@@ -438,6 +438,53 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Tours</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        @php
+                                            $selectedBestTours = json_decode($item->best_tours_ids, true) ?? [];
+                                        @endphp
+                                        <label class="title">Best Things To do <span class="text-danger">*</span>
+                                            :</label>
+                                        <select name="best_tours_ids[]" multiple class="select2-select"
+                                            placeholder="Select Tours" {{ !$item->tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
+                                            @foreach ($item->tours as $tour)
+                                                <option value="{{ $tour->id }}"
+                                                    {{ in_array($tour->id, old('best_tours_ids', $selectedBestTours)) ? 'selected' : '' }}>
+                                                    {{ $tour->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('best_tours_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-fields">
+                                        @php
+                                            $selectedPopularTours = json_decode($item->popular_tours_ids, true) ?? [];
+                                        @endphp
+                                        <label class="title">Popular Activities <span class="text-danger">*</span>
+                                            :</label>
+                                        <select name="popular_tours_ids[]" multiple class="select2-select"
+                                            placeholder="Select Tours" {{ !$item->tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
+                                            @foreach ($item->tours as $tour)
+                                                <option value="{{ $tour->id }}"
+                                                    {{ in_array($tour->id, old('popular_tours_ids', $selectedPopularTours)) ? 'selected' : '' }}>
+                                                    {{ $tour->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('popular_tours_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

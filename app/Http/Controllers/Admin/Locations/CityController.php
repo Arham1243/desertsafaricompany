@@ -89,6 +89,8 @@ class CityController extends Controller
             'name' => 'nullable|min:3|max:255',
             'slug' => 'nullable|string|max:255',
             'country_id' => 'nullable|int',
+            'best_tours_ids' => 'nullable|array',
+            'popular_tours_ids' => 'nullable|array',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',

@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div class="location1-content__section pt-5">
+    <div class="location1-content__section py-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-7">
@@ -40,44 +40,70 @@
 
 
                 </div>
-                <div class="col-md-5">
-                    <div class="loaction-guide">
-                        <div class="loaction-guide-content">
-                            <div class="loaction-guide-heading">
-                                Guide
-                            </div>
-                            <div class="loaction-guide-title">
-                                Plan your trip with Guide, an AI travel planner!
 
-                            </div>
-                            <div class="loaction-guide-pra">
-                                Create a personalized trip itinerary in seconds using artificial intelligence.
-                            </div>
-                            <div class="loaction-guide-btn">
-                                <a href="">
-                                    <button class="themeBtn-round">Create a trip</button>
-                                </a>
+                @php
+                    $sectionContent = json_decode($item->section_content);
+                    $guideContent = $sectionContent->guide ?? null;
+                @endphp
+                @if (isset($guideContent->is_enabled))
+                    <div class="col-md-5">
+                        <div class="loaction-guide"
+                            style=" {{ $guideContent->background_color ? 'background: ' . $guideContent->background_color . ';' : '' }} ">
+                            <div class="loaction-guide-content">
+                                <div style="
+                            {{ $guideContent->title_color ? 'color: ' . $guideContent->title_color . ';' : '' }} "
+                                    class="loaction-guide-heading">
+                                    {{ $guideContent->title }}
+                                </div>
+                                <div style=" {{ $guideContent->subtitle_color ? 'color: ' . $guideContent->subtitle_color . ';' : '' }} "
+                                    class="loaction-guide-title">
+                                    {{ $guideContent->subtitle }}
+                                </div>
+                                <div style=" {{ $guideContent->description_color ? 'color: ' . $guideContent->description_color . ';' : '' }} "
+                                    class="loaction-guide-pra">
+                                    {{ $guideContent->description }}
+                                </div>
+                                @if (isset($guideContent->is_button_enabled))
+                                    <div class="loaction-guide-btn">
+                                        <a style="
+                                {{ $guideContent->btn_background_color ? 'background: ' . $guideContent->btn_background_color . ';' : '' }}
+                                {{ $guideContent->btn_text_color ? 'color: ' . $guideContent->btn_text_color . ';' : '' }}
+                            "
+                                            href="{{ sanitizedLink($guideContent->btn_link) }}" class="themeBtn-round"
+                                            target="_blank">
+                                            {{ $guideContent->btn_text }}
+                                        </a>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
 
-    @if ($tours->isNotEmpty())
-        <div class="section-padding">
+    @php
+        $bestTours = \App\Models\Tour::whereIn('id', json_decode($item->best_tours_ids ?? '[]'))
+            ->where('status', 'publish')
+            ->get();
+        $popularTours = \App\Models\Tour::whereIn('id', json_decode($item->popular_tours_ids ?? '[]'))
+            ->where('status', 'publish')
+            ->get();
+    @endphp
+
+    @if ($bestTours->isNotEmpty())
+        <div class="section-padding pt-4">
             <div class="container">
                 <div class="top-picks-experts__heading">
                     <div class="section-content">
                         <h2 class="subHeading">
-                            {{ $tours->count() }} best things to do in {{ $item->name }}
+                            {{ $bestTours->count() }} best things to do in {{ $item->name }}
                         </h2>
                     </div>
                 </div>
                 <div class="row four-items-slider pt-3">
-                    @foreach ($tours as $tour)
+                    @foreach ($bestTours as $tour)
                         <div class="col">
                             <div class=card-content>
                                 <a href={{ route('tours.details', $tour->slug) }} class=card_img>
@@ -134,7 +160,7 @@
         </div>
     @endif
 
-    @if ($tours->isNotEmpty())
+    @if ($popularTours->isNotEmpty())
         <div class="container">
             <div class="top-picks-experts__heading">
                 <div class="section-content text-center">
@@ -144,7 +170,7 @@
                 </div>
             </div>
             <div class="row three-items-slider pt-3">
-                @foreach ($tours as $tour)
+                @foreach ($popularTours as $tour)
                     <div class="col">
                         <div class=card-content>
                             <a href=# class=card_img>
@@ -186,10 +212,8 @@
         </div>
     @endif
 
-
-
     @if ($relatedCities->isNotEmpty())
-        <div class="location1-beyond section-padding">
+        <div class="location1-beyond section-padding ">
             <div class="container">
                 <div class="latest-stories__details">
                     <div class="section-content">

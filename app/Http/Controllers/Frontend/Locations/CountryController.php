@@ -15,11 +15,7 @@ class CountryController extends Controller
             ->where('status', 'publish')
             ->get();
 
-        $tours = $relatedCities->flatMap(function ($city) {
-            return $city->tours;
-        })->sortByDesc('average_rating');
-
-        $data = compact('item', 'tours', 'relatedCities');
+        $data = compact('item', 'relatedCities');
 
         return view('frontend.locations.country.details')
             ->with('title', ucfirst(strtolower($item->name)))

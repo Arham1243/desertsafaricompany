@@ -50,10 +50,17 @@ class CountryController extends Controller
             $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/Country/Banner-images');
         }
 
+        $sectionData = $request->all()['section_content'];
+        foreach ($sectionData as $sectionKey => $content) {
+            $existingSectionContent = [];
+            $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_image' => $featuredImage,
             'banner_image' => $bannerImage,
+            'section_content' => json_encode($updatedContent),
         ]);
 
         $item = Country::create($data);
@@ -66,9 +73,12 @@ class CountryController extends Controller
     public function edit($id)
     {
         $item = Country::find($id);
+        $tours = $item->cities->flatMap(function ($city) {
+            return $city->tours;
+        });
         $seo = $item->seo()->first();
 
-        return view('admin.locations.countries-management.edit', compact('item', 'seo'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)
@@ -77,6 +87,8 @@ class CountryController extends Controller
         $validatedData = $request->validate([
             'name' => 'nullable|min:3|max:255',
             'slug' => 'nullable|string|max:255',
+            'best_tours_ids' => 'nullable|array',
+            'popular_tours_ids' => 'nullable|array',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
@@ -99,10 +111,17 @@ class CountryController extends Controller
             $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/Country/Banner-images', $item->banner_image);
         }
 
+        $sectionData = $request->all()['section_content'];
+        foreach ($sectionData as $sectionKey => $content) {
+            $existingSectionContent = $item->section_content ? json_decode($item->section_content, true) : [];
+            $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_image' => $featuredImage,
             'banner_image' => $bannerImage,
+            'section_content' => json_encode($updatedContent),
         ]);
 
         $item->update($data);
@@ -111,5 +130,13 @@ class CountryController extends Controller
 
         return redirect()->route('admin.countries.index')
             ->with('notify_success', 'Country updated successfully.');
+    }
+
+    public function handleSectionData(array $newData, ?array $existingData, string $sectionKey)
+    {
+        switch ($sectionKey) {
+            case 'guide':
+                return $newData;
+        }
     }
 }
