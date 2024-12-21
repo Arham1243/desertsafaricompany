@@ -354,7 +354,66 @@
 
                     @if ($tour->location_type === 'itinerary_experience')
                         @php
-                            $itineraryExperience = json_decode($tour->itinerary_experience);
+                            $itineraryExperience = json_decode($tour->itinerary_experience, true);
+                            $orderedItems = collect();
+
+                            if (isset($itineraryExperience['vehicles']) && isset($itineraryExperience['stops'])) {
+                                foreach ($itineraryExperience['vehicles'] as $vehicle) {
+                                    $orderedItems->push([
+                                        'order' => isset($vehicle['order']) ? $vehicle['order'] : -1,
+                                        'type' => 'vehicle',
+                                        'name' => $vehicle['name'],
+                                        'time' => $vehicle['time'],
+                                    ]);
+                                }
+
+                                foreach ($itineraryExperience['stops'] as $key => $stop) {
+                                    $stopItem = [
+                                        'order' => isset($stop['order']) ? $stop['order'] : -1,
+                                        'type' => 'stop',
+                                        'title' => $stop['title'],
+                                        'activities' => $stop['activities'],
+                                        'sub_stops' => [],
+                                    ];
+
+                                    // Check if sub-stops are enabled and append sub-stops to the stop item
+                                    if (
+                                        isset($itineraryExperience['enable_sub_stops']) &&
+                                        $itineraryExperience['enable_sub_stops'] == '1' &&
+                                        isset($itineraryExperience['stops']['sub_stops']['main_stop']) &&
+                                        in_array(
+                                            $stop['title'],
+                                            $itineraryExperience['stops']['sub_stops']['main_stop'],
+                                        )
+                                    ) {
+                                        foreach (
+                                            $itineraryExperience['stops']['sub_stops']['title']
+                                            as $index => $subStopTitle
+                                        ) {
+                                            if (
+                                                $itineraryExperience['stops']['sub_stops']['main_stop'][$index] ==
+                                                $stop['title']
+                                            ) {
+                                                $stopItem['sub_stops'][] = [
+                                                    'order' =>
+                                                        (isset($stop['order']) ? $stop['order'] : -1) +
+                                                        ($index + 1) * 0.1,
+                                                    'title' => $subStopTitle,
+                                                    'activities' =>
+                                                        $itineraryExperience['stops']['sub_stops']['activities'][
+                                                            $index
+                                                        ],
+                                                ];
+                                            }
+                                        }
+                                    }
+
+                                    // Add the stop item to the collection
+                                    $orderedItems->push($stopItem);
+                                }
+                            }
+
+                            $orderedItems = $orderedItems->reject(fn($item) => $item['order'] === -1)->sortBy('order');
                         @endphp
                         <div class=tour-content__line></div>
                         <div class=activity-experience>
@@ -369,147 +428,142 @@
                                     <div class="row mb-4">
                                         <div class=col-md-4>
                                             <ul class=experience-itinerary-timeline>
-                                                <li class=activity-itinerary-timeline__item>
-                                                    <div class=timeline-item__wrapper>
-                                                        <div class=timeline-item-stop>
-                                                            <span class=timeline-item__icon>
-                                                                <i class='bx bx-location-plus'></i>
-                                                            </span>
-                                                            <div class="timeline-item-info timeline-item__info">
-                                                                <h3
-                                                                    class="timeline-item-info--primary tour-content__title">
-                                                                    {{ $itineraryExperience->pickup_locations ? count(explode(',', $itineraryExperience->pickup_locations)) : 0 }}
-                                                                    pickup location options:</h3>
-                                                                <section>
-                                                                    <div
-                                                                        class="timeline-item-info--secondary tour-content__pra">
-                                                                        <p>{{ $itineraryExperience->pickup_locations ?? '' }}
-                                                                        </p>
-                                                                    </div>
-                                                                </section>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </li>
-
-                                                @foreach ($itineraryExperience->vehicles as $vehicle)
-                                                    <li class="activity-itinerary-timeline__item">
-                                                        <div class="timeline-item__wrapper">
-                                                            <div class="timeline-item-stop">
-                                                                <span class="timeline-item__icon timeline-item__staricon">
-                                                                    <i class='bx bxs-car'></i>
+                                                @if ($itineraryExperience['pickup_locations'])
+                                                    <li class=activity-itinerary-timeline__item>
+                                                        <div class=timeline-item__wrapper>
+                                                            <div class=timeline-item-stop>
+                                                                <span class=timeline-item__icon>
+                                                                    <i class='bx bx-location-plus'></i>
                                                                 </span>
                                                                 <div class="timeline-item-info timeline-item__info">
                                                                     <h3
                                                                         class="timeline-item-info--primary tour-content__title">
-                                                                        {{ $vehicle->name }}
-                                                                    </h3>
+                                                                        {{ $itineraryExperience['pickup_locations'] ? count(explode(',', $itineraryExperience['pickup_locations'])) : 0 }}
+                                                                        pickup location options:</h3>
                                                                     <section>
                                                                         <div
                                                                             class="timeline-item-info--secondary tour-content__pra">
-                                                                            <p>({{ $vehicle->time }} minutes)</p>
+                                                                            <p>{{ $itineraryExperience['pickup_locations'] ?? '' }}
+                                                                            </p>
                                                                         </div>
                                                                     </section>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </li>
-                                                @endforeach
+                                                @endif
 
-                                                @foreach ($itineraryExperience->stops as $stop)
-                                                    <li class="activity-itinerary-timeline__item">
-                                                        <div class="timeline-item__wrapper">
-                                                            <div class="timeline-item-stop">
-                                                                <span class="timeline-item__icon timeline-item__staricon">
-                                                                    <i class="bx bx-star"></i>
-                                                                </span>
-                                                                <div class="timeline-item-info timeline-item__info">
-                                                                    <h3
-                                                                        class="timeline-item-info--primary tour-content__title">
-                                                                        @if (is_array($stop->title))
-                                                                            {{ implode(', ', $stop->title) }}
-                                                                            <!-- Join array elements with commas -->
-                                                                        @else
-                                                                            {{ $stop->title }}
-                                                                            <!-- If it's already a string, display it directly -->
-                                                                        @endif
-                                                                    </h3>
-                                                                    <section>
-                                                                        <div
-                                                                            class="timeline-item-info--secondary tour-content__pra">
-                                                                            <p>{{ $stop->activities }}</p>
-                                                                        </div>
-                                                                    </section>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
-                                                    @if (
-                                                        $itineraryExperience->enable_sub_stops == '1' &&
-                                                            isset($itineraryExperience->stops->sub_stops) &&
-                                                            in_array($stop->title, $itineraryExperience->stops->sub_stops->main_stop))
-                                                        @foreach ($itineraryExperience->stops->sub_stops->title as $index => $subStopTitle)
-                                                            @if ($subStopTitle == $stop->title)
-                                                                <li class="activity-itinerary-timeline__item">
-                                                                    <div class="timeline-item__wrapper">
-                                                                        <div class="timeline-item-stop">
-                                                                            <span
-                                                                                class="timeline-item__icon timeline-item__staricon">
-                                                                                <i class="bx bx-star"></i>
-                                                                            </span>
+                                                @foreach ($orderedItems as $item)
+                                                    @if ($item['type'] == 'vehicle')
+                                                        <li class="activity-itinerary-timeline__item">
+                                                            <div class="timeline-item__wrapper">
+                                                                <div class="timeline-item-stop">
+                                                                    <span
+                                                                        class="timeline-item__icon timeline-item__staricon">
+                                                                        <i class='bx bxs-car'></i>
+                                                                    </span>
+                                                                    <div class="timeline-item-info timeline-item__info">
+                                                                        <h3
+                                                                            class="timeline-item-info--primary tour-content__title">
+                                                                            {{ $item['name'] }}
+                                                                        </h3>
+                                                                        <section>
                                                                             <div
-                                                                                class="timeline-item-info timeline-item__info">
-                                                                                <h3
-                                                                                    class="timeline-item-info--primary tour-content__title">
-                                                                                    {{ $subStopTitle }}
-                                                                                </h3>
-                                                                                <section>
+                                                                                class="timeline-item-info--secondary tour-content__pra">
+                                                                                <p>({{ $item['time'] }} minutes)</p>
+                                                                            </div>
+                                                                        </section>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    @elseif ($item['type'] == 'stop')
+                                                        <li class="activity-itinerary-timeline__item">
+                                                            <div class="timeline-item__wrapper">
+                                                                <div class="timeline-item-stop">
+                                                                    <span
+                                                                        class="timeline-item__icon timeline-item__staricon">
+                                                                        <i class="bx bx-star"></i>
+                                                                    </span>
+                                                                    <div class="timeline-item-info timeline-item__info">
+                                                                        <h3
+                                                                            class="timeline-item-info--primary tour-content__title">
+                                                                            @if (is_array($item['title']))
+                                                                                {{ implode(', ', $item['title']) }}
+                                                                            @else
+                                                                                {{ $item['title'] }}
+                                                                            @endif
+                                                                        </h3>
+                                                                        <section>
+                                                                            <div
+                                                                                class="timeline-item-info--secondary tour-content__pra">
+                                                                                <p>
+                                                                                    @if (is_array($item['activities']))
+                                                                                        {{ implode(', ', $item['activities']) }}
+                                                                                    @else
+                                                                                        {{ $item['activities'] }}
+                                                                                    @endif
+                                                                                </p>
+                                                                            </div>
+                                                                        </section>
+                                                                        @if (!empty($item['sub_stops']))
+                                                                            @foreach ($item['sub_stops'] as $index => $subStop)
+                                                                                <div
+                                                                                    class="timeline-item__subitems-wrapper">
+
+                                                                                    <div class="grey-circle-icon"></div>
                                                                                     <div
-                                                                                        class="timeline-item-info--secondary tour-content__pra">
-                                                                                        <p>{{ $itineraryExperience->stops->sub_stops->activities[$index] }}
+                                                                                        class="timeline-item-info timeline-item__info timeline-item__info--subitem">
+                                                                                        <p
+                                                                                            class="timeline-subitems-info--primary">
+                                                                                            {{ $subStop['title'] }}</p>
+                                                                                        <p
+                                                                                            class="timeline-subitems-info--secondary">
+                                                                                            {{ $subStop['activities'] }}
                                                                                         </p>
                                                                                     </div>
-                                                                                </section>
-                                                                            </div>
-                                                                        </div>
+                                                                                </div>
+                                                                            @endforeach
+                                                                        @endif
                                                                     </div>
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
+                                                                </div>
+                                                            </div>
+                                                        </li>
                                                     @endif
                                                 @endforeach
 
 
-
-                                                <li>
-                                                    <div class=timeline-item__wrapper>
-                                                        <div class=timeline-item-stop>
-                                                            <span class=timeline-item__icon>
-                                                            </span>
-                                                            <div class="timeline-item-info timeline-item__info">
-                                                                <h3
-                                                                    class="timeline-item-info--primary tour-content__title">
-                                                                    {{ $itineraryExperience->dropoff_locations ? count(explode(',', $itineraryExperience->dropoff_locations)) : 0 }}
-                                                                    drop-off locations:
-                                                                </h3>
-                                                                <section>
-                                                                    <div
-                                                                        class="timeline-item-info--secondary tour-content__pra">
-                                                                        <p>{{ $itineraryExperience->dropoff_locations ?? '' }}
-                                                                        </p>
-                                                                    </div>
-                                                                </section>
+                                                @if ($itineraryExperience['dropoff_locations'])
+                                                    <li>
+                                                        <div class=timeline-item__wrapper>
+                                                            <div class=timeline-item-stop>
+                                                                <span class=timeline-item__icon>
+                                                                    <i class='bx bx-location-plus'></i>
+                                                                </span>
+                                                                <div class="timeline-item-info timeline-item__info">
+                                                                    <h3
+                                                                        class="timeline-item-info--primary tour-content__title">
+                                                                        {{ $itineraryExperience['dropoff_locations'] ? count(explode(',', $itineraryExperience['dropoff_locations'])) : 0 }}
+                                                                        drop-off locations:
+                                                                    </h3>
+                                                                    <section>
+                                                                        <div
+                                                                            class="timeline-item-info--secondary tour-content__pra">
+                                                                            <p>{{ $itineraryExperience['dropoff_locations'] ?? '' }}
+                                                                            </p>
+                                                                        </div>
+                                                                    </section>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </li>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                         <div class=col-md-8>
                                             <div class="tour-content-location__map activity-experience__map">
                                                 <iframe
-                                                    src="{{ $itineraryExperience->map_iframe ?? 'https://www.google.com/maps?qUnited Arab Emirates&output=embed' }}"
+                                                    src="{{ $itineraryExperience['map_iframe'] ?? 'https://www.google.com/maps?qUnited Arab Emirates&output=embed' }}"
                                                     width=600 height=450 style=border:0 allowfullscreen
                                                     referrerpolicy=no-referrer-when-downgrade></iframe>
                                             </div>

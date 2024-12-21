@@ -2554,8 +2554,9 @@ a.card_img.trending-products__img {
     cursor: pointer;
     background: #fff;
     border-radius: 24px;
+    opacity: 0.75;
 }
-
+.slick-dots li.slick-active {opacity: 1;}
 .comment-card__img.comment-slider .slick-arrow::before {
     width: 22px;
     height: 22px;
