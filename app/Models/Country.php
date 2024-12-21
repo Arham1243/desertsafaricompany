@@ -44,6 +44,7 @@ class Country extends Model
         static::deleting(function ($item) {
             if ($item->isForceDeleting()) {
                 self::deleteImage($item->featured_image);
+                self::deleteImage($item->banner_image);
                 if ($item->seo) {
                     self::deleteImage($item->seo->seo_featured_image);
                     self::deleteImage($item->seo->fb_featured_image);
