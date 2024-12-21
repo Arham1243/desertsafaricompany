@@ -19,7 +19,10 @@
                 @endif
             </h1>
             @if (isset($content->is_button_enabled))
-                <a style="background: {{ $content->btn_background_color ?? 'var(--color-primary)' }};color: {{ $content->btn_text_color ?? '#fff' }};"
+                <a style="
+                {{ $content->btn_background_color ? 'background: ' . $content->btn_background_color . ';' : '' }}
+                {{ $content->btn_text_color ? 'color: ' . $content->btn_text_color . ';' : '' }}
+            "
                     href="{{ sanitizedLink($content->btn_link) }}" class="primary-btn mt-3"
                     target="_blank">{{ $content->btn_text }} <i class='bx bx-right-arrow-alt'></i></a>
             @endif

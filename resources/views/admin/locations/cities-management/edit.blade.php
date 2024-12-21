@@ -72,6 +72,245 @@
                                     </div>
                                 </div>
                             </div>
+                            @php
+                                $sectionContent = json_decode($item->section_content);
+                                $guideContent = $sectionContent->guide ?? null;
+                            @endphp
+                            <div class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Guide Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input class="form-check-input" data-toggle-switch=""
+                                                {{ isset($guideContent->is_enabled) ? 'checked' : '' }} type="checkbox"
+                                                id="guide_enabled" value="1" name="section_content[guide][is_enabled]">
+                                            <label class="form-check-label" for="guide_enabled">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/guide.png') }}" data-fancybox="gallery"
+                                        class="themeBtn p-2"><i class='bx bxs-show'></i></a>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Title <span class="text-danger">*</span>
+                                                            :</label>
+                                                        <input type="text" name="section_content[guide][title]"
+                                                            class="field" value="{{ $guideContent->title ?? '' }}"
+                                                            maxlength="33">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Title Text Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get
+                                                                Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="section_content[guide][title_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $guideContent->title_color ?? '#000000' }}"
+                                                                data-error="background Color" inputmode="text">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Sub title <span class="text-danger">*</span>
+                                                            :</label>
+                                                        <input type="text" name="section_content[guide][subtitle]"
+                                                            class="field" value="{{ $guideContent->title ?? '' }}"
+                                                            maxlength="80">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Sub title Text Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get
+                                                                Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="section_content[guide][subtitle_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $guideContent->subtitle_color ?? '#000000' }}"
+                                                                data-error="background Color" inputmode="text">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Description <span
+                                                                class="text-danger">*</span>
+                                                            :</label>
+                                                        <input type="text" name="section_content[guide][description]"
+                                                            class="field" value="{{ $guideContent->title ?? '' }}"
+                                                            maxlength="80">
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-4">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Description Text Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get
+                                                                Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="section_content[guide][description_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $guideContent->description_color ?? '#000000' }}"
+                                                                data-error="background Color" inputmode="text">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-lg-12 py-4">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <label class="title title--sm mb-0">Call to Action Button:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input class="form-check-input" data-toggle-switch=""
+                                                            {{ isset($guideContent->is_button_enabled) ? 'checked' : '' }}
+                                                            type="checkbox" id="cta_btn_enabled_tour" value="1"
+                                                            name="section_content[guide][is_button_enabled]">
+                                                        <label class="form-check-label"
+                                                            for="cta_btn_enabled_tour">Enabled</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="form-fields">
+                                                            <label class="title">Button Text <span
+                                                                    class="text-danger">*</span>
+                                                                :</label>
+                                                            <input type="text"
+                                                                value="{{ $guideContent->btn_text ?? '' }}"
+                                                                name="section_content[guide][btn_text]" class="field"
+                                                                placeholder="" data-error="Button Text" maxlength="28">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 mb-4">
+                                                        <div class="form-fields">
+                                                            <label class="title">
+                                                                <div class="d-flex align-items-center gap-2 lh-1">
+                                                                    <div class="mt-1">Button Link </div>
+                                                                    <button data-bs-placement="top"
+                                                                        title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
+                                                                        type="button" data-tooltip="tooltip"
+                                                                        class="tooltip-lg">
+                                                                        <i class='bx bxs-info-circle'></i>
+                                                                    </button>
+                                                                </div>
+                                                            </label>
+                                                            <input type="text"
+                                                                value="{{ $guideContent->btn_link ?? '' }}"
+                                                                name="section_content[guide][btn_link]" class="field"
+                                                                placeholder="" data-error="Button Link">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-6">
+                                                        <div class="form-fields">
+                                                            <div class="title d-flex align-items-center gap-2">
+                                                                <div>
+                                                                    Button Background Color <span
+                                                                        class="text-danger">*</span>:
+                                                                </div>
+                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                    target="_blank">Get Color
+                                                                    Codes</a>
+                                                            </div>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="color-picker" data-color-picker></label>
+                                                                <input id="color-picker" type="text"
+                                                                    name="section_content[guide][btn_background_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $guideContent->btn_background_color ?? '#1c4d99' }}"
+                                                                    data-error="background Color" inputmode="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-fields">
+                                                            <div class="title d-flex align-items-center gap-2">
+                                                                <div>
+                                                                    Button Text Color <span class="text-danger">*</span>:
+                                                                </div>
+                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                    target="_blank">Get Color
+                                                                    Codes</a>
+                                                            </div>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="color-picker" data-color-picker></label>
+                                                                <input id="color-picker" type="text"
+                                                                    name="section_content[guide][btn_text_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $guideContent->btn_text_color ?? '#ffffff' }}"
+                                                                    data-error="background Color" inputmode="text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-md-12 pt-3">
+                                            <div class="form-fields">
+                                                <div class="title d-flex align-items-center gap-2">
+                                                    <div>
+                                                        Select Background Color <span class="text-danger">*</span>:
+                                                    </div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color
+                                                        Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="color-picker" data-color-picker></label>
+                                                    <input id="color-picker" type="text"
+                                                        name="section_content[guide][background_color]"
+                                                        data-color-picker-input
+                                                        value="{{ $guideContent->background_color ?? '#EEF6FF' }}"
+                                                        placeholder="#000000" data-error="background Color"
+                                                        inputmode="text" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <x-seo-options :seo="$seo ?? null" :resource="'city'" :slug="$item->slug" />
                         </div>
                     </div>
@@ -199,6 +438,53 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Tours</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        @php
+                                            $selectedBestTours = json_decode($item->best_tours_ids, true) ?? [];
+                                        @endphp
+                                        <label class="title">Best Things To do <span class="text-danger">*</span>
+                                            :</label>
+                                        <select name="best_tours_ids[]" multiple class="select2-select"
+                                            placeholder="Select Tours" {{ !$item->tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
+                                            @foreach ($item->tours as $tour)
+                                                <option value="{{ $tour->id }}"
+                                                    {{ in_array($tour->id, old('best_tours_ids', $selectedBestTours)) ? 'selected' : '' }}>
+                                                    {{ $tour->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('best_tours_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-fields">
+                                        @php
+                                            $selectedPopularTours = json_decode($item->popular_tours_ids, true) ?? [];
+                                        @endphp
+                                        <label class="title">Popular Activities <span class="text-danger">*</span>
+                                            :</label>
+                                        <select name="popular_tours_ids[]" multiple class="select2-select"
+                                            placeholder="Select Tours" {{ !$item->tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
+                                            @foreach ($item->tours as $tour)
+                                                <option value="{{ $tour->id }}"
+                                                    {{ in_array($tour->id, old('popular_tours_ids', $selectedPopularTours)) ? 'selected' : '' }}>
+                                                    {{ $tour->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('popular_tours_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -206,3 +492,16 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document
+                .querySelectorAll("[data-color-picker-container]")
+                ?.forEach((element) => {
+                    InitializeColorPickers(element);
+                });
+        })
+    </script>
+@endpush
