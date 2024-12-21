@@ -47,17 +47,24 @@ class CityController extends Controller
         $bannerImage = null;
 
         if ($request->hasFile('featured_image')) {
-            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Location/Country/Featured-images');
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Location/City/Featured-images');
         }
 
         if ($request->hasFile('banner_image')) {
-            $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/Country/Banner-images');
+            $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/City/Banner-images');
+        }
+
+        $sectionData = $request->all()['section_content'];
+        foreach ($sectionData as $sectionKey => $content) {
+            $existingSectionContent = [];
+            $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
         }
 
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_image' => $featuredImage,
             'banner_image' => $bannerImage,
+            'section_content' => json_encode($updatedContent),
         ]);
 
         $item = City::create($data);
@@ -82,6 +89,8 @@ class CityController extends Controller
             'name' => 'nullable|min:3|max:255',
             'slug' => 'nullable|string|max:255',
             'country_id' => 'nullable|int',
+            'best_tours_ids' => 'nullable|array',
+            'popular_tours_ids' => 'nullable|array',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
@@ -97,17 +106,24 @@ class CityController extends Controller
         $bannerImage = $item->banner_image;
 
         if ($request->hasFile('featured_image')) {
-            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Location/Country/Featured-images', $item->featured_image);
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Location/City/Featured-images', $item->featured_image);
         }
 
         if ($request->hasFile('banner_image')) {
-            $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/Country/Banner-images', $item->banner_image);
+            $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/City/Banner-images', $item->banner_image);
+        }
+
+        $sectionData = $request->all()['section_content'];
+        foreach ($sectionData as $sectionKey => $content) {
+            $existingSectionContent = $item->section_content ? json_decode($item->section_content, true) : [];
+            $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
         }
 
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_image' => $featuredImage,
             'banner_image' => $bannerImage,
+            'section_content' => json_encode($updatedContent),
         ]);
 
         $item->update($data);
@@ -115,5 +131,13 @@ class CityController extends Controller
 
         return redirect()->route('admin.cities.index')
             ->with('notify_success', 'City updated successfully.');
+    }
+
+    public function handleSectionData(array $newData, ?array $existingData, string $sectionKey)
+    {
+        switch ($sectionKey) {
+            case 'guide':
+                return $newData;
+        }
     }
 }

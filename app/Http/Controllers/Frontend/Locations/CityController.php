@@ -11,8 +11,7 @@ class CityController extends Controller
     {
         $item = City::where('slug', $slug)->firstOrFail();
         $relatedCities = City::where('country_id', $item->country->id)->where('status', 'publish')->whereNot('id', $item->id)->get();
-        $tours = $item->tours()->get()->sortByDesc('average_rating');
-        $data = compact('item', 'tours', 'relatedCities');
+        $data = compact('item', 'relatedCities');
 
         return view('frontend.locations.city.details')->with('title', ucfirst(strtolower($item->name)))->with($data);
     }
