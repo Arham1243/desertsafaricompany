@@ -1,4 +1,0 @@
-
-font-family: 'Century Schoolbook Regular font';
-
-font-family: 'Montserrat', sans-serif;
