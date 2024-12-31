@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Config;
 use App\Models\ImageTable;
 use App\Models\Popup;
 
@@ -32,5 +33,12 @@ abstract class Controller
 
         View()->share('logo', $logo);
         View()->share('popup', $matchedPopup);
+    }
+
+    public static function getConfig()
+    {
+        return Config::where('is_active', 1)
+            ->pluck('flag_value', 'flag_type')
+            ->toArray();
     }
 }
