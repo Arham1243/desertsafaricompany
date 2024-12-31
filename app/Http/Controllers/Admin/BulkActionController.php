@@ -12,6 +12,7 @@ use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
 use App\Models\Page;
+use App\Models\Popup;
 use App\Models\Section;
 use App\Models\Testimonial;
 use App\Models\Tour;
@@ -110,6 +111,11 @@ class BulkActionController extends Controller
                 $modelClass = Testimonial::class;
                 $column = 'id';
                 $redirectRoute = 'admin.testimonials.index';
+                break;
+            case 'popups':
+                $modelClass = Popup::class;
+                $column = 'id';
+                $redirectRoute = 'admin.popups.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');

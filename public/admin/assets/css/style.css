@@ -1088,18 +1088,23 @@ body .choices__inner {
     flex-direction: column-reverse;
 }
 
-.form-fields .field, .choices__list--single, body .choices__input, .select2-selection--single, .select2-selection--multiple, .select2-search--dropdown .select2-search__field {
+.form-fields .field,
+.choices__list--single,
+body .choices__input,
+.select2-selection--single,
+.select2-selection--multiple,
+.select2-search--dropdown .select2-search__field {
     width: 100% !important;
     padding: 0.7rem 1rem;
     border-radius: 0.25rem;
-    border: 1px solid #dee2e6;!;!i;!;
+    border: 1px solid #dee2e6;
     outline: none;
     color: #000;
     font-size: 0.85rem;
     font-weight: 500;
     transition: all 300ms;
     box-shadow: none !important;
-    background: #fff;!;!i;!;
+    background: #fff;
     height: 45px;
 }
 .form-fields textarea.field {
@@ -1112,7 +1117,6 @@ body .choices__inner {
     color: inherit !important;
     opacity: 0.75 !important;
 }
-
 
 /* .upload-box */
 .upload {
@@ -1216,12 +1220,13 @@ body .choices__inner {
 }
 .upload .upload-box__img input {
     margin-top: 0.5rem;
-    border: 2px solid #cccc ;
+    border: 2px solid #cccc;
 }
 .upload .upload-box__img input:focus {
     border-color: var(--color-primary);
 }
-.upload-box__img .filename,.single-image .filename {
+.upload-box__img .filename,
+.single-image .filename {
     margin: 0.75rem 0;
     font-weight: 600;
     font-size: 0.85rem;

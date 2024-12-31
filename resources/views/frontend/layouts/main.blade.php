@@ -18,6 +18,10 @@
     @include('frontend.layouts.header')
     @yield('content')
     @include('frontend.layouts.footer')
+    @if (isset($popup) && $popup)
+        @include('frontend.layouts.popup', ['popup' => $popup])
+    @endif
+
     @include('frontend.layouts.scripts')
     @yield('js')
     @stack('js')
