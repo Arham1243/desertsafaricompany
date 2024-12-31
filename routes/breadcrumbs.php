@@ -213,3 +213,18 @@ Breadcrumbs::for('admin.testimonials.edit', function (BreadcrumbTrail $trail, $i
     $trail->push($item->title ?? 'N/A', route('admin.testimonials.edit', $item->id));
 });
 // ---------------Testimonials---------------
+
+// ---------------Popups---------------
+Breadcrumbs::for('admin.popups.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Popups', route('admin.popups.index'));
+});
+Breadcrumbs::for('admin.popups.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.popups.index');
+    $trail->push('Add Popup', route('admin.popups.create'));
+});
+Breadcrumbs::for('admin.popups.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.popups.index');
+    $trail->push($item->title ?? 'N/A', route('admin.popups.edit', $item->id));
+});
+// ---------------Popups---------------

@@ -235,7 +235,18 @@
         [
             'title' => 'Popup',
             'icon' => 'bx bx-message-square',
-            'route' => 'javascript:void(0)',
+            'submenu' => [
+                [
+                    'title' => 'Popups',
+                    'icon' => 'bx bx-list-ul',
+                    'route' => route('admin.popups.index'),
+                ],
+                [
+                    'title' => 'Add Popup',
+                    'icon' => 'bx bx-plus',
+                    'route' => route('admin.popups.create'),
+                ],
+            ],
         ],
         [
             'title' => 'Coupon',

@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\News\CategoriesController as NewsCategoriesContro
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\News\TagsController as NewsTagsController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SiteSettingsController;
@@ -74,6 +75,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('countries', CountryController::class);
     Route::resource('cities', CityController::class);
     Route::resource('testimonials', TestimonialController::class);
+    Route::resource('popups', PopupController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
 });
