@@ -352,10 +352,10 @@
 
     @if ($featuredReviews->isNotEmpty())
         <div class="comment">
-            <img src="{{ asset('assets/images/comment.webp') }}" alt="image" class="peoples-img imgFluid"
+            <img src="{{ asset('frontend/assets/images/comment.webp') }}" alt="image" class="peoples-img imgFluid"
                 loading="lazy">
             <div class="ocizgi_imgs">
-                <img src="{{ asset('assets/images/ocizgi.webp') }}" alt="image" class="ocizgi imgFluid"
+                <img src="{{ asset('frontend/assets/images/ocizgi.webp') }}" alt="image" class="ocizgi imgFluid"
                     loading="lazy">
             </div>
             <div class="container">
@@ -417,7 +417,7 @@
             <div class="row g-0">
                 <div class=col-md-6>
                     <div class=newsletter__img>
-                        <img src="{{ asset('assets/images/173.webp') }}" alt="image" class="imgFluid"
+                        <img src="{{ asset('frontend/assets/images/173.webp') }}" alt="image" class="imgFluid"
                             loading="lazy">
                     </div>
                 </div>

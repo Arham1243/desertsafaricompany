@@ -15,8 +15,8 @@
                 </div>
                 <div class=col-md-6>
                     <div class=banner-img>
-                        <img data-src="{{ asset('assets/images/baloon.webp') }}" alt=image class="imgFluid lazy" width="345.89"
-                            height="186">
+                        <img data-src="{{ asset('frontend/assets/images/baloon.webp') }}" alt=image class="imgFluid lazy"
+                            width="345.89" height="186">
                     </div>
                 </div>
                 <form action="" class=banner-form>
@@ -37,8 +37,8 @@
                         <div class=dst2>
                             Meet With Carefully Selected Destinations!
                             <div class=darrow>
-                                <img data-src="{{ asset('assets/images/darrow.webp') }}" alt=image class="imgFluid lazy"
-                                    width=100 height=20.36>
+                                <img data-src="{{ asset('frontend/assets/images/darrow.webp') }}" alt=image
+                                    class="imgFluid lazy" width=100 height=20.36>
                             </div>
                         </div>
                     </div>
@@ -514,7 +514,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -549,7 +549,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/oscar-restaurant-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/oscar-restaurant-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -584,7 +584,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/little-mermaid-600.webp')}}" alt=image class="imgFluid lazy"
+                                    <img data-src="{{ asset('frontend/assets/images/little-mermaid-600.webp')}}" alt=image class="imgFluid lazy"
                                         loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -619,7 +619,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/elite-restaurant-alanya-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/elite-restaurant-alanya-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -654,7 +654,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/photo-2023-04-18-12-10-20-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/photo-2023-04-18-12-10-20-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -693,7 +693,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -728,7 +728,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -763,7 +763,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -798,7 +798,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -833,7 +833,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -872,7 +872,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -907,7 +907,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -942,7 +942,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -977,7 +977,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -1012,7 +1012,7 @@
                         <div class=col-md>
                             <div class=card-content>
                                 <a href=# class=card_img>
-                                    <img data-src="{{ asset('assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
+                                    <img data-src="{{ asset('frontend/assets/images/mezze-grill-restaurant-ocakbasi-600.webp')}}" alt=image
                                         class="imgFluid lazy" loading="lazy">
                                     <div class=price-details>
                                         <div class=price>
@@ -1135,10 +1135,10 @@
 
     @if (!$testimonials->isEmpty())
         <div class=comment>
-            <img data-src="{{ asset('assets/images/comment.webp') }}" alt=image class="peoples-img lazy imgFluid"
-                loading="lazy">
+            <img data-src="{{ asset('frontend/assets/images/comment.webp') }}" alt=image
+                class="peoples-img lazy imgFluid" loading="lazy">
             <div class=ocizgi_imgs>
-                <img data-src="{{ asset('assets/images/ocizgi.webp') }}" alt=image class="ocizgi imgFluid lazy"
+                <img data-src="{{ asset('frontend/assets/images/ocizgi.webp') }}" alt=image class="ocizgi imgFluid lazy"
                     loading="lazy">
             </div>
             <div class=container>
@@ -1248,7 +1248,7 @@
                     </div>
                     <div class=fi4>
                         <div class=fi4-1>Social Media<div class=temiz></div><span class=thin>Follow Me <img alt=""
-                                    class=darrow2 data-src="{{ asset('assets/images/darrow.webp') }}" width=37.19
+                                    class=darrow2 data-src="{{ asset('frontend/assets/images/darrow.webp') }}" width=37.19
                                     height=7.56></span></div>
                         <div class=fi4-2>
                             <ul>

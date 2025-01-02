@@ -4,7 +4,7 @@
             <div class="row g-0">
                 <div class=col-md-6>
                     <div class=newsletter__img>
-                        <img data-src={{ asset('assets/images/newsletter-background.webp') }} alt=image
+                        <img data-src={{ asset('frontend/assets/images/newsletter-background.webp') }} alt=image
                             class="imgFluid lazy" loading="lazy">
                     </div>
                 </div>

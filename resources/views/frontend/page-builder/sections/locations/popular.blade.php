@@ -8,8 +8,8 @@
                 <div class=col-md-3>
                     <div class=popular-related-destinations__content>
                         <div class=popular-related-destinations__img>
-                            <img data-src={{ asset('assets/images/popular1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/popular1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <a href=# class=popular-related-destinations__title>
                             Vietnam
@@ -19,8 +19,8 @@
                 <div class=col-md-3>
                     <div class=popular-related-destinations__content>
                         <div class=popular-related-destinations__img>
-                            <img data-src={{ asset('assets/images/popular1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/popular1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <a href=# class=popular-related-destinations__title>
                             Vietnam
@@ -30,8 +30,8 @@
                 <div class=col-md-3>
                     <div class=popular-related-destinations__content>
                         <div class=popular-related-destinations__img>
-                            <img data-src={{ asset('assets/images/popular1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/popular1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <a href=# class=popular-related-destinations__title>
                             Vietnam
@@ -41,8 +41,8 @@
                 <div class=col-md-3>
                     <div class=popular-related-destinations__content>
                         <div class=popular-related-destinations__img>
-                            <img data-src={{ asset('assets/images/popular1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/popular1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <a href=# class=popular-related-destinations__title>
                             Vietnam

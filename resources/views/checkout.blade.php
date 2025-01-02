@@ -101,7 +101,7 @@
                             <div class="checkout__order-card">
                                 <div class="checkout__order-card__content">
                                     <div class="checkout__order-card__img">
-                                        <img src="{{ asset('assets/images/dubai-palm-helicopter-tour-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/dubai-palm-helicopter-tour-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <div class="checkout__order-card__deatils">
@@ -133,7 +133,7 @@
                             <div class="checkout__order-card">
                                 <div class="checkout__order-card__content">
                                     <div class="checkout__order-card__img">
-                                        <img src="{{ asset('assets/images/dubai-palm-helicopter-tour-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/dubai-palm-helicopter-tour-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <div class="checkout__order-card__deatils">
@@ -170,7 +170,7 @@
                             <div class="checkout__order-card">
                                 <div class="checkout__order-card__content">
                                     <div class="checkout__order-card__img">
-                                        <img src="{{ asset('assets/images/dubai-palm-helicopter-tour-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/dubai-palm-helicopter-tour-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <div class="checkout__order-card__deatils">
@@ -203,7 +203,7 @@
                             <div class="checkout__order-card">
                                 <div class="checkout__order-card__content">
                                     <div class="checkout__order-card__img">
-                                        <img src="{{ asset('assets/images/dubai-palm-helicopter-tour-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/dubai-palm-helicopter-tour-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <div class="checkout__order-card__deatils">

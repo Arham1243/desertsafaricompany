@@ -15,8 +15,8 @@
                         <div class=app-details>
                             <div class=code-details>
                                 <div class=qr-code>
-                                    <img data-src={{ asset('assets/images/qr.webp') }} alt=image class="imgFluid lazy"
-                                        loading="lazy">
+                                    <img data-src={{ asset('frontend/assets/images/qr.webp') }} alt=image
+                                        class="imgFluid lazy" loading="lazy">
                                 </div>
                                 <div class=app-search>
                                     <h3>Send a link to your email</h3>
@@ -30,15 +30,15 @@
                                 <h2 class=link-title>Download App</h2>
                                 <div class=download-wrapper>
                                     <a href=# class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/apple.webp') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/apple.webp') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                     <a href=# class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/gp.webp') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/gp.webp') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                     <a href=# class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/huawei.png') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/huawei.png') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                 </div>
@@ -99,17 +99,17 @@
                                 <div class=download-wrapper>
                                     <a target="_blank" href="{{ sanitizedLink($content->app_store_link) ?? '' }}"
                                         target="_blank" class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/apple.webp') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/apple.webp') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                     <a target="_blank" href="{{ sanitizedLink($content->play_store_link) ?? '' }}"
                                         target="_blank" class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/gp.webp') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/gp.webp') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                     <a target="_blank" href="{{ sanitizedLink($content->huawei_link) ?? '' }}"
                                         class=download-details__btn>
-                                        <img data-src={{ asset('assets/images/huawei.png') }} alt=image
+                                        <img data-src={{ asset('frontend/assets/images/huawei.png') }} alt=image
                                             class="imgFluid lazy" loading="lazy">
                                     </a>
                                 </div>

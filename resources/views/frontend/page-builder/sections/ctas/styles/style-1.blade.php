@@ -2,7 +2,7 @@
         <div class="offers-section section-padding">
             <div class=container>
                 <div class=offers-section__details>
-                    <img data-src={{ asset('assets/images/group_tour_desktop_banner_image.webp') }} alt=image
+                    <img data-src={{ asset('frontend/assets/images/group_tour_desktop_banner_image.webp') }} alt=image
                         class="imgFluid offers-section__img lazy" loading="lazy" height="200">
                     <div class=GroupTourCard_content>
                         <span class=GroupTourCard_title>Bigger Group? Get special offers up to 50% Off!</span>

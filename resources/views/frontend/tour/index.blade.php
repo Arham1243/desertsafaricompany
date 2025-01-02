@@ -39,7 +39,8 @@
 
                     <div class="col-md-4">
                         <div class="header-form__img">
-                            <img src="{{ asset('assets/images/49.webp') }}" alt='image' class='imgFluid' loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/49.webp') }}" alt='image' class='imgFluid'
+                                loading='lazy'>
                         </div>
                     </div>
                 </div>

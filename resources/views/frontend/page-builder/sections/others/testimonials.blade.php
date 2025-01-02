@@ -1,9 +1,10 @@
 @if (!$content)
     <div class=comment>
-        <img data-src={{ asset('assets/images/comment.webp') }} alt=image class="peoples-img lazy imgFluid"
+        <img data-src={{ asset('frontend/assets/images/comment.webp') }} alt=image class="peoples-img lazy imgFluid"
             loading="lazy">
         <div class=ocizgi_imgs>
-            <img data-src={{ asset('assets/images/ocizgi.webp') }} alt=image class="ocizgi imgFluid lazy" loading="lazy">
+            <img data-src={{ asset('frontend/assets/images/ocizgi.webp') }} alt=image class="ocizgi imgFluid lazy"
+                loading="lazy">
         </div>
         <div class=container>
             <div class=section-content>
@@ -16,10 +17,10 @@
                 <div class=col-md-3>
                     <div class=comment-card>
                         <div class="comment-card__img comment-slider">
-                            <img data-src={{ asset('assets/images/comment1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
-                            <img data-src={{ asset('assets/images/comment2.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment2.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <div class=comment-card__content>
                             <div class=comment-details>
@@ -44,10 +45,10 @@
                 <div class=col-md-3>
                     <div class=comment-card>
                         <div class="comment-card__img comment-slider">
-                            <img data-src={{ asset('assets/images/comment2.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
-                            <img data-src={{ asset('assets/images/comment1.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment2.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment1.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <div class=comment-card__content>
                             <div class=comment-details>
@@ -72,10 +73,10 @@
                 <div class=col-md-3>
                     <div class=comment-card>
                         <div class="comment-card__img comment-slider">
-                            <img data-src={{ asset('assets/images/comment3.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
-                            <img data-src={{ asset('assets/images/comment4.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment3.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment4.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <div class=comment-card__content>
                             <div class=comment-details>
@@ -100,10 +101,10 @@
                 <div class=col-md-3>
                     <div class=comment-card>
                         <div class="comment-card__img comment-slider">
-                            <img data-src={{ asset('assets/images/comment4.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
-                            <img data-src={{ asset('assets/images/comment3.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment4.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/comment3.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <div class=comment-card__content>
                             <div class=comment-details>
@@ -130,10 +131,10 @@
     </div>
 @else
     <div class=comment>
-        <img data-src={{ asset('assets/images/comment.webp') }} alt=image class="peoples-img lazy imgFluid"
+        <img data-src={{ asset('frontend/assets/images/comment.webp') }} alt=image class="peoples-img lazy imgFluid"
             loading="lazy">
         <div class=ocizgi_imgs>
-            <img data-src={{ asset('assets/images/ocizgi.webp') }} alt=image class="ocizgi imgFluid lazy"
+            <img data-src={{ asset('frontend/assets/images/ocizgi.webp') }} alt=image class="ocizgi imgFluid lazy"
                 loading="lazy">
         </div>
         <div class=container>

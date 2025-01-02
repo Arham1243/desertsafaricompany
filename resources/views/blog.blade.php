@@ -33,8 +33,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -58,7 +58,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -83,7 +83,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -108,112 +108,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3">
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -243,8 +138,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -268,7 +163,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -293,7 +188,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -318,112 +213,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3">
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -453,8 +243,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -478,7 +268,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -503,7 +293,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -528,112 +318,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3">
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -663,8 +348,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -688,7 +373,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -713,7 +398,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -738,112 +423,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3">
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -873,8 +453,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -898,7 +478,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -923,7 +503,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -948,112 +528,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-
-
-            </div>
-            <div class="row pt-3">
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy'>
-                        </a>
-                        <div class="blog-card__bookMark-icon">
-                            <a href="#">
-                                <i class='bx bx-bookmark'></i>
-                            </a>
-                        </div>
-                        <div class="main-blog__content">
-                            <div class="main-blog__heading">
-                                Burj Al Arab
-                            </div>
-                            <div class="main-blog__title">
-                                Dubai
-                            </div>
-                            <p class="main-blog__pra">
-                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
-                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
-                            </p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -1083,8 +558,8 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/burj-al-arab.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
                             <a href="#">
@@ -1108,7 +583,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -1133,7 +608,7 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -1158,7 +633,532 @@
                 <div class="col-md-3">
                     <div class="main-blog__card">
                         <a href="{{ route('blog-details') }}" class="blog__card-img">
-                            <img src="{{ asset('assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
+                                class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </a>
+                        <div class="blog-card__bookMark-icon">
+                            <a href="#">
+                                <i class='bx bx-bookmark'></i>
+                            </a>
+                        </div>
+                        <div class="main-blog__content">
+                            <div class="main-blog__heading">
+                                Burj Al Arab
+                            </div>
+                            <div class="main-blog__title">
+                                Dubai
+                            </div>
+                            <p class="main-blog__pra">
+                                The Burj Al Arab's graceful silhouette – meant to evoke the sail of a dhow (a traditional
+                                wooden cargo vessel) – is to Dubai what the Eiffel Tower is to…
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="main-blog__card">
+                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                            <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
                         <div class="blog-card__bookMark-icon">
@@ -1204,7 +1204,7 @@
                         <div class="blog-more__dest-content">
                             <div class="blog-more__destinations-img">
                                 <a href="#">
-                                    <img src="{{ asset('assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
+                                    <img src="{{ asset('frontend/assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
                                         alt='image' class='imgFluid' loading='lazy'>
                                 </a>
                             </div>
@@ -1217,7 +1217,7 @@
                         <div class="blog-more__dest-content">
                             <div class="blog-more__destinations-img">
                                 <a href="#">
-                                    <img src="{{ asset('assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
+                                    <img src="{{ asset('frontend/assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
                                         alt='image' class='imgFluid' loading='lazy'>
                                 </a>
                             </div>
@@ -1230,7 +1230,7 @@
                         <div class="blog-more__dest-content">
                             <div class="blog-more__destinations-img">
                                 <a href="#">
-                                    <img src="{{ asset('assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
+                                    <img src="{{ asset('frontend/assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
                                         alt='image' class='imgFluid' loading='lazy'>
                                 </a>
                             </div>
@@ -1243,7 +1243,7 @@
                         <div class="blog-more__dest-content">
                             <div class="blog-more__destinations-img">
                                 <a href="#">
-                                    <img src="{{ asset('assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
+                                    <img src="{{ asset('frontend/assets/images/abudhabi-GettyImages-1281590453-rfc.webp') }}"
                                         alt='image' class='imgFluid' loading='lazy'>
                                 </a>
                             </div>
@@ -1263,7 +1263,7 @@
             <div class="row g-0">
                 <div class="col-md-6">
                     <div class="newsletter-signup__img">
-                        <img src="{{ asset('assets/images/173.webp') }}" alt='image' class='imgFluid'
+                        <img src="{{ asset('frontend/assets/images/173.webp') }}" alt='image' class='imgFluid'
                             loading='lazy'>
                     </div>
 

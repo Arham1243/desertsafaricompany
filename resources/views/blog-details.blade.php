@@ -17,7 +17,73 @@
                     </h2>
                     <div class="post-content">
                         <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Featured-Dubai-Safari-1244x700.webp') }}" alt='image'
+                            <img src="{{ asset('frontend/assets/images/Featured-Dubai-Safari-1244x700.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </div>
+                        <h3 class="post-content__subHeading">
+                            The Allure of Dubai’s Desert
+
+                        </h3>
+                        <div class="post-content__pra">
+                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
+                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
+                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
+                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
+                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
+                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
+
+
+
+                        </div>
+                        <div class="separator"></div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-content__img">
+                            <img src="{{ asset('frontend/assets/images/Dubai-lovers-in-desert-with-camel.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </div>
+                        <h3 class="post-content__subHeading">
+                            The Allure of Dubai’s Desert
+
+                        </h3>
+                        <div class="post-content__pra">
+                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
+                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
+                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
+                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
+                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
+                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
+
+
+
+                        </div>
+                        <div class="separator"></div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-content__img">
+                            <img src="{{ asset('frontend/assets/images/Dubai-lovers-in-desert-at-night.webp') }}"
+                                alt='image' class='imgFluid' loading='lazy'>
+                        </div>
+                        <h3 class="post-content__subHeading">
+                            The Allure of Dubai’s Desert
+
+                        </h3>
+                        <div class="post-content__pra">
+                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
+                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
+                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
+                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
+                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
+                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
+
+
+
+                        </div>
+                        <div class="separator"></div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-content__img">
+                            <img src="{{ asset('frontend/assets/images/Dubai-evening.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </div>
                         <h3 class="post-content__subHeading">
@@ -39,7 +105,7 @@
                     </div>
                     <div class="post-content">
                         <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Dubai-lovers-in-desert-with-camel.webp') }}" alt='image'
+                            <img src="{{ asset('frontend/assets/images/Dubai-desert-sky.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </div>
                         <h3 class="post-content__subHeading">
@@ -61,74 +127,8 @@
                     </div>
                     <div class="post-content">
                         <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Dubai-lovers-in-desert-at-night.webp') }}" alt='image'
+                            <img src="{{ asset('frontend/assets/images/Dubai-Bedouin-tea.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
-                        </div>
-                        <h3 class="post-content__subHeading">
-                            The Allure of Dubai’s Desert
-
-                        </h3>
-                        <div class="post-content__pra">
-                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
-                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
-                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
-                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
-                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
-                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
-
-
-
-                        </div>
-                        <div class="separator"></div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Dubai-evening.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </div>
-                        <h3 class="post-content__subHeading">
-                            The Allure of Dubai’s Desert
-
-                        </h3>
-                        <div class="post-content__pra">
-                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
-                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
-                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
-                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
-                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
-                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
-
-
-
-                        </div>
-                        <div class="separator"></div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Dubai-desert-sky.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
-                        </div>
-                        <h3 class="post-content__subHeading">
-                            The Allure of Dubai’s Desert
-
-                        </h3>
-                        <div class="post-content__pra">
-                            Dubai, known for its towering skyscrapers and luxurious lifestyle, also offers an enchanting
-                            escape into its golden deserts. The allure of the desert with its vast sandy expanses and unique
-                            flora and fauna makes Dubai a premier destination for desert safaris. These adventures range
-                            from exhilarating morning excursions to immersive overnight camping experiences, each promising
-                            a unique blend of thrill and cultural insight. Whether it’s the adrenaline rush of dune bashing
-                            or the serenity of a sunset camel ride, a desert safari in Dubai is a must-do for any traveler.
-
-
-
-                        </div>
-                        <div class="separator"></div>
-                    </div>
-                    <div class="post-content">
-                        <div class="post-content__img">
-                            <img src="{{ asset('assets/images/Dubai-Bedouin-tea.webp') }}" alt='image' class='imgFluid'
-                                loading='lazy'>
                         </div>
                         <h3 class="post-content__subHeading">
                             The Allure of Dubai’s Desert
@@ -154,7 +154,7 @@
                     <div class="availability-frame">
                         <div class="availability-frame__deatils">
                             <div class="availability-frame__img">
-                                <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
+                                <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image' class='imgFluid'
                                     loading='lazy'>
                             </div>
                             <div class="availability-frame__content">
@@ -206,7 +206,7 @@
 
                         <div class="blogDet-card mt-4 mt-4">
                             <div class="blogDet-card__img">
-                                <img src="{{ asset('assets/images/Galata-tower-at-night-in-Istanbul-Turkey-526x320.webp') }}"
+                                <img src="{{ asset('frontend/assets/images/Galata-tower-at-night-in-Istanbul-Turkey-526x320.webp') }}"
                                     alt='image' class='imgFluid' loading='lazy'>
                             </div>
 
@@ -224,25 +224,7 @@
                         </div>
                         <div class="blogDet-card mt-4 mt-4">
                             <div class="blogDet-card__img">
-                                <img src="{{ asset('assets/images/Dongshan-River-Yilan-526x320.webp') }}" alt='image'
-                                    class='imgFluid' loading='lazy'>
-                            </div>
-
-                            <div class="blogDet-card__content">
-                                <a href="#">
-                                    <h5 class="blogDet-card__title">3 Days in Istanbul Itine....</h5>
-                                </a>
-
-
-                                <div class="blogDet-card__pra">
-                                    <p>Explore Istanbul's historic gems....</p>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="blogDet-card mt-4 mt-4">
-                            <div class="blogDet-card__img">
-                                <img src="{{ asset('assets/images/Featured-image-Songdo-Park-and-Songdo-District-at-Incheon-526x320.webp') }}"
+                                <img src="{{ asset('frontend/assets/images/Dongshan-River-Yilan-526x320.webp') }}"
                                     alt='image' class='imgFluid' loading='lazy'>
                             </div>
 
@@ -260,7 +242,7 @@
                         </div>
                         <div class="blogDet-card mt-4 mt-4">
                             <div class="blogDet-card__img">
-                                <img src="{{ asset('assets/images/Featured-image-Dalat-Railway-Station-Dalat-Vietnam-526x320.webp') }}"
+                                <img src="{{ asset('frontend/assets/images/Featured-image-Songdo-Park-and-Songdo-District-at-Incheon-526x320.webp') }}"
                                     alt='image' class='imgFluid' loading='lazy'>
                             </div>
 
@@ -278,7 +260,25 @@
                         </div>
                         <div class="blogDet-card mt-4 mt-4">
                             <div class="blogDet-card__img">
-                                <img src="{{ asset('assets/images/Chatrapati-Shivaji-Mumbai-India-526x320.webp') }}"
+                                <img src="{{ asset('frontend/assets/images/Featured-image-Dalat-Railway-Station-Dalat-Vietnam-526x320.webp') }}"
+                                    alt='image' class='imgFluid' loading='lazy'>
+                            </div>
+
+                            <div class="blogDet-card__content">
+                                <a href="#">
+                                    <h5 class="blogDet-card__title">3 Days in Istanbul Itine....</h5>
+                                </a>
+
+
+                                <div class="blogDet-card__pra">
+                                    <p>Explore Istanbul's historic gems....</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="blogDet-card mt-4 mt-4">
+                            <div class="blogDet-card__img">
+                                <img src="{{ asset('frontend/assets/images/Chatrapati-Shivaji-Mumbai-India-526x320.webp') }}"
                                     alt='image' class='imgFluid' loading='lazy'>
                             </div>
 
@@ -304,7 +304,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <div class="availability-frame__img availability-frame__img-ver">
-                            <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
+                            <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image' class='imgFluid'
                                 loading='lazy'>
                         </div>
                     </div>
@@ -351,7 +351,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <div class="availability-frame__img availability-frame__img-ver">
-                            <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
+                            <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image' class='imgFluid'
                                 loading='lazy'>
                         </div>
                     </div>
@@ -398,7 +398,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <div class="availability-frame__img availability-frame__img-ver">
-                            <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
+                            <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image' class='imgFluid'
                                 loading='lazy'>
                         </div>
                     </div>
@@ -445,7 +445,7 @@
                 <div class="row justify-content-center">
                     <div class="col-md-3">
                         <div class="availability-frame__img availability-frame__img-ver">
-                            <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
+                            <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image' class='imgFluid'
                                 loading='lazy'>
                         </div>
                     </div>

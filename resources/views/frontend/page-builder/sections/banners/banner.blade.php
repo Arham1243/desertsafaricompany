@@ -21,8 +21,8 @@
                 </div>
                 <div class="col-md-5">
                     <div class="banner-img">
-                        <img data-src="{{ asset('assets/images/baloon.webp') }}" alt="image" class="imgFluid lazy"
-                            width="345.89" height="186">
+                        <img data-src="{{ asset('frontend/assets/images/baloon.webp') }}" alt="image"
+                            class="imgFluid lazy" width="345.89" height="186">
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -34,7 +34,7 @@
                 <div class="col-md-12">
                     <div class="banner-rating">
                         <div class="banner-rating__custom">
-                            <img src="{{ asset('assets/images/google.png') }}" alt="Google"
+                            <img src="{{ asset('frontend/assets/images/google.png') }}" alt="Google"
                                 class="banner-rating__platform">
                             <div class="banner-rating__stars">
                                 <i class="banner-rating__star bx bxs-star" style="color:#fec10b"></i>
@@ -72,8 +72,8 @@
                         <div class=dst2>
                             Meet With Carefully Selected Destinations!
                             <div class=darrow>
-                                <img data-src={{ asset('assets/images/darrow.webp') }} alt=image class="imgFluid lazy"
-                                    width=100 height=20.36>
+                                <img data-src={{ asset('frontend/assets/images/darrow.webp') }} alt=image
+                                    class="imgFluid lazy" width=100 height=20.36>
                             </div>
                         </div>
                     </div>
@@ -83,7 +83,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/dubai-600.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/dubai-600.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -95,7 +95,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/belek1.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/belek1.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -107,7 +107,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/antalya-600.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/antalya-600.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -119,7 +119,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/alanya2.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/alanya2.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -131,7 +131,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/side.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/side.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -143,7 +143,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/side.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/side.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>

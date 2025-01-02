@@ -9,7 +9,7 @@
                         <div class="col-md-12">
                             <div class="cart__product">
                                 <div class="cart__productImg">
-                                    <img src="{{ asset('assets/images/Dubai-evening.webp') }}" alt="Product Image"
+                                    <img src="{{ asset('frontend/assets/images/Dubai-evening.webp') }}" alt="Product Image"
                                         loading="lazy">
                                 </div>
                                 <div class="cart__productContent">
@@ -66,8 +66,8 @@
                         <div class="col-md-12">
                             <div class="cart__product">
                                 <div class="cart__productImg">
-                                    <img src="{{ asset('assets/images/Dubai-desert-sky.webp') }}" alt="Product Image"
-                                        loading="lazy">
+                                    <img src="{{ asset('frontend/assets/images/Dubai-desert-sky.webp') }}"
+                                        alt="Product Image" loading="lazy">
                                 </div>
                                 <div class="cart__productContent">
                                     <div>

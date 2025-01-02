@@ -11,8 +11,8 @@
                 <div class=col-md-7>
                     <div class=Desti-Pract__details>
                         <div class=Desti-Pract__img>
-                            <img data-src={{ asset('assets/images/lastest-main.webp') }} alt=image class="imgFluid lazy"
-                                loading="lazy">
+                            <img data-src={{ asset('frontend/assets/images/lastest-main.webp') }} alt=image
+                                class="imgFluid lazy" loading="lazy">
                         </div>
                         <div class=Desti-Pract__content>
                             <div class="sub-title">Destination Practicalities</div>
@@ -28,8 +28,8 @@
                     <div class=Desti-Pract__activities>
                         <div class=activities-details>
                             <div class=activities-img>
-                                <img data-src={{ asset('assets/images/GettyImages-1392454769.webp') }} alt=image
-                                    class="imgFluid lazy" loading="lazy">
+                                <img data-src={{ asset('frontend/assets/images/GettyImages-1392454769.webp') }}
+                                    alt=image class="imgFluid lazy" loading="lazy">
                             </div>
                             <div class=activities-content>
                                 <p><b>Hiking</b></p>
@@ -41,8 +41,8 @@
                     <div class=Desti-Pract__activities>
                         <div class=activities-details>
                             <div class=activities-img>
-                                <img data-src={{ asset('assets/images/GettyImages-1392454769.webp') }} alt=image
-                                    class="imgFluid lazy" loading="lazy">
+                                <img data-src={{ asset('frontend/assets/images/GettyImages-1392454769.webp') }}
+                                    alt=image class="imgFluid lazy" loading="lazy">
                             </div>
                             <div class=activities-content>
                                 <p><b>Hiking</b></p>
@@ -54,8 +54,8 @@
                     <div class=Desti-Pract__activities>
                         <div class=activities-details>
                             <div class=activities-img>
-                                <img data-src={{ asset('assets/images/GettyImages-1392454769.webp') }} alt=image
-                                    class="imgFluid lazy" loading="lazy">
+                                <img data-src={{ asset('frontend/assets/images/GettyImages-1392454769.webp') }}
+                                    alt=image class="imgFluid lazy" loading="lazy">
                             </div>
                             <div class=activities-content>
                                 <p><b>Hiking</b></p>

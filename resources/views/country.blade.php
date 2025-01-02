@@ -51,8 +51,8 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/173.webp') }}" alt='image' class='imgFluid'
-                                            loading='lazy'>
+                                        <img src="{{ asset('frontend/assets/images/173.webp') }}" alt='image'
+                                            class='imgFluid' loading='lazy'>
                                     </div>
 
                                     <a href="javascript:void(0)" class="country-card__details">
@@ -82,7 +82,7 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/sky-dive-600.webp') }}" alt='image'
+                                        <img src="{{ asset('frontend/assets/images/sky-dive-600.webp') }}" alt='image'
                                             class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
@@ -100,8 +100,8 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
-                                            loading='lazy'>
+                                        <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image'
+                                            class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
                                         <div class="country-card__title">
@@ -115,8 +115,8 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/173.webp') }}" alt='image' class='imgFluid'
-                                            loading='lazy'>
+                                        <img src="{{ asset('frontend/assets/images/173.webp') }}" alt='image'
+                                            class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
                                         <div class="country-card__title">
@@ -130,8 +130,8 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/156.webp') }}" alt='image' class='imgFluid'
-                                            loading='lazy'>
+                                        <img src="{{ asset('frontend/assets/images/156.webp') }}" alt='image'
+                                            class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
                                         <div class="country-card__title">
@@ -148,7 +148,7 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/elite-restaurant-alanya-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/elite-restaurant-alanya-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
@@ -163,8 +163,8 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/49.webp') }}" alt='image' class='imgFluid'
-                                            loading='lazy'>
+                                        <img src="{{ asset('frontend/assets/images/49.webp') }}" alt='image'
+                                            class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
                                         <div class="country-card__title">
@@ -178,7 +178,7 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src="{{ asset('assets/images/dubai-palm-helicopter-tour-600.webp') }}"
+                                        <img src="{{ asset('frontend/assets/images/dubai-palm-helicopter-tour-600.webp') }}"
                                             alt='image' class='imgFluid' loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">
@@ -208,7 +208,7 @@
                             Advertisement
                         </div>
                         <div class="country-Advertisement__img">
-                            <img src="{{ asset('assets/images/15761105775232956155.png') }}" alt='image'
+                            <img src="{{ asset('frontend/assets/images/15761105775232956155.png') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </div>
                     </div>
@@ -223,7 +223,7 @@
                 Advertisement
             </div>
             <div class="country-Advertisement2__img">
-                <img src="{{ asset('assets/images/3510117500144793346.png') }}" alt='image' class='imgFluid'
+                <img src="{{ asset('frontend/assets/images/3510117500144793346.png') }}" alt='image' class='imgFluid'
                     loading='lazy'>
             </div>
         </div>

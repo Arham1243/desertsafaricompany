@@ -8,8 +8,8 @@
                         <div class=dst2>
                             Meet With Carefully Selected Destinations!
                             <div class=darrow>
-                                <img data-src={{ asset('assets/images/darrow.webp') }} alt=image class="imgFluid lazy"
-                                    width=100 height=20.36>
+                                <img data-src={{ asset('frontend/assets/images/darrow.webp') }} alt=image
+                                    class="imgFluid lazy" width=100 height=20.36>
                             </div>
                         </div>
                     </div>
@@ -19,7 +19,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/dubai-600.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/dubai-600.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -31,7 +31,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/belek1.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/belek1.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -43,7 +43,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/antalya-600.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/antalya-600.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -55,7 +55,7 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/alanya2.webp') }} alt=image
+                                    <img data-src={{ asset('frontend/assets/images/alanya2.webp') }} alt=image
                                         class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
@@ -67,7 +67,8 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/side.webp') }} alt=image class="imgFluid lazy">
+                                    <img data-src={{ asset('frontend/assets/images/side.webp') }} alt=image
+                                        class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
                                     manavgat
@@ -78,7 +79,8 @@
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>
-                                    <img data-src={{ asset('assets/images/side.webp') }} alt=image class="imgFluid lazy">
+                                    <img data-src={{ asset('frontend/assets/images/side.webp') }} alt=image
+                                        class="imgFluid lazy">
                                 </div>
                                 <div class=dst-location>
                                     manavgat
@@ -123,8 +125,8 @@
                                     style="color: {{ isset($content->destination_subtitle->text_color[1]) ? $content->destination_subtitle->text_color[1] : '' }};">
                                     {{ $content->destination_subtitle->title[1] }}
                                     <div class="darrow">
-                                        <img data-src="{{ asset('assets/images/darrow.webp') }}" alt="image"
-                                            class="imgFluid lazy" width="100" height="20.36">
+                                        <img data-src="{{ asset('frontend/assets/images/darrow.webp') }}"
+                                            alt="image" class="imgFluid lazy" width="100" height="20.36">
                                     </div>
                                 </div>
                             @endif

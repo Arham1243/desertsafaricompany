@@ -20,7 +20,7 @@
                                 Ambient music system for atmosphere.<br>
                                 warm cozy bone fire will put charm in the environment.</p>
                             <div class=more-offers__img
-                                style="background:url('{{ asset('assets/images/private-arabic-desert-camp.webp') }}')">
+                                style="background:url('{{ asset('frontend/assets/images/private-arabic-desert-camp.webp') }}')">
                             </div>
                         </div>
                     </div>
@@ -34,7 +34,7 @@
                                 Relish the live BBQ feasts<br>
                                 Seating setup for 2 - 50 People.</p>
                             <div class=more-offers__img
-                                style="background:url('{{ asset('assets/images/beach-party.webp') }}')"></div>
+                                style="background:url('{{ asset('frontend/assets/images/beach-party.webp') }}')"></div>
                         </div>
                     </div>
                 </div>
@@ -47,7 +47,8 @@
                                 Relish the live BBQ feasts<br>
                                 Seating setup for 2 - 50 People.</p>
                             <div class=more-offers__img
-                                style="background:url('{{ asset('assets/images/private-dinner.webp') }}')"></div>
+                                style="background:url('{{ asset('frontend/assets/images/private-dinner.webp') }}')">
+                            </div>
                         </div>
                     </div>
                 </div>

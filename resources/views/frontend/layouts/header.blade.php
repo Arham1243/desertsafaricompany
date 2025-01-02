@@ -8,14 +8,14 @@
         <div class="loginSignup-popup__buttons">
             <a href="{{ route('auth.socialite', ['social' => 'google']) }}" class="loginSignup-popup__icons">
                 <div class="loginSignup-popup__img">
-                    <img src="{{ asset('assets/images/google-removebg-preview.webp') }}" alt='image' class='imgFluid'
-                        loading='lazy' width="27" height="27">
+                    <img src="{{ asset('frontend/assets/images/google-removebg-preview.webp') }}" alt='image'
+                        class='imgFluid' loading='lazy' width="27" height="27">
                 </div>
             </a>
 
             <a href="{{ route('auth.socialite', ['social' => 'facebook']) }}" class="loginSignup-popup__icons">
                 <div class="loginSignup-popup__img">
-                    <img src="{{ asset('assets/images/scale_1200-removebg-preview.webp') }}" alt='image'
+                    <img src="{{ asset('frontend/assets/images/scale_1200-removebg-preview.webp') }}" alt='image'
                         class='imgFluid' loading='lazy' width="27" height="27">
                 </div>
             </a href="#">
@@ -220,7 +220,7 @@
 <div class="sideBar" id="sideBar">
     <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()">×</a>
     <a href="{{ route('index') }}" class="sideBar__logo">
-        <img alt="Logo" class="imgFluid" src="{{ asset('assets/images/logo (1).webp') }}">
+        <img alt="Logo" class="imgFluid" src="{{ asset('frontend/assets/images/logo (1).webp') }}">
     </a>
     <ul class="sideBar__nav">
         <li><a href="{{ route('tours.index') }}">Tours</a></li>

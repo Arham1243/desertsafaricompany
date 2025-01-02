@@ -35,7 +35,7 @@
                                     style="color: {{ isset($content->destination_subtitle->text_color[1]) ? $content->destination_subtitle->text_color[1] : '' }};">
                                     {{ $content->destination_subtitle->title[1] }}
                                     <div class="darrow">
-                                        <img data-src="{{ asset('assets/images/darrow.webp') }}" alt="image"
+                                        <img data-src="{{ asset('frontend/assets/images/darrow.webp') }}" alt="image"
                                             class="imgFluid lazy" width="100" height="20.36">
                                     </div>
                                 </div>

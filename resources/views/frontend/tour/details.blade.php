@@ -754,7 +754,7 @@
                                 @foreach ($reviews as $review)
                                     <div class="reviews-single">
                                         <div class="reviews-single__img">
-                                            <img src="{{ $review->user && $review->user->avatar ? $review->user->avatar : asset('assets/images/avatar.png') }}"
+                                            <img src="{{ $review->user && $review->user->avatar ? $review->user->avatar : asset('frontend/assets/images/avatar.png') }}"
                                                 class="imgFluid">
                                         </div>
                                         <div class="reviews-single__info">

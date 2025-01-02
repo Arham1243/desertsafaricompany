@@ -50,18 +50,26 @@
                 <div class=payment-section id=payment-section>
                     <label class=footer-details>Ways You Can Pay</label>
                     <div class=payment-images>
-                        <div><img alt=Paypal src={{ asset('assets/images/paypal_border.webp') }} class=imgFluid></div>
-                        <div><img alt=Mastercard src={{ asset('assets/images/mastercard.webp') }} class=imgFluid></div>
-                        <div><img alt=Visa src={{ asset('assets/images/visa.webp') }} class=imgFluid></div>
-                        <div><img alt=Maestro src={{ asset('assets/images/maestro.webp') }} class=imgFluid></div>
-                        <div><img alt="American Express" src={{ asset('assets/images/amex.webp') }}></div>
-                        <div><img alt=Jcb src={{ asset('assets/images/jcb.webp') }} class=imgFluid></div>
-                        <div><img alt=Discover src={{ asset('assets/images/discover.webp') }} class=imgFluid></div>
-                        <div><img alt=Sofort src={{ asset('assets/images/sofort.webp') }} class=imgFluid></div>
-                        <div><img alt=Klarna src={{ asset('assets/images/klarna.webp') }} class=imgFluid></div>
-                        <div><img alt="Google Pay" src={{ asset('assets/images/googlepay.webp') }} class=imgFluid></div>
-                        <div><img alt="Apple Pay" src={{ asset('assets/images/applepay.webp') }} class=imgFluid></div>
-                        <div><img alt=Bancontact src={{ asset('assets/images/bancontact.webp') }} class=imgFluid></div>
+                        <div><img alt=Paypal src={{ asset('frontend/assets/images/paypal_border.webp') }}
+                                class=imgFluid></div>
+                        <div><img alt=Mastercard src={{ asset('frontend/assets/images/mastercard.webp') }}
+                                class=imgFluid></div>
+                        <div><img alt=Visa src={{ asset('frontend/assets/images/visa.webp') }} class=imgFluid></div>
+                        <div><img alt=Maestro src={{ asset('frontend/assets/images/maestro.webp') }} class=imgFluid>
+                        </div>
+                        <div><img alt="American Express" src={{ asset('frontend/assets/images/amex.webp') }}></div>
+                        <div><img alt=Jcb src={{ asset('frontend/assets/images/jcb.webp') }} class=imgFluid></div>
+                        <div><img alt=Discover src={{ asset('frontend/assets/images/discover.webp') }} class=imgFluid>
+                        </div>
+                        <div><img alt=Sofort src={{ asset('frontend/assets/images/sofort.webp') }} class=imgFluid></div>
+                        <div><img alt=Klarna src={{ asset('frontend/assets/images/klarna.webp') }} class=imgFluid>
+                        </div>
+                        <div><img alt="Google Pay" src={{ asset('frontend/assets/images/googlepay.webp') }}
+                                class=imgFluid></div>
+                        <div><img alt="Apple Pay" src={{ asset('frontend/assets/images/applepay.webp') }}
+                                class=imgFluid></div>
+                        <div><img alt=Bancontact src={{ asset('frontend/assets/images/bancontact.webp') }}
+                                class=imgFluid></div>
                     </div>
                 </div>
             </div>

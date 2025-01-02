@@ -33,7 +33,8 @@
                         </div>
                         <div class="sm-text">
                             Follow Us <span class=thin><img alt="" class="darrow2 imgFluid lazy"
-                                    data-src={{ asset('assets/images/darrow.webp') }} width=37.19 height=7.56></span>
+                                    data-src={{ asset('frontend/assets/images/darrow.webp') }} width=37.19
+                                    height=7.56></span>
                         </div>
                     </div>
                     <ul class="icons">
@@ -91,7 +92,8 @@
                         </div>
                         <div class="sm-text">
                             Follow Us <span class=thin><img alt="" class="darrow2 imgFluid lazy"
-                                    data-src={{ asset('assets/images/darrow.webp') }} width=37.19 height=7.56></span>
+                                    data-src={{ asset('frontend/assets/images/darrow.webp') }} width=37.19
+                                    height=7.56></span>
                         </div>
                     </div>
                     <ul class="icons">
