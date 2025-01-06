@@ -211,27 +211,27 @@
                 ],
             ],
         ],
-        [
-            'title' => 'Testimonials',
-            'icon' => 'bx bxs-chat',
-            'submenu' => [
-                [
-                    'title' => 'Testimonials',
-                    'icon' => 'bx bx-list-ul',
-                    'route' => route('admin.testimonials.index'),
-                ],
-                [
-                    'title' => 'Add Testimonial',
-                    'icon' => 'bx bx-plus',
-                    'route' => route('admin.testimonials.create'),
-                ],
-                [
-                    'title' => 'Recovery',
-                    'icon' => 'bx bx-refresh',
-                    'route' => route('admin.recovery.index', ['resource' => 'testimonials']),
-                ],
-            ],
-        ],
+        // [
+        //     'title' => 'Testimonials',
+        //     'icon' => 'bx bxs-chat',
+        //     'submenu' => [
+        //         [
+        //             'title' => 'Testimonials',
+        //             'icon' => 'bx bx-list-ul',
+        //             'route' => route('admin.testimonials.index'),
+        //         ],
+        //         [
+        //             'title' => 'Add Testimonial',
+        //             'icon' => 'bx bx-plus',
+        //             'route' => route('admin.testimonials.create'),
+        //         ],
+        //         [
+        //             'title' => 'Recovery',
+        //             'icon' => 'bx bx-refresh',
+        //             'route' => route('admin.recovery.index', ['resource' => 'testimonials']),
+        //         ],
+        //     ],
+        // ],
         [
             'title' => 'Popup',
             'icon' => 'bx bx-message-square',

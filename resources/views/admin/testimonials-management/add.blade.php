@@ -16,59 +16,16 @@
                 <div class="row">
                     <div class="col-md-9">
                         <div class="form-wrapper">
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Testimonial Content</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Title <span class="text-danger">*</span> :</label>
-                                        <input type="text" name="title" class="field" value="{{ old('title') }}"
-                                            placeholder="" data-error="Title">
-                                        @error('title')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-12">
                                     <div class="form-fields">
                                         <label class="title">Content <span class="text-danger">*</span> :</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
-                                            {{ old('content') }}
+                                            {!! old('content', $item->content) !!}
                                         </textarea>
                                         @error('content')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Rating <span class="text-danger">*</span> :</label>
-                                        <div class="rating">
-                                            @for ($i = 5; $i >= 1; $i--)
-                                                <input type="radio" id="star-{{ $i }}" name="rating"
-                                                    value="{{ $i }}" />
-                                                <label for="star-{{ $i }}"
-                                                    title="Rating {{ $i }}"></label>
-                                            @endfor
-                                        </div>
-
-                                        @error('rating')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields mt-3">
-                                        <div class="multiple-upload" data-upload-multiple>
-                                            <input type="file" class="gallery-input d-none" multiple
-                                                data-upload-multiple-input accept="image/*" id="banners" name="gallery[]">
-                                            <label class="multiple-upload__btn themeBtn" for="banners">
-                                                <i class='bx bx-plus'></i>
-                                                Other images
-                                            </label>
-                                            <div class="dimensions mt-3">
-                                                <strong>Dimensions:</strong> 265 &times; 155
-                                            </div>
-                                            <ul class="multiple-upload__imgs" data-upload-multiple-images>
-                                            </ul>
-                                            <div class="text-danger error-message d-none" data-upload-multiple-error>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
