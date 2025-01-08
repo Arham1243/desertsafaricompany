@@ -7,35 +7,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ isset($title) ? $title . ' | ' . env('APP_NAME') : env('APP_NAME') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @include('admin.dash_layouts.links')
+    @include('admin.layouts.links')
     @yield('css')
     @stack('css')
 </head>
 
 <body class="responsive">
     <input type="hidden" id="web_base_url" value="{{ url('/') }}" />
-    <div class="dashboard">
-        <div class="container-fluid p-0">
-            <div class="row g-0">
-                <div class="col-md-2">
-                    @include('admin.dash_layouts.sidebar')
-                </div>
-                <div class="col-md-10">
-                    <div class="row g-0">
-                        <div class="col-12">
-                            @include('admin.dash_layouts.header')
+    @if (!isset($is_login))
+        <div class="dashboard">
+            <div class="container-fluid p-0">
+                <div class="row g-0">
+                    <div class="col-md-2">
+                        @include('admin.layouts.sidebar')
+                    </div>
+                    <div class="col-md-10">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                @include('admin.layouts.header')
+                            </div>
+                            @yield('content')
                         </div>
-                        @yield('content')
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        @yield('content')
+    @endif
     <div class="loader-mask" id="loader">
         <div class="loader"></div>
     </div>
 
-    @include('admin.dash_layouts.scripts')
+    @include('admin.layouts.scripts')
     @yield('js')
     @stack('js')
     <script type="text/javascript">

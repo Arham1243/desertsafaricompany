@@ -3,19 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AdminLoginController extends Controller
 {
-    public function __construct()
-    {
-        $logo = Imagetable::where('table_name', 'logo')->latest()->first();
-        View()->share('logo', $logo);
-    }
-
-    //------------------------- Authentication -------------------------
     public function login()
     {
         $adminGuard = Auth::guard('admin');
@@ -29,22 +21,18 @@ class AdminLoginController extends Controller
 
     public function performLogin(Request $request)
     {
-        // Validate the request input
         $validated = $request->validate([
-            'email' => 'nullable|email',
-            'password' => 'nullable',
+            'email' => 'required|email',
+            'password' => 'required|min:8',
         ]);
 
-        // Attempt to authenticate the user
         if (Auth::guard('admin')->attempt([
             'email' => $validated['email'],
             'password' => $validated['password'],
         ])) {
-            // Authentication passed
             return redirect()->intended('admin/dashboard')->with('notify_success', 'You are logged in as Admin');
         } else {
-            // Authentication failed
-            return redirect()->back()->withInput($request->input())->with('notify_error', 'Invalid Credentials');
+            return redirect()->back()->withErrors(['email' => 'Invalid Credentials'])->withInput($request->input())->with('notify_error', 'Invalid Credentials');
         }
     }
 
@@ -52,8 +40,6 @@ class AdminLoginController extends Controller
     {
         Auth::guard('admin')->logout();
 
-        return redirect()->route('admin.login')->with('notify_success', 'Logged Out!');
+        return redirect()->route('frontend.index')->with('notify_success', 'Logged Out!');
     }
-    //------------------------- Authentication -------------------------
-
 }

@@ -1,4 +1,4 @@
-@extends('admin.dash_layouts.main')
+@extends('admin.layouts.main')
 @section('content')
     @php
         $sectionContent = json_decode($category->section_content);
