@@ -45,12 +45,13 @@
                 </div>
             </div>
         </div>
-    @endsection
-    @push('js')
-        <script>
-            document.querySelector('.login-content__form').addEventListener('submit', function() {
-                document.querySelector('.themeBtn').disabled = true;
-                document.querySelector('.btn-loader').classList.remove('d-none');
-            });
-        </script>
-    @endpush
+    </div>
+@endsection
+@push('js')
+    <script>
+        document.querySelector('.login-content__form').addEventListener('submit', function() {
+            document.querySelector('.themeBtn').disabled = true;
+            document.querySelector('.btn-loader').classList.remove('d-none');
+        });
+    </script>
+@endpush
