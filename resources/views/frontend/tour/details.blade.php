@@ -132,7 +132,7 @@
         </div>
     @endif
 
-    <div class="tour-details_banner2 mt-2 tour-details_banner2-slider">
+    <div class="tour-details_banner2 mt-2 one-items-slider">
         @foreach ($tour->media as $media)
             <div class=tour-details_banner2--img>
                 <img src={{ asset($media->file_path ?? 'assets/images/placeholder.png') }}

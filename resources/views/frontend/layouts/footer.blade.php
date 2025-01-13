@@ -79,7 +79,7 @@
         <div class=container>
             <div class=footer-2__content>
                 <div class=footer-logo>
-                    <a href=index.php> <img src="{{ asset($logo->img_path ?? 'assets/images/logo (1).webp') }}"
+                    <a href=index.php> <img src="{{ asset($logo->img_path ?? 'frontend/assets/images/logo (1).webp') }}"
                             alt=image class=imgFluid width=112.03 height=33.69></a>
                 </div>
                 <!--<div class=header-btns>-->

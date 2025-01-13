@@ -15,7 +15,7 @@
                     </div>
                 </div>
                 <div class=col-md-8>
-                    <div class="row destinations-slider">
+                    <div class="row five-items-slider">
                         <div class=col-md>
                             <div class=dst-card>
                                 <div class=destinations-img>

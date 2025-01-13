@@ -6,7 +6,7 @@
                     Latest travel promotions
                 </h2>
             </div>
-            <div class="row pt-3 promotions-slider">
+            <div class="row pt-3 three-items-slider">
                 <div class=col-md-4>
                     <div class=card-event-item>
                         <div class=card-event-item__img>

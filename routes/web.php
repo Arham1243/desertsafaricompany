@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Auth\PasswordResetController;
 use App\Http\Controllers\Auth\SocialiteController;
 use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
@@ -56,14 +57,19 @@ Route::prefix('tours')->name('tours.')->group(function () {
 });
 
 // ---------------------------------------User Actions---------------------------------------
-Route::post('/check-account', [AuthController::class, 'check_account'])->name('auth.check_account');
-Route::post('/perfrom-auth', [AuthController::class, 'perfrom_auth'])->name('auth.perfrom-auth');
-Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
-Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
+Route::prefix('auth')->name('auth.')->group(function () {
+    Route::post('/check-email', [AuthController::class, 'checkEmail'])->name('check-email');
+    Route::post('/perfrom-auth', [AuthController::class, 'performAuth'])->name('perform-auth');
+    Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->name('verify-email');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
 Route::get('/notify', [AuthController::class, 'notify'])->name('notify');
-Route::post('/send-reset-password-link', [AuthController::class, 'send_reset_password_link'])->name('send_reset_password_link');
-Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset_password');
-Route::post('/reset-password', [AuthController::class, 'set_new_password'])->name('set_new_password');
+
+Route::post('/password/email', [PasswordResetController::class, 'sendResetLink'])->name('password.email');
+Route::get('/password/reset', [PasswordResetController::class, 'showResetForm'])->name('password.reset');
+Route::post('/password/reset', [PasswordResetController::class, 'resetPassword'])->name('password.update');
+
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
 // ---------------------------------------User Actions---------------------------------------
 

@@ -4,16 +4,13 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <div class="banner-content text-center">
-                        <div class="banner-heading">
-                            <h1>
-                                <span class="bannerMain-title">{{ $title }}</span>
-                            </h1>
-                            <p>
-                                {!! $desc !!}
-                            </p>
-
-                        </div>
+                    <div class="section-content text-center">
+                        <h1 class="subHeading">
+                            {{ $title }}
+                        </h1>
+                        <p style="font-size:1rem ">
+                            {!! $desc !!}
+                        </p>
                     </div>
                 </div>
             </div>

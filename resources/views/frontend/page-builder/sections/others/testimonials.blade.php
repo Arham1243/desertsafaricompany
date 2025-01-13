@@ -16,7 +16,7 @@
             <div class="row pt-3">
                 <div class=col-md-3>
                     <div class=comment-card>
-                        <div class="comment-card__img comment-slider">
+                        <div class="comment-card__img one-items-slider">
                             <img data-src={{ asset('frontend/assets/images/comment1.webp') }} alt=image
                                 class="imgFluid lazy" loading="lazy">
                             <img data-src={{ asset('frontend/assets/images/comment2.webp') }} alt=image
@@ -44,7 +44,7 @@
                 </div>
                 <div class=col-md-3>
                     <div class=comment-card>
-                        <div class="comment-card__img comment-slider">
+                        <div class="comment-card__img one-items-slider">
                             <img data-src={{ asset('frontend/assets/images/comment2.webp') }} alt=image
                                 class="imgFluid lazy" loading="lazy">
                             <img data-src={{ asset('frontend/assets/images/comment1.webp') }} alt=image
@@ -72,7 +72,7 @@
                 </div>
                 <div class=col-md-3>
                     <div class=comment-card>
-                        <div class="comment-card__img comment-slider">
+                        <div class="comment-card__img one-items-slider">
                             <img data-src={{ asset('frontend/assets/images/comment3.webp') }} alt=image
                                 class="imgFluid lazy" loading="lazy">
                             <img data-src={{ asset('frontend/assets/images/comment4.webp') }} alt=image
@@ -100,7 +100,7 @@
                 </div>
                 <div class=col-md-3>
                     <div class=comment-card>
-                        <div class="comment-card__img comment-slider">
+                        <div class="comment-card__img one-items-slider">
                             <img data-src={{ asset('frontend/assets/images/comment4.webp') }} alt=image
                                 class="imgFluid lazy" loading="lazy">
                             <img data-src={{ asset('frontend/assets/images/comment3.webp') }} alt=image
@@ -154,7 +154,7 @@
                     @foreach ($testimonials as $testimonial)
                         <div class=col-md-3>
                             <div class=comment-card>
-                                <div class="comment-card__img comment-slider">
+                                <div class="comment-card__img one-items-slider">
                                     <img data-src="{{ asset($testimonial->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                         alt="{{ $testimonial->featured_image_alt_text }}" class="imgFluid lazy"
                                         loading="lazy">

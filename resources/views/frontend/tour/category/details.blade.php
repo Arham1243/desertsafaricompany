@@ -370,7 +370,7 @@
                     @foreach ($featuredReviews as $testimonial)
                         <div class=col-md-3>
                             <div class=comment-card>
-                                <div class="comment-card__img comment-slider">
+                                <div class="comment-card__img one-items-slider">
                                     <img data-src="{{ asset($testimonial->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                         alt="{{ $testimonial->featured_image_alt_text }}" class="imgFluid lazy"
                                         loading="lazy">

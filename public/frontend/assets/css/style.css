@@ -1413,7 +1413,7 @@ a.service-wishlis i {
     position: fixed;
     right: 2rem;
     bottom: 3.25rem;
-    z-index: 100000000;
+    z-index: 100;
     animation: goUp 5s infinite linear;
     padding: 0.55rem 1.5rem;
     gap: 10px;
@@ -3876,14 +3876,6 @@ a h5.blogDet-card__title:hover {
 .login-wrapper.open {
     opacity: 1;
     visibility: visible;
-}
-
-.signUpStep {
-    display: none;
-}
-
-.signUpStep.show {
-    display: block;
 }
 
 .loginSignup-popup h3 {
