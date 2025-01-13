@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\Category;
 use App\Models\City;
-use App\Models\Country;
 use App\Models\ImageTable;
 use App\Models\Newsletter;
-use App\Models\Promotion;
-use App\Models\Section;
-use App\Models\Testimonial;
-use App\Models\Tour;
+use App\Models\Page;
 use App\Models\TourReview;
-use App\Models\TourStory;
 use App\Traits\Sluggable;
 use Illuminate\Http\Request;
 
@@ -50,50 +44,29 @@ class IndexController extends Controller
 
     public function index()
     {
-        $tours = Tour::where('status', 'publish')->with('reviews', 'cities', 'categories')->latest()->get()->sortByDesc('average_rating');
+        $query = Page::where('slug', 'homepage');
 
-        $waterActivityCategory = Category::where('name', 'Water Activities')
-            ->where('is_active', 1)
-            ->first();
-
-        if ($waterActivityCategory) {
-            $categoryId = $waterActivityCategory->id;
-
-            $waterActivityTours = Tour::whereHas('categories', function ($query) use ($categoryId) {
-                $query->where('category_id', $categoryId);
-            })->where('status', 'publish')
-                ->with('cities', 'categories', 'tour_attributes')
-                ->latest()
-                ->get()->sortByDesc('average_rating');
-        } else {
-
-            $waterActivityTours = collect();
+        if (request()->query('viewer') !== 'admin') {
+            $query->where('status', 'publish');
+        }
+        $page = $query->firstOrFail();
+        $sections = $page->sections()->withPivot('content')->orderBy('pivot_order')->get();
+        $bannerSection = $sections->filter(function ($item) {
+            return $item['section_key'] === 'banner';
+        })->first();
+        $bannerContent = $bannerSection ? json_decode($bannerSection->pivot->content) : null;
+        $reviewDetails = null;
+        if ($bannerContent && isset($bannerContent->is_review_enabled) && $bannerContent->review_type !== 'custom') {
+            $fetchReviewController = new FetchReviewController;
+            $request = app('request');
+            $reviewContent = $fetchReviewController->fetchReview($request, $type = $bannerContent->review_type);
+            if ($reviewContent) {
+                $reviewDetails = $reviewContent->getData(true);
+            }
         }
 
-        $cities = City::where('status', 'publish')
-            ->withCount('tours')
-            ->orderBy('tours_count', 'desc')
-            ->latest()
-            ->get();
+        return view('frontend.page-builder.page', compact('page', 'sections', 'reviewDetails'));
 
-        $countries = Country::where('status', 'publish')
-            ->latest()
-            ->get();
-
-        $testimonials = Testimonial::where('is_active', 1)->with('images')->latest()->get();
-        $stories = TourStory::where('is_active', 1)->where('show_on_homepage', 1)->with('city')->latest()->get();
-        $promotions = Promotion::where('is_active', 1)->latest()->get();
-        $sections = Section::where('is_active', 1)->latest()->get();
-        $data = compact('stories', 'cities', 'promotions', 'tours', 'waterActivityTours', 'countries', 'testimonials', 'sections');
-
-        return view('index')->with('title', 'Home')->with($data);
-    }
-
-    public function storyDetails($slug)
-    {
-        $story = TourStory::where('slug', $slug)->with('city')->first();
-
-        return view('story-details')->with('title', $story->title)->with(compact('story'));
     }
 
     public function cart()
@@ -104,20 +77,6 @@ class IndexController extends Controller
     public function checkout()
     {
         return view('checkout')->with('title', 'Checkout');
-    }
-
-    public function country()
-    {
-        return view('country')->with('title', 'Country');
-    }
-
-    public function country_details($slug)
-    {
-        $country = Country::where('slug', $slug)->with('continent', 'cities')->first();
-        $tours = $country->tours()->with('tour_attributes', 'reviews')->get()->sortByDesc('average_rating');
-        $data = compact('country', 'tours');
-
-        return view('country-details')->with('title', $country->name)->with($data);
     }
 
     public function make_slug()

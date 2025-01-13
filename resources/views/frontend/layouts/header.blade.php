@@ -18,12 +18,7 @@
                     <img src="{{ asset('frontend/assets/images/scale_1200-removebg-preview.webp') }}" alt='image'
                         class='imgFluid' loading='lazy' width="27" height="27">
                 </div>
-            </a href="#">
-            <a href="#" class="loginSignup-popup__icons">
-                <div class="loginSignup-popup__img">
-                    <i class='bx bxl-apple'></i>
-                </div>
-            </a href="#">
+            </a>
         </div>
         <form id="checkEmailForm">
             <div class="loginSignup-popup__email">

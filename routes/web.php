@@ -1,7 +1,7 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Auth\SocialiteController;
-use App\Http\Controllers\Auth\UserController;
 use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\Locations\CityController;
@@ -56,14 +56,14 @@ Route::prefix('tours')->name('tours.')->group(function () {
 });
 
 // ---------------------------------------User Actions---------------------------------------
-Route::post('/check-account', [UserController::class, 'check_account'])->name('auth.check_account');
-Route::post('/perfrom-auth', [UserController::class, 'perfrom_auth'])->name('auth.perfrom-auth');
-Route::get('/logout', [UserController::class, 'logout'])->name('auth.logout');
-Route::get('/email/verify/{token}', [UserController::class, 'verifyEmail'])->name('verify.email');
-Route::get('/notify', [UserController::class, 'notify'])->name('notify');
-Route::post('/send-reset-password-link', [UserController::class, 'send_reset_password_link'])->name('send_reset_password_link');
-Route::get('/reset-password', [UserController::class, 'reset_password'])->name('reset_password');
-Route::post('/reset-password', [UserController::class, 'set_new_password'])->name('set_new_password');
+Route::post('/check-account', [AuthController::class, 'check_account'])->name('auth.check_account');
+Route::post('/perfrom-auth', [AuthController::class, 'perfrom_auth'])->name('auth.perfrom-auth');
+Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('/email/verify/{token}', [AuthController::class, 'verifyEmail'])->name('verify.email');
+Route::get('/notify', [AuthController::class, 'notify'])->name('notify');
+Route::post('/send-reset-password-link', [AuthController::class, 'send_reset_password_link'])->name('send_reset_password_link');
+Route::get('/reset-password', [AuthController::class, 'reset_password'])->name('reset_password');
+Route::post('/reset-password', [AuthController::class, 'set_new_password'])->name('set_new_password');
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
 // ---------------------------------------User Actions---------------------------------------
 

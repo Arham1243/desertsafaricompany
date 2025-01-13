@@ -35,13 +35,13 @@
             $review_image = null;
             if ($content->review_type === 'google') {
                 $review_link = $content->review_google_link ?? 'javascript:void(0);';
-                $review_image = 'assets/images/google.png';
+                $review_image = 'frontend/assets/images/google.png';
             } elseif ($content->review_type === 'trustpilot') {
                 $review_link = $content->review_trustpilot_link ?? 'javascript:void(0);';
-                $review_image = 'assets/images/trustpilot.png';
+                $review_image = 'frontend/assets/images/trustpilot.png';
             } elseif ($content->review_type === 'tripadvisor') {
                 $review_link = $content->review_tripadvisor_link ?? 'javascript:void(0);';
-                $review_image = 'assets/images/tripadvisor.png';
+                $review_image = 'frontend/assets/images/tripadvisor.png';
             }
         @endphp
         <div class="col-md-12">

@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
     public function perfrom_auth(Request $request)
     {

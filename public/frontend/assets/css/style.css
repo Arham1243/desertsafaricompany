@@ -3924,6 +3924,7 @@ a h5.blogDet-card__title:hover {
     background: #fff;
     border-radius: 21px;
     padding: 5px 45px;
+    width: 47%;
 }
 
 .loginSignup-popup__email {
@@ -5682,6 +5683,19 @@ a.country-card__details {
 }
 
 /* banner date search */
+.date-search .select2-container {
+    top: 100% !important;
+    left: 0 !important;
+    width: 100% !important;
+}
+
+.date-search .select2-results__option {
+    line-height: 1;
+}
+
+.date-search span.select2-dropdown {
+    width: 100% !important;
+}
 .date-search {
     width: 90%;
     margin: 0 0 0.5rem;
@@ -5820,6 +5834,8 @@ a.country-card__details {
 }
 span.select2-dropdown.select2-dropdown--below {
     border: 1px solid #dee2e6 !important;
+    width: 100% !important;!i;!;
+    background: #ededed;
 }
 
 .select2-container--default .select2-search--dropdown .select2-search__field {
@@ -5863,7 +5879,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .highlighted {
-    background-color: #ff901c;
+    background-color: #ff901c96;
     font-weight: 600;
     color: #000;
 }
@@ -5894,7 +5910,8 @@ span.select2-dropdown.select2-dropdown--below {
 }
 .date-search__btn span.select2.select2-container.select2-container--default {
     position: relative;
-    top: 4px !important;
+    top: -4px !important;
+    height: 10px;
 }
 
 .date-search__btn input.select2-search__field {
