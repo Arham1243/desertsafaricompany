@@ -65,7 +65,6 @@ Route::post('/send-reset-password-link', [UserController::class, 'send_reset_pas
 Route::get('/reset-password', [UserController::class, 'reset_password'])->name('reset_password');
 Route::post('/reset-password', [UserController::class, 'set_new_password'])->name('set_new_password');
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
-
 // ---------------------------------------User Actions---------------------------------------
 
 // ---------------------------------------Socialite Login---------------------------------------

@@ -261,6 +261,6 @@ class UserController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('index')->with('notify_success', 'Logged Out!');
+        return redirect()->back()->with('notify_success', 'Logged Out!');
     }
 }
