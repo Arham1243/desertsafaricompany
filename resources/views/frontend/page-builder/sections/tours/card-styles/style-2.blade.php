@@ -16,8 +16,9 @@
                 </a>
                 <div class=tour-activity-card__details>
                     <div class=vertical-activity-card__header>
-                        <div><span> From {{ formatPrice($tour->regular_price) }}
-                            </span></div>
+                        <div><span>
+                                {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
+                        </div>
                         <div class="tour-activity-card__details--title">
                             {{ $tour->title }}
                         </div>
@@ -27,10 +28,12 @@
                             <i class="bx bxs-star"></i>
                             <span>5.0 1 Rating</span>
                         </div>
-                        <div data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}"
+                        <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
                             class=card-location>
                             <i class="bx bx-location-plus"></i>
-                            {{ $tour->cities[0]->name }}
+                            @if ($tour->cities->isNotEmpty())
+                                {{ $tour->cities[0]->name }}
+                            @endif
                         </div>
                     </div>
                 </div>

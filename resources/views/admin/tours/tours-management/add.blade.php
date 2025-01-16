@@ -1096,17 +1096,20 @@
                                                                                     <input type="text"
                                                                                         name="tour[pricing][promo][promo_title][]"
                                                                                         class="field"
-                                                                                        placeholder="E.g., For One Adult"
+                                                                                        placeholder="E.g., Adult"
                                                                                         data-error="Package Title">
                                                                                 </td>
-                                                                                <td style="width: 35%">
+                                                                                <td style="width: 35%"
+                                                                                    calculate-promo-price>
                                                                                     <div>
                                                                                         <input
                                                                                             name="tour[pricing][promo][original_price][]"
                                                                                             type="number" class="field"
                                                                                             placeholder="Original Price"
                                                                                             step="0.01" min="0"
-                                                                                            data-error="Original Price">
+                                                                                            data-error="Original Price"
+                                                                                            oninput="calculatePromoPrice()"
+                                                                                            og-promo-price>
                                                                                     </div>
                                                                                     <div class="mt-2">
                                                                                         <input
@@ -1114,7 +1117,9 @@
                                                                                             type="number" class="field"
                                                                                             placeholder="Discounted Price"
                                                                                             step="0.01" min="0"
-                                                                                            data-error="Discount Price">
+                                                                                            data-error="Discount Price"
+                                                                                            oninput="calculatePromoPrice()"
+                                                                                            discounted-promo-price>
                                                                                     </div>
                                                                                     <div class="mt-2">
                                                                                         <input
@@ -1122,7 +1127,8 @@
                                                                                             type="number" class="field"
                                                                                             placeholder="Promo Price"
                                                                                             step="0.01" min="0"
-                                                                                            data-error="Promo Price">
+                                                                                            data-error="Promo Price"
+                                                                                            readonly promo-price>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>

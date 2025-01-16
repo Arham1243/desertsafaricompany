@@ -79,6 +79,18 @@ class Tour extends Model
         return $this->hasMany(TourPricing::class)->where('price_type', 'promo');
     }
 
+    public function getFormatedPriceTypeAttribute()
+    {
+        $types = [
+            'normal' => 'Group Pricing',
+            'private' => 'Private Tour',
+            'water' => 'Water Adventure',
+            'promo' => 'Promo Tour',
+        ];
+
+        return $types[$this->price_type] ?? null;
+    }
+
     public function seo()
     {
         return $this->morphOne(Seo::class, 'seoable');

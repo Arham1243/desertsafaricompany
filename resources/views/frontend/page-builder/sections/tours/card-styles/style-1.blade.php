@@ -9,8 +9,8 @@
                     <div class=price-details>
                         <div class=price>
                             <span>
-                                <b>{{ formatPrice($tour->regular_price) }}</b>
-                                From
+
+                                <b>{{ $tour->Formated_price_type ?? formatPrice($tour->regular_price) . ' From' }}</b>
                             </span>
                         </div>
                         <div class=heart-icon>
@@ -23,9 +23,11 @@
                 <div class=card-details>
                     <a href=# data-tooltip="tooltip" class=card-title title="{{ $tour->title }}">{{ $tour->title }}</a>
                     @if ($tour->cities->isNotEmpty())
-                        <div data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}"
+                        <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
                             class=location-details><i class="bx bx-location-plus"></i>
-                            {{ $tour->cities[0]->name }}
+                            @if ($tour->cities->isNotEmpty())
+                                {{ $tour->cities[0]->name }}
+                            @endif
                         </div>
                     @endif
                     <div class=card-rating>

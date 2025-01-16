@@ -198,10 +198,12 @@
                                         <i class="bx bxs-star"></i>
                                         <span>5.0 1 Rating</span>
                                     </div>
-                                    <div data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}"
+                                    <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
                                         class=card-location>
                                         <i class="bx bx-location-plus"></i>
-                                        {{ $tour->cities[0]->name }}
+                                        @if ($tour->cities->isNotEmpty())
+                                            {{ $tour->cities[0]->name }}
+                                        @endif
                                     </div>
                                 </div>
                             </div>

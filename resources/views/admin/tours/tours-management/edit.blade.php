@@ -1471,10 +1471,11 @@
                                                                                             name="tour[pricing][promo][promo_title][]"
                                                                                             class="field"
                                                                                             value="{{ $promoTourPrice['promo_title'] }}"
-                                                                                            placeholder="E.g., For One Adult"
+                                                                                            placeholder="E.g., Adult"
                                                                                             data-error="Package Title">
                                                                                     </td>
-                                                                                    <td style="width: 35%">
+                                                                                    <td style="width: 35%"
+                                                                                        calculate-promo-price>
                                                                                         <div>
                                                                                             <input
                                                                                                 name="tour[pricing][promo][original_price][]"
@@ -1484,7 +1485,9 @@
                                                                                                 value="{{ $promoTourPrice['original_price'] }}"
                                                                                                 step="0.01"
                                                                                                 min="0"
-                                                                                                data-error="Original Price">
+                                                                                                data-error="Original Price"
+                                                                                                oninput="calculatePromoPrice()"
+                                                                                                og-promo-price>
                                                                                         </div>
                                                                                         <div class="mt-2">
                                                                                             <input
@@ -1495,7 +1498,9 @@
                                                                                                 value="{{ $promoTourPrice['discount_price'] }}"
                                                                                                 step="0.01"
                                                                                                 min="0"
-                                                                                                data-error="Discount Price">
+                                                                                                data-error="Discount Price"
+                                                                                                oninput="calculatePromoPrice()"
+                                                                                                discounted-promo-price>
                                                                                         </div>
                                                                                         <div class="mt-2">
                                                                                             <input
@@ -1506,7 +1511,8 @@
                                                                                                 value="{{ $promoTourPrice['promo_price'] }}"
                                                                                                 step="0.01"
                                                                                                 min="0"
-                                                                                                data-error="Promo Price">
+                                                                                                data-error="Promo Price"
+                                                                                                readonly promo-price>
                                                                                         </div>
                                                                                     </td>
                                                                                     <td>

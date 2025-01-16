@@ -19,21 +19,25 @@
                 </a>
                 <div class="tour-activity-card__details normal-card__details">
                     <div class="vertical-activity-card__header">
-                        <div class="normal-card__location" data-tooltip="tooltip"
-                            title="{{ $tour->cities->pluck('name')->implode(', ') }}">
-                            <i class="bx bxs-paper-plane"></i>{{ $tour->cities[0]->name }}
-                        </div>
+                        @if ($tour->cities->isNotEmpty())
+                            <div class="normal-card__location" data-tooltip="tooltip"
+                                title="{{ $tour->cities->pluck('name')->implode(', ') }}">
+                                <i class="bx bxs-paper-plane"></i>{{ $tour->cities[0]->name }}
+                            </div>
+                        @endif
                         <div class="tour-activity-card__details--title"> {{ $tour->title }}</div>
                     </div>
                     <div class="tour-listing__info normal-card__info">
-                        <div class="duration">
-                            <i class="bx bx-stopwatch"></i>
-                            5H
-                        </div>
+                        @if (json_decode($tour->features) && json_decode($tour->features)[0]->title && json_decode($tour->features)[0]->icon)
+                            <div class="duration">
+                                <i class="{{ json_decode($tour->features)[0]->icon }}"></i>
+                                {{ json_decode($tour->features)[0]->title }}
+                            </div>
+                        @endif
                         <div class="baseline-pricing__value baseline-pricing__value--high">
                             <p class="baseline-pricing__from">
-                                <span class="baseline-pricing__from--value">From
-                                    {{ formatPrice($tour->regular_price) }}</span>
+                                <span class="baseline-pricing__from--value">
+                                    {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
                             </p>
                         </div>
                     </div>

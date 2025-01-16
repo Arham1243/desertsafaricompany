@@ -47,7 +47,9 @@
                                     <a href=# class=card-title>{{ $tour->title }}</a>
                                     @if (!$tour->cities->isEmpty())
                                         <div class=location-details><i class="bx bx-location-plus"></i>
-                                            {{ $tour->cities[0]->name }}
+                                            @if ($tour->cities->isNotEmpty())
+                                                {{ $tour->cities[0]->name }}
+                                            @endif
                                         </div>
                                     @endif
                                     <div class=card-rating>

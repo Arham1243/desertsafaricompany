@@ -765,3 +765,12 @@ function initializeFeatures() {
             syncToEditable(field);
         });
 }
+
+function calculatePromoPrice() {
+    $("[calculate-promo-price]").each(function() {
+        const originalPrice = parseFloat($(this).find("[og-promo-price]").val());
+        const discount = parseFloat($(this).find("[discounted-promo-price]").val());
+        const promoPrice = Math.max(0, originalPrice - discount);
+        $(this).find("[promo-price]").val(promoPrice.toFixed(2));
+    });
+}

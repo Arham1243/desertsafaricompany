@@ -293,6 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
         updateDeleteButtonState(container);
         updateIndices(container);
         initializeSubRepeater(newItem);
+        calculatePromoPrice()
     }
 
     function removeItem(button) {

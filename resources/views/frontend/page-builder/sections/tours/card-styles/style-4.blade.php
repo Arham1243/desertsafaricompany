@@ -11,11 +11,13 @@
                         TOP 1
                     </div>
                     <div class="price-details">
-                        <div class="price-location" data-tooltip="tooltip"
-                            title="{{ $tour->cities->pluck('name')->implode(', ') }}">
-                            <i class="bx bxs-location-plus"></i>
-                            {{ $tour->cities[0]->name }}
-                        </div>
+                        @if ($tour->cities->isNotEmpty())
+                            <div class="price-location" data-tooltip="tooltip"
+                                title="{{ $tour->cities->pluck('name')->implode(', ') }}">
+                                <i class="bx bxs-location-plus"></i>
+                                {{ $tour->cities[0]->name }}
+                            </div>
+                        @endif
                         <div class="heart-icon">
                             <div class="service-wishlis">
                                 <i class="bx bx-heart"></i>
@@ -38,7 +40,8 @@
                             </span>
                         </div>
                     </div>
-                    <div class="top10-trending-products__price">From {{ formatPrice($tour->regular_price) }}
+                    <div class="top10-trending-products__price">
+                        {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}
                     </div>
                 </div>
             </div>
