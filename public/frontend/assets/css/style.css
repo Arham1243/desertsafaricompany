@@ -3247,12 +3247,6 @@ span.tour-content__title.ml-1 {
     position: sticky;
     top: 0;
 }
-
-.tour-content_book_priceHeader {
-    border: 1px solid #e4e4e4 !important;
-    padding: 1rem 0 1rem 1rem;
-}
-
 .nav-enquiry {
     align-items: center;
     justify-content: center;
@@ -3281,7 +3275,7 @@ span.tour-content__title.ml-1 {
 }
 
 .form-book_content {
-    padding: 1.5rem 0 0.25rem;
+    padding: 0  0 0.25rem;
 }
 
 .form-group.form-guest-search {
@@ -5354,7 +5348,7 @@ a.country-card__details {
 }
 
 .form-book_details {
-    padding: 0 1.5rem;
+    padding: 3rem 1.5rem 0.5rem;
 }
 
 /* Reviews */

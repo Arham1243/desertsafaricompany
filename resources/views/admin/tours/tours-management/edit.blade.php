@@ -1581,21 +1581,21 @@
                                                                             <tr>
                                                                                 <th scope="col">Name</th>
                                                                                 <th scope="col">Price</th>
-                                                                                <th scope="col">Type</th>
+                                                                                {{-- <th scope="col">Type</th> --}}
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
                                                                         @php
-                                                                            $tourExtraPrices = !$tour->extraPrices->isEmpty()
-                                                                                ? $tour->extraPrices
+                                                                            // Check if the data is already decoded
+                                                                            $tourExtraPrices = $tour->extra_prices
+                                                                                ? json_decode($tour->extra_prices)
                                                                                 : [
                                                                                     [
                                                                                         'name' => '',
                                                                                         'price' => '',
-                                                                                        'type' => '',
-                                                                                        'is_per_person' => '',
                                                                                     ],
                                                                                 ];
+
                                                                         @endphp
                                                                         <tbody data-repeater-list>
                                                                             @foreach ($tourExtraPrices as $i => $extraPrice)
@@ -1604,31 +1604,31 @@
                                                                                         <input type="text"
                                                                                             name="tour[pricing][extra_price][{{ $i }}][name]"
                                                                                             class="field"
-                                                                                            value="{{ $extraPrice['name'] }}"
+                                                                                            value="{{ $extraPrice->name }}"
                                                                                             placeholder="Extra Price Name">
                                                                                     </td>
                                                                                     <td>
                                                                                         <input type="number"
                                                                                             step="0.01" min="0"
-                                                                                            value="{{ $extraPrice['price'] }}"
+                                                                                            value="{{ $extraPrice->price }}"
                                                                                             name="tour[pricing][extra_price][{{ $i }}][price]"
                                                                                             class="field">
                                                                                     </td>
-                                                                                    <td>
+                                                                                    {{-- <td>
                                                                                         <select class="field"
                                                                                             name="tour[pricing][extra_price][{{ $i }}][type]">
                                                                                             <option value=""
                                                                                                 selected>Select</option>
                                                                                             <option
-                                                                                                {{ $extraPrice['type'] == 'one-time' ? 'selected' : '' }}
+                                                                                                {{ $extraPrice->type == 'one-time' ? 'selected' : '' }}
                                                                                                 value="one-time">One-time
                                                                                             </option>
                                                                                             <option
-                                                                                                {{ $extraPrice['type'] == 'per-hour' ? 'selected' : '' }}
+                                                                                                {{ $extraPrice->type == 'per-hour' ? 'selected' : '' }}
                                                                                                 value="per-hour">Per Hour
                                                                                             </option>
                                                                                             <option
-                                                                                                {{ $extraPrice['type'] == 'per-day' ? 'selected' : '' }}
+                                                                                                {{ $extraPrice->type == 'per-day' ? 'selected' : '' }}
                                                                                                 value="per-day">Per Day
                                                                                             </option>
                                                                                         </select>
@@ -1638,7 +1638,7 @@
                                                                                                 id="is_per_person_{{ $i }}"
                                                                                                 class="form-check-input"
                                                                                                 type="checkbox"
-                                                                                                {{ $extraPrice['is_per_person'] == '1' ? 'checked' : '' }}
+                                                                                                {{ $extraPrice->is_per_person == '1' ? 'checked' : '' }}
                                                                                                 name="tour[pricing][extra_price][{{ $i }}][is_per_person]"
                                                                                                 value="1">
                                                                                             <label
@@ -1646,7 +1646,7 @@
                                                                                                 class="form-check-label">Price
                                                                                                 per person</label>
                                                                                         </div>
-                                                                                    </td>
+                                                                                    </td> --}}
                                                                                     <td>
                                                                                         <button type="button"
                                                                                             class="delete-btn ms-auto delete-btn--static"

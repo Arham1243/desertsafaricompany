@@ -1193,7 +1193,7 @@
                                                                             <tr>
                                                                                 <th scope="col">Name</th>
                                                                                 <th scope="col">Price</th>
-                                                                                <th scope="col">Type</th>
+                                                                                {{-- <th scope="col">Type</th> --}}
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
@@ -1211,7 +1211,7 @@
                                                                                         name="tour[pricing][extra_price][0][price]"
                                                                                         class="field">
                                                                                 </td>
-                                                                                <td>
+                                                                                {{-- <td>
                                                                                     <select class="field"
                                                                                         name="tour[pricing][extra_price][0][type]">
                                                                                         <option value="" selected>
@@ -1234,7 +1234,7 @@
                                                                                             class="form-check-label">Price
                                                                                             per person</label>
                                                                                     </div>
-                                                                                </td>
+                                                                                </td> --}}
                                                                                 <td>
                                                                                     <button type="button"
                                                                                         class="delete-btn ms-auto delete-btn--static"

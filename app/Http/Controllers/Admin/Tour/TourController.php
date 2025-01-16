@@ -8,7 +8,6 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
 use App\Models\TourDetail;
-use App\Models\TourExtraPrice;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
 use App\Models\TourOpenHour;
@@ -78,6 +77,7 @@ class TourController extends Controller
             : null;
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
+        $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -112,6 +112,7 @@ class TourController extends Controller
             'is_person_type_enabled' => $pricing['is_person_type_enabled'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
+            'extra_prices' => $extraPrices ?? null,
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
             'service_fee_price' => $pricing['service_fee_price'] ?? null,
             'show_phone' => $pricing['show_phone'] ?? 0,
@@ -191,20 +192,6 @@ class TourController extends Controller
                     'amount' => $amount,
                     'type' => $type,
                 ]);
-            }
-        }
-
-        if (isset($pricing['extra_price'])) {
-            foreach ($pricing['extra_price'] as $extraPriceData) {
-                if (isset($extraPriceData['name'], $extraPriceData['price'], $extraPriceData['type'])) {
-                    TourExtraPrice::create([
-                        'tour_id' => $tour->id,
-                        'name' => $extraPriceData['name'],
-                        'price' => $extraPriceData['price'],
-                        'type' => $extraPriceData['type'],
-                        'is_per_person' => $extraPriceData['is_per_person'] ?? 0,
-                    ]);
-                }
             }
         }
 
@@ -358,6 +345,7 @@ class TourController extends Controller
             : null;
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
+        $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
 
         $tour->update([
             'title' => $general['title'] ?? null,
@@ -392,6 +380,7 @@ class TourController extends Controller
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
+            'extra_prices' => $extraPrices ?? null,
             'service_fee_price' => $pricing['service_fee_price'] ?? null,
             'show_phone' => $pricing['show_phone'] ?? 0,
             'phone_country_code' => $pricing['phone_country_code'] ?? null,
@@ -477,22 +466,6 @@ class TourController extends Controller
                     'amount' => $amount,
                     'type' => $type,
                 ]);
-            }
-        }
-
-        // Handle extra prices
-        if (isset($pricing['extra_price'])) {
-            $tour->extraPrices()->delete();
-            foreach ($pricing['extra_price'] as $extraPriceData) {
-                if (isset($extraPriceData['name'], $extraPriceData['price'], $extraPriceData['type'])) {
-                    TourExtraPrice::create([
-                        'tour_id' => $tour->id,
-                        'name' => $extraPriceData['name'],
-                        'price' => $extraPriceData['price'],
-                        'type' => $extraPriceData['type'],
-                        'is_per_person' => $extraPriceData['is_per_person'] ?? 0,
-                    ]);
-                }
             }
         }
 

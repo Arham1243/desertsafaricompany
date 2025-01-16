@@ -857,28 +857,8 @@
                 <div class=col-md-3>
                     <div class=tour-content_book_wrap>
                         <div class=tour-content_book_app>
-                            <div class=tour-content_book_priceHeader>
-                                <div class=sale-box>
-                                    <div class="ribbon ribbon--red">SAVE 66%</div>
-                                </div>
-                                @if ($tour->price_type == 'per_person')
-                                    <div class=tour-content_book_pricing>
-
-                                        <b class="tour-content_book__realPrice ml-1">
-                                            {{ $tour->for_adult_price }} Per Person
-                                        </b>
-                                    </div>
-                                @elseif($tour->price_type == 'per_car')
-                                    <div class=tour-content_book_pricing>
-                                        <b class="tour-content_book__realPrice ml-1">
-                                            {{ $tour->for_car_price }} Per Car
-                                        </b>
-                                    </div>
-                                @endif
-                            </div>
-                            <div class=nav-enquiry>
-                                <div class="enquiry-item active"><span>Book</span></div>
-                                <div class=enquiry-item><a href=#><span>Enquiry</span></a></div>
+                            <div class=sale-box>
+                                <div class="ribbon ribbon--red">SAVE 66%</div>
                             </div>
                             <div class=form-book>
                                 <form class=form-book_details>
