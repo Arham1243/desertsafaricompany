@@ -5,7 +5,7 @@
                 style="--review-color: {{ $content->review_text_color ?? '#333333a1' }};" class="banner-rating"
                 target="_blank">
                 <div class="banner-rating__custom">
-                    <img src="{{ asset($content->custom_review_logo_image ?? 'assets/images/placeholder.png') }}"
+                    <img src="{{ asset($content->custom_review_logo_image ?? 'frontend/assets/images/placeholder.png') }}"
                         alt="{{ $content->custom_review_logo_alt_text ?? 'Review Logo' }}"
                         class="banner-rating__platform">
                     <div class="banner-rating__stars">

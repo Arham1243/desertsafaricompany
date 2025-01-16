@@ -67,7 +67,7 @@
                             <div class="col-md-4">
                                 <div class="country-card_content">
                                     <div class="country-card__img">
-                                        <img src='assets/images/132 (2).webp' alt='image' class='imgFluid'
+                                        <img src='frontend/assets/images/132 (2).webp' alt='image' class='imgFluid'
                                             loading='lazy'>
                                     </div>
                                     <a href="javascript:void(0)" class="country-card__details">

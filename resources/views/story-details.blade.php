@@ -5,7 +5,7 @@
             <div class="stories-content">
                 <!-- Display the story image -->
                 <div class="stories-content__img">
-                    <img src="{{ asset($story->img_path ?? 'assets/images/placeholder.png') }}" alt="Image"
+                    <img src="{{ asset($story->img_path ?? 'frontend/assets/images/placeholder.png') }}" alt="Image"
                         class="imgFluid">
                 </div>
 

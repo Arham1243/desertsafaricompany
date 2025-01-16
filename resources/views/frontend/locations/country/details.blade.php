@@ -8,7 +8,7 @@
     <div class="location-banner1">
         <div class="container-Fluid">
             <div class="location-banner1__img">
-                <img data-src="{{ asset($item->banner_image ?? 'assets/images/placeholder.png') }}"
+                <img data-src="{{ asset($item->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
                     alt='{{ $item->banner_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
             </div>
         </div>
@@ -231,7 +231,7 @@
                             <div class="blog-more__dest-content">
                                 <div class="location1-beyond__img">
                                     <a href="{{ route('city.details', $city->slug) }}">
-                                        <img data-src="{{ asset($city->featured_image ?? 'assets/images/placeholder.png') }}"
+                                        <img data-src="{{ asset($city->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
                                             alt='{{ $city->featured_image_alt_text }}' class='imgFluid lazy'
                                             loading='lazy'>
                                     </a>
