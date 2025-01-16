@@ -59,6 +59,22 @@ class Tour extends Model
         return $this->hasMany(TourPricing::class);
     }
 
+    public function getTotalServiceFeeAttribute()
+    {
+        return $this->enabled_custom_service_fee === 1 ? $this->service_fee_price : 0;
+    }
+
+    public function getTotalExtraPricesAttribute()
+    {
+        if ($this->is_extra_price_enabled === 1 && $this->extra_prices) {
+            $extraPrices = json_decode($this->extra_prices, true);
+
+            return collect($extraPrices)->sum('price');
+        }
+
+        return 0;
+    }
+
     public function privatePrices()
     {
         return $this->hasOne(TourPricing::class)->where('price_type', 'private');

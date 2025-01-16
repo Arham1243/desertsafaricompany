@@ -1931,7 +1931,7 @@ img.ocizgi.imgFluid {
     flex: 0.15;
 }
 
-.app-btn:hover {
+.app-btn:not([disabled]):hover {
     background: #064282;
     color: #fff;
 }
@@ -2330,6 +2330,7 @@ input.form-book__date {
 
 .baseline-pricing__value.baseline-pricing__value--low {
     color: green;
+    text-decoration: line-through !important;
 }
 
 .tour-activity__RL {
@@ -2736,14 +2737,13 @@ h2.more-offers-title {
 
 .tour-content__header {
     display: flex;
-    /* align-items: center; */
     justify-content: space-between;
     margin-bottom: 25px;
 }
 
 /* .tour-content */
 .tour-content {
-    padding: 5rem 0 2rem;
+    padding: 5rem 0 3rem;
 }
 
 .headerReviews--icon ul li i {
@@ -2914,8 +2914,7 @@ ul.tour-content__pra li {
     font-weight: 500;
     margin-bottom: 20px;
     margin-top: 20px;
-    line-height: 1.7;
-    font-size: 15px;
+    font-size: 13px;
 }
 
 .tour-content__title {
@@ -3175,7 +3174,7 @@ span.timeline-item__icon {
 .tour-content_book_pricing {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 3px;
     /* padding: .5rem 1.5rem; */
     font-size: 16px;
     font-weight: 500;
@@ -3192,7 +3191,7 @@ span.tour-content__title.ml-1 {
 }
 
 .tour-content_book__realPrice {
-    font-size: 1.25rem;
+    font-size: 1rem;
 }
 
 .ribbon {
@@ -3234,6 +3233,8 @@ span.tour-content__title.ml-1 {
     position: relative;
     width: 100%;
     border: 1px solid #e4e4e4 !important;
+    padding: 3rem 1.5rem 1rem;
+    margin-bottom: 1.25rem;
 }
 
 .sale-box {
@@ -3271,7 +3272,7 @@ span.tour-content__title.ml-1 {
 
 .form-book__title {
     margin: 0;
-    padding-bottom: 12px;
+    padding-bottom: 8px;
 }
 
 .form-book_content {
@@ -3279,13 +3280,13 @@ span.tour-content__title.ml-1 {
 }
 
 .form-group.form-guest-search {
-    padding: 1.5rem 0 0.75rem;
+    padding: 1.5rem 0 0;
     padding-top: 0;
 }
 
 .form-guest-search__details {
     border-bottom: 2px solid #e4e4e4;
-    padding-bottom: 12px;
+    padding: 10px 0;
 }
 
 .form-guest-search__title .info-circle {
@@ -3299,6 +3300,8 @@ span.tour-content__title.ml-1 {
     font-size: 15px;
     font-weight: 700;
     color: #000;
+    text-transform: capitalize;
+    line-height: 1.7;
 }
 
 .form-guest-search__items {
@@ -3327,18 +3330,26 @@ label.form-guest-search__item-clean input {
 .form-guest-search__smallTitle {
     font-size: 13px;
     font-weight: 600;
+    text-transform: initial;
 }
 
 .form-guest-search__item-clean {
-    font-size: 15px;
+    font-size: 13px;
     font-weight: 500;
 }
 
 .Service-fee__content {
     display: flex;
     align-items: center;
+    margin: 1rem 0;
+}
+.form-group.form-guest-search.extra-price-block {
+    margin-top: 0.75rem;
 }
 
+.form-group.form-guest-search.extra-price-block .form-guest-search__details {
+    padding: 6px 0;
+}
 .form-guest__btn {
     margin-top: 13px;
 }
@@ -3347,16 +3358,9 @@ label.form-guest-search__item-clean input {
     width: 100%;
 }
 
-.Why-Book-Us {
-    border: 1px solid #e4e4e4 !important;
-    margin: 1rem 0;
-    padding: 1.5rem;
-}
-
 .Why-Book-Us__content {
     display: flex;
     align-items: center;
-    /* justify-content: center; */
     gap: 7px;
 }
 
@@ -5348,7 +5352,6 @@ a.country-card__details {
 }
 
 .form-book_details {
-    padding: 3rem 1.5rem 0.5rem;
 }
 
 /* Reviews */
@@ -5820,7 +5823,7 @@ a.country-card__details {
 }
 span.select2-dropdown.select2-dropdown--below {
     border: 1px solid #dee2e6 !important;
-    width: 100% !important;!i;!;
+    width: 100% !important;
     background: #ededed;
 }
 

@@ -151,8 +151,6 @@ quantityWrappers.forEach((counter) => {
             ++quantity;
             quantityField.value = quantity;
         });
-    } else {
-        console.error("Maintain HTML Structure for quantity counter");
     }
 });
 

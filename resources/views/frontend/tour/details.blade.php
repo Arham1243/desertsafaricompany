@@ -184,14 +184,14 @@
                                     </div>
                                 </div>
                                 <div class=tour-content__headerLocation--details>
-                                    <span class=pipeDivider></span>
                                     @if ($tour->badge_icon_class && $tour->badge_name)
+                                        <span class=pipeDivider></span>
                                         <div class="badge-of-excellence">
                                             <i class="{{ $tour->badge_icon_class }}"></i>
                                             {{ $tour->badge_name }}
                                         </div>
                                     @endif
-                                    @if ($tour->cities)
+                                    @if ($tour->cities->isNotEmpty())
                                         <div class=location-headerLocation--details>
                                             <span class=pipeDivider></span>
                                             @foreach ($tour->cities as $i => $city)
@@ -228,58 +228,64 @@
                         <div class=tour-content__moreDetail>
                             <ul class=tour-content__moreDetail--content>
                                 @foreach (json_decode($tour->features) as $feature)
-                                    <li>
-                                        <i class="{{ $feature->icon }}"></i>
-                                        <div>{{ $feature->title }}</div>
-                                    </li>
+                                    @if ($feature->icon && $feature->title)
+                                        <li>
+                                            <i class="{{ $feature->icon }}"></i>
+                                            <div>{{ $feature->title }}</div>
+                                        </li>
+                                    @endif
                                 @endforeach
                             </ul>
                         </div>
                     @endif
+                    @if (json_decode($tour->inclusions) && $tour->exclusions && $tour->content)
+                        <div class=tour-content__line></div>
+                        <div class=tour-content__description>
+                            @if ($tour->content)
+                                <div class=tour-content__details>
+                                    <div class=tour-content__SubTitle>
+                                        Description
+                                    </div>
+                                    <div class="tour-content__pra editor-content">
+                                        {!! $tour->content !!}
+                                    </div>
+                                </div>
+                            @endif
+                            <div class=row>
+                                @if (json_decode($tour->inclusions))
+                                    <div class="col-md-6 mb-4">
+                                        <div class="tour-content__title mb-3">Price Includes</div>
+                                        @foreach (json_decode($tour->inclusions) as $inclusion)
+                                            <div class=Price-Includes__content>
+                                                <div class="tour-content__pra-icon check-icon">
+                                                    <i class="bx bx-check mr-3"></i>
+                                                </div>
+                                                <div class=tour-content__pra>
+                                                    {{ $inclusion }}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                                @if (json_decode($tour->exclusions))
+                                    <div class="col-md-6 mb-4">
+                                        <div class="tour-content__title mb-3">Price Excludes</div>
+                                        @foreach (json_decode($tour->exclusions) as $exclusion)
+                                            <div class=Price-Includes__content>
+                                                <div class="tour-content__pra-icon x-icon">
+                                                    <i class="bx bx-x mr-3"></i>
+                                                </div>
+                                                <div class=tour-content__pra>
+                                                    {{ $exclusion }}
+                                                </div>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
 
-                    <div class=tour-content__line></div>
-                    <div class=tour-content__description>
-                        <div class=tour-content__details>
-                            <div class=tour-content__SubTitle>
-                                Description
-                            </div>
-                            <div class="tour-content__pra editor-content">
-                                {!! $tour->content !!}
-                            </div>
-                        </div>
-                        <div class=row>
-                            @if (json_decode($tour->inclusions))
-                                <div class="col-md-6 mb-4">
-                                    <div class="tour-content__title mb-3">Price Includes</div>
-                                    @foreach (json_decode($tour->inclusions) as $inclusion)
-                                        <div class=Price-Includes__content>
-                                            <div class="tour-content__pra-icon check-icon">
-                                                <i class="bx bx-check mr-3"></i>
-                                            </div>
-                                            <div class=tour-content__pra>
-                                                {{ $inclusion }}
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if (json_decode($tour->exclusions))
-                                <div class="col-md-6 mb-4">
-                                    <div class="tour-content__title mb-3">Price Excludes</div>
-                                    @foreach (json_decode($tour->exclusions) as $exclusion)
-                                        <div class=Price-Includes__content>
-                                            <div class="tour-content__pra-icon x-icon">
-                                                <i class="bx bx-x mr-3"></i>
-                                            </div>
-                                            <div class=tour-content__pra>
-                                                {{ $exclusion }}
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @endif
-                        </div>
-                    </div>
                     @if ($tour->tourAttributes->isNotEmpty())
                         <div class=tour-content__line></div>
                         <div class="tour-content__moreDetail">
@@ -584,7 +590,7 @@
                         </div>
                     @endif
 
-                    @if ($tour->location_type === 'normal_location')
+                    @if ($tour->location_type === 'normal_location' && $tour->address)
                         <div class=tour-content__line></div>
                         <div class=tour-content-location>
                             <div class=tour-content__SubTitle>
@@ -600,9 +606,9 @@
                         </div>
                     @endif
 
-                    <div class=tour-content__line></div>
-                    <div class="faqs">
-                        @if ($tour->faqs->isNotEmpty())
+                    @if ($tour->faqs->isNotEmpty())
+                        <div class=tour-content__line></div>
+                        <div class="faqs">
                             <div class="tour-content__SubTitle">
                                 FAQS
                             </div>
@@ -619,12 +625,8 @@
                                     </div>
                                 </div>
                             @endforeach
-                        @else
-                            <div class="tour-content__SubTitle">
-                                No FAQs available
-                            </div>
-                        @endif
-                    </div>
+                        </div>
+                    @endif
 
                     <div class=tour-content__line></div>
                     @if ($tour->reviews->isNotEmpty())
@@ -853,99 +855,10 @@
 
 
                 </div>
-
                 <div class=col-md-3>
-                    <div class=tour-content_book_wrap>
-                        <div class=tour-content_book_app>
-                            <div class=sale-box>
-                                <div class="ribbon ribbon--red">SAVE 66%</div>
-                            </div>
-                            <div class=form-book>
-                                <form class=form-book_details>
-                                    <div class=form-book_content>
+                    @include('frontend.tour.pricing.src.box')
 
-                                        <div class="tour-content__pra form-book__pra">
-                                            Start Date
-                                        </div>
-                                        <div class="tour-content__title form-book__title">
-                                            <input type="date" class="form-book__date">
-                                        </div>
-
-                                    </div>
-                                    <div class="form-group form-guest-search">
-                                        <div class="tour-content__pra form-book__pra form-guest-search__details">
-                                            Adult
-                                            <div class=form-guest-search__items>
-                                                <div class="form-book__title form-guest-search__title">
-                                                    Age 18+
-                                                    <div class=form-guest-search__smallTitle>$1.000 per person</div>
-                                                </div>
-                                                <div class="quantity-counter">
-                                                    <button class="quantity-counter__btn quantity-counter__btn--minus"
-                                                        type="button"><i class='bx bx-chevron-down'></i></button>
-                                                    <input type="number" value="0"
-                                                        class="quantity-counter__btn quantity-counter__btn--quantity"
-                                                        min="0" name="adult_count">
-                                                    <button class="quantity-counter__btn quantity-counter__btn--plus"
-                                                        type="button"><i class='bx bx-chevron-up'></i></button>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-guest-search">
-                                        <div class="tour-content__pra form-book__pra form-guest-search__details">
-                                            Child
-                                            <div class=form-guest-search__items>
-                                                <div class="form-book__title form-guest-search__title">
-                                                    Age 6-17 <div class=form-guest-search__smallTitle>$1.000 per person
-                                                    </div>
-                                                </div>
-                                                <div class="quantity-counter">
-                                                    <button class="quantity-counter__btn quantity-counter__btn--minus"
-                                                        type="button"><i class='bx bx-chevron-down'></i></button>
-                                                    <input type="number" value="0"
-                                                        class="quantity-counter__btn quantity-counter__btn--quantity"
-                                                        min="0" name="child_count">
-                                                    <button class="quantity-counter__btn quantity-counter__btn--plus"
-                                                        type="button"><i class='bx bx-chevron-up'></i></button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-guest-search">
-                                        <div class="tour-content__title form-book__title form-guest-search__title">
-                                            Extra prices:
-                                            <div class="form-guest-search__items form-guest-search__details">
-                                                <div class="form-book__title form-guest-search__title">
-                                                    <label class=form-guest-search__item-clean><input type=checkbox>
-                                                        Clean</label>
-                                                </div>
-                                                <div class="tour-content__pra form-book__pra">
-                                                    $100
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group form-guest-search">
-                                        <div class=form-guest-search__title>
-                                            <div class="form-guest-search__items Service-fee__content">
-                                                <div class=form-guest-search__title>
-                                                    Service fee
-                                                    <i class="bx bxs-info-circle"></i>
-                                                </div>
-                                                <div class="tour-content__pra form-book__pra">
-                                                    $100
-                                                </div>
-                                            </div>
-                                            <div class=form-guest__btn>
-                                                <button class="app-btn themeBtn">Book Now</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
+                    <div class=tour-content_book_app>
                         <div class=Why-Book-Us>
                             <h6 class="tour-content__title mb-4">
                                 Why Book With Us?
@@ -987,6 +900,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @if ($tour->related_tour_ids)
         <div class="my-5 pb-2">
@@ -1055,16 +969,56 @@
             </div>
         </div>
     @endif
+
+    <div class="loader-mask" id="loader">
+        <div class="loader"></div>
+    </div>
 @endsection
-@section('css')
+@push('css')
     <style type="text/css">
         .goUp {
             display: none;
         }
+
+        .loader-mask {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000000000000;
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            width: 48px;
+            height: 48px;
+            border: 4px solid var(--color-primary);
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+
+        @keyframes rotation {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
     </style>
-@endsection
-@section('js')
-    <script type="text/javascript">
-        /*in page js here*/
+@endpush
+@push('js')
+    <script>
+        window.addEventListener("load", function() {
+            const loader = document.getElementById("loader");
+            loader.style.display = "none";
+        });
     </script>
-@endsection
+@endpush
