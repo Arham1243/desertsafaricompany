@@ -654,7 +654,7 @@
                             </div>
                             @php
 
-                                $reviews = $tour->reviews->where('status', 'active')->get();
+                                $reviews = $tour->reviews->where('status', 'active');
                                 $excellentCount = $reviews->where('rating', 5)->count();
                                 $veryGoodCount = $reviews->where('rating', 4)->count();
                                 $averageCount = $reviews->where('rating', 3)->count();
