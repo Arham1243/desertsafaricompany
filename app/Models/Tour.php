@@ -31,7 +31,7 @@ class Tour extends Model
 
     public function reviews()
     {
-        return $this->hasMany(TourReview::class);
+        return $this->hasMany(TourReview::class)->where('status', 'active');
     }
 
     public function faqs()

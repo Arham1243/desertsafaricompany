@@ -647,10 +647,7 @@
                     @endif
 
                     <div class=tour-content__line></div>
-                    @php
-                        $reviews = $tour->reviews->where('status', 'active');
-                    @endphp
-                    @if ($reviews->isNotEmpty())
+                    @if ($tour->reviews->isNotEmpty())
                         <div class=main-reviews__details>
                             <div class=tour-content__SubTitle>
                                 Reviews

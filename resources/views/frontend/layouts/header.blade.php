@@ -20,15 +20,7 @@
             <div class="header-btns">
                 <ul class="header-btns__list">
                     <li class="header-btns__item">
-                        @if (!Auth::check())
-                            @include('frontend.auth.popup')
-                        @else
-                            <a href="{{ route('auth.logout') }}"
-                                onclick="return confirm('Are you sure you want to Logout?')" title="Logout"
-                                class="item__become-supplier">
-                                <span><b>Logout</b></span>
-                            </a>
-                        @endif
+                        @include('frontend.auth.popup')
                     </li>
 
                     <li class="header-btns__item">

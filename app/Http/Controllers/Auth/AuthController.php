@@ -92,7 +92,7 @@ class AuthController extends Controller
     {
         $data = [
             'full_name' => $user->full_name,
-            'verify_link' => route('verify-email', ['token' => $user->email_verification_token]),
+            'verify_link' => route('auth.verify-email', ['token' => $user->email_verification_token]),
             'logo' => asset(ImageTable::where('table_name', 'logo')->latest()->first()->img_path ?? 'frontend/assets/images/logo (1).webp'),
         ];
 
