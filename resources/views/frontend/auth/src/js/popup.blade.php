@@ -1,12 +1,13 @@
 <script>
     const {
+        createApp,
         ref,
         onMounted,
         computed,
         watch
     } = Vue;
     @if (!Auth::check())
-        const PopupComponent = {
+        const LoginPopup = createApp({
             setup() {
                 const loginPopup = ref(null);
                 const showPassword = ref(null);
@@ -186,11 +187,11 @@
                     togglePasswordVisibility
                 };
             }
-        };
+        });
     @else
-        const PopupComponent = {
+        const LoginPopup = createApp({
             setup() {}
-        }
+        });
     @endif
-    Vue.createApp(PopupComponent).mount('#login-popup');
+    LoginPopup.mount('#login-popup');
 </script>

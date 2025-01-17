@@ -30,7 +30,7 @@
     $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
 @endphp
 <script>
-    const PricingBoxComponent = {
+    const PricingBox = createApp({
         setup() {
             const totalPrice = ref(parseFloat("{{ $total_price ?? 0 }}"));
             const priceType = "{{ $tour->price_type ?? 'simple' }}";
@@ -86,7 +86,8 @@
                 if (action === "minus" && carQuantity.value > 0) carQuantity.value--;
 
                 const currentCars = Math.ceil(carQuantity.value / carMax);
-                totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars < previousCars ? -
+                totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars <
+                    previousCars ? -
                     carPrice : 0));
             };
 
@@ -94,9 +95,11 @@
                 const personData = normalTourData.value[personType];
                 if (!personData) return;
 
-                personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData.quantity >
+                personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData
+                    .quantity >
                     personData.min ? -1 : 0));
-                personData.quantity = Math.max(personData.min, Math.min(personData.quantity, personData.max));
+                personData.quantity = Math.max(personData.min, Math.min(personData.quantity, personData
+                    .max));
                 updateTotalPrice();
             };
 
@@ -104,7 +107,8 @@
                 const promoData = promoTourData.value.find(promo => promo.promo_title === personType);
                 if (!promoData) return;
 
-                promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData.quantity > 0 ? -
+                promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData
+                    .quantity > 0 ? -
                     1 : 0));
                 updateTotalPrice();
             };
@@ -161,6 +165,6 @@
                 getTimeLeft
             };
         },
-    };
-    Vue.createApp(PricingBoxComponent).mount('#pricing-box');
+    });
+    PricingBox.mount('#pricing-box');
 </script>
