@@ -647,14 +647,16 @@
                     @endif
 
                     <div class=tour-content__line></div>
-                    @if ($tour->reviews->isNotEmpty())
+                    @php
+                        $reviews = $tour->reviews->where('status', 'active');
+                    @endphp
+                    @if ($reviews->isNotEmpty())
                         <div class=main-reviews__details>
                             <div class=tour-content__SubTitle>
                                 Reviews
                             </div>
                             @php
 
-                                $reviews = $tour->reviews->where('status', 'active');
                                 $excellentCount = $reviews->where('rating', 5)->count();
                                 $veryGoodCount = $reviews->where('rating', 4)->count();
                                 $averageCount = $reviews->where('rating', 3)->count();
