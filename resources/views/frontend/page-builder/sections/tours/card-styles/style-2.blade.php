@@ -25,8 +25,13 @@
                     </div>
                     <div class=tour-activity__RL>
                         <div class=card-rating>
-                            <i class="bx bxs-star"></i>
-                            <span>5.0 1 Rating</span>
+                            <x-star-rating :rating="$tour->average_rating" />
+                            @if ($tour->reviews->count() > 0)
+                                {{ $tour->reviews->count() }}
+                                Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                            @else
+                                <span>No Reviews Yet</span>
+                            @endif
                         </div>
                         <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
                             class=card-location>

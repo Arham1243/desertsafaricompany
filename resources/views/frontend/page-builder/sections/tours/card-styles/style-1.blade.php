@@ -31,12 +31,13 @@
                         </div>
                     @endif
                     <div class=card-rating>
-                        <i class="bx bxs-star yellow-star"></i>
-                        <i class="bx bxs-star yellow-star"></i>
-                        <i class="bx bxs-star yellow-star"></i>
-                        <i class="bx bxs-star yellow-star"></i>
-                        <i class="bx bxs-star"></i>
-                        <span>10 Reviews</span>
+                        <x-star-rating :rating="$tour->average_rating" />
+                        @if ($tour->reviews->count() > 0)
+                            {{ $tour->reviews->count() }}
+                            Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                        @else
+                            <span>No Reviews Yet</span>
+                        @endif
                     </div>
                 </div>
             </div>

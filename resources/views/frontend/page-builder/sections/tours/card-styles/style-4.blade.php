@@ -36,7 +36,13 @@
                     <div class="tour-activity__RL">
                         <div class="card-rating">
                             <i class="bx bxs-star green-star"></i>
-                            <span>5.0 1 Rating | 200K+ booked
+                            <span>
+                                @if ($tour->reviews->count() > 0)
+                                    {{ $tour->reviews->count() }}
+                                    Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                                @else
+                                    <span>No Reviews Yet</span>
+                                @endif | 200K+ booked
                             </span>
                         </div>
                     </div>
