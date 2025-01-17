@@ -1,11 +1,8 @@
 @php
     $isDataValid = $tour->regular_price && $tour->sale_price;
-    $total_price += $tour->sale_price;
 @endphp
 <div class=tour-content_book_app>
-    <div class=sale-box>
-        <div class="ribbon ribbon--red">SAVE 66%</div>
-    </div>
+
     <div class=form-book>
         @if ($isDataValid)
             <form class=form-book_details>
@@ -18,8 +15,9 @@
                 <span class="tour-content__pra">From</span>
                 <div class="baseline-pricing__value baseline-pricing__value--low">
                     {{ formatPrice($tour->regular_price) }}
+
                 </div>
-                <div class="tour-content__title tour-content_book__realPrice ml-1">
+                <div class="baseline-pricing__value green">
                     {{ formatPrice($tour->sale_price) }}
                 </div>
             </div>

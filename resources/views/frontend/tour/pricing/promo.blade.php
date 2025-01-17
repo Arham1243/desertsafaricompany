@@ -70,6 +70,9 @@
                     <div>@{{ promo.promo_title }}: Expires in: @{{ getTimeLeft(promo.offer_expire_at) }}</div>
                     <div class="form-guest-search__items">
                         <div class="prices-wrapper">
+                            <div class="new-price">
+                                {{ env('APP_CURRENCY') }}
+                            </div>
                             <div class="del-price"
                                 :class="{ 'cut': promo.is_not_expired, 'green': !promo.is_not_expired }">
                                 @{{ promo.original_price }}</div>
@@ -82,7 +85,7 @@
                                 @click="updateQuantity('minus', promo.promo_title)">
                                 <i class="bx bx-chevron-down"></i>
                             </button>
-                            <input type="number" class="quantity-counter__btn quantity-counter__btn--quantity"
+                            <input readonly type="number" class="quantity-counter__btn quantity-counter__btn--quantity"
                                 min="0" v-model="promo.quantity">
                             <button class="quantity-counter__btn" type="button"
                                 @click="updateQuantity('plus', promo.promo_title)">

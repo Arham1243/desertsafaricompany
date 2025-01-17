@@ -32,6 +32,9 @@
             @break
 
             @default
+                @php
+                    $total_price += $tour->sale_price;
+                @endphp
                 @include('frontend.tour.pricing.simple')
         @endswitch
     </div>

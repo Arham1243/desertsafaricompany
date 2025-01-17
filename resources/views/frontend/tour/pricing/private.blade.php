@@ -6,9 +6,7 @@
         $tour->privatePrices->max_person;
 @endphp
 <div class=tour-content_book_app>
-    <div class=sale-box>
-        <div class="ribbon ribbon--red">SAVE 66%</div>
-    </div>
+
     <div class=form-book>
         @if ($isDataValid)
             <form class=form-book_details>
@@ -43,16 +41,15 @@
                     Total Persons
                     <div class=form-guest-search__items>
                         <div class="form-book__title form-guest-search__title">
-                            person
-                            <div clFass=form-guest-search__smallTitle>{{ formatPrice($tour->privatePrices->car_price) }}
-                                per
-                                person</div>
+                            Car Price
+                            <div clFass=form-guest-search__smallTitle>
+                                {{ formatPrice($tour->privatePrices->car_price) }} </div>
                         </div>
                         <div class="quantity-counter">
                             <button class="quantity-counter__btn" type="button" @click="updateQuantity('minus')">
                                 <i class='bx bx-chevron-down'></i>
                             </button>
-                            <input type="number"
+                            <input readonly type="number"
                                 class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
                                 min="0" name="price[persons][quantity]" v-model="carQuantity">
                             <button class="quantity-counter__btn" type="button" @click="updateQuantity('plus')">

@@ -2329,7 +2329,6 @@ input.form-book__date {
 }
 
 .baseline-pricing__value.baseline-pricing__value--low {
-    color: green;
     text-decoration: line-through !important;
 }
 
@@ -6052,7 +6051,7 @@ span.select2-dropdown.select2-dropdown--below {
     font-weight: 600;
 }
 
-.prices-wrapper .green {
+.green {
     color: green;
 }
 

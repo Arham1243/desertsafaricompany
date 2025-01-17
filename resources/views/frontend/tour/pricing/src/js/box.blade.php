@@ -21,6 +21,8 @@
         return [
             strtolower(str_replace(' ', '_', $price->person_type)) => [
                 'price' => $price->price,
+                'min' => $price->min_person,
+                'max' => $price->max_person,
                 'quantity' => 0,
             ],
         ];
@@ -78,33 +80,50 @@
             };
 
 
+            const updatePrivateQuantity = (action) => {
+                const previousCars = Math.ceil(carQuantity.value / carMax);
+                if (action === "plus") carQuantity.value++;
+                if (action === "minus" && carQuantity.value > 0) carQuantity.value--;
+
+                const currentCars = Math.ceil(carQuantity.value / carMax);
+                totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars < previousCars ? -
+                    carPrice : 0));
+            };
+
+            const updateNormalQuantity = (action, personType) => {
+                const personData = normalTourData.value[personType];
+                if (!personData) return;
+
+                personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData.quantity >
+                    personData.min ? -1 : 0));
+                personData.quantity = Math.max(personData.min, Math.min(personData.quantity, personData.max));
+                updateTotalPrice();
+            };
+
+            const updatePromoQuantity = (action, personType) => {
+                const promoData = promoTourData.value.find(promo => promo.promo_title === personType);
+                if (!promoData) return;
+
+                promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData.quantity > 0 ? -
+                    1 : 0));
+                updateTotalPrice();
+            };
+
+            const updateWaterQuantity = (action) => {
+                if (action === "plus") timeSlotQuantity.value++;
+                if (action === "minus" && timeSlotQuantity.value > 0) timeSlotQuantity.value--;
+                updateTotalPrice();
+            };
+
             const updateQuantity = (action, personType = null) => {
                 if (priceType === "private") {
-                    const previousCars = Math.ceil(carQuantity.value / carMax);
-                    if (action === "plus") carQuantity.value++;
-                    if (action === "minus" && carQuantity.value > 0) carQuantity.value--;
-
-                    const currentCars = Math.ceil(carQuantity.value / carMax);
-                    totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars < previousCars ? -
-                        carPrice : 0));
+                    updatePrivateQuantity(action);
                 } else if (priceType === "normal" && personType) {
-                    const personData = normalTourData.value[personType];
-                    if (!personData) return;
-
-                    personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData.quantity >
-                        0 ? -1 : 0));
-                    updateTotalPrice();
+                    updateNormalQuantity(action, personType);
                 } else if (priceType === "promo" && personType) {
-                    const promoData = promoTourData.value.find(promo => promo.promo_title === personType);
-                    if (!promoData) return;
-
-                    promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData.quantity >
-                        0 ? -1 : 0));
-                    updateTotalPrice();
+                    updatePromoQuantity(action, personType);
                 } else if (priceType === "water") {
-                    if (action === "plus") timeSlotQuantity.value++;
-                    if (action === "minus" && timeSlotQuantity.value > 0) timeSlotQuantity.value--;
-                    updateTotalPrice();
+                    updateWaterQuantity(action);
                 }
             };
 

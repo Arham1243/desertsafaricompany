@@ -3,9 +3,7 @@
     $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
 @endphp
 <div class=tour-content_book_app>
-    <div class=sale-box>
-        <div class="ribbon ribbon--red">SAVE 66%</div>
-    </div>
+
     <div class=form-book>
         @if ($isDataValid)
             <form class=form-book_details>
@@ -55,7 +53,7 @@
                             <button class="quantity-counter__btn" type="button" @click="updateQuantity('minus')">
                                 <i class='bx bx-chevron-down'></i>
                             </button>
-                            <input type="number"
+                            <input readonly type="number"
                                 class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
                                 min="0" v-model="timeSlotQuantity" name="time_slot_quantity">
                             <button class="quantity-counter__btn" type="button" @click="updateQuantity('plus')">

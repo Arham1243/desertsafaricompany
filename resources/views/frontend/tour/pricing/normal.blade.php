@@ -4,9 +4,7 @@
 @endphp
 
 <div class=tour-content_book_app>
-    <div class=sale-box>
-        <div class="ribbon ribbon--red">SAVE 66%</div>
-    </div>
+
     <div class=form-book>
         @if ($isDataValid)
             <form class=form-book_details>
@@ -39,9 +37,9 @@
                                     @click="updateQuantity('minus', '{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}')">
                                     <i class='bx bx-chevron-down'></i>
                                 </button>
-                                <input type="number"
+                                <input readonly type="number"
                                     class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
-                                    min="0"
+                                    min="{{ $normalPrice->min_person ?? 0 }}" max="{{ $normalPrice->max_person }}"
                                     v-model="normalTourData['{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}'].quantity"
                                     name="price[{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}][quantity]">
                                 <button class="quantity-counter__btn" type="button"
