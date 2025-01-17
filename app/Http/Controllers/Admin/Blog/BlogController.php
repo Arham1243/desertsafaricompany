@@ -67,9 +67,14 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
 
+        if ($request->hasFile('featured_image')) {
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Blogs/Featured-images');
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_tours_ids' => $featuredToursIds,
+            'featured_image' => $featuredImage,
         ]);
 
         $blog = Blog::create($data);
@@ -77,8 +82,6 @@ class BlogController extends Controller
         if (! empty($validatedData['tags_ids'])) {
             $blog->tags()->attach($validatedData['tags_ids']);
         }
-
-        $this->uploadImg('featured_image', 'Blog/Featured-images', $blog, 'featured_image');
 
         if (! empty($validatedData['gallery'])) {
             $this->uploadMultipleImages(
@@ -163,9 +166,14 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
 
+        if ($request->hasFile('featured_image')) {
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Blogs/Featured-images', $blog->featured_image);
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
             'featured_tours_ids' => $featuredToursIds,
+            'featured_image' => $featuredImage,
         ]);
 
         // Update the blog entry
@@ -177,7 +185,6 @@ class BlogController extends Controller
         } else {
             $blog->tags()->detach();
         }
-        $this->uploadImg('featured_image', 'Blog/Featured-images', $blog, 'featured_image');
 
         // Handle gallery images
         if (! empty($validatedData['gallery'])) {

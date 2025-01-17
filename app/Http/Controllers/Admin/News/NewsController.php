@@ -58,8 +58,13 @@ class NewsController extends Controller
 
         $slug = $this->createSlug($validatedData['title'], 'blogs');
 
+        if ($request->hasFile('featured_image')) {
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'News/Featured-images');
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
+            'featured_image' => $featuredImage,
         ]);
 
         $news = News::create($data);
@@ -67,8 +72,6 @@ class NewsController extends Controller
         if (! empty($validatedData['tags_ids'])) {
             $news->tags()->attach($validatedData['tags_ids']);
         }
-        $this->uploadImg('featured_image', 'News/Featured-images', $news, 'featured_image');
-
         handleSeoData($request, $news, 'News');
 
         return redirect()->route('admin.news.index')->with('notify_success', 'News Added successfully!');
@@ -105,8 +108,13 @@ class NewsController extends Controller
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];
         $slug = $this->createSlug($slugText, 'blogs', $news->slug);
 
+        if ($request->hasFile('featured_image')) {
+            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'News/Featured-images', $news->featured_image);
+        }
+
         $data = array_merge($validatedData, [
             'slug' => $slug,
+            'featured_image' => $featuredImage,
         ]);
 
         // Update the blog entry
@@ -118,8 +126,6 @@ class NewsController extends Controller
         } else {
             $news->tags()->detach();
         }
-        $this->uploadImg('featured_image', 'News/Featured-images', $news, 'featured_image');
-
         handleSeoData($request, $news, 'Blog');
 
         return redirect()->route('admin.news.index')->with('notify_success', 'News updated successfully!');
