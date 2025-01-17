@@ -281,13 +281,13 @@ class TourController extends Controller
         }
 
         // Handle banner and featured images
-        $this->uploadImg('banner_image', 'Tour/Banners/Featured-images', $tour, 'banner_image');
-        $this->uploadImg('featured_image', 'Tour/Featured-images', $tour, 'featured_image');
-        $this->uploadImg('promotional_image', 'Tour/Promotional-images', $tour, 'promotional_image');
+        $this->uploadImg('banner_image', 'Tours/Banners/Featured-images', $tour, 'banner_image');
+        $this->uploadImg('featured_image', 'Tours/Featured-images', $tour, 'featured_image');
+        $this->uploadImg('promotional_image', 'Tours/Promotional-images', $tour, 'promotional_image');
 
         if ($request->gallery) {
             foreach ($request->file('gallery') as $index => $image) {
-                $path = $this->simpleUploadImg($image, 'Tour/Gallery-images');
+                $path = $this->simpleUploadImg($image, 'Tours/Gallery-images');
 
                 $tour->media()->create([
                     'file_path' => $path,
@@ -579,7 +579,7 @@ class TourController extends Controller
 
         if ($request->gallery) {
             foreach ($request->file('gallery') as $index => $image) {
-                $path = $this->simpleUploadImg($image, 'Tour/Gallery-images');
+                $path = $this->simpleUploadImg($image, 'Tours/Gallery-images');
 
                 $tour->media()->create([
                     'file_path' => $path,
