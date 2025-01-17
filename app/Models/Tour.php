@@ -44,11 +44,6 @@ class Tour extends Model
         return $this->hasMany(TourDetail::class);
     }
 
-    public function discounts()
-    {
-        return $this->hasMany(TourPriceDiscount::class);
-    }
-
     public function normalPrices()
     {
         return $this->hasMany(TourPricing::class)->where('price_type', 'normal');
@@ -130,11 +125,6 @@ class Tour extends Model
     public function media()
     {
         return $this->morphMany(Media::class, 'mediable');
-    }
-
-    public function openHours()
-    {
-        return $this->hasMany(TourOpenHour::class);
     }
 
     public function normalItineraries()

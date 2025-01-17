@@ -10,8 +10,6 @@ use App\Models\TourCategory;
 use App\Models\TourDetail;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
-use App\Models\TourOpenHour;
-use App\Models\TourPriceDiscount;
 use App\Models\TourPricing;
 use App\Models\User;
 use App\Traits\Sluggable;
@@ -78,6 +76,8 @@ class TourController extends Controller
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
+        $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
+        $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -122,6 +122,8 @@ class TourController extends Controller
             'address' => $location['normal_location']['address'] ?? null,
             'location_type' => $location['location_type'] ?? null,
             'itinerary_experience' => json_encode($itineraryExperience) ?? null,
+            'discount_by_number_of_people' => $discounts ?? null,
+            'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
 
         // Handle FAQs
@@ -159,39 +161,6 @@ class TourController extends Controller
                         'urls' => $detail['urls'],
                     ]);
                 }
-            }
-        }
-
-        // Store Open Hours if is_open_hours is true
-        if (isset($availabilityData['is_open_hours']) && $availabilityData['is_open_hours'] == 1) {
-            foreach ($availabilityData['open_hours'] as $hours) {
-                TourOpenHour::create([
-                    'tour_id' => $tour->id,
-                    'day' => $hours['day'] ?? null,
-                    'open_time' => $hours['open_time'] ?? null,
-                    'close_time' => $hours['close_time'] ?? null,
-                    'enabled' => $hours['enabled'] ?? 0,
-                ]);
-            }
-        }
-
-        // Check if discounts exist and save them
-        if (! empty($pricing['discount'])) {
-
-            $discountCount = count($pricing['discount']['people_from']);
-            for ($i = 0; $i < $discountCount; $i++) {
-                $peopleFrom = $pricing['discount']['people_from'][$i] ?? null;
-                $peopleTo = $pricing['discount']['people_to'][$i] ?? null;
-                $amount = $pricing['discount']['discount'][$i] ?? null;
-                $type = $pricing['discount']['type'][$i] ?? null;
-
-                TourPriceDiscount::create([
-                    'tour_id' => $tour->id,
-                    'people_from' => $peopleFrom,
-                    'people_to' => $peopleTo,
-                    'amount' => $amount,
-                    'type' => $type,
-                ]);
             }
         }
 
@@ -346,6 +315,8 @@ class TourController extends Controller
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
+        $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
+        $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
 
         $tour->update([
             'title' => $general['title'] ?? null,
@@ -389,6 +360,8 @@ class TourController extends Controller
             'address' => $location['normal_location']['address'] ?? null,
             'location_type' => $location['location_type'] ?? null,
             'itinerary_experience' => json_encode($itineraryExperience) ?? null,
+            'discount_by_number_of_people' => $discounts ?? null,
+            'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
 
         // Handle FAQs
@@ -432,40 +405,6 @@ class TourController extends Controller
                         'urls' => $detail['urls'],
                     ]);
                 }
-            }
-        }
-
-        // Update Open Hours if is_open_hours is true
-        if (isset($availabilityData['is_open_hours']) && $availabilityData['is_open_hours'] == 1) {
-            $tour->openHours()->delete();
-            foreach ($availabilityData['open_hours'] as $hours) {
-                TourOpenHour::create([
-                    'tour_id' => $tour->id,
-                    'day' => $hours['day'] ?? null,
-                    'open_time' => $hours['open_time'] ?? null,
-                    'close_time' => $hours['close_time'] ?? null,
-                    'enabled' => $hours['enabled'] ?? 0,
-                ]);
-            }
-        }
-
-        // Handle discounts
-        if (! empty($pricing['discount'])) {
-            $tour->discounts()->delete();
-            $discountCount = count($pricing['discount']['people_from']);
-            for ($i = 0; $i < $discountCount; $i++) {
-                $peopleFrom = $pricing['discount']['people_from'][$i] ?? null;
-                $peopleTo = $pricing['discount']['people_to'][$i] ?? null;
-                $amount = $pricing['discount']['discount'][$i] ?? null;
-                $type = $pricing['discount']['type'][$i] ?? null;
-
-                TourPriceDiscount::create([
-                    'tour_id' => $tour->id,
-                    'people_from' => $peopleFrom,
-                    'people_to' => $peopleTo,
-                    'amount' => $amount,
-                    'type' => $type,
-                ]);
             }
         }
 
