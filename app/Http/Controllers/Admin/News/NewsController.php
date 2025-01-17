@@ -67,7 +67,7 @@ class NewsController extends Controller
         if (! empty($validatedData['tags_ids'])) {
             $news->tags()->attach($validatedData['tags_ids']);
         }
-        $this->uploadImg('featured_image', 'News/Featured-image', $news, 'featured_image');
+        $this->uploadImg('featured_image', 'News/Featured-images', $news, 'featured_image');
 
         handleSeoData($request, $news, 'News');
 
@@ -118,7 +118,7 @@ class NewsController extends Controller
         } else {
             $news->tags()->detach();
         }
-        $this->uploadImg('featured_image', 'Blog/Featured-image', $news, 'featured_image');
+        $this->uploadImg('featured_image', 'News/Featured-images', $news, 'featured_image');
 
         handleSeoData($request, $news, 'Blog');
 

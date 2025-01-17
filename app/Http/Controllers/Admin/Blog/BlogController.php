@@ -78,7 +78,7 @@ class BlogController extends Controller
             $blog->tags()->attach($validatedData['tags_ids']);
         }
 
-        $this->uploadImg('featured_image', 'Blog/Featured-image', $blog, 'featured_image');
+        $this->uploadImg('featured_image', 'Blog/Featured-images', $blog, 'featured_image');
 
         if (! empty($validatedData['gallery'])) {
             $this->uploadMultipleImages(
@@ -177,7 +177,7 @@ class BlogController extends Controller
         } else {
             $blog->tags()->detach();
         }
-        $this->uploadImg('featured_image', 'Blog/Featured-image', $blog, 'featured_image');
+        $this->uploadImg('featured_image', 'Blog/Featured-images', $blog, 'featured_image');
 
         // Handle gallery images
         if (! empty($validatedData['gallery'])) {
