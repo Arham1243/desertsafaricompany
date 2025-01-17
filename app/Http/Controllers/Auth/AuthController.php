@@ -77,7 +77,7 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => 'success',
                     'message' => 'Logged In!',
-                    'redirect_url' => redirect()->intended(url()->previous())->getTargetUrl(),
+                    'redirect_url' => redirect()->back(),
                 ]);
             }
 
