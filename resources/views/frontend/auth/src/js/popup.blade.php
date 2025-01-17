@@ -187,6 +187,10 @@
                 };
             }
         };
+    @else
+        const PopupComponent = {
+            setup() {}
+        }
     @endif
     Vue.createApp(PopupComponent).mount('#login-popup');
 </script>
