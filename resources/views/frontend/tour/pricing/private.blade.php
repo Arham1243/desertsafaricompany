@@ -20,7 +20,7 @@
             <input type="hidden" name="simeple_tour_price" value="{{ $tour->privatePrices->car_price }}">
             <div class="tour-content_book_pricing d-block">
                 <span class="tour-content__pra m-0">Min: {{ $tour->privatePrices->min_person }}</span>
-                <span class="tour-content__pra m-0">Max: {{ $tour->privatePrices->max_person }}</span>
+                <span class="tour-content__pra m-0 ms-2">Max: {{ $tour->privatePrices->max_person }}</span>
                 <div class="tour-content__title tour-content_book__realPrice mt-0">
                     Car Price {{ formatPrice($tour->privatePrices->car_price) }}
                 </div>

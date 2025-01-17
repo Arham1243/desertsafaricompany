@@ -3276,7 +3276,7 @@ span.tour-content__title.ml-1 {
 }
 
 .form-book_content {
-    padding: 0  0 0.25rem;
+    padding: 0 0 0.25rem;
 }
 
 .form-group.form-guest-search {
@@ -6029,5 +6029,16 @@ span.select2-dropdown.select2-dropdown--below {
     background: #fff;
     scale: 0.85;
     transition: all 150ms ease-in;
+}
+
+.select-field {
+    width: 100%;
+    padding: 0.65rem 0.75rem;
+    font-size: 0.75rem;
+    border: 1px solid #ccc;
+    background: transparent;
+    outline: none;
+    border-radius: 0.25rem;
+    margin: 0.5rem 0;
 }
 /* popup */

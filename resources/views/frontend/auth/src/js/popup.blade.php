@@ -2,7 +2,8 @@
     const {
         ref,
         onMounted,
-        computed
+        computed,
+        watch
     } = Vue;
 
     const PopupComponent = {

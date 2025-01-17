@@ -1,5 +1,6 @@
 @php
-    $isDataValid = $tour->regular_price && $tour->sale_price;
+    $isDataValid = $tour->waterPrices->isNotEmpty();
+    $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
 @endphp
 <div class=tour-content_book_app>
     <div class=sale-box>
@@ -11,18 +12,7 @@
             @else
                 <div class=form-book_details>
         @endif
-        @if ($tour->regular_price && $tour->sale_price)
-            <input type="hidden" name="simeple_tour_price" value="{{ $tour->sale_price }}">
-            <div class="tour-content_book_pricing">
-                <span class="tour-content__pra">From</span>
-                <div class="baseline-pricing__value baseline-pricing__value--low">
-                    {{ formatPrice($tour->regular_price) }}
-                </div>
-                <div class="tour-content__title tour-content_book__realPrice ml-1">
-                    {{ formatPrice($tour->sale_price) }}
-                </div>
-            </div>
-        @endif
+
 
         <div class=form-book_content>
 
@@ -34,6 +24,48 @@
             </div>
 
         </div>
+
+        @if ($isDataValid)
+            <div class="tour-content__pra m-0">Select Timeslot:</div>
+            <select name="time_slot" v-model="timeSlot" class="select-field">
+                @foreach ($tour->waterPrices as $i => $waterPrice)
+                    @php
+                        $timeSlot = $waterPricesTimeSlots[$i];
+                    @endphp
+                    <option value="{{ $timeSlot }}" time-price="{{ $waterPrice->water_price }}">
+                        {{ $timeSlot }} (AED {{ number_format($waterPrice->water_price, 2) }})
+                    </option>
+                @endforeach
+            </select>
+            <div class="form-group form-guest-search">
+                <div class="tour-content__pra form-book__pra form-guest-search__details">
+                    Water activity
+                    <div class="form-guest-search__items">
+                        <div class="form-book__title form-guest-search__title">
+                            Selected Time Slot Price
+                            <div class="form-guest-search__smallTitle">
+                                <span v-if="timeSlot">
+                                    AED @{{ parseFloat(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0).toFixed(2) }}
+                                </span>
+                                <span v-else>Select a timeslot</span>
+                            </div>
+                        </div>
+                        <div class="quantity-counter">
+                            <button class="quantity-counter__btn" type="button" @click="updateQuantity('minus')">
+                                <i class='bx bx-chevron-down'></i>
+                            </button>
+                            <input type="number"
+                                class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
+                                min="0" v-model="timeSlotQuantity" name="time_slot_quantity">
+                            <button class="quantity-counter__btn" type="button" @click="updateQuantity('plus')">
+                                <i class='bx bx-chevron-up'></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
+
         @include('frontend.tour.pricing.extra_price')
         @include('frontend.tour.pricing.service_fee')
         @include('frontend.tour.pricing.total_price')
@@ -46,4 +78,5 @@
         @else
     </div>
     @endif
+</div>
 </div>

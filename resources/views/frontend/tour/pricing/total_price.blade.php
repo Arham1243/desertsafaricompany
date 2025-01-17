@@ -6,7 +6,7 @@
                 Total Price:
             </div>
             <div class="tour-content__pra form-book__pra total-price">
-                <input type="hidden" :value="formatPrice" name="total_price" /> <span>@{{ formatPrice }}</span>
+                <input type="hidden" :value="totalPrice" name="total_price" /> <span>@{{ formatPrice }}</span>
             </div>
         </div>
     </div>

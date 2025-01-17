@@ -23,7 +23,7 @@
             </div>
 
         </div>
-        @if ($tour->is_person_type_enabled && $tour->normalPrices)
+        @if ($tour->is_person_type_enabled && $tour->normalPrices->isNotEmpty())
             @foreach ($tour->normalPrices as $normalPrice)
                 <div class="form-group form-guest-search">
                     <div class="tour-content__pra form-book__pra form-guest-search__details">
