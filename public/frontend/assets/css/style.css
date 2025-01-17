@@ -6041,4 +6041,22 @@ span.select2-dropdown.select2-dropdown--below {
     border-radius: 0.25rem;
     margin: 0.5rem 0;
 }
+.prices-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.prices-wrapper div {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.prices-wrapper .green {
+    color: green;
+}
+
+.prices-wrapper .del-price.cut {
+    text-decoration: line-through !important;;
+}
 /* popup */

@@ -1,4 +1,22 @@
 @php
+    $promoTourData = $tour->promoPrices->map(function ($promoPrice) {
+        $discountPercent = 0;
+        if ($promoPrice->original_price > 0) {
+            $discountPercent =
+                (($promoPrice->original_price - $promoPrice->promo_price) / $promoPrice->original_price) * 100;
+        }
+        $isNotExpired = \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($promoPrice->offer_expire_at));
+
+        return [
+            'promo_title' => $promoPrice->promo_title,
+            'original_price' => $promoPrice->original_price,
+            'discount_price' => $promoPrice->promo_price,
+            'offer_expire_at' => $promoPrice->offer_expire_at,
+            'is_not_expired' => $isNotExpired,
+            'quantity' => 0,
+        ];
+    });
+
     $normalTourData = $tour->normalPrices->mapWithKeys(function ($price) {
         return [
             strtolower(str_replace(' ', '_', $price->person_type)) => [
@@ -32,9 +50,16 @@
 
             const initialTotalPrice = parseFloat("{{ $total_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
+            const promoTourData = ref(@json($promoTourData));
 
             const updateTotalPrice = () => {
                 totalPrice.value = initialTotalPrice;
+
+                promoTourData.value.forEach((promo) => {
+                    const applicablePrice = promo.is_not_expired ? promo.discount_price : promo
+                        .original_price;
+                    totalPrice.value += applicablePrice * promo.quantity;
+                });
 
                 if (priceType === "normal") {
                     totalPrice.value += Object.values(normalTourData.value).reduce(
@@ -52,6 +77,7 @@
                 }
             };
 
+
             const updateQuantity = (action, personType = null) => {
                 if (priceType === "private") {
                     const previousCars = Math.ceil(carQuantity.value / carMax);
@@ -68,6 +94,13 @@
                     personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData.quantity >
                         0 ? -1 : 0));
                     updateTotalPrice();
+                } else if (priceType === "promo" && personType) {
+                    const promoData = promoTourData.value.find(promo => promo.promo_title === personType);
+                    if (!promoData) return;
+
+                    promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData.quantity >
+                        0 ? -1 : 0));
+                    updateTotalPrice();
                 } else if (priceType === "water") {
                     if (action === "plus") timeSlotQuantity.value++;
                     if (action === "minus" && timeSlotQuantity.value > 0) timeSlotQuantity.value--;
@@ -79,16 +112,34 @@
 
             watch(timeSlot, updateTotalPrice);
 
+            const getTimeLeft = (expireAt) => {
+                const now = new Date();
+                const expiry = new Date(expireAt);
+                const diffMs = expiry - now;
+
+                if (diffMs <= 0) return "expired";
+
+                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+
+                if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? "s" : ""}`;
+                if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? "s" : ""}`;
+                return `${diffMinutes} minute${diffMinutes > 1 ? "s" : ""}`;
+            };
+
             return {
                 carQuantity,
                 totalPrice,
                 updateQuantity,
                 formatPrice,
                 normalTourData,
+                promoTourData,
                 timeSlot,
                 timeSlotQuantity,
                 waterPrices,
                 waterPricesTimeSlots,
+                getTimeLeft
             };
         },
     };

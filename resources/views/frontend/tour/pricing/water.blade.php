@@ -27,7 +27,8 @@
 
         @if ($isDataValid)
             <div class="tour-content__pra m-0">Select Timeslot:</div>
-            <select name="time_slot" v-model="timeSlot" class="select-field">
+            <select name="time_slot" v-model="timeSlot" class="select-field" required>
+                <option value=""selected>Select</option>
                 @foreach ($tour->waterPrices as $i => $waterPrice)
                     @php
                         $timeSlot = $waterPricesTimeSlots[$i];
