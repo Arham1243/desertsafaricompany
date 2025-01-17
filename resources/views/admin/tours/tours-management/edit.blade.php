@@ -329,45 +329,77 @@
                                                                 <th class="text-end" scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
+                                                        @php
+                                                            $tourDetails = $tour->tourDetails->isNotEmpty()
+                                                                ? $tour->tourDetails
+                                                                : [
+                                                                    0 => [
+                                                                        'name' => '',
+                                                                        'items' => '',
+                                                                        'urls' => '',
+                                                                    ],
+                                                                ];
+                                                        @endphp
                                                         <tbody data-repeater-list>
-                                                            @foreach ($tour->tourDetails as $index => $detail)
+                                                            @foreach ($tourDetails as $index => $detail)
                                                                 <tr data-repeater-item>
                                                                     <td>
                                                                         <input
                                                                             name="tour[general][details][{{ $index }}][name]"
                                                                             type="text"
                                                                             placeholder="e.g., Timings, What to Bring"
-                                                                            class="field" value="{{ $detail->name }}">
-
+                                                                            class="field"
+                                                                            value="{{ $detail['name'] ?? '' }}">
                                                                     </td>
                                                                     <td>
                                                                         <div class="repeater-table" data-sub-repeater>
                                                                             <table class="table table-bordered">
                                                                                 <tbody data-sub-repeater-list>
                                                                                     @php
-                                                                                        $items = json_decode(
-                                                                                            $detail->items,
-                                                                                            true,
-                                                                                        );
-                                                                                        $urls = json_decode(
-                                                                                            $detail->urls,
-                                                                                            true,
-                                                                                        );
+                                                                                        $items = $detail['items'];
+                                                                                        $urls = $detail['urls'];
                                                                                     @endphp
-                                                                                    @foreach ($items as $subIndex => $item)
+                                                                                    @if (!empty($items))
+                                                                                        @foreach ($items as $subIndex => $item)
+                                                                                            <tr data-sub-repeater-item>
+                                                                                                <td>
+                                                                                                    <input
+                                                                                                        name="tour[general][details][{{ $index }}][items]"
+                                                                                                        type="text"
+                                                                                                        placeholder=""
+                                                                                                        class="field"
+                                                                                                        value="{{ $items }}">
+                                                                                                    <input
+                                                                                                        name="tour[general][details][{{ $index }}][urls]"
+                                                                                                        type="text"
+                                                                                                        placeholder="Url"
+                                                                                                        value="{{ $urls ?? '' }}"
+                                                                                                        class="field mt-3">
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <button type="button"
+                                                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                                                        data-sub-repeater-remove>
+                                                                                                        <i
+                                                                                                            class='bx bxs-trash-alt'></i>
+                                                                                                    </button>
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                        @endforeach
+                                                                                    @else
                                                                                         <tr data-sub-repeater-item>
                                                                                             <td>
                                                                                                 <input
-                                                                                                    name="tour[general][details][{{ $index }}][items][]"
+                                                                                                    name="tour[general][details][{{ $index }}][items]"
                                                                                                     type="text"
                                                                                                     placeholder=""
                                                                                                     class="field"
-                                                                                                    value="{{ $item }}">
+                                                                                                    value="">
                                                                                                 <input
-                                                                                                    name="tour[general][details][{{ $index }}][urls][]"
-                                                                                                    type="url"
+                                                                                                    name="tour[general][details][{{ $index }}][urls]"
+                                                                                                    type="text"
                                                                                                     placeholder="Url"
-                                                                                                    value="{{ isset($urls[$subIndex]) ? $urls[$subIndex] : '' }}"
+                                                                                                    value=""
                                                                                                     class="field mt-3">
                                                                                             </td>
                                                                                             <td>
@@ -379,22 +411,10 @@
                                                                                                 </button>
                                                                                             </td>
                                                                                         </tr>
-                                                                                    @endforeach
+                                                                                    @endif
                                                                                 </tbody>
                                                                             </table>
-                                                                            <button type="button"
-                                                                                class="themeBtn ms-auto"
-                                                                                data-sub-repeater-create>
-                                                                                Add <i class="bx bx-plus"></i>
-                                                                            </button>
                                                                         </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <button type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove>
-                                                                            <i class='bx bxs-trash-alt'></i>
-                                                                        </button>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -523,7 +543,7 @@
                                                 <div class="title">
                                                     <div>Youtube Video <span class="text-danger">*</span>:</div>
                                                 </div>
-                                                <input type="url" name="tour[general][video_link]" class="field"
+                                                <input type="text" name="tour[general][video_link]" class="field"
                                                     value="{{ $tour->video_link }}">
                                                 @error('tour[general][video_link]')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -847,7 +867,7 @@
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
                                                         target="_blank">Google Map Generator</a>
                                                 </div>
-                                                <input type="url" name="itinerary_experience[map_iframe]"
+                                                <input type="text" name="itinerary_experience[map_iframe]"
                                                     class="field"
                                                     value="{{ $itineraryExperience['map_iframe'] ?? '' }}">
                                                 @error('itinerary_experience[map_iframe]')
@@ -2304,7 +2324,7 @@
                                 <div class="form-box__body">
                                     <div class="form-fields">
                                         <label class="title">Import url <span class="text-danger">*</span> :</label>
-                                        <input type="url" name="tour[status][ical_import_url]" class="field"
+                                        <input type="text" name="tour[status][ical_import_url]" class="field"
                                             placeholder="" value="{{ $tour->ical_import_url }}">
                                         @error('tour[status][ical_import_url]')
                                             <div class="text-danger">{{ $message }}</div>
@@ -2312,7 +2332,7 @@
                                     </div>
                                     <div class="form-fields">
                                         <label class="title">Export url <span class="text-danger">*</span> :</label>
-                                        <input type="url" name="tour[status][ical_export_url]" class="field"
+                                        <input type="text" name="tour[status][ical_export_url]" class="field"
                                             placeholder="" value="{{ $tour->ical_export_url }}">
                                         @error('tour[status][ical_export_url]')
                                             <div class="text-danger">{{ $message }}</div>

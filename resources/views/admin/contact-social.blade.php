@@ -16,7 +16,7 @@
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-fields">
                                 <label class="title">Facebook<span class="text-danger">*</span>:</label>
-                                <input type="url" name="FACEBOOK" class="field"
+                                <input type="text" name="FACEBOOK" class="field"
                                     value="{{ $config['FACEBOOK'] ?? '' }} " placeholder="Enter Facebook Address">
                             </div>
                         </div>
@@ -24,7 +24,7 @@
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-fields">
                                 <label class="title">Instagram<span class="text-danger">*</span>:</label>
-                                <input type="url" name="INSTAGRAM" class="field"
+                                <input type="text" name="INSTAGRAM" class="field"
                                     value="{{ $config['INSTAGRAM'] ?? '' }}" placeholder="Enter Instagram Address" required>
                             </div>
                         </div>
@@ -32,7 +32,7 @@
                         <div class="col-lg-6 col-md-6 col-12">
                             <div class="form-fields">
                                 <label class="title">Twitter<span class="text-danger">*</span>:</label>
-                                <input type="url" name="TWITTER" class="field" value="{{ $config['TWITTER'] ?? '' }}"
+                                <input type="text" name="TWITTER" class="field" value="{{ $config['TWITTER'] ?? '' }}"
                                     placeholder="Enter Twitter Address" required>
                             </div>
                         </div>
@@ -41,7 +41,7 @@
                         <div class="form-fields">
                             <label class="title">Youtube<span class="text-danger">*</span>:</label>
                             <div class="relative-div">
-                                <input type="url" name="YOUTUBE"  class="field"
+                                <input type="text" name="YOUTUBE"  class="field"
                                     value="{{ $config['YOUTUBE'] ?? '' }}" placeholder="Enter Youtube link">
                             </div>
                         </div>

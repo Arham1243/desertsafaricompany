@@ -226,21 +226,21 @@
             <div class="col-md-12 mb-4">
                 <div class="form-fields">
                     <label class="title">App store link <span class="text-danger">*</span> :</label>
-                    <input type="url" name="content[app_store_link]" class="field" placeholder=""
+                    <input type="text" name="content[app_store_link]" class="field" placeholder=""
                         data-error="app_store_link" value="{{ $sectionContent->app_store_link ?? '' }}">
                 </div>
             </div>
             <div class="col-md-12 mb-4">
                 <div class="form-fields">
                     <label class="title">play store link <span class="text-danger">*</span> :</label>
-                    <input type="url" name="content[play_store_link]" class="field" placeholder=""
+                    <input type="text" name="content[play_store_link]" class="field" placeholder=""
                         data-error="play_store_link" value="{{ $sectionContent->play_store_link ?? '' }}">
                 </div>
             </div>
             <div class="col-md-12">
                 <div class="form-fields">
                     <label class="title">Huawei link <span class="text-danger">*</span> :</label>
-                    <input type="url" name="content[huawei_link]" class="field" placeholder=""
+                    <input type="text" name="content[huawei_link]" class="field" placeholder=""
                         data-error="huawei_link" value="{{ $sectionContent->huawei_link ?? '' }}">
                 </div>
             </div>

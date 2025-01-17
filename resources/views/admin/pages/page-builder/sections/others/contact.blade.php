@@ -98,7 +98,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input placeholder="https://www.facebook.com/" type="url" class="field"
+                                    <input placeholder="https://www.facebook.com/" type="text" class="field"
                                         name="content[social][url][]" x-model="item.url" />
                                 </td>
                                 <td>

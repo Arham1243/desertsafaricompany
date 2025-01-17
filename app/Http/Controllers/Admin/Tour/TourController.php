@@ -155,8 +155,8 @@ class TourController extends Controller
                     TourDetail::create([
                         'tour_id' => $tour->id,
                         'name' => $detail['name'],
-                        'items' => json_encode($detail['items']),
-                        'urls' => json_encode($detail['urls']),
+                        'items' => $detail['items'],
+                        'urls' => $detail['urls'],
                     ]);
                 }
             }
@@ -428,8 +428,8 @@ class TourController extends Controller
                     TourDetail::create([
                         'tour_id' => $tour->id,
                         'name' => $detail['name'],
-                        'items' => json_encode($detail['items']),
-                        'urls' => json_encode($detail['urls']),
+                        'items' => $detail['items'],
+                        'urls' => $detail['urls'],
                     ]);
                 }
             }

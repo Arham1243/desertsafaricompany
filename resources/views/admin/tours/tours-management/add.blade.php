@@ -317,13 +317,13 @@
                                                                                 <tr data-sub-repeater-item>
                                                                                     <td>
                                                                                         <input
-                                                                                            name="tour[general][details][0][items][]"
+                                                                                            name="tour[general][details][0][items]"
                                                                                             type="text"
                                                                                             placeholder="Item"
                                                                                             class="field">
                                                                                         <input
-                                                                                            name="tour[general][details][0][urls][]"
-                                                                                            type="url"
+                                                                                            name="tour[general][details][0][urls]"
+                                                                                            type="text"
                                                                                             placeholder="Url"
                                                                                             class="field mt-3">
                                                                                     </td>
@@ -463,7 +463,7 @@
                                                 <div class="title">
                                                     <div>Youtube Video <span class="text-danger">*</span>:</div>
                                                 </div>
-                                                <input type="url" name="tour[general][video_link]" class="field"
+                                                <input type="text" name="tour[general][video_link]" class="field"
                                                     value="{{ old('tour[general][video_link]') }}">
                                                 @error('tour[general][video_link]')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -668,7 +668,7 @@
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
                                                         target="_blank">Google Map Generator</a>
                                                 </div>
-                                                <input type="url" name="itinerary_experience[map_iframe]"
+                                                <input type="text" name="itinerary_experience[map_iframe]"
                                                     class="field" value="{{ old('itinerary_experience[map_iframe]') }}">
                                                 @error('itinerary_experience[map_iframe]')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -1842,7 +1842,7 @@
                                 <div class="form-box__body">
                                     <div class="form-fields">
                                         <label class="title">Import url <span class="text-danger">*</span> :</label>
-                                        <input type="url" name="tour[status][ical_import_url]" class="field"
+                                        <input type="text" name="tour[status][ical_import_url]" class="field"
                                             placeholder="">
                                         @error('tour[status][ical_import_url]')
                                             <div class="text-danger">{{ $message }}</div>
@@ -1850,7 +1850,7 @@
                                     </div>
                                     <div class="form-fields">
                                         <label class="title">Export url <span class="text-danger">*</span> :</label>
-                                        <input type="url" name="tour[status][ical_export_url]" class="field"
+                                        <input type="text" name="tour[status][ical_export_url]" class="field"
                                             placeholder="">
                                         @error('tour[status][ical_export_url]')
                                             <div class="text-danger">{{ $message }}</div>

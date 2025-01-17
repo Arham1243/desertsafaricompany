@@ -321,7 +321,7 @@
                                             <label class="title">
                                                 Canonical:
                                             </label>
-                                            <input type="url" name="seo[canonical]" class="field"
+                                            <input type="text" name="seo[canonical]" class="field"
                                                 value="{{ old('seo[canonical]', $seo->canonical ?? '') }}"
                                                 placeholder="Enter URL">
                                             @error('seo[canonical]')

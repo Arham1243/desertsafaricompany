@@ -172,8 +172,10 @@ document.addEventListener("DOMContentLoaded", function () {
         const items = container.querySelectorAll("[data-repeater-item]");
         items.forEach((item, index) => {
             const deleteBtn = item.querySelector("[data-repeater-remove]");
-            deleteBtn.disabled = index === 0;
-        });
+            if (deleteBtn) {
+                deleteBtn.disabled = index === 0;
+            }
+        });        
     }
 
     function updateUploadBox(newItem) {
@@ -237,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateIndices(container) {
         const items = container.querySelectorAll("[data-repeater-item]");
         items.forEach((item, index) => {
-            const pricingFields = ["name", "price", "type", "is_per_person"];
+            const pricingFields = ["name", "price"];
 
             pricingFields.forEach((field) => {
                 const input = item.querySelector(
@@ -249,12 +251,12 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             const itemInputs = item.querySelectorAll(
-                "input[name*='[items][]']"
+                "input[name*='[items]']"
             );
             itemInputs.forEach((input) => {
                 input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
             });
-            const urlsInputs = item.querySelectorAll("input[name*='[urls][]']");
+            const urlsInputs = item.querySelectorAll("input[name*='[urls]']");
             urlsInputs.forEach((input) => {
                 input.name = input.name.replace(/\[\d+\]/, `[${index}]`);
             });
@@ -310,19 +312,22 @@ document.addEventListener("DOMContentLoaded", function () {
             const addBtn = subContainer.querySelector(
                 "[data-sub-repeater-create]"
             );
-            addBtn.addEventListener("click", function () {
-                addSubItem(subContainer);
-            });
-
-            subContainer.addEventListener("click", function (e) {
-                if (e.target.closest("[data-sub-repeater-remove]")) {
-                    removeSubItem(
-                        e.target.closest("[data-sub-repeater-remove]")
-                    );
-                }
-            });
-
-            updateSubDeleteButtonState(subContainer);
+            if(addBtn){
+                addBtn.addEventListener("click", function () {
+                    addSubItem(subContainer);
+                });
+    
+                subContainer.addEventListener("click", function (e) {
+                    if (e.target.closest("[data-sub-repeater-remove]")) {
+                        removeSubItem(
+                            e.target.closest("[data-sub-repeater-remove]")
+                        );
+                    }
+                });
+    
+                updateSubDeleteButtonState(subContainer);
+            }
+            
         }
     }
 

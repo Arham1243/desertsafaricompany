@@ -314,6 +314,24 @@
                         </div>
                     @endif
 
+                    @if ($tour->tourDetails->isNotEmpty())
+                        <div class=tour-content__line></div>
+                        <div class="tour-content__moreDetail">
+                            @foreach ($tour->tourDetails as $i => $detail)
+                                <div class="tour-content__title">
+                                    {{ $detail->name ?? '' }}
+                                </div>
+                                <ul class="tour-content__moreDetail--content">
+                                    <li class="d-block">
+                                        <div>{{ $detail->items ?? '' }}</div>
+                                        <div><a href="{{ sanitizedLink($detail->urls) }}" target="_blank"
+                                                class="link">View</a></div>
+                                    </li>
+                                </ul>
+                            @endforeach
+                        </div>
+                    @endif
+
                     @if ($tour->location_type === 'normal_itinerary')
                         <div class=tour-content__line></div>
                         <div class=itinerary>
