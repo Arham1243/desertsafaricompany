@@ -27,9 +27,9 @@
                 </a>
                 <div class="tour-activity-card__details">
                     <div class="vertical-activity-card__header">
-                        <div class="tour-activity-card__details--title">
+                        <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
                             {{ $tour->title }}
-                        </div>
+                        </a>
                         <div class="product-card__tag"><span title="Receive voucher instantly" class="tag">Receive
                                 voucher instantly</span></div>
                     </div>
@@ -47,7 +47,7 @@
                         </div>
                     </div>
                     <div class="top10-trending-products__price">
-                        {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}
+                        {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}
                     </div>
                 </div>
             </div>

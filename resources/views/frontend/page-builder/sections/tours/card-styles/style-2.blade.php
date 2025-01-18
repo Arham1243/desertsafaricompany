@@ -17,11 +17,11 @@
                 <div class=tour-activity-card__details>
                     <div class=vertical-activity-card__header>
                         <div><span>
-                                {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
+                                {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
                         </div>
-                        <div class="tour-activity-card__details--title">
+                        <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
                             {{ $tour->title }}
-                        </div>
+                        </a>
                     </div>
                     <div class=tour-activity__RL>
                         <div class=card-rating>

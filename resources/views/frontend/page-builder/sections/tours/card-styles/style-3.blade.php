@@ -24,7 +24,8 @@
                         @if ($tour->category)
                             <div><span> {{ $tour->category->name }}</span></div>
                         @endif
-                        <div class="tour-activity-card__details--title">{{ $tour->title }}</div>
+                        <a href="{{ route('tours.details', $tour->slug) }}"
+                            class="tour-activity-card__details--title">{{ $tour->title }}</a>
                     </div>
                     <div class=card-rating>
                         <x-star-rating :rating="$tour->average_rating" />
@@ -43,9 +44,9 @@
                     </div>
                     <div class="baseline-pricing__value baseline-pricing__value--high">
                         <p class=baseline-pricing__from>
-                            @if ($tour->Formated_price_type)
+                            @if ($tour->formated_price_type)
                                 <span
-                                    class="baseline-pricing__from--value green">{{ $tour->Formated_price_type }}</span>
+                                    class="baseline-pricing__from--value green">{{ $tour->formated_price_type }}</span>
                             @else
                                 <span class=baseline-pricing__from--text>From </span>
                                 <span class="baseline-pricing__from--value green">

@@ -10,7 +10,7 @@
                         <div class=price>
                             <span>
 
-                                <b>{{ $tour->Formated_price_type ?? formatPrice($tour->regular_price) . ' From' }}</b>
+                                <b>{{ $tour->formated_price_type ?? formatPrice($tour->regular_price) . ' From' }}</b>
                             </span>
                         </div>
                         <div class=heart-icon>

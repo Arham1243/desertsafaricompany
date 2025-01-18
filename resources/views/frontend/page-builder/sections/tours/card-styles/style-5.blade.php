@@ -25,7 +25,8 @@
                                 <i class="bx bxs-paper-plane"></i>{{ $tour->cities[0]->name }}
                             </div>
                         @endif
-                        <div class="tour-activity-card__details--title"> {{ $tour->title }}</div>
+                        <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
+                            {{ $tour->title }}</a>
                     </div>
                     <div class="tour-listing__info normal-card__info">
                         @if (json_decode($tour->features) && json_decode($tour->features)[0]->title && json_decode($tour->features)[0]->icon)
@@ -37,7 +38,7 @@
                         <div class="baseline-pricing__value baseline-pricing__value--high">
                             <p class="baseline-pricing__from">
                                 <span class="baseline-pricing__from--value">
-                                    {{ $tour->Formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
+                                    {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
                             </p>
                         </div>
                     </div>
