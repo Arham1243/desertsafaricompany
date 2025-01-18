@@ -16,29 +16,26 @@
 
         @switch($tour->price_type)
             @case('normal')
-                @include('frontend.tour.pricing.normal')
+                @include('frontend.tour.price_type.normal')
             @break
 
             @case('water')
-                @include('frontend.tour.pricing.water')
+                @include('frontend.tour.price_type.water')
             @break
 
             @case('promo')
-                @include('frontend.tour.pricing.promo')
+                @include('frontend.tour.price_type.promo')
             @break
 
             @case('private')
-                @include('frontend.tour.pricing.private')
+                @include('frontend.tour.price_type.private')
             @break
 
             @default
                 @php
                     $total_price += $tour->sale_price;
                 @endphp
-                @include('frontend.tour.pricing.simple')
+                @include('frontend.tour.price_type.simple')
         @endswitch
     </div>
 </div>
-@push('js')
-    @include('frontend.tour.pricing.src.js.box')
-@endpush

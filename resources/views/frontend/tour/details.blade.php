@@ -6,7 +6,7 @@
     @endphp
 
     @if (isset($tour->show_phone) && $tour->show_phone === 1)
-        <a href="jtel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-block"><i
+        <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
                 class='bx bxl-whatsapp'></i></a>
     @endif
 
@@ -874,8 +874,11 @@
 
                 </div>
                 <div class=col-md-3>
-                    @include('frontend.tour.pricing.src.box')
-
+                    @include('frontend.vue.main', [
+                        'appId' => 'pricing-box',
+                        'appComponent' => 'pricing-box',
+                        'appJs' => 'pricing-box',
+                    ])
                     <div class=tour-content_book_app>
                         <div class=Why-Book-Us>
                             <h6 class="tour-content__title mb-4">

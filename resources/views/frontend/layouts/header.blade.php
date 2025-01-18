@@ -20,7 +20,11 @@
             <div class="header-btns">
                 <ul class="header-btns__list">
                     <li class="header-btns__item">
-                        @include('frontend.auth.popup')
+                        @include('frontend.vue.main', [
+                            'appId' => 'login-popup',
+                            'appComponent' => 'popup',
+                            'appJs' => 'popup',
+                        ])
                     </li>
 
                     <li class="header-btns__item">

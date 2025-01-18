@@ -57,9 +57,9 @@
 
         @endif
 
-        @include('frontend.tour.pricing.extra_price')
-        @include('frontend.tour.pricing.service_fee')
-        @include('frontend.tour.pricing.total_price')
+        @include('frontend.tour.price_type.extra_price')
+        @include('frontend.tour.price_type.service_fee')
+        @include('frontend.tour.price_type.total_price')
 
         <div class=form-guest__btn>
             @if (Auth::check())

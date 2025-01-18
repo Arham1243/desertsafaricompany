@@ -1,11 +1,4 @@
 <script>
-    const {
-        createApp,
-        ref,
-        onMounted,
-        computed,
-        watch
-    } = Vue;
     @if (!Auth::check())
         const LoginPopup = createApp({
             setup() {
