@@ -83,6 +83,9 @@
                 @if (!Auth::check())
                     showToast('error', 'Please Login to continue.');
                 @endif
+                @if ($isTourInCart)
+                    showToast('error', 'Tour already added to cart.');
+                @endif
                 totalPrice.value = initialTotalPrice;
 
                 promoTourData.value.forEach((promo) => {
