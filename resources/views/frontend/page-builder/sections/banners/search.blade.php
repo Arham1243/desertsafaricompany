@@ -136,8 +136,8 @@
                 });
         }
 
-        const today = new Date();
-        const formattedDate = today.toLocaleDateString("en-US", {
+        const todayForSearch = new Date();
+        const formattedDate = todayForSearch.toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
