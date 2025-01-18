@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\City;
 use App\Models\ImageTable;
 use App\Models\Newsletter;
 use App\Models\Page;
@@ -67,33 +66,6 @@ class IndexController extends Controller
 
         return view('frontend.page-builder.page', compact('page', 'sections', 'reviewDetails'));
 
-    }
-
-    public function cart()
-    {
-        return view('cart')->with('title', 'Cart');
-    }
-
-    public function checkout()
-    {
-        return view('checkout')->with('title', 'Checkout');
-    }
-
-    public function make_slug()
-    {
-        $entries = City::latest()->get();
-        foreach ($entries as $entry) {
-            $slug = $this->createSlug($entry['name'], 'cities');
-            $entry->slug = $slug;
-            $entry->save();
-        }
-
-        return 'Done';
-    }
-
-    public function wishlist()
-    {
-        return view('wishlist')->with('title', 'Wishlist');
     }
 
     public function save_newsletter(Request $request)

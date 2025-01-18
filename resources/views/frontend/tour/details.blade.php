@@ -768,8 +768,6 @@
                         <div class=tour-content__line></div>
                         <div class="main-reviews mb-5">
                             <div class="reviews">
-
-
                                 <div class=tour-content__SubTitle>
                                     Showing {{ $reviews->count() }} total
                                 </div>
@@ -875,9 +873,9 @@
                 </div>
                 <div class=col-md-3>
                     @include('frontend.vue.main', [
-                        'appId' => 'pricing-box',
-                        'appComponent' => 'pricing-box',
-                        'appJs' => 'pricing-box',
+                        'appId' => 'tour-pricing',
+                        'appComponent' => 'tour-pricing',
+                        'appJs' => 'tour-pricing',
                     ])
                     <div class=tour-content_book_app>
                         <div class=Why-Book-Us>

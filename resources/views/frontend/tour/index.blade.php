@@ -120,9 +120,14 @@
                                     </div>
                                     <div class="baseline-pricing__value baseline-pricing__value--high">
                                         <p class=baseline-pricing__from>
-                                            <span class=baseline-pricing__from--text>From </span>
-                                            <span class="baseline-pricing__from--value green">
-                                                {{ formatPrice($tour->regular_price) }}</span>
+                                            @if ($tour->formated_price_type)
+                                                <span
+                                                    class="baseline-pricing__from--value green">{{ $tour->formated_price_type }}</span>
+                                            @else
+                                                <span class=baseline-pricing__from--text>From </span>
+                                                <span class="baseline-pricing__from--value green">
+                                                    {{ formatPrice($tour->regular_price) }}</span>
+                                            @endif
                                         </p>
                                     </div>
                                 </div>

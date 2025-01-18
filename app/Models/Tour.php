@@ -59,6 +59,27 @@ class Tour extends Model
         return $this->enabled_custom_service_fee === 1 ? $this->service_fee_price : 0;
     }
 
+    public function getInitialPriceAttribute()
+    {
+        $total_price = 0;
+        $total_price += $this->sale_price;
+
+        if ($this->enabled_custom_service_fee === 1) {
+            $total_price += $this->service_fee_price;
+        }
+
+        if ($this->is_extra_price_enabled === 1 && $this->extra_prices) {
+            foreach (json_decode($this->extra_prices) as $extra_price) {
+                $total_price += $extra_price->price;
+            }
+        }
+        if (! $this->price_type) {
+            $total_price += $this->sale_price;
+        }
+
+        return $total_price;
+    }
+
     public function getTotalExtraPricesAttribute()
     {
         if ($this->is_extra_price_enabled === 1 && $this->extra_prices) {

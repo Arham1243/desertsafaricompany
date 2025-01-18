@@ -6,8 +6,12 @@
                 Total Price:
             </div>
             <div class="tour-content__pra form-book__pra total-price">
-                <input type="hidden" :value="totalPrice" name="total_price" /> <span class="green"
-                    style="font-weight:700;">@{{ formatPrice }}</span>
+                <input type="hidden"
+                    :value="totalPrice -
+                        {{ $tour->enabled_custom_service_fee === 1 && $tour->service_fee_price ? $tour->service_fee_price : 0 }}"
+                    name="subtotal" />
+                <input type="hidden" :value="totalPrice" name="total_price" />
+                <span class="green" style="font-weight:700;">@{{ formatPrice }}</span>
             </div>
         </div>
     </div>

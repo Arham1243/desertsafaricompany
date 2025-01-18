@@ -32,7 +32,7 @@
 <script>
     const PricingBox = createApp({
         setup() {
-            const totalPrice = ref(parseFloat("{{ $total_price ?? 0 }}"));
+            const totalPrice = ref(parseFloat("{{ $tour->initial_price ?? 0 }}"));
             const priceType = "{{ $tour->price_type ?? 'simple' }}";
 
             const carQuantity = ref(0);
@@ -83,7 +83,7 @@
                 @if (!Auth::check())
                     showToast('error', 'Please Login to continue.');
                 @endif
-                @if ($isTourInCart)
+                @if (isset($isTourInCart) && $isTourInCart)
                     showToast('error', 'Tour already added to cart.');
                 @endif
                 totalPrice.value = initialTotalPrice;
@@ -208,5 +208,5 @@
             };
         },
     });
-    PricingBox.mount('#pricing-box');
+    PricingBox.mount('#tour-pricing');
 </script>

@@ -98,16 +98,6 @@ function closeSideBar() {
     document.getElementById("sideBar").classList.remove("show");
 }
 
-const dropdownToggle = document.querySelector(".drop-down--toggle");
-const sidebarNav = document.querySelector(".sideBar__nav");
-
-dropdownToggle.addEventListener("click", () => {
-    const toggleWrapper = dropdownToggle.querySelector(".toggle-wrapper");
-    if (toggleWrapper) {
-        toggleWrapper.classList.toggle("open");
-    }
-});
-
 document.addEventListener("DOMContentLoaded", function () {
     let images = document.querySelectorAll("img.lazy");
     let observer = new IntersectionObserver(

@@ -87,7 +87,6 @@
                                 href="{{ url()->previous() }}">Try Again</a></strong> with different criteria or explore
                         other options.</p>
                 </div>
-
             </div>
         </div>
     @endif
