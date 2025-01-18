@@ -1718,26 +1718,31 @@
                                                                                 ? json_decode(
                                                                                     $tour->discount_by_number_of_people,
                                                                                 )
+                                                                                : null;
+                                                                            $tourDiscounts = !empty($tourDiscounts)
+                                                                                ? $tourDiscounts
                                                                                 : [
                                                                                     [
                                                                                         'people_from' => '',
                                                                                         'people_to' => '',
-                                                                                        'amount' => '',
+                                                                                        'discount' => '',
                                                                                         'type' => '',
                                                                                     ],
                                                                                 ];
                                                                         @endphp
+
                                                                         <tbody data-repeater-list>
-                                                                            @foreach ($tourDiscounts->people_from as $i => $discount)
+                                                                            @foreach ($tourDiscounts as $discount)
                                                                                 @php
+                                                                                    // Safely access keys and assign default values if missing
                                                                                     $people_from =
-                                                                                        $tourDiscounts->people_from[$i];
+                                                                                        $discount['people_from'] ?? '';
                                                                                     $people_to =
-                                                                                        $tourDiscounts->people_to[$i];
+                                                                                        $discount['people_to'] ?? '';
                                                                                     $discount_price =
-                                                                                        $tourDiscounts->discount[$i];
+                                                                                        $discount['discount'] ?? '';
                                                                                     $discount_type =
-                                                                                        $tourDiscounts->type[$i];
+                                                                                        $discount['type'] ?? '';
                                                                                 @endphp
                                                                                 <tr data-repeater-item>
                                                                                     <td>
@@ -1772,14 +1777,12 @@
                                                                                             name="tour[pricing][discount][type][]">
                                                                                             <option value=""
                                                                                                 selected>Select</option>
-                                                                                            <option
-                                                                                                {{ $discount_type == 'fixed' ? 'selected' : '' }}
-                                                                                                value="fixed">Fixed
-                                                                                            </option>
-                                                                                            <option
-                                                                                                {{ $discount_type == 'percent' ? 'selected' : '' }}
-                                                                                                value="percent">Percent
-                                                                                            </option>
+                                                                                            <option value="fixed"
+                                                                                                {{ $discount_type == 'fixed' ? 'selected' : '' }}>
+                                                                                                Fixed</option>
+                                                                                            <option value="percent"
+                                                                                                {{ $discount_type == 'percent' ? 'selected' : '' }}>
+                                                                                                Percent</option>
                                                                                         </select>
                                                                                     </td>
                                                                                     <td>
@@ -1793,6 +1796,7 @@
                                                                                 </tr>
                                                                             @endforeach
                                                                         </tbody>
+
                                                                     </table>
                                                                     <button type="button" class="themeBtn ms-auto"
                                                                         data-repeater-create>Add
@@ -2013,12 +2017,29 @@
                                                                     ];
 
                                                                     $openHour = $tour->availability_open_hours
-                                                                        ? json_decode($tour->availability_open_hours)
-                                                                        : null;
+                                                                        ? json_decode(
+                                                                            $tour->availability_open_hours,
+                                                                            true,
+                                                                        )
+                                                                        : [];
+
+                                                                    $openHour = array_replace(
+                                                                        array_fill(0, count($days), [
+                                                                            'enabled' => '',
+                                                                            'open_time' => '',
+                                                                            'close_time' => '',
+                                                                        ]),
+                                                                        $openHour,
+                                                                    );
                                                                 @endphp
                                                                 @for ($i = 0; $i < count($days); $i++)
                                                                     @php
                                                                         $day = $days[$i];
+                                                                        $dayData = $openHour[$i] ?? [
+                                                                            'enabled' => '',
+                                                                            'open_time' => '',
+                                                                            'close_time' => '',
+                                                                        ];
                                                                     @endphp
                                                                     <tr>
                                                                         <td>
@@ -2028,7 +2049,7 @@
                                                                                     name="tour[availability][open_hours][{{ $i }}][enabled]"
                                                                                     id="{{ $day }}"
                                                                                     value="1"
-                                                                                    {{ isset($openHour[$i]->enabled) && $openHour[$i]->enabled === '1' ? 'checked' : '' }}>
+                                                                                    {{ isset($dayData['enabled']) && $dayData['enabled'] === '1' ? 'checked' : '' }}>
                                                                                 <label class="form-check-label"
                                                                                     for="{{ $day }}">
                                                                                     Enable
@@ -2049,7 +2070,7 @@
                                                                                 </option>
                                                                                 @foreach ($timeSlots as $slot)
                                                                                     <option value="{{ $slot }}"
-                                                                                        {{ $openHour[$i]->open_time === $slot ? 'selected' : '' }}>
+                                                                                        {{ $dayData['open_time'] === $slot ? 'selected' : '' }}>
                                                                                         {{ date('H:i', strtotime($slot)) }}
                                                                                     </option>
                                                                                 @endforeach
@@ -2062,7 +2083,7 @@
                                                                                 </option>
                                                                                 @foreach ($timeSlots as $slot)
                                                                                     <option value="{{ $slot }}"
-                                                                                        {{ $openHour[$i]->close_time === $slot ? 'selected' : '' }}>
+                                                                                        {{ $dayData['close_time'] === $slot ? 'selected' : '' }}>
                                                                                         {{ date('H:i', strtotime($slot)) }}
                                                                                     </option>
                                                                                 @endforeach

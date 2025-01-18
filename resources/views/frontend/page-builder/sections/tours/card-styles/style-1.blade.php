@@ -21,7 +21,8 @@
                     </div>
                 </a>
                 <div class=card-details>
-                    <a href=# data-tooltip="tooltip" class=card-title title="{{ $tour->title }}">{{ $tour->title }}</a>
+                    <a href={{ route('tours.details', $tour->slug) }} data-tooltip="tooltip" class=card-title
+                        title="{{ $tour->title }}">{{ $tour->title }}</a>
                     @if ($tour->cities->isNotEmpty())
                         <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
                             class=location-details><i class="bx bx-location-plus"></i>

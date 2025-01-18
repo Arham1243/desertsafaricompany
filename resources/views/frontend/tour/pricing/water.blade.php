@@ -41,7 +41,7 @@
                     Water activity
                     <div class="form-guest-search__items">
                         <div class="form-book__title form-guest-search__title">
-                            Selected Time Slot Price
+                            Selected Time Slot
                             <div class="form-guest-search__smallTitle">
                                 <span v-if="timeSlot">
                                     AED @{{ parseFloat(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0).toFixed(2) }}
