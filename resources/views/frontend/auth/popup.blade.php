@@ -9,7 +9,7 @@
     @endif
 </div>
 {{-- <script src="https://cdn.jsdelivr.net/npm/vue@3.x/dist/vue.global.prod.js"></script> --}}
-<script src="https://cdn.jsdelivr.net/npm/vue@3"></script>
+<script src="{{ asset('frontend/assets/js/vue@3-local.js') }}"></script>
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 @section('js')

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Tour;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class CartController extends Controller
 {
@@ -13,11 +14,16 @@ class CartController extends Controller
             ->with('title', 'Cart');
     }
 
-    public function add(Request $request)
+    public function add(Request $request, $tourId)
     {
-        dd($request->all());
+        $cardData = $request->except('_token');
+        $cart = Session::get('cart', []);
 
-        return view('frontend.tour.cart')
-            ->with('title', 'Cart');
+        $cart[$tourId] = [
+            'data' => $cardData,
+        ];
+        Session::put('cart', $cart);
+
+        return redirect()->route('tours.cart.index')->with('notify_success', 'Tour added to cart successfully.');
     }
 }

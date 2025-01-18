@@ -9,6 +9,7 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class TourController extends Controller
 {
@@ -23,11 +24,13 @@ class TourController extends Controller
 
     public function details($slug)
     {
+        $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
+        $isTourInCart = isset($cart[$tour->id]);
         if ($tour) {
-            $data = compact('tour', 'attributes');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }

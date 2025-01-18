@@ -337,13 +337,13 @@
         height: 100%;
     }
 
-    .goUp {
+    .whatsapp-contact {
         font-size: 0.85rem;
         padding: 0.5rem 0.75rem;
         gap: 6px;
     }
 
-    .goUp i {
+    .whatsapp-contact i {
         font-size: 16px;
     }
 

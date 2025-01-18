@@ -1,4 +1,4 @@
-<a href="javascript:void(0)" class="goUp">Whatsapp<i class='bx bx-message-rounded'></i></i></a>
+<a href="javascript:void(0)" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
 
 <header class="header">
     <div class="container">

@@ -6,8 +6,8 @@
     @endphp
 
     @if (isset($tour->show_phone) && $tour->show_phone === 1)
-        <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="goUp d-block">Whatsapp<i
-                class='bx bx-message-rounded'></i></i></a>
+        <a href="jtel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-block"><i
+                class='bx bxl-whatsapp'></i></a>
     @endif
 
     <div class=tour-details id=tour-details.php>
@@ -994,7 +994,7 @@
 @endsection
 @push('css')
     <style type="text/css">
-        .goUp {
+        .whatsapp-contact {
             display: none;
         }
 

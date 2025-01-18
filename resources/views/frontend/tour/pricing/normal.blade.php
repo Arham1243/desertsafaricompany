@@ -18,7 +18,7 @@
                 Start Date
             </div>
             <div class="tour-content__title form-book__title">
-                <input type="date" class="form-book__date" name="start_date" required>
+                <input type="date" class="form-book__date" name="start_date" required id="start_date">
             </div>
 
         </div>
@@ -40,9 +40,11 @@
                                 </button>
                                 <input readonly type="number"
                                     class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
-                                    min="{{ $normalPrice->min_person ?? 0 }}" max="{{ $normalPrice->max_person }}"
                                     v-model="normalTourData['{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}'].quantity"
                                     name="price[{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}][quantity]">
+                                <input type="hidden"
+                                    name="price[{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}][price]"
+                                    value="{{ $normalPrice->price }}">
                                 <button class="quantity-counter__btn" type="button"
                                     @click="updateQuantity('plus', '{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}')">
                                     <i class='bx bx-chevron-up'></i>
@@ -60,9 +62,17 @@
         @include('frontend.tour.pricing.total_price')
 
         <div class=form-guest__btn>
-            <button class="app-btn themeBtn" :disabled="!isSubmitEnabled"
-                @if (!$isDataValid) disabled @endif>Book
-                Now</button>
+            @if (Auth::check())
+                @if (!$isTourInCart)
+                    <button class="app-btn themeBtn w-100" :disabled="!isSubmitEnabled"
+                        @if (!$isDataValid) disabled @endif>Book
+                        Now</button>
+                @else
+                    <a href="{{ route('tours.cart.index') }}" class="app-btn themeBtn w-100">View Cart</a>
+                @endif
+            @else
+                <button class="app-btn themeBtn w-100" disabled>Login to Continue</button>
+            @endif
         </div>
 
         @if ($isDataValid)

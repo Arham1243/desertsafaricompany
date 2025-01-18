@@ -1397,28 +1397,27 @@ a.service-wishlis i {
     margin-top: 18px;
     padding: 0.3rem 0.3rem 0.3rem 2rem;
 }
-.goUp {
+.whatsapp-contact {
     color: #fff;
-    font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--color-primary);
-    border-radius: 100px;
+    background: #08F077;
+    border-radius: 100%;
     position: fixed;
-    right: 2rem;
-    bottom: 3.25rem;
+    left: 1.25rem;
+    bottom: 1.25rem;
     z-index: 100;
-    animation: goUp 5s infinite linear;
-    padding: 0.55rem 1.5rem;
-    gap: 10px;
+    width: 50px;
+    aspect-ratio: 1/1;
+    box-shadow: 0 0 0 2px #fff,0 0 0 3px #08F077;
 }
 
-.goUp i {
-    font-size: 17px;
+.whatsapp-contact i {
+    font-size: 33px;
 }
 
-.goUp:hover {
+.whatsapp-contact:hover {
     color: #fff;
 }
 
@@ -1919,6 +1918,7 @@ img.ocizgi.imgFluid {
     width: fit-content;
     background: var(--color-primary);
     color: #fff;
+    text-align: center;
     border: none;
     border-radius: 0.45rem;
     padding: 1rem 1.5rem;
@@ -2292,10 +2292,13 @@ span.baseline-pricing__value--low {
 input.form-book__date {
     border: none;
     outline: none;
-    font-size: 0.85rem;
+    font-size: 0.75rem;
+    color: #000;
+    font-weight: 600;
     width: 100%;
     border-bottom: 2px solid #e4e4e4;
-    padding: 0.5rem 0;
+    padding: 0.25rem 0;
+    margin-top: 0.35rem;
 }
 .baseline-pricing__category {
     font-size: 0.875rem;

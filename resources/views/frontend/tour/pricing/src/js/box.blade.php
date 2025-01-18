@@ -55,7 +55,34 @@
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
 
+            const showToast = (type, message) => {
+                if (type === 'error') {
+                    $.toast({
+                        heading: 'Error!',
+                        position: 'bottom-right',
+                        loaderBg: '#ff6849',
+                        icon: 'error',
+                        hideAfter: 5000,
+                        text: message,
+                        stack: 6
+                    });
+                } else {
+                    $.toast({
+                        text: message,
+                        heading: 'Success!',
+                        position: 'bottom-right',
+                        loaderBg: '#ff6849',
+                        icon: 'success',
+                        hideAfter: 2000,
+                        stack: 6
+                    });
+                }
+            }
+
             const updateTotalPrice = () => {
+                @if (!Auth::check())
+                    showToast('error', 'Please Login to continue.');
+                @endif
                 totalPrice.value = initialTotalPrice;
 
                 promoTourData.value.forEach((promo) => {

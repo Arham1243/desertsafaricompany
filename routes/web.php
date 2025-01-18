@@ -50,7 +50,7 @@ Route::prefix('tours')->name('tours.')->group(function () {
     });
 
     Route::prefix('cart')->name('cart.')->group(function () {
-        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::get('/index', [CartController::class, 'index'])->name('index');
         Route::post('add/{tour}', [CartController::class, 'add'])->name('add');
         Route::post('remove/{tour}', [CartController::class, 'remove'])->name('remove');
         Route::post('update', [CartController::class, 'update'])->name('update');
@@ -58,13 +58,13 @@ Route::prefix('tours')->name('tours.')->group(function () {
     });
 
     Route::prefix('checkout')->name('checkout.')->group(function () {
-        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::get('/index', [CheckoutController::class, 'index'])->name('index');
         Route::post('payment/{method}', [CheckoutController::class, 'processPayment'])->name('payment');
         Route::post('complete', [CheckoutController::class, 'complete'])->name('complete');
     });
 
     Route::prefix('favorites')->name('favorites.')->group(function () {
-        Route::get('/', [FavoriteController::class, 'index'])->name('index');
+        Route::get('/index', [FavoriteController::class, 'index'])->name('index');
         Route::post('add/{tour}', [FavoriteController::class, 'add'])->name('add');
         Route::post('remove/{tour}', [FavoriteController::class, 'remove'])->name('remove');
     });

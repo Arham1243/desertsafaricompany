@@ -61,7 +61,7 @@
                 Start Date
             </div>
             <div class="tour-content__title form-book__title">
-                <input type="date" class="form-book__date" name="start_date" required>
+                <input type="date" class="form-book__date" name="start_date" required id="start_date">
             </div>
 
         </div>
@@ -103,9 +103,17 @@
         @include('frontend.tour.pricing.total_price')
 
         <div class=form-guest__btn>
-            <button class="app-btn themeBtn" :disabled="!isSubmitEnabled"
-                @if (!$isDataValid) disabled @endif>Book
-                Now</button>
+            @if (Auth::check())
+                @if (!$isTourInCart)
+                    <button class="app-btn themeBtn w-100" :disabled="!isSubmitEnabled"
+                        @if (!$isDataValid) disabled @endif>Book
+                        Now</button>
+                @else
+                    <a href="{{ route('tours.cart.index') }}" class="app-btn themeBtn w-100">View Cart</a>
+                @endif
+            @else
+                <button class="app-btn themeBtn w-100" disabled>Login to Continue</button>
+            @endif
         </div>
 
         @if ($isDataValid)
