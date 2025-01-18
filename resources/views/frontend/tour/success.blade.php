@@ -11,7 +11,7 @@
                     </div>
                 </div>
                 <p>Thank you for your purchase! Your payment was processed successfully. <br> You can now explore our
-                    exciting and plan your next
+                    exciting tours and plan your next
                     adventure.</p>
                 <a href="{{ route('tours.index') }}" class="primary-btn mx-auto">Browse Tours</a>
 
