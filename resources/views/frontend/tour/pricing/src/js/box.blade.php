@@ -53,6 +53,7 @@
             const initialTotalPrice = parseFloat("{{ $total_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
+            const isSubmitEnabled = ref(false);
 
             const updateTotalPrice = () => {
                 totalPrice.value = initialTotalPrice;
@@ -77,8 +78,18 @@
                     const slotPrice = waterPriceMap.value[timeSlot.value] || 0;
                     totalPrice.value += slotPrice * timeSlotQuantity.value;
                 }
+                updateSubmitButtonState();
+
             };
 
+
+            const updateSubmitButtonState = () => {
+                isSubmitEnabled.value = (
+                    timeSlotQuantity.value > 0 ||
+                    Object.values(normalTourData.value).some(data => data.quantity > 0) ||
+                    promoTourData.value.some(promo => promo.quantity > 0)
+                );
+            };
 
             const updatePrivateQuantity = (action) => {
                 const previousCars = Math.ceil(carQuantity.value / carMax);
@@ -162,7 +173,8 @@
                 timeSlotQuantity,
                 waterPrices,
                 waterPricesTimeSlots,
-                getTimeLeft
+                getTimeLeft,
+                isSubmitEnabled
             };
         },
     });

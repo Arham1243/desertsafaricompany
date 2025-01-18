@@ -6,7 +6,10 @@ use App\Http\Controllers\Frontend\Locations\CityController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchSuggestionController;
+use App\Http\Controllers\Frontend\Tour\CartController;
 use App\Http\Controllers\Frontend\Tour\CategoryController;
+use App\Http\Controllers\Frontend\Tour\CheckoutController;
+use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +48,27 @@ Route::prefix('tours')->name('tours.')->group(function () {
     Route::prefix('category')->name('category.')->group(function () {
         Route::get('{slug}', [CategoryController::class, 'details'])->name('details');
     });
+
+    Route::prefix('cart')->name('cart.')->group(function () {
+        Route::get('/', [CartController::class, 'index'])->name('index');
+        Route::post('add/{tour}', [CartController::class, 'add'])->name('add');
+        Route::post('remove/{tour}', [CartController::class, 'remove'])->name('remove');
+        Route::post('update', [CartController::class, 'update'])->name('update');
+        Route::get('checkout', [CartController::class, 'checkout'])->name('checkout');
+    });
+
+    Route::prefix('checkout')->name('checkout.')->group(function () {
+        Route::get('/', [CheckoutController::class, 'index'])->name('index');
+        Route::post('payment/{method}', [CheckoutController::class, 'processPayment'])->name('payment');
+        Route::post('complete', [CheckoutController::class, 'complete'])->name('complete');
+    });
+
+    Route::prefix('favorites')->name('favorites.')->group(function () {
+        Route::get('/', [FavoriteController::class, 'index'])->name('index');
+        Route::post('add/{tour}', [FavoriteController::class, 'add'])->name('add');
+        Route::post('remove/{tour}', [FavoriteController::class, 'remove'])->name('remove');
+    });
+
 });
 
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');

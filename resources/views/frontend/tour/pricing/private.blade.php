@@ -9,7 +9,8 @@
 
     <div class=form-book>
         @if ($isDataValid)
-            <form class=form-book_details>
+            <form class="form-book_details" method="POST" action="{{ route('tours.cart.add', $tour->id) }}">
+                @csrf
             @else
                 <div class=form-book_details>
         @endif
@@ -19,6 +20,7 @@
             <div class="tour-content_book_pricing d-block">
                 <span class="tour-content__pra m-0">Min: {{ $tour->privatePrices->min_person }}</span>
                 <span class="tour-content__pra m-0 ms-2">Max: {{ $tour->privatePrices->max_person }}</span>
+                <span class="tour-content__pra m-0 ms-2">Persons</span>
                 <div class="tour-content__title tour-content_book__realPrice mt-0">
                     Car Price {{ formatPrice($tour->privatePrices->car_price) }}
                 </div>
@@ -65,7 +67,10 @@
         @include('frontend.tour.pricing.total_price')
 
         <div class=form-guest__btn>
-            <button class="app-btn themeBtn" @if (!$isDataValid) disabled @endif>Book Now</button>
+            <button class="app-btn themeBtn" :disabled="!carQuantity > 0" @if (!$isDataValid)
+                disabled
+                @endif>Book
+                Now</button>
         </div>
         @if ($isDataValid)
             </form>

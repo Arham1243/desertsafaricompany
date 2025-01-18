@@ -6,7 +6,8 @@
 
     <div class=form-book>
         @if ($isDataValid)
-            <form class=form-book_details>
+            <form class="form-book_details" method="POST" action="{{ route('tours.cart.add', $tour->id) }}">
+                @csrf
             @else
                 <div class=form-book_details>
         @endif
@@ -70,7 +71,9 @@
         @include('frontend.tour.pricing.total_price')
 
         <div class=form-guest__btn>
-            <button class="app-btn themeBtn" @if (!$isDataValid) disabled @endif>Book Now</button>
+            <button class="app-btn themeBtn" :disabled="!isSubmitEnabled"
+                @if (!$isDataValid) disabled @endif>Book
+                Now</button>
         </div>
         @if ($isDataValid)
             </form>
