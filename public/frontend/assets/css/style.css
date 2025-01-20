@@ -5948,6 +5948,9 @@ span.select2-dropdown.select2-dropdown--below {
 .green {
     color: green;
 }
+.red {
+    color: red;
+}
 .darrow img {
     filter: brightness(0);
 }

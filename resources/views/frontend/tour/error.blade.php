@@ -8,13 +8,11 @@
                         <i class='bx bxs-x-circle'></i>
                     </div>
                     <div class="heading">
-                        Payment Canceled
+                        Something went wrong during the process
                     </div>
                 </div>
-                <p>Your payment has been canceled. If you face any issues with the payment,<br> please contact our support
-                    at <strong><a href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.
-                </p>
-
+                <p>An error occurred, please contact our support at <strong><a
+                            href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.</p>
             </div>
         </div>
     </div>

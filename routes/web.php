@@ -65,6 +65,7 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/', [CheckoutController::class, 'store'])->name('store');
     Route::get('/success', [CheckoutController::class, 'success'])->name('success');
     Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('cancel');
+    Route::get('/error', [CheckoutController::class, 'error'])->name('error');
 });
 
 require __DIR__.'/auth.php';
