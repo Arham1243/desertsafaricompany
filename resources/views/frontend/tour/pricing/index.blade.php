@@ -9,25 +9,25 @@
 
     @switch($tour->price_type)
         @case('normal')
-            @include('frontend.tour.price_type.normal')
+            @include('frontend.tour.pricing.types.normal')
         @break
 
         @case('water')
-            @include('frontend.tour.price_type.water')
+            @include('frontend.tour.pricing.types.water')
         @break
 
         @case('promo')
-            @include('frontend.tour.price_type.promo')
+            @include('frontend.tour.pricing.types.promo')
         @break
 
         @case('private')
-            @include('frontend.tour.price_type.private')
+            @include('frontend.tour.pricing.types.private')
         @break
     @endswitch
 
-    @include('frontend.tour.price_type.extra_price')
-    @include('frontend.tour.price_type.service_fee')
-    @include('frontend.tour.price_type.total_price')
+    @include('frontend.tour.pricing.components.extra_price')
+    @include('frontend.tour.pricing.components.service_fee')
+    @include('frontend.tour.pricing.components.total_price')
 
     <div class=form-guest__btn>
         @if (Auth::check())

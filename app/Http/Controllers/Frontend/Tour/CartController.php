@@ -15,7 +15,7 @@ class CartController extends Controller
         $tours = Tour::where('status', 'publish')->get();
         $data = compact('tours', 'cart');
 
-        return view('frontend.tour.cart')
+        return view('frontend.tour.cart.index')
             ->with('title', 'Cart')->with($data);
     }
 

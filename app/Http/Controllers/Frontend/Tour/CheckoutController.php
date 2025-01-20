@@ -20,7 +20,7 @@ class CheckoutController extends Controller
             $tours = Tour::where('status', 'publish')->get();
             $data = compact('tours', 'cart');
 
-            return view('frontend.tour.checkout')
+            return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')->with($data);
         }
 
@@ -321,7 +321,7 @@ class CheckoutController extends Controller
 
         Session::forget('cart');
 
-        return view('frontend.tour.success')
+        return view('frontend.tour.checkout.success')
             ->with('title', 'Payment successful!');
     }
 
@@ -334,7 +334,7 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
-        return view('frontend.tour.cancel')
+        return view('frontend.tour.checkout.cancel')
             ->with('title', 'Payment failed');
     }
 
@@ -347,7 +347,7 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
-        return view('frontend.tour.error')
+        return view('frontend.tour.checkout.error')
             ->with('title', 'Something went wrong during the process');
     }
 }

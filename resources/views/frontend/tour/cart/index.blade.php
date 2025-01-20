@@ -15,11 +15,11 @@
                                 $tour = $tours->where('id', $tourId)->first();
                             @endphp
                             <div class="cart__product">
-                                <a href="{{ route('tours.details', $tour->slug) }}" class="cart__productImg">
+                                <div class="cart__productImg">
                                     <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                         loading="lazy">
-                                </a>
+                                </div>
                                 <div class="cart__productContent">
                                     <div>
                                         <div class="cart__productDescription">

@@ -88,11 +88,11 @@
                 @if ($isDataValid)
                     <form method="POST" action="{{ route('cart.add', $tour->id) }}">
                         @csrf
-                        @include('frontend.tour.price')
+                        @include('frontend.tour.pricing.index')
                     </form>
                 @else
                     <div class="form-book_details">
-                        @include('frontend.tour.price')
+                        @include('frontend.tour.pricing.index')
                     </div>
                 @endif
             </div>

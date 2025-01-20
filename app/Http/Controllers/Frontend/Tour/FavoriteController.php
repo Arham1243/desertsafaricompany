@@ -8,7 +8,7 @@ class FavoriteController extends Controller
 {
     public function index()
     {
-        return view('frontend.tour.favorite')
+        return view('frontend.tour.cart.favorite')
             ->with('title', 'Favorite');
     }
 }
