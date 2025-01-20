@@ -41,8 +41,11 @@ class CheckoutController extends Controller
 
         if ($request->payment_type === 'stripe') {
             $response = $this->createStripeSession($request, $order);
+            $payment_error = 'Failed to create Stripe session. Please try again.';
             if (! $response || ! isset($response->id)) {
-                return redirect()->route('checkout.error', ['order_id' => $order->id])->with('error', 'Failed to create Stripe session. Please try again.');
+                return redirect()->route('checkout.error', ['order_id' => $order->id])
+                    ->with('notify_error', $payment_error)
+                    ->with('error_message', $payment_error); // Pass error to the error page
             }
             Order::where('id', $order->id)->update([
                 'stripe_session_id' => $response->id,
@@ -55,16 +58,21 @@ class CheckoutController extends Controller
             if ($response instanceof \Illuminate\Http\JsonResponse) {
                 $response = $response->getData(true);
             }
+
             if (isset($response['error'])) {
-                return redirect()->route('checkout.cancel', ['order_id' => $order->id])
-                    ->with('error', $response['error']);
+                return redirect()->route('checkout.error', ['order_id' => $order->id])
+                    ->with('notify_error', $response['error'])
+                    ->with('error_message', $response['error']); // Pass error to the error page
             }
 
             return redirect($response['redirect_url']);
         } elseif ($request->payment_type === 'tabby') {
             $response = $this->createTabbySession($request, $order);
+
             if (isset($response['error'])) {
-                return redirect()->route('checkout.error', ['order_id' => $order->id])->with('notify_error', $response['error']);
+                return redirect()->route('checkout.error', ['order_id' => $order->id])
+                    ->with('notify_error', $response['error'])
+                    ->with('error_message', $response['error']); // Pass error to the error page
             }
 
             return redirect($response);
@@ -325,8 +333,6 @@ class CheckoutController extends Controller
             'payment_status' => 'failed',
             'payment_date' => now(),
         ]);
-
-        Session::forget('cart');
 
         return view('frontend.tour.cancel')
             ->with('title', 'Payment failed');

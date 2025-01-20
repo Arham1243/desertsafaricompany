@@ -11,7 +11,12 @@
                         Something went wrong during the process
                     </div>
                 </div>
-                <p>An error occurred, please contact our support at <strong><a
+                @if (session('notify_error'))
+                    <p class="my-2">
+                        <strong>{{ session('notify_error') }}</strong>
+                    </p>
+                @endif
+                <p> please contact our support at <strong><a
                             href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.</p>
             </div>
         </div>
