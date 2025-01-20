@@ -7,11 +7,24 @@
                     <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                     <div class="price-details">
-                        <div class="heart-icon">
-                            <div class="service-wishlis">
-                                <i class="bx bx-heart"></i>
+                        @if (Auth::check())
+                            <div class="heart-icon">
+                                @php
+                                    $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
+                                @endphp
+                                @if ($isFavorited)
+                                    <div class="service-wishlist">
+                                        <i class="bx bxs-heart"></i>
+                                    </div>
+                                @else
+                                    <form class="service-wishlist"
+                                        action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                                        @csrf
+                                        <button type="submit"> <i class="bx bx-heart"></i></button>
+                                    </form>
+                                @endif
                             </div>
-                        </div>
+                        @endif
                         <div class="sale_info">
                             38%
                         </div>

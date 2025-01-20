@@ -950,7 +950,7 @@
                                             {{ $relatedTour->cities[0]->name }}
                                         </div>
                                         <div class=heart-icon>
-                                            <div class=service-wishlis>
+                                            <div class=service-wishlist>
                                                 <i class="bx bx-heart"></i>
                                             </div>
                                         </div>

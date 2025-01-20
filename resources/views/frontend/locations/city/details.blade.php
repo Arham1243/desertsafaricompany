@@ -117,7 +117,7 @@
                                             </span>
                                         </div>
                                         <div class=heart-icon>
-                                            <div class=service-wishlis>
+                                            <div class=service-wishlist>
                                                 <i class="bx bx-heart"></i>
                                             </div>
                                         </div>
@@ -179,7 +179,7 @@
                                     loading="lazy">
                                 <div class=price-details>
                                     <div class=heart-icon>
-                                        <div class=service-wishlis>
+                                        <div class=service-wishlist>
                                             <i class="bx bx-heart"></i>
                                         </div>
                                     </div>

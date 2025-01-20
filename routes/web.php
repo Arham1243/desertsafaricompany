@@ -49,8 +49,8 @@ Route::prefix('tours')->name('tours.')->group(function () {
     });
     Route::prefix('favorites')->name('favorites.')->group(function () {
         Route::get('/index', [FavoriteController::class, 'index'])->name('index');
-        Route::post('add/{tour}', [FavoriteController::class, 'add'])->name('add');
-        Route::post('remove/{tour}', [FavoriteController::class, 'remove'])->name('remove');
+        Route::post('/add/{tour}', [FavoriteController::class, 'add'])->name('add');
+        Route::post('/remove/{tour}', [FavoriteController::class, 'remove'])->name('remove');
     });
 });
 

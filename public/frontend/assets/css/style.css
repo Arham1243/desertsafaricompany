@@ -1127,7 +1127,7 @@ a.card-title:hover {
     justify-content: center;
 }
 
-.heart-icon a.service-wishlis {
+.heart-icon a.service-wishlist {
     width: 31px;
     aspect-ratio: 1/1;
     display: flex;
@@ -1288,21 +1288,26 @@ img.ocizgi.imgFluid {
     font-size: 11px;
 }
 
-a.service-wishlis {
+.service-wishlist {
     border-radius: 6px;
     background-color: #fff;
     color: #000;
 }
 
-a.service-wishlis i {
+.service-wishlist i {
     font-size: 18px;
+}
+.service-wishlist button {
+    outline: none;
+    background: none;
+    outline: none;
 }
 
 .card-content:hover {
     border-color: rgba(33, 109, 244, 0.71);
 }
 
-.heart-icon .service-wishlis {
+.service-wishlist {
     width: 25px;
     aspect-ratio: 1/1;
     background: #fff;
@@ -6339,3 +6344,10 @@ span.select2-dropdown.select2-dropdown--below {
     font-size: 20px;
 }
   /* checkout */
+  .heart-icon .service-wishlist button {
+    background: none;
+    border: none;
+    outline: none;
+}.service-wishlist i{
+    color: red;
+}
