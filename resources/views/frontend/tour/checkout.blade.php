@@ -165,7 +165,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                     </div>
                     <div class="col-lg-5">
                         @foreach ($cart as $tourId => $item)
@@ -261,6 +260,13 @@
                                                 <div class="title">Service Fee</div>
                                                 <div class="price">{{ formatPrice($combined['service_fee']) }}</div>
                                             </div>
+                                            <div class="cart-coupon">
+                                                <form>
+                                                    <input type="text" id="coupon" name="coupon_name"
+                                                        placeholder="Enter code" class="coupon-input">
+                                                    <button type="button" class="apply-btn couponcode">Apply</button>
+                                                </form>
+                                            </div>
                                             <hr>
                                             <input type="hidden" name="total_amount"
                                                 value="{{ $combined['total_price'] }}">
@@ -268,6 +274,7 @@
                                                 <div class="title">Total Payable</div>
                                                 <div class="price">{{ formatPrice($combined['total_price']) }}</div>
                                             </div>
+                                            <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                                         </div>
                                     </div>
                                 </div>
