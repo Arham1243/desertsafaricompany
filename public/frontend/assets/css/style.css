@@ -6219,6 +6219,8 @@ span.select2-dropdown.select2-dropdown--below {
     transition: all 600ms;
     cursor: pointer;
     margin-bottom: 0;
+    display: flex;
+    gap: 1rem;
   }
   .payment-option__input {
     position: absolute;
@@ -6233,8 +6235,7 @@ span.select2-dropdown.select2-dropdown--below {
   .payment-option__box .title-wrapper {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 1.1rem;
+    gap: 1.1rem;
   }
   
   .payment-option__box .title {
@@ -6243,7 +6244,6 @@ span.select2-dropdown.select2-dropdown--below {
   }
   
   .payment-option__box .content {
-    padding: 0 2.25rem;
     font-size: 0.8rem;
     font-weight: 500;
     opacity: 0.65;
@@ -6282,5 +6282,15 @@ span.select2-dropdown.select2-dropdown--below {
 
 .check-icon {
     font-size: 4.75rem;
+}.payment-option__box .icon {
+    width: 90px;
+    height: 49px;
+    background: #fff;
+    border-radius: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ccc;
+    padding: 0.5rem;
 }
   /* checkout */

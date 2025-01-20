@@ -14,11 +14,15 @@ class CheckoutController extends Controller
     public function index()
     {
         $cart = Session::get('cart', []);
-        $tours = Tour::where('status', 'publish')->get();
-        $data = compact('tours', 'cart');
+        if (! empty($cart)) {
+            $tours = Tour::where('status', 'publish')->get();
+            $data = compact('tours', 'cart');
 
-        return view('frontend.tour.checkout')
-            ->with('title', 'Checkout')->with($data);
+            return view('frontend.tour.checkout')
+                ->with('title', 'Checkout')->with($data);
+        }
+
+        return redirect()->back()->with('notify_error', 'Your cart is empty.');
     }
 
     public function store(Request $request)
