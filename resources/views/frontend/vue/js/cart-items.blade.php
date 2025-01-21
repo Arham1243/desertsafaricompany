@@ -1,5 +1,30 @@
 @php
     $cartTours = $tours->whereIn('id', array_keys($cart['tours']));
+    $toursPrivatePrices = $tours
+        ->filter(function ($tour) {
+            return $tour->price_type === 'private'; // Only process tours with price_type 'private'
+        })
+        ->mapWithKeys(function ($tour) use ($cart) {
+            $quantity = $cart['tours'][$tour->id]['data']['price']['persons']['quantity'] ?? 0;
+
+            $price = $tour->privatePrices; // Assuming privatePrices is a single model instance
+
+            if (!$price) {
+                return [$tour->id => null]; // Handle case where privatePrices is null
+            }
+
+            return [
+                $tour->id => [
+                    'persons' => [
+                        'car_price' => $price->car_price,
+                        'min_person' => $price->min_person,
+                        'max_person' => $price->max_person,
+                        'quantity' => (int) $quantity,
+                    ],
+                ],
+            ];
+        });
+
     $toursNormalPrices = $tours->mapWithKeys(function ($tour) use ($cart) {
         return [
             $tour->id => $tour->normalPrices->mapWithKeys(function ($price) use ($tour, $cart) {
@@ -63,6 +88,8 @@
             const cartToursData = ref(@json($cartTours));
             const promoToursData = ref(@json($promoToursData));
             const toursNormalPrices = ref(@json($toursNormalPrices));
+            const toursPrivatePrices = ref(@json($toursPrivatePrices));
+
             const totalPrice = ref(cart.value.total_price);
 
             const cartTours = computed(() =>
@@ -74,6 +101,10 @@
             const getNormalTourPricing = (tourId) => {
                 return toursNormalPrices.value[tourId] || [];
             }
+            const getPrivateTourPricing = (tourId) => {
+                return toursPrivatePrices.value[tourId] || {}
+            };
+
             const removeTour = (id) => {
                 const tour = cart.value.tours[id];
                 if (tour) {
@@ -204,7 +235,8 @@
                 formatNameForInput,
                 getPromoTourPricing,
                 getNormalTourPricing,
-                toursNormalPrices
+                toursNormalPrices,
+                getPrivateTourPricing
             };
         },
     });

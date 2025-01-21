@@ -1,4 +1,4 @@
-<div v-if="tour.is_person_type_enabled">
+<template v-if="tour.is_person_type_enabled">
     <div class="form-group form-guest-search" v-for="(normalPrice, index) in getNormalTourPricing(tour.id)"
         :key="index">
         <div class="tour-content__pra form-book__pra form-guest-search__details">
@@ -23,4 +23,4 @@
             </div>
         </div>
     </div>
-</div>
+</template>
