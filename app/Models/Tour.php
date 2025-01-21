@@ -12,7 +12,7 @@ class Tour extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $appends = ['average_rating'];
+    protected $appends = ['average_rating', 'formated_price_type'];
 
     public function category()
     {
@@ -62,7 +62,6 @@ class Tour extends Model
     public function getInitialPriceAttribute()
     {
         $total_price = 0;
-        $total_price += $this->sale_price;
 
         if ($this->enabled_custom_service_fee === 1) {
             $total_price += $this->service_fee_price;

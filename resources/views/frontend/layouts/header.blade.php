@@ -37,8 +37,8 @@
                     <li class="header-btns__item">
                         <a href="{{ route('cart.index') }}" title="Cart" class="li__link">
                             <span class="total">
-                                @if (isset($cart))
-                                    {{ count($cart) }}
+                                @if (isset($cart) && isset($cart['tours']))
+                                    {{ count($cart['tours']) }}
                                 @else
                                     0
                                 @endif

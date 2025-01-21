@@ -84,6 +84,17 @@
                     </div>
                 </div>
             @endif
+            @if ($tour->price_type === 'private')
+                <div class="tour-content_book_pricing">
+                    <div class="baseline-pricing__value">
+                        Min: {{ $tour->privatePrices->min_person }}
+                    </div>
+                    <div class="baseline-pricing__value">
+                        Max: {{ $tour->privatePrices->max_person }}
+                        Persons
+                    </div>
+                </div>
+            @endif
             <div class=form-book>
                 @if ($isDataValid)
                     <form method="POST" action="{{ route('cart.add', $tour->id) }}">

@@ -5,12 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Config;
 use App\Models\ImageTable;
 use App\Models\Popup;
+use Illuminate\Support\Facades\Session;
 
 abstract class Controller
 {
     public function __construct()
     {
         $logo = ImageTable::where('table_name', 'logo')->latest()->first();
+        $cart = Session::get('cart', []);
 
         $currentUrl = request()->path();
 
@@ -32,6 +34,7 @@ abstract class Controller
         }
 
         View()->share('logo', $logo);
+        View()->share('cart', $cart);
         View()->share('popup', $matchedPopup);
     }
 

@@ -22,22 +22,40 @@ class CartController extends Controller
     public function add(Request $request, $tourId)
     {
         $cardData = $request->except('_token');
-        $cart = Session::get('cart', []);
+        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
 
-        $cart[$tourId] = [
-            'data' => $cardData,
-        ];
-        Session::put('cart', $cart);
+        if (! isset($cart['tours'][$tourId])) {
+            if (! isset($cardData['subtotal'])) {
+                $cardData['subtotal'] = 0;
+            }
+            if (! isset($cardData['service_fee'])) {
+                $cardData['service_fee'] = 0;
+            }
+            if (! isset($cardData['total_price'])) {
+                $cardData['total_price'] = $cardData['subtotal'] + $cardData['service_fee'];
+            }
 
-        return redirect()->route('cart.index')->with('notify_success', 'Tour added to cart successfully.');
+            $cart['tours'][$tourId] = [
+                'data' => $cardData,
+            ];
+
+            Session::put('cart', $this->updateCombinedTotals($cart, $request, 'add'));
+
+            return redirect()->route('cart.index')->with('notify_success', 'Tour added to cart successfully.');
+        } else {
+            return redirect()->route('cart.index')->with('notify_error', 'Tour already in cart.');
+        }
     }
 
     public function remove($tourId)
     {
-        $cart = Session::get('cart', []);
+        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
 
-        if (isset($cart[$tourId])) {
-            unset($cart[$tourId]);
+        if (isset($cart['tours'][$tourId])) {
+
+            $cart = $this->updateCombinedTotals($cart, $tourId, 'remove');
+
+            unset($cart['tours'][$tourId]);
 
             Session::put('cart', $cart);
 
@@ -45,5 +63,32 @@ class CartController extends Controller
         }
 
         return redirect()->back()->with('notify_error', 'Item not found in cart.');
+    }
+
+    private function updateCombinedTotals($cart, $request, $action)
+    {
+        if ($action === 'add') {
+            $combined = [
+                'subtotal' => $cart['subtotal'],
+                'service_fee' => $cart['service_fee'],
+                'total_price' => $cart['total_price'],
+            ];
+
+            $combined['subtotal'] += $request->subtotal;
+            $combined['service_fee'] += $request->service_fee;
+            $combined['total_price'] += $request->total_price;
+
+            $cart['subtotal'] = $combined['subtotal'];
+            $cart['service_fee'] = $combined['service_fee'];
+            $cart['total_price'] = $combined['total_price'];
+
+        } elseif ($action === 'remove') {
+            $cart['subtotal'] -= $cart['tours'][$request]['data']['subtotal'];
+            $cart['service_fee'] -= $cart['tours'][$request]['data']['service_fee'];
+            $cart['total_price'] -= $cart['tours'][$request]['data']['total_price'];
+        }
+
+        return $cart;
+
     }
 }

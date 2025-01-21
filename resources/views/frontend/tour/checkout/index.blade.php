@@ -122,7 +122,7 @@
                                             </div>
                                         </label>
                                     </li>
-                                    <li class="payment-option">
+                                    {{-- <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
                                             value="postpay" id="postpay" />
                                         <label for="postpay" class="payment-option__box">
@@ -141,7 +141,7 @@
                                                 </div>
                                             </div>
                                         </label>
-                                    </li>
+                                    </li> --}}
                                     <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
                                             value="tabby" id="tabby" />
@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <div class="col-lg-5">
-                        @foreach ($cart as $tourId => $item)
+                        @foreach ($cart['tours'] as $tourId => $item)
                             @php
                                 $tour = $tours->where('id', $tourId)->first();
                             @endphp
@@ -180,20 +180,6 @@
                                     <div class="checkout-details__optional">
                                         <div class="optional-wrapper">
                                             <div class="optional-wrapper-padding">
-                                                @php
-                                                    $combined = [
-                                                        'subtotal' => 0,
-                                                        'service_fee' => 0,
-                                                        'total_price' => 0,
-                                                    ];
-
-                                                    foreach ($cart as $item) {
-                                                        $data = $item['data'];
-                                                        $combined['subtotal'] += $data['subtotal'];
-                                                        $combined['service_fee'] += $data['service_fee'];
-                                                        $combined['total_price'] += $data['total_price'];
-                                                    }
-                                                @endphp
                                                 <div class="sub-total">
                                                     <div class="title">Type</div>
                                                     <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}
@@ -202,26 +188,30 @@
                                                 <div class="sub-total">
                                                     <div class="title">Date</div>
                                                     <div class="price">
-                                                        {{ formatDate($cart[$tour->id]['data']['start_date']) }}</div>
+                                                        {{ formatDate($cart['tours'][$tour->id]['data']['start_date']) }}
+                                                    </div>
                                                 </div>
                                                 <div class="sub-total">
                                                     <div class="title">Subtotal</div>
                                                     <div class="price">
-                                                        {{ formatPrice($cart[$tour->id]['data']['subtotal']) }}</div>
+                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['subtotal']) }}
+                                                    </div>
                                                 </div>
                                                 <div class="sub-total">
                                                     <div class="title">Service Fee</div>
                                                     <div class="price">
-                                                        {{ formatPrice($cart[$tour->id]['data']['service_fee']) }}</div>
+                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['service_fee']) }}
+                                                    </div>
                                                 </div>
                                                 <div class="sub-total">
                                                     <input type="hidden" name="tour[title][]"
                                                         value="{{ $tour->title }}">
                                                     <input type="hidden" name="tour[total_price][]"
-                                                        value="{{ $cart[$tour->id]['data']['total_price'] }}">
+                                                        value="{{ $cart['tours'][$tour->id]['data']['total_price'] }}">
                                                     <div class="title">Total</div>
                                                     <div class="price">
-                                                        {{ formatPrice($cart[$tour->id]['data']['total_price']) }}</div>
+                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['total_price']) }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -238,27 +228,13 @@
                                 <div class="checkout-details__optional ">
                                     <div class="optional-wrapper">
                                         <div class="optional-wrapper-padding">
-                                            @php
-                                                $combined = [
-                                                    'subtotal' => 0,
-                                                    'service_fee' => 0,
-                                                    'total_price' => 0,
-                                                ];
-
-                                                foreach ($cart as $item) {
-                                                    $data = $item['data'];
-                                                    $combined['subtotal'] += $data['subtotal'];
-                                                    $combined['service_fee'] += $data['service_fee'];
-                                                    $combined['total_price'] += $data['total_price'];
-                                                }
-                                            @endphp
                                             <div class="sub-total">
                                                 <div class="title">Subtotal</div>
-                                                <div class="price">{{ formatPrice($combined['subtotal']) }}</div>
+                                                <div class="price">{{ formatPrice($cart['subtotal']) }}</div>
                                             </div>
                                             <div class="sub-total">
                                                 <div class="title">Service Fee</div>
-                                                <div class="price">{{ formatPrice($combined['service_fee']) }}</div>
+                                                <div class="price">{{ formatPrice($cart['service_fee']) }}</div>
                                             </div>
                                             <div class="cart-coupon">
                                                 <form>
@@ -269,10 +245,10 @@
                                             </div>
                                             <hr>
                                             <input type="hidden" name="total_amount"
-                                                value="{{ $combined['total_price'] }}">
+                                                value="{{ $cart['total_price'] }}">
                                             <div class="sub-total total all-total">
                                                 <div class="title">Total Payable</div>
-                                                <div class="price">{{ formatPrice($combined['total_price']) }}</div>
+                                                <div class="price">{{ formatPrice($cart['total_price']) }}</div>
                                             </div>
                                             <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                                         </div>

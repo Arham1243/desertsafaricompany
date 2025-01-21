@@ -28,7 +28,7 @@ class TourController extends Controller
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
-        $isTourInCart = isset($cart[$tour->id]);
+        $isTourInCart = isset($cart['tours'][$tour->id]);
         if ($tour) {
             $data = compact('tour', 'attributes', 'cart', 'isTourInCart');
 

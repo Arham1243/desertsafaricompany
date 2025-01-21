@@ -4,6 +4,7 @@
         </div>
         <div class="tour-content__title form-book__title">
             <input type="date" class="form-book__date" name="start_date" required id="start_date">
+            <input type="hidden" name="price_type" value="{{ $tour->price_type }}">
         </div>
     </div>
 

@@ -7,7 +7,7 @@
                 <div class=price-details>
                     <div class=price>
                         <span>
-                            <b>{{ $tour->formated_price_type ?? formatPrice($tour->regular_price) . ' From' }}</b>
+                            <b>{{ $tour->formated_price_type ?? formatPrice($tour->sale_price) . ' From' }}</b>
                         </span>
                     </div>
                     @if (Auth::check())
@@ -83,7 +83,7 @@
             <div class=tour-activity-card__details>
                 <div class=vertical-activity-card__header>
                     <div><span>
-                            {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
+                            {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}</span>
                     </div>
                     <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
                         {{ $tour->title }}
@@ -172,7 +172,7 @@
                         @else
                             <span class=baseline-pricing__from--text>From </span>
                             <span class="baseline-pricing__from--value green">
-                                {{ formatPrice($tour->regular_price) }}</span>
+                                {{ formatPrice($tour->sale_price) }}</span>
                         @endif
                     </p>
                 </div>
@@ -238,7 +238,7 @@
                     </div>
                 </div>
                 <div class="top10-trending-products__price">
-                    {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}
+                    {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}
                 </div>
             </div>
         </div>
@@ -294,7 +294,7 @@
                     <div class="baseline-pricing__value baseline-pricing__value--high">
                         <p class="baseline-pricing__from">
                             <span class="baseline-pricing__from--value">
-                                {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->regular_price) }}</span>
+                                {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}</span>
                         </p>
                     </div>
                 </div>

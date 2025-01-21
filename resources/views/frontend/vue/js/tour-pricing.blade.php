@@ -50,7 +50,7 @@
                 }, {});
             });
 
-            const initialTotalPrice = parseFloat("{{ $total_price ?? 0 }}");
+            const initialTotalPrice = parseFloat("{{ $tour->initial_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
