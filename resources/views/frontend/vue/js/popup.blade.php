@@ -53,30 +53,6 @@
                         formData.value.password.length > 7;
                 });
 
-                const showToast = (type, message) => {
-                    if (type === 'error') {
-                        $.toast({
-                            heading: 'Error!',
-                            position: 'bottom-right',
-                            loaderBg: '#ff6849',
-                            icon: 'error',
-                            hideAfter: 5000,
-                            text: message,
-                            stack: 6
-                        });
-                    } else {
-                        $.toast({
-                            text: message,
-                            heading: 'Success!',
-                            position: 'bottom-right',
-                            loaderBg: '#ff6849',
-                            icon: 'success',
-                            hideAfter: 2000,
-                            stack: 6
-                        });
-                    }
-                }
-
                 const checkEmail = async () => {
                     try {
                         loading.value = true;

@@ -11,18 +11,17 @@
                     </div>
                     <div class="quantity-counter">
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('minus', '{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}')">
+                            @click="updateQuantity('minus', '{{ formatNameForInput($normalPrice->person_type) }}')">
                             <i class='bx bx-chevron-down'></i>
                         </button>
                         <input readonly type="number"
                             class="person-quanity quantity-counter__btn quantity-counter__btn--quantity"
-                            v-model="normalTourData['{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}'].quantity"
-                            name="price[{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}][quantity]">
-                        <input type="hidden"
-                            name="price[{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}][price]"
+                            v-model="normalTourData['{{ formatNameForInput($normalPrice->person_type) }}'].quantity"
+                            name="price[{{ formatNameForInput($normalPrice->person_type) }}][quantity]">
+                        <input type="hidden" name="price[{{ formatNameForInput($normalPrice->person_type) }}][price]"
                             value="{{ $normalPrice->price }}">
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('plus', '{{ strtolower(str_replace(' ', '_', $normalPrice->person_type)) }}')">
+                            @click="updateQuantity('plus', '{{ formatNameForInput($normalPrice->person_type) }}')">
                             <i class='bx bx-chevron-up'></i>
                         </button>
                     </div>

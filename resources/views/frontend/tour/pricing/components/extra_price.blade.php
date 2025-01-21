@@ -6,8 +6,7 @@
                 <div class="form-guest-search__items form-guest-search__details">
                     <div class="form-book__title form-guest-search__title">
                         <label class=form-guest-search__item-clean>
-                            <input type=hidden
-                                name="extra_prices[{{ strtolower(str_replace(' ', '_', $extra_price->name)) }}][]"
+                            <input type=hidden name="extra_prices[{{ formatNameForInput($extra_price->name) }}][]"
                                 value="{{ $extra_price->price }}">
                             {{ $extra_price->name }}
                         </label>

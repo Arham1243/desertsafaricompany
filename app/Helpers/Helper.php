@@ -67,3 +67,37 @@ if (! function_exists('renderCategories')) {
         }
     }
 }
+if (! function_exists('getTimeLeft')) {
+
+    function getTimeLeft($expireAt)
+    {
+        $now = new DateTime;
+        $expiry = new DateTime($expireAt);
+        $interval = $expiry->diff($now);
+
+        if ($expiry <= $now) {
+            return 'expired';
+        }
+
+        if ($interval->d > 0) {
+            return $interval->d.' day'.($interval->d > 1 ? 's' : '');
+        }
+
+        if ($interval->h > 0) {
+            return $interval->h.' hour'.($interval->h > 1 ? 's' : '');
+        }
+
+        if ($interval->i > 0) {
+            return $interval->i.' minute'.($interval->i > 1 ? 's' : '');
+        }
+
+        return 'less than a minute';
+    }
+}
+if (! function_exists('formatNameForInput')) {
+
+    function formatNameForInput($name)
+    {
+        return strtolower(str_replace(' ', '_', $name));
+    }
+}

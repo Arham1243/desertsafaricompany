@@ -11,7 +11,7 @@
             'promo_title' => $promoPrice->promo_title,
             'original_price' => $promoPrice->original_price,
             'discount_price' => $promoPrice->promo_price,
-            'offer_expire_at' => $promoPrice->offer_expire_at,
+            'offer_expire_at' => getTimeLeft($promoPrice->offer_expire_at),
             'is_not_expired' => $isNotExpired,
             'quantity' => 0,
         ];
@@ -19,7 +19,7 @@
 
     $normalTourData = $tour->normalPrices->mapWithKeys(function ($price) {
         return [
-            strtolower(str_replace(' ', '_', $price->person_type)) => [
+            formatNameForInput($price->person_type) => [
                 'price' => $price->price,
                 'min' => $price->min_person,
                 'max' => $price->max_person,
@@ -54,30 +54,6 @@
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
-
-            const showToast = (type, message) => {
-                if (type === 'error') {
-                    $.toast({
-                        heading: 'Error!',
-                        position: 'bottom-right',
-                        loaderBg: '#ff6849',
-                        icon: 'error',
-                        hideAfter: 5000,
-                        text: message,
-                        stack: 6
-                    });
-                } else {
-                    $.toast({
-                        text: message,
-                        heading: 'Success!',
-                        position: 'bottom-right',
-                        loaderBg: '#ff6849',
-                        icon: 'success',
-                        hideAfter: 2000,
-                        stack: 6
-                    });
-                }
-            }
 
             const updateTotalPrice = () => {
                 @if (!Auth::check())
@@ -145,7 +121,8 @@
             };
 
             const updatePromoQuantity = (action, personType) => {
-                const promoData = promoTourData.value.find(promo => promo.promo_title === personType);
+                const promoData = promoTourData.value.find(promo => formatNameForInput(promo
+                    .promo_title) === personType);
                 if (!promoData) return;
 
                 promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData
@@ -174,23 +151,11 @@
 
             const formatPrice = computed(() => `{{ env('APP_CURRENCY') }} ${totalPrice.value.toFixed(2)}`);
 
-            watch(timeSlot, updateTotalPrice);
-
-            const getTimeLeft = (expireAt) => {
-                const now = new Date();
-                const expiry = new Date(expireAt);
-                const diffMs = expiry - now;
-
-                if (diffMs <= 0) return "expired";
-
-                const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-                const diffHours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const diffMinutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
-
-                if (diffDays > 0) return `${diffDays} day${diffDays > 1 ? "s" : ""}`;
-                if (diffHours > 0) return `${diffHours} hour${diffHours > 1 ? "s" : ""}`;
-                return `${diffMinutes} minute${diffMinutes > 1 ? "s" : ""}`;
+            const formatNameForInput = (name) => {
+                return name.toLowerCase().replace(/ /g, '_');
             };
+
+            watch(timeSlot, updateTotalPrice);
 
             return {
                 carQuantity,
@@ -203,8 +168,8 @@
                 timeSlotQuantity,
                 waterPrices,
                 waterPricesTimeSlots,
-                getTimeLeft,
-                isSubmitEnabled
+                isSubmitEnabled,
+                formatNameForInput
             };
         },
     });

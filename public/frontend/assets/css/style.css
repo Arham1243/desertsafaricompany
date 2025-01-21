@@ -4301,9 +4301,9 @@ a h5.blogDet-card__title:hover {
     flex: 1;
 }
 
-.cart__productQuantity :is(button, input) {
-    width: 25px;
-    height: 25px;
+.cart__productQuantity-btns :is(button, input) {
+    width: 30px;
+    height: 30px;
     font-size: 12px;
     line-height: 1;
     text-align: center;
@@ -4314,9 +4314,16 @@ a h5.blogDet-card__title:hover {
     padding: 0.5rem;
     display: flex;
     align-items: center;
+    user-select: none;
     justify-content: center;
 }
 
+.cart__productQuantity-btns input {
+    width: 40px;
+}
+.cart__productQuantity-btns button {
+    font-size: 1.1rem;
+}
 .cart__productQuantity button:active {
     box-shadow: 0px 0px 5px 1px #00000020;
 }
@@ -4435,6 +4442,7 @@ a h5.blogDet-card__title:hover {
     display: flex;
     align-items: center;
     gap: 9px;
+    user-select: none;
 }
 
 .cart__productOptions .active {
@@ -6350,4 +6358,7 @@ span.select2-dropdown.select2-dropdown--below {
     outline: none;
 }.service-wishlist i{
     color: red;
+}
+.form-guest-search:last-child .form-guest-search__details {
+    border-color: transparent;
 }
