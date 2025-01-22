@@ -58,6 +58,7 @@ Route::prefix('cart')->name('cart.')->group(function () {
     Route::get('/', [CartController::class, 'index'])->name('index');
     Route::post('add/{tour}', [CartController::class, 'add'])->name('add');
     Route::get('remove/{tour}', [CartController::class, 'remove'])->name('remove');
+    Route::post('/update', [CartController::class, 'update'])->name('update');
 });
 
 Route::prefix('checkout')->name('checkout.')->group(function () {

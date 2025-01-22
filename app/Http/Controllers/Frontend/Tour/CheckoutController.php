@@ -16,6 +16,9 @@ class CheckoutController extends Controller
     public function index()
     {
         $cart = Session::get('cart', []);
+        if ($cart['total_price'] === 0) {
+            return redirect()->route('cart.index')->with('notify_error', 'Your cart is empty.');
+        }
         if (! empty($cart)) {
             $tours = Tour::where('status', 'publish')->get();
             $data = compact('tours', 'cart');
@@ -23,8 +26,6 @@ class CheckoutController extends Controller
             return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')->with($data);
         }
-
-        return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
     }
 
     public function store(Request $request)

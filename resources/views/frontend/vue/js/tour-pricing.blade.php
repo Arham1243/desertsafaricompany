@@ -149,8 +149,10 @@
                 }
             };
 
-            const formatPrice = computed(() => `{{ env('APP_CURRENCY') }} ${totalPrice.value.toFixed(2)}`);
-
+            const formatPrice = (price) => {
+                const formattedPrice = price.toLocaleString();
+                return `{{ env('APP_CURRENCY') }} ${formattedPrice}`;
+            };
             const formatNameForInput = (name) => {
                 return name.toLowerCase().replace(/ /g, '_');
             };

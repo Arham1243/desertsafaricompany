@@ -47,6 +47,14 @@ class CartController extends Controller
         }
     }
 
+    public function update(Request $request)
+    {
+        $cartData = json_decode($request->cart, true);
+        Session::put('cart', $cartData);
+
+        return redirect()->route('checkout.index');
+    }
+
     public function remove($tourId)
     {
         $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
@@ -81,7 +89,6 @@ class CartController extends Controller
             $cart['subtotal'] = $combined['subtotal'];
             $cart['service_fee'] = $combined['service_fee'];
             $cart['total_price'] = $combined['total_price'];
-
         } elseif ($action === 'remove') {
             $cart['subtotal'] -= $cart['tours'][$request]['data']['subtotal'];
             $cart['service_fee'] -= $cart['tours'][$request]['data']['service_fee'];
@@ -89,6 +96,5 @@ class CartController extends Controller
         }
 
         return $cart;
-
     }
 }

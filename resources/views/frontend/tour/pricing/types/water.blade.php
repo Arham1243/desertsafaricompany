@@ -7,19 +7,19 @@
                 $timeSlot = $waterPricesTimeSlots[$i];
             @endphp
             <option value="{{ $timeSlot }}" time-price="{{ $waterPrice->water_price }}">
-                {{ $timeSlot }} (AED {{ number_format($waterPrice->water_price, 2) }})
+                {{ $timeSlot }} ({{ formatPrice($waterPrice->water_price) }})
             </option>
         @endforeach
     </select>
     <div class="form-group form-guest-search">
         <div class="tour-content__pra form-book__pra form-guest-search__details">
-            Water activity
+            Seleted Timeslot
             <div class="form-guest-search__items">
                 <div class="form-book__title form-guest-search__title">
-                    Selected Time Slot
+                    @{{ waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.time || 'Water activity' }}
                     <div class="form-guest-search__smallTitle">
                         <span v-if="timeSlot">
-                            AED @{{ parseFloat(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0).toFixed(2) }}
+                            @{{ formatPrice(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0) }}
                         </span>
                         <span v-else>Select a timeslot</span>
                     </div>
@@ -31,6 +31,8 @@
                     <input readonly type="number"
                         class="person-quanity quantity-counter__btn quantity-counter__btn--quantity" min="0"
                         v-model="timeSlotQuantity" name="time_slot_quantity">
+                    <input type="hidden" name="time_slot_price"
+                        :value="waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price">
                     <button class="quantity-counter__btn" type="button" @click="updateQuantity('plus')">
                         <i class='bx bx-chevron-up'></i>
                     </button>

@@ -11,7 +11,7 @@
                         {{ $tour->enabled_custom_service_fee === 1 && $tour->service_fee_price ? $tour->service_fee_price : 0 }}"
                     name="subtotal" />
                 <input type="hidden" :value="totalPrice" name="total_price" />
-                <span class="green" style="font-weight:700;">@{{ formatPrice }}</span>
+                <span class="green" style="font-weight:700;">@{{ formatPrice(totalPrice) }}</span>
             </div>
         </div>
     </div>
