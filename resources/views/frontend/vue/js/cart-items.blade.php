@@ -2,15 +2,15 @@
     $cartTours = $tours->whereIn('id', array_keys($cart['tours']));
     $toursPrivatePrices = $tours
         ->filter(function ($tour) {
-            return $tour->price_type === 'private'; // Only process tours with price_type 'private'
+            return $tour->price_type === 'private';
         })
         ->mapWithKeys(function ($tour) use ($cart) {
             $quantity = $cart['tours'][$tour->id]['data']['price']['persons']['quantity'] ?? 0;
 
-            $price = $tour->privatePrices; // Assuming privatePrices is a single model instance
+            $price = $tour->privatePrices;
 
             if (!$price) {
-                return [$tour->id => null]; // Handle case where privatePrices is null
+                return [$tour->id => null];
             }
 
             return [
@@ -48,7 +48,6 @@
             }),
         ];
     });
-
     $promoToursData = $tours
         ->map(function ($tour) use ($cart) {
             return $tour->promoPrices->map(function ($promoPrice) use ($tour, $cart) {
@@ -92,9 +91,11 @@
 
             const totalPrice = ref(cart.value.total_price);
 
-            const cartTours = computed(() =>
-                cartToursData.value.filter(tour => cart.value.tours[tour.id])
-            );
+            const cartTours = computed(() => {
+                const toursArray = Object.values(cartToursData.value);
+                return toursArray.filter(tour => cart.value.tours[tour.id]);
+            });
+
             const getPromoTourPricing = (tourId) => {
                 return promoToursData.value[tourId] || [];
             }
@@ -112,7 +113,9 @@
 
                         minusCartPrices(tour);
                         delete cart.value.tours[id];
-                        cartToursData.value = cartToursData.value.filter(tour => tour.id !== id);
+                        cartToursData.value = Object.fromEntries(
+                            Object.entries(cartToursData.value).filter(([key, tour]) => tour.id !== id)
+                        );
                     }
                 } else {
                     showToast('error', 'Tour not found!');
@@ -155,9 +158,32 @@
                 updateTotalPrice(tour, action, promoIndex);
             };
 
+            const updatePrivateQuantity = (action, tour) => {
+                let carPrice = parseInt(getPrivateTourPricing(tour.id)['persons']['car_price']);
+                let carMax = getPrivateTourPricing(tour.id)['persons']['max_person'];
+
+                const previousCars = Math.ceil(getPrivateTourPricing(tour.id)['persons']['quantity'] /
+                    carMax);
+                if (action === "plus") {
+                    getPrivateTourPricing(tour.id)['persons']['quantity']++;
+                    cart.value['tours'][tour.id]['data']['price']['persons']['quantity']++
+                }
+
+                if (action === "minus" && getPrivateTourPricing(tour.id)['persons']['quantity'] > 0) {
+                    getPrivateTourPricing(tour.id)['persons']['quantity']--;
+                    cart.value['tours'][tour.id]['data']['price']['persons']['quantity']--
+                };
+
+                const currentCars = Math.ceil(getPrivateTourPricing(tour.id)['persons']['quantity'] /
+                    carMax);
+                totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars <
+                    previousCars ? -
+                    carPrice : 0));
+            };
+
             const updateQuantity = (action, personType = null, tour, index = null) => {
                 if (tour.price_type === "private") {
-                    updatePrivateQuantity(action);
+                    updatePrivateQuantity(action, tour);
                 } else if (tour.price_type === "normal" && personType) {
                     updateNormalQuantity(action, personType, tour, index);
                 } else if (tour.price_type === "promo" && personType) {
@@ -169,10 +195,10 @@
 
             const updateTotalPrice = (tour, action, index = null) => {
                 switch (tour.price_type) {
+
                     case 'normal':
                         const toursNormalPrice = getNormalTourPricing(tour.id);
                         const normalPrice = parseFloat(toursNormalPrice[index].price);
-
 
                         if (action === 'plus') {
                             if (toursNormalPrice[index].quantity < toursNormalPrice[index].max) {
@@ -183,9 +209,10 @@
                                 cart.value['total_price'] += normalPrice;
                                 toursNormalPrices.value[tour.id][formatNameForInput(
                                     toursNormalPrice[index].person_type)].quantity++;
+                                cart.value['tours'][tour.id]['data']['price'][formatNameForInput(
+                                    toursNormalPrice[index].person_type)].quantity++
                             }
                         }
-
                         if (action === 'minus') {
                             if (toursNormalPrice[index].quantity > toursNormalPrice[index].min) {
                                 totalPrice.value -= normalPrice;
@@ -195,10 +222,10 @@
                                 cart.value['total_price'] -= normalPrice;
                                 toursNormalPrices.value[tour.id][formatNameForInput(
                                     toursNormalPrice[index].person_type)].quantity--;
+                                cart.value['tours'][tour.id]['data']['price'][formatNameForInput(
+                                    toursNormalPrice[index].person_type)].quantity--
                             }
                         }
-
-
                         break;
                     case 'promo':
                         const promoTourData = getPromoTourPricing(tour.id);

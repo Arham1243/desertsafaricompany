@@ -7,10 +7,9 @@
                     <div class="new-price">
                         {{ env('APP_CURRENCY') }}
                     </div>
-                    <div class="del-price" :class="{ 'cut': promo.is_not_expired, 'green': !promo.is_not_expired }">
+                    <div class="del-price cut">
                         @{{ promo.original_price }}</div>
-                    <div class="new-price" :class="{ 'green': promo.is_not_expired, 'cut': !promo.is_not_expired }"
-                        v-if="promo.is_not_expired">@{{ promo.discount_price }}</div>
+                    <div class="new-price green">@{{ promo.discount_price }}</div>
                 </div>
 
                 <div class="quantity-counter">

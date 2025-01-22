@@ -4238,6 +4238,7 @@ a h5.blogDet-card__title:hover {
     font-weight: 700;
     text-transform: capitalize;
     color: var(--color-primary);
+    margin-bottom: 0;
 }
 .cart__productContent .primary-btn {
     padding: 0.4rem !important;
@@ -4304,7 +4305,8 @@ a h5.blogDet-card__title:hover {
 .cart__productQuantity-btns :is(button, input) {
     width: 30px;
     height: 30px;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: 600;
     line-height: 1;
     text-align: center;
     cursor: pointer;
