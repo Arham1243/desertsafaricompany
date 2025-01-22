@@ -2,7 +2,7 @@
 @section('content')
     <div class="cart section-padding">
         <div class="container">
-            @if (isset($cart) && count($cart['tours']) > 0)
+            @if (isset($cart['tours']) && count($cart['tours']) > 0)
                 @include('frontend.vue.main', [
                     'appId' => 'cart-items',
                     'appComponent' => 'cart-items',
