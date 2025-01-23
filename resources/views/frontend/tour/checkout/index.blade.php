@@ -100,7 +100,26 @@
                                 <ul class="payment-options">
                                     <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="stripe" checked id="stripe" />
+                                            value="cod" checked id="cod" />
+                                        <label for="cod" class="payment-option__box">
+                                            <div class="title-wrapper">
+                                                <div class="radio"></div>
+                                                <div class="icon">
+                                                    <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
+                                                        alt="cod" class="imgFluid">
+                                                </div>
+                                            </div>
+                                            <div class="content">
+                                                <div class="title">Cash on delivery</div>
+                                                <div class="note">
+                                                    Pay directly in cash at the time of delivery.
+                                                </div>
+                                            </div>
+                                        </label>
+                                    </li>
+                                    <li class="payment-option">
+                                        <input class="payment-option__input" type="radio" name="payment_type"
+                                            value="stripe" id="stripe" />
                                         <label for="stripe" class="payment-option__box">
                                             <div class="title-wrapper">
                                                 <div class="radio"></div>

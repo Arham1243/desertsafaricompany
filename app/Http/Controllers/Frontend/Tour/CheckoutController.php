@@ -51,7 +51,7 @@ class CheckoutController extends Controller
             if (! $response || ! isset($response->id)) {
                 return redirect()->route('checkout.error', ['order_id' => $order->id])
                     ->with('notify_error', $payment_error)
-                    ->with('error_message', $payment_error); // Pass error to the error page
+                    ->with('error_message', $payment_error);
             }
             Order::where('id', $order->id)->update([
                 'stripe_session_id' => $response->id,
@@ -64,10 +64,19 @@ class CheckoutController extends Controller
             if (isset($response['error'])) {
                 return redirect()->route('checkout.error', ['order_id' => $order->id])
                     ->with('notify_error', $response['error'])
-                    ->with('error_message', $response['error']); // Pass error to the error page
+                    ->with('error_message', $response['error']);
             }
 
             return redirect($response);
+        } elseif ($request->payment_type === 'cod') {
+            Order::where('id', $order->id)->update([
+                'payment_status' => 'pending',
+            ]);
+
+            Session::forget('cart');
+
+            return view('frontend.tour.checkout.confirmed')
+                ->with('title', 'Order Confirmed!');
         }
     }
 
