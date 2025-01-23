@@ -122,7 +122,7 @@
                                             </div>
                                         </label>
                                     </li>
-                                    {{-- <li class="payment-option">
+                                    <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
                                             value="postpay" id="postpay" />
                                         <label for="postpay" class="payment-option__box">
@@ -141,7 +141,7 @@
                                                 </div>
                                             </div>
                                         </label>
-                                    </li> --}}
+                                    </li>
                                     <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
                                             value="tabby" id="tabby" />
@@ -283,14 +283,14 @@
             });
         }
 
-        fetch('https://restcountries.com/v3.1/all')
-            .then(response => response.json())
-            .then(countries => {
+        axios.get('https://apicountries.com/countries')
+            .then(response => {
+                const countries = response.data;
                 const select = document.getElementById('country-select');
                 countries.forEach(country => {
                     const option = document.createElement('option');
-                    option.value = country.name.common;
-                    option.textContent = country.name.common;
+                    option.value = country.name;
+                    option.textContent = country.name;
                     select.appendChild(option);
                 });
             })

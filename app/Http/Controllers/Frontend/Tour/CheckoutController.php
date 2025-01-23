@@ -16,7 +16,7 @@ class CheckoutController extends Controller
     public function index()
     {
         $cart = Session::get('cart', []);
-        if ($cart['total_price'] === 0) {
+        if (isset($cart['total_price']) && $cart['total_price'] === 0) {
             Session::forget('cart');
 
             return redirect()->route('cart.index')->with('notify_error', 'Your cart is empty.');
@@ -29,6 +29,8 @@ class CheckoutController extends Controller
             return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')->with($data);
         }
+
+        return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
     }
 
     public function store(Request $request)
