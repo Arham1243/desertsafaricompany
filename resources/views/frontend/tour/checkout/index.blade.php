@@ -283,14 +283,14 @@
             });
         }
 
-        axios.get('https://apicountries.com/countries')
+        axios.get('https://restcountries.com/v3.1/all')
             .then(response => {
                 const countries = response.data;
                 const select = document.getElementById('country-select');
                 countries.forEach(country => {
                     const option = document.createElement('option');
-                    option.value = country.name;
-                    option.textContent = country.name;
+                    option.value = country.name.common;
+                    option.textContent = country.name.common;
                     select.appendChild(option);
                 });
             })
