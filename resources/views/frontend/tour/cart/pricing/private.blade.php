@@ -1,11 +1,4 @@
 <template v-if="getPrivateTourPricing(tour.id)">
-    <div class="tour-content_book_pricing">
-        <div class="baseline-pricing__value">
-        </div>
-        <div class="baseline-pricing__value">
-
-        </div>
-    </div>
     <div class="form-group form-guest-search">
         <div class="tour-content__pra form-book__pra form-guest-search__details">
             Car Price
