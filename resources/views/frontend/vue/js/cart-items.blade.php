@@ -1,6 +1,8 @@
 @php
     $cartTours = $tours->whereIn('id', array_keys($cart['tours']));
+    $cartToursIds = $tours->whereIn('id', array_keys($cart['tours']))->pluck('id');
     $toursPrivatePrices = $tours
+        ->whereIn('id', $cartToursIds)
         ->filter(function ($tour) {
             return $tour->price_type === 'private';
         })
@@ -25,15 +27,11 @@
             ];
         });
 
-    $toursNormalPrices = $tours->mapWithKeys(function ($tour) use ($cart) {
+    $toursNormalPrices = $tours->whereIn('id', $cartToursIds)->mapWithKeys(function ($tour) use ($cart) {
         return [
             $tour->id => $tour->normalPrices->mapWithKeys(function ($price) use ($tour, $cart) {
                 $formattedKey = formatNameForInput($price->person_type);
-                $quantity = 0;
-
-                if (isset($cart['tours'][$tour->id]['data']['price'][$formattedKey]['quantity'])) {
-                    $quantity = $cart['tours'][$tour->id]['data']['price'][$formattedKey]['quantity'] ?? 0;
-                }
+                $quantity = $cart['tours'][$tour->id]['data']['price'][$formattedKey]['quantity'] ?? 0;
 
                 return [
                     $formattedKey => [
@@ -49,13 +47,9 @@
         ];
     });
 
-    $toursWaterPrices = $tours->mapWithKeys(function ($tour) use ($cart) {
+    $toursWaterPrices = $tours->whereIn('id', $cartToursIds)->mapWithKeys(function ($tour) use ($cart) {
         $waterPrices = $tour->waterPrices->map(function ($price) use ($tour, $cart) {
-            $quantity = 0;
-
-            if (isset($cart['tours'][$tour->id]['data']['time_slot_quantity'])) {
-                $quantity = $cart['tours'][$tour->id]['data']['time_slot_quantity'] ?? 0;
-            }
+            $quantity = $cart['tours'][$tour->id]['data']['time_slot_quantity'] ?? 0;
 
             return [
                 'time' => $price->time,
@@ -68,20 +62,24 @@
         return [$tour->id => $waterPrices->toArray()];
     });
 
-    $waterTourTimeSlots = $tours->filter(fn($tour) => $tour->waterPrices->isNotEmpty())->mapWithKeys(function ($tour) {
-        return [
-            $tour->id => $tour->waterPrices
-                ->map(function ($price) {
-                    return [
-                        'time' => $price->time,
-                        'water_price' => $price->water_price,
-                    ];
-                })
-                ->toArray(),
-        ];
-    });
+    $waterTourTimeSlots = $tours
+        ->whereIn('id', $cartToursIds)
+        ->filter(fn($tour) => $tour->waterPrices->isNotEmpty())
+        ->mapWithKeys(function ($tour) {
+            return [
+                $tour->id => $tour->waterPrices
+                    ->map(function ($price) {
+                        return [
+                            'time' => $price->time,
+                            'water_price' => $price->water_price,
+                        ];
+                    })
+                    ->toArray(),
+            ];
+        });
 
     $promoToursData = $tours
+        ->whereIn('id', $cartToursIds)
         ->map(function ($tour) use ($cart) {
             return $tour->promoPrices->map(function ($promoPrice) use ($tour, $cart) {
                 $discountPercent = 0;
@@ -93,11 +91,7 @@
 
                 $promoTitle = formatNameForInput($promoPrice->promo_title);
 
-                $quantity = 0;
-                if (isset($cart['tours'][$tour->id]['data']['price'][formatNameForInput($promoTitle)]['quantity'])) {
-                    $quantity =
-                        $cart['tours'][$tour->id]['data']['price'][formatNameForInput($promoTitle)]['quantity'] ?? 0;
-                }
+                $quantity = $cart['tours'][$tour->id]['data']['price'][$promoTitle]['quantity'] ?? 0;
 
                 return [
                     'tour_id' => $tour->id,
