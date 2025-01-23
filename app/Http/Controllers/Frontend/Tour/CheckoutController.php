@@ -17,8 +17,11 @@ class CheckoutController extends Controller
     {
         $cart = Session::get('cart', []);
         if ($cart['total_price'] === 0) {
+            Session::forget('cart');
+
             return redirect()->route('cart.index')->with('notify_error', 'Your cart is empty.');
         }
+
         if (! empty($cart)) {
             $tours = Tour::where('status', 'publish')->get();
             $data = compact('tours', 'cart');
