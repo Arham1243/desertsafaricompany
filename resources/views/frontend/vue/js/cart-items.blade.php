@@ -126,6 +126,14 @@
             const waterTourTimeSlots = ref(@json($waterTourTimeSlots));
             const totalPrice = ref(cart.value.total_price);
 
+            watch(totalPrice, async (newValue) => {
+                if (newValue === 0 && cartUpdateForm.value) {
+                    await nextTick();
+                    cartUpdateForm.value.submit();
+                }
+            });
+
+
             const cartTours = computed(() => {
                 const toursArray = Object.values(cartToursData.value);
                 return toursArray.filter(tour => cart.value.tours[tour.id]);
@@ -148,33 +156,43 @@
             };
             const handleTimeSlotChange = (event, tourId) => {
                 const selectedTime = event.target.value;
-                const selectedPrice = event.target.options[event.target.selectedIndex].getAttribute(
-                    'time-price')
-                totalPrice.value -= cart.value['tours'][tourId]['data']['time_slot_price'] * cart.value[
+                const selectedPrice = event.target.options[event.target.selectedIndex]
+                    .getAttribute(
+                        'time-price')
+                totalPrice.value -= cart.value['tours'][tourId]['data']['time_slot_price'] *
+                    cart.value[
                         'tours']
                     [tourId]['data'][
                         'time_slot_quantity'
                     ];
 
-                cart.value['subtotal'] -= cart.value['tours'][tourId]['data']['time_slot_price'] * cart
-                    .value['tours']
-                    [tourId]['data'][
-                        'time_slot_quantity'
-                    ];
-                cart.value['total_price'] -= cart.value['tours'][tourId]['data']['time_slot_price'] * cart
-                    .value['tours']
-                    [tourId]['data'][
-                        'time_slot_quantity'
-                    ];
-
-                cart.value['tours'][tourId]['data']['subtotal'] -= cart.value['tours'][tourId]['data'][
+                cart.value['subtotal'] -= cart.value['tours'][tourId]['data'][
                         'time_slot_price'
                     ] * cart
                     .value['tours']
                     [tourId]['data'][
                         'time_slot_quantity'
                     ];
-                cart.value['tours'][tourId]['data']['total_price'] -= cart.value['tours'][tourId]['data'][
+                cart.value['total_price'] -= cart.value['tours'][tourId]['data'][
+                        'time_slot_price'
+                    ] * cart
+                    .value['tours']
+                    [tourId]['data'][
+                        'time_slot_quantity'
+                    ];
+
+                cart.value['tours'][tourId]['data']['subtotal'] -= cart.value['tours'][
+                        tourId
+                    ]['data'][
+                        'time_slot_price'
+                    ] * cart
+                    .value['tours']
+                    [tourId]['data'][
+                        'time_slot_quantity'
+                    ];
+                cart.value['tours'][tourId]['data']['total_price'] -= cart.value['tours'][
+                        tourId
+                    ]['data'][
                         'time_slot_price'
                     ] * cart
                     .value['tours']
@@ -201,14 +219,17 @@
                         [tourId]['data'][
                             'time_slot_quantity'
                         ];
-                    cart.value['tours'][tourId]['data']['subtotal'] += cart.value['tours'][tourId]['data'][
+                    cart.value['tours'][tourId]['data']['subtotal'] += cart.value['tours'][
+                            tourId
+                        ]['data'][
                             'time_slot_price'
                         ] * cart
                         .value['tours']
                         [tourId]['data'][
                             'time_slot_quantity'
                         ];
-                    cart.value['tours'][tourId]['data']['total_price'] += cart.value['tours'][tourId][
+                    cart.value['tours'][tourId]['data']['total_price'] += cart.value[
+                            'tours'][tourId][
                             'data'
                         ][
                             'time_slot_price'
@@ -236,7 +257,8 @@
                         minusCartPrices(tour);
                         delete cart.value.tours[id];
                         cartToursData.value = Object.fromEntries(
-                            Object.entries(cartToursData.value).filter(([key, tour]) => tour
+                            Object.entries(cartToursData.value).filter(([key, tour]) =>
+                                tour
                                 .id !== id)
                         );
                     }
@@ -276,14 +298,17 @@
                     formatNameForInput(personType));
                 if (!promoData) return;
 
-                promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData
+                promoData.quantity += (action === "plus" ? 1 : (action === "minus" &&
+                    promoData
                     .quantity > 0 ? -
                     1 : 0));
                 updateTotalPrice(tour, action, promoIndex);
             };
 
             const updatePrivateQuantity = (action, tour) => {
-                let carPrice = parseInt(getPrivateTourPricing(tour.id)['persons']['car_price']);
+                let carPrice = parseInt(getPrivateTourPricing(tour.id)['persons'][
+                    'car_price'
+                ]);
                 let carMax = getPrivateTourPricing(tour.id)['persons']['max_person'];
 
                 const previousCars = Math.ceil(getPrivateTourPricing(tour.id)['persons'][
@@ -295,7 +320,9 @@
                     cart.value['tours'][tour.id]['data']['price']['persons']['quantity']++
                 }
 
-                if (action === "minus" && getPrivateTourPricing(tour.id)['persons']['quantity'] >
+                if (action === "minus" && getPrivateTourPricing(tour.id)['persons'][
+                        'quantity'
+                    ] >
                     0) {
                     getPrivateTourPricing(tour.id)['persons']['quantity']--;
                     cart.value['tours'][tour.id]['data']['price']['persons']['quantity']--
@@ -315,24 +342,36 @@
                     'time_slot_price'
                 ]);
 
-                const initial_price = (cart.value['tours'][tour.id]['data']['extra_prices'] ? Object.values(
-                    cart.value['tours'][tour.id]['data']['extra_prices']).reduce((acc, curr) =>
-                    acc + parseFloat(curr), 0) : 0) + (cart.value['tours'][tour.id]['data'][
+                const initial_price = (cart.value['tours'][tour.id]['data'][
+                    'extra_prices'
+                ] ? Object.values(
+                    cart.value['tours'][tour.id]['data']['extra_prices']).reduce((
+                        acc, curr) =>
+                    acc + parseFloat(curr), 0) : 0) + (cart.value['tours'][tour.id][
+                    'data'
+                ][
                     'service_fee'
-                ] ? parseFloat(cart.value['tours'][tour.id]['data']['service_fee']) : 0);
+                ] ? parseFloat(cart.value['tours'][tour.id]['data'][
+                    'service_fee'
+                ]) : 0);
                 if (action === 'plus') {
                     cart.value['tours'][tour.id]['data']['time_slot_quantity']++
                     totalPrice.value += slotPrice
                     cart.value['subtotal'] += slotPrice;
                     cart.value['total_price'] += slotPrice;
                     cart.value['tours'][tour.id]['data']['subtotal'] =
-                        initial_price - (cart.value['tours'][tour.id]['data']['service_fee'] ? cart.value[
-                            'tours'][tour.id]['data']['service_fee'] : 0) + slotPrice * cart.value['tours'][
+                        initial_price - (cart.value['tours'][tour.id]['data'][
+                            'service_fee'
+                        ] ? cart.value[
+                            'tours'][tour.id]['data']['service_fee'] : 0) + slotPrice *
+                        cart.value['tours'][
                             tour.id
                         ]['data']['time_slot_quantity'];
                     cart.value['tours'][tour.id]['data']['total_price'] =
                         initial_price +
-                        slotPrice * cart.value['tours'][tour.id]['data']['time_slot_quantity'];
+                        slotPrice * cart.value['tours'][tour.id]['data'][
+                            'time_slot_quantity'
+                        ];
                 } else if (action === 'minus' && cart.value['tours'][tour.id]['data'][
                         'time_slot_quantity'
                     ] > 0) {
@@ -344,13 +383,18 @@
                     cart.value['subtotal'] -= slotPrice;
                     cart.value['total_price'] -= slotPrice;
                     cart.value['tours'][tour.id]['data']['subtotal'] =
-                        initial_price - (cart.value['tours'][tour.id]['data']['service_fee'] ? cart.value[
-                            'tours'][tour.id]['data']['service_fee'] : 0) + slotPrice * cart.value['tours'][
+                        initial_price - (cart.value['tours'][tour.id]['data'][
+                            'service_fee'
+                        ] ? cart.value[
+                            'tours'][tour.id]['data']['service_fee'] : 0) + slotPrice *
+                        cart.value['tours'][
                             tour.id
                         ]['data']['time_slot_quantity'];
                     cart.value['tours'][tour.id]['data']['total_price'] =
                         initial_price +
-                        slotPrice * cart.value['tours'][tour.id]['data']['time_slot_quantity'];
+                        slotPrice * cart.value['tours'][tour.id]['data'][
+                            'time_slot_quantity'
+                        ];
 
                 }
             };
@@ -375,35 +419,47 @@
                         const normalPrice = parseFloat(toursNormalPrice[index].price);
 
                         if (action === 'plus') {
-                            if (toursNormalPrice[index].quantity < toursNormalPrice[index].max) {
+                            if (toursNormalPrice[index].quantity < toursNormalPrice[index]
+                                .max) {
                                 totalPrice.value += normalPrice;
                                 cart.value['tours'][tour.id]['data']['subtotal'] =
-                                    (parseFloat(cart.value['tours'][tour.id]['data']['subtotal']) +
+                                    (parseFloat(cart.value['tours'][tour.id]['data'][
+                                            'subtotal'
+                                        ]) +
                                         normalPrice).toString();
 
                                 cart.value['tours'][tour.id]['data']['total_price'] =
-                                    (parseFloat(cart.value['tours'][tour.id]['data']['total_price']) +
+                                    (parseFloat(cart.value['tours'][tour.id]['data'][
+                                            'total_price'
+                                        ]) +
                                         normalPrice).toString();
 
                                 cart.value['subtotal'] += normalPrice;
                                 cart.value['total_price'] += normalPrice;
                                 toursNormalPrices.value[tour.id][formatNameForInput(
                                     toursNormalPrice[index].person_type)].quantity++;
-                                cart.value['tours'][tour.id]['data']['price'][formatNameForInput(
-                                    toursNormalPrice[index].person_type)].quantity++
+                                cart.value['tours'][tour.id]['data']['price'][
+                                    formatNameForInput(
+                                        toursNormalPrice[index].person_type)
+                                ].quantity++
                             }
                         }
                         if (action === 'minus') {
-                            if (toursNormalPrice[index].quantity > toursNormalPrice[index].min) {
+                            if (toursNormalPrice[index].quantity > toursNormalPrice[index]
+                                .min) {
                                 totalPrice.value -= normalPrice;
-                                cart.value['tours'][tour.id]['data']['subtotal'] -= normalPrice;
-                                cart.value['tours'][tour.id]['data']['total_price'] -= normalPrice;
+                                cart.value['tours'][tour.id]['data']['subtotal'] -=
+                                    normalPrice;
+                                cart.value['tours'][tour.id]['data']['total_price'] -=
+                                    normalPrice;
                                 cart.value['subtotal'] -= normalPrice;
                                 cart.value['total_price'] -= normalPrice;
                                 toursNormalPrices.value[tour.id][formatNameForInput(
                                     toursNormalPrice[index].person_type)].quantity--;
-                                cart.value['tours'][tour.id]['data']['price'][formatNameForInput(
-                                    toursNormalPrice[index].person_type)].quantity--
+                                cart.value['tours'][tour.id]['data']['price'][
+                                    formatNameForInput(
+                                        toursNormalPrice[index].person_type)
+                                ].quantity--
                             }
                         }
                         break;
@@ -418,8 +474,10 @@
                             totalPrice.value += applicablePrice;
                         } else if (action === 'minus' && promo.quantity >= 0) {
                             totalPrice.value -= applicablePrice;
-                            cart.value['tours'][tour.id]['data']['subtotal'] -= applicablePrice;
-                            cart.value['tours'][tour.id]['data']['total_price'] -= applicablePrice;
+                            cart.value['tours'][tour.id]['data']['subtotal'] -=
+                                applicablePrice;
+                            cart.value['tours'][tour.id]['data']['total_price'] -=
+                                applicablePrice;
                             cart.value['subtotal'] -= applicablePrice;
                             cart.value['total_price'] -= applicablePrice;
                         }

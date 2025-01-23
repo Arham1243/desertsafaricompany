@@ -14,7 +14,8 @@
             ref,
             onMounted,
             computed,
-            watch
+            watch,
+            nextTick
         } = Vue;
 
         const showToast = (type, message) => {
