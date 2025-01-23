@@ -58,20 +58,6 @@ class CheckoutController extends Controller
             ]);
 
             return redirect($response->url);
-        } elseif ($request->payment_type === 'postpay') {
-            $response = $this->createPostPaySession($request, $order);
-
-            if ($response instanceof \Illuminate\Http\JsonResponse) {
-                $response = $response->getData(true);
-            }
-
-            if (isset($response['error'])) {
-                return redirect()->route('checkout.error', ['order_id' => $order->id])
-                    ->with('notify_error', $response['error'])
-                    ->with('error_message', $response['error']); // Pass error to the error page
-            }
-
-            return redirect($response['redirect_url']);
         } elseif ($request->payment_type === 'tabby') {
             $response = $this->createTabbySession($request, $order);
 
@@ -135,80 +121,6 @@ class CheckoutController extends Controller
 
             return response()->json(['error' => 'An error occurred: '.$e->getMessage()]);
         }
-    }
-
-    private function createPostPaySession(Request $request, Order $order)
-    {
-        $dt = new \DateTime;
-        $dt->setTimeZone(new \DateTimeZone('UTC'));
-
-        $customer = [
-            'id' => (string) $order->id,
-            'email' => Auth::user()->email,
-            'first_name' => Auth::user()->full_name,
-            'date_joined' => Auth::user()->created_at->format('Y-m-d\TH:i:s.u'),
-        ];
-
-        $tourTitles = $request->input('tour.title', []);
-        $tourPrices = $request->input('tour.total_price', []);
-
-        $items = [];
-        foreach ($tourTitles as $i => $title) {
-            $items[] = [
-                'name' => $title,
-                'price' => $tourPrices[$i] ?? 0,
-                'quantity' => 1,
-            ];
-        }
-
-        $payload = [
-            'order_id' => (string) $order->id,
-            'total_amount' => $request->total_amount,
-            'tax_amount' => 0,
-            'currency' => env('APP_CURRENCY'),
-            'customer' => $customer,
-            'items' => $items,
-            'merchant' => [
-                'confirmation_url' => route('checkout.success', ['order_id' => $order->id]),
-                'cancel_url' => route('checkout.cancel', ['order_id' => $order->id]),
-            ],
-        ];
-
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.postpay.io/checkouts');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic '.env('POSTPAY_AUTH_KEY'),
-            'Content-Type: application/json',
-        ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-
-        $result = curl_exec($ch);
-
-        if ($result === false) {
-            $error = curl_error($ch);
-            curl_close($ch);
-
-            return response()->json(['error' => 'Failed to connect to PostPay API: '.$error], 500);
-        }
-
-        $response = json_decode($result, true);
-        curl_close($ch);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return response()->json(['error' => 'Invalid JSON response from PostPay API: '.json_last_error_msg()], 500);
-        }
-
-        if (! empty($response['error'])) {
-            return response()->json(['error' => $response['error']['message']], 500);
-        }
-
-        if (empty($response['redirect_url'])) {
-            return response()->json(['error' => 'Redirect URL is missing in PostPay API response'], 500);
-        }
-
-        return response()->json(['redirect_url' => $response['redirect_url']]);
     }
 
     private function createTabbySession(Request $request, Order $order)

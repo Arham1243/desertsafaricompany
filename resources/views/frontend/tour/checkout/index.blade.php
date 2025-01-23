@@ -124,26 +124,6 @@
                                     </li>
                                     <li class="payment-option">
                                         <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="postpay" id="postpay" />
-                                        <label for="postpay" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/2.png') }}"
-                                                        alt="postpay" class="imgFluid">
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Buy Now Pay Later - 3 Installements, No Credit Card
-                                                    Required</div>
-                                                <div class="note">
-                                                    Only Valid on basket value of AED 100 or more
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </li>
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
                                             value="tabby" id="tabby" />
                                         <label for="tabby" class="payment-option__box">
                                             <div class="title-wrapper">
