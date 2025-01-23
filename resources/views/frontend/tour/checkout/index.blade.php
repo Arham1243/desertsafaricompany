@@ -172,10 +172,15 @@
                                 $tour = $tours->where('id', $tourId)->first();
                             @endphp
                             <div class="checkout-details__wapper">
-                                <div class="checkout-details open">
+                                <div class="checkout-details {{ $loop->first ? 'open' : '' }}">
                                     <div class="checkout-details__header">
-                                        <i class="bx bx-purchase-tag-alt"></i>
-                                        <div class="heading">{{ $tour->title }}</div>
+                                        <div class="title-content">
+                                            <i class='bx bxs-map'></i>
+                                            <div class="heading">{{ $tour->title }}</div>
+                                        </div>
+                                        <div class="up-arrow">
+                                            <i class="bx bx-chevron-up"></i>
+                                        </div>
                                     </div>
                                     <div class="checkout-details__optional">
                                         <div class="optional-wrapper">
@@ -222,8 +227,10 @@
                         <div class="checkout-details__wapper">
                             <div class="checkout-details open">
                                 <div class="checkout-details__header">
-                                    <i class="bx bx-box"></i>
-                                    <div class="heading">Total</div>
+                                    <div class="title-content">
+                                        <i class="bx bx-box"></i>
+                                        <div class="heading">Total</div>
+                                    </div>
                                 </div>
                                 <div class="checkout-details__optional ">
                                     <div class="optional-wrapper">
@@ -264,6 +271,18 @@
 @endsection
 @push('js')
     <script>
+        if (document.querySelectorAll('.checkout-details').length > 0 && document.querySelectorAll(
+                '.checkout-details__header').length > 0) {
+            const checkoutDetails = document.querySelectorAll('.checkout-details');
+            const upArrows = document.querySelectorAll('.checkout-details__header');
+
+            upArrows.forEach((upArrow, index) => {
+                upArrow.addEventListener('click', () => {
+                    checkoutDetails[index].classList.toggle('open');
+                });
+            });
+        }
+
         fetch('https://restcountries.com/v3.1/all')
             .then(response => response.json())
             .then(countries => {
