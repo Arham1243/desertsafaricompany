@@ -16,9 +16,9 @@
                                 $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
                             @endphp
                             @if ($isFavorited)
-                                <div class="service-wishlist">
-                                    <i class="bx bxs-heart"></i>
-                                </div>
+                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                </form>
                             @else
                                 <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
                                     method="post">
@@ -66,9 +66,9 @@
                                 $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
                             @endphp
                             @if ($isFavorited)
-                                <div class="service-wishlist">
-                                    <i class="bx bxs-heart"></i>
-                                </div>
+                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                </form>
                             @else
                                 <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
                                     method="post">
@@ -128,9 +128,9 @@
                                 $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
                             @endphp
                             @if ($isFavorited)
-                                <div class="service-wishlist">
-                                    <i class="bx bxs-heart"></i>
-                                </div>
+                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                </form>
                             @else
                                 <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
                                     method="post">
@@ -202,9 +202,9 @@
                                 $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
                             @endphp
                             @if ($isFavorited)
-                                <div class="service-wishlist">
-                                    <i class="bx bxs-heart"></i>
-                                </div>
+                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                </form>
                             @else
                                 <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
                                     method="post">
@@ -256,9 +256,9 @@
                                 $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
                             @endphp
                             @if ($isFavorited)
-                                <div class="service-wishlist">
-                                    <i class="bx bxs-heart"></i>
-                                </div>
+                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                </form>
                             @else
                                 <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
                                     method="post">

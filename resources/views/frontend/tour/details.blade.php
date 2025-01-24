@@ -10,7 +10,7 @@
                 class='bx bxl-whatsapp'></i></a>
     @endif
 
-    <div class=tour-details id=tour-details.php>
+    <div class=tour-details>
         <div class=tour-details_banner>
             <div class=tour-details_img>
                 <img data-src="{{ asset($tour->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
@@ -31,6 +31,70 @@
             </div>
         </div>
     </div>
+
+
+    <div class="share-popup-wrapper" data-send-popup>
+        <div class="share-popup light">
+            <div class="share-popup__header">
+                <div class="title">Share</div>
+                <div class="close-btn">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <div class="share-popup__body">
+                <ul class="platforms">
+                    <li class="platform">
+                        <a href="https://wa.me/?text={{ $tour->title }}%20{{ url()->current() }}" target="_blank">
+                            <div class="icon" style="background: #27D469;">
+                                <i class='bx bxl-whatsapp'></i>
+                            </div>
+                            <div class="title">WhatsApp</div>
+                        </a>
+                    </li>
+                    <li class="platform">
+                        <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->current() }}&title={{ $tour->title }}"
+                            target="_blank">
+                            <div class="icon" style="background: #0179B7;">
+                                <i class='bx bxl-linkedin'></i>
+                            </div>
+                            <div class="title">LinkedIn</div>
+                        </a>
+                    </li>
+                    <li class="platform">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank">
+                            <div class="icon" style="background: #3D5A98;">
+                                <i class='bx bxl-facebook'></i>
+                            </div>
+                            <div class="title">Facebook</div>
+                        </a>
+                    </li>
+                    <li class="platform">
+                        <a href="https://twitter.com/intent/tweet?text={{ $tour->title }}&url={{ url()->current() }}"
+                            target="_blank">
+                            <div class="icon" style="background: #000;">
+                                <img src="https://imagecme.com/public/frontend/assets/images/x.png" alt="">
+                            </div>
+                            <div class="title">X</div>
+                        </a>
+                    </li>
+                    <li class="platform">
+                        <a href="mailto:?subject={{ $tour->title }}&body={{ url()->current() }}" target="_blank">
+                            <div class="icon" style="background: grey;">
+                                <i class='bx bxs-envelope'></i>
+                            </div>
+                            <div class="title">Email</div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="copy-link">
+                    <input type="text" readonly class="copy-link__input" value="{{ url()->current() }}">
+                    <button type="button" class="copy-link__btn primary-btn" onclick="copyLink()">Copy</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     @if ($tour->media->isNotEmpty())
         <div class="media-gallery--view mt-2">
@@ -208,14 +272,30 @@
                             </div>
                         </div>
                         <ul class=header-listGroup>
-                            <li><a href=#>
-                                    <span data-type=tour class="header-listGroup faq-icon">
-                                        <i class="bx bx-heart"></i>
-                                    </span>
-                                </a>
-                            </li>
+                            @if (Auth::check())
+                                @php
+                                    $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
+                                @endphp
+                                <li>
+                                    @if ($isFavorited)
+                                        <a href="{{ route('tours.favorites.index') }}">
+                                            <span class="header-listGroup faq-icon added">
+                                                <i class="bx bxs-heart"></i>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <span class="header-listGroup faq-icon">
+
+                                            <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                                                @csrf
+                                                <button type="submit"> <i class="bx bx-heart"></i></button>
+                                            </form>
+                                        </span>
+                                    @endif
+                                </li>
+                            @endif
                             <li>
-                                <a href=#>
+                                <a href='javascript:void(0)' data-send-button>
                                     <span class="header-listGroup faq-icon"> <i class="bx bx-share-alt"></i></span>
                                 </a>
                             </li>
@@ -1035,6 +1115,34 @@
 @endpush
 @push('js')
     <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendPopupBtn = document.querySelectorAll('[data-send-button]');
+            const popupWrapper = document.querySelector('[data-send-popup]');
+            const copyLinkInput = popupWrapper.querySelector('.copy-link__input');
+            const closeIcon = popupWrapper.querySelector('.close-btn');
+
+            sendPopupBtn.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    popupWrapper.classList.add('open');
+                });
+            });
+
+            closeIcon.addEventListener('click', function(e) {
+                popupWrapper.classList.remove('open');
+            });
+        });
+
+        const copyLink = () => {
+            var copyText = document.querySelector('.copy-link__input');
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            document.execCommand('copy');
+
+            showMessage('Link copied to clipboard!', 'success', 'top-right');
+        }
+
         window.addEventListener("load", function() {
             const loader = document.getElementById("loader");
             loader.style.display = "none";

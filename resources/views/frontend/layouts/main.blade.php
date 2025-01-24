@@ -28,6 +28,17 @@
     @stack('js')
 
     <script type="text/javascript">
+        const showMessage = (message, type, position = 'bottom-right') => {
+            $.toast({
+                heading: type === 'success' ? 'Success!' : 'Error!',
+                position: position,
+                text: message,
+                loaderBg: type === 'success' ? '#ff6849' : '#ff6849',
+                icon: type === 'success' ? 'success' : 'error',
+                hideAfter: 3000,
+                stack: 6
+            });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             const img = document.querySelectorAll('img');
             img.forEach(function(imgElement) {
