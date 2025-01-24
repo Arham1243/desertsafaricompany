@@ -152,6 +152,15 @@ class Tour extends Model
         return $this->hasMany(TourItinerary::class);
     }
 
+    public function orders()
+    {
+        return Order::whereJsonContains('cart_data->tours', function ($query) {
+            $query->where('tour_id', $this->id);
+        })
+            ->where('payment_status', 'paid')
+            ->get();
+    }
+
     protected static function boot()
     {
         parent::boot();

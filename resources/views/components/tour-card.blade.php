@@ -233,7 +233,10 @@
                                 Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                             @else
                                 <span>No Reviews Yet</span>
-                            @endif | 200K+ booked
+                            @endif
+                            @if ($tour->orders()->count() > 0)
+                                | {{ formatBigNumber($tour->orders()->count()) }} Booked
+                            @endif
                         </span>
                     </div>
                 </div>

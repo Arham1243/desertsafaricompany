@@ -101,3 +101,19 @@ if (! function_exists('formatNameForInput')) {
         return strtolower(str_replace(' ', '_', $name));
     }
 }
+if (! function_exists('formatBigNumber')) {
+    function formatBigNumber($num)
+    {
+        if ($num >= 1_000_000_000) {
+            return rtrim(number_format($num / 1_000_000_000, 1, '.', '0'), '.0').'B';
+        }
+        if ($num >= 1_000_000) {
+            return rtrim(number_format($num / 1_000_000, 1, '.', '0'), '.0').'M';
+        }
+        if ($num >= 1_000) {
+            return rtrim(number_format($num / 1_000, 1, '.', '0'), '.0').'K';
+        }
+
+        return (string) $num;
+    }
+}
