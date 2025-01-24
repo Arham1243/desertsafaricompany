@@ -111,11 +111,13 @@
                                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                         loading="lazy">
                                     <div class=price-details>
-                                        <div class=price>
-                                            <span>
-                                                Top pick
-                                            </span>
-                                        </div>
+                                        @if ($tour->orders()->count() > 5)
+                                            <div class=price>
+                                                <span>
+                                                    Top pick
+                                                </span>
+                                            </div>
+                                        @endif
                                         <div class=heart-icon>
                                             <div class=service-wishlist>
                                                 <i class="bx bx-heart"></i>

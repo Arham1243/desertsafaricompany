@@ -117,11 +117,13 @@
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class=price-details>
-                    <div class=price>
-                        <span>
-                            Top pick
-                        </span>
-                    </div>
+                    @if ($tour->orders()->count() > 5)
+                        <div class=price>
+                            <span>
+                                Top pick
+                            </span>
+                        </div>
+                    @endif
                     @if (Auth::check())
                         <div class="heart-icon">
                             @php
