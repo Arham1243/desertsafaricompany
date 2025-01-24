@@ -38,6 +38,7 @@
                                                     id="select-all">
                                             </div>
                                         </th>
+                                        <th>Code</th>
                                         <th>Name</th>
                                         <th>Amount</th>
                                         <th>Discount Type</th>
@@ -55,6 +56,7 @@
                                                         class="bulk-item" name="bulk_select[]" value="{{ $item->id }}">
                                                 </div>
                                             </td>
+                                            <td>{{ $item->code }}</td>
                                             <td>
                                                 <a href="{{ route('admin.coupons.edit', $item->id) }}"
                                                     class="link">{{ $item->name }}</a>
