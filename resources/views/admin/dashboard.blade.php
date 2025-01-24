@@ -27,7 +27,7 @@
                             <div class="revenue-card__icon"><i class='bx bx-dollar'></i></div>
                             <div class="revenue-card__content">
                                 <div class="title">Monthly Online Payments</div>
-                                <div class="num">{{ env('APP_CURRENCY') }}100000</div>
+                                <div class="num">{{ formatPrice($totalPayments) }}</div>
                             </div>
                         </div>
                     </div>
