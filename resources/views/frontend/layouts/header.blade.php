@@ -28,7 +28,21 @@
                     </li>
                     <li class="header-btns__item">
                         <a href="{{ route('tours.favorites.index') }}" title="Wishlist" class="li__link">
+
                             <div class="header-btns__icon">
+                                @if (Auth::check())
+                                    @php
+                                        $favotites = App\Models\UserFavoriteTour::where(
+                                            'user_id',
+                                            Auth::user()->id,
+                                        )->get();
+                                    @endphp
+                                    @if ($favotites->isNotEmpty())
+                                        <span class="total">
+                                            {{ count($favotites) }}
+                                        </span>
+                                    @endif
+                                @endif
                                 <i class='bx bx-heart'></i>
                             </div>
                             <span>Wishlist</span>
@@ -36,14 +50,12 @@
                     </li>
                     <li class="header-btns__item">
                         <a href="{{ route('cart.index') }}" title="Cart" class="li__link">
-                            <span class="total">
-                                @if (isset($cart) && isset($cart['tours']))
-                                    {{ count($cart['tours']) }}
-                                @else
-                                    0
-                                @endif
-                            </span>
                             <div class="header-btns__icon">
+                                @if (Auth::check() && isset($cart['tours']) && count($cart['tours']) > 0)
+                                    <span class="total">
+                                        {{ count($cart['tours']) }}
+                                    </span>
+                                @endif
                                 <i class='bx bx-cart'></i>
                             </div>
                             <span>Cart</span>

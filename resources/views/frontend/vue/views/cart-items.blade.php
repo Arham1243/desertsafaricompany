@@ -52,8 +52,10 @@
             <div class="checkout-details__wapper">
                 <div class="checkout-details open">
                     <div class="checkout-details__header">
-                        <i class="bx bx-box"></i>
-                        <div class="heading">Total</div>
+                        <div class="title-content">
+                            <i class="bx bx-box"></i>
+                            <div class="heading">Total</div>
+                        </div>
                     </div>
                     <div class="checkout-details__optional ">
                         <div class="optional-wrapper">
@@ -70,7 +72,6 @@
                                 <div class="sub-total total all-total">
                                     <div class="title">Total Payable</div>
                                     <div class="price">@{{ formatPrice(totalPrice) }}</div>
-                                    <input type="hidden" name="total_price" :value="totalPrice">
                                 </div>
                                 <button class="primary-btn w-100 mt-4">Proceed
                                     to Checkout</button>

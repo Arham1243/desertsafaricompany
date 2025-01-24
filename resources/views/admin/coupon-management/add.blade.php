@@ -35,22 +35,13 @@
                                             <div class="form-fields">
                                                 <label class="title">Name <span class="text-danger">*</span> :</label>
                                                 <input type="text" name="name" class="field"
-                                                    value="{{ old('name') }}" data-required data-error="Name">
+                                                    value="{{ old('name') }}">
                                                 @error('name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Amount <span class="text-danger">*</span> :</label>
-                                                <input type="text" name="amount" class="field"
-                                                    value="{{ old('amount') }}" data-required data-error="Amount">
-                                                @error('amount')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
+
                                         <div class="col-md-6 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Discount Type <span class="text-danger">*</span>
@@ -61,6 +52,16 @@
                                                     <option value="fixed">Fixed</option>
                                                 </select>
                                                 @error('discount_type')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Amount <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="amount" class="field"
+                                                    value="{{ old('amount') }}" data-required data-error="Amount">
+                                                @error('amount')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -82,7 +83,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Expiry Date <span class="text-danger">*</span>
                                                     :</label>
-                                                <input type="date" name="expiry_date" class="field"
+                                                <input type="datetime-local" name="expiry_date" class="field"
                                                     value="{{ old('expiry_date') }}" data-required data-error="Expiry Date"
                                                     min="{{ now()->toDateString() }}">
                                                 @error('expiry_date')

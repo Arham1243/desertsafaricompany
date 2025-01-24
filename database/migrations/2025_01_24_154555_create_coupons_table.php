@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('amount', 10, 2)->nullable();
             $table->enum('discount_type', ['percentage', 'fixed'])->nullable();
             $table->decimal('minimum_order_amount', 10, 2)->nullable();
-            $table->date('expiry_date')->nullable();
+            $table->timestamp('expiry_date')->nullable();
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamps();
         });

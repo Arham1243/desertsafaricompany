@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Tour;
 
 use App\Http\Controllers\Controller;
+use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Tour;
 use DateTime;
@@ -35,18 +36,22 @@ class CheckoutController extends Controller
 
     public function store(Request $request)
     {
-
+        $cart = Session::get('cart', []);
+        $totalAmount = isset($cart['total_price']) ? $cart['total_price'] : 0;
+        if (! $totalAmount || $totalAmount < 0) {
+            return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
+        }
         $order = Order::create([
             'user_id' => Auth::id(),
             'request_data' => json_encode($request->order),
-            'cart_data' => json_encode(Session::get('cart', [])),
+            'cart_data' => json_encode($cart),
             'payment_type' => $request->payment_type,
             'payment_status' => 'pending',
-            'total_amount' => $request->total_amount,
+            'total_amount' => $totalAmount,
         ]);
 
         if ($request->payment_type === 'stripe') {
-            $response = $this->createStripeSession($request, $order);
+            $response = $this->createStripeSession($request, $order, $totalAmount);
             $payment_error = 'Failed to create Stripe session. Please try again.';
             if (! $response || ! isset($response->id)) {
                 return redirect()->route('checkout.error', ['order_id' => $order->id])
@@ -59,7 +64,7 @@ class CheckoutController extends Controller
 
             return redirect($response->url);
         } elseif ($request->payment_type === 'tabby') {
-            $response = $this->createTabbySession($request, $order);
+            $response = $this->createTabbySession($request, $order, $totalAmount);
 
             if (isset($response['error'])) {
                 return redirect()->route('checkout.error', ['order_id' => $order->id])
@@ -132,7 +137,7 @@ class CheckoutController extends Controller
         }
     }
 
-    private function createTabbySession(Request $request, Order $order)
+    private function createTabbySession(Request $request, Order $order, $totalAmount)
     {
         $tourTitles = $request->input('tour.title');
         $tourPrices = $request->input('tour.total_price');
@@ -159,7 +164,7 @@ class CheckoutController extends Controller
 
         $postData = [
             'payment' => [
-                'amount' => $request->total_amount,
+                'amount' => $totalAmount,
                 'currency' => env('APP_CURRENCY'),
                 'description' => env('APP_NAME'),
                 'buyer' => [
@@ -171,7 +176,7 @@ class CheckoutController extends Controller
                     'address' => $request['order']['address'],
                 ],
                 'order' => [
-                    'tax_amount' => $request->total_amount,
+                    'tax_amount' => $totalAmount,
                     'shipping_amount' => '0.00',
                     'discount_amount' => '0.00',
                     'updated_at' => $order->created_at->toIso8601String(),
@@ -276,5 +281,83 @@ class CheckoutController extends Controller
 
         return view('frontend.tour.checkout.error')
             ->with('title', 'Something went wrong during the process');
+    }
+
+    public function applyCode(Request $request)
+    {
+        $request->validate([
+            'code' => 'required|string',
+        ]);
+
+        $coupon = Coupon::where('code', $request->code)
+            ->where('status', 'active')
+            ->first();
+
+        if (! $coupon) {
+            return redirect()->back()
+                ->with('notify_error', 'Invalid coupon code.')
+                ->withErrors(['code' => 'Invalid coupon code.'])
+                ->withInput();
+        }
+
+        if ($coupon->expiry_date && \Carbon\Carbon::parse($coupon->expiry_date)->isPast()) {
+            return redirect()->back()
+                ->with('notify_error', 'This coupon has expired.')
+                ->withErrors(['code' => 'This coupon has expired.'])
+                ->withInput();
+        }
+
+        $cart = Session::get('cart', []);
+        if (empty($cart) || ! isset($cart['total_price'])) {
+            return redirect()->back()
+                ->with('notify_error', 'Cart is empty.');
+        }
+
+        if (isset($cart['applied_coupons']) && in_array($coupon->id, array_column($cart['applied_coupons'], 'coupon'))) {
+            return redirect()->back()
+                ->with('notify_error', 'You have already used this coupon.')
+                ->withErrors(['code' => 'You have already used this coupon.'])
+                ->withInput();
+        }
+
+        $totalAmount = $cart['total_price'];
+        $totalSubtotalAmount = $cart['subtotal'];
+
+        if ($coupon->minimum_order_amount && $totalSubtotalAmount < $coupon->minimum_order_amount) {
+            return redirect()->back()
+                ->with(
+                    'notify_error',
+                    'Your total cart amount should be at least '.formatPrice($coupon->minimum_order_amount).' to apply this coupon.'
+                )
+                ->withErrors([
+                    'code' => 'Your total cart amount should be at least '.formatPrice($coupon->minimum_order_amount).' to apply this coupon.',
+                ])
+                ->withInput();
+        }
+
+        $discountAmount = 0;
+
+        if ($coupon->discount_type === 'fixed') {
+            $discountAmount = $coupon->amount;
+        } elseif ($coupon->discount_type === 'percentage') {
+            $discountAmount = ($totalAmount * $coupon->amount) / 100;
+        }
+
+        $discountAmount = min($discountAmount, $totalAmount);
+
+        $cart['total_price'] = $totalAmount - $discountAmount;
+        $cart['subtotal'] = $totalSubtotalAmount - $discountAmount;
+
+        $cart['applied_coupons'][] = [
+            'coupon' => $coupon->id,
+            'code' => $coupon->code,
+            'amount' => $discountAmount,
+            'type' => $coupon->discount_type,
+        ];
+
+        Session::put('cart', $cart);
+
+        return redirect()->back()
+            ->with('notify_success', 'Coupon applied successfully!');
     }
 }

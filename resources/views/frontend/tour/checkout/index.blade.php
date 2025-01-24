@@ -34,10 +34,11 @@
                 </div>
 
             </div>
-            <form action="{{ route('checkout.store') }}" method="POST">
-                @csrf
-                <div class="row">
-                    <div class="col-lg-7">
+
+            <div class="row">
+                <div class="col-lg-7">
+                    <form action="{{ route('checkout.store') }}" method="POST">
+                        @csrf
                         <div class="details-box">
                             <div class="details-box__header">
                                 <i class='bx bxs-group'></i>
@@ -162,109 +163,112 @@
                                         </label>
                                     </li>
                                 </ul>
+                                <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-5">
-                        @foreach ($cart['tours'] as $tourId => $item)
-                            @php
-                                $tour = $tours->where('id', $tourId)->first();
-                            @endphp
-                            <div class="checkout-details__wapper">
-                                <div class="checkout-details {{ $loop->first ? 'open' : '' }}">
-                                    <div class="checkout-details__header">
-                                        <div class="title-content">
-                                            <i class='bx bxs-map'></i>
-                                            <div class="heading">{{ $tour->title }}</div>
-                                        </div>
-                                        <div class="up-arrow">
-                                            <i class="bx bx-chevron-up"></i>
-                                        </div>
-                                    </div>
-                                    <div class="checkout-details__optional">
-                                        <div class="optional-wrapper">
-                                            <div class="optional-wrapper-padding">
-                                                <div class="sub-total">
-                                                    <div class="title">Type</div>
-                                                    <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}
-                                                    </div>
-                                                </div>
-                                                <div class="sub-total">
-                                                    <div class="title">Date</div>
-                                                    <div class="price">
-                                                        {{ formatDate($cart['tours'][$tour->id]['data']['start_date']) }}
-                                                    </div>
-                                                </div>
-                                                <div class="sub-total">
-                                                    <div class="title">Subtotal</div>
-                                                    <div class="price">
-                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['subtotal']) }}
-                                                    </div>
-                                                </div>
-                                                <div class="sub-total">
-                                                    <div class="title">Service Fee</div>
-                                                    <div class="price">
-                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['service_fee']) }}
-                                                    </div>
-                                                </div>
-                                                <div class="sub-total">
-                                                    <input type="hidden" name="tour[title][]"
-                                                        value="{{ $tour->title }}">
-                                                    <input type="hidden" name="tour[total_price][]"
-                                                        value="{{ $cart['tours'][$tour->id]['data']['total_price'] }}">
-                                                    <div class="title">Total</div>
-                                                    <div class="price">
-                                                        {{ formatPrice($cart['tours'][$tour->id]['data']['total_price']) }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
+                    </form>
+                </div>
+                <div class="col-lg-5">
+                    @foreach ($cart['tours'] as $tourId => $item)
+                        @php
+                            $tour = $tours->where('id', $tourId)->first();
+                        @endphp
                         <div class="checkout-details__wapper">
-                            <div class="checkout-details open">
+                            <div class="checkout-details {{ $loop->first ? 'open' : '' }}">
                                 <div class="checkout-details__header">
                                     <div class="title-content">
-                                        <i class="bx bx-box"></i>
-                                        <div class="heading">Total</div>
+                                        <i class='bx bxs-map'></i>
+                                        <div class="heading">{{ $tour->title }}</div>
+                                    </div>
+                                    <div class="up-arrow">
+                                        <i class="bx bx-chevron-up"></i>
                                     </div>
                                 </div>
-                                <div class="checkout-details__optional ">
+                                <div class="checkout-details__optional">
                                     <div class="optional-wrapper">
                                         <div class="optional-wrapper-padding">
                                             <div class="sub-total">
+                                                <div class="title">Type</div>
+                                                <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}
+                                                </div>
+                                            </div>
+                                            <div class="sub-total">
+                                                <div class="title">Date</div>
+                                                <div class="price">
+                                                    {{ formatDate($cart['tours'][$tour->id]['data']['start_date']) }}
+                                                </div>
+                                            </div>
+                                            <div class="sub-total">
                                                 <div class="title">Subtotal</div>
-                                                <div class="price">{{ formatPrice($cart['subtotal']) }}</div>
+                                                <div class="price">
+                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['subtotal']) }}
+                                                </div>
                                             </div>
                                             <div class="sub-total">
                                                 <div class="title">Service Fee</div>
-                                                <div class="price">{{ formatPrice($cart['service_fee']) }}</div>
+                                                <div class="price">
+                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['service_fee']) }}
+                                                </div>
                                             </div>
-                                            <div class="cart-coupon">
-                                                <form>
-                                                    <input type="text" id="coupon" name="coupon_name"
-                                                        placeholder="Enter code" class="coupon-input">
-                                                    <button type="button" class="apply-btn couponcode">Apply</button>
-                                                </form>
+                                            <div class="sub-total">
+                                                <input type="hidden" name="tour[title][]" value="{{ $tour->title }}">
+                                                <input type="hidden" name="tour[total_price][]"
+                                                    value="{{ $cart['tours'][$tour->id]['data']['total_price'] }}">
+                                                <div class="title">Total</div>
+                                                <div class="price">
+                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['total_price']) }}
+                                                </div>
                                             </div>
-                                            <hr>
-                                            <input type="hidden" name="total_amount"
-                                                value="{{ $cart['total_price'] }}">
-                                            <div class="sub-total total all-total">
-                                                <div class="title">Total Payable</div>
-                                                <div class="price">{{ formatPrice($cart['total_price']) }}</div>
-                                            </div>
-                                            <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                    <div class="checkout-details__wapper">
+                        <div class="checkout-details open">
+                            <div class="checkout-details__header">
+                                <div class="title-content">
+                                    <i class="bx bx-box"></i>
+                                    <div class="heading">Total</div>
+                                </div>
+                            </div>
+                            <div class="checkout-details__optional ">
+                                <div class="optional-wrapper">
+                                    <div class="optional-wrapper-padding">
+                                        <div class="sub-total">
+                                            <div class="title">Subtotal</div>
+                                            <div class="price">{{ formatPrice($cart['subtotal']) }}</div>
+                                        </div>
+                                        <div class="sub-total">
+                                            <div class="title">Service Fee</div>
+                                            <div class="price">{{ formatPrice($cart['service_fee']) }}</div>
+                                        </div>
+                                        <div class="cart-coupon">
+                                            <form action="{{ route('checkout.applyCode') }}" method="POST">
+                                                @csrf
+                                                <input autocomplete="off" type="text" id="coupon" name="code"
+                                                    placeholder="Enter code" class="coupon-input">
+                                                <button type="submit" class="apply-btn couponcode">Apply</button>
+                                            </form>
+
+                                        </div>
+                                        @error('code')
+                                            <span class="text-danger">{{ $message }}</span>
+                                        @enderror
+                                        <hr>
+                                        <div class="sub-total total all-total">
+                                            <div class="title">Total Payable</div>
+                                            <div class="price">{{ formatPrice($cart['total_price']) }}</div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 @endsection

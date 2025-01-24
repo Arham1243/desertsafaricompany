@@ -371,8 +371,8 @@ a.li__link .total {
     font-size: 0.7rem;
     font-weight: 500;
     position: absolute;
-    right: -10px;
-    top: -5px;
+    right: -14px;
+    top: -6px;
 }
 
 .header-btns__icon {
@@ -380,7 +380,8 @@ a.li__link .total {
     border: none;
     display: flex;
     align-items: center;
-    justify-content: c;
+    position: relative;
+    width: fit-content;
 }
 
 .header-btns__icon i {
