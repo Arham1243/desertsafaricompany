@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Blog\BlogController;
 use App\Http\Controllers\Admin\Blog\CategoriesController as BlogCategoriesController;
 use App\Http\Controllers\Admin\Blog\TagsController as BlogTagsController;
 use App\Http\Controllers\Admin\BulkActionController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\IcalController;
 use App\Http\Controllers\Admin\Locations\CityController;
 use App\Http\Controllers\Admin\Locations\CountryController;
@@ -81,6 +82,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('cities', CityController::class);
     Route::resource('testimonials', TestimonialController::class);
     Route::resource('popups', PopupController::class);
+    Route::resource('coupons', CouponController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
 });

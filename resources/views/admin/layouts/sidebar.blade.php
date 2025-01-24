@@ -251,7 +251,18 @@
         [
             'title' => 'Coupon',
             'icon' => 'bx bx-gift',
-            'route' => 'javascript:void(0)',
+            'submenu' => [
+                [
+                    'title' => 'Coupons',
+                    'icon' => 'bx bx-list-ul',
+                    'route' => route('admin.coupons.index'),
+                ],
+                [
+                    'title' => 'Add Coupon',
+                    'icon' => 'bx bx-plus',
+                    'route' => route('admin.coupons.create'),
+                ],
+            ],
         ],
         [
             'title' => 'Reviews',

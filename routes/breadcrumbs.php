@@ -228,3 +228,18 @@ Breadcrumbs::for('admin.popups.edit', function (BreadcrumbTrail $trail, $item) {
     $trail->push($item->title ?? 'N/A', route('admin.popups.edit', $item->id));
 });
 // ---------------Popups---------------
+
+// ---------------Coupons---------------
+Breadcrumbs::for('admin.coupons.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Coupons', route('admin.coupons.index'));
+});
+Breadcrumbs::for('admin.coupons.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.coupons.index');
+    $trail->push('Add Coupon', route('admin.coupons.create'));
+});
+Breadcrumbs::for('admin.coupons.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.coupons.index');
+    $trail->push($item->name ?? 'N/A', route('admin.coupons.edit', $item->id));
+});
+// ---------------Coupons---------------

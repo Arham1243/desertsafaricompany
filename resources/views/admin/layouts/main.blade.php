@@ -43,6 +43,14 @@
     @yield('js')
     @stack('js')
     <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            const img = document.querySelectorAll('img');
+            img.forEach(function(imgElement) {
+                imgElement.onerror = function() {
+                    imgElement.src = "{{ asset('admin/assets/images/placeholder.png') }}";
+                };
+            });
+        });
         (() => {
             @if (session('notify_success'))
                 $.toast({

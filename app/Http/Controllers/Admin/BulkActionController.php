@@ -8,6 +8,7 @@ use App\Models\BlogCategory;
 use App\Models\BlogTag;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Coupon;
 use App\Models\News;
 use App\Models\NewsCategory;
 use App\Models\NewsTag;
@@ -116,6 +117,11 @@ class BulkActionController extends Controller
                 $modelClass = Popup::class;
                 $column = 'id';
                 $redirectRoute = 'admin.popups.index';
+                break;
+            case 'coupons':
+                $modelClass = Coupon::class;
+                $column = 'id';
+                $redirectRoute = 'admin.coupons.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');
