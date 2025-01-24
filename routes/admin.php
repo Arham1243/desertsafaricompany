@@ -59,7 +59,12 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('tour-attributes', AttributesController::class);
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
     Route::resource('tour-categories', TourCategoriesController::class);
-    Route::resource('tour-reviews', ReviewController::class);
+    Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {
+        Route::resource('/', ReviewController::class);
+        Route::get('/approved', [ReviewController::class, 'approved'])->name('approved');
+        Route::get('/rejected', [ReviewController::class, 'rejected'])->name('rejected');
+    });
+
     Route::resource('tour-availability', AvailabilityController::class);
     Route::resource('tour-bookings', BookingController::class);
 

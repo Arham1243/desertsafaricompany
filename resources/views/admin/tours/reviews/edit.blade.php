@@ -108,7 +108,8 @@
                                             value="active"
                                             {{ old('status', $review->status ?? '') == 'active' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="active">
-                                            Active
+                                            Approve ✅
+
                                         </label>
                                     </div>
                                     <div class="form-check mt-2">
@@ -116,7 +117,7 @@
                                             value="inactive"
                                             {{ old('status', $review->status ?? '') == 'inactive' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="inactive">
-                                            Inactive
+                                            Reject ❌
                                         </label>
                                     </div>
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>

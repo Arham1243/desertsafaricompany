@@ -260,17 +260,17 @@
                 [
                     'title' => 'All Reviews',
                     'icon' => 'bx bx-list-ul',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.tour-reviews.index'),
                 ],
                 [
                     'title' => 'Approved',
                     'icon' => 'bx bx-check',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.tour-reviews.approved'),
                 ],
                 [
-                    'title' => 'Remove',
+                    'title' => 'Rejected',
                     'icon' => 'bx bx-x',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.tour-reviews.rejected'),
                 ],
             ],
         ],

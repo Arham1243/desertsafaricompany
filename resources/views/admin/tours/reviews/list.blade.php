@@ -18,9 +18,9 @@
                                 <form class="custom-form ">
                                     <div class="form-fields d-flex gap-3">
                                         <select class="field" id="bulkActions" name="bulk_actions" required>
-                                            <option value="" disabled selected>Bulk Actions</option>
-                                            <option value="active">Make Active</option>
-                                            <option value="inactive">Make inactive</option>
+                                            <option value="" disabled selected>Select Bulk Action</option>
+                                            <option value="active">Approve</option>
+                                            <option value="inactive">Reject</option>
                                         </select>
                                         <button type="submit" onclick="confirmBulkAction(event)"
                                             class="themeBtn">Apply</button>
@@ -63,12 +63,12 @@
                                             <td>
                                                 <span
                                                     class="badge rounded-pill bg-{{ $item->status == 'active' ? 'success' : ($item->status == 'pending' ? 'warning' : 'danger') }}">
-                                                    {{ $item->status }}
+                                                    {{ $item->status == 'active' ? 'Approved' : ($item->status == 'pending' ? 'Pending' : 'Rejected') }}
                                                 </span>
                                             </td>
                                             <td>
                                                 <a href="{{ route('admin.tour-reviews.edit', $item->id) }}"
-                                                    class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
+                                                    class="themeBtn"><i class='bx bxs-edit'></i>View Details</a>
                                             </td>
                                         </tr>
                                     @endforeach

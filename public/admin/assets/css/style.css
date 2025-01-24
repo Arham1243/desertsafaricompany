@@ -1472,7 +1472,6 @@ a.custom-dropdown__active {
 .badge {
     padding: 0.4rem 0.85rem;
     font-size: 0.85em;
-    width: 75px;
     text-transform: capitalize;
 }
 

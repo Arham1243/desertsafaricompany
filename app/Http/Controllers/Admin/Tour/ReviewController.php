@@ -10,7 +10,27 @@ class ReviewController extends Controller
 {
     public function index()
     {
-        $reviews = TourReview::with('tour', 'user')->get();
+
+        $reviews = TourReview::with('tour', 'user')
+            ->get();
+
+        return view('admin.tours.reviews.list', compact('reviews'))->with('title', 'Tour Reviews');
+    }
+
+    public function approved()
+    {
+
+        $reviews = TourReview::with('tour', 'user')->where('status', 'active')
+            ->get();
+
+        return view('admin.tours.reviews.list', compact('reviews'))->with('title', 'Tour Reviews');
+    }
+
+    public function rejected()
+    {
+
+        $reviews = TourReview::with('tour', 'user')->where('status', 'inactive')
+            ->get();
 
         return view('admin.tours.reviews.list', compact('reviews'))->with('title', 'Tour Reviews');
     }
