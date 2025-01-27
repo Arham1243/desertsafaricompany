@@ -318,7 +318,7 @@
                             </ul>
                         </div>
                     @endif
-                    @if (json_decode($tour->inclusions) && $tour->exclusions && $tour->content)
+                    @if (json_decode($tour->inclusions) || $tour->exclusions || $tour->content)
                         <div class=tour-content__line></div>
                         <div class=tour-content__description>
                             @if ($tour->content)
