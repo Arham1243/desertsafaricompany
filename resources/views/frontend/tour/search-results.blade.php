@@ -3,24 +3,21 @@
     @if ($tours->isNotEmpty())
         <div class="tours section-paddding">
             <div class=container>
-                <div class=tours-content>
-                    <div class="section-content">
-                        <div class="heading">
-                            We found {{ count($tours) }} tour{{ count($tours) > 1 ? 's' : '' }} for you
-                            <br>
-                            <small>
-                                Showing results from
-                                @if ($resourceType === 'city')
-                                    City: {{ $resourceName }}
-                                @elseif ($resourceType === 'country')
-                                    Country: {{ $resourceName }}
-                                @elseif ($resourceType === 'category')
-                                    Category: {{ $resourceName }}
-                                @endif
-                            </small>
-                        </div>
+                <div class="section-content">
+                    <div class="heading">
+                        We found {{ count($tours) }} tour{{ count($tours) > 1 ? 's' : '' }} for you
                     </div>
                 </div>
+                <p>
+                    Showing results from
+                    @if ($resourceType === 'city')
+                        City: {{ $resourceName }}
+                    @elseif ($resourceType === 'country')
+                        Country: {{ $resourceName }}
+                    @elseif ($resourceType === 'category')
+                        Category: {{ $resourceName }}
+                    @endif
+                </p>
                 <div class="row pt-3">
                     @foreach ($tours as $tour)
                         <div class="col-md-3">
