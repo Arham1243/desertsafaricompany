@@ -89,9 +89,14 @@ class CheckoutController extends Controller
     {
         try {
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            $cart = Session::get('cart', []);
+            $tourTitles = [];
+            $tourPrices = [];
 
-            $tourTitles = $request->input('tour.title');
-            $tourPrices = $request->input('tour.total_price');
+            foreach ($cart['tours'] as $tourId => $tourData) {
+                $tourTitles[$tourId] = Tour::where('id', $tourId)->first()->title;
+                $tourPrices[$tourId] = $tourData['data']['total_price'] ?? 0;
+            }
 
             if (empty($tourTitles) || empty($tourPrices)) {
                 return response()->json(['error' => 'Tour details are missing. Please provide valid tour titles and prices.']);
