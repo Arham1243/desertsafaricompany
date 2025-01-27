@@ -1,7 +1,7 @@
 @extends('frontend.layouts.main')
 @section('content')
     @if ($tours->isNotEmpty())
-        <div class="tours section-paddding">
+        <div class="tours section-padding">
             <div class=container>
                 <div class="section-content">
                     <div class="heading">
@@ -28,7 +28,7 @@
             </div>
         </div>
     @else
-        <div class="section-paddding">
+        <div class="section-padding">
             <div class="container">
                 <div class="text-center">
                     <div class="section-content">
