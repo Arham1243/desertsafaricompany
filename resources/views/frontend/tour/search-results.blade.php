@@ -21,7 +21,7 @@
                 <div class="row pt-3">
                     @foreach ($tours as $tour)
                         <div class="col-md-3">
-                            <x-tour-card :tour="$tour" style="style3" />
+                            <x-tour-card :tour="$tour" style="style2" />
                         </div>
                     @endforeach
                 </div>
