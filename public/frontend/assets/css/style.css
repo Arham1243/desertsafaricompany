@@ -6616,7 +6616,6 @@ span.select2-dropdown.select2-dropdown--below {
 
 .editor-content :is(h1, h2, h3, h4, h5, h6) {
     font-weight: 700;
-    margin-bottom: 0.35rem;
     color: #343a40;
     margin-bottom: 0.85rem;
 }
