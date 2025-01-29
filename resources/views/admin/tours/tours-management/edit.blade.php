@@ -232,11 +232,13 @@
                                                         <tbody data-repeater-list>
 
                                                             @php
-                                                                $features = json_decode($tour->features) ?? [
-                                                                    'icon' => [],
-                                                                    'title' => [],
-                                                                    'content' => [],
-                                                                ];
+                                                                $features =
+                                                                    json_decode($tour->features) ??
+                                                                    (object) [
+                                                                        'icon' => [],
+                                                                        'title' => [],
+                                                                        'content' => [],
+                                                                    ];
 
                                                                 $iconCount = count($features->icon);
                                                                 $titleCount = count($features->title);
