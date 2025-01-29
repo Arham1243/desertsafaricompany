@@ -35,7 +35,7 @@ class TourController extends Controller
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }
 
-        return redirect()->back()->with('notify_error', 'Page Not Available');
+        return redirect()->route('index')->with('notify_error', 'Page Not Found');
     }
 
     public function search(Request $request)
