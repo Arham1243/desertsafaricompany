@@ -68,8 +68,6 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.tours.edit', $item->id) }}" class="themeBtn"><i
-                                                        class='bx bxs-edit'></i>Edit</a>
                                                 <div class="dropstart bootsrap-dropdown">
                                                     <button type="button" class="recent-act__icon dropdown-toggle"
                                                         data-bs-toggle="dropdown" aria-expanded="false">

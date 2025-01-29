@@ -75,7 +75,7 @@
                                                                 href="{{ route('page.show', $item->slug) }}{{ $item->status === 'draft' ? '?viewer=admin' : '' }}"
                                                                 title="View Page">
                                                                 <i class='bx bxs-show'></i>
-                                                                View
+                                                                View page
                                                             </a>
                                                         </li>
                                                         <li>
