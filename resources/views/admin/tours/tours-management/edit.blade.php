@@ -151,9 +151,9 @@
                                                 </div>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <input type="text" name="tour[badge][icon_class]" class="field"
-                                                        value="{{ old('tour.badge.icon_class', json_decode($tour->badge)->icon_class ?? 'bx bx-badge-check') }}"
+                                                        value="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }}"
                                                         placeholder="" oninput="showIcon(this)">
-                                                    <i class="{{ old('tour.badge.icon_class', json_decode($tour->badge)->icon_class ?? 'bx bx-badge-check') }} bx-md"
+                                                    <i class="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }} bx-md"
                                                         data-preview-icon></i>
                                                 </div>
                                                 @error('tour.badge.icon_class')
@@ -166,7 +166,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Badge Name:</label>
                                                 <input type="text" name="tour[badge][name]" class="field"
-                                                    value="{{ old('tour.badge.name', json_decode($tour->badge)->name) }}"
+                                                    value="{{ old('tour.badge.name', optional(json_decode($tour->badge))->name) }}"
                                                     placeholder="">
                                                 @error('tour.badge.name')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -185,7 +185,7 @@
                                                     <label for="background-color-picker" data-color-picker></label>
                                                     <input id="background-color-picker" type="text"
                                                         name="tour[badge][background_color]" data-color-picker-input
-                                                        value="{{ old('tour.badge.background_color', json_decode($tour->badge)->background_color ?? '#edab56') }}"
+                                                        value="{{ old('tour.badge.background_color', optional(json_decode($tour->badge))->background_color ?? '#edab56') }}"
                                                         inputmode="text">
                                                 </div>
                                             </div>
@@ -202,7 +202,7 @@
                                                     <label for="icon-color-picker" data-color-picker></label>
                                                     <input id="icon-color-picker" type="text"
                                                         name="tour[badge][icon_color]" data-color-picker-input
-                                                        value="{{ old('tour.badge.icon_color', json_decode($tour->badge)->icon_color ?? '#ffffff') }}"
+                                                        value="{{ old('tour.badge.icon_color', optional(json_decode($tour->badge))->icon_color ?? '#ffffff') }}"
                                                         inputmode="text">
                                                 </div>
                                             </div>
