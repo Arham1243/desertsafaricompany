@@ -65,7 +65,7 @@
         $hasValidDeals = $validDeals->isNotEmpty();
     @endphp
     <div class=tour-content_book_wrap>
-        <div class=tour-content_book_app>
+        <div class="tour-content_book_app {{ $tour->price_type === 'promo' ? 'sale' : '' }}">
             @if ($hasValidDeals)
                 <div class="sale-box">
                     <div class="ribbon ribbon--red">SAVE {{ $combinedDiscountPercent }}%</div>
