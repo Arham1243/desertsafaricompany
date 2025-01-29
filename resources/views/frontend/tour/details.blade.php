@@ -323,7 +323,7 @@
                         <div class=tour-content__description>
                             @if ($tour->content)
                                 <div class=tour-content__details>
-                                    <div class="tour-content__pra editor-content">
+                                    <div class="editor-content">
                                         {!! $tour->content !!}
                                     </div>
                                 </div>
