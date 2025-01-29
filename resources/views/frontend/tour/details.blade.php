@@ -1030,7 +1030,7 @@
                     @endphp
                     @foreach ($relatedTours as $relatedTour)
                         <div class=col-md-3>
-                            <x-tour-card :tour="$tour" style="style1" />
+                            <x-tour-card :tour="$relatedTour" style="style1" />
                         </div>
                     @endforeach
                 </div>
