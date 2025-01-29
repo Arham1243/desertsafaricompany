@@ -238,7 +238,16 @@
                                                                         <input
                                                                             name="tour[general][features][{{ $i }}][title]"
                                                                             type="text" class="field"
+                                                                            placeholder="Title"
                                                                             value="{{ $titles[$i] ?? '' }}">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[general][features][{{ $i }}][content]"
+                                                                            type="text" class="field"
+                                                                            placeholder="Content"
+                                                                            value="{{ $contents[$i] ?? '' }}"
+                                                                            maxlength="50">
                                                                     </td>
                                                                 </tr>
                                                             @endfor

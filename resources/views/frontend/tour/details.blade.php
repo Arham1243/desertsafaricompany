@@ -314,11 +314,17 @@
                                         <div class="col-md-6">
                                             <div class="features-item">
                                                 <div class="icon">
-                                                    <i class="{{ $feature->icon }}"></i>
+                                                    @if ($feature->icon)
+                                                        <i class="{{ $feature->icon }}"></i>
+                                                    @endif
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">{{ $feature->title }}</div>
-                                                    <p>{{ $feature->content }}</p>
+                                                    @if ($feature->title)
+                                                        <div class="title">{{ $feature->title }}</div>
+                                                    @endif
+                                                    @if ($feature->content)
+                                                        <p>{{ $feature->content }}</p>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>

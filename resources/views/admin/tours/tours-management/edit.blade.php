@@ -255,6 +255,13 @@
                                                                             type="text" class="field"
                                                                             value="{{ $features[$i]->title ?? '' }}">
                                                                     </td>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[general][features][{{ $i }}][title]"
+                                                                            type="text" class="field"
+                                                                            value="{{ $features[$i]->content ?? '' }}"
+                                                                            maxlength="50">
+                                                                    </td>
                                                                 </tr>
                                                             @endfor
 
