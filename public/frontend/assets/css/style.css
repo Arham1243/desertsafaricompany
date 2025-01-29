@@ -6584,10 +6584,6 @@ span.select2-dropdown.select2-dropdown--below {
     list-style-type: disc !important;
 }
 
-.editor-content p {
-    margin-bottom: 0.5rem;
-}
-
 .editor-content :is(p, li) {
     font-weight: 400;
 }
