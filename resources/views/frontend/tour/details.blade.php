@@ -323,9 +323,6 @@
                         <div class=tour-content__description>
                             @if ($tour->content)
                                 <div class=tour-content__details>
-                                    <div class=tour-content__SubTitle>
-                                        Description
-                                    </div>
                                     <div class="tour-content__pra editor-content">
                                         {!! $tour->content !!}
                                     </div>
@@ -337,7 +334,7 @@
                                         <div class="tour-content__title mb-3">Price Includes</div>
                                         @foreach (json_decode($tour->inclusions) as $inclusion)
                                             <div class=Price-Includes__content>
-                                                <div class="tour-content__pra-icon check-icon">
+                                                <div class="tour-content__pra-icon">
                                                     <i class="bx bx-check mr-3"></i>
                                                 </div>
                                                 <div class=tour-content__pra>
@@ -424,7 +421,7 @@
                                         <div class="itinerary-card__header accordian-2-header border-bottom-0 p-0">
                                             <h5 class="mb-0">
                                                 <button type="button" class="itinerary-card__header--btn">
-                                                    <div class="tour-content__pra-icon check-icon">
+                                                    <div class="tour-content__pra-icon">
                                                     </div>
                                                     <div class="tour-content__title tour-content__title--Blue">
                                                         Day {{ $itinerary->day }} <span class="px-2">-</span>

@@ -6568,3 +6568,55 @@ span.select2-dropdown.select2-dropdown--below {
     filter: invert(1);
 }
 /* share popup */
+.editor-content {
+    font-size: 15px;
+}
+
+.editor-content :is(p, li, strong) {
+    font-size: 0.99em;
+}
+
+.editor-content ul {
+    margin: 0.5rem 0 0.5rem 1.5rem;
+}
+
+.editor-content li {
+    list-style-type: disc !important;
+}
+
+.editor-content p {
+    margin-bottom: 0.5rem;
+}
+
+.editor-content :is(p, li) {
+    font-weight: 400;
+}
+
+.editor-content h1 {
+    font-size: 2.75em;
+}
+
+.editor-content h2 {
+    font-size: 1.95em;
+}
+
+.editor-content h3 {
+    font-size: 1.5em;
+}
+
+.editor-content h4 {
+    font-size: 1.25em;
+}
+
+.editor-content h5 {
+    font-size: 1em;
+}
+
+.editor-content h6 {
+    font-size: 0.95em;
+}
+
+.editor-content :is(h1, h2, h3, h4, h5, h6) {
+    font-weight: 700;
+    margin-bottom: 0.35rem;
+}
