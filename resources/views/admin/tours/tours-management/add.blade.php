@@ -191,7 +191,7 @@
                                                     <label for="color-picker" data-color-picker></label>
                                                     <input id="color-picker" type="text"
                                                         name="tour[badge][icon_color]" data-color-picker-input
-                                                        value="#ffffff" inputmode="text">
+                                                        value="#000000" inputmode="text">
                                                 </div>
                                             </div>
                                         </div>

@@ -308,17 +308,19 @@
                     @if (json_decode($tour->features))
                         <div class=tour-content__line></div>
 
-                        <div class=tour-content__moreDetail>
-                            <ul class=tour-content__moreDetail--content>
+                        <div class="tour-content__moreDetail--content features-list">
+                            <div class=row>
                                 @foreach (json_decode($tour->features) as $feature)
                                     @if ($feature->icon && $feature->title)
-                                        <li>
-                                            <i class="{{ $feature->icon }}"></i>
-                                            <div>{{ $feature->title }}</div>
-                                        </li>
+                                        <div class="col-md-6">
+                                            <div class="features-item">
+                                                <i class="{{ $feature->icon }}"></i>
+                                                <div>{{ $feature->title }}</div>
+                                            </div>
+                                        </div>
                                     @endif
                                 @endforeach
-                            </ul>
+                            </div>
                         </div>
                     @endif
                     @if (json_decode($tour->inclusions) || $tour->exclusions || $tour->content)

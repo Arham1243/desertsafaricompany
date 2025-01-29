@@ -202,7 +202,7 @@
                                                     <label for="icon-color-picker" data-color-picker></label>
                                                     <input id="icon-color-picker" type="text"
                                                         name="tour[badge][icon_color]" data-color-picker-input
-                                                        value="{{ old('tour.badge.icon_color', optional(json_decode($tour->badge))->icon_color ?? '#ffffff') }}"
+                                                        value="{{ old('tour.badge.icon_color', optional(json_decode($tour->badge))->icon_color ?? '#000000') }}"
                                                         inputmode="text">
                                                 </div>
                                             </div>
