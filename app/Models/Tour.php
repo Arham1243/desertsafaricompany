@@ -167,19 +167,46 @@ class Tour extends Model
 
         static::deleting(function ($item) {
             if ($item->isForceDeleting()) {
-                self::deleteImage($item->featured_image);
+                self::deleteImageIfNotUsed($item->promotional_image);
+                self::deleteImageIfNotUsed($item->banner_image);
+                self::deleteImageIfNotUsed($item->featured_image);
+
                 if ($item->seo) {
-                    self::deleteImage($item->seo->seo_featured_image);
-                    self::deleteImage($item->seo->fb_featured_image);
-                    self::deleteImage($item->seo->tw_featured_image);
+                    self::deleteImageIfNotUsed($item->seo->seo_featured_image);
+                    self::deleteImageIfNotUsed($item->seo->fb_featured_image);
+                    self::deleteImageIfNotUsed($item->seo->tw_featured_image);
                     $item->seo->delete();
                 }
+
                 $item->attributes()->detach();
                 $item->media()->each(function ($media) {
-                    self::deleteImage($media->image_path);
+                    self::deleteImageIfNotUsed($media->file_path);
                 });
             }
         });
+    }
+
+    public static function deleteImageIfNotUsed($imagePath)
+    {
+        if ($imagePath) {
+
+            $imageUsedByAnotherTour = \App\Models\Tour::whereHas('seo', function ($query) use ($imagePath) {
+                $query->where('seo_featured_image', $imagePath)
+                    ->orWhere('fb_featured_image', $imagePath)
+                    ->orWhere('tw_featured_image', $imagePath);
+            })->orWhereHas('media', function ($query) use ($imagePath) {
+                $query->where('file_path', $imagePath);
+            })->orWhere(function ($query) use ($imagePath) {
+
+                $query->where('promotional_image', $imagePath)
+                    ->orWhere('banner_image', $imagePath)
+                    ->orWhere('featured_image', $imagePath);
+            })->exists();
+
+            if (! $imageUsedByAnotherTour) {
+                self::deleteImage($imagePath);
+            }
+        }
     }
 
     public static function deleteImage($path)
