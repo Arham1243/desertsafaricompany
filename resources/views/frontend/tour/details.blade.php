@@ -310,19 +310,19 @@
                         <div class="features-list">
                             <div class=row>
                                 @foreach (json_decode($tour->features) as $feature)
-                                    @if ($feature->icon && $feature->title)
+                                    @if (optional($feature->icon) && optional($feature->title))
                                         <div class="col-md-6">
                                             <div class="features-item">
                                                 <div class="icon">
-                                                    @if ($feature->icon)
+                                                    @if (optional($feature->icon))
                                                         <i class="{{ $feature->icon }}"></i>
                                                     @endif
                                                 </div>
                                                 <div class="content">
-                                                    @if ($feature->title)
+                                                    @if (optional($feature->title))
                                                         <div class="title">{{ $feature->title }}</div>
                                                     @endif
-                                                    @if ($feature->content)
+                                                    @if (optional($feature->content))
                                                         <p>{{ $feature->content }}</p>
                                                     @endif
                                                 </div>
