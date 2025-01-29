@@ -537,6 +537,7 @@ class TourController extends Controller
         $newTour = $tour->replicate();
 
         $newTour->title = $tour->title.' - Copy';
+        $newTour->status = 'draft';
         $newTour->slug = $this->createSlug($newTour->title, 'tours');
 
         $newTour->save();
