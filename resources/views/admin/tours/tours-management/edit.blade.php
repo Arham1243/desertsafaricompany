@@ -253,11 +253,12 @@
                                                                         <input
                                                                             name="tour[general][features][{{ $i }}][title]"
                                                                             type="text" class="field"
-                                                                            value="{{ $features[$i]->title ?? '' }}">
+                                                                            value="{{ $features[$i]->title ?? '' }}"
+                                                                            maxlength="50">
                                                                     </td>
                                                                     <td>
                                                                         <input
-                                                                            name="tour[general][features][{{ $i }}][title]"
+                                                                            name="tour[general][features][{{ $i }}][content]"
                                                                             type="text" class="field"
                                                                             value="{{ $features[$i]->content ?? '' }}"
                                                                             maxlength="50">

@@ -239,7 +239,8 @@
                                                                             name="tour[general][features][{{ $i }}][title]"
                                                                             type="text" class="field"
                                                                             placeholder="Title"
-                                                                            value="{{ $titles[$i] ?? '' }}">
+                                                                            value="{{ $titles[$i] ?? '' }}"
+                                                                            maxlength="50">
                                                                     </td>
                                                                     <td>
                                                                         <input
