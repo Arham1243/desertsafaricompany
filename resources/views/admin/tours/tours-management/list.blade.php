@@ -89,7 +89,9 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="dropdown-item" href="">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.tours.duplicate', $item->id) }}"
+                                                                onclick="return confirm('Are you sure you want to duplicate this tour?')">
                                                                 <i class='bx bxs-copy'></i>
                                                                 Duplicate </a>
                                                         </li>

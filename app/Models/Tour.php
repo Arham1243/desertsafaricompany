@@ -44,11 +44,6 @@ class Tour extends Model
         return $this->hasMany(TourDetail::class);
     }
 
-    public function normalPrices()
-    {
-        return $this->hasMany(TourPricing::class)->where('price_type', 'normal');
-    }
-
     public function pricing()
     {
         return $this->hasMany(TourPricing::class);
@@ -88,6 +83,11 @@ class Tour extends Model
         }
 
         return 0;
+    }
+
+    public function normalPrices()
+    {
+        return $this->hasMany(TourPricing::class)->where('price_type', 'normal');
     }
 
     public function privatePrices()

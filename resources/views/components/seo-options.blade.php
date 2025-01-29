@@ -95,8 +95,7 @@
                                             </label>
                                             <input type="text" name="seo[seo_title]" class="field"
                                                 value="{{ old('seo[seo_title]', $seo->seo_title ?? '') }}"
-                                                placeholder="Leave blank to use service title"
-                                                oninput="updateText(this,'google_title')">
+                                                placeholder="Title" oninput="updateText(this,'google_title')">
                                             @error('seo[seo_title]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -169,7 +168,7 @@
                                             </label>
                                             <input type="text" name="seo[fb_title]" class="field"
                                                 value="{{ old('seo[fb_title]', $seo->fb_title ?? '') }}"
-                                                placeholder="Leave blank to use service title">
+                                                placeholder="Title">
                                             @error('seo[fb_title]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -237,7 +236,7 @@
                                             </label>
                                             <input type="text" name="seo[tw_title]" class="field"
                                                 value="{{ old('seo[tw_title]', $seo->tw_title ?? '') }}"
-                                                placeholder="Leave blank to use service title">
+                                                placeholder="Title">
                                             @error('seo[tw_title]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror

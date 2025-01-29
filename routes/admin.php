@@ -56,6 +56,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('news-categories', NewsCategoriesController::class);
 
     Route::resource('tours', TourController::class);
+    Route::get('tours/duplicate/{id}', [TourController::class, 'duplicate'])->name('tours.duplicate');
     Route::get('tour-media/{media}', [TourController::class, 'deleteMedia'])->name('tour-media.delete');
     Route::resource('tour-attributes', AttributesController::class);
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
