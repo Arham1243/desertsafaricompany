@@ -161,3 +161,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 const todayDate = new Date().toISOString().split('T')[0]; 
 document.getElementById('start_date')?.setAttribute('min', todayDate);
+const emptyParas = Array.from(document.querySelectorAll("p")).filter(p => p.innerHTML.trim() === "&nbsp;");
+
+if (emptyParas.length > 0) {
+    emptyParas.forEach(p => p.style.display = "none");
+}

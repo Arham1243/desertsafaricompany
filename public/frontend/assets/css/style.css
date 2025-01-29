@@ -2845,25 +2845,29 @@ ul.headerReviews--icon li {
 .tour-content__headerLocation--details a {
     color: #297cbb;
 }
-
-ul.header-listGroup i {
-    font-size: 1.3rem;
+.features-list {
+    padding: 2rem 0 1.5rem;
 }
-
-ul.tour-content__moreDetail--content {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.75rem 0;
+.features-item i {
+    font-size: 1.75rem;
+    color: var(--color-primary);
+    margin-top: 2px;
 }
-
-ul.tour-content__moreDetail--content li {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    width: 32%;
+.features-item .title {
     font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.features-item p {margin-bottom: 0;}
+
+.features-item {
+    display: flex;
+    gap: 15px;
+    font-size: 0.85rem;
     color: #67747c;
     font-weight: 500;
+    margin: 0.65rem 0;
 }
 
 .tour-content__moreDetail {
