@@ -313,7 +313,7 @@
                     @php
                         $features = json_decode($tour->features);
                     @endphp
-                    @if ($features)
+                    @if ($features && isset($features->icon))
                         <div class=tour-content__line></div>
                         <div class="features-list">
                             <div class=row>
