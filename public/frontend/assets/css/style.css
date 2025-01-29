@@ -742,7 +742,6 @@ a#loginBtn {
     font-size: 1rem;
 }
 
-
 .tours-content {
     display: flex;
     align-items: center;
@@ -2762,7 +2761,7 @@ h2.more-offers-title {
 
 /* .tour-content */
 .tour-content {
-    padding: 5rem 0 3rem;
+    padding: 4rem 0 3rem;
 }
 
 .headerReviews--icon ul li i {
@@ -2859,7 +2858,9 @@ ul.headerReviews--icon li {
     margin-bottom: 0.25rem;
 }
 
-.features-item p {margin-bottom: 0;}
+.features-item p {
+    margin-bottom: 0;
+}
 
 .features-item {
     display: flex;
@@ -3256,7 +3257,7 @@ span.tour-content__title.ml-1 {
     width: 100%;
     border: 1px solid #e4e4e4 !important;
     padding: 1rem 1.5rem 1.5rem;
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 .tour-content_book_app.sale {
     padding-top: 3rem;
@@ -3268,7 +3269,6 @@ span.tour-content__title.ml-1 {
 }
 
 .tour-content_book_wrap {
-    margin-top: 10px;
     position: sticky;
     top: 0;
 }
@@ -3460,11 +3460,9 @@ ul.header-listGroup form {
 }
 
 span.header-listGroup.faq-icon.added {
-    background: #FE4838;
+    background: #fe4838;
     border: none;
 }
-
-
 
 span.header-listGroup.faq-icon.added i {
     color: #fff;
@@ -6624,4 +6622,7 @@ span.select2-dropdown.select2-dropdown--below {
     font-weight: 700;
     color: #343a40;
     margin-bottom: 0.85rem;
+}
+.breadcrumb {
+    margin: 1.1rem 0;
 }

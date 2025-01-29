@@ -208,66 +208,73 @@
                                             </div>
                                         </div>
 
+
+
+
+
+
+
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
                                                 <label class="title title--sm">Features:</label>
-                                                <div class="repeater-table">
+                                                <div class="repeater-table" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
-                                                            <tr>
-                                                                <th scope="col">
-                                                                    <div class="d-flex align-items-center gap-2"> Icon:
-                                                                        <a class="p-0 nav-link" href="//boxicons.com"
-                                                                            target="_blank">boxicons</a>
-                                                                    </div>
-                                                                </th>
-                                                                <th scope="col">Title</th>
+                                                            <th scope="col">
+                                                                <div class="d-flex align-items-center gap-2"> Icon:
+                                                                    <a class="p-0 nav-link" href="//boxicons.com"
+                                                                        target="_blank">boxicons</a>
+                                                                </div>
+                                                            </th>
+                                                            <th scope="col">Title</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
+                                                        <tbody data-repeater-list>
+
                                                             @php
-                                                                $icons = [
-                                                                    'bx bx-stopwatch',
-                                                                    'bx bx-user',
-                                                                    'bx bx-wifi',
-                                                                    'bx bx-calendar',
-                                                                    'bx bx-user-check',
-                                                                    'bx bxs-map',
-                                                                ];
                                                                 $features = json_decode($tour->features) ?? [];
                                                             @endphp
 
-                                                            @for ($i = 0; $i < 6; $i++)
-                                                                <tr>
+                                                            @foreach ($features->icon as $i => $feature)
+                                                                <tr data-repeater-item>
                                                                     <td>
                                                                         <div class="d-flex align-items-center gap-3">
                                                                             <input type="text" class="field"
-                                                                                name="tour[general][features][{{ $i }}][icon]"
+                                                                                name="tour[general][features][icon][]"
                                                                                 oninput="showIcon(this)"
-                                                                                value="{{ $features[$i]->icon ?? ($icons[$i] ?? '') }}">
-                                                                            <i class="{{ $features[$i]->icon ?? ($icons[$i] ?? '') }} bx-md"
+                                                                                value="{{ $features->icon[$i] ?? '' }}">
+                                                                            <i class="{{ $features->icon[$i] ?? '' }} bx-md"
                                                                                 data-preview-icon></i>
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <input
-                                                                            name="tour[general][features][{{ $i }}][title]"
+                                                                        <input name="tour[general][features][title][]"
                                                                             type="text" class="field"
-                                                                            value="{{ $features[$i]->title ?? '' }}"
+                                                                            value="{{ $features->title[$i] ?? '' }}"
                                                                             maxlength="50">
                                                                     </td>
                                                                     <td>
-                                                                        <input
-                                                                            name="tour[general][features][{{ $i }}][content]"
+                                                                        <input name="tour[general][features][content][]"
                                                                             type="text" class="field"
-                                                                            value="{{ $features[$i]->content ?? '' }}"
+                                                                            value="{{ $features->content[$i] ?? '' }}"
                                                                             maxlength="50">
                                                                     </td>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                            data-repeater-remove>
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </button>
+                                                                    </td>
                                                                 </tr>
-                                                            @endfor
+                                                            @endforeach
 
                                                         </tbody>
                                                     </table>
+                                                    <button type="button" class="themeBtn ms-auto"
+                                                        data-repeater-create>Add
+                                                        <i class="bx bx-plus"></i>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>

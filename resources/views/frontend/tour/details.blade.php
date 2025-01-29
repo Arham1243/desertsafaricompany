@@ -9,6 +9,19 @@
         <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
                 class='bx bxl-whatsapp'></i></a>
     @endif
+    <div class=container>
+        <div class=row>
+            <div class=col-md-9>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $tour->slug }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
 
     <div class=tour-details>
         <div class=tour-details_banner>
@@ -129,8 +142,8 @@
                             <a href="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
                                 data-fancybox="gallery-2" class="media-gallery__item--4">
                                 <img data-src="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                                    height="400">
+                                    alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy"
+                                    width="662.5" height="400">
                             </a>
                             @if (count($tour->media) > 4)
                                 <div class="media-gallery--view__morePics">
@@ -211,13 +224,6 @@
         <div class=container>
             <div class=row>
                 <div class=col-md-9>
-                    <nav aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                            <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ $tour->slug }}</li>
-                        </ol>
-                    </nav>
                     <div class=tour-content__header>
                         <div>
                             <div class=section-content>
@@ -304,26 +310,28 @@
                             </li>
                         </ul>
                     </div>
-
-                    @if (json_decode($tour->features))
+                    @php
+                        $features = json_decode($tour->features);
+                    @endphp
+                    @if ($features)
                         <div class=tour-content__line></div>
                         <div class="features-list">
                             <div class=row>
-                                @foreach (json_decode($tour->features) as $feature)
-                                    @if (isset($feature->icon) && isset($feature->title))
+                                @foreach ($features->icon as $i => $feature)
+                                    @if (isset($features->icon) && isset($features->title))
                                         <div class="col-md-6">
                                             <div class="features-item">
                                                 <div class="icon">
-                                                    @if (isset($feature->icon))
-                                                        <i class="{{ $feature->icon }}"></i>
+                                                    @if (isset($features->icon[$i]))
+                                                        <i class="{{ $features->icon[$i] }}"></i>
                                                     @endif
                                                 </div>
                                                 <div class="content">
-                                                    @if (isset($feature->title))
-                                                        <div class="title">{{ $feature->title }}</div>
+                                                    @if (isset($features->title[$i]))
+                                                        <div class="title">{{ $features->title[$i] }}</div>
                                                     @endif
-                                                    @if (isset($feature->content))
-                                                        <p>{{ $feature->content }}</p>
+                                                    @if (isset($features->content[$i]))
+                                                        <p>{{ $features->content[$i] }}</p>
                                                     @endif
                                                 </div>
                                             </div>
@@ -629,7 +637,8 @@
                                                                                 <div
                                                                                     class="timeline-item__subitems-wrapper">
 
-                                                                                    <div class="grey-circle-icon"></div>
+                                                                                    <div class="grey-circle-icon">
+                                                                                    </div>
                                                                                     <div
                                                                                         class="timeline-item-info timeline-item__info timeline-item__info--subitem">
                                                                                         <p
