@@ -53,6 +53,7 @@ class TourController extends Controller
     public function store(Request $request)
     {
         $general = $request->input('tour.general', []);
+        $badge = $request->input('tour.badge', []);
         $statusTab = $request->input('tour.status', []);
         $availabilityData = $request->input('tour.availability', []);
         $pricing = $request->input('tour.pricing', []);
@@ -78,14 +79,14 @@ class TourController extends Controller
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
             'slug' => $slug ?? null,
+            'badge' => $badge ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
-            'badge_icon_class' => $general['badge_icon_class'] ?? null,
-            'badge_name' => $general['badge_name'] ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
             'promotional_image_alt_text' => $request->input('promotional_image_alt_text'),
@@ -297,6 +298,7 @@ class TourController extends Controller
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
+        $badge = $request->input('tour.badge', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours', $tour->slug);
@@ -317,14 +319,14 @@ class TourController extends Controller
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
 
         $tour->update([
             'title' => $general['title'] ?? null,
             'slug' => $slug ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
-            'badge_icon_class' => $general['badge_icon_class'] ?? null,
-            'badge_name' => $general['badge_name'] ?? null,
+            'badge' => $badge ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
             'promotional_image_alt_text' => $request->input('promotional_image_alt_text'),

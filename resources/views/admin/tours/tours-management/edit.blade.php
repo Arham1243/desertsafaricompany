@@ -118,7 +118,7 @@
                                         </div>
                                         <div class="col-12  mt-4">
                                             <div class="form-fields">
-                                                <label class="title">Categories <span class="text-danger">*</span>
+                                                <label class="title">Select category <span class="text-danger">*</span>
                                                     :</label>
                                                 <select name="tour[general][category_id]" class="select2-select"
                                                     data-error="Category" placeholder="Select Categories">
@@ -131,42 +131,83 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12  mt-4">
+
+                                        <div class="col-md-6 col-12 mt-4">
                                             <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
-                                                    <div>
-                                                        Badge icon:
+                                                <div class="d-flex align-items-center gap-3 mb-2">
+                                                    <span class="title mb-0">Badge Icon:
+                                                        <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                            target="_blank">boxicons</a>
+                                                    </span>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input class="form-check-input" data-toggle-switch type="checkbox"
+                                                            id="enable-badge-section" value="1"
+                                                            name="tour[badge][is_enabled]"
+                                                            {{ old('tour.badge.is_enabled', optional(json_decode($tour->badge))->is_enabled) ? 'checked' : '' }}>
+                                                        <label class="form-check-label"
+                                                            for="enable-badge-section">Enabled</label>
                                                     </div>
-                                                    <a class="p-0 nav-link" href="//boxicons.com"
-                                                        target="_blank">boxicons</a>
                                                 </div>
                                                 <div class="d-flex align-items-center gap-3">
-
-                                                    <input type="text" name="tour[general][badge_icon_class]"
-                                                        class="field"
-                                                        value="{{ $tour->badge_icon_class ?? 'bx bx-badge-check' }}"
+                                                    <input type="text" name="tour[badge][icon_class]" class="field"
+                                                        value="{{ old('tour.badge.icon_class', json_decode($tour->badge)->icon_class ?? 'bx bx-badge-check') }}"
                                                         placeholder="" oninput="showIcon(this)">
-                                                    <i class="bx {{ $tour->badge_icon_class ?? 'bx bx-badge-check' }} bx-md"
+                                                    <i class="{{ old('tour.badge.icon_class', json_decode($tour->badge)->icon_class ?? 'bx bx-badge-check') }} bx-md"
                                                         data-preview-icon></i>
                                                 </div>
-                                                @error('tour[general][badge_icon_class]')
+                                                @error('tour.badge.icon_class')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
-
                                             </div>
-
                                         </div>
-                                        <div class="col-md-6 col-12  mt-4">
+
+                                        <div class="col-md-6 col-12 mt-4">
                                             <div class="form-fields">
                                                 <label class="title">Badge Name:</label>
-                                                <input type="text" name="tour[general][badge_name]" class="field"
-                                                    value="{{ old('tour[general][badge_name]', $tour->badge_name) }}"
+                                                <input type="text" name="tour[badge][name]" class="field"
+                                                    value="{{ old('tour.badge.name', json_decode($tour->badge)->name) }}"
                                                     placeholder="">
-                                                @error('tour[general][badge_name]')
+                                                @error('tour.badge.name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        <div class="col-md-6 col-12 mt-4">
+                                            <div class="form-fields">
+                                                <div class="title d-flex align-items-center gap-2">
+                                                    <div>Badge Background Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="background-color-picker" data-color-picker></label>
+                                                    <input id="background-color-picker" type="text"
+                                                        name="tour[badge][background_color]" data-color-picker-input
+                                                        value="{{ old('tour.badge.background_color', json_decode($tour->badge)->background_color ?? '#edab56') }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mt-4">
+                                            <div class="form-fields">
+                                                <div class="title d-flex align-items-center gap-2">
+                                                    <div>Badge Icon Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="icon-color-picker" data-color-picker></label>
+                                                    <input id="icon-color-picker" type="text"
+                                                        name="tour[badge][icon_color]" data-color-picker-input
+                                                        value="{{ old('tour.badge.icon_color', json_decode($tour->badge)->icon_color ?? '#ffffff') }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
                                                 <label class="title title--sm">Features:</label>
@@ -1770,7 +1811,8 @@
                                                                                             min="0"
                                                                                             name="tour[pricing][discount][discount][]"
                                                                                             value="{{ $discount_price }}"
-                                                                                            class="field" placeholder="">
+                                                                                            class="field"
+                                                                                            placeholder="">
                                                                                     </td>
                                                                                     <td>
                                                                                         <select class="field"
@@ -2394,6 +2436,8 @@
         crossorigin="anonymous" />
 @endpush
 @push('js')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>

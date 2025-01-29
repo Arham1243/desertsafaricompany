@@ -248,11 +248,14 @@
                                     </div>
                                 </div>
                                 <div class=tour-content__headerLocation--details>
-                                    @if ($tour->badge_icon_class && $tour->badge_name)
+                                    @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
                                         <span class=pipeDivider></span>
+
                                         <div class="badge-of-excellence">
-                                            <i class="{{ $tour->badge_icon_class }}"></i>
-                                            {{ $tour->badge_name }}
+                                            <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
+                                                {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
+                                                class="{{ json_decode($tour->badge)->icon_class }}"></i>
+                                            {{ json_decode($tour->badge)->name }}
                                         </div>
                                     @endif
                                     @if ($tour->cities->isNotEmpty())
