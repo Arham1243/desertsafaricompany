@@ -29,7 +29,7 @@ class TourController extends Controller
             ->latest()->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
         if ($tour) {
-            $isTourInCart = isset($cart) && isset($cart['tours']) ? isset($cart['tours'][$tour->id]) : null;
+            $isTourInCart = isset($cart['tours'][$tour->id]);
             $data = compact('tour', 'attributes', 'cart', 'isTourInCart');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
