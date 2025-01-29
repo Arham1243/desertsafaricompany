@@ -240,9 +240,9 @@
                                                                         'content' => [],
                                                                     ];
 
-                                                                $iconCount = count($features->icon);
-                                                                $titleCount = count($features->title);
-                                                                $contentCount = count($features->content);
+                                                                $iconCount = count($features->icon) ?: 1;
+                                                                $titleCount = count($features->title) ?: 1;
+                                                                $contentCount = count($features->content) ?: 1;
                                                                 $maxCount = max($iconCount, $titleCount, $contentCount);
                                                             @endphp
 
