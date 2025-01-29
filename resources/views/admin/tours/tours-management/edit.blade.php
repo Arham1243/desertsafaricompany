@@ -237,9 +237,14 @@
                                                                     'title' => [],
                                                                     'content' => [],
                                                                 ];
+
+                                                                $iconCount = count($features->icon);
+                                                                $titleCount = count($features->title);
+                                                                $contentCount = count($features->content);
+                                                                $maxCount = max($iconCount, $titleCount, $contentCount);
                                                             @endphp
 
-                                                            @foreach ($features->icon as $i => $feature)
+                                                            @for ($i = 0; $i < $maxCount; $i++)
                                                                 <tr data-repeater-item>
                                                                     <td>
                                                                         <div class="d-flex align-items-center gap-3">
@@ -271,8 +276,7 @@
                                                                         </button>
                                                                     </td>
                                                                 </tr>
-                                                            @endforeach
-
+                                                            @endfor
                                                         </tbody>
                                                     </table>
                                                     <button type="button" class="themeBtn ms-auto"
