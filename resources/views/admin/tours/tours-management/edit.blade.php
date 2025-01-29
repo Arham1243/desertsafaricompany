@@ -232,7 +232,11 @@
                                                         <tbody data-repeater-list>
 
                                                             @php
-                                                                $features = json_decode($tour->features) ?? [];
+                                                                $features = json_decode($tour->features) ?? [
+                                                                    'icon' => [],
+                                                                    'title' => [],
+                                                                    'content' => [],
+                                                                ];
                                                             @endphp
 
                                                             @foreach ($features->icon as $i => $feature)
