@@ -1006,7 +1006,7 @@
                         You might also like...
                     </h2>
                 </div>
-                <div class="row pt-3 mb-4">
+                <div class="row four-items-slider pt-3 mb-4">
                     @php
                         $relatedTours = App\Models\Tour::whereIn('id', json_decode($tour->related_tour_ids ?? '[]'))
                             ->where('status', 'publish')
@@ -1015,50 +1015,7 @@
                     @endphp
                     @foreach ($relatedTours as $relatedTour)
                         <div class=col-md-3>
-                            <div class="card-content normal-card__content">
-                                <a href={{ route('tours.details', $relatedTour->slug) }}
-                                    class="card_img normal-card__img">
-                                    <img data-src={{ asset($relatedTour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                        alt={{ $relatedTour->featured_image_alt_text ?? 'image' }} class='imgFluid lazy'>
-                                    <div class=price-details>
-                                        <div class=price-location data-tooltip="tooltip"
-                                            title="{{ $relatedTour->cities->pluck('name')->implode(', ') }}">
-                                            <i class="bx bxs-location-plus"></i>
-                                            {{ $relatedTour->cities[0]->name }}
-                                        </div>
-                                        <div class=heart-icon>
-                                            <div class=service-wishlist>
-                                                <i class="bx bx-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class="tour-activity-card__details normal-card__details">
-                                    <div class=vertical-activity-card__header>
-                                        <div data-tooltip="tooltip" title="{{ $tour->title }}"
-                                            class="tour-activity-card__details--title text-truncate">
-                                            {{ $relatedTour->title }}
-                                        </div>
-                                    </div>
-                                    <div class="card-rating mb-2">
-                                        <div class=card-rating__yellow>
-                                            {{ $relatedTour->average_rating ?? 0 }}/5
-                                        </div>
-                                        <span>
-                                            ({{ count($relatedTour->reviews) === 0
-                                                ? 'No Reviews Yet'
-                                                : count($relatedTour->reviews) . ' Review' . (count($relatedTour->reviews) > 1 ? 's' : '') }})
-                                        </span>
-                                    </div>
-                                    <div class="tour-listing__info normal-card__info">
-                                        <p class=baseline-pricing__from>
-                                            <span class=baseline-pricing__from--text>From</span>
-                                            <span
-                                                class=baseline-pricing__from--value>{{ formatPrice($relatedTour->regular_price) }}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-tour-card :tour="$tour" style="style1" />
                         </div>
                     @endforeach
                 </div>

@@ -2112,11 +2112,11 @@
                                         @php
                                             $selectedRelatedTourIds = json_decode($tour->related_tour_ids, true) ?? [];
                                         @endphp
-                                        <label class="title">Select 4 tours <span class="text-danger">*</span>
+                                        <label class="title">Select tours <span class="text-danger">*</span>
                                             :</label>
                                         <select name="related_tour_ids[]" multiple class="select2-select"
-                                            data-max-items="4" placeholder="Select Tours"
-                                            {{ !$tours->isEmpty() ? '' : '' }} data-error="Top 4 featured tours">
+                                            placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
                                             @foreach ($tours as $t)
                                                 <option value="{{ $t->id }}"
                                                     {{ in_array($t->id, $selectedRelatedTourIds) ? 'selected' : '' }}>

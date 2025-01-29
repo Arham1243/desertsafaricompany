@@ -1607,11 +1607,11 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Select 4 tours <span class="text-danger">*</span>
+                                        <label class="title">Select tours <span class="text-danger">*</span>
                                             :</label>
                                         <select name="related_tour_ids[]" multiple class="select2-select"
-                                            data-max-items="4" placeholder="Select Tours"
-                                            {{ !$tours->isEmpty() ? '' : '' }} data-error="Top 4 featured tours">
+                                            placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
+                                            data-error="Top 4 featured tours">
                                             @foreach ($tours as $tour)
                                                 <option value="{{ $tour->id }}">
                                                     {{ $tour->title }}
