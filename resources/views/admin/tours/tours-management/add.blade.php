@@ -328,7 +328,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mt-4">
+                                        {{-- <div class="col-md-12 mt-4">
                                             <div class="form-fields">
                                                 <label
                                                     class=" d-flex align-items-center mb-3 justify-content-between"><span
@@ -408,7 +408,7 @@
 
 
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="col-md-12 mt-3">
                                             <div class="form-fields">
                                                 <label class="title title--sm">FAQs:</label>

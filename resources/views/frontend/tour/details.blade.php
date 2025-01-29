@@ -406,7 +406,7 @@
                         </div>
                     @endif
 
-                    @if ($tour->tourDetails->isNotEmpty())
+                    {{-- @if ($tour->tourDetails->isNotEmpty())
                         <div class=tour-content__line></div>
                         <div class="tour-content__moreDetail">
                             @foreach ($tour->tourDetails as $i => $detail)
@@ -422,7 +422,7 @@
                                 </ul>
                             @endforeach
                         </div>
-                    @endif
+                    @endif --}}
 
                     @if ($tour->location_type === 'normal_itinerary')
                         <div class=tour-content__line></div>

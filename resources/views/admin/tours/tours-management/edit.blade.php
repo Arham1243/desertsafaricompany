@@ -358,7 +358,7 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mt-4">
+                                        {{-- <div class="col-md-12 mt-4">
                                             <div class="form-fields">
                                                 <label class="d-flex align-items-center mb-3 justify-content-between">
                                                     <span class="title title--sm mb-0">Tour Information:</span>
@@ -474,7 +474,7 @@
                                                     </button>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         @php
                                             $faqs = !$tour->faqs->isEmpty()
@@ -1819,8 +1819,7 @@
                                                                                             min="0"
                                                                                             name="tour[pricing][discount][discount][]"
                                                                                             value="{{ $discount_price }}"
-                                                                                            class="field"
-                                                                                            placeholder="">
+                                                                                            class="field" placeholder="">
                                                                                     </td>
                                                                                     <td>
                                                                                         <select class="field"
