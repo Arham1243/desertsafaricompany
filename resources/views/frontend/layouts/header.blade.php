@@ -30,19 +30,6 @@
                         <a href="{{ route('tours.favorites.index') }}" title="Wishlist" class="li__link">
 
                             <div class="header-btns__icon">
-                                @if (Auth::check())
-                                    @php
-                                        $favotites = App\Models\UserFavoriteTour::where(
-                                            'user_id',
-                                            Auth::user()->id,
-                                        )->get();
-                                    @endphp
-                                    @if ($favotites->isNotEmpty())
-                                        <span class="total">
-                                            {{ count($favotites) }}
-                                        </span>
-                                    @endif
-                                @endif
                                 <i class='bx bx-heart'></i>
                             </div>
                             <span>Wishlist</span>
