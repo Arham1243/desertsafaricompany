@@ -6645,7 +6645,7 @@ span.select2-dropdown.select2-dropdown--below {
     margin-bottom: 0.5rem;
 }
 .tour-details__items {
-    margin: 0.5rem 0 0.25rem 1rem;
+    margin: 0.25rem 0 0.75rem 1rem;
 }
 
 .tour-details__items li {
@@ -6653,5 +6653,5 @@ span.select2-dropdown.select2-dropdown--below {
     font-weight: 500;
     list-style-type: disc !important;
     color: #5e6d77;
-    padding: 0.25rem 0;
+    padding: 0.2rem 0;
 }
