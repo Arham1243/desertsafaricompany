@@ -401,7 +401,7 @@
                                         </div>
                                     @endforeach
                                 @endif
-                                <div class=row>
+                                <div class="row pt-2">
                                     @if (json_decode($tour->inclusions))
                                         <div class="col-md-6 mb-4">
                                             <div class="tour-content__title mb-3">Price Includes</div>
