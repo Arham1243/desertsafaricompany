@@ -385,7 +385,7 @@
                                                             <thead>
                                                                 <tr>
                                                                     <th>Section Title</th>
-                                                                    <th>Categories</th>
+                                                                    <th>Items</th>
                                                                     <th class="text-end">Actions</th>
                                                                 </tr>
                                                             </thead>
@@ -443,7 +443,7 @@
                                                                                             <button type="button"
                                                                                                 @click="category.items.push('')"
                                                                                                 class="themeBtn mt-3">
-                                                                                                Add Item <i
+                                                                                                Add Subitem <i
                                                                                                     class="bx bx-plus"></i>
                                                                                             </button>
                                                                                         </div>
@@ -452,7 +452,7 @@
                                                                                 <button type="button"
                                                                                     @click="section.categories.push({ category_name: '', items: [''] })"
                                                                                     class="themeBtn mt-3">
-                                                                                    Add Category <i class="bx bx-plus"></i>
+                                                                                    Add Item <i class="bx bx-plus"></i>
                                                                                 </button>
                                                                             </div>
                                                                         </td>
