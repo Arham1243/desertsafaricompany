@@ -388,8 +388,7 @@
                                                                     <td>
                                                                         <input x-model="row.heading"
                                                                             :name="`tour[details][${index}][heading]`"
-                                                                            type="text" placeholder="Heading"
-                                                                            class="field">
+                                                                            type="text" class="field">
                                                                     </td>
                                                                     <td>
                                                                         <div>
@@ -400,8 +399,7 @@
                                                                                     class="d-flex align-items-center gap-3">
                                                                                     <input x-model="row.items[itemIndex]"
                                                                                         :name="`tour[details][${index}][items][]`"
-                                                                                        type="text" placeholder="Item"
-                                                                                        class="field mb-3">
+                                                                                        type="text" class="field mb-3">
                                                                                     <button type="button"
                                                                                         @click="row.items.splice(itemIndex, 1)"
                                                                                         class="delete-btn delete-btn--static ms-auto">
