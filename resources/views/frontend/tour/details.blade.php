@@ -344,7 +344,7 @@
 
                     @if ($tour->description)
                         <div class=tour-content__line></div>
-                        <div class="pb-5 pt-3">
+                        <div class="pb-4 pt-3">
                             <div class="tour-content__SubTitle">Description</div>
 
                             <div data-show-more>
