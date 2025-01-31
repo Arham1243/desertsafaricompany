@@ -39,11 +39,6 @@ class Tour extends Model
         return $this->hasMany(TourFaq::class);
     }
 
-    public function tourDetails()
-    {
-        return $this->hasMany(TourDetail::class);
-    }
-
     public function pricing()
     {
         return $this->hasMany(TourPricing::class);

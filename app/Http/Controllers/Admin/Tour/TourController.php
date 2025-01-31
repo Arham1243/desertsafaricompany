@@ -7,7 +7,6 @@ use App\Models\City;
 use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
-use App\Models\TourDetail;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
 use App\Models\TourPricing;
@@ -58,6 +57,7 @@ class TourController extends Controller
         $availabilityData = $request->input('tour.availability', []);
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
+        $details = $request->input('tour.details', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
@@ -80,6 +80,7 @@ class TourController extends Controller
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
+        $details = ! empty($request->input('tour.details')) ? json_encode($request->input('tour.details')) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -96,6 +97,7 @@ class TourController extends Controller
             'video_link' => $general['video_link'] ?? null,
             'inclusions' => $inclusions,
             'exclusions' => $exclusions,
+            'details' => $details,
             'features' => $features,
             'status' => $statusTab['status'],
             'author_id' => $statusTab['author_id'],
@@ -147,19 +149,6 @@ class TourController extends Controller
             foreach ($statusTab['attributes'] as $attributeId => $itemIds) {
                 foreach ($itemIds as $itemId) {
                     $tour->attributes()->attach($attributeId, ['tour_attribute_item_id' => $itemId]);
-                }
-            }
-        }
-
-        if (! empty($general['details'])) {
-            foreach ($general['details'] as $detail) {
-                if ($detail['name'] !== null && ! empty($detail['items'])) {
-                    TourDetail::create([
-                        'tour_id' => $tour->id,
-                        'name' => $detail['name'],
-                        'items' => $detail['items'],
-                        'urls' => $detail['urls'],
-                    ]);
                 }
             }
         }
@@ -292,6 +281,7 @@ class TourController extends Controller
         $location = $request->input('tour.location', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
         $badge = $request->input('tour.badge', []);
+        $details = $request->input('tour.details', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours', $tour->slug);
@@ -307,6 +297,7 @@ class TourController extends Controller
         $features = ! empty($general['features']) && ! in_array(null, $general['features'], true)
             ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
             : null;
+        $details = ! empty($request->input('tour.details')) ? json_encode($request->input('tour.details')) : null;
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
@@ -320,6 +311,7 @@ class TourController extends Controller
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'description' => $general['description'] ?? null,
+            'details' => $details,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'badge' => $badge ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
@@ -385,20 +377,6 @@ class TourController extends Controller
             }
         } else {
             $tour->attributes()->detach();
-        }
-
-        if (! empty($general['details'])) {
-            $tour->tourDetails()->delete();
-            foreach ($general['details'] as $detail) {
-                if ($detail['name'] !== null && ! empty($detail['items'])) {
-                    TourDetail::create([
-                        'tour_id' => $tour->id,
-                        'name' => $detail['name'],
-                        'items' => $detail['items'],
-                        'urls' => $detail['urls'],
-                    ]);
-                }
-            }
         }
 
         if (isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == '1') {
@@ -549,7 +527,6 @@ class TourController extends Controller
         $this->duplicateSeoData($tour, $newTour);
         $this->duplicateFaqs($tour, $newTour);
         $this->duplicateAttributes($tour, $newTour);
-        $this->duplicateDetails($tour, $newTour);
         $this->duplicatePricing($tour, $newTour);
         $this->duplicateItinerary($tour, $newTour);
         $this->duplicateCities($tour, $newTour);
@@ -588,17 +565,6 @@ class TourController extends Controller
     {
         foreach ($tour->attributes as $attribute) {
             $newTour->attributes()->attach($attribute->id);
-        }
-    }
-
-    private function duplicateDetails($tour, $newTour)
-    {
-        foreach ($tour->tourDetails as $detail) {
-            $newTour->tourDetails()->create([
-                'name' => $detail->name,
-                'items' => $detail->items,
-                'urls' => $detail->urls,
-            ]);
         }
     }
 
