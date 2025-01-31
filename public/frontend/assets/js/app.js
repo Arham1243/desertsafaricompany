@@ -159,10 +159,47 @@ document.addEventListener("DOMContentLoaded", function () {
     showTooltips();
 });
 
-const todayDate = new Date().toISOString().split('T')[0]; 
-document.getElementById('start_date')?.setAttribute('min', todayDate);
-const emptyParas = Array.from(document.querySelectorAll("p")).filter(p => p.innerHTML.trim() === "&nbsp;");
+const todayDate = new Date().toISOString().split("T")[0];
+document.getElementById("start_date")?.setAttribute("min", todayDate);
+const emptyParas = Array.from(document.querySelectorAll("p")).filter(
+    (p) => p.innerHTML.trim() === "&nbsp;"
+);
 
 if (emptyParas.length > 0) {
-    emptyParas.forEach(p => p.style.display = "none");
+    emptyParas.forEach((p) => (p.style.display = "none"));
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-show-more]").forEach((container) => {
+        const content = container.querySelector("[data-show-more-content]");
+        const button = container.querySelector("[data-show-more-btn]");
+
+        if (content && button) {
+            const moreText = button.getAttribute("more-text") || "Show less";
+            const lessText = button.getAttribute("less-text") || "Show more";
+
+            button.addEventListener("click", function () {
+                const isExpanded = content.style.display === "block";
+
+                content.style.display = isExpanded ? "-webkit-box" : "block";
+                button.textContent = isExpanded ? moreText : lessText;
+            });
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll("[data-show-more]").forEach((container) => {
+        const content = container.querySelector("[data-show-more-content]");
+        const button = container.querySelector("[data-show-more-btn]");
+
+        if (content && button) {
+            const isTruncated = content.scrollHeight > content.clientHeight;
+
+            if (isTruncated) {
+                button.style.display = 'inline-block'; // 
+            } else {
+                button.style.display = 'none';
+            }
+        }
+    });
+});

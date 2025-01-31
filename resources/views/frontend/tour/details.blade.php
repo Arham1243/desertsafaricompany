@@ -341,76 +341,103 @@
                             </div>
                         </div>
                     @endif
+
+                    @if ($tour->description)
+                        <div class=tour-content__line></div>
+                        <div class="pb-5 pt-3">
+                            <div class="tour-content__SubTitle">Description</div>
+
+                            <div data-show-more>
+                                <div class="tour-content__pra line-clamp" data-show-more-content
+                                    @if ($tour->description_line_limit > 0) style="
+    -webkit-line-clamp: {{ $tour->description_line_limit }};
+" @endif>
+                                    {{ $tour->description }}
+
+                                </div>
+                                @if ($tour->description_line_limit > 0)
+                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
+                                        more-text="See more" less-text='Show less'> See more</a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
+
                     @if (json_decode($tour->inclusions) || $tour->exclusions || $tour->content)
                         <div class=tour-content__line></div>
-                        <div class=tour-content__description>
-                            @if ($tour->content)
-                                <div class=tour-content__details>
-                                    <div class="editor-content pt-4">
-                                        {!! $tour->content !!}
+                        <div class="pb-2 pt-3">
+                            <div class=tour-content__description>
+                                @if ($tour->content)
+                                    <div class=tour-content__details>
+                                        <div class="editor-content pt-4">
+                                            {!! $tour->content !!}
+                                        </div>
                                     </div>
+                                @endif
+                                <div class=row>
+                                    @if (json_decode($tour->inclusions))
+                                        <div class="col-md-6 mb-4">
+                                            <div class="tour-content__title mb-3">Price Includes</div>
+                                            @foreach (json_decode($tour->inclusions) as $inclusion)
+                                                <div class=Price-Includes__content>
+                                                    <div class="tour-content__pra-icon">
+                                                        <i class="bx bx-check mr-3"></i>
+                                                    </div>
+                                                    <div class=tour-content__pra>
+                                                        {{ $inclusion }}
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+                                    @if (json_decode($tour->exclusions))
+                                        <div class="col-md-6 mb-4">
+                                            <div class="tour-content__title mb-3">Price Excludes</div>
+                                            @foreach (json_decode($tour->exclusions) as $exclusion)
+                                                <div class=Price-Includes__content>
+                                                    <div class="tour-content__pra-icon x-icon">
+                                                        <i class="bx bx-x mr-3"></i>
+                                                    </div>
+                                                    <div class=tour-content__pra>
+                                                        {{ $exclusion }}
+                                                    </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
-                            @endif
-                            <div class=row>
-                                @if (json_decode($tour->inclusions))
-                                    <div class="col-md-6 mb-4">
-                                        <div class="tour-content__title mb-3">Price Includes</div>
-                                        @foreach (json_decode($tour->inclusions) as $inclusion)
-                                            <div class=Price-Includes__content>
-                                                <div class="tour-content__pra-icon">
-                                                    <i class="bx bx-check mr-3"></i>
-                                                </div>
-                                                <div class=tour-content__pra>
-                                                    {{ $inclusion }}
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
-                                @if (json_decode($tour->exclusions))
-                                    <div class="col-md-6 mb-4">
-                                        <div class="tour-content__title mb-3">Price Excludes</div>
-                                        @foreach (json_decode($tour->exclusions) as $exclusion)
-                                            <div class=Price-Includes__content>
-                                                <div class="tour-content__pra-icon x-icon">
-                                                    <i class="bx bx-x mr-3"></i>
-                                                </div>
-                                                <div class=tour-content__pra>
-                                                    {{ $exclusion }}
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                @endif
                             </div>
                         </div>
                     @endif
 
                     @if ($tour->tourAttributes->isNotEmpty())
                         <div class=tour-content__line></div>
-                        <div class="tour-content__moreDetail">
-                            @foreach ($attributes as $attribute)
-                                @php
-                                    $hasItems = $attribute->attributeItems->isNotEmpty();
-                                    $isAssociatedWithTour = $tour->attributes->contains($attribute->id);
-                                @endphp
+                        <div class="pb-2 pt-3">
+                            <div class="tour-content__moreDetail">
+                                @foreach ($attributes as $attribute)
+                                    @php
+                                        $hasItems = $attribute->attributeItems->isNotEmpty();
+                                        $isAssociatedWithTour = $tour->attributes->contains($attribute->id);
+                                    @endphp
 
-                                @if ($hasItems && $isAssociatedWithTour)
-                                    <div class="tour-content__title">
-                                        {{ $attribute->name ?? '' }}
-                                    </div>
-                                    <ul class="tour-content__moreDetail--content">
-                                        @foreach ($attribute->attributeItems as $item)
-                                            @if ($item->tourAttributes->contains($attribute->id))
-                                                <li>
-                                                    <i class="bx bx-check-circle"></i>
-                                                    <div>{{ $item->item ?? '' }}</div>
-                                                </li>
-                                            @endif
-                                        @endforeach
-                                    </ul>
-                                @endif
-                            @endforeach
+                                    @if ($hasItems && $isAssociatedWithTour)
+                                        <div class="tour-content__title">
+                                            {{ $attribute->name ?? '' }}
+                                        </div>
+                                        <ul class="tour-content__moreDetail--content">
+                                            @foreach ($attribute->attributeItems as $item)
+                                                @if ($item->tourAttributes->contains($attribute->id))
+                                                    <li>
+                                                        <i class="bx bx-check-circle"></i>
+                                                        <div>{{ $item->item ?? '' }}</div>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        </ul>
+                                    @endif
+                                @endforeach
+                            </div>
                         </div>
                     @endif
 
@@ -434,47 +461,49 @@
 
                     @if ($tour->location_type === 'normal_itinerary')
                         <div class=tour-content__line></div>
-                        <div class=itinerary>
-                            @if ($tour->normalItineraries->isNotEmpty())
-                                <div class=tour-content__SubTitle>
-                                    Itinerary
-                                </div>
-                                @foreach ($tour->normalItineraries as $itinerary)
-                                    <div class="itinerary-card accordian-2 {{ $loop->first ? 'active' : '' }} mb-3">
-                                        <div class="itinerary-card__header accordian-2-header border-bottom-0 p-0">
-                                            <h5 class="mb-0">
-                                                <button type="button" class="itinerary-card__header--btn">
-                                                    <div class="tour-content__pra-icon">
-                                                    </div>
-                                                    <div class="tour-content__title tour-content__title--Blue">
-                                                        Day {{ $itinerary->day }} <span class="px-2">-</span>
-                                                    </div>
-                                                    <h6 class="tour-content__title text-left mb-0">
-                                                        {{ $itinerary->title }}</h6>
-                                                </button>
-                                            </h5>
-                                        </div>
-                                        <div class="itinerary-card__body accordian-2-content">
-                                            <div class="hidden-wrapper">
-                                                <p class="tour-content__pra mb-1">
-                                                    {{ $itinerary->description }}
-                                                </p>
-                                                @if ($itinerary->featured_image)
-                                                    <div class="itinerary-card__body__img">
-                                                        <img data-src="{{ asset($itinerary->featured_image) }}"
-                                                            alt="{{ $itinerary->featured_image_alt_text }}"
-                                                            class="lazy imgFluid">
-                                                    </div>
-                                                @endif
+                        <div class="pb-2 pt-3">
+                            <div class=itinerary>
+                                @if ($tour->normalItineraries->isNotEmpty())
+                                    <div class=tour-content__SubTitle>
+                                        Itinerary
+                                    </div>
+                                    @foreach ($tour->normalItineraries as $itinerary)
+                                        <div class="itinerary-card accordian-2 {{ $loop->first ? 'active' : '' }} mb-3">
+                                            <div class="itinerary-card__header accordian-2-header border-bottom-0 p-0">
+                                                <h5 class="mb-0">
+                                                    <button type="button" class="itinerary-card__header--btn">
+                                                        <div class="tour-content__pra-icon">
+                                                        </div>
+                                                        <div class="tour-content__title tour-content__title--Blue">
+                                                            Day {{ $itinerary->day }} <span class="px-2">-</span>
+                                                        </div>
+                                                        <h6 class="tour-content__title text-left mb-0">
+                                                            {{ $itinerary->title }}</h6>
+                                                    </button>
+                                                </h5>
+                                            </div>
+                                            <div class="itinerary-card__body accordian-2-content">
+                                                <div class="hidden-wrapper">
+                                                    <p class="tour-content__pra mb-1">
+                                                        {{ $itinerary->description }}
+                                                    </p>
+                                                    @if ($itinerary->featured_image)
+                                                        <div class="itinerary-card__body__img">
+                                                            <img data-src="{{ asset($itinerary->featured_image) }}"
+                                                                alt="{{ $itinerary->featured_image_alt_text }}"
+                                                                class="lazy imgFluid">
+                                                        </div>
+                                                    @endif
+                                                </div>
                                             </div>
                                         </div>
+                                    @endforeach
+                                @else
+                                    <div class=tour-content__SubTitle>
+                                        No Itinerary available for this tour
                                     </div>
-                                @endforeach
-                            @else
-                                <div class=tour-content__SubTitle>
-                                    No Itinerary available for this tour
-                                </div>
-                            @endif
+                                @endif
+                            </div>
                         </div>
                     @endif
 
@@ -711,194 +740,201 @@
 
                     @if ($tour->location_type === 'normal_location' && $tour->address)
                         <div class=tour-content__line></div>
-                        <div class=tour-content-location>
-                            <div class=tour-content__SubTitle>
-                                Location
-                            </div>
-                            <div class=tour-content-location__map>
+                        <div class="pb-2 pt-3">
+                            <div class=tour-content-location>
+                                <div class=tour-content__SubTitle>
+                                    Location
+                                </div>
+                                <div class=tour-content-location__map>
 
-                                <iframe
-                                    src="https://www.google.com/maps?q={{ $tour->address ?? 'United Arab Emirates' }}&output=embed"
-                                    width=600 height=450 style=border:0 allowfullscreen
-                                    referrerpolicy=no-referrer-when-downgrade></iframe>
+                                    <iframe
+                                        src="https://www.google.com/maps?q={{ $tour->address ?? 'United Arab Emirates' }}&output=embed"
+                                        width=600 height=450 style=border:0 allowfullscreen
+                                        referrerpolicy=no-referrer-when-downgrade></iframe>
+                                </div>
                             </div>
                         </div>
                     @endif
 
                     @if ($tour->faqs->isNotEmpty())
                         <div class=tour-content__line></div>
-                        <div class="faqs">
-                            <div class="tour-content__SubTitle">
-                                FAQS
-                            </div>
-                            @foreach ($tour->faqs as $faq)
-                                <div class="faqs-single accordian {{ $loop->first ? 'active' : '' }}">
-                                    <div class="faqs-single__header accordian-header">
-                                        <div class="faq-icon"><i class="bx bx-plus"></i></div>
-                                        <div class="tour-content__title">{{ $faq->question }}</div>
-                                    </div>
-                                    <div class="faqs-single__content accordian-content">
-                                        <div class="hidden-wrapper tour-content__pra">
-                                            {{ $faq->answer }}
-                                        </div>
-                                    </div>
+                        <div class="pb-2 pt-3">
+                            <div class="faqs">
+                                <div class="tour-content__SubTitle">
+                                    FAQS
                                 </div>
-                            @endforeach
-                        </div>
-                    @endif
-
-                    <div class=tour-content__line></div>
-                    @if ($tour->reviews->isNotEmpty())
-                        <div class=main-reviews__details>
-                            <div class=tour-content__SubTitle>
-                                Reviews
-                            </div>
-                            @php
-
-                                $reviews = $tour->reviews;
-                                $excellentCount = $reviews->where('rating', 5)->count();
-                                $veryGoodCount = $reviews->where('rating', 4)->count();
-                                $averageCount = $reviews->where('rating', 3)->count();
-                                $poorCount = $reviews->where('rating', 2)->count();
-                                $terribleCount = $reviews->where('rating', 1)->count();
-
-                                $totalReviews = $reviews->count();
-                                $sumOfRatings = $reviews->sum('rating');
-
-                                $averageRating = $totalReviews > 0 ? $sumOfRatings / $totalReviews : 0;
-
-                                // Find the most common rating
-                                $ratingCounts = $reviews
-                                    ->groupBy('rating')
-                                    ->map(fn($group) => $group->count())
-                                    ->sortDesc();
-
-                                $mostCommonRating = $ratingCounts->keys()->first();
-                                $mostCommonRatingCount = $ratingCounts->first();
-
-                                $ratingCategories = [
-                                    5 => 'Excellent',
-                                    4 => 'Very Good',
-                                    3 => 'Average',
-                                    2 => 'Poor',
-                                    1 => 'Terrible',
-                                ];
-
-                                $mostCommonCategory = $ratingCategories[$mostCommonRating] ?? 'Not Rated';
-                            @endphp
-
-                            <div class="row mb-5">
-                                <div class=col-md-4>
-                                    <div class=main-reviews__box>
-                                        <div class="text-center">
-                                            <h2 class="main-reviews__detailsNum">
-                                                {{ number_format($averageRating, 1) }}<span
-                                                    class="main-reviews__detailsNum">/5</span>
-                                            </h2>
-                                            <div class="tour-content__title mb-3">
-                                                {{ $mostCommonCategory }} ({{ $mostCommonRatingCount }} reviews)
-                                            </div>
-                                            <div class="tour-content__pra">From {{ $totalReviews }} reviews</div>
+                                @foreach ($tour->faqs as $faq)
+                                    <div class="faqs-single accordian {{ $loop->first ? 'active' : '' }}">
+                                        <div class="faqs-single__header accordian-header">
+                                            <div class="faq-icon"><i class="bx bx-plus"></i></div>
+                                            <div class="tour-content__title">{{ $faq->question }}</div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class=col-md-8>
-                                    <div class="bars-wrapper">
-
-                                        <div class=row>
-                                            <div class="col-md-6 mb-4">
-                                                <h6 class="tour-content__pra mb-1">
-                                                    Excellent
-                                                </h6>
-                                                <div class=main-reviews__details--remarks>
-                                                    <div class=main-reviews__details--lines></div>
-                                                    <div class=tour-content__title>
-                                                        {{ $excellentCount }}
-                                                    </div>
-                                                </div>
+                                        <div class="faqs-single__content accordian-content">
+                                            <div class="hidden-wrapper tour-content__pra">
+                                                {{ $faq->answer }}
                                             </div>
-                                            <div class="col-md-6 mb-4">
-                                                <h6 class="tour-content__pra mb-1">
-                                                    Very Good
-                                                </h6>
-                                                <div class=main-reviews__details--remarks>
-                                                    <div class=main-reviews__details--lines></div>
-                                                    <div class=tour-content__title>
-                                                        {{ $veryGoodCount }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <h6 class="tour-content__pra mb-1">
-                                                    Average
-                                                </h6>
-                                                <div class=main-reviews__details--remarks>
-                                                    <div class=main-reviews__details--lines></div>
-                                                    <div class=tour-content__title>
-                                                        {{ $averageCount }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <h6 class="tour-content__pra mb-1">
-                                                    Poor
-                                                </h6>
-                                                <div class=main-reviews__details--remarks>
-                                                    <div class=main-reviews__details--lines></div>
-                                                    <div class=tour-content__title>
-                                                        {{ $poorCount }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6 mb-4">
-                                                <h6 class="tour-content__pra mb-1">
-                                                    Terrible
-                                                </h6>
-                                                <div class=main-reviews__details--remarks>
-                                                    <div class=main-reviews__details--lines></div>
-                                                    <div class=tour-content__title>
-                                                        {{ $terribleCount }}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class=tour-content__line></div>
-                        <div class="main-reviews mb-5">
-                            <div class="reviews">
-                                <div class=tour-content__SubTitle>
-                                    Showing {{ $reviews->count() }} total
-                                </div>
-                                @foreach ($reviews as $review)
-                                    <div class="reviews-single">
-                                        <div class="reviews-single__img">
-                                            <img src="{{ $review->user && $review->user->avatar ? $review->user->avatar : asset('frontend/assets/images/avatar.png') }}"
-                                                class="imgFluid">
-                                        </div>
-                                        <div class="reviews-single__info">
-                                            <div class="username">{{ $review->user->full_name ?? 'N/A' }}</div>
-
-                                            <div class="date">{{ $review->created_at->format('d/M/Y H:i') }}</div>
-
-
-                                            <div class="title-wrapper">
-                                                <div class="review-box">{{ $review->rating }}/5</div>
-                                                <div class="title">{{ $review->title }}</div>
-                                            </div>
-                                            <p>
-                                                {{ $review->review }}
                                         </div>
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($tour->reviews->isNotEmpty())
+                        <div class=tour-content__line></div>
+                        <div class="pb-2 pt-3">
+                            <div class=main-reviews__details>
+                                <div class=tour-content__SubTitle>
+                                    Reviews
+                                </div>
+                                @php
+
+                                    $reviews = $tour->reviews;
+                                    $excellentCount = $reviews->where('rating', 5)->count();
+                                    $veryGoodCount = $reviews->where('rating', 4)->count();
+                                    $averageCount = $reviews->where('rating', 3)->count();
+                                    $poorCount = $reviews->where('rating', 2)->count();
+                                    $terribleCount = $reviews->where('rating', 1)->count();
+
+                                    $totalReviews = $reviews->count();
+                                    $sumOfRatings = $reviews->sum('rating');
+
+                                    $averageRating = $totalReviews > 0 ? $sumOfRatings / $totalReviews : 0;
+
+                                    // Find the most common rating
+                                    $ratingCounts = $reviews
+                                        ->groupBy('rating')
+                                        ->map(fn($group) => $group->count())
+                                        ->sortDesc();
+
+                                    $mostCommonRating = $ratingCounts->keys()->first();
+                                    $mostCommonRatingCount = $ratingCounts->first();
+
+                                    $ratingCategories = [
+                                        5 => 'Excellent',
+                                        4 => 'Very Good',
+                                        3 => 'Average',
+                                        2 => 'Poor',
+                                        1 => 'Terrible',
+                                    ];
+
+                                    $mostCommonCategory = $ratingCategories[$mostCommonRating] ?? 'Not Rated';
+                                @endphp
+
+                                <div class="row mb-5">
+                                    <div class=col-md-4>
+                                        <div class=main-reviews__box>
+                                            <div class="text-center">
+                                                <h2 class="main-reviews__detailsNum">
+                                                    {{ number_format($averageRating, 1) }}<span
+                                                        class="main-reviews__detailsNum">/5</span>
+                                                </h2>
+                                                <div class="tour-content__title mb-3">
+                                                    {{ $mostCommonCategory }} ({{ $mostCommonRatingCount }} reviews)
+                                                </div>
+                                                <div class="tour-content__pra">From {{ $totalReviews }} reviews</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class=col-md-8>
+                                        <div class="bars-wrapper">
+
+                                            <div class=row>
+                                                <div class="col-md-6 mb-4">
+                                                    <h6 class="tour-content__pra mb-1">
+                                                        Excellent
+                                                    </h6>
+                                                    <div class=main-reviews__details--remarks>
+                                                        <div class=main-reviews__details--lines></div>
+                                                        <div class=tour-content__title>
+                                                            {{ $excellentCount }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <h6 class="tour-content__pra mb-1">
+                                                        Very Good
+                                                    </h6>
+                                                    <div class=main-reviews__details--remarks>
+                                                        <div class=main-reviews__details--lines></div>
+                                                        <div class=tour-content__title>
+                                                            {{ $veryGoodCount }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <h6 class="tour-content__pra mb-1">
+                                                        Average
+                                                    </h6>
+                                                    <div class=main-reviews__details--remarks>
+                                                        <div class=main-reviews__details--lines></div>
+                                                        <div class=tour-content__title>
+                                                            {{ $averageCount }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <h6 class="tour-content__pra mb-1">
+                                                        Poor
+                                                    </h6>
+                                                    <div class=main-reviews__details--remarks>
+                                                        <div class=main-reviews__details--lines></div>
+                                                        <div class=tour-content__title>
+                                                            {{ $poorCount }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4">
+                                                    <h6 class="tour-content__pra mb-1">
+                                                        Terrible
+                                                    </h6>
+                                                    <div class=main-reviews__details--remarks>
+                                                        <div class=main-reviews__details--lines></div>
+                                                        <div class=tour-content__title>
+                                                            {{ $terribleCount }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=tour-content__line></div>
+                            <div class="main-reviews mb-5">
+                                <div class="reviews">
+                                    <div class=tour-content__SubTitle>
+                                        Showing {{ $reviews->count() }} total
+                                    </div>
+                                    @foreach ($reviews as $review)
+                                        <div class="reviews-single">
+                                            <div class="reviews-single__img">
+                                                <img src="{{ $review->user && $review->user->avatar ? $review->user->avatar : asset('frontend/assets/images/avatar.png') }}"
+                                                    class="imgFluid">
+                                            </div>
+                                            <div class="reviews-single__info">
+                                                <div class="username">{{ $review->user->full_name ?? 'N/A' }}</div>
+
+                                                <div class="date">{{ $review->created_at->format('d/M/Y H:i') }}</div>
+
+
+                                                <div class="title-wrapper">
+                                                    <div class="review-box">{{ $review->rating }}/5</div>
+                                                    <div class="title">{{ $review->title }}</div>
+                                                </div>
+                                                <p>
+                                                    {{ $review->review }}
+                                            </div>
+                                        </div>
+                                    @endforeach
 
 
 
+                                </div>
                             </div>
                         </div>
                     @else
+                        <div class=tour-content__line></div>
                         <div class=main-reviews__details>
                             <div class=tour-content__SubTitle>
                                 No Review

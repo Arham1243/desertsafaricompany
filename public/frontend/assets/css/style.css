@@ -2897,7 +2897,7 @@ ul.tour-content__moreDetail--content li i {
 .tour-content__SubTitle {
     font-size: 1.313rem;
     font-weight: 600;
-    margin: 2rem 0;
+    margin: 1.1rem 0 0.75rem;
     text-transform: capitalize;
 }
 
@@ -2936,7 +2936,8 @@ ul.tour-content__pra li {
 .tour-content__pra {
     color: #5e6d77;
     font-weight: 500;
-    font-size: 13px;
+    font-size: 14px;
+    line-height: 1.7;
 }
 
 .tour-content__title {
@@ -3018,9 +3019,6 @@ button.itinerary-card__header--btn .check-icon {
     flex-wrap: wrap;
 }
 
-.review-message a {
-    color: var(--color-primary);
-}
 
 h2.main-reviews__detailsNum {
     font-size: 3rem;
@@ -6625,4 +6623,13 @@ span.select2-dropdown.select2-dropdown--below {
 }
 .breadcrumb {
     margin: 1.1rem 0;
+}
+.line-clamp{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.loginBtn{
+    font-weight: 600;
+    color: var(--color-primary);
 }

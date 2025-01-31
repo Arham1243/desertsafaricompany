@@ -87,7 +87,7 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-fields">
-                                                <label class="title">Title <span class="text-danger">*</span> :</label>
+                                                <label class="title">Title :</label>
                                                 <input type="text" name="tour[general][title]" class="field"
                                                     value="{{ old('tour[general][title]') }}" placeholder=""
                                                     data-error="Title">
@@ -98,11 +98,33 @@
                                         </div>
                                         <div class="col-12 mt-4">
                                             <div class="form-fields">
-                                                <label class="title">Content <span class="text-danger">*</span>
+                                                <label class="title">Description
                                                     :</label>
-                                                <textarea class="editor" name="tour[general][content]" data-placeholder="content" data-error="Content">
-                                            {{ old('tour[general][content]') }}
-                                        </textarea>
+                                                <textarea class="field" rows="5" name="tour[general][description]" data-placeholder="Description"
+                                                    data-error="description"> {{ old('tour[general][description]') }} </textarea>
+                                                @error('tour[general][description]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <div class="form-fields">
+                                                <label class="title">Lines to Display Before "See More" </label>
+                                                <input oninput="this.value = Math.abs(this.value)" type="number"
+                                                    min="0" name="tour[general][description_line_limit]"
+                                                    class="field"
+                                                    value="{{ old('tour[general][description_line_limit]') }}"
+                                                    data-error="description_line_limit">
+                                                @error('tour[general][description_line_limit]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mt-4">
+                                            <div class="form-fields">
+                                                <label class="title">Content
+                                                    :</label>
+                                                <textarea class="editor" name="tour[general][content]" data-placeholder="content" data-error="Content"> {{ old('tour[general][content]') }} </textarea>
                                                 @error('tour[general][content]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -110,7 +132,7 @@
                                         </div>
                                         <div class="col-12  mt-4">
                                             <div class="form-fields">
-                                                <label class="title">Select category <span class="text-danger">*</span>
+                                                <label class="title">Select category
                                                     :</label>
                                                 <select name="tour[general][category_id]" class="select2-select"
                                                     data-error="Category">
@@ -471,7 +493,7 @@
                                             <div class="form-fields">
                                                 <input type="hidden" name="tour[general][banner_type]" value="1">
                                                 <div class="title">
-                                                    <div>Banner Image <span class="text-danger">*</span>:</div>
+                                                    <div>Banner Image :</div>
                                                 </div>
 
                                                 <div class="upload upload--banner" data-upload>
@@ -517,7 +539,7 @@
                                             </div>
                                             <div class="form-fields">
                                                 <div class="title">
-                                                    <div>Youtube Video <span class="text-danger">*</span>:</div>
+                                                    <div>Youtube Video :</div>
                                                 </div>
                                                 <input type="text" name="tour[general][video_link]" class="field"
                                                     value="{{ old('tour[general][video_link]') }}">
@@ -580,7 +602,7 @@
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
                                         <div class="form-fields">
-                                            <label class="title">Location <span class="text-danger">*</span> :</label>
+                                            <label class="title">Location :</label>
                                             <select name="tour[location][normal_location][city_ids][]"
                                                 class="select2-select" data-error="Location" multiple
                                                 placeholder="Select Locations" autocomplete="new-password">
@@ -596,7 +618,7 @@
                                             @enderror
                                         </div>
                                         <div class="form-fields">
-                                            <label class="title">Real Tour address <span class="text-danger">*</span>
+                                            <label class="title">Real Tour address
                                                 :</label>
                                             <input type="text" name="tour[location][normal_location][address]"
                                                 class="field"
@@ -720,7 +742,7 @@
                                             </div>
                                             <div class="form-fields">
                                                 <div class="title d-flex align-items-center gap-2">
-                                                    <div>Map Iframe Link<span class="text-danger p-0">*</span>:</div>
+                                                    <div>Map Iframe Link:</div>
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
                                                         target="_blank">Google Map Generator</a>
                                                 </div>
@@ -871,7 +893,7 @@
                                         </div>
                                         <div class="col-md-6 col-12 mb-3">
                                             <div class="form-fields">
-                                                <label class="title">Price <span class="text-danger">*</span>:</label>
+                                                <label class="title">Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][regular_price]" class="field"
                                                     value="{{ old('tour[pricing][regular_price]') }}" data-error="Price">
@@ -882,15 +904,14 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-fields">
-                                                <label class="title">Sale Price <span
-                                                        class="text-danger">*</span>:</label>
-                                                <input step="0.01" min="0" type="number"
-                                                    name="tour[pricing][sale_price]" class="field"
-                                                    value="{{ old('tour[pricing][sale_price]') }}"
-                                                    data-error="Sale Price">
-                                                @error('tour[pricing][sale_price]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                <label class="title">Sale Price
+                                                    <input step="0.01" min="0" type="number"
+                                                        name="tour[pricing][sale_price]" class="field"
+                                                        value="{{ old('tour[pricing][sale_price]') }}"
+                                                        data-error="Sale Price">
+                                                    @error('tour[pricing][sale_price]')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
                                             </div>
                                         </div>
                                         <div class="col-12 my-2">
@@ -1487,8 +1508,7 @@
                                                 <div class="row my-2">
                                                     <div class="col-md-4">
                                                         <div class="form-fields">
-                                                            <label class="title">Start Date <span
-                                                                    class="text-danger">*</span>
+                                                            <label class="title">Start Date
                                                                 :</label>
                                                             <input readonly type="text" class="field date-picker"
                                                                 placeholder="Select a date"
@@ -1500,8 +1520,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-fields">
-                                                            <label class="title">End Date <span
-                                                                    class="text-danger">*</span>
+                                                            <label class="title">End Date
                                                                 :</label>
                                                             <input readonly type="text" class="field date-picker"
                                                                 placeholder="Select a date"
@@ -1513,8 +1532,7 @@
                                                     </div>
                                                     <div class="col-md-4">
                                                         <div class="form-fields">
-                                                            <label class="title">Last Booking Date <span
-                                                                    class="text-danger">*</span>
+                                                            <label class="title">Last Booking Date
                                                                 :</label>
                                                             <input readonly type="text" class="field date-picker"
                                                                 placeholder="Select a date" autocomplete="off"
@@ -1663,7 +1681,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Select tours <span class="text-danger">*</span>
+                                        <label class="title">Select tours
                                             :</label>
                                         <select name="related_tour_ids[]" multiple class="select2-select"
                                             placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
@@ -1711,7 +1729,7 @@
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-fields">
-                                                <label class="title">Feature Image <span class="text-danger">*</span>
+                                                <label class="title">Feature Image
                                                     :</label>
                                                 <div class="upload" data-upload>
                                                     <div class="upload-box-wrapper">
@@ -1820,7 +1838,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Author <span class="text-danger">*</span> :</label>
+                                        <label class="title">Author :</label>
                                         <select class="select2-select" name="tour[status][author_id]"
                                             data-error="Author">
                                             <option value="" selected>Select</option>
@@ -1852,7 +1870,7 @@
                                         </div>
                                     </div>
                                     <div class="form-fields mt-3">
-                                        <label class="title">Default State <span class="text-danger">*</span> :</label>
+                                        <label class="title">Default State :</label>
                                         <select name="tour[status][featured_state]" class="field">
 
                                             <option value="" selected disabled>Select</option>
@@ -1897,7 +1915,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Import url <span class="text-danger">*</span> :</label>
+                                        <label class="title">Import url :</label>
                                         <input type="text" name="tour[status][ical_import_url]" class="field"
                                             placeholder="">
                                         @error('tour[status][ical_import_url]')
@@ -1905,7 +1923,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title">Export url <span class="text-danger">*</span> :</label>
+                                        <label class="title">Export url :</label>
                                         <input type="text" name="tour[status][ical_export_url]" class="field"
                                             placeholder="">
                                         @error('tour[status][ical_export_url]')
