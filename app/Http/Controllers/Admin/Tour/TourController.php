@@ -52,12 +52,10 @@ class TourController extends Controller
     public function store(Request $request)
     {
         $general = $request->input('tour.general', []);
-        $badge = $request->input('tour.badge', []);
         $statusTab = $request->input('tour.status', []);
         $availabilityData = $request->input('tour.availability', []);
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
-        $details = $request->input('tour.details', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
@@ -80,7 +78,7 @@ class TourController extends Controller
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
-        $details = ! empty($request->input('tour.details')) ? json_encode($request->input('tour.details')) : null;
+        $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -280,8 +278,6 @@ class TourController extends Controller
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
-        $badge = $request->input('tour.badge', []);
-        $details = $request->input('tour.details', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours', $tour->slug);
@@ -297,7 +293,7 @@ class TourController extends Controller
         $features = ! empty($general['features']) && ! in_array(null, $general['features'], true)
             ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
             : null;
-        $details = ! empty($request->input('tour.details')) ? json_encode($request->input('tour.details')) : null;
+        $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
 
         $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;

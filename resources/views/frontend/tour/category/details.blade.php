@@ -338,7 +338,7 @@
                                                 </div>
                                             </div>
                                             <div class="highlight__button-wrapper">
-                                                <a class="" type="button">
+                                                <a type="button">
                                                     See more
                                                 </a>
                                             </div>
