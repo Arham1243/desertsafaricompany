@@ -383,9 +383,7 @@
                                                                     <td>
                                                                         <input x-model="row.name"
                                                                             :name="`tour[details][${index}][name]`"
-                                                                            type="text"
-                                                                            placeholder="e.g., What to Bring"
-                                                                            class="field">
+                                                                            type="text" class="field">
                                                                     </td>
                                                                     <td>
                                                                         <input x-model="row.heading"
