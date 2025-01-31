@@ -2883,7 +2883,7 @@ ul.tour-content__moreDetail--content li i {
 }
 
 .tour-content__line {
-    border: 1px solid #ebf0f7;
+    border: 1px solid #e9e9e9;
 }
 
 .itinerary-card__body img {
@@ -6601,7 +6601,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .editor-content h3 {
-    font-size: 1.5em;
+    font-size: 1.4em;
 }
 
 .editor-content h4 {
@@ -6632,4 +6632,27 @@ span.select2-dropdown.select2-dropdown--below {
 .loginBtn{
     font-weight: 600;
     color: var(--color-primary);
+}
+.tour-details__title {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.tour-details {
+    color: #343a40;
+    padding: 2.25rem 0;
+}
+.tour-details:not(:last-child) {
+    border-top: 1px solid #e9e9e9;
+}
+.tour-details__items {
+    margin: 0.5rem 0 0.25rem 1rem;
+}
+
+.tour-details__items li {
+    font-size: 14px;
+    font-weight: 500;
+    list-style-type: disc !important;
+    color: #5e6d77;
+    padding: 0.25rem 0;
 }

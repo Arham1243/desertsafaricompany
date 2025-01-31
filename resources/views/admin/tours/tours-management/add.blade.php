@@ -359,87 +359,85 @@
 
                                             </div>
                                         </div>
-                                        {{-- <div class="col-md-12 mt-4">
+                                        <div class="col-md-12 mt-4">
                                             <div class="form-fields">
                                                 <label
                                                     class=" d-flex align-items-center mb-3 justify-content-between"><span
                                                         class="title title--sm mb-0">Tour Information:</span>
-                                                    <span class="title d-flex align-items-center gap-1">Section
-                                                        Preview:
-                                                        <a href="{{ asset('admin/assets/images/tour-infomation.png') }}"
-                                                            data-fancybox="gallery" class="themeBtn p-1"
-                                                            title="Section Preivew"><i class='bx  bxs-show'></i></a>
-                                                    </span>
+
                                                 </label>
-                                                <div class="repeater-table" data-repeater>
+                                                <div class="repeater-table" x-data="{ repeater: [{ name: '', heading: '', items: [''] }] }">
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Heading</th>
+                                                                <th scope="col">Sub Heading</th>
                                                                 <th scope="col">Items</th>
                                                                 <th class="text-end" scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody data-repeater-list>
-                                                            <tr data-repeater-item>
-                                                                <td>
-                                                                    <input name="tour[general][details][0][name]"
-                                                                        type="text"
-                                                                        placeholder="e.g., Timings, What to Bring"
-                                                                        class="field">
-                                                                </td>
-                                                                <td>
-                                                                    <div class="repeater-table" data-sub-repeater>
-                                                                        <table class="table table-bordered">
-                                                                            <tbody data-sub-repeater-list>
-                                                                                <tr data-sub-repeater-item>
-                                                                                    <td>
-                                                                                        <input
-                                                                                            name="tour[general][details][0][items]"
-                                                                                            type="text"
-                                                                                            placeholder="Item"
-                                                                                            class="field">
-                                                                                        <input
-                                                                                            name="tour[general][details][0][urls]"
-                                                                                            type="text"
-                                                                                            placeholder="Url"
-                                                                                            class="field mt-3">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                                            data-sub-repeater-remove>
-                                                                                            <i
-                                                                                                class='bx bxs-trash-alt'></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            </tbody>
-                                                                        </table>
-                                                                        <button type="button" class="themeBtn ms-auto"
-                                                                            data-sub-repeater-create>
-                                                                            Add <i class="bx bx-plus"></i>
+                                                        <tbody>
+                                                            <template x-for="(row, index) in repeater"
+                                                                :key="index">
+                                                                <tr>
+                                                                    <td>
+                                                                        <input x-model="row.name"
+                                                                            :name="`tour[details][${index}][name]`"
+                                                                            type="text"
+                                                                            placeholder="e.g., What to Bring"
+                                                                            class="field">
+                                                                    </td>
+                                                                    <td>
+                                                                        <input x-model="row.heading"
+                                                                            :name="`tour[details][${index}][heading]`"
+                                                                            type="text" placeholder="Heading"
+                                                                            class="field">
+                                                                    </td>
+                                                                    <td>
+                                                                        <div>
+                                                                            <template
+                                                                                x-for="(item, itemIndex) in row.items"
+                                                                                :key="itemIndex">
+                                                                                <div
+                                                                                    class="d-flex align-items-center gap-3">
+                                                                                    <input x-model="row.items[itemIndex]"
+                                                                                        :name="`tour[details][${index}][items][]`"
+                                                                                        type="text" placeholder="Item"
+                                                                                        class="field mb-3">
+                                                                                    <button type="button"
+                                                                                        @click="row.items.splice(itemIndex, 1)"
+                                                                                        class="delete-btn delete-btn--static ms-auto">
+                                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                                    </button>
+                                                                                </div>
+                                                                            </template>
+                                                                            <button type="button"
+                                                                                @click="row.items.push('')"
+                                                                                class="themeBtn ms-auto mb-3">
+                                                                                Add <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                            @click="repeater.splice(index, 1)"
+                                                                            class="delete-btn delete-btn--static ms-auto">
+                                                                            <i class='bx bxs-trash-alt'></i>
                                                                         </button>
-                                                                    </div>
-                                                                </td>
-                                                                <td>
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove>
-                                                                        <i class='bx bxs-trash-alt'></i>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
+                                                                    </td>
+                                                                </tr>
+                                                            </template>
                                                         </tbody>
                                                     </table>
-                                                    <button type="button" class="themeBtn ms-auto" data-repeater-create>
+
+                                                    <button type="button"
+                                                        @click="repeater.push({ name: '', heading: '', items: [''] })"
+                                                        class="themeBtn ms-auto">
                                                         Add <i class="bx bx-plus"></i>
                                                     </button>
                                                 </div>
-
-
                                             </div>
-                                        </div> --}}
+                                        </div>
                                         <div class="col-md-12 mt-3">
                                             <div class="form-fields">
                                                 <label class="title title--sm">FAQs:</label>
@@ -1512,7 +1510,8 @@
                                                                 :</label>
                                                             <input readonly type="text" class="field date-picker"
                                                                 placeholder="Select a date"
-                                                                name="tour[availability][start_date]" autocomplete="off">
+                                                                name="tour[availability][start_date]"
+                                                                autocomplete="off">
                                                             @error('availability[start_date]')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
