@@ -589,7 +589,7 @@
                             </div>
                             <div class=activity-experience-items__content>
                                 <div class=activity-experience__itinerary>
-                                    <div class="row mb-4">
+                                    <div class="row">
                                         <div class=col-md-4>
                                             <ul class=experience-itinerary-timeline>
                                                 @if ($itineraryExperience['pickup_locations'])
