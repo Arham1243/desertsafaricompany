@@ -23,25 +23,23 @@
         </div>
     </div>
 
-    <div class=tour-details>
-        <div class=tour-details_banner>
-            <div class=tour-details_img>
-                <img data-src="{{ asset($tour->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
-                    alt='{{ $tour->banner_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
-            </div>
-            <div class=tour-details_btns>
-                @if ($tour->video_link)
-                    <a href={{ sanitizedLink($tour->video_link) }} data-fancybox="gallery"
-                        class="themeBtn themeBtn-white">Video</a>
-                @endif
-                @if ($tour->media->isNotEmpty())
-                    @foreach ($tour->media as $media)
-                        <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                            data-fancybox="gallery-1"
-                            class="themeBtn themeBtn-white {{ $loop->first ? 'd-block' : 'd-none' }}">Gallery</a>
-                    @endforeach
-                @endif
-            </div>
+    <div class=tour-details_banner>
+        <div class=tour-details_img>
+            <img data-src="{{ asset($tour->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
+                alt='{{ $tour->banner_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
+        </div>
+        <div class=tour-details_btns>
+            @if ($tour->video_link)
+                <a href={{ sanitizedLink($tour->video_link) }} data-fancybox="gallery"
+                    class="themeBtn themeBtn-white">Video</a>
+            @endif
+            @if ($tour->media->isNotEmpty())
+                @foreach ($tour->media as $media)
+                    <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                        data-fancybox="gallery-1"
+                        class="themeBtn themeBtn-white {{ $loop->first ? 'd-block' : 'd-none' }}">Gallery</a>
+                @endforeach
+            @endif
         </div>
     </div>
 
