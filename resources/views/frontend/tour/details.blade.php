@@ -342,26 +342,7 @@
                         </div>
                     @endif
 
-                    @if ($tour->description)
-                        <div class=tour-content__line></div>
-                        <div class="pb-4 pt-3">
-                            <div class="tour-content__SubTitle">Description</div>
 
-                            <div data-show-more>
-                                <div class="tour-content__pra line-clamp" data-show-more-content
-                                    @if ($tour->description_line_limit > 0) style="
-    -webkit-line-clamp: {{ $tour->description_line_limit }};
-" @endif>
-                                    {{ $tour->description }}
-
-                                </div>
-                                @if ($tour->description_line_limit > 0)
-                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
-                                        more-text="See more" less-text='Show less'> See more</a>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
 
 
                     @if (json_decode($tour->inclusions) || $tour->exclusions || $tour->content)
@@ -453,6 +434,8 @@
                         </div>
                     @endif
 
+
+
                     @if ($tour->tourAttributes->isNotEmpty())
                         <div class=tour-content__line></div>
                         <div class="pb-2 pt-3">
@@ -528,6 +511,27 @@
                                     <div class=tour-content__SubTitle>
                                         No Itinerary available for this tour
                                     </div>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
+
+                    @if ($tour->description)
+                        <div class=tour-content__line></div>
+                        <div class="pb-4 pt-3">
+                            <div class="tour-content__SubTitle">Description</div>
+
+                            <div data-show-more>
+                                <div class="tour-content__pra line-clamp" data-show-more-content
+                                    @if ($tour->description_line_limit > 0) style="
+-webkit-line-clamp: {{ $tour->description_line_limit }};
+" @endif>
+                                    {{ $tour->description }}
+
+                                </div>
+                                @if ($tour->description_line_limit > 0)
+                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
+                                        more-text="See more" less-text='Show less'> See more</a>
                                 @endif
                             </div>
                         </div>
