@@ -348,7 +348,7 @@
                         <div class="pb-2 pt-3">
                             <div class=tour-content__description>
                                 @if ($tour->content)
-                                    <div class=tour-content__details>
+                                    <div class="tour-content__details mb-4 pb-2">
                                         <div class="editor-content pt-4">
                                             {!! $tour->content !!}
                                         </div>
@@ -356,8 +356,8 @@
                                 @endif
                                 @if ($tour->description)
                                     <div class=tour-content__line></div>
-                                    <div class="pb-4 pt-3">
-                                        <div class="tour-content__SubTitle">Description</div>
+                                    <div class="pb-4 mt-4 pt-1">
+                                        <div class="tour-content__SubTitle mt-0">Description</div>
 
                                         <div data-show-more>
                                             <div class="tour-content__pra line-clamp" data-show-more-content
