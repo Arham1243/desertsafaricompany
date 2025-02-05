@@ -354,6 +354,28 @@
                                         </div>
                                     </div>
                                 @endif
+                                @if ($tour->description)
+                                    <div class=tour-content__line></div>
+                                    <div class="pb-4 pt-3">
+                                        <div class="tour-content__SubTitle">Description</div>
+
+                                        <div data-show-more>
+                                            <div class="tour-content__pra line-clamp" data-show-more-content
+                                                @if ($tour->description_line_limit > 0) style="
+        -webkit-line-clamp: {{ $tour->description_line_limit }};
+        " @endif>
+                                                {{ $tour->description }}
+
+                                            </div>
+                                            @if ($tour->description_line_limit > 0)
+                                                <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
+                                                    more-text="See more" less-text='Show less'> See more</a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                @endif
+
+
                                 <div class="row pt-2">
                                     @if (json_decode($tour->inclusions))
                                         <div class="col-md-6 mb-4">
@@ -389,28 +411,6 @@
                             </div>
                         </div>
                     @endif
-
-                    @if ($tour->description)
-                        <div class=tour-content__line></div>
-                        <div class="pb-4 pt-3">
-                            <div class="tour-content__SubTitle">Description</div>
-
-                            <div data-show-more>
-                                <div class="tour-content__pra line-clamp" data-show-more-content
-                                    @if ($tour->description_line_limit > 0) style="
--webkit-line-clamp: {{ $tour->description_line_limit }};
-" @endif>
-                                    {{ $tour->description }}
-
-                                </div>
-                                @if ($tour->description_line_limit > 0)
-                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
-                                        more-text="See more" less-text='Show less'> See more</a>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-
 
                     @if ($tour->tourAttributes->isNotEmpty())
                         <div class=tour-content__line></div>
@@ -565,7 +565,7 @@
                             </div>
                             <div class=activity-experience-items__content>
                                 <div class=activity-experience__itinerary>
-                                    <div class="row">
+                                    <div class="row align-items-start mb-5 pb-2">
                                         <div class=col-md-4>
                                             <ul class=experience-itinerary-timeline>
                                                 @if ($itineraryExperience['pickup_locations'])
@@ -708,8 +708,6 @@
                                                     width=600 height=450 style=border:0 allowfullscreen
                                                     referrerpolicy=no-referrer-when-downgrade></iframe>
                                             </div>
-                                            <div class=activity-experience-itinerary__map-title>
-                                            </div>
                                             <div class=itinerary__map-title-main>
                                                 <i class="bx bx-star"></i>
                                                 <div class=itinerary__map-label>
@@ -809,7 +807,6 @@
                     @endif
 
                     @if ($tour->reviews->isNotEmpty())
-                        <div class=tour-content__line></div>
                         <div class="pb-2 pt-3">
                             <div class=main-reviews__details>
                                 <div class=tour-content__SubTitle>
@@ -962,7 +959,6 @@
                             </div>
                         </div>
                     @else
-                        <div class=tour-content__line></div>
                         <div class=main-reviews__details>
                             <div class=tour-content__SubTitle>
                                 No Review
