@@ -354,48 +354,6 @@
                                         </div>
                                     </div>
                                 @endif
-                                @php
-                                    $tourDetails = json_decode($tour->details, true) ?? [
-                                        'title' => 'Important Information',
-                                        'sections' => [],
-                                    ];
-                                @endphp
-
-                                @if (!empty($tourDetails['sections']))
-                                    <div class="tour-details">
-                                        <div class="row">
-                                            <div class="col-md-3">
-                                                <div class="tour-details__title">
-                                                    {{ $tourDetails['title'] ?? 'Important information' }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-9">
-                                                @foreach ($tourDetails['sections'] as $section)
-                                                    <div class="category-group mb-4">
-                                                        <div class="tour-details__title mb-2">
-                                                            {{ $section['title'] }}
-                                                        </div>
-                                                        @foreach ($section['categories'] as $category)
-                                                            @if (!empty($category['category_name']))
-                                                                <div class="tour-details__title mb-1">
-                                                                    {{ $category['category_name'] }}
-                                                                </div>
-                                                            @endif
-
-                                                            @if (!empty($category['items']))
-                                                                <ul class="tour-details__items">
-                                                                    @foreach ($category['items'] as $item)
-                                                                        <li>{{ $item }}</li>
-                                                                    @endforeach
-                                                                </ul>
-                                                            @endif
-                                                        @endforeach
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
                                 <div class="row pt-2">
                                     @if (json_decode($tour->inclusions))
                                         <div class="col-md-6 mb-4">
@@ -432,6 +390,26 @@
                         </div>
                     @endif
 
+                    @if ($tour->description)
+                        <div class=tour-content__line></div>
+                        <div class="pb-4 pt-3">
+                            <div class="tour-content__SubTitle">Description</div>
+
+                            <div data-show-more>
+                                <div class="tour-content__pra line-clamp" data-show-more-content
+                                    @if ($tour->description_line_limit > 0) style="
+-webkit-line-clamp: {{ $tour->description_line_limit }};
+" @endif>
+                                    {{ $tour->description }}
+
+                                </div>
+                                @if ($tour->description_line_limit > 0)
+                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
+                                        more-text="See more" less-text='Show less'> See more</a>
+                                @endif
+                            </div>
+                        </div>
+                    @endif
 
 
                     @if ($tour->tourAttributes->isNotEmpty())
@@ -745,29 +723,6 @@
                         </div>
                     @endif
 
-
-                    @if ($tour->description)
-                        <div class=tour-content__line></div>
-                        <div class="pb-4 pt-3">
-                            <div class="tour-content__SubTitle">Description</div>
-
-                            <div data-show-more>
-                                <div class="tour-content__pra line-clamp" data-show-more-content
-                                    @if ($tour->description_line_limit > 0) style="
--webkit-line-clamp: {{ $tour->description_line_limit }};
-" @endif>
-                                    {{ $tour->description }}
-
-                                </div>
-                                @if ($tour->description_line_limit > 0)
-                                    <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
-                                        more-text="See more" less-text='Show less'> See more</a>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-
-
                     @if ($tour->location_type === 'normal_location' && $tour->address)
                         <div class=tour-content__line></div>
                         <div class="pb-2 pt-3">
@@ -806,6 +761,49 @@
                                         </div>
                                     </div>
                                 @endforeach
+                            </div>
+                        </div>
+                    @endif
+
+                    @php
+                        $tourDetails = json_decode($tour->details, true) ?? [
+                            'title' => 'Important Information',
+                            'sections' => [],
+                        ];
+                    @endphp
+
+                    @if (!empty($tourDetails['sections']))
+                        <div class="tour-details">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="tour-details__title">
+                                        {{ $tourDetails['title'] ?? 'Important information' }}
+                                    </div>
+                                </div>
+                                <div class="col-md-9">
+                                    @foreach ($tourDetails['sections'] as $section)
+                                        <div class="category-group mb-4">
+                                            <div class="tour-details__title mb-2">
+                                                {{ $section['title'] }}
+                                            </div>
+                                            @foreach ($section['categories'] as $category)
+                                                @if (!empty($category['category_name']))
+                                                    <div class="tour-details__title mb-1">
+                                                        {{ $category['category_name'] }}
+                                                    </div>
+                                                @endif
+
+                                                @if (!empty($category['items']))
+                                                    <ul class="tour-details__items">
+                                                        @foreach ($category['items'] as $item)
+                                                            <li>{{ $item }}</li>
+                                                        @endforeach
+                                                    </ul>
+                                                @endif
+                                            @endforeach
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
                         </div>
                     @endif
