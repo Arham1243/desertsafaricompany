@@ -1095,7 +1095,6 @@
             </div>
         </div>
     </div>
-    </div>
     @if ($tour->related_tour_ids)
         <div class="my-5 pb-2">
             <div class=container>
