@@ -209,10 +209,11 @@
             </div>
         </div>
     </div>
+
     <div class="tour-content py-0">
         <div class=container>
             <div class=row>
-                <div class=col-md-12>
+                <div class=col-md-9>
                     <div class=tour-content__header>
                         <div>
                             <div class=section-content>
@@ -223,11 +224,14 @@
                             <div class=tour-content__headerLocation>
                                 <div class=tour-content__headerReviews>
                                     <div class=headerReviews-content>
+
+
                                         <ul class="headerReviews--icon">
                                             <li>
                                                 <x-star-rating :rating="$tour->average_rating" />
                                             </li>
                                         </ul>
+
                                         <span>
                                             @if ($tour->reviews->count() > 0)
                                                 {{ $tour->reviews->count() }}
@@ -236,21 +240,35 @@
                                                 No Reviews Yet
                                             @endif
                                         </span>
+
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class=tour-content__headerLocation--details>
-                            @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
-                                <span class=pipeDivider></span>
+                                <div class=tour-content__headerLocation--details>
+                                    @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
+                                        <span class=pipeDivider></span>
 
-                                <div class="badge-of-excellence">
-                                    <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
-                                                    {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
-                                        class="{{ json_decode($tour->badge)->icon_class }}"></i>
-                                    {{ json_decode($tour->badge)->name }}
+                                        <div class="badge-of-excellence">
+                                            <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
+                                                {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
+                                                class="{{ json_decode($tour->badge)->icon_class }}"></i>
+                                            {{ json_decode($tour->badge)->name }}
+                                        </div>
+                                    @endif
+                                    @if ($tour->cities->isNotEmpty())
+                                        <div class=location-headerLocation--details>
+                                            <span class=pipeDivider></span>
+                                            @foreach ($tour->cities as $i => $city)
+                                                <span>
+                                                    {{ $city->name }}
+                                                    @if ($i != count($tour->cities) - 1)
+                                                        ,
+                                                    @endif
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                    @endif
                                 </div>
-                            @endif
+                            </div>
                         </div>
                         <ul class=header-listGroup>
                             @if (Auth::check())
