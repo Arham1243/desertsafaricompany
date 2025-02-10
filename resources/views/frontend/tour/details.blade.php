@@ -213,7 +213,7 @@
     <div class="tour-content py-0">
         <div class=container>
             <div class=row>
-                <div class=col-md-9>
+                <div class=col-md-12>
                     <div class=tour-content__header>
                         <div>
                             <div class=section-content>
@@ -318,25 +318,11 @@
         <div class=container>
             <div class=row>
                 <div class=col-md-8>
-                    @if ($tour->cities->isNotEmpty())
-                        <div class=location-headerLocation--details>
-                            <span class=pipeDivider></span>
-                            @foreach ($tour->cities as $i => $city)
-                                <span>
-                                    {{ $city->name }}
-                                    @if ($i != count($tour->cities) - 1)
-                                        ,
-                                    @endif
-                                </span>
-                            @endforeach
-                        </div>
-                    @endif
                     @php
                         $features = json_decode($tour->features);
                     @endphp
 
                     @if ($features && isset($features->icon))
-                        <div class=tour-content__line></div>
                         <div class="features-list">
                             <div class=row>
                                 @foreach ($features->icon as $i => $feature)
