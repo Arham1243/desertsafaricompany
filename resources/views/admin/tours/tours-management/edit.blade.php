@@ -330,7 +330,12 @@
 
                                         <div class="col-md-12 mt-3">
                                             <div class="form-fields">
-                                                <label class="title title--sm">Include:</label>
+                                                <label class="title title--sm mb-3">Include:</label>
+                                                <div class="mb-4">
+                                                    <label class="title">Title</label>
+                                                    <input type="text" name="exclusions_inclusions_heading[inclusion]"
+                                                        class="field">
+                                                </div>
 
                                                 <div class="repeater-table" data-repeater>
                                                     <table class="table table-bordered">
@@ -374,8 +379,12 @@
 
                                         <div class="col-md-12 mt-3">
                                             <div class="form-fields">
-                                                <label class="title title--sm">Exclude:</label>
-
+                                                <label class="title title--sm mb-3 ">Exclude:</label>
+                                                <div class="mb-4">
+                                                    <label class="title">Title</label>
+                                                    <input type="text" name="exclusions_inclusions_heading[exclusions]"
+                                                        class="field">
+                                                </div>
                                                 <div class="repeater-table" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
@@ -1743,7 +1752,8 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <input type="number"
-                                                                                            step="0.01" min="0"
+                                                                                            step="0.01"
+                                                                                            min="0"
                                                                                             value="{{ $extraPrice->price }}"
                                                                                             name="tour[pricing][extra_price][{{ $i }}][price]"
                                                                                             class="field">

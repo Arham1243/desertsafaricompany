@@ -79,9 +79,11 @@ class TourController extends Controller
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
+        $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
+            'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'slug' => $slug ?? null,
             'badge' => $badge ?? null,
             'content' => $general['content'] ?? null,
@@ -299,6 +301,7 @@ class TourController extends Controller
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
+        $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
 
         $tour->update([
             'title' => $general['title'] ?? null,
@@ -306,6 +309,7 @@ class TourController extends Controller
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'details' => $details,
+            'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'badge' => $badge ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),

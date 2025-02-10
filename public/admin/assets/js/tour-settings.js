@@ -296,6 +296,11 @@ document.addEventListener("DOMContentLoaded", function () {
         updateIndices(container);
         initializeSubRepeater(newItem);
         calculatePromoPrice()
+        document
+        .querySelectorAll("[data-color-picker-container]")
+        ?.forEach((element) => {
+            InitializeColorPickers(element);
+        });
     }
 
     function removeItem(button) {
