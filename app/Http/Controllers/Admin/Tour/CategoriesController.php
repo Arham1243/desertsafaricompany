@@ -84,38 +84,39 @@ class CategoriesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $data = $request->all();
         $category = TourCategory::findOrFail($id);
 
-        $slugText = $request['slug'] != '' ? $request['slug'] : $request['name'];
+        $slugText = $request['slug'] ?? $request['name'];
         $slug = $this->createSlug($slugText, 'tour_categories', $category->slug);
 
         $data['slug'] = $slug;
 
-        // Handle JSON IDs
         $data['bottom_featured_tour_ids'] = json_encode($request->input('bottom_featured_tour_ids', []));
         $data['recommended_tour_ids'] = json_encode($request->input('recommended_tour_ids', []));
         $data['tour_reviews_ids'] = json_encode($request->input('tour_reviews_ids', []));
 
-        $sectionData = $request->all()['content'];
+        $sectionData = $request->input('content', []);
+        $updatedContent = [];
         foreach ($sectionData as $sectionKey => $content) {
             $existingSectionContent = $category->section_content ? json_decode($category->section_content, true) : [];
             $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
         }
-
-        $data['section_content'] = $updatedContent;
+        $data['section_content'] = json_encode($updatedContent);
 
         $category->update($data);
 
         handleSeoData($request, $category, 'Tours/Categories');
 
         $this->uploadImg('featured_image', 'Tours/Categories/Featured-image', $category, 'featured_image');
-        if ($request->gallery) {
+
+        if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $index => $image) {
                 $path = $this->simpleUploadImg($image, 'Testimonial/Other-images');
-
+                $altText = $request['gallery_alt_texts'][$index] ?? null;
                 $category->media()->create([
                     'file_path' => $path,
-                    'alt_text' => $request['gallery_alt_texts'][$index],
+                    'alt_text' => $altText,
                 ]);
             }
         }
