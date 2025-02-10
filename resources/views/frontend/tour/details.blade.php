@@ -240,6 +240,47 @@
                                 </div>
                             </div>
                         </div>
+                        <div class=tour-content__headerLocation--details>
+                            @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
+                                <span class=pipeDivider></span>
+
+                                <div class="badge-of-excellence">
+                                    <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
+                                                    {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
+                                        class="{{ json_decode($tour->badge)->icon_class }}"></i>
+                                    {{ json_decode($tour->badge)->name }}
+                                </div>
+                            @endif
+                        </div>
+                        <ul class=header-listGroup>
+                            @if (Auth::check())
+                                @php
+                                    $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
+                                @endphp
+                                <li>
+                                    @if ($isFavorited)
+                                        <a href="{{ route('tours.favorites.index') }}">
+                                            <span class="header-listGroup faq-icon added">
+                                                <i class="bx bxs-heart"></i>
+                                            </span>
+                                        </a>
+                                    @else
+                                        <span class="header-listGroup faq-icon">
+
+                                            <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                                                @csrf
+                                                <button type="submit"> <i class="bx bx-heart"></i></button>
+                                            </form>
+                                        </span>
+                                    @endif
+                                </li>
+                            @endif
+                            <li>
+                                <a href='javascript:void(0)' data-send-button>
+                                    <span class="header-listGroup faq-icon"> <i class="bx bx-share-alt"></i></span>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -259,63 +300,23 @@
         <div class=container>
             <div class=row>
                 <div class=col-md-8>
-                    <div class=tour-content__headerLocation--details>
-                        @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
+                    @if ($tour->cities->isNotEmpty())
+                        <div class=location-headerLocation--details>
                             <span class=pipeDivider></span>
-
-                            <div class="badge-of-excellence">
-                                <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
-                                                {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
-                                    class="{{ json_decode($tour->badge)->icon_class }}"></i>
-                                {{ json_decode($tour->badge)->name }}
-                            </div>
-                        @endif
-                        @if ($tour->cities->isNotEmpty())
-                            <div class=location-headerLocation--details>
-                                <span class=pipeDivider></span>
-                                @foreach ($tour->cities as $i => $city)
-                                    <span>
-                                        {{ $city->name }}
-                                        @if ($i != count($tour->cities) - 1)
-                                            ,
-                                        @endif
-                                    </span>
-                                @endforeach
-                            </div>
-                        @endif
-                    </div>
-                    <ul class=header-listGroup>
-                        @if (Auth::check())
-                            @php
-                                $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
-                            @endphp
-                            <li>
-                                @if ($isFavorited)
-                                    <a href="{{ route('tours.favorites.index') }}">
-                                        <span class="header-listGroup faq-icon added">
-                                            <i class="bx bxs-heart"></i>
-                                        </span>
-                                    </a>
-                                @else
-                                    <span class="header-listGroup faq-icon">
-
-                                        <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
-                                            @csrf
-                                            <button type="submit"> <i class="bx bx-heart"></i></button>
-                                        </form>
-                                    </span>
-                                @endif
-                            </li>
-                        @endif
-                        <li>
-                            <a href='javascript:void(0)' data-send-button>
-                                <span class="header-listGroup faq-icon"> <i class="bx bx-share-alt"></i></span>
-                            </a>
-                        </li>
-                    </ul>
+                            @foreach ($tour->cities as $i => $city)
+                                <span>
+                                    {{ $city->name }}
+                                    @if ($i != count($tour->cities) - 1)
+                                        ,
+                                    @endif
+                                </span>
+                            @endforeach
+                        </div>
+                    @endif
                     @php
                         $features = json_decode($tour->features);
                     @endphp
+
                     @if ($features && isset($features->icon))
                         <div class=tour-content__line></div>
                         <div class="features-list">
@@ -345,9 +346,6 @@
                             </div>
                         </div>
                     @endif
-
-
-
 
                     @if (json_decode($tour->inclusions) || $tour->exclusions || $tour->content)
                         <div class=tour-content__line></div>
@@ -512,7 +510,6 @@
                                         'sub_stops' => [],
                                     ];
 
-                                    // Check if sub-stops are enabled and append sub-stops to the stop item
                                     if (
                                         isset($itineraryExperience['enable_sub_stops']) &&
                                         $itineraryExperience['enable_sub_stops'] == '1' &&
@@ -544,7 +541,6 @@
                                         }
                                     }
 
-                                    // Add the stop item to the collection
                                     $orderedItems->push($stopItem);
                                 }
                             }
@@ -825,7 +821,6 @@
 
                                     $averageRating = $totalReviews > 0 ? $sumOfRatings / $totalReviews : 0;
 
-                                    // Find the most common rating
                                     $ratingCounts = $reviews
                                         ->groupBy('rating')
                                         ->map(fn($group) => $group->count())
@@ -1036,54 +1031,55 @@
                         </div>
                     @endif
                 </div>
-                <div class=col-md-4>
-                    @include('frontend.vue.main', [
-                        'appId' => 'tour-pricing',
-                        'appComponent' => 'tour-pricing',
-                        'appJs' => 'tour-pricing',
-                    ])
-                    <div class=tour-content_book_app>
-                        <div class=Why-Book-Us>
-                            <h6 class="tour-content__title mb-4">
-                                Why Book With Us?
-                            </h6>
-                            <div class=Why-Book-Us__content>
-                                <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                    <i class="bx bx-phone"></i>
-                                </div>
-                                <div class=tour-content__pra>
-                                    No-hassle best price guarantee
-                                </div>
+            </div>
+            <div class=col-md-4>
+                @include('frontend.vue.main', [
+                    'appId' => 'tour-pricing',
+                    'appComponent' => 'tour-pricing',
+                    'appJs' => 'tour-pricing',
+                ])
+                <div class=tour-content_book_app>
+                    <div class=Why-Book-Us>
+                        <h6 class="tour-content__title mb-4">
+                            Why Book With Us?
+                        </h6>
+                        <div class=Why-Book-Us__content>
+                            <div class="Why-Book-Us__icon tour-content__pra-icon">
+                                <i class="bx bx-phone"></i>
                             </div>
-                            <div class=Why-Book-Us__content>
-                                <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                    <i class="bx bx-calendar-star"></i>
-                                </div>
-                                <div class=tour-content__pra>
-                                    Customer care available 24/7
-                                </div>
+                            <div class=tour-content__pra>
+                                No-hassle best price guarantee
                             </div>
-                            <div class=Why-Book-Us__content>
-                                <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                    <i class="bx bx-star"></i>
-                                </div>
-                                <div class=tour-content__pra>
-                                    Hand-picked Tours & Activities
-                                </div>
+                        </div>
+                        <div class=Why-Book-Us__content>
+                            <div class="Why-Book-Us__icon tour-content__pra-icon">
+                                <i class="bx bx-calendar-star"></i>
                             </div>
-                            <div class=Why-Book-Us__content>
-                                <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                    <i class="bx bxs-plane-alt"></i>
-                                </div>
-                                <div class=tour-content__pra>
-                                    Free Travel Insureance
-                                </div>
+                            <div class=tour-content__pra>
+                                Customer care available 24/7
+                            </div>
+                        </div>
+                        <div class=Why-Book-Us__content>
+                            <div class="Why-Book-Us__icon tour-content__pra-icon">
+                                <i class="bx bx-star"></i>
+                            </div>
+                            <div class=tour-content__pra>
+                                Hand-picked Tours & Activities
+                            </div>
+                        </div>
+                        <div class=Why-Book-Us__content>
+                            <div class="Why-Book-Us__icon tour-content__pra-icon">
+                                <i class="bx bxs-plane-alt"></i>
+                            </div>
+                            <div class=tour-content__pra>
+                                Free Travel Insureance
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     @if ($tour->related_tour_ids)
         <div class="my-5 pb-2">
