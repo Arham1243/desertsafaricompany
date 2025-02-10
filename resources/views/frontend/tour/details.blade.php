@@ -376,7 +376,12 @@
                                     <div class="row pt-2">
                                         @if (json_decode($tour->inclusions))
                                             <div class="col-md-12">
-                                                <div class="tour-content__title mb-3">Price Includes
+                                                <div class="tour-content__title mb-3">
+                                                    @if (json_decode($tour->exclusions_inclusions_heading))
+                                                        {{ json_decode($tour->exclusions_inclusions_heading)['inclusions'] }}
+                                                    @else
+                                                        Price Includes
+                                                    @endif
                                                 </div>
                                                 @foreach (json_decode($tour->inclusions) as $inclusion)
                                                     <div class=Price-Includes__content>
@@ -392,7 +397,12 @@
                                         @endif
                                         @if (json_decode($tour->exclusions))
                                             <div class="col-md-12">
-                                                <div class="tour-content__title mb-3">Price Excludes
+                                                <div class="tour-content__title mb-3">
+                                                    @if (json_decode($tour->exclusions_inclusions_heading))
+                                                        {{ json_decode($tour->exclusions_inclusions_heading)['exclusions'] }}
+                                                    @else
+                                                        Price Excludes
+                                                    @endif
                                                 </div>
                                                 @foreach (json_decode($tour->exclusions) as $exclusion)
                                                     <div class=Price-Includes__content>
