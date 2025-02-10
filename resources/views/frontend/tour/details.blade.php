@@ -9,19 +9,6 @@
         <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
                 class='bx bxl-whatsapp'></i></a>
     @endif
-    <div class=container>
-        <div class=row>
-            <div class=col-md-9>
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
-                        <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{ $tour->slug }}</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
-    </div>
 
     <div class=tour-details_banner>
         <div class=tour-details_img>
@@ -140,8 +127,8 @@
                             <a href="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
                                 data-fancybox="gallery-2" class="media-gallery__item--4">
                                 <img data-src="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy"
-                                    width="662.5" height="400">
+                                    alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
+                                    height="400">
                             </a>
                             @if (count($tour->media) > 4)
                                 <div class="media-gallery--view__morePics">
@@ -208,6 +195,20 @@
             </div>
         </div>
     @endif
+
+    <div class=container>
+        <div class=row>
+            <div class=col-md-9>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                        <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{ $tour->slug }}</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
 
     <div class="tour-details_banner2 mt-2 one-items-slider">
         @foreach ($tour->media as $media)
