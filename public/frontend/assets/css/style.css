@@ -2849,12 +2849,13 @@ ul.headerReviews--icon li {
 }
 .features-item i {
     font-size: 1.75rem;
-    color: var(--color-primary);
     margin-top: 2px;
+    color: #000;
 }
 .features-item .title {
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 1.1rem;
+    color: #000;
+    font-weight: 600;
     margin-bottom: 0.25rem;
 }
 

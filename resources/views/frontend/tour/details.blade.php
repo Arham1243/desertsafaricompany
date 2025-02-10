@@ -222,7 +222,7 @@
     <div class=tour-content>
         <div class=container>
             <div class=row>
-                <div class=col-md-9>
+                <div class=col-md-8>
                     <div class=tour-content__header>
                         <div>
                             <div class=section-content>
@@ -367,7 +367,7 @@
 
                                     <div class="row pt-2">
                                         @if (json_decode($tour->inclusions))
-                                            <div class="col-md-6 mb-4">
+                                            <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">Price Includes</div>
                                                 @foreach (json_decode($tour->inclusions) as $inclusion)
                                                     <div class=Price-Includes__content>
@@ -382,7 +382,7 @@
                                             </div>
                                         @endif
                                         @if (json_decode($tour->exclusions))
-                                            <div class="col-md-6 mb-4">
+                                            <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">Price Excludes</div>
                                                 @foreach (json_decode($tour->exclusions) as $exclusion)
                                                     <div class=Price-Includes__content>
@@ -1021,7 +1021,7 @@
 
 
                 </div>
-                <div class=col-md-3>
+                <div class=col-md-4>
                     @include('frontend.vue.main', [
                         'appId' => 'tour-pricing',
                         'appComponent' => 'tour-pricing',
