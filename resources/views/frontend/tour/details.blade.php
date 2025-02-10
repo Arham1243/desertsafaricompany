@@ -327,7 +327,8 @@
                                             <div class="features-item">
                                                 <div class="icon">
                                                     @if (isset($features->icon[$i]))
-                                                        <i class="{{ $features->icon[$i] }}"></i>
+                                                        <i @if (isset($features->icon_color[$i])) style="color: {{ $features->icon_color[$i] }};" @endif
+                                                            class="{{ $features->icon[$i] }}"></i>
                                                     @endif
                                                 </div>
                                                 <div class="content">

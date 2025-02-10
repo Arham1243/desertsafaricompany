@@ -239,6 +239,12 @@
                                                                         target="_blank">boxicons</a>
                                                                 </div>
                                                             </th>
+                                                            <th scope="col">
+                                                                <div class="d-flex align-items-center gap-2"> Icon Color:
+                                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                        target="_blank">Get Color Codes</a>
+                                                                </div>
+                                                            </th>
                                                             <th scope="col">Title</th>
                                                             </tr>
                                                         </thead>
@@ -248,11 +254,13 @@
                                                                 $features =
                                                                     json_decode($tour->features) ??
                                                                     (object) [
+                                                                        'icon_color' => [],
                                                                         'icon' => [],
                                                                         'title' => [],
                                                                         'content' => [],
                                                                     ];
 
+                                                                $iconColorCount = count($features->icon_color) ?: 1;
                                                                 $iconCount = count($features->icon) ?: 1;
                                                                 $titleCount = count($features->title) ?: 1;
                                                                 $contentCount = count($features->content) ?: 1;
@@ -269,6 +277,20 @@
                                                                                 value="{{ $features->icon[$i] ?? '' }}">
                                                                             <i class="{{ $features->icon[$i] ?? '' }} bx-md"
                                                                                 data-preview-icon></i>
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="field color-picker"
+                                                                            data-color-picker-container>
+                                                                            <label
+                                                                                for="icon-color-picker-{{ $i }}"
+                                                                                data-color-picker></label>
+                                                                            <input
+                                                                                id="icon-color-picker-{{ $i }}"
+                                                                                type="text"
+                                                                                name="tour[general][features][icon_color][]"
+                                                                                data-color-picker-input inputmode="text"
+                                                                                value="{{ $features->icon_color[$i] ?? '' }}">
                                                                         </div>
                                                                     </td>
                                                                     <td>

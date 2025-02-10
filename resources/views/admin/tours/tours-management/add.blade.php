@@ -246,6 +246,19 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
+                                                                        <div class="field color-picker"
+                                                                            data-color-picker-container>
+                                                                            <label
+                                                                                for="icon-color-picker-{{ $i }}"
+                                                                                data-color-picker></label>
+                                                                            <input
+                                                                                id="icon-color-picker-{{ $i }}"
+                                                                                type="text"
+                                                                                name="tour[general][features][icon_color][]"
+                                                                                data-color-picker-input inputmode="text">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
                                                                         <input name="tour[general][features][title][]"
                                                                             type="text" class="field"
                                                                             placeholder="Title"
