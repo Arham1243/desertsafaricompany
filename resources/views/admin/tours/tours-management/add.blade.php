@@ -98,11 +98,10 @@
                                         </div>
                                         <div class="col-12 mt-4">
                                             <div class="form-fields">
-                                                <label class="title">Description
+                                                <label class="title">Content
                                                     :</label>
-                                                <textarea class="field" rows="5" name="tour[general][description]" data-placeholder="Description"
-                                                    data-error="description"> {{ old('tour[general][description]') }} </textarea>
-                                                @error('tour[general][description]')
+                                                <textarea class="editor" name="tour[general][content]" data-placeholder="content" data-error="Content"> {{ old('tour[general][content]') }} </textarea>
+                                                @error('tour[general][content]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
@@ -116,16 +115,6 @@
                                                     value="{{ old('tour[general][description_line_limit]') }}"
                                                     data-error="description_line_limit">
                                                 @error('tour[general][description_line_limit]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mt-4">
-                                            <div class="form-fields">
-                                                <label class="title">Content
-                                                    :</label>
-                                                <textarea class="editor" name="tour[general][content]" data-placeholder="content" data-error="Content"> {{ old('tour[general][content]') }} </textarea>
-                                                @error('tour[general][content]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>

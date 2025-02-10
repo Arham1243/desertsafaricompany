@@ -349,68 +349,56 @@
                         <div class="pb-2 pt-3">
                             <div class=tour-content__description>
                                 @if ($tour->content)
-                                    <div class="tour-content__details mb-4 pb-2">
-                                        <div class="editor-content pt-4">
+                                    <div class="tour-content__details mb-4 pb-2" data-show-more>
+                                        <div class="editor-content pt-4 line-clamp" data-show-more-content
+                                            @if ($tour->description_line_limit > 0) style="
+                                        -webkit-line-clamp: {{ $tour->description_line_limit }};
+                                        " @endif>
                                             {!! $tour->content !!}
                                         </div>
+                                        @if ($tour->description_line_limit > 0)
+                                            <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
+                                                more-text="See more" less-text='Show less'> See more</a>
+                                        @endif
                                     </div>
                                 @endif
-                                @if ($tour->description)
-                                    <div class=tour-content__line></div>
-                                    <div class="pb-4 mt-4 pt-1">
-                                        <div class="tour-content__SubTitle mt-0">Description</div>
+                                <div>
 
-                                        <div data-show-more>
-                                            <div class="tour-content__pra line-clamp" data-show-more-content
-                                                @if ($tour->description_line_limit > 0) style="
-        -webkit-line-clamp: {{ $tour->description_line_limit }};
-        " @endif>
-                                                {{ $tour->description }}
 
+                                    <div class="row pt-2">
+                                        @if (json_decode($tour->inclusions))
+                                            <div class="col-md-6 mb-4">
+                                                <div class="tour-content__title mb-3">Price Includes</div>
+                                                @foreach (json_decode($tour->inclusions) as $inclusion)
+                                                    <div class=Price-Includes__content>
+                                                        <div class="tour-content__pra-icon">
+                                                            <i class="bx bx-check mr-3"></i>
+                                                        </div>
+                                                        <div class=tour-content__pra>
+                                                            {{ $inclusion }}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
                                             </div>
-                                            @if ($tour->description_line_limit > 0)
-                                                <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn
-                                                    more-text="See more" less-text='Show less'> See more</a>
-                                            @endif
-                                        </div>
+                                        @endif
+                                        @if (json_decode($tour->exclusions))
+                                            <div class="col-md-6 mb-4">
+                                                <div class="tour-content__title mb-3">Price Excludes</div>
+                                                @foreach (json_decode($tour->exclusions) as $exclusion)
+                                                    <div class=Price-Includes__content>
+                                                        <div class="tour-content__pra-icon x-icon">
+                                                            <i class="bx bx-x mr-3"></i>
+                                                        </div>
+                                                        <div class=tour-content__pra>
+                                                            {{ $exclusion }}
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @endif
                                     </div>
-                                @endif
-
-
-                                <div class="row pt-2">
-                                    @if (json_decode($tour->inclusions))
-                                        <div class="col-md-6 mb-4">
-                                            <div class="tour-content__title mb-3">Price Includes</div>
-                                            @foreach (json_decode($tour->inclusions) as $inclusion)
-                                                <div class=Price-Includes__content>
-                                                    <div class="tour-content__pra-icon">
-                                                        <i class="bx bx-check mr-3"></i>
-                                                    </div>
-                                                    <div class=tour-content__pra>
-                                                        {{ $inclusion }}
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
-                                    @if (json_decode($tour->exclusions))
-                                        <div class="col-md-6 mb-4">
-                                            <div class="tour-content__title mb-3">Price Excludes</div>
-                                            @foreach (json_decode($tour->exclusions) as $exclusion)
-                                                <div class=Price-Includes__content>
-                                                    <div class="tour-content__pra-icon x-icon">
-                                                        <i class="bx bx-x mr-3"></i>
-                                                    </div>
-                                                    <div class=tour-content__pra>
-                                                        {{ $exclusion }}
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    @endif
                                 </div>
                             </div>
-                        </div>
                     @endif
 
                     @if ($tour->tourAttributes->isNotEmpty())
