@@ -232,7 +232,7 @@
                                                 <label class="title title--sm">Features:</label>
 
                                                 <div x-data="{
-                                                    features: @json(json_decode($tour->features) ?: [['icon' => '', 'icon_color' => '', 'title' => '', 'content' => '']]),
+                                                    features: @json(json_decode($tour->features) ?: [['icon' => '', 'icon_color' => '', 'title' => '', 'content' => '']])
                                                     addFeature() {
                                                         this.features.push({ icon: '', icon_color: '', title: '', content: '' });
                                                     },
