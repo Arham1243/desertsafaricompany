@@ -1572,6 +1572,8 @@
                                                                                         'discount_wednesday' => '',
                                                                                         'discount_thursday' => '',
                                                                                         'discount_friday' => '',
+                                                                                        'discount_saturday' => '',
+                                                                                        'discount_sunday' => '',
                                                                                     ],
                                                                                 ];
                                                                         @endphp
@@ -1647,6 +1649,24 @@
                                                                                                 placeholder="friday"
                                                                                                 value="{{ $promo_discount->discount_friday[$i] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_friday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="saturday"
+                                                                                                value="{{ $promo_discount->discount_saturday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_saturday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="sunday"
+                                                                                                value="{{ $promo_discount->discount_sunday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_sunday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
                                                                                         </div>
@@ -1737,7 +1757,8 @@
                                                                                     </td>
                                                                                     <td>
                                                                                         <input type="number"
-                                                                                            step="0.01" min="0"
+                                                                                            step="0.01"
+                                                                                            min="0"
                                                                                             value="{{ $extraPrice->price }}"
                                                                                             name="tour[pricing][extra_price][{{ $i }}][price]"
                                                                                             class="field">

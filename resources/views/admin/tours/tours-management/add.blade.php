@@ -1250,6 +1250,20 @@
                                                                                             name="tour[pricing][promo][discount][discount_friday][]"
                                                                                             step="0.01" min="0">
                                                                                     </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="saturday"
+                                                                                            name="tour[pricing][promo][discount][discount_saturday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="sunday"
+                                                                                            name="tour[pricing][promo][discount][discount_sunday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <button type="button"
