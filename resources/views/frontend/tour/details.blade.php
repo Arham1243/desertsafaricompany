@@ -377,7 +377,9 @@
                                         @if (json_decode($tour->inclusions))
                                             <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">
-                                                    @if (isset(json_decode($tour->exclusions_inclusions_heading, true)['inclusions']))
+                                                    @if (isset($tour->exclusions_inclusions_heading) &&
+                                                            is_array(json_decode($tour->exclusions_inclusions_heading, true)) &&
+                                                            array_key_exists('inclusions', json_decode($tour->exclusions_inclusions_heading, true)))
                                                         {{ json_decode($tour->exclusions_inclusions_heading, true)['inclusions'] }}
                                                     @else
                                                         Price Includes
@@ -398,7 +400,9 @@
                                         @if (json_decode($tour->exclusions))
                                             <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">
-                                                    @if (isset(json_decode($tour->exclusions_inclusions_heading, true)['exclusions']))
+                                                    @if (isset($tour->exclusions_inclusions_heading) &&
+                                                            is_array(json_decode($tour->exclusions_inclusions_heading, true)) &&
+                                                            array_key_exists('exclusions', json_decode($tour->exclusions_inclusions_heading, true)))
                                                         {{ json_decode($tour->exclusions_inclusions_heading, true)['exclusions'] }}
                                                     @else
                                                         Price Excludes
