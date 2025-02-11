@@ -378,7 +378,7 @@
                                             <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">
                                                     @if (json_decode($tour->exclusions_inclusions_heading))
-                                                        {{ json_decode($tour->exclusions_inclusions_heading)['inclusions'] }}
+                                                        {{ json_decode($tour->exclusions_inclusions_heading, true)['inclusions'] }}
                                                     @else
                                                         Price Includes
                                                     @endif
@@ -399,7 +399,7 @@
                                             <div class="col-md-12">
                                                 <div class="tour-content__title mb-3">
                                                     @if (json_decode($tour->exclusions_inclusions_heading))
-                                                        {{ json_decode($tour->exclusions_inclusions_heading)['exclusions'] }}
+                                                        {{ json_decode($tour->exclusions_inclusions_heading, true)['exclusions'] }}
                                                     @else
                                                         Price Excludes
                                                     @endif
