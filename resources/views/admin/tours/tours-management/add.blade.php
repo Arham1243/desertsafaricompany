@@ -111,9 +111,7 @@
                                                 <label class="title">Lines to Display Before "See More" </label>
                                                 <input oninput="this.value = Math.abs(this.value)" type="number"
                                                     min="0" name="tour[general][description_line_limit]"
-                                                    class="field"
-                                                    value="{{ old('tour[general][description_line_limit]') }}"
-                                                    data-error="description_line_limit">
+                                                    class="field" value="15" data-error="description_line_limit">
                                                 @error('tour[general][description_line_limit]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -382,24 +380,15 @@
                                                 </label>
                                                 <div x-data="{
                                                     formData: {
-                                                        title: 'Important Information',
                                                         sections: []
                                                     }
                                                 }">
-
-                                                    <div class="mb-4">
-                                                        <label class="title">Title</label> <input
-                                                            x-model="formData.title" type="text" name="details[title]"
-                                                            class="field">
-                                                    </div>
-
-                                                    <div class="repeater-table" x-data="{ newSection: { title: '', categories: [] } }">
-
+                                                    <div class="repeater-table">
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <tr>
                                                                     <th>Section Title</th>
-                                                                    <th>Items</th>
+                                                                    <th>Category Title & Items</th>
                                                                     <th class="text-end">Actions</th>
                                                                 </tr>
                                                             </thead>
@@ -408,74 +397,58 @@
                                                                     x-for="(section, sectionIndex) in formData.sections"
                                                                     :key="sectionIndex">
                                                                     <tr>
+                                                                        <!-- Section Title -->
                                                                         <td>
                                                                             <input x-model="section.title"
                                                                                 :name="`details[sections][${sectionIndex}][title]`"
-                                                                                type="text" class="field">
+                                                                                type="text" class="field"
+                                                                                placeholder="Section Title">
                                                                         </td>
 
+                                                                        <!-- Single Category Title with Multiple Items -->
                                                                         <td>
-                                                                            <div class="my-3">
-                                                                                <template
-                                                                                    x-for="(category, categoryIndex) in section.categories"
-                                                                                    :key="categoryIndex">
-                                                                                    <div class="category-group">
+                                                                            <div>
+                                                                                <div class="mb-2">
+                                                                                    <input x-model="section.category.title"
+                                                                                        :name="`details[sections][${sectionIndex}][category][title]`"
+                                                                                        type="text"
+                                                                                        placeholder="Category Title"
+                                                                                        class="field">
+                                                                                </div>
+                                                                                <div class="ms-4">
+                                                                                    <template
+                                                                                        x-for="(item, itemIndex) in section.category.items"
+                                                                                        :key="itemIndex">
                                                                                         <div class="d-flex gap-3 mb-2">
                                                                                             <input
-                                                                                                x-model="category.category_name"
-                                                                                                :name="`details[sections][${sectionIndex}][categories][${categoryIndex}][category_name]`"
+                                                                                                x-model="section.category.items[itemIndex]"
+                                                                                                :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`"
                                                                                                 type="text"
-                                                                                                class="field mt-3"
-                                                                                                placeholder="Category name">
+                                                                                                placeholder="Item"
+                                                                                                class="field">
                                                                                             <button type="button"
-                                                                                                @click="section.categories.splice(categoryIndex, 1)"
-                                                                                                class="delete-btn delete-btn--static align-self-center  ">
+                                                                                                @click="section.category.items.splice(itemIndex, 1)"
+                                                                                                class="delete-btn delete-btn--static align-self-center">
                                                                                                 <i
-                                                                                                    class='bx bxs-trash-alt'></i>
+                                                                                                    class="bx bxs-trash-alt"></i>
                                                                                             </button>
                                                                                         </div>
-
-                                                                                        <div class="ms-4">
-                                                                                            <template
-                                                                                                x-for="(item, itemIndex) in category.items"
-                                                                                                :key="itemIndex">
-                                                                                                <div
-                                                                                                    class="d-flex gap-3 mb-2">
-                                                                                                    <input
-                                                                                                        x-model="category.items[itemIndex]"
-                                                                                                        :name="`details[sections][${sectionIndex}][categories][${categoryIndex}][items][${itemIndex}]`"
-                                                                                                        type="text"
-                                                                                                        class="field">
-                                                                                                    <button type="button"
-                                                                                                        @click="category.items.splice(itemIndex, 1)"
-                                                                                                        class="delete-btn delete-btn--static align-self-center">
-                                                                                                        <i
-                                                                                                            class='bx bxs-trash-alt'></i>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </template>
-                                                                                            <button type="button"
-                                                                                                @click="category.items.push('')"
-                                                                                                class="themeBtn mt-3">
-                                                                                                Add Subitem <i
-                                                                                                    class="bx bx-plus"></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </template>
-                                                                                <button type="button"
-                                                                                    @click="section.categories.push({ category_name: '', items: [''] })"
-                                                                                    class="themeBtn mt-3">
-                                                                                    Add Item <i class="bx bx-plus"></i>
-                                                                                </button>
+                                                                                    </template>
+                                                                                    <button type="button"
+                                                                                        @click="section.category.items.push('')"
+                                                                                        class="themeBtn mt-3">
+                                                                                        Add Item <i class="bx bx-plus"></i>
+                                                                                    </button>
+                                                                                </div>
                                                                             </div>
                                                                         </td>
 
+                                                                        <!-- Delete Section -->
                                                                         <td>
                                                                             <button type="button"
                                                                                 @click="formData.sections.splice(sectionIndex, 1)"
-                                                                                class="delete-btn delete-btn--static    ">
-                                                                                <i class='bx bxs-trash-alt'></i>
+                                                                                class="delete-btn delete-btn--static">
+                                                                                <i class="bx bxs-trash-alt"></i>
                                                                             </button>
                                                                         </td>
                                                                     </tr>
@@ -483,9 +456,10 @@
                                                             </tbody>
                                                         </table>
 
+                                                        <!-- Add Section -->
                                                         <div class="mt-4">
                                                             <button type="button"
-                                                                @click="formData.sections.push({ title: '', categories: [] })"
+                                                                @click="formData.sections.push({ title: '', category: { title: '', items: [] } })"
                                                                 class="themeBtn">
                                                                 Add Section <i class="bx bx-plus"></i>
                                                             </button>

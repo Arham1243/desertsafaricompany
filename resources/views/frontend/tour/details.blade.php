@@ -779,44 +779,38 @@
 
                     @php
                         $tourDetails = json_decode($tour->details, true) ?? [
-                            'title' => 'Important Information',
                             'sections' => [],
                         ];
                     @endphp
 
                     @if (!empty($tourDetails['sections']))
                         <div class="tour-details">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="tour-details__title">
-                                        {{ $tourDetails['title'] ?? 'Important information' }}
+                            @foreach ($tourDetails['sections'] as $section)
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="tour-details__title">
+                                            {{ $section['title'] ?? '' }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="category-group mb-4">
+                                            @if (!empty($section['category']['title']))
+                                                <div class="tour-details__title mb-2">
+                                                    {{ $section['category']['title'] }}
+                                                </div>
+                                            @endif
+
+                                            @if (!empty($section['category']['items']))
+                                                <ul class="tour-details__items">
+                                                    @foreach ($section['category']['items'] as $item)
+                                                        <li>{{ $item }}</li>
+                                                    @endforeach
+                                                </ul>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-md-9">
-                                    @foreach ($tourDetails['sections'] as $section)
-                                        <div class="category-group mb-4">
-                                            <div class="tour-details__title mb-2">
-                                                {{ $section['title'] }}
-                                            </div>
-                                            @foreach ($section['categories'] as $category)
-                                                @if (!empty($category['category_name']))
-                                                    <div class="tour-details__title mb-1">
-                                                        {{ $category['category_name'] }}
-                                                    </div>
-                                                @endif
-
-                                                @if (!empty($category['items']))
-                                                    <ul class="tour-details__items">
-                                                        @foreach ($category['items'] as $item)
-                                                            <li>{{ $item }}</li>
-                                                        @endforeach
-                                                    </ul>
-                                                @endif
-                                            @endforeach
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
+                            @endforeach
                         </div>
                     @endif
 
