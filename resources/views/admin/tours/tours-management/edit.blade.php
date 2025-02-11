@@ -1567,14 +1567,16 @@
                                                                                     [
                                                                                         'promo_title' => '',
                                                                                         'original_price' => '',
-                                                                                        'discount_price' => '',
-                                                                                        'promo_price' => '',
-                                                                                        'offer_expire_at' => '',
+                                                                                        'discount_monday' => '',
+                                                                                        'discount_tuesday' => '',
+                                                                                        'discount_wednesday' => '',
+                                                                                        'discount_thursday' => '',
+                                                                                        'discount_friday' => '',
                                                                                     ],
                                                                                 ];
                                                                         @endphp
                                                                         <tbody data-repeater-list>
-                                                                            @foreach ($promoTourPrices as $promoTourPrice)
+                                                                            @foreach ($promoTourPrices as $i => $promoTourPrice)
                                                                                 <tr data-repeater-item>
                                                                                     <td>
                                                                                         <input type="text"
@@ -1594,44 +1596,60 @@
                                                                                                 placeholder="Original Price"
                                                                                                 value="{{ $promoTourPrice['original_price'] }}"
                                                                                                 step="0.01"
-                                                                                                min="0"
-                                                                                                data-error="Original Price"
-                                                                                                oninput="calculatePromoPrice()"
-                                                                                                og-promo-price>
-                                                                                        </div>
-                                                                                        <div class="mt-2">
-                                                                                            <input
-                                                                                                name="tour[pricing][promo][discount_price][]"
-                                                                                                type="number"
-                                                                                                class="field"
-                                                                                                placeholder="Discounted Price"
-                                                                                                value="{{ $promoTourPrice['discount_price'] }}"
-                                                                                                step="0.01"
-                                                                                                min="0"
-                                                                                                data-error="Discount Price"
-                                                                                                oninput="calculatePromoPrice()"
-                                                                                                discounted-promo-price>
-                                                                                        </div>
-                                                                                        <div class="mt-2">
-                                                                                            <input
-                                                                                                name="tour[pricing][promo][promo_price][]"
-                                                                                                type="number"
-                                                                                                class="field"
-                                                                                                placeholder="Promo Price"
-                                                                                                value="{{ $promoTourPrice['promo_price'] }}"
-                                                                                                step="0.01"
-                                                                                                min="0"
-                                                                                                data-error="Promo Price"
-                                                                                                readonly promo-price>
+                                                                                                min="0">
                                                                                         </div>
                                                                                     </td>
+                                                                                    @php
+                                                                                        $promo_discount = json_decode(
+                                                                                            $promoTourPrice['discount'],
+                                                                                        );
+                                                                                    @endphp
                                                                                     <td>
-                                                                                        <input type="datetime-local"
-                                                                                            class="field"
-                                                                                            name="tour[pricing][promo][offer_expire_at][]"
-                                                                                            data-error="Expiry Date & Time"
-                                                                                            value="{{ $promoTourPrice['offer_expire_at'] }}"
-                                                                                            autocomplete="off">
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="monday"
+                                                                                                value="{{ $promo_discount->discount_monday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_monday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="tuesday"
+                                                                                                value="{{ $promo_discount->discount_tuesday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_tuesday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="wednesday"
+                                                                                                value="{{ $promo_discount->discount_wednesday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_wednesday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="thursday"
+                                                                                                value="{{ $promo_discount->discount_thursday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_thursday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
+                                                                                        <div class="mb-4">
+                                                                                            <input type="number"
+                                                                                                class="field"
+                                                                                                placeholder="friday"
+                                                                                                value="{{ $promo_discount->discount_friday[$i] }}"
+                                                                                                name="tour[pricing][promo][discount][discount_friday][]"
+                                                                                                step="0.01"
+                                                                                                min="0">
+                                                                                        </div>
                                                                                     </td>
                                                                                     <td>
                                                                                         <button type="button"

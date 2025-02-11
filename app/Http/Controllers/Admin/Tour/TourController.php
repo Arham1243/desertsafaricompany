@@ -196,9 +196,7 @@ class TourController extends Controller
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
-                        'discount_price' => $pricing['promo']['discount_price'][$index] ?? null,
-                        'promo_price' => $pricing['promo']['promo_price'][$index] ?? null,
-                        'offer_expire_at' => $pricing['promo']['offer_expire_at'][$index] ?? null,
+                        'discount' => json_encode($pricing['promo']['discount']) ?? null,
                     ]);
                 }
             }
@@ -422,9 +420,7 @@ class TourController extends Controller
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
-                        'discount_price' => $pricing['promo']['discount_price'][$index] ?? null,
-                        'promo_price' => $pricing['promo']['promo_price'][$index] ?? null,
-                        'offer_expire_at' => $pricing['promo']['offer_expire_at'][$index] ?? null,
+                        'discount' => json_encode($pricing['promo']['discount']) ?? null,
                     ]);
                 }
             }

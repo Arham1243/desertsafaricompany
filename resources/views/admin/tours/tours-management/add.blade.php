@@ -932,14 +932,14 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-fields">
-                                                <label class="title">Sale Price
-                                                    <input step="0.01" min="0" type="number"
-                                                        name="tour[pricing][sale_price]" class="field"
-                                                        value="{{ old('tour[pricing][sale_price]') }}"
-                                                        data-error="Sale Price">
-                                                    @error('tour[pricing][sale_price]')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                <label class="title">Sale Price</label>
+                                                <input step="0.01" min="0" type="number"
+                                                    name="tour[pricing][sale_price]" class="field"
+                                                    value="{{ old('tour[pricing][sale_price]') }}"
+                                                    data-error="Sale Price">
+                                                @error('tour[pricing][sale_price]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-12 my-2">
@@ -1190,7 +1190,7 @@
                                                                             <tr>
                                                                                 <th scope="col">Package Title</th>
                                                                                 <th scope="col">Pricing Details</th>
-                                                                                <th scope="col">Offer Expires At</th>
+                                                                                <th scope="col">Discount in %</th>
                                                                                 <th class="text-end" scope="col">Remove
                                                                                 </th>
                                                                             </tr>
@@ -1210,38 +1210,46 @@
                                                                                         <input
                                                                                             name="tour[pricing][promo][original_price][]"
                                                                                             type="number" class="field"
-                                                                                            placeholder="Original Price"
-                                                                                            step="0.01" min="0"
-                                                                                            data-error="Original Price"
-                                                                                            oninput="calculatePromoPrice()"
-                                                                                            og-promo-price>
-                                                                                    </div>
-                                                                                    <div class="mt-2">
-                                                                                        <input
-                                                                                            name="tour[pricing][promo][discount_price][]"
-                                                                                            type="number" class="field"
-                                                                                            placeholder="Discounted Price"
-                                                                                            step="0.01" min="0"
-                                                                                            data-error="Discount Price"
-                                                                                            oninput="calculatePromoPrice()"
-                                                                                            discounted-promo-price>
-                                                                                    </div>
-                                                                                    <div class="mt-2">
-                                                                                        <input
-                                                                                            name="tour[pricing][promo][promo_price][]"
-                                                                                            type="number" class="field"
-                                                                                            placeholder="Promo Price"
-                                                                                            step="0.01" min="0"
-                                                                                            data-error="Promo Price"
-                                                                                            readonly promo-price>
+                                                                                            placeholder="Price"
+                                                                                            step="0.01" min="0">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>
-                                                                                    <input type="datetime-local"
-                                                                                        class="field"
-                                                                                        name="tour[pricing][promo][offer_expire_at][]"
-                                                                                        data-error="Expiry Date & Time"
-                                                                                        autocomplete="off">
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="monday"
+                                                                                            name="tour[pricing][promo][discount][discount_monday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="tuesday"
+                                                                                            name="tour[pricing][promo][discount][discount_tuesday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="wednesday"
+                                                                                            name="tour[pricing][promo][discount][discount_wednesday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="thursday"
+                                                                                            name="tour[pricing][promo][discount][discount_thursday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <input type="number"
+                                                                                            class="field"
+                                                                                            placeholder="friday"
+                                                                                            name="tour[pricing][promo][discount][discount_friday][]"
+                                                                                            step="0.01" min="0">
+                                                                                    </div>
                                                                                 </td>
                                                                                 <td>
                                                                                     <button type="button"
