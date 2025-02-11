@@ -231,15 +231,7 @@
                                             <div class="form-fields">
                                                 <label class="title title--sm">Features:</label>
 
-                                                <div x-data="{
-                                                    features: @json(json_decode($tour->features) ?: [['icon' => '', 'icon_color' => '', 'title' => '', 'content' => '']])
-                                                    addFeature() {
-                                                        this.features.push({ icon: '', icon_color: '', title: '', content: '' });
-                                                    },
-                                                    removeFeature(index) {
-                                                        this.features.splice(index, 1);
-                                                    }
-                                                }">
+                                                <div x-data="featuresManager">
                                                     <div class="repeater-table">
                                                         <table class="table table-bordered">
                                                             <thead>
@@ -271,11 +263,12 @@
                                                                         <td>
                                                                             <div class="d-flex align-items-center gap-3">
                                                                                 <input type="text" class="field"
-                                                                                    :name="`tour[general][features][icon][${index}]`"
+                                                                                    :name="`tour[general][features][${index}][icon]`"
                                                                                     x-model="feature.icon"
                                                                                     @input="$el.nextElementSibling.className = feature.icon"
                                                                                     placeholder="Enter icon class">
-                                                                                <i :class="feature.icon" class="bx-md"
+                                                                                <i style="font-size: 1.5rem"
+                                                                                    :class="` ${feature.icon}  `"
                                                                                     data-preview-icon></i>
                                                                             </div>
                                                                         </td>
@@ -285,21 +278,22 @@
                                                                                 <label :for="`icon-color-picker-${index}`"
                                                                                     data-color-picker></label>
                                                                                 <input type="text"
+                                                                                    data-color-picker-input
                                                                                     :id="`icon-color-picker-${index}`"
-                                                                                    :name="`tour[general][features][icon_color][${index}]`"
+                                                                                    :name="`tour[general][features][${index}][icon_color]`"
                                                                                     x-model="feature.icon_color"
                                                                                     placeholder="Enter color code">
                                                                             </div>
                                                                         </td>
                                                                         <td>
                                                                             <input type="text"
-                                                                                :name="`tour[general][features][title][${index}]`"
+                                                                                :name="`tour[general][features][${index}][title]`"
                                                                                 x-model="feature.title" class="field"
                                                                                 maxlength="50" placeholder="Enter title">
                                                                         </td>
                                                                         <td>
                                                                             <input type="text"
-                                                                                :name="`tour[general][features][content][${index}]`"
+                                                                                :name="`tour[general][features][${index}][content]`"
                                                                                 x-model="feature.content" class="field"
                                                                                 maxlength="50"
                                                                                 placeholder="Enter content">
@@ -2517,6 +2511,38 @@
         crossorigin="anonymous" />
 @endpush
 @push('js')
+    <script>
+        function featuresManager() {
+            return {
+                features: @if ($tour->features)
+                    @js(json_decode($tour->features))
+                @else
+                    [{
+                        icon: '',
+                        icon_color: '',
+                        title: '',
+                        content: ''
+                    }]
+                @endif ,
+                addFeature() {
+                    this.features.push({
+                        icon: '',
+                        icon_color: '',
+                        title: '',
+                        content: ''
+                    });
+                    this.$nextTick(() => {
+                        document.querySelectorAll("[data-color-picker-container]").forEach(el => {
+                            InitializeColorPickers(el);
+                        });
+                    });
+                },
+                removeFeature(index) {
+                    this.features.splice(index, 1);
+                }
+            };
+        }
+    </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>

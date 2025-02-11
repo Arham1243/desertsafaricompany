@@ -322,26 +322,26 @@
                         $features = json_decode($tour->features);
                     @endphp
 
-                    @if ($features && isset($features->icon))
+                    @if ($features)
                         <div class="features-list">
                             <div class=row>
-                                @foreach ($features->icon as $i => $feature)
-                                    @if (isset($features->icon) && isset($features->title))
+                                @foreach ($features as $i => $feature)
+                                    @if (isset($feature->icon) && isset($feature->title))
                                         <div class="col-md-6">
                                             <div class="features-item">
                                                 <div class="icon">
-                                                    @if (isset($features->icon[$i]))
-                                                        <i @if (isset($features->icon_color[$i])) style="color: {{ $features->icon_color[$i] }};" @endif
-                                                            class="{{ $features->icon[$i] }}"></i>
+                                                    @if (isset($feature->icon))
+                                                        <i @if (isset($feature->icon_color)) style="color: {{ $feature->icon_color }};" @endif
+                                                            class="{{ $feature->icon }}"></i>
                                                     @endif
                                                 </div>
                                                 <div class="content">
-                                                    @if (isset($features->title[$i]))
-                                                        <div class="title">{{ $features->title[$i] }}
+                                                    @if (isset($feature->title))
+                                                        <div class="title">{{ $feature->title }}
                                                         </div>
                                                     @endif
-                                                    @if (isset($features->content[$i]))
-                                                        <p>{{ $features->content[$i] }}</p>
+                                                    @if (isset($feature->content))
+                                                        <p>{{ $feature->content }}</p>
                                                     @endif
                                                 </div>
                                             </div>
