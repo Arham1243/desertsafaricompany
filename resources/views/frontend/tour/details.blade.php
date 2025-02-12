@@ -398,7 +398,7 @@
                                             </div>
                                         @endif
                                         @if (json_decode($tour->exclusions))
-                                            <div class="col-md-12">
+                                            <div class="col-md-12 pb-4">
                                                 <div class="tour-content__title mb-3">
                                                     @if (isset($tour->exclusions_inclusions_heading) &&
                                                             is_array(json_decode($tour->exclusions_inclusions_heading, true)) &&
