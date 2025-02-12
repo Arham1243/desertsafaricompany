@@ -329,7 +329,8 @@
                                                 <div class="mb-4">
                                                     <label class="title">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusion]"
-                                                        class="field">
+                                                        class="field"
+                                                        value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->inclusion : '' }}">
                                                 </div>
 
                                                 <div class="repeater-table" data-repeater>
@@ -378,7 +379,8 @@
                                                 <div class="mb-4">
                                                     <label class="title">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
-                                                        class="field">
+                                                        class="field"
+                                                        value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->exclusions : '' }}">
                                                 </div>
                                                 <div class="repeater-table" data-repeater>
                                                     <table class="table table-bordered">
