@@ -603,9 +603,7 @@ class TourController extends Controller
                 'water_price' => $pricing['water_price'],
                 'promo_title' => $pricing['promo_title'],
                 'original_price' => $pricing['original_price'],
-                'discount_price' => $pricing['discount_price'],
-                'promo_price' => $pricing['promo_price'],
-                'offer_expire_at' => $pricing['offer_expire_at'],
+                'discount' => $pricing['discount'],
             ]);
         }
     }
