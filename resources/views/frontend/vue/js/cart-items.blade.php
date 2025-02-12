@@ -82,12 +82,16 @@
         ->whereIn('id', $cartToursIds)
         ->map(function ($tour) use ($cart) {
             return $tour->promoPrices->map(function ($promoPrice) use ($tour, $cart) {
-                $discountPercent = 0;
-                if ($promoPrice->original_price > 0) {
-                    $discountPercent =
-                        (($promoPrice->original_price - $promoPrice->promo_price) / $promoPrice->original_price) * 100;
-                }
-                $isNotExpired = \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($promoPrice->offer_expire_at));
+                $today = strtolower(Carbon\Carbon::now()->englishDayOfWeek);
+                $discountKey = 'discount_' . $today;
+
+                $originalPrice = (float) $promoPrice->original_price;
+
+                $decodedDiscount = json_decode($promoPrice->discount, true);
+
+                $discountPercent = $decodedDiscount[$discountKey][0];
+
+                $discountedPrice = $originalPrice * (1 - $discountPercent / 100);
 
                 $promoTitle = formatNameForInput($promoPrice->promo_title);
 
@@ -96,10 +100,9 @@
                 return [
                     'tour_id' => $tour->id,
                     'promo_title' => $promoPrice->promo_title,
-                    'original_price' => $promoPrice->original_price,
-                    'discount_price' => $promoPrice->promo_price,
-                    'offer_expire_at' => getTimeLeft($promoPrice->offer_expire_at),
-                    'is_not_expired' => $isNotExpired,
+                    'original_price' => number_format($originalPrice, 2),
+                    'discount_percent' => $discountPercent,
+                    'discounted_price' => number_format($discountedPrice, 2),
                     'quantity' => (int) $quantity,
                 ];
             });
@@ -111,6 +114,7 @@
     const Cart = createApp({
         setup() {
             const cartUpdateForm = ref(null);
+            const submitButton = ref(null);
             const cart = ref(@json($cart));
             const cartToursData = ref(@json($cartTours));
             const promoToursData = ref(@json($promoToursData));
@@ -121,11 +125,12 @@
             const totalPrice = ref(cart.value.total_price);
 
             watch(totalPrice, async (newValue) => {
-                if (newValue === 0 && cartUpdateForm.value) {
-                    await nextTick();
-                    cartUpdateForm.value.submit();
+                const roundedValue = Math.round(newValue * 100) / 100;
+                if (roundedValue === 0) {
+                    submitButton.value.disabled = true;
                 }
             });
+
 
 
             const cartTours = computed(() => {
@@ -255,6 +260,10 @@
                                 tour
                                 .id !== id)
                         );
+
+                        setTimeout(() => {
+                            cartUpdateForm.value.submit();
+                        }, 1000);
                     }
                 } else {
                     showToast('error', 'Tour not found!');
@@ -292,10 +301,6 @@
                     formatNameForInput(personType));
                 if (!promoData) return;
 
-                promoData.quantity += (action === "plus" ? 1 : (action === "minus" &&
-                    promoData
-                    .quantity > 0 ? -
-                    1 : 0));
                 updateTotalPrice(tour, action, promoIndex);
             };
 
@@ -460,13 +465,18 @@
                     case 'promo':
                         const promoTourData = getPromoTourPricing(tour.id);
                         const promo = promoTourData[index]
-                        const applicablePrice = promo.is_not_expired ? parseFloat(promo
-                                .discount_price) :
-                            parseFloat(promo
-                                .original_price);
+                        const applicablePrice = parseFloat(promo.discounted_price);
                         if (action === 'plus') {
+                            promo.quantity++;
                             totalPrice.value += applicablePrice;
-                        } else if (action === 'minus' && promo.quantity >= 0) {
+                            cart.value['tours'][tour.id]['data']['subtotal'] +=
+                                applicablePrice;
+                            cart.value['tours'][tour.id]['data']['total_price'] +=
+                                applicablePrice;
+                            cart.value['subtotal'] += applicablePrice;
+                            cart.value['total_price'] += applicablePrice;
+                        } else if (action === 'minus' && promo.quantity > 0) {
+                            promo.quantity--;
                             totalPrice.value -= applicablePrice;
                             cart.value['tours'][tour.id]['data']['subtotal'] -=
                                 applicablePrice;
@@ -501,6 +511,7 @@
                 getWaterTourTimeSlots,
                 handleTimeSlotChange,
                 cartUpdateForm,
+                submitButton,
             };
         },
     });

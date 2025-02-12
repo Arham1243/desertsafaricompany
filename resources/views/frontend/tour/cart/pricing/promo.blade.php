@@ -2,17 +2,15 @@
     <div v-for="(promo, index) in getPromoTourPricing(tour.id)" :key="index"
         class="form-group form-guest-search">
         <div class="tour-content__pra form-book__pra form-guest-search__details">
-            @{{ promo.promo_title }}
+            <div class="d-flex gap-2">
+                <span>@{{ promo.promo_title }} </span>
+                <span>@{{ promo.discount_percent }}% off</span>
+            </div>
             <div class="form-guest-search__items">
                 <div class="form-book__title form-guest-search__title">
-                    Expires in: @{{ promo.offer_expire_at }}
                     <div class="prices-wrapper">
-                        <div class="new-price">
-                            {{ env('APP_CURRENCY') }}
-                        </div>
-                        <div class="del-price cut">
-                            @{{ promo.original_price }}</div>
-                        <div class="new-price green">@{{ promo.discount_price }}</div>
+                        <div class="del-price cut">@{{ formatPrice(promo.original_price) }}</div>
+                        <div class="new-price green">@{{ formatPrice(promo.discounted_price) }}</div>
                     </div>
                 </div>
 

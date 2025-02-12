@@ -159,7 +159,7 @@ i.bx {
     width: 100%;
 }
 
-.primary-btn:hover {
+.primary-btn:not([disabled]):hover {
     background-color: var(--color-primary-dark);
     color: #fff;
 }
@@ -6658,3 +6658,7 @@ span.select2-dropdown.select2-dropdown--below {
     padding: 0.2rem 0;
 }
 .editor-content h3 + p.empty {margin-bottom: 0;}
+button[disabled]{
+    cursor: initial;
+    opacity: 0.75;
+}

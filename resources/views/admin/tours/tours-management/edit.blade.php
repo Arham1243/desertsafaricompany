@@ -1602,6 +1602,7 @@
                                                                                         </div>
                                                                                     </td>
                                                                                     @php
+
                                                                                         $promo_discount = json_decode(
                                                                                             $promoTourPrice['discount'],
                                                                                         );
@@ -1611,7 +1612,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="monday"
-                                                                                                value="{{ $promo_discount->discount_monday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_monday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_monday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1620,7 +1621,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="tuesday"
-                                                                                                value="{{ $promo_discount->discount_tuesday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_tuesday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_tuesday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1629,7 +1630,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="wednesday"
-                                                                                                value="{{ $promo_discount->discount_wednesday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_wednesday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_wednesday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1638,7 +1639,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="thursday"
-                                                                                                value="{{ $promo_discount->discount_thursday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_thursday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_thursday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1647,7 +1648,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="friday"
-                                                                                                value="{{ $promo_discount->discount_friday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_friday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_friday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1656,7 +1657,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="saturday"
-                                                                                                value="{{ $promo_discount->discount_saturday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_saturday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_saturday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">
@@ -1665,7 +1666,7 @@
                                                                                             <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="sunday"
-                                                                                                value="{{ $promo_discount->discount_sunday[$i] }}"
+                                                                                                value="{{ $promo_discount->discount_sunday[0] }}"
                                                                                                 name="tour[pricing][promo][discount][discount_sunday][]"
                                                                                                 step="0.01"
                                                                                                 min="0">

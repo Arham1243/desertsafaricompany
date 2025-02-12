@@ -1,18 +1,23 @@
 @php
+    use Carbon\Carbon;
+
     $promoTourData = $tour->promoPrices->map(function ($promoPrice) {
-        $discountPercent = 0;
-        if ($promoPrice->original_price > 0) {
-            $discountPercent =
-                (($promoPrice->original_price - $promoPrice->promo_price) / $promoPrice->original_price) * 100;
-        }
-        $isNotExpired = \Carbon\Carbon::now()->lt(\Carbon\Carbon::parse($promoPrice->offer_expire_at));
+        $today = strtolower(Carbon::now()->englishDayOfWeek);
+        $discountKey = 'discount_' . $today;
+
+        $originalPrice = (float) $promoPrice->original_price;
+
+        $decodedDiscount = json_decode($promoPrice->discount, true);
+
+        $discountPercent = $decodedDiscount[$discountKey][0];
+
+        $discountedPrice = $originalPrice * (1 - $discountPercent / 100);
 
         return [
             'promo_title' => $promoPrice->promo_title,
-            'original_price' => $promoPrice->original_price,
-            'discount_price' => $promoPrice->promo_price,
-            'offer_expire_at' => getTimeLeft($promoPrice->offer_expire_at),
-            'is_not_expired' => $isNotExpired,
+            'original_price' => number_format($originalPrice, 2),
+            'discount_percent' => $discountPercent,
+            'discounted_price' => number_format($discountedPrice, 2),
             'quantity' => 0,
         ];
     });
@@ -65,8 +70,7 @@
                 totalPrice.value = initialTotalPrice;
 
                 promoTourData.value.forEach((promo) => {
-                    const applicablePrice = promo.is_not_expired ? promo.discount_price : promo
-                        .original_price;
+                    const applicablePrice = promo.discounted_price;
                     totalPrice.value += applicablePrice * promo.quantity;
                 });
 

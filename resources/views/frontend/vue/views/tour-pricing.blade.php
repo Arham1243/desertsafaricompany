@@ -19,11 +19,7 @@
                     $tour->privatePrices->max_person;
                 break;
             case 'promo':
-                $isDataValid =
-                    $tour->promoPrices->isNotEmpty() &&
-                    $tour->promoPrices[0]->original_price &&
-                    $tour->promoPrices[0]->discount_price &&
-                    $tour->promoPrices[0]->promo_price;
+                $isDataValid = $tour->promoPrices->isNotEmpty() && $tour->promoPrices[0]->original_price;
                 break;
             case 'water':
                 $isDataValid = $tour->waterPrices->isNotEmpty();
@@ -33,46 +29,11 @@
                 break;
         }
 
-        $promoDetails = $tour->promoPrices->map(function ($promoPrice) {
-            $discountPercent = 0;
-            if ($promoPrice->original_price > 0) {
-                $discountPercent =
-                    (($promoPrice->original_price - $promoPrice->promo_price) / $promoPrice->original_price) * 100;
-            }
-            $isNotExpired = Carbon::now()->lt(Carbon::parse($promoPrice->offer_expire_at));
-
-            return [
-                'discount_percent' => $discountPercent,
-                'original_price' => $promoPrice->original_price,
-                'promo_price' => $promoPrice->promo_price,
-                'is_not_expired' => $isNotExpired,
-            ];
-        });
-
-        $validDeals = $promoDetails->filter(fn($deal) => $deal['is_not_expired']);
-
-        $combinedDiscountPercent = 0;
-        if ($validDeals->isNotEmpty()) {
-            $totalOriginalPrice = $validDeals->sum('original_price');
-            $totalPromoPrice = $validDeals->sum('promo_price');
-
-            if ($totalOriginalPrice > 0) {
-                $combinedDiscountPercent = (($totalOriginalPrice - $totalPromoPrice) / $totalOriginalPrice) * 100;
-            }
-        }
-
-        $combinedDiscountPercent = round($combinedDiscountPercent, 0);
-        $hasValidDeals = $validDeals->isNotEmpty();
     @endphp
     <div class=tour-content_book_wrap>
         <div class="tour-content_book_app {{ $tour->price_type === 'promo' ? 'sale' : '' }}">
-            @if ($hasValidDeals)
-                <div class="sale-box">
-                    <div class="ribbon ribbon--red">SAVE {{ $combinedDiscountPercent }}%</div>
-                </div>
-            @endif
 
-            @if ($tour->regular_price && $tour->sale_price)
+            @if (!$tour->price_type && $tour->regular_price && $tour->sale_price)
                 <input type="hidden" name="simeple_tour_price" value="{{ $tour->sale_price }}">
                 <div class="tour-content_book_pricing">
                     <span class="tour-content__pra">From</span>

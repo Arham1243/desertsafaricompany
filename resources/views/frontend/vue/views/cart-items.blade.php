@@ -73,8 +73,9 @@
                                     <div class="title">Total Payable</div>
                                     <div class="price">@{{ formatPrice(totalPrice) }}</div>
                                 </div>
-                                <button class="primary-btn w-100 mt-4">Proceed
-                                    to Checkout</button>
+                                <button ref="submitButton" class="primary-btn w-100 mt-4">Proceed
+                                    to Checkout
+                                </button>
                             </div>
                         </div>
                     </div>
