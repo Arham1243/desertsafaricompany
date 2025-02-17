@@ -372,56 +372,116 @@
             'route' => 'javascript:void(0)',
         ],
         [
-            'title' => 'Setting',
+    'title' => 'Setting',
+    'icon' => 'bx bx-cog',
+    'submenu' => [
+        [
+            'title' => 'General',
             'icon' => 'bx bx-cog',
-            'submenu' => [
-                [
-                    'title' => 'General',
-                    'icon' => 'bx bx-cog',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Header',
-                    'icon' => 'bx bx-vertical-top',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Footer',
-                    'icon' => 'bx bx-vertical-top bx-rotate-180',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Logo',
-                    'icon' => 'bx bx-image',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Favicon',
-                    'icon' => 'bx bx-image-alt',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Email',
-                    'icon' => 'bx bx-envelope',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Social Media Links',
-                    'icon' => 'bx bx-share',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'Contact Information',
-                    'icon' => 'bx bx-phone',
-                    'route' => 'javascript:void(0)',
-                ],
-                [
-                    'title' => 'SEO',
-                    'icon' => 'bx bx-search-alt',
-                    'route' => 'javascript:void(0)',
-                ],
-            ],
+            'route' => 'javascript:void(0)',
         ],
+        [
+            'title' => 'Tour',
+            'icon' => 'bx bx-map',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'News',
+            'icon' => 'bx bx-news',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Blog',
+            'icon' => 'bx bx-pencil',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Booking',
+            'icon' => 'bx bx-calendar-check',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Enquiry',
+            'icon' => 'bx bx-question-mark',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'User',
+            'icon' => 'bx bx-user',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Vendor',
+            'icon' => 'bx bx-store',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Payment',
+            'icon' => 'bx bx-credit-card',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Social Media',
+            'icon' => 'bx bx-share-alt',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Style',
+            'icon' => 'bx bx-palette',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Advanced',
+            'icon' => 'bx bx-wrench',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Media',
+            'icon' => 'bx bx-image',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Email',
+            'icon' => 'bx bx-envelope',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'SMS',
+            'icon' => 'bx bx-message',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Online Chat',
+            'icon' => 'bx bx-chat',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Mobile App',
+            'icon' => 'bx bx-mobile',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Review',
+            'icon' => 'bx bx-star',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Invoice',
+            'icon' => 'bx bx-file',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Quotations',
+            'icon' => 'bx bx-clipboard',
+             'route' => 'javascript:void(0)',
+        ],
+        [
+            'title' => 'Voucher',
+            'icon' => 'bx bx-gift',
+             'route' => 'javascript:void(0)',
+        ],
+    ],
+],
     ];
 @endphp
 
