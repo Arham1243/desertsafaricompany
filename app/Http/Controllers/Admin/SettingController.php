@@ -14,11 +14,13 @@ class SettingController extends Controller
     {
         $settings = Setting::where('group', $resource)->pluck('value', 'key');
         $pages = Page::where('status', 'publish')->get();
+        $viewPath = "admin.settings.$resource";
 
-        return view("admin.settings.$resource", compact(
-            'settings',
-            'pages',
-        ));
+        if (! view()->exists($viewPath)) {
+            return redirect()->back()->with('notify_error', 'Settings page not found.');
+        }
+
+        return view($viewPath, compact('settings', 'pages'));
     }
 
     public function update(Request $request, $resource)
@@ -35,6 +37,11 @@ class SettingController extends Controller
             $appCurrency = Setting::get('app_currency');
             $stripeSecretKey = Setting::get('stripe_secret_key');
             $tabbySecretKey = Setting::get('tabby_secret_key');
+
+            if ($request->has('perks')) {
+                $features = $request->input('perks');
+                Setting::set('perks', json_encode($features), $resource);
+            }
 
             if ($appName) {
                 $this->updateEnvFile('APP_NAME', $appName);

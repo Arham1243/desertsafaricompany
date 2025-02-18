@@ -29,8 +29,6 @@
                             $selectedTimezone = $settings->get('app_timezone');
                             $appName = $settings->get('app_name');
                             $selectedCurrency = $settings->get('app_currency');
-                            $stripeSecretKey = $settings->get('stripe_secret_key');
-                            $tabbySecretKey = $settings->get('tabby_secret_key');
                             $footerCopyrightText = $settings->get('footer_copyright_text');
                             $currencies = [
                                 '$' => ['name' => 'US Dollar', 'code' => 'USD'],
@@ -233,29 +231,6 @@
                                             <div class="dimensions text-center mt-3">
                                                 <strong>Dimensions:</strong> 16 &times; 16
                                             </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Payment Secret Keys</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    <div class="col-md-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Stripe Secret key</label>
-                                            <input type="text" name="stripe_secret_key"
-                                                value="{{ $stripeSecretKey ?? '' }}" class="field">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="form-fields">
-                                            <label class="title">Tabby Secret key</label>
-                                            <input type="text" name="tabby_secret_key"
-                                                value="{{ $tabbySecretKey ?? '' }}" class="field">
                                         </div>
                                     </div>
                                 </div>

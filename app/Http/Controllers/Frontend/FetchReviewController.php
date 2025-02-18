@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Collection;
 
 class FetchReviewController extends Controller
 {

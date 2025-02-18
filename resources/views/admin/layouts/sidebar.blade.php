@@ -211,27 +211,6 @@
                 ],
             ],
         ],
-        // [
-        //     'title' => 'Testimonials',
-        //     'icon' => 'bx bxs-chat',
-        //     'submenu' => [
-        //         [
-        //             'title' => 'Testimonials',
-        //             'icon' => 'bx bx-list-ul',
-        //             'route' => route('admin.testimonials.index'),
-        //         ],
-        //         [
-        //             'title' => 'Add Testimonial',
-        //             'icon' => 'bx bx-plus',
-        //             'route' => route('admin.testimonials.create'),
-        //         ],
-        //         [
-        //             'title' => 'Recovery',
-        //             'icon' => 'bx bx-refresh',
-        //             'route' => route('admin.recovery.index', ['resource' => 'testimonials']),
-        //         ],
-        //     ],
-        // ],
         [
             'title' => 'Popup',
             'icon' => 'bx bx-message-square',
@@ -380,45 +359,111 @@
                     'icon' => 'bx bx-cog',
                     'route' => route('admin.settings.edit', ['resource' => 'general']),
                 ],
+
                 [
-                    'title' => 'Header',
-                    'icon' => 'bx bx-vertical-top',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'Tour',
+                    'icon' => 'bx bx-map',
+                    'route' => route('admin.settings.edit', ['resource' => 'tour']),
                 ],
                 [
-                    'title' => 'Footer',
-                    'icon' => 'bx bx-vertical-top bx-rotate-180',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'News',
+                    'icon' => 'bx bx-news',
+                    'route' => route('admin.settings.edit', ['resource' => 'news']),
                 ],
                 [
-                    'title' => 'Logo',
+                    'title' => 'Blog',
+                    'icon' => 'bx bx-pencil',
+                    'route' => route('admin.settings.edit', ['resource' => 'blog']),
+                ],
+                [
+                    'title' => 'Media',
                     'icon' => 'bx bx-image',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.settings.edit', ['resource' => 'media']),
                 ],
                 [
-                    'title' => 'Favicon',
-                    'icon' => 'bx bx-image-alt',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'Style',
+                    'icon' => 'bx bx-palette',
+                    'route' => route('admin.settings.edit', ['resource' => 'style']),
+                ],
+                [
+                    'title' => 'Review',
+                    'icon' => 'bx bx-star',
+                    'route' => route('admin.settings.edit', ['resource' => 'review']),
+                ],
+
+                [
+                    'title' => 'Booking',
+                    'icon' => 'bx bx-book',
+                    'route' => route('admin.settings.edit', ['resource' => 'booking']),
+                ],
+                [
+                    'title' => 'Payment',
+                    'icon' => 'bx bx-credit-card',
+                    'route' => route('admin.settings.edit', ['resource' => 'payment']),
+                ],
+                [
+                    'title' => 'Voucher',
+                    'icon' => 'bx bx-gift',
+                    'route' => route('admin.settings.edit', ['resource' => 'voucher']),
+                ],
+
+                [
+                    'title' => 'Enquiry',
+                    'icon' => 'bx bx-message-square-dots',
+                    'route' => route('admin.settings.edit', ['resource' => 'enquiry']),
+                ],
+                [
+                    'title' => 'SMS',
+                    'icon' => 'bx bx-message',
+                    'route' => route('admin.settings.edit', ['resource' => 'sms']),
                 ],
                 [
                     'title' => 'Email',
                     'icon' => 'bx bx-envelope',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.settings.edit', ['resource' => 'email']),
                 ],
                 [
-                    'title' => 'Social Media Links',
-                    'icon' => 'bx bx-share',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'Online Chat',
+                    'icon' => 'bx bx-chat',
+                    'route' => route('admin.settings.edit', ['resource' => 'online_chat']),
+                ],
+
+                [
+                    'title' => 'User',
+                    'icon' => 'bx bx-user',
+                    'route' => route('admin.settings.edit', ['resource' => 'user']),
                 ],
                 [
-                    'title' => 'Contact Information',
-                    'icon' => 'bx bx-phone',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'Vendor',
+                    'icon' => 'bx bx-store',
+                    'route' => route('admin.settings.edit', ['resource' => 'vendor']),
+                ],
+
+                [
+                    'title' => 'Advanced',
+                    'icon' => 'bx bx-wrench',
+                    'route' => route('admin.settings.edit', ['resource' => 'advanced']),
                 ],
                 [
-                    'title' => 'SEO',
-                    'icon' => 'bx bx-search-alt',
-                    'route' => 'javascript:void(0)',
+                    'title' => 'Mobile App',
+                    'icon' => 'bx bx-mobile-alt',
+                    'route' => route('admin.settings.edit', ['resource' => 'mobile_app']),
+                ],
+                [
+                    'title' => 'Invoice',
+                    'icon' => 'bx bx-file',
+                    'route' => route('admin.settings.edit', ['resource' => 'invoice']),
+                ],
+                [
+                    'title' => 'Quotations',
+                    'icon' => 'bx bx-file',
+                    'route' => route('admin.settings.edit', ['resource' => 'quotations']),
+                ],
+
+                [
+                    'title' => 'Social Media',
+                    'icon' => 'bx bx-share-alt',
+                    'route' => route('admin.settings.edit', ['resource' => 'social_media']),
                 ],
             ],
         ],
@@ -440,7 +485,6 @@
                 $hasActiveSubmenu =
                     isset($item['submenu']) &&
                     array_filter($item['submenu'], function ($submenu) {
-                        // Check if the submenu or any subSubMenu matches the current URL
                         return Request::url() === ($submenu['route'] ?? '') ||
                             (isset($submenu['submenu']) &&
                                 array_filter($submenu['submenu'], function ($subSubMenu) {
