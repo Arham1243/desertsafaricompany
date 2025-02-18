@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
 use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\TourReview;
@@ -13,13 +12,6 @@ use Illuminate\Http\Request;
 class IndexController extends Controller
 {
     use Sluggable;
-
-    public function __construct()
-    {
-        $logo = Imagetable::where('table_name', 'logo')->latest()->first();
-        View()->share('config', $this->getConfig());
-        View()->share('logo', $logo);
-    }
 
     public function blog_details()
     {
