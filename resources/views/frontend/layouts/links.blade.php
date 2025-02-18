@@ -1,6 +1,5 @@
 @php
     $favicon = $settings->get('favicon');
-@endphp;
 @endphp
 @if ($favicon)
     <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">
