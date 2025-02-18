@@ -1,3 +1,8 @@
+@php
+    $footerLogo = $settings->get('footer_logo');
+    $footerLogoAltText = $settings->get('footer_logo_alt_text');
+    $footerCopyrightText = $settings->get('footer_copyright_text');
+@endphp
 <footer class=footer>
     <div class=container>
         <div class=row>
@@ -79,15 +84,10 @@
         <div class=container>
             <div class=footer-2__content>
                 <div class=footer-logo>
-                    <a href=index.php> <img src="{{ asset($logo->img_path ?? 'frontend/assets/images/logo (1).webp') }}"
-                            alt=image class=imgFluid width=112.03 height=33.69></a>
+                    <a href="{{ route('index') }}"> <img
+                            src="{{ asset($footerLogo ?? 'frontend/assets/images/logo (1).webp') }}"
+                            alt={{ $footerLogoAltText ?? 'logo' }} class=imgFluid width=112.03 height=33.69></a>
                 </div>
-                <!--<div class=header-btns>-->
-                <!--    <div class=currencys>-->
-                <!--        <div class="themeBtn themeBtn-white footer-2__btn">EN</div>-->
-                <!--        <div class="themeBtn themeBtn-white footer-2__btn">EUR</div>-->
-                <!--    </div>-->
-                <!--</div>-->
             </div>
         </div>
     </div>
@@ -95,9 +95,8 @@
         <div class=container>
             <div class=last-footer__content>
                 <div class=last-footer__title>
-                    <span>© <?php echo date('Y'); ?> {{ env('APP_NAME') }} All Rights Reserved.</span>
+                    <span>{{ $footerCopyrightText }}</span>
                 </div>
-                <!--<div class=Agency-name>Öz Alanya Tour and Travel Agency</div>-->
             </div>
         </div>
     </div>

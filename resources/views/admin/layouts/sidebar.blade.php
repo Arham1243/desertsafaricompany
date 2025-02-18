@@ -378,7 +378,7 @@
                 [
                     'title' => 'General',
                     'icon' => 'bx bx-cog',
-                    'route' => 'javascript:void(0)',
+                    'route' => route('admin.settings.edit', ['resource' => 'general']),
                 ],
                 [
                     'title' => 'Header',
