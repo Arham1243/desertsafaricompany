@@ -1,4 +1,10 @@
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+@php
+    $favicon = $settings->get('favicon');
+@endphp;
+@endphp
+@if ($favicon)
+    <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">
+@endif
 <link href="{{ asset('frontend/assets/css/all.min.css?v=' . time()) }}" rel="stylesheet">
 <link rel="preload" href="{{ asset('frontend/assets/fonts/boxicons/boxicons.woff2') }}" as="font" type="font/woff2"
     crossorigin="anonymous">
