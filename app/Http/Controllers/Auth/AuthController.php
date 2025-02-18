@@ -17,7 +17,7 @@ class AuthController extends Controller
 
         if ($request->auth_type === 'sign_up') {
             $request->validate([
-                'email' => 'required|email|max:255',
+                'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:8',
                 'auth_type' => 'required|in:sign_up,login',
                 'full_name' => 'sometimes|required|string|max:255',
