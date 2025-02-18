@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -29,10 +28,11 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'signup_method' => 'email',
-                'email_verification_token' => Str::random(32),
+                'email_verification_token' => null,
+                'email_verified' => true,
             ]);
 
-            $this->sendVerificationEmail($user);
+            // $this->sendVerificationEmail($user);
 
             return response()->json([
                 'status' => 'success',
