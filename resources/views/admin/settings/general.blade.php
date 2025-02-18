@@ -68,7 +68,7 @@
                                     <div class="col-md-12 mb-4">
                                         <div class="form-fields">
                                             <label class="title">App Currency</label>
-                                            <select name="app_currency" placeholder="Select" class="field">
+                                            <select name="app_currency" placeholder="Select" class="select2-select">
                                                 <option value="" disabled selected>Select</option>
                                                 @foreach ($currencies as $code => $currency)
                                                     <option value="{{ $code }}"
