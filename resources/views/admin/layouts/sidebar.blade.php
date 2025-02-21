@@ -470,12 +470,17 @@
     ];
 @endphp
 
+@php
+    $headerLogo = $settings->get('header_logo');
+    $headerLogoAltText = $settings->get('header_logo_alt_text');
+@endphp
+
 
 <div class="sidebar">
     <a href="{{ route('admin.dashboard') }}" class="sidebar-header">
         <div class="sidebar-header__icon">
-            <img src="{{ asset($logo->img_path ?? 'admin/assets/images/placeholder-logo.png') }}" alt="Logo"
-                class="imgFluid">
+            <img src='{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}'
+                alt='{{ $headerLogoAltText ?? 'logo' }}' class="imgFluid">
         </div>
     </a>
     <ul class="sidebar-nav">
