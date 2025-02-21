@@ -1,13 +1,16 @@
 <a href="javascript:void(0)" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
-
+@php
+    $headerLogo = $settings->get('header_logo');
+    $headerLogoAltText = $settings->get('header_logo_alt_text');
+@endphp
 <header class="header">
     <div class="container">
         <div class="header-main">
             <div class="header-content">
                 <div class="header-logo">
                     <a href="{{ route('index') }}"> <img
-                            src='{{ asset($logo->img_path ?? 'frontend/assets/images/logo (1).webp') }}' alt='image'
-                            class='imgFluid' width="112.03" height="33.69"></a>
+                            src='{{ asset($headerLogo ?? 'frontend/assets/images/logo (1).webp') }}'
+                            alt='{{ $headerLogoAltText ?? 'logo' }}' class='imgFluid' width="112.03" height="33.69"></a>
                 </div>
                 <div class="header-nav">
                     <ul>
@@ -105,7 +108,8 @@
 <div class="sideBar" id="sideBar">
     <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()">×</a>
     <a href="{{ route('index') }}" class="sideBar__logo">
-        <img alt="Logo" class="imgFluid" src="{{ asset('frontend/frontend/assets/images/logo (1).webp') }}">
+        <img class="imgFluid" src='{{ asset($headerLogo ?? 'frontend/assets/images/logo (1).webp') }}'
+            alt='{{ $headerLogoAltText ?? 'logo' }}'>
     </a>
     <ul class="sideBar__nav">
         <li><a href="{{ route('tours.index') }}">Tours</a></li>

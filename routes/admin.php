@@ -18,6 +18,7 @@ use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
+use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
@@ -89,4 +90,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('coupons', CouponController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
+
+    Route::get('settings/{resource}/edit', [SettingController::class, 'edit'])->name('settings.edit');
+    Route::post('settings/{resource}/update', [SettingController::class, 'update'])->name('settings.update');
 });

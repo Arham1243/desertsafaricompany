@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -18,7 +17,7 @@ class AuthController extends Controller
 
         if ($request->auth_type === 'sign_up') {
             $request->validate([
-                'email' => 'required|email|max:255',
+                'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:8',
                 'auth_type' => 'required|in:sign_up,login',
                 'full_name' => 'sometimes|required|string|max:255',
@@ -29,10 +28,11 @@ class AuthController extends Controller
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'signup_method' => 'email',
-                'email_verification_token' => Str::random(32),
+                'email_verification_token' => null,
+                'email_verified' => true,
             ]);
 
-            $this->sendVerificationEmail($user);
+            // $this->sendVerificationEmail($user);
 
             return response()->json([
                 'status' => 'success',
@@ -90,10 +90,13 @@ class AuthController extends Controller
 
     public function sendVerificationEmail($user)
     {
+        $settings = Setting::where('group', 'general')->pluck('value', 'key');
+        $headerLogo = $settings->get('header_logo') ?? '';
+
         $data = [
             'full_name' => $user->full_name,
             'verify_link' => route('auth.verify-email', ['token' => $user->email_verification_token]),
-            'logo' => asset(ImageTable::where('table_name', 'logo')->latest()->first()->img_path ?? 'frontend/assets/images/logo (1).webp'),
+            'logo' => asset($headerLogo),
         ];
 
         Mail::send('emails.verify-email', ['data' => $data], function ($message) use ($user) {

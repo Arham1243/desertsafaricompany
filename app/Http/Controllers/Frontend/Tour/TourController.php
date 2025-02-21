@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Tour;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
@@ -15,6 +16,7 @@ class TourController extends Controller
 {
     public function index()
     {
+
         $tours = Tour::where('status', 'publish')->get();
         $data = compact('tours');
 
@@ -24,13 +26,16 @@ class TourController extends Controller
 
     public function details($slug)
     {
+        $settings = Setting::where('group', 'tour')->pluck('value', 'key');
+        $bannerStyle = $settings->get('banner_style');
+        $perks = $settings->get('perks');
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
         if ($tour) {
             $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'bannerStyle', 'perks');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }

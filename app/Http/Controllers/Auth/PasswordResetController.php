@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Models\ImageTable;
+use App\Models\Setting;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -26,10 +26,13 @@ class PasswordResetController extends Controller
                 ['token' => $token, 'created_at' => now()]
             );
 
+            $settings = Setting::where('group', 'general')->pluck('value', 'key');
+            $headerLogo = $settings->get('header_logo') ?? '';
+
             $data = [
                 'full_name' => $user->full_name,
                 'verify_link' => route('password.reset', ['token' => $token]),
-                'logo' => asset(ImageTable::where('table_name', 'logo')->latest()->first()->img_path ?? 'frontend/assets/images/logo (1).webp'),
+                'logo' => asset($headerLogo),
             ];
 
             Mail::send('emails.reset-password', ['data' => $data], function ($message) use ($user) {

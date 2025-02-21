@@ -1,34 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
 
-    @php
-        $seo = $tour->seo ?? null;
-    @endphp
-
-    @if (isset($tour->show_phone) && $tour->show_phone === 1)
-        <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
-                class='bx bxl-whatsapp'></i></a>
-    @endif
-
-    <div class=tour-details_banner>
-        <div class=tour-details_img>
-            <img data-src="{{ asset($tour->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
-                alt='{{ $tour->banner_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
-        </div>
-        <div class=tour-details_btns>
-            @if ($tour->video_link)
-                <a href={{ sanitizedLink($tour->video_link) }} data-fancybox="gallery"
-                    class="themeBtn themeBtn-white">Video</a>
-            @endif
-            @if ($tour->media->isNotEmpty())
-                @foreach ($tour->media as $media)
-                    <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                        data-fancybox="gallery-1"
-                        class="themeBtn themeBtn-white {{ $loop->first ? 'd-block' : 'd-none' }}">Gallery</a>
-                @endforeach
-            @endif
-        </div>
-    </div>
 
 
     <div class="share-popup-wrapper" data-send-popup>
@@ -93,108 +65,140 @@
         </div>
     </div>
 
+    @php
+        $seo = $tour->seo ?? null;
+    @endphp
 
-    @if ($tour->media->isNotEmpty())
-        <div class="media-gallery--view mt-2">
-            <div class="row g-0">
-                <div class="col-lg-6">
-                    <a href="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                        data-fancybox="gallery-2" class="media-gallery__item--1">
-                        <img data-src="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                            alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                            height="400">
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <a href="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                        data-fancybox="gallery-2" class="media-gallery__item--2">
-                        <img data-src="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                            alt="{{ $tour->media[1]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                            height="400">
-                    </a>
-                </div>
-                <div class="col-lg-3">
-                    <div class="row g-0">
-                        <div class="col-12">
-                            <a href="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                data-fancybox="gallery-2" class="media-gallery__item--3">
-                                <img data-src="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[2]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                                    height="400">
-                            </a>
-                        </div>
-                        <div class="col-12">
-                            <a href="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                data-fancybox="gallery-2" class="media-gallery__item--4">
-                                <img data-src="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                                    height="400">
-                            </a>
-                            @if (count($tour->media) > 4)
-                                <div class="media-gallery--view__morePics">
-                                    @foreach ($tour->media->slice(4) as $media)
-                                        <a href="{{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                            type="button" data-fancybox="gallery-4"
-                                            class="{{ $loop->first ? 'd-flex' : 'd-none' }}">
-                                            <span class="media-gallery--view__morePics-icon">
-                                                <i class="bx bx-photo-album"></i>
-                                            </span>
-                                            +{{ count($tour->media) - 4 }}
-                                        </a>
-                                    @endforeach
-                                </div>
-                            @endif
+    @if (isset($tour->show_phone) && $tour->show_phone === 1)
+        <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
+                class='bx bxl-whatsapp'></i></a>
+    @endif
+
+    @if ($bannerStyle === 'style-1')
+        <div class=tour-details_banner>
+            <div class=tour-details_img>
+                <img data-src="{{ asset($tour->banner_image ?? 'frontend/assets/images/placeholder.png') }}"
+                    alt='{{ $tour->banner_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
+            </div>
+            <div class=tour-details_btns>
+                @if ($tour->video_link)
+                    <a href={{ sanitizedLink($tour->video_link) }} data-fancybox="gallery"
+                        class="themeBtn themeBtn-white">Video</a>
+                @endif
+                @if ($tour->media->isNotEmpty())
+                    @foreach ($tour->media as $media)
+                        <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                            data-fancybox="gallery-1"
+                            class="themeBtn themeBtn-white {{ $loop->first ? 'd-block' : 'd-none' }}">Gallery</a>
+                    @endforeach
+                @endif
+            </div>
+        </div>
+    @elseif ($bannerStyle === 'style-2')
+        @if ($tour->media->isNotEmpty())
+            <div class="media-gallery--view mt-2">
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                        <a href="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                            data-fancybox="gallery-2" class="media-gallery__item--1">
+                            <img data-src="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
+                                height="400">
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <a href="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                            data-fancybox="gallery-2" class="media-gallery__item--2">
+                            <img data-src="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                alt="{{ $tour->media[1]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
+                                height="400">
+                        </a>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row g-0">
+                            <div class="col-12">
+                                <a href="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                    data-fancybox="gallery-2" class="media-gallery__item--3">
+                                    <img data-src="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $tour->media[2]->alt_text ?? 'image' }}" class="imgFluid lazy"
+                                        width="662.5" height="400">
+                                </a>
+                            </div>
+                            <div class="col-12">
+                                <a href="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                    data-fancybox="gallery-2" class="media-gallery__item--4">
+                                    <img data-src="{{ asset($tour->media[3]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $tour->media[3]->alt_text ?? 'image' }}" class="imgFluid lazy"
+                                        width="662.5" height="400">
+                                </a>
+                                @if (count($tour->media) > 4)
+                                    <div class="media-gallery--view__morePics">
+                                        @foreach ($tour->media->slice(4) as $media)
+                                            <a href="{{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                                type="button" data-fancybox="gallery-4"
+                                                class="{{ $loop->first ? 'd-flex' : 'd-none' }}">
+                                                <span class="media-gallery--view__morePics-icon">
+                                                    <i class="bx bx-photo-album"></i>
+                                                </span>
+                                                +{{ count($tour->media) - 4 }}
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    @endif
-    @if ($tour->media->isNotEmpty())
-        <div class="media-gallery--view media-gallery--view2 mt-2">
-            <div class="row g-0">
-                <div class=col-md-8>
-                    <a href={{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                        class="media-gallery__item--1 media-gallery--view2" data-fancybox=gallery-3>
-                        <img data-src="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                            alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy">
-                    </a>
-                </div>
-                <div class=col-md-4>
-                    <div class="row g-0">
-                        <div class=col-12>
-                            <a href={{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                                class="media-gallery__item--3 media-gallery--view2" data-fancybox=gallery-3>
-                                <img data-src="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[1]->alt_text ?? 'image' }}" class="imgFluid lazy">
-                            </a>
-                            @if (count($tour->media) > 4)
-                                <div class=media-gallery--view2__morePics>
-                                    @foreach ($tour->media as $media)
-                                        <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                                            data-fancybox=gallery-3 class="{{ $loop->first ? 'd-flex' : 'd-none' }}">
-                                            <span class=media-gallery--view2__morePics-icon>
-                                                <i class="bx bx-dots-vertical-rounded"></i>
-                                            </span>
-                                            Show all photos
-                                        </a>
-                                    @endforeach
+        @endif
+    @elseif ($bannerStyle === 'style-3')
+        @if ($tour->media->isNotEmpty())
+            <div class="media-gallery--view media-gallery--view2 mt-2">
+                <div class="row g-0">
+                    <div class=col-md-8>
+                        <a href={{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                            class="media-gallery__item--1 media-gallery--view2" data-fancybox=gallery-3>
+                            <img data-src="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy">
+                        </a>
+                    </div>
+                    <div class=col-md-4>
+                        <div class="row g-0">
+                            <div class=col-12>
+                                <a href={{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                                    class="media-gallery__item--3 media-gallery--view2" data-fancybox=gallery-3>
+                                    <img data-src="{{ asset($tour->media[1]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $tour->media[1]->alt_text ?? 'image' }}" class="imgFluid lazy">
+                                </a>
+                                @if (count($tour->media) > 4)
+                                    <div class=media-gallery--view2__morePics>
+                                        @foreach ($tour->media as $media)
+                                            <a href={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                                                data-fancybox=gallery-3 class="{{ $loop->first ? 'd-flex' : 'd-none' }}">
+                                                <span class=media-gallery--view2__morePics-icon>
+                                                    <i class="bx bx-dots-vertical-rounded"></i>
+                                                </span>
+                                                Show all photos
+                                            </a>
+                                        @endforeach
 
-                                </div>
-                            @endif
-                        </div>
-                        <div class=col-12>
-                            <a href={{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                                class="media-gallery__item--4 media-gallery--view2" data-fancybox=gallery-3>
-                                <img data-src="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[2]->alt_text ?? 'image' }}" class="imgFluid lazy">
-                            </a>
+                                    </div>
+                                @endif
+                            </div>
+                            <div class=col-12>
+                                <a href={{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                                    class="media-gallery__item--4 media-gallery--view2" data-fancybox=gallery-3>
+                                    <img data-src="{{ asset($tour->media[2]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $tour->media[2]->alt_text ?? 'image' }}" class="imgFluid lazy">
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
     @endif
+
 
     <div class=container>
         <div class=row>
@@ -305,14 +309,16 @@
         </div>
     </div>
 
-    <div class="tour-details_banner2 one-items-slider">
-        @foreach ($tour->media as $media)
-            <div class=tour-details_banner2--img>
-                <img src={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
-                    alt={{ $media->alt_text ?? 'image' }} class="imgFluid">
-            </div>
-        @endforeach
-    </div>
+    @if ($bannerStyle === 'style-4')
+        <div class="tour-details_banner2 one-items-slider">
+            @foreach ($tour->media as $media)
+                <div class=tour-details_banner2--img>
+                    <img src={{ asset($media->file_path ?? 'frontend/assets/images/placeholder.png') }}
+                        alt={{ $media->alt_text ?? 'image' }} class="imgFluid">
+                </div>
+            @endforeach
+        </div>
+    @endif
 
     <div class="tour-content pt-2">
         <div class=container>
@@ -1051,45 +1057,26 @@
                     'appComponent' => 'tour-pricing',
                     'appJs' => 'tour-pricing',
                 ])
-                <div class=tour-content_book_app>
-                    <div class=Why-Book-Us>
-                        <h6 class="tour-content__title mb-4">
-                            Why Book With Us?
-                        </h6>
-                        <div class=Why-Book-Us__content>
-                            <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                <i class="bx bx-phone"></i>
-                            </div>
-                            <div class=tour-content__pra>
-                                No-hassle best price guarantee
-                            </div>
-                        </div>
-                        <div class=Why-Book-Us__content>
-                            <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                <i class="bx bx-calendar-star"></i>
-                            </div>
-                            <div class=tour-content__pra>
-                                Customer care available 24/7
-                            </div>
-                        </div>
-                        <div class=Why-Book-Us__content>
-                            <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                <i class="bx bx-star"></i>
-                            </div>
-                            <div class=tour-content__pra>
-                                Hand-picked Tours & Activities
-                            </div>
-                        </div>
-                        <div class=Why-Book-Us__content>
-                            <div class="Why-Book-Us__icon tour-content__pra-icon">
-                                <i class="bx bxs-plane-alt"></i>
-                            </div>
-                            <div class=tour-content__pra>
-                                Free Travel Insureance
-                            </div>
+                @if (json_decode($perks))
+                    <div class=tour-content_book_app>
+                        <div class=Why-Book-Us>
+                            <h6 class="tour-content__title mb-4">
+                                Why Book With Us?
+                            </h6>
+                            @foreach (json_decode($perks) as $perk)
+                                <div class=Why-Book-Us__content>
+                                    <div class="Why-Book-Us__icon tour-content__pra-icon"
+                                        @if ($perk->icon_color) style="color:{{ $perk->icon_color }};" @endif>
+                                        <i class="{{ $perk->icon }}"></i>
+                                    </div>
+                                    <div class=tour-content__pra>
+                                        {{ $perk->title }}
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>
