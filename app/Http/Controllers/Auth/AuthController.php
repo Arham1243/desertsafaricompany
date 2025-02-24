@@ -91,7 +91,7 @@ class AuthController extends Controller
     public function sendVerificationEmail($user)
     {
         $settings = Setting::where('group', 'general')->pluck('value', 'key');
-        $headerLogo = $settings->get('header_logo') ?? '';
+        $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
 
         $data = [
             'full_name' => $user->full_name,
