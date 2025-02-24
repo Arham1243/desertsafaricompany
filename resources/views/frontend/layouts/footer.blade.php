@@ -84,9 +84,7 @@
         <div class=container>
             <div class=footer-2__content>
                 <div class=footer-logo>
-                    <a href="{{ route('index') }}"> <img <<<<<<< Updated upstream
-                            src="{{ asset($footerLogo ?? 'frontend/assets/images/logo (1).webp') }}"=======src="{{ asset($footerLogo ?? 'admin/assets/images/placeholder-logo.png') }}">>>>>>>
-                        Stashed changes
+                    <a href="{{ route('index') }}"> <img src="{{ asset($footerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
                         alt={{ $footerLogoAltText ?? 'logo' }} class=imgFluid width=112.03 height=33.69></a>
                 </div>
             </div>

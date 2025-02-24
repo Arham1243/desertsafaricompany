@@ -8,10 +8,9 @@
         <div class="header-main">
             <div class="header-content">
                 <div class="header-logo">
-                    <a href="{{ route('index') }}"> <img <<<<<<< Updated upstream
-                            src='{{ asset($headerLogo ?? 'frontend/assets/images/logo (1).webp') }}'=======src='{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}'>>>>>>>
-                        Stashed changes
-                        alt='{{ $headerLogoAltText ?? 'logo' }}' class='imgFluid' width="112.03" height="33.69"></a>
+                    <a href="{{ route('index') }}">
+                        <img src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
+                            alt="{{ $headerLogoAltText ?? 'logo' }}" class='imgFluid' width="112.03" height="33.69"></a>
                 </div>
                 <div class="header-nav">
                     <ul>
@@ -109,9 +108,7 @@
 <div class="sideBar" id="sideBar">
     <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()">×</a>
     <a href="{{ route('index') }}" class="sideBar__logo">
-        <<<<<<< Updated upstream <img class="imgFluid"
-            src='{{ asset($headerLogo ?? 'frontend/assets/images/logo (1).webp') }}'=======<img class="imgFluid"
-            src='{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}'>>>>>>> Stashed changes
+        <img class="imgFluid" src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
             alt='{{ $headerLogoAltText ?? 'logo' }}'>
     </a>
     <ul class="sideBar__nav">
