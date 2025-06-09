@@ -4,7 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "configure-husky": "npx husky-init"
+        "configure-husky": "npx husky-init",
+         "prepare": "husky install"
     },
     "devDependencies": {
         "blade-formatter": "^1.41.1",
