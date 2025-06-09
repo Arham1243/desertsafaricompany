@@ -42,6 +42,8 @@ class PageController extends Controller
             'content' => 'nullable',
             'header_style' => 'nullable',
             'footer_style' => 'nullable',
+            'banner_image' => 'nullable',
+            'banner_image_alt_text' => 'nullable',
             'status' => 'nullable|in:publish,draft',
         ]);
 
@@ -52,6 +54,7 @@ class PageController extends Controller
         ]);
 
         $page = Page::create($data);
+        $this->uploadImg('banner_image', 'Pages/banner-images', $page, 'banner_image');
 
         handleSeoData($request, $page, 'Page/'.$page->title);
 
@@ -75,18 +78,23 @@ class PageController extends Controller
             'content' => 'nullable',
             'header_style' => 'nullable',
             'footer_style' => 'nullable',
+            'banner_image' => 'nullable',
+            'banner_image_alt_text' => 'nullable',
             'status' => 'nullable|in:publish,draft',
         ]);
 
         $page = Page::where('id', $id)->firstOrFail();
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];
         $slug = $this->createSlug($slugText, 'pages', $page->slug);
+        $show_page_builder_sections = isset($request->show_page_builder_sections) ? $request->show_page_builder_sections : 0;
 
         $data = array_merge($validatedData, [
             'slug' => $slug,
+            'show_page_builder_sections' => $show_page_builder_sections,
         ]);
 
         $page->update($data);
+        $this->uploadImg('banner_image', 'Pages/banner-images', $page, 'banner_image');
 
         handleSeoData($request, $page, 'Page/'.$page->title);
 
@@ -178,6 +186,10 @@ class PageController extends Controller
         if (! empty($newData)) {
             DB::table('page_section')->insert($newData);
         }
+
+        Page::where('id', $pageId)->update([
+            'show_page_builder_sections' => 0,
+        ]);
 
         return redirect()->back()->with('notify_success', 'Layout Saved Successfully!');
     }

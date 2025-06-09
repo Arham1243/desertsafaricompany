@@ -68,6 +68,46 @@
                             </div>
                             <div class="form-box">
                                 <div class="form-box__header">
+                                    <div class="title">Banner Image</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        <div class="upload" data-upload>
+                                            <div class="upload-box-wrapper">
+                                                <div class="upload-box show" data-upload-box>
+                                                    <input type="file" name="banner_image" data-error="Preview Image"
+                                                        id="banner_image" class="upload-box__file d-none" accept="image/*"
+                                                        data-file-input>
+                                                    <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                    </div>
+                                                    <label for="banner_image" class="upload-box__btn themeBtn">Upload
+                                                        Image</label>
+                                                </div>
+                                                <div class="upload-box__img" data-upload-img>
+                                                    <button type="button" class="delete-btn" data-delete-btn><i
+                                                            class='bx bxs-trash-alt'></i></button>
+                                                    <a href="#" class="mask" data-fancybox="gallery">
+                                                        <img src="{{ asset('admin/assets/images/loading.webp') }}"
+                                                            alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                    </a>
+                                                    <input type="text" name="banner_image_alt_text" class="field"
+                                                        placeholder="Enter alt text" value="Banner Alt Text">
+                                                </div>
+                                            </div>
+                                            <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                upload a
+                                                valid image file
+                                            </div>
+                                            @error('banner_image')
+                                                <div class="text-danger mt-2 text-center">{{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="form-box">
+                                <div class="form-box__header">
                                     <div class="title">Header / footer Style </div>
                                 </div>
                                 @php
@@ -106,7 +146,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 

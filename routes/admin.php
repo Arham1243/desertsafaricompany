@@ -19,7 +19,6 @@ use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\SiteSettingsController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
 use App\Http\Controllers\Admin\Tour\AvailabilityController;
@@ -40,8 +39,6 @@ Route::middleware('guest')->prefix('admin')->namespace('Admin')->group(function 
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashController::class, 'dashboard'])->name('dashboard');
-    Route::get('/showLogo', [SiteSettingsController::class, 'showLogo'])->name('showLogo');
-    Route::post('/saveLogo', [SiteSettingsController::class, 'saveLogo'])->name('saveLogo');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');

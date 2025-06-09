@@ -33,8 +33,17 @@
                     <div class="col-md-9">
                         <div class="form-wrapper">
                             <div class="form-box">
-                                <div class="form-box__header">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="title">Page Content</div>
+                                    <div class="form-check form-switch" data-enabled-text="Show Page Content"
+                                        data-disabled-text="Show Page builder sections">
+                                        <input class="form-check-input" data-toggle-switch=""
+                                            {{ $page->show_page_builder_sections === 1 ? 'checked' : '' }} type="checkbox"
+                                            id="show_page_builder_sections" value="1"
+                                            name="show_page_builder_sections">
+                                        <label class="form-check-label" for="show_page_builder_sections">Show Page
+                                            Content</label>
+                                    </div>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
@@ -89,6 +98,51 @@
                             </div>
                             <div class="form-box">
                                 <div class="form-box__header">
+                                    <div class="title">Banner Image</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        <div class="upload" data-upload>
+                                            <div class="upload-box-wrapper">
+                                                <div class="upload-box {{ empty($page->banner_image) ? 'show' : '' }}"
+                                                    data-upload-box>
+                                                    <input type="file" name="banner_image"
+                                                        {{ empty($page->banner_image) ? '' : '' }}
+                                                        data-error="Preview Image" id="banner_image"
+                                                        class="upload-box__file d-none" accept="image/*" data-file-input>
+                                                    <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                    </div>
+                                                    <label for="banner_image" class="upload-box__btn themeBtn">Upload
+                                                        Image</label>
+                                                </div>
+                                                <div class="upload-box__img {{ !empty($page->banner_image) ? 'show' : '' }}"
+                                                    data-upload-img>
+                                                    <button type="button" class="delete-btn" data-delete-btn><i
+                                                            class='bx bxs-trash-alt'></i></button>
+                                                    <a href="{{ asset($page->banner_image) }}" class="mask"
+                                                        data-fancybox="gallery">
+                                                        <img src="{{ asset($page->banner_image) }}" alt="Section"
+                                                            class="imgFluid" data-upload-preview>
+                                                    </a>
+                                                    <input type="text" name="banner_image_alt_text" class="field"
+                                                        placeholder="Enter alt text"
+                                                        value="{{ $page->banner_image_alt_text }}">
+                                                </div>
+                                            </div>
+                                            <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                upload a
+                                                valid image file
+                                            </div>
+                                            @error('banner_image')
+                                                <div class="text-danger mt-2 text-center">{{ $message }}
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{-- <div class="form-box">
+                                <div class="form-box__header">
                                     <div class="title">Header / footer Style </div>
                                 </div>
                                 @php
@@ -127,7 +181,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                 </div>

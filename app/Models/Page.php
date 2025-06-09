@@ -31,6 +31,7 @@ class Page extends Model
         static::deleting(function ($item) {
             if ($item->isForceDeleting()) {
                 if ($item->seo) {
+                    self::deleteImage($item->banner_image);
                     self::deleteImage($item->seo->seo_featured_image);
                     self::deleteImage($item->seo->fb_featured_image);
                     self::deleteImage($item->seo->tw_featured_image);
