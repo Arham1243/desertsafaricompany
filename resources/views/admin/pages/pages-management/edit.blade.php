@@ -36,9 +36,9 @@
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="title">Page Content</div>
                                     <div class="form-check form-switch" data-enabled-text="Show Page Content"
-                                        data-disabled-text="Show Page builder sections">
+                                        data-disabled-text="Show Page Content">
                                         <input class="form-check-input" data-toggle-switch=""
-                                            {{ $page->show_page_builder_sections === 1 ? 'checked' : '' }} type="checkbox"
+                                            {{ $page->show_page_builder_sections === 0 ? 'checked' : '' }} type="checkbox"
                                             id="show_page_builder_sections" value="1"
                                             name="show_page_builder_sections">
                                         <label class="form-check-label" for="show_page_builder_sections">Show Page
