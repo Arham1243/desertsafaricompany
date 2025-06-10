@@ -39,7 +39,7 @@
                                         data-disabled-text="Show Page Content">
                                         <input class="form-check-input" data-toggle-switch=""
                                             {{ $page->show_page_builder_sections === 1 ? 'checked' : '' }} type="checkbox"
-                                            id="show_page_builder_sections" value="0"
+                                            id="show_page_builder_sections" value="1"
                                             name="show_page_builder_sections">
                                         <label class="form-check-label" for="show_page_builder_sections">Show Page
                                             Content</label>
