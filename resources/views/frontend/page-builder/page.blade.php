@@ -3,7 +3,7 @@
     $seo = $page->seo ?? null;
 @endphp
 @section('content')
-    @if ($page->show_page_builder_sections === 0)
+    @if ($page->show_page_builder_sections === '0')
         @foreach ($sections as $section)
             @include('frontend.page-builder.sections.' . $section->template_path, [
                 'content' => json_decode($section->pivot->content),
