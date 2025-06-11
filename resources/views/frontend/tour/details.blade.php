@@ -1,8 +1,5 @@
 @extends('frontend.layouts.main')
 @section('content')
-
-
-
     <div class="share-popup-wrapper" data-send-popup>
         <div class="share-popup light">
             <div class="share-popup__header">
@@ -774,7 +771,7 @@
                                         </div>
                                         <div class="faqs-single__content accordian-content">
                                             <div class="hidden-wrapper tour-content__pra">
-                                                {{ $faq->answer }}
+                                                {!! nl2br(e($faq->answer)) !!}
                                             </div>
                                         </div>
                                     </div>
