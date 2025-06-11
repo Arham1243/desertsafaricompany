@@ -3111,8 +3111,8 @@ span.main-reviews__detailsNum {
 }
 
 ul.experience-itinerary-timeline {
-    margin-right: 51px;
     position: relative;
+    padding-top: 0.5rem;
 }
 
 .timeline-item-stop {
@@ -3123,19 +3123,34 @@ ul.experience-itinerary-timeline {
 }
 
 .timeline-item-info--primary {
+    color: #1a2b49;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 1rem;
-    font-weight: 800;
-    line-height: 1.375rem;
-}
-
-.timeline-item-info--secondary {
-    margin-top: 4px;
-    font-size: 0.875rem;
+    font-size: 0.95rem;
     font-weight: 600;
+    line-height: 1.4;
+}
+.timeline-item__subitems-wrapper {
+    margin: 1.9rem 0 0.1rem;
 }
 
+p.timeline-item-info--secondary,.timeline-item-info--secondary p ,p.timeline-subitems-info--secondary{
+    margin: 0;
+}
+
+li.activity-itinerary-timeline__item {
+    margin-bottom: 1.75rem;
+}
+.timeline-item-info--secondary {
+    font-size: 14px;
+    line-height: 1.5;
+    color: #1a2b49;
+    font-weight: inherit;
+}
+
+.activity-experience-map-wrapper {
+    margin-left: 3.75rem;
+}
 .activity-experience__map {
     height: 70%;
 }
@@ -3182,7 +3197,7 @@ span.timeline-item__icon {
     top: 30px;
     width: 12px;
     content: "";
-    height: 95%;
+    height: 92%;
     background-color: #f53;
     z-index: -1;
     border-radius: 1rem;

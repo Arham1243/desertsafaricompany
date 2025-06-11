@@ -577,15 +577,12 @@
                             @endphp
                             <div class=tour-content__line></div>
                             <div class=activity-experience>
-                                <div class=tour-content__SubTitle>
-                                    experience
-                                </div>
-                                <div class="timeline-item-info--primary mb-2">
+                                <div class="tour-content__SubTitle mb-4">
                                     Itinerary
                                 </div>
                                 <div class=activity-experience-items__content>
                                     <div class=activity-experience__itinerary>
-                                        <div class="row align-items-start mb-5 pb-2">
+                                        <div class="row align-items-start mb-5 pb-2 g-0">
                                             <div class=col-md-4>
                                                 <ul class=experience-itinerary-timeline>
                                                     @if ($itineraryExperience['pickup_locations'])
@@ -679,7 +676,7 @@
                                                                                         <div
                                                                                             class="timeline-item-info timeline-item__info timeline-item__info--subitem">
                                                                                             <p
-                                                                                                class="timeline-subitems-info--primary">
+                                                                                                class="timeline-item-info--primary">
                                                                                                 {{ $subStop['title'] }}
                                                                                             </p>
                                                                                             <p
@@ -726,16 +723,18 @@
                                                 </ul>
                                             </div>
                                             <div class=col-md-8>
-                                                <div class="tour-content-location__map activity-experience__map">
-                                                    <iframe
-                                                        src="{{ $itineraryExperience['map_iframe'] ?? 'https://www.google.com/maps?qUnited Arab Emirates&output=embed' }}"
-                                                        width=600 height=450 style=border:0 allowfullscreen
-                                                        referrerpolicy=no-referrer-when-downgrade></iframe>
-                                                </div>
-                                                <div class=itinerary__map-title-main>
-                                                    <i class="bx bx-star"></i>
-                                                    <div class=itinerary__map-label>
-                                                        Main stop
+                                                <div class="activity-experience-map-wrapper">
+                                                    <div class="tour-content-location__map activity-experience__map">
+                                                        <iframe
+                                                            src="{{ $itineraryExperience['map_iframe'] ?? 'https://www.google.com/maps?qUnited Arab Emirates&output=embed' }}"
+                                                            width=600 height=450 style=border:0 allowfullscreen
+                                                            referrerpolicy=no-referrer-when-downgrade></iframe>
+                                                    </div>
+                                                    <div class=itinerary__map-title-main>
+                                                        <i class="bx bx-star"></i>
+                                                        <div class=itinerary__map-label>
+                                                            Main stop
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
