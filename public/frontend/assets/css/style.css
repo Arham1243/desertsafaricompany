@@ -249,9 +249,9 @@ i.bx {
 }
 
 .section-content .heading {
-    font-size: 1.37rem;
+    font-size: 1.5rem;
     line-height: 1.15;
-    font-weight: 800;
+    font-weight: 700;
     margin-bottom: 0.75rem;
     text-transform: capitalize;
     color: #243064;
@@ -2341,7 +2341,7 @@ span.baseline-pricing__value--low {
 input.form-book__date {
     border: none;
     outline: none;
-    font-size: 0.75rem;
+    font-size: 0.84rem;
     color: #000;
     font-weight: 600;
     width: 100%;
@@ -2972,7 +2972,7 @@ ul.tour-content__pra li {
 .tour-content__pra {
     color: #5e6d77;
     font-weight: 500;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 1.7;
 }
 
@@ -3359,7 +3359,7 @@ span.tour-content__title.ml-1 {
 .form-guest-search__title {
     border: none;
     padding: 0;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 700;
     color: #000;
     text-transform: capitalize;
@@ -6178,7 +6178,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .prices-wrapper div {
-    font-size: 0.85rem;
+    font-size: 0.99rem;
     font-weight: 600;
 }
 
