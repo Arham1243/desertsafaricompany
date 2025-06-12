@@ -3157,7 +3157,7 @@ li.activity-itinerary-timeline__item {
 
 span.timeline-item__icon {
     align-items: center;
-    background-color: #f53;
+    background-color: #FF4408;
     border: 2px solid #fff;
     border-radius: 100%;
     box-shadow: 0 0 32px #0000000f, 0 4px 8px #00000029;
@@ -3176,7 +3176,7 @@ span.timeline-item__icon {
 
 .timeline-item__icon {
     align-items: center;
-    background-color: #f53;
+    background-color: #FF4408;
     border: 2px solid #fff;
     border-radius: 50%;
     box-shadow: 0 0 32px #0000000f, 0 4px 8px #00000029;
@@ -3231,7 +3231,7 @@ span.timeline-item__icon {
 }
 
 .timeline-item__staricon {
-    background-color: #1a2b49 !important;
+    background-color: #112C49 !important;
     border: none !important;
     color: #fff;
 }
