@@ -328,9 +328,9 @@
                                                 <label class="title title--sm mb-3">Include:</label>
                                                 <div class="mb-4">
                                                     <label class="title">Title</label>
-                                                    <input type="text" name="exclusions_inclusions_heading[inclusion]"
+                                                    <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field"
-                                                        value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->inclusion : '' }}">
+                                                        value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->inclusions : '' }}">
                                                 </div>
 
                                                 <div class="repeater-table" data-repeater>
@@ -510,8 +510,8 @@
                                                         <div class="mt-4">
                                                             <button type="button"
                                                                 @click="formData.sections.push({ title: '', category: { title: '', items: [] } })"
-                                                                class="themeBtn">
-                                                                Add Section <i class="bx bx-plus"></i>
+                                                                class="themeBtn ms-auto">
+                                                                Add <i class="bx bx-plus"></i>
                                                             </button>
                                                         </div>
                                                     </div>
@@ -2229,28 +2229,64 @@
                         <div x-show="optionTab === 'addOn'" class="addOn-options">
                             <div class="form-box">
                                 <div class="form-box__header">
-                                    <div class="title">Add On (You might also like)</div>
+                                    <div class="title">Add On</div>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        @php
-                                            $selectedRelatedTourIds = json_decode($tour->related_tour_ids, true) ?? [];
-                                        @endphp
-                                        <label class="title">Select tours
-                                            :</label>
-                                        <select name="related_tour_ids[]" multiple class="select2-select"
-                                            placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                            data-error="Top 4 featured tours">
-                                            @foreach ($tours as $t)
-                                                <option value="{{ $t->id }}"
-                                                    {{ in_array($t->id, $selectedRelatedTourIds) ? 'selected' : '' }}>
-                                                    {{ $t->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('related_tour_ids[]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                        <div x-data="repeaterFormForAddOns({{ $tour->addOns->toJson() }})" x-init="initChoices()">
+                                            <div class="repeater-table">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Section</th>
+                                                            <th class="text-end">Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(addOn, index) in formData.addOns"
+                                                            :key="index">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="form-fields">
+                                                                        <label class="title text-dark">Heading</label>
+                                                                        <input :name="`addOns[${index}][heading]`"
+                                                                            type="text" class="field"
+                                                                            x-model="addOn.heading">
+                                                                    </div>
+                                                                    <div class="form-fields">
+                                                                        <label class="title text-dark">Select
+                                                                            tours</label>
+                                                                        <select :name="`addOns[${index}][tour_ids][]`"
+                                                                            class="choices-select" multiple
+                                                                            x-ref="select${index}">
+                                                                            @foreach ($tours as $tour)
+                                                                                <option :value="'{{ $tour->id }}'"
+                                                                                    :selected="addOn.tour_ids.includes(
+                                                                                        '{{ $tour->id }}')">
+                                                                                    {{ $tour->title }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button" @click="removeAddOn(index)"
+                                                                        class="delete-btn delete-btn--static ms-auto">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                                <div class="mt-4">
+                                                    <button type="button" @click="addAddOn()"
+                                                        class="themeBtn ms-auto">
+                                                        Add <i class="bx bx-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2548,6 +2584,45 @@
                     this.features.splice(index, 1);
                 }
             };
+        }
+
+        function repeaterFormForAddOns(addOns = []) {
+            return {
+                formData: {
+                    addOns: addOns.length ? addOns : [{
+                        heading: '',
+                        tour_ids: []
+                    }]
+                },
+                initChoices() {
+                    this.$nextTick(() => {
+                        document.querySelectorAll('.choices-select').forEach(el => {
+                            if (el._choicesInstance) el._choicesInstance.destroy()
+                            el._choicesInstance = new Choices(el, {
+                                removeItemButton: true
+                            })
+
+
+                            const selectedValues = Array.from(el.querySelectorAll('option:checked')).map(
+                                o => o.value)
+                            selectedValues.forEach(val => {
+                                el._choicesInstance.setChoiceByValue(val)
+                            })
+                        })
+                    })
+                },
+                addAddOn() {
+                    this.formData.addOns.push({
+                        heading: '',
+                        tour_ids: []
+                    })
+                    this.initChoices()
+                },
+                removeAddOn(index) {
+                    this.formData.addOns.splice(index, 1)
+                    this.initChoices()
+                }
+            }
         }
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />

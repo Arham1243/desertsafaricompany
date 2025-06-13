@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Tour;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Tour;
+use App\Models\TourAddOn;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
 use App\Models\TourFaq;
@@ -72,8 +73,7 @@ class TourController extends Controller
         $features = ! empty($general['features']) && ! in_array(null, $general['features'], true)
             ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
             : null;
-
-        $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
+        $addOns = $request->input('addOns', []);
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
@@ -104,7 +104,6 @@ class TourController extends Controller
             'featured_state' => $statusTab['featured_state'] ?? null,
             'ical_import_url' => $statusTab['ical_import_url'] ?? null,
             'ical_export_url' => $statusTab['ical_export_url'] ?? null,
-            'related_tour_ids' => $relatedTours,
             'is_fixed_date' => $availabilityData['is_fixed_date'] ?? 0,
             'is_open_hours' => $availabilityData['is_open_hours'] ?? 0,
             'is_fixed_date' => $availabilityData['is_fixed_date'] ?? 0,
@@ -236,6 +235,21 @@ class TourController extends Controller
             }
         }
 
+        if (! empty($addOns) && is_array($addOns)) {
+            foreach ($addOns as $addOn) {
+                $heading = $addOn['heading'] ?? null;
+                $tourIds = $addOn['tour_ids'] ?? [];
+
+                if ($heading || ! empty($tourIds)) {
+                    TourAddOn::create([
+                        'tour_id' => $tour->id,
+                        'heading' => $heading,
+                        'tour_ids' => $tourIds,
+                    ]);
+                }
+            }
+        }
+
         $this->uploadImg('banner_image', 'Tours/Banners/Featured-images', $tour, 'banner_image');
         $this->uploadImg('featured_image', 'Tours/Featured-images', $tour, 'featured_image');
         $this->uploadImg('promotional_image', 'Tours/Promotional-images', $tour, 'promotional_image');
@@ -298,8 +312,7 @@ class TourController extends Controller
             ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
             : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
-
-        $relatedTours = ! empty($request->input('related_tour_ids')) ? json_encode($request->input('related_tour_ids')) : null;
+        $addOns = $request->input('addOns', []);
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
@@ -330,7 +343,6 @@ class TourController extends Controller
             'featured_state' => $statusTab['featured_state'] ?? null,
             'ical_import_url' => $statusTab['ical_import_url'] ?? null,
             'ical_export_url' => $statusTab['ical_export_url'] ?? null,
-            'related_tour_ids' => $relatedTours,
             'is_fixed_date' => $availabilityData['is_fixed_date'] ?? 0,
             'start_date' => $availabilityData['start_date'],
             'end_date' => $availabilityData['end_date'] ?? null,
@@ -483,6 +495,22 @@ class TourController extends Controller
                             ]);
                         }
                     }
+                }
+            }
+        }
+
+        $tour->addOns()->delete();
+        if (! empty($addOns) && is_array($addOns)) {
+            foreach ($addOns as $addOn) {
+                $heading = $addOn['heading'] ?? null;
+                $tourIds = $addOn['tour_ids'] ?? [];
+
+                if ($heading || ! empty($tourIds)) {
+                    $tour->addOns()->create([
+                        'tour_id' => $tour->id,
+                        'heading' => $heading,
+                        'tour_ids' => $tourIds,
+                    ]);
                 }
             }
         }

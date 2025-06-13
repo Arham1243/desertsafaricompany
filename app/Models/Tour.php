@@ -156,6 +156,11 @@ class Tour extends Model
             ->get();
     }
 
+    public function addOns()
+    {
+        return $this->hasMany(TourAddOn::class, 'tour_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

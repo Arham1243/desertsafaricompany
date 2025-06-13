@@ -198,7 +198,6 @@
             @endif
         @endif
 
-
         <div class=container>
             <div class=row>
                 <div class=col-md-12>
@@ -1086,29 +1085,35 @@
             </div>
         </div>
 
-        @if ($tour->related_tour_ids)
-            <div class="my-5 pb-2">
-                <div class=container>
-                    <div class="section-content text-center">
-                        <h2 class=subHeading>
-                            You might also like...
-                        </h2>
-                    </div>
-                    <div class="row four-items-slider pt-3 mb-4">
-                        @php
-                            $relatedTours = App\Models\Tour::whereIn('id', json_decode($tour->related_tour_ids ?? '[]'))
-                                ->where('status', 'publish')
-                                ->get();
+        @if ($tour->addOns->isNotEmpty())
+            @foreach ($tour->addOns as $index => $addOn)
+                <div class="{{ !$loop->last ? 'my-5' : '' }} pb-2">
+                    <div class=container>
+                        <div class="section-content text-center">
+                            @if ($addOn->heading)
+                                <h2 class=subHeading>
+                                    {{ $addOn->heading }}
+                                </h2>
+                            @endif
+                        </div>
+                        @if (!empty($addOn->tour_ids))
+                            <div class="row four-items-slider pt-3">
+                                @php
+                                    $relatedTours = App\Models\Tour::whereIn('id', $addOn->tour_ids ?? [])
+                                        ->where('status', 'publish')
+                                        ->get();
 
-                        @endphp
-                        @foreach ($relatedTours as $relatedTour)
-                            <div class=col-md-3>
-                                <x-tour-card :tour="$relatedTour" style="style1" />
+                                @endphp
+                                @foreach ($relatedTours as $relatedTour)
+                                    <div class=col-md-3>
+                                        <x-tour-card :tour="$relatedTour" style="style1" />
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
+                        @endif
                     </div>
                 </div>
-            </div>
+            @endforeach
         @endif
 
         <div class="loader-mask" id="loader">
