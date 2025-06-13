@@ -1239,14 +1239,14 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-fields">
-                                                <label class="title">Sale Price
-                                                    <input step="0.01" min="0" type="number"
-                                                        name="tour[pricing][sale_price]" class="field"
-                                                        value="{{ old('tour[pricing][sale_price]', $tour->sale_price) }}"
-                                                        data-error="Sale Price">
-                                                    @error('tour[pricing][sale_price]')
-                                                        <div class="text-danger">{{ $message }}</div>
-                                                    @enderror
+                                                <label class="title">Sale Price</label>
+                                                <input step="0.01" min="0" type="number"
+                                                    name="tour[pricing][sale_price]" class="field"
+                                                    value="{{ old('tour[pricing][sale_price]', $tour->sale_price) }}"
+                                                    data-error="Sale Price">
+                                                @error('tour[pricing][sale_price]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-12 my-2">
@@ -1577,12 +1577,9 @@
                                                                             @foreach ($promoTourPrices as $i => $promoTourPrice)
                                                                                 <tr data-repeater-item>
                                                                                     <td>
-                                                                                        <input type="text"
-                                                                                            name="tour[pricing][promo][promo_title][]"
-                                                                                            class="field"
-                                                                                            value="{{ $promoTourPrice['promo_title'] }}"
-                                                                                            placeholder="E.g., Adult"
-                                                                                            data-error="Package Title">
+                                                                                        <textarea rows="6" name="tour[pricing][promo][promo_title][]" class="field" placeholder="E.g., Adult"
+                                                                                            data-error="Package Title">{{ $promoTourPrice['promo_title'] }}</textarea>
+
                                                                                     </td>
                                                                                     <td style="width: 35%"
                                                                                         calculate-promo-price>

@@ -1198,11 +1198,9 @@
                                                                         <tbody data-repeater-list>
                                                                             <tr data-repeater-item>
                                                                                 <td>
-                                                                                    <input type="text"
-                                                                                        name="tour[pricing][promo][promo_title][]"
-                                                                                        class="field"
-                                                                                        placeholder="E.g., Adult"
-                                                                                        data-error="Package Title">
+                                                                                    <textarea rows="6" name="tour[pricing][promo][promo_title][]" class="field" placeholder="E.g., Adult"
+                                                                                        data-error="Package Title"></textarea>
+
                                                                                 </td>
                                                                                 <td style="width: 35%"
                                                                                     calculate-promo-price>
