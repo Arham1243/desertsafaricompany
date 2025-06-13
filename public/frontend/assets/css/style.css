@@ -2970,15 +2970,15 @@ ul.tour-content__pra li {
 }
 
 .tour-content__pra {
-    font-weight: 500;
     font-size: 16px;
     line-height: 1.7;
-    opacity: 0.73;
+    opacity: 0.6;
+    padding-left: 0.5rem;
 }
 
 .tour-content__title {
     color: #343a40;
-    font-size: 1.15rem;
+    font-size: 18px;
     font-weight: 500;
     text-transform: capitalize;
     margin: 21px 0;
@@ -3126,7 +3126,7 @@ ul.experience-itinerary-timeline {
     color: #1a2b49;
     margin-top: 0;
     margin-bottom: 0;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
     font-weight: 600;
     line-height: 1.4;
 }
@@ -3142,7 +3142,7 @@ li.activity-itinerary-timeline__item {
     margin-bottom: 1.75rem;
 }
 .timeline-item-info--secondary {
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.5;
     color: #1a2b49;
     font-weight: inherit;
@@ -3214,9 +3214,8 @@ span.timeline-item__icon {
 }
 
 .timeline-subitems-info--secondary {
-    font-size: 0.825rem;
+    font-size: 15px;
     color: #858995;
-    font-weight: 600;
 }
 
 .grey-circle-icon {
@@ -3471,15 +3470,14 @@ label.form-guest-search__item-clean input {
 }
 
 .faqs-single {
-    margin-bottom: 1.35rem;
+    margin-bottom: 1.5rem;
 }
 
 .faqs-single__header {
     display: flex;
     align-items: center;
     gap: 1.5rem;
-
-    padding-bottom: 0.5rem;
+    padding-bottom: 0.25rem;
 }
 
 .faqs-single__header .tour-content__title {
@@ -6786,7 +6784,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .tour-details__items li {
-    font-size: 15px;
+    font-size: 0.98rem;
     font-weight: 500;
     list-style-type: disc !important;
     color: #5e6d77;
