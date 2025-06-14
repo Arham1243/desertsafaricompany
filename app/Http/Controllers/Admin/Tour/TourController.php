@@ -190,17 +190,11 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
-                    $filteredDiscount = [];
-                    foreach ($pricing['promo']['discount'] as $dayKey => $discountArray) {
-                        $filteredDiscount[$dayKey] = isset($discountArray[$index]) ? [$discountArray[$index]] : [];
-                    }
-
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
-                        'discount' => json_encode($filteredDiscount) ?? null,
                     ]);
                 }
             }
@@ -432,17 +426,11 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
-                    $filteredDiscount = [];
-                    foreach ($pricing['promo']['discount'] as $dayKey => $discountArray) {
-                        $filteredDiscount[$dayKey] = isset($discountArray[$index]) ? [$discountArray[$index]] : [];
-                    }
-
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
-                        'discount' => json_encode($filteredDiscount) ?? null,
                     ]);
                 }
             }
@@ -632,7 +620,6 @@ class TourController extends Controller
                 'water_price' => $pricing['water_price'],
                 'promo_title' => $pricing['promo_title'],
                 'original_price' => $pricing['original_price'],
-                'discount' => $pricing['discount'],
             ]);
         }
     }
