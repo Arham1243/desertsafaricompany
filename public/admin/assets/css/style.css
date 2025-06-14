@@ -1061,6 +1061,10 @@ form .text-danger {
     opacity: 0.85;
     font-size: 1.2rem;
 }
+label.title.title--xs {
+    opacity: 0.85;
+    font-size: 1.05rem;
+}
 
 .form-fields .title .text-danger {
     padding-left: 0.25rem;

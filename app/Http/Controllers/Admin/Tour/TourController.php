@@ -76,6 +76,9 @@ class TourController extends Controller
         $addOns = $request->input('addOns', []);
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
+        $promoDiscountConfig = isset($request->tour['pricing']['promo']['discount'])
+            ? json_encode($request->tour['pricing']['promo']['discount'])
+            : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
@@ -126,6 +129,7 @@ class TourController extends Controller
             'location_type' => $location['location_type'] ?? null,
             'itinerary_experience' => json_encode($itineraryExperience) ?? null,
             'discount_by_number_of_people' => $discounts ?? null,
+            'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
 
@@ -309,6 +313,9 @@ class TourController extends Controller
         $addOns = $request->input('addOns', []);
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
+        $promoDiscountConfig = isset($request->tour['pricing']['promo']['discount'])
+    ? json_encode($request->tour['pricing']['promo']['discount'])
+    : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
@@ -357,6 +364,7 @@ class TourController extends Controller
             'location_type' => $location['location_type'] ?? null,
             'itinerary_experience' => json_encode($itineraryExperience) ?? null,
             'discount_by_number_of_people' => $discounts ?? null,
+            'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
 

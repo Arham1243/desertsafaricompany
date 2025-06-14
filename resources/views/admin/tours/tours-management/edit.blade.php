@@ -1239,7 +1239,7 @@
                                         </div>
                                         <div class="col-md-6 col-12">
                                             <div class="form-fields">
-                                                <label class="title">Sale Price</label>
+                                                <label class="title">Sale Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][sale_price]" class="field"
                                                     value="{{ old('tour[pricing][sale_price]', $tour->sale_price) }}"
@@ -1548,6 +1548,83 @@
                                                         </div>
                                                         <div x-show="tourType === 'promo'">
                                                             <div class="form-fields">
+                                                                <label class="title title--sm">Promo Pricing
+                                                                    Discounts:</label>
+                                                                @php
+                                                                    $promoDiscountConfig =
+                                                                        isset($tour->promo_discount_config) &&
+                                                                        $tour->promo_discount_config
+                                                                            ? json_decode($tour->promo_discount_config)
+                                                                            : null;
+                                                                @endphp
+                                                                <div class="row mb-4">
+                                                                    <div class="col-md-12">
+                                                                        <label class="title title--xs">Weekday Discounts
+                                                                            (Mon–Thu):</label>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Renewal Timer (hours)
+                                                                                :</label>
+                                                                            <select
+                                                                                name="tour[pricing][promo][discount][weekday_timer_hours]"
+                                                                                class="field">
+                                                                                <option value="" selected disabled>
+                                                                                    Select</option>
+                                                                                @for ($i = 1; $i <= 12; $i++)
+                                                                                    <option value="{{ $i }}"
+                                                                                        {{ $i == ($promoDiscountConfig->weekday_timer_hours ?? 10) ? 'selected' : '' }}>
+                                                                                        {{ $i }}
+                                                                                    </option>
+                                                                                @endfor
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Discount (%) :</label>
+                                                                            <input type="number"
+                                                                                value="{{ $promoDiscountConfig->weekday_discount_percent }}"
+                                                                                name="tour[pricing][promo][discount][weekday_discount_percent]"
+                                                                                step="0.01" min="0"
+                                                                                class="field">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row mb-4">
+                                                                    <div class="col-md-12">
+                                                                        <label class="title title--xs">Weekend Discounts
+                                                                            (Fri–Sun):</label>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Renewal Timer (hours)
+                                                                                :</label>
+                                                                            <select
+                                                                                name="tour[pricing][promo][discount][weekend_timer_hours]"
+                                                                                class="field">
+                                                                                <option value="" selected disabled>
+                                                                                    Select</option>
+                                                                                @for ($i = 1; $i <= 12; $i++)
+                                                                                    <option value="{{ $i }}"
+                                                                                        {{ $i == ($promoDiscountConfig->weekend_timer_hours ?? 10) ? 'selected' : '' }}>
+                                                                                        {{ $i }}
+                                                                                    </option>
+                                                                                @endfor
+                                                                            </select>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6 col-12">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Discount (%) :</label>
+                                                                            <input type="number"
+                                                                                value="{{ $promoDiscountConfig->weekend_discount_percent }}"
+                                                                                name="tour[pricing][promo][discount][weekend_discount_percent]"
+                                                                                step="0.01" min="0"
+                                                                                class="field">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                                 <div class="repeater-table" data-repeater>
                                                                     <label class="title title--sm">Promo Pricing:</label>
                                                                     <table class="table table-bordered">
