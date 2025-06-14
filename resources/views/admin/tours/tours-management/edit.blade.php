@@ -1581,6 +1581,7 @@
                                                                         </div>
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
+                                                                        @dd($promoDiscountConfig, $promoDiscountConfig->weekday_discount_percent)
                                                                         <div class="form-fields">
                                                                             <label class="title">Discount (%) :</label>
                                                                             <input type="number"
