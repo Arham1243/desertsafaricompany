@@ -243,3 +243,10 @@ Breadcrumbs::for('admin.coupons.edit', function (BreadcrumbTrail $trail, $item) 
     $trail->push($item->name ?? 'N/A', route('admin.coupons.edit', $item->id));
 });
 // ---------------Coupons---------------
+
+// ---------------settings---------------
+Breadcrumbs::for('admin.settings.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Settings', route('admin.settings.edit', ['resource' => 'general']));
+});
+// ---------------settings---------------
