@@ -234,8 +234,6 @@ ul.sidebar-nav > li > a {
     border-radius: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    gap: 7px;
     padding: 13px 14px;
     font-size: 14px;
     font-weight: 600;
@@ -1490,7 +1488,7 @@ a.custom-dropdown__active {
 }
 
 .badge.bg-warning {
-    color: #ffc107;
+    color: #edb304;
     background: #ffc10738 !important;
 }
 
@@ -2407,4 +2405,9 @@ button[data-tooltip="tooltip"] {
 /* login */
 input.field.flag-input {
     padding-left: 86px !important;
+}
+body .badge.badge-sm {
+    font-size: 10px !important;
+    padding: 0.28rem 0.5rem;
+    border-radius: 100px !important;
 }

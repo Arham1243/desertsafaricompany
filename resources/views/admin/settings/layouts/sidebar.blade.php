@@ -1,13 +1,10 @@
 @php
     $settingsItems = [
-        // General Settings
         [
             'route' => 'general',
             'icon' => 'bx-cog',
             'label' => 'General Settings',
         ],
-
-        // Content Settings
         [
             'route' => 'tour',
             'icon' => 'bx-world',
@@ -17,33 +14,37 @@
             'route' => 'news',
             'icon' => 'bx-news',
             'label' => 'News',
+            'status' => 'pending',
         ],
         [
             'route' => 'blog',
             'icon' => 'bx-pencil',
             'label' => 'Blog',
+            'status' => 'pending',
         ],
         [
             'route' => 'media',
             'icon' => 'bx-image',
             'label' => 'Media',
+            'status' => 'pending',
         ],
         [
             'route' => 'style',
             'icon' => 'bx-palette',
             'label' => 'Style',
+            'status' => 'pending',
         ],
         [
             'route' => 'review',
             'icon' => 'bx-star',
             'label' => 'Review',
+            'status' => 'pending',
         ],
-
-        // Booking and Payment
         [
             'route' => 'booking',
             'icon' => 'bx-book',
             'label' => 'Booking',
+            'status' => 'pending',
         ],
         [
             'route' => 'payment',
@@ -54,67 +55,73 @@
             'route' => 'voucher',
             'icon' => 'bx-gift',
             'label' => 'Voucher',
+            'status' => 'pending',
         ],
-
-        // Communication Settings
         [
             'route' => 'enquiry',
             'icon' => 'bx-message-square-dots',
             'label' => 'Enquiry',
+            'status' => 'pending',
         ],
         [
             'route' => 'sms',
             'icon' => 'bx-message',
             'label' => 'SMS',
+            'status' => 'pending',
         ],
         [
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',
+            'status' => 'pending',
         ],
         [
             'route' => 'online_chat',
             'icon' => 'bx-chat',
             'label' => 'Online Chat',
+            'status' => 'pending',
         ],
-
-        // User and Vendor Management
         [
             'route' => 'user',
             'icon' => 'bx-user',
             'label' => 'User',
+            'status' => 'pending',
         ],
         [
             'route' => 'vendor',
             'icon' => 'bx-store',
             'label' => 'Vendor',
+            'status' => 'pending',
         ],
-
-        // Advanced and Technical Settings
         [
             'route' => 'advanced',
             'icon' => 'bx-wrench',
             'label' => 'Advanced',
+            'status' => 'pending',
         ],
         [
             'route' => 'mobile_app',
             'icon' => 'bx-mobile-alt',
             'label' => 'Mobile App',
+            'status' => 'pending',
         ],
         [
             'route' => 'invoice',
             'icon' => 'bx-file',
             'label' => 'Invoice',
+            'status' => 'pending',
         ],
         [
             'route' => 'quotations',
             'icon' => 'bx-file',
             'label' => 'Quotations',
+            'status' => 'pending',
         ],
         [
             'route' => 'social_media',
             'icon' => 'bx-share-alt',
             'label' => 'Social Media',
+            'status' => 'pending',
         ],
     ];
 
@@ -132,6 +139,9 @@
                     <a href="{{ route('admin.settings.edit', ['resource' => $item['route']]) }}"
                         class="settings-item__link {{ Route::is('admin.settings.edit') && request()->route('resource') == $item['route'] ? 'active' : '' }}">
                         <i class="bx {{ $item['icon'] }}"></i> {{ $item['label'] }}
+                        @if (isset($item['status']) && $item['status'] === 'pending')
+                            <span class="badge badge-sm rounded-pill bg-warning d-inline-block ms-auto">pending</span>
+                        @endif
                     </a>
                 </li>
             @endforeach

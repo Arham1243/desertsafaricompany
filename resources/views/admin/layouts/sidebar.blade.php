@@ -267,6 +267,7 @@
         [
             'title' => 'Media',
             'icon' => 'bx bx-image',
+            'status' => 'pending',
             'submenu' => [
                 [
                     'title' => 'Video',
@@ -305,6 +306,7 @@
         [
             'title' => 'Payout',
             'icon' => 'bx bx-dollar',
+            'status' => 'pending',
             'submenu' => [
                 [
                     'title' => 'Vendor Payment',
@@ -349,6 +351,7 @@
             'title' => 'Themes',
             'icon' => 'bx bx-paint',
             'route' => 'javascript:void(0)',
+            'status' => 'pending',
         ],
         [
             'title' => 'Setting',
@@ -369,32 +372,38 @@
                     'title' => 'News',
                     'icon' => 'bx bx-news',
                     'route' => route('admin.settings.edit', ['resource' => 'news']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Blog',
                     'icon' => 'bx bx-pencil',
                     'route' => route('admin.settings.edit', ['resource' => 'blog']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Media',
                     'icon' => 'bx bx-image',
                     'route' => route('admin.settings.edit', ['resource' => 'media']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Style',
                     'icon' => 'bx bx-palette',
                     'route' => route('admin.settings.edit', ['resource' => 'style']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Review',
                     'icon' => 'bx bx-star',
                     'route' => route('admin.settings.edit', ['resource' => 'review']),
+                    'status' => 'pending',
                 ],
 
                 [
                     'title' => 'Booking',
                     'icon' => 'bx bx-book',
                     'route' => route('admin.settings.edit', ['resource' => 'booking']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Payment',
@@ -405,65 +414,77 @@
                     'title' => 'Voucher',
                     'icon' => 'bx bx-gift',
                     'route' => route('admin.settings.edit', ['resource' => 'voucher']),
+                    'status' => 'pending',
                 ],
 
                 [
                     'title' => 'Enquiry',
                     'icon' => 'bx bx-message-square-dots',
                     'route' => route('admin.settings.edit', ['resource' => 'enquiry']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'SMS',
                     'icon' => 'bx bx-message',
                     'route' => route('admin.settings.edit', ['resource' => 'sms']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Email',
                     'icon' => 'bx bx-envelope',
                     'route' => route('admin.settings.edit', ['resource' => 'email']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Online Chat',
                     'icon' => 'bx bx-chat',
                     'route' => route('admin.settings.edit', ['resource' => 'online_chat']),
+                    'status' => 'pending',
                 ],
 
                 [
                     'title' => 'User',
                     'icon' => 'bx bx-user',
                     'route' => route('admin.settings.edit', ['resource' => 'user']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Vendor',
                     'icon' => 'bx bx-store',
                     'route' => route('admin.settings.edit', ['resource' => 'vendor']),
+                    'status' => 'pending',
                 ],
 
                 [
                     'title' => 'Advanced',
                     'icon' => 'bx bx-wrench',
                     'route' => route('admin.settings.edit', ['resource' => 'advanced']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Mobile App',
                     'icon' => 'bx bx-mobile-alt',
                     'route' => route('admin.settings.edit', ['resource' => 'mobile_app']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Invoice',
                     'icon' => 'bx bx-file',
                     'route' => route('admin.settings.edit', ['resource' => 'invoice']),
+                    'status' => 'pending',
                 ],
                 [
                     'title' => 'Quotations',
                     'icon' => 'bx bx-file',
                     'route' => route('admin.settings.edit', ['resource' => 'quotations']),
+                    'status' => 'pending',
                 ],
 
                 [
                     'title' => 'Social Media',
                     'icon' => 'bx bx-share-alt',
                     'route' => route('admin.settings.edit', ['resource' => 'social_media']),
+                    'status' => 'pending',
                 ],
             ],
         ],
@@ -505,6 +526,9 @@
                         <i class="{{ $item['icon'] }}"></i>
                         {{ $item['title'] }}
                     </div>
+                    @if (isset($item['status']) && $item['status'] === 'pending')
+                        <span class="badge badge-sm rounded-pill bg-warning ms-3">pending</span>
+                    @endif
                     @if (isset($item['submenu']))
                         <div class="icon"><i class='bx bx-chevron-down'></i></div>
                     @endif
@@ -528,6 +552,9 @@
                                         <div class="info">
                                             <i class="{{ $submenu['icon'] }}"></i> {{ $submenu['title'] }}
                                         </div>
+                                        @if (isset($submenu['status']) && $submenu['status'] === 'pending')
+                                            <span class="badge badge-sm rounded-pill bg-warning">pending</span>
+                                        @endif
                                         @if (isset($submenu['submenu']))
                                             <div class="icon"><i class='bx bx-chevron-down'></i></div>
                                         @endif
