@@ -999,10 +999,9 @@
                                                                     for="promoPrice">Promo</label>
                                                             </div>
                                                         </div>
-
                                                         <div x-show="tourType === 'normal'">
                                                             <div class="form-fields">
-                                                                <div class="title">Normal Tour Pricing:</div>
+                                                                <div class="title title--sm">Normal Tour Pricing:</div>
                                                                 <div class="repeater-table" data-repeater>
                                                                     <table class="table table-bordered">
                                                                         <thead>
@@ -1063,10 +1062,9 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div x-show="tourType === 'private'">
                                                             <div class="form-fields">
-                                                                <div class="title">Private Tour Pricing:</div>
+                                                                <div class="title title--sm">Private Tour Pricing:</div>
                                                                 <div class="repeater-table">
                                                                     <table class="table table-bordered">
                                                                         <thead>
@@ -1102,11 +1100,11 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                         <div x-show="tourType === 'water'">
                                                             <div class="form-fields">
                                                                 <div class="repeater-table" data-repeater>
-                                                                    <label class="title">Water / Desert Activities
+                                                                    <label class="title title--sm">Water / Desert
+                                                                        Activities
                                                                         Pricing:</label>
                                                                     <table class="table table-bordered">
                                                                         <thead>
@@ -1184,7 +1182,7 @@
                                                         <div x-show="tourType === 'promo'">
                                                             <div class="form-fields">
                                                                 <div class="repeater-table" data-repeater>
-                                                                    <label class="title">Promo Pricing:</label>
+                                                                    <label class="title title--sm">Promo Pricing:</label>
                                                                     <table class="table table-bordered">
                                                                         <thead>
                                                                             <tr>
@@ -1228,7 +1226,6 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -1266,7 +1263,6 @@
                                                                             <tr>
                                                                                 <th scope="col">Name</th>
                                                                                 <th scope="col">Price</th>
-                                                                                {{-- <th scope="col">Type</th> --}}
                                                                                 <th></th>
                                                                             </tr>
                                                                         </thead>
@@ -1284,30 +1280,6 @@
                                                                                         name="tour[pricing][extra_price][0][price]"
                                                                                         class="field">
                                                                                 </td>
-                                                                                {{-- <td>
-                                                                                    <select class="field"
-                                                                                        name="tour[pricing][extra_price][0][type]">
-                                                                                        <option value="" selected>
-                                                                                            Select</option>
-                                                                                        <option value="one-time">One-time
-                                                                                        </option>
-                                                                                        <option value="per-hour">Per Hour
-                                                                                        </option>
-                                                                                        <option value="per-day">Per Day
-                                                                                        </option>
-                                                                                    </select>
-                                                                                    <br>
-                                                                                    <div class="form-check mt-3">
-                                                                                        <input id="is_per_person"
-                                                                                            class="form-check-input"
-                                                                                            type="checkbox"
-                                                                                            name="tour[pricing][extra_price][0][is_per_person]"
-                                                                                            value="1">
-                                                                                        <label for="is_per_person"
-                                                                                            class="form-check-label">Price
-                                                                                            per person</label>
-                                                                                    </div>
-                                                                                </td> --}}
                                                                                 <td>
                                                                                     <button type="button"
                                                                                         class="delete-btn ms-auto delete-btn--static"
