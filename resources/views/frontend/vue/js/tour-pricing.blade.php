@@ -9,7 +9,7 @@
 
         $decodedDiscount = json_decode($promoPrice->discount, true);
 
-        $discountPercent = $decodedDiscount[$discountKey][0];
+        $discountPercent = isset($decodedDiscount[$discountKey][0]) ? $decodedDiscount[$discountKey][0] : 0;
 
         $discountedPrice = $originalPrice * (1 - $discountPercent / 100);
 

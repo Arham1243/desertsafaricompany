@@ -561,6 +561,7 @@ class TourController extends Controller
         $this->duplicateAttributes($tour, $newTour);
         $this->duplicatePricing($tour, $newTour);
         $this->duplicateItinerary($tour, $newTour);
+        $this->duplicateAddOns($tour, $newTour);
         $this->duplicateCities($tour, $newTour);
         $this->duplicateMedia($tour, $newTour);
 
@@ -646,6 +647,17 @@ class TourController extends Controller
                 'description' => $itinerary->description,
                 'featured_image' => $itinerary->featured_image,
                 'featured_image_alt_text' => $itinerary->featured_image_alt_text,
+            ]);
+        }
+    }
+
+    private function duplicateAddOns($tour, $newTour)
+    {
+        foreach ($tour->addOns as $addOn) {
+            TourAddOn::create([
+                'tour_id' => $newTour->id,
+                'heading' => $addOn->heading,
+                'tour_ids' => $addOn->tour_ids,
             ]);
         }
     }
