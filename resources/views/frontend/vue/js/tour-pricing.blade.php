@@ -23,7 +23,7 @@
             ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
             : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
 
-        $hoursLeft = $timerHours - ($hourOfDay % $timerHours);
+        $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
 
         $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
 
