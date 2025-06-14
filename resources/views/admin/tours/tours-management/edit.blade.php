@@ -1630,8 +1630,8 @@
                                                                     <table class="table table-bordered">
                                                                         <thead>
                                                                             <tr>
-                                                                                <th scope="col">Package Title</th>
-                                                                                <th scope="col">Pricing Details</th>
+                                                                                <th scope="col">Title</th>
+                                                                                <th scope="col">Price</th>
                                                                                 <th class="text-end" scope="col">Remove
                                                                                 </th>
                                                                             </tr>
