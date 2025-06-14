@@ -1049,7 +1049,7 @@
                             </div>
                         @else
                             <div class="review-message tour-content__title">
-                                You must <a href="javascript:void(0)" class="loginBtn">log in</a> to write
+                                You must <a href="#header" class="loginBtn">log in</a> to write
                                 review
                             </div>
                         @endif

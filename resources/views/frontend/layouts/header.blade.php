@@ -3,7 +3,7 @@
     $headerLogo = $settings->get('header_logo');
     $headerLogoAltText = $settings->get('header_logo_alt_text');
 @endphp
-<header class="header">
+<header class="header" id="header">
     <div class="container">
         <div class="header-main">
             <div class="header-content">
