@@ -121,7 +121,6 @@
             'route' => 'social_media',
             'icon' => 'bx-share-alt',
             'label' => 'Social Media',
-            'status' => 'pending',
         ],
     ];
 

@@ -479,12 +479,10 @@
                     'route' => route('admin.settings.edit', ['resource' => 'quotations']),
                     'status' => 'pending',
                 ],
-
                 [
                     'title' => 'Social Media',
                     'icon' => 'bx bx-share-alt',
                     'route' => route('admin.settings.edit', ['resource' => 'social_media']),
-                    'status' => 'pending',
                 ],
             ],
         ],
