@@ -1,5 +1,5 @@
     <div class=form-book_content>
-        <div class="tour-content__pra form-book__pra">
+        <div class="tour-content__pra form-book__pra px-0">
             Start Date
         </div>
         <div class="tour-content__title form-book__title">

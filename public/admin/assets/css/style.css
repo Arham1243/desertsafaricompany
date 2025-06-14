@@ -2405,3 +2405,6 @@ button[data-tooltip="tooltip"] {
     margin-right: 0.35rem;
 }
 /* login */
+input.field.flag-input {
+    padding-left: 86px !important;
+}

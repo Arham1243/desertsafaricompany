@@ -1,17 +1,31 @@
 @php
     use Carbon\Carbon;
 
-    $promoTourData = $tour->promoPrices->map(function ($promoPrice) {
-        $today = strtolower(Carbon::now()->englishDayOfWeek);
-        $discountKey = 'discount_' . $today;
+    $promoTourData = $tour->promoPrices->map(function ($promoPrice) use ($tour) {
+        $now = Carbon::now();
+        $today = strtolower($now->englishDayOfWeek);
+        $hourOfDay = $now->hour;
 
         $originalPrice = (float) $promoPrice->original_price;
 
-        $decodedDiscount = json_decode($promoPrice->discount, true);
+        $promoDiscountConfig =
+            isset($tour->promo_discount_config) && $tour->promo_discount_config
+                ? json_decode($tour->promo_discount_config, true)
+                : [];
 
-        $discountPercent = isset($decodedDiscount[$discountKey][0]) ? $decodedDiscount[$discountKey][0] : 0;
+        $isWeekend = in_array($today, ['friday', 'saturday', 'sunday']);
 
-        $discountedPrice = $originalPrice * (1 - $discountPercent / 100);
+        $discountPercent = $isWeekend
+            ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
+            : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+
+        $timerHours = (int) ($isWeekend
+            ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
+            : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
+
+        $hoursLeft = $timerHours - ($hourOfDay % $timerHours);
+
+        $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
 
         return [
             'promo_title' => $promoPrice->promo_title,
@@ -19,6 +33,7 @@
             'discount_percent' => $discountPercent,
             'discounted_price' => number_format($discountedPrice, 2),
             'quantity' => 0,
+            'hours_left' => $hoursLeft,
         ];
     });
 
@@ -154,8 +169,11 @@
             };
 
             const formatPrice = (price) => {
-                const formattedPrice = price.toLocaleString();
-                return `{{ env('APP_CURRENCY') }} ${formattedPrice}`;
+                const formattedPrice = Number(price).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                return `{{ env('APP_CURRENCY') }}${formattedPrice}`;
             };
             const formatNameForInput = (name) => {
                 return name.toLowerCase().replace(/ /g, '_');

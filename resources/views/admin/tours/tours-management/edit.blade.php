@@ -1584,7 +1584,7 @@
                                                                         <div class="form-fields">
                                                                             <label class="title">Discount (%) :</label>
                                                                             <input type="number"
-                                                                                value="{{ $promoDiscountConfig->weekday_discount_percent }}"
+                                                                                value="{{ $promoDiscountConfig->weekday_discount_percent ?? '' }}"
                                                                                 name="tour[pricing][promo][discount][weekday_discount_percent]"
                                                                                 step="0.01" min="0"
                                                                                 class="field">
@@ -1618,7 +1618,7 @@
                                                                         <div class="form-fields">
                                                                             <label class="title">Discount (%) :</label>
                                                                             <input type="number"
-                                                                                value="{{ $promoDiscountConfig->weekend_discount_percent }}"
+                                                                                value="{{ $promoDiscountConfig->weekend_discount_percent ?? '' }}"
                                                                                 name="tour[pricing][promo][discount][weekend_discount_percent]"
                                                                                 step="0.01" min="0"
                                                                                 class="field">

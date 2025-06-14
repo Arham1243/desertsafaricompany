@@ -1,4 +1,6 @@
 @php
+    use Carbon\Carbon;
+
     $cartTours = $tours->whereIn('id', array_keys($cart['tours']));
     $cartToursIds = $tours->whereIn('id', array_keys($cart['tours']))->pluck('id');
     $toursPrivatePrices = $tours
@@ -82,16 +84,35 @@
         ->whereIn('id', $cartToursIds)
         ->map(function ($tour) use ($cart) {
             return $tour->promoPrices->map(function ($promoPrice) use ($tour, $cart) {
-                $today = strtolower(Carbon\Carbon::now()->englishDayOfWeek);
-                $discountKey = 'discount_' . $today;
-
+                $now = Carbon::now();
+                $hourOfDay = $now->hour;
+                $today = strtolower(Carbon::now()->englishDayOfWeek);
+                $hourOfDay = $now->hour;
                 $originalPrice = (float) $promoPrice->original_price;
+                $promoDiscountConfig =
+                    isset($tour->promo_discount_config) && $tour->promo_discount_config
+                        ? json_decode($tour->promo_discount_config, true)
+                        : null;
 
-                $decodedDiscount = json_decode($promoPrice->discount, true);
+                $isWeekend = in_array($today, ['friday', 'saturday', 'sunday']);
+                $discountPercent = 0;
+                if ($promoDiscountConfig) {
+                    $discountPercent = $isWeekend
+                        ? $promoDiscountConfig->weekend_discount_percent ?? 0
+                        : $promoDiscountConfig->weekday_discount_percent ?? 0;
+                }
 
-                $discountPercent = $decodedDiscount[$discountKey][0];
+                $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
 
-                $discountedPrice = $originalPrice * (1 - $discountPercent / 100);
+                $discountPercent = $isWeekend
+                    ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
+                    : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+
+                $timerHours = (int) ($isWeekend
+                    ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
+                    : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
+
+                $hoursLeft = $timerHours - ($hourOfDay % $timerHours);
 
                 $promoTitle = formatNameForInput($promoPrice->promo_title);
 
@@ -104,6 +125,7 @@
                     'discount_percent' => $discountPercent,
                     'discounted_price' => number_format($discountedPrice, 2),
                     'quantity' => (int) $quantity,
+                    'hours_left' => $hoursLeft,
                 ];
             });
         })
@@ -282,8 +304,11 @@
                     '{{ asset('admin/assets/images/placeholder.png') }}';
             }
             const formatPrice = (price) => {
-                const formattedPrice = price.toLocaleString();
-                return `{{ env('APP_CURRENCY') }} ${formattedPrice}`;
+                const formattedPrice = Number(price).toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                return `{{ env('APP_CURRENCY') }}${formattedPrice}`;
             };
 
             const updateNormalQuantity = (action, personType, tour, nomalIndex) => {

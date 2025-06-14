@@ -67,9 +67,14 @@
             $seo = $tour->seo ?? null;
         @endphp
 
-        @if (isset($tour->show_phone) && $tour->show_phone === 1)
-            <a href="tel:{{ $tour->phone_dial_code . $tour->phone_number }}" class="whatsapp-contact d-flex"><i
-                    class='bx bxl-whatsapp'></i></a>
+        @php
+            $fullPhone = $tour->phone_dial_code . $tour->phone_number;
+        @endphp
+
+        @if (isset($tour->show_phone) && $tour->show_phone === 1 && preg_match('/^\+?\d{10,15}$/', $fullPhone))
+            <a href="tel:{{ $fullPhone }}" class="whatsapp-contact d-flex">
+                <i class='bx bxl-whatsapp'></i>
+            </a>
         @endif
 
         @if ($bannerStyle === 'style-1')

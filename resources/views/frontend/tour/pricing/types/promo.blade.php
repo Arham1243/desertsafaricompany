@@ -1,16 +1,20 @@
 @if ($tour->is_person_type_enabled && $tour->promoPrices->isNotEmpty())
     <div v-for="(promo, index) in promoTourData" :key="index" class="form-group form-guest-search">
-        <div class="tour-content__pra form-book__pra form-guest-search__details">
-            <div class="d-flex gap-2">
-                <span>@{{ promo.promo_title }} </span>
-                <span>@{{ promo.discount_percent }}% off</span>
+        <div class="form-guest-search__details promo">
+            <div class="promo-title">@{{ promo.promo_title }}</div>
+            <div class="promo-price-wrapper">
+                <div class="promo-price cut">@{{ formatPrice(promo.original_price) }}</div>
+                <div class="promo-price green">@{{ formatPrice(promo.discounted_price) }}</div>
+                <span class="percent-off-tag">@{{ promo.discount_percent }}% Off</span>
             </div>
-            <div class="form-guest-search__items">
-                <div class="prices-wrapper">
-                    <div class="del-price cut">@{{ formatPrice(promo.original_price) }}</div>
-                    <div class="new-price green">@{{ formatPrice(promo.discounted_price) }}</div>
-                </div>
-
+            <div class="promo-og-offer">
+                <span class="offer">@{{ formatPrice(promo.discounted_price) }} with promo</span>
+                <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
+                    @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
+                </span>
+            </div>
+            <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
+                <div class="already-bought"></div>
                 <div class="quantity-counter">
                     <button class="quantity-counter__btn" type="button"
                         @click="updateQuantity('minus', formatNameForInput(promo.promo_title))">
@@ -29,3 +33,10 @@
         </div>
     </div>
 @endif
+@push('css')
+    <style>
+        .form-book__title {
+            padding-bottom: 0 !important;
+        }
+    </style>
+@endpush

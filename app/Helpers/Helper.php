@@ -28,7 +28,7 @@ if (! function_exists('formatPrice')) {
     {
         $formattedPrice = number_format($price, 2, '.', ',');
 
-        return env('APP_CURRENCY').' '.$formattedPrice;
+        return env('APP_CURRENCY').$formattedPrice;
     }
 }
 

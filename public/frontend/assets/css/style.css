@@ -2422,8 +2422,6 @@ input.form-book__date {
 
 /* event-promotions */
 
-.event-promotions {}
-
 .event-promotions .slick-slide {
     margin-inline: 0.5rem;
 }
@@ -3130,17 +3128,21 @@ ul.experience-itinerary-timeline {
     font-weight: 600;
     line-height: 1.4;
 }
+
 .timeline-item__subitems-wrapper {
     margin: 1.9rem 0 0.1rem;
 }
 
-p.timeline-item-info--secondary,.timeline-item-info--secondary p ,p.timeline-subitems-info--secondary{
+p.timeline-item-info--secondary,
+.timeline-item-info--secondary p,
+p.timeline-subitems-info--secondary {
     margin: 0;
 }
 
 li.activity-itinerary-timeline__item {
     margin-bottom: 1.75rem;
 }
+
 .timeline-item-info--secondary {
     font-size: 15px;
     line-height: 1.5;
@@ -3151,6 +3153,7 @@ li.activity-itinerary-timeline__item {
 .activity-experience-map-wrapper {
     margin-left: 3.75rem;
 }
+
 .activity-experience__map {
     height: 70%;
 }
@@ -3345,7 +3348,11 @@ span.tour-content__title.ml-1 {
 .form-book__pra {
     margin: 0;
 }
-.review-message {font-weight: 500;}
+
+.review-message {
+    font-weight: 500;
+}
+
 .form-book__title {
     margin: 0;
     padding-bottom: 8px;
@@ -5465,7 +5472,84 @@ a.country-card__details {
     margin: 0;
 }
 
-.form-book_details {}
+.promo-title {
+    color: #333;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+    opacity: 0.67;
+    font-weight: 500;
+}
+
+.promo-price-wrapper {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    line-height: 1;
+    margin-bottom: 2px;
+}
+
+.percent-off-tag {
+    color: #53a318;
+    background: #DFFDE8;
+    padding: 0.3rem 0.4rem 0.13rem;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 0.25rem;
+    display: block;
+    margin-bottom: 1px;
+}
+
+.promo-price {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.promo-price.cut {
+    color: #625c66ba;
+    text-decoration: line-through !important;
+}
+
+.promo-og-offer {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.promo-og-offer .offer {
+    font-size: 17px;
+    font-weight: 500;
+}
+
+.promo-og-offer {
+    color: #8330c7;
+}
+
+.promo-og-offer .offer .time-left {
+    font-weight: 300;
+}
+
+.form-guest-search__details.promo {
+    padding: 19px 0 15px;
+}
+
+.already-bought {
+    font-size: 14px;
+    color: #736e6e;
+}
+.blink-red {
+    color: #d00606;
+    animation: pulseRed 1s infinite;
+}
+
+@keyframes pulseRed {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
 
 /* Reviews */
 .reviews-single {
