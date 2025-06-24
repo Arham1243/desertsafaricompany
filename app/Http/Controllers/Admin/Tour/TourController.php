@@ -95,6 +95,7 @@ class TourController extends Controller
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
             'promotional_image_alt_text' => $request->input('promotional_image_alt_text'),
+            'gift_image_alt_text' => $request->input('gift_image_alt_text'),
             'banner_type' => $general['banner_type'] ?? null,
             'video_link' => $general['video_link'] ?? null,
             'inclusions' => $inclusions,
@@ -251,6 +252,7 @@ class TourController extends Controller
         $this->uploadImg('banner_image', 'Tours/Banners/Featured-images', $tour, 'banner_image');
         $this->uploadImg('featured_image', 'Tours/Featured-images', $tour, 'featured_image');
         $this->uploadImg('promotional_image', 'Tours/Promotional-images', $tour, 'promotional_image');
+        $this->uploadImg('gift_image', 'Tours/Gift-images', $tour, 'gift_image');
 
         if ($request->gallery) {
             foreach ($request->file('gallery') as $index => $image) {
@@ -265,7 +267,7 @@ class TourController extends Controller
 
         handleSeoData($request, $tour, 'Tour');
 
-        return redirect()->route('admin.tours.index')->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
+        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
     }
 
     public function edit($id)
@@ -332,6 +334,7 @@ class TourController extends Controller
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
             'promotional_image_alt_text' => $request->input('promotional_image_alt_text'),
+            'gift_image_alt_text' => $request->input('gift_image_alt_text'),
             'banner_type' => $general['banner_type'] ?? null,
             'video_link' => $general['video_link'] ?? null,
             'inclusions' => $inclusions,
@@ -531,12 +534,15 @@ class TourController extends Controller
         if ($request->hasFile('promotional_image')) {
             $tour->promotional_image = $this->simpleUploadImg($request->file('promotional_image'), 'Tours/Promotional-images');
         }
+        if ($request->hasFile('gift_image')) {
+            $tour->gift_image = $this->simpleUploadImg($request->file('gift_image'), 'Tours/Gift-images');
+        }
 
         $tour->save();
 
         handleSeoData($request, $tour, 'Tour');
 
-        return redirect()->route('admin.tours.index')->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
+        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
     }
 
     public function duplicate($id)

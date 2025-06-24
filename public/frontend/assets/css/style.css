@@ -2876,9 +2876,16 @@ ul.headerReviews--icon li {
 }
 
 .features-list {
-    padding: 2rem 0 1.5rem;
+    padding: 0 0 1.5rem;
+}
+.gift-image {
+    margin-bottom: 1rem;
+    width: 100%;
 }
 
+.gift-image img {
+    width: 100%;
+}
 .features-item i {
     font-size: 1.75rem;
     margin-top: 2px;

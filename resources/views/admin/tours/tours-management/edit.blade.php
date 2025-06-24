@@ -2221,11 +2221,11 @@
                                                                         <select :name="`addOns[${index}][tour_ids][]`"
                                                                             class="choices-select" multiple
                                                                             x-ref="select${index}">
-                                                                            @foreach ($tours as $tour)
-                                                                                <option :value="'{{ $tour->id }}'"
+                                                                            @foreach ($tours as $tourAddOn)
+                                                                                <option :value="'{{ $tourAddOn->id }}'"
                                                                                     :selected="addOn.tour_ids.includes(
-                                                                                        '{{ $tour->id }}')">
-                                                                                    {{ $tour->title }}
+                                                                                        '{{ $tourAddOn->id }}')">
+                                                                                    {{ $tourAddOn->title }}
                                                                                 </option>
                                                                             @endforeach
                                                                         </select>
@@ -2379,6 +2379,49 @@
                                                 </div>
                                                 <div class="dimensions text-center mt-3">
                                                     <strong>Dimensions:</strong> 360 &times; 155
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-fields">
+                                                <label class="title">Gift Image:</label>
+                                                <div class="upload" data-upload>
+                                                    <div class="upload-box-wrapper">
+                                                        <div class="upload-box {{ empty($tour->gift_image) ? 'show' : '' }}"
+                                                            data-upload-box>
+                                                            <input type="file" name="gift_image"
+                                                                data-error="Gift Image" id="gift_image"
+                                                                class="upload-box__file d-none" accept="image/*"
+                                                                data-file-input>
+                                                            <div class="upload-box__placeholder"><i
+                                                                    class='bx bxs-image'></i></div>
+                                                            <label for="gift_image"
+                                                                class="upload-box__btn themeBtn">Upload Image</label>
+                                                        </div>
+                                                        <div class="upload-box__img {{ !empty($tour->gift_image) ? 'show' : '' }}"
+                                                            data-upload-img>
+                                                            <button type="button" class="delete-btn" data-delete-btn><i
+                                                                    class='bx bxs-trash-alt'></i></button>
+                                                            <a href="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                                class="mask" data-fancybox="gallery">
+                                                                <img src="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                                    alt="{{ $tour->gift_image_alt_text }}"
+                                                                    class="imgFluid" data-upload-preview>
+                                                            </a>
+                                                            <input type="text" name="gift_image_alt_text"
+                                                                class="field" placeholder="Enter alt text"
+                                                                value="{{ $tour->gift_image_alt_text }}">
+                                                        </div>
+                                                    </div>
+                                                    <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                        Please upload a valid image file
+                                                    </div>
+                                                    @error('gift_image')
+                                                        <div class="text-danger mt-2 text-center">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                                <div class="dimensions text-center mt-3">
+                                                    <strong>Dimensions:</strong> 765 &times; 210
                                                 </div>
                                             </div>
                                         </div>

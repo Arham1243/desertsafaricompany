@@ -54,9 +54,11 @@
                                                 </div>
                                             </td>
                                             <td>
-
                                                 <a href="{{ route('admin.tours.edit', $item->id) }}"
-                                                    class="link">{{ $item->title }}</a>
+                                                    class="link">{{ $item->title }}</a> <br />
+                                                <a target="_blank" style="font-size: 0.76rem;"
+                                                    href="{{ route('tours.details', $item->slug) }}"
+                                                    class="link">{{ buildUrl(url('/'), 'tours/' . $item->slug) }}</a>
                                             </td>
 
                                             <td>{{ $item->category->name ?? 'N/A' }}</td>
@@ -74,13 +76,6 @@
                                                         <i class='bx bx-dots-horizontal-rounded'></i>
                                                     </button>
                                                     <ul class="dropdown-menu">
-                                                        <li>
-                                                            <a class="dropdown-item" target="_blank"
-                                                                href="{{ route('tours.details', $item->slug) }}">
-                                                                <i class='bx bxs-show'></i>
-                                                                View on website
-                                                            </a>
-                                                        </li>
                                                         <li>
                                                             <a class="dropdown-item"
                                                                 href="{{ route('admin.tours.edit', $item->id) }}">
