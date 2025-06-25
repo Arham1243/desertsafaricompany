@@ -161,6 +161,11 @@ class Tour extends Model
         return $this->hasMany(TourAddOn::class, 'tour_id');
     }
 
+    public function views()
+    {
+        return $this->hasMany(TourView::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
