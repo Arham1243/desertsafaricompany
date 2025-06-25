@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
+use App\Models\TourView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
@@ -24,7 +25,7 @@ class TourController extends Controller
             ->with('title', 'Top Tours')->with($data);
     }
 
-    public function details($slug)
+    public function details(Request $request, $slug)
     {
         $settings = Setting::where('group', 'tour')->pluck('value', 'key');
         $bannerStyle = $settings->get('banner_style');
@@ -33,9 +34,11 @@ class TourController extends Controller
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
+        $this->trackTourView($request, $tour->id);
+        $todayViews = $tour->views()->whereDate('view_date', today())->count();
         if ($tour) {
             $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'bannerStyle', 'perks');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'bannerStyle', 'perks', 'todayViews');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }
@@ -83,5 +86,17 @@ class TourController extends Controller
 
         return view('frontend.tour.search-results', compact('tours', 'resourceType', 'resourceName'))
             ->with('title', 'Tour Search Results');
+    }
+
+    public function trackTourView(Request $request, $tourId)
+    {
+        $ip = $request->ip();
+        $today = now()->toDateString();
+
+        TourView::firstOrCreate([
+            'tour_id' => $tourId,
+            'ip_address' => $ip,
+            'view_date' => $today,
+        ]);
     }
 }
