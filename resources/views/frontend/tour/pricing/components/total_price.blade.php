@@ -1,7 +1,7 @@
 <div class="form-group form-guest-search">
     <div class=form-guest-search__title>
 
-        <div class="form-guest-search__items Service-fee__content">
+        <div class="form-guest-search__items Service-fee__content mb-2">
             <div class=form-guest-search__title>
                 Total Price:
             </div>

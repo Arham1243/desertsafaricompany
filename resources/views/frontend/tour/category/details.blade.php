@@ -22,7 +22,6 @@
                 <div class="row">
                     <div class="col-md-8">
                         <div class="header-form__title header-banner__heading">
-
                             <h1 class="banner-heading banner-alt-heading">
                                 {{ explode(' ', $item->name)[0] }}
                                 <div class="bannerMain-title">{{ implode(' ', array_slice(explode(' ', $item->name), 1)) }}
@@ -50,6 +49,26 @@
             </div>
         </div>
     </div>
+
+    @if ($item->long_description)
+        <div class="my-5">
+            <div class=container>
+                <div class="tour-content__details " data-show-more>
+                    <div class="editor-content line-clamp" data-show-more-content
+                        @if ($item->long_description_line_limit > 0) style="
+            -webkit-line-clamp: {{ $item->long_description_line_limit }};
+            " @endif>
+                        {!! $item->long_description !!}
+                    </div>
+                    @if ($item->long_description_line_limit > 0)
+                        <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn more-text="See more"
+                            less-text='Show less'> See more</a>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endif
+
 
     @if ($featuredTours->isNotEmpty())
         <div class="section-padding pb-4">

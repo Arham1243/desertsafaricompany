@@ -10,7 +10,7 @@ use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class CategoryController extends Controller
 {
     use Sluggable;
     use UploadImageTrait;
@@ -103,7 +103,6 @@ class CategoriesController extends Controller
             $updatedContent[$sectionKey] = $this->handleSectionData($content, $existingSectionContent[$sectionKey] ?? [], $sectionKey);
         }
         $data['section_content'] = json_encode($updatedContent);
-
         $category->update($data);
 
         handleSeoData($request, $category, 'Tours/Categories');

@@ -30,6 +30,11 @@
     @include('frontend.tour.pricing.components.service_fee')
     @include('frontend.tour.pricing.components.total_price')
 
+    <div class="tour-views">
+        <div class="tour-views__icon"><i class="bx bx-show"></i></div>
+        <div class="tour-views__count">Over 80 views today, so act now!</div>
+    </div>
+
     <div class=form-guest__btn>
         @if (Auth::check())
             @if (isset($isTourInCart) && !$isTourInCart)

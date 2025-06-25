@@ -74,6 +74,15 @@
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
+            const showAllPromos = ref(false)
+
+            const visiblePromos = computed(() =>
+                showAllPromos.value ? promoTourData.value : promoTourData.value.slice(0, 4)
+            )
+
+            const toggleShowAll = () => {
+                showAllPromos.value = !showAllPromos.value
+            }
 
             const updateTotalPrice = () => {
                 @if (!Auth::check())
@@ -193,7 +202,10 @@
                 waterPrices,
                 waterPricesTimeSlots,
                 isSubmitEnabled,
-                formatNameForInput
+                formatNameForInput,
+                showAllPromos,
+                visiblePromos,
+                toggleShowAll
             };
         },
     });

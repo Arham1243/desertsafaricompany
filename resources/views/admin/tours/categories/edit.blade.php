@@ -66,6 +66,26 @@
                                     </div>
 
                                     <div class="form-fields mt-4">
+                                        <label class="title">Content
+                                            :</label>
+                                        <textarea class="editor" name="long_description" data-placeholder="content" data-error="Content"> {{ $category->long_description }} </textarea>
+                                        @error('long_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-fields mt-4">
+                                        <label class="title">Lines to Display Before "See More" </label>
+                                        <input oninput="this.value = Math.abs(this.value)" type="number" min="0"
+                                            name="long_description_line_limit" class="field"
+                                            value="{{ $category->long_description_line_limit }}"
+                                            data-error="long_description_line_limit">
+                                        @error('long_description_line_limit')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-fields mt-4">
                                         <div class="multiple-upload" data-upload-multiple>
                                             <input type="file" class="gallery-input d-none" multiple
                                                 data-upload-multiple-input accept="image/*" id="banners" name="gallery[]">
@@ -116,14 +136,14 @@
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input class="form-check-input" data-toggle-switch=""
-                                                {{ isset($tourCountContent->is_enabled) ? 'checked' : '' }} type="checkbox"
-                                                id="tour_count_enabled" value="1"
+                                                {{ isset($tourCountContent->is_enabled) ? 'checked' : '' }}
+                                                type="checkbox" id="tour_count_enabled" value="1"
                                                 name="content[tour_count][is_enabled]">
                                             <label class="form-check-label" for="tour_count_enabled">Enabled</label>
                                         </div>
                                     </div>
-                                    <a href="{{ asset('admin/assets/images/ctas-blocks/3.png') }}" data-fancybox="gallery"
-                                        class="themeBtn p-2"><i class='bx bxs-show'></i></a>
+                                    <a href="{{ asset('admin/assets/images/ctas-blocks/3.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2"><i class='bx bxs-show'></i></a>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="row">
@@ -773,10 +793,10 @@
                                     <select name="top_featured_tour_ids[]" multiple class="select2-select"
                                         data-max-items="4" placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
                                         data-error="Top 4 featured tours">
-                                        @foreach ($tours as $tour)
-                                            <option value="{{ $tour->id }}"
-                                                {{ in_array($tour->id, old('top_featured_tour_ids', $selectedTopFeaturedTours)) ? 'selected' : '' }}>
-                                                {{ $tour->title }}
+                                        @foreach ($tours as $topFeaturedTour)
+                                            <option value="{{ $topFeaturedTour->id }}"
+                                                {{ in_array($topFeaturedTour->id, old('top_featured_tour_ids', $selectedTopFeaturedTours)) ? 'selected' : '' }}>
+                                                {{ $topFeaturedTour->title }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -794,10 +814,10 @@
                                     <select name="bottom_featured_tour_ids[]" multiple class="select2-select"
                                         placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
                                         data-error="Bottom featured tours">
-                                        @foreach ($tours as $tour)
-                                            <option value="{{ $tour->id }}"
-                                                {{ in_array($tour->id, old('bottom_featured_tour_ids', $selectedBottomFeaturedTours)) ? 'selected' : '' }}>
-                                                {{ $tour->title }}
+                                        @foreach ($tours as $bottomFeaturedTour)
+                                            <option value="{{ $bottomFeaturedTour->id }}"
+                                                {{ in_array($bottomFeaturedTour->id, old('bottom_featured_tour_ids', $selectedBottomFeaturedTours)) ? 'selected' : '' }}>
+                                                {{ $bottomFeaturedTour->title }}
                                             </option>
                                         @endforeach
                                     </select>
@@ -815,10 +835,10 @@
                                     <select name="recommended_tour_ids[]" multiple class="select2-select"
                                         data-max-items="4" placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
                                         data-error="Recommended tours">
-                                        @foreach ($tours as $tour)
-                                            <option value="{{ $tour->id }}"
-                                                {{ in_array($tour->id, old('recommended_tour_ids', $selectedRecommendedTours)) ? 'selected' : '' }}>
-                                                {{ $tour->title }}
+                                        @foreach ($tours as $recommendedFeaturedTour)
+                                            <option value="{{ $recommendedFeaturedTour->id }}"
+                                                {{ in_array($recommendedFeaturedTour->id, old('recommended_tour_ids', $selectedRecommendedTours)) ? 'selected' : '' }}>
+                                                {{ $recommendedFeaturedTour->title }}
                                             </option>
                                         @endforeach
                                     </select>

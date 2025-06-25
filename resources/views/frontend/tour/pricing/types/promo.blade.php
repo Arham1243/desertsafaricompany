@@ -1,5 +1,5 @@
 @if ($tour->is_person_type_enabled && $tour->promoPrices->isNotEmpty())
-    <div v-for="(promo, index) in promoTourData" :key="index" class="form-group form-guest-search">
+    <div v-for="(promo, index) in visiblePromos" :key="index" class="form-group form-guest-search">
         <div class="form-guest-search__details promo">
             <div class="promo-title">@{{ promo.promo_title }}</div>
             <div class="promo-price-wrapper">
@@ -31,6 +31,35 @@
                 </div>
             </div>
         </div>
+    </div>
+    <a href="javascript:void(0)" @click="toggleShowAll" class="see-more-promo">
+        @{{ showAllPromos ? 'Show Less' : `See All ${promoTourData.length} Options` }}
+    </a>
+
+    <div class="promo-code applied">
+        <div class="promo-code__info">
+            <div class="icon" style="rotate: 140deg;">
+                <i class="bx bx-tag"></i>
+            </div>
+            <div class="content">
+                <div class="title">
+                    Extra 10% off
+                </div>
+                <div class="subtitle">Promo Code PROMO.</div>
+            </div>
+        </div>
+        <button type="button" class='promo-code__apply'>Apply</button>
+        {{-- <div class="promo-code__info">
+            <div class="icon">
+                <i class="bx bxs-check-circle"></i>
+            </div>
+            <div class="content">
+                <div class="title">
+                    Promo Applied
+                </div>
+                <div class="subtitle">Promo savings will be applied to eligible options at checkout.</div>
+            </div>
+        </div> --}}
     </div>
 @endif
 @push('css')
