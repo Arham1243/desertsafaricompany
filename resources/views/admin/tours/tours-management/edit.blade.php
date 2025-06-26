@@ -893,7 +893,7 @@
                                                         'order' => $stop['order'],
                                                         'type' => 'stop',
                                                         'title' => $stop['title'],
-                                                        'icon_class' => $stop['icon_class'],
+                                                        'icon_class' => $stop['icon_class'] ?? '',
                                                         'activities' => $stop['activities'],
                                                         'sub_stops' => [], // Initialize sub_stops as an empty array
                                                     ];
