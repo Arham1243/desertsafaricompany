@@ -1935,6 +1935,7 @@ img.ocizgi.imgFluid {
     width: 134px;
     aspect-ratio: 1/1;
     border-radius: 0.85rem;
+    padding: 0;
     background: #fff;
     overflow: hidden;
 }
@@ -2585,6 +2586,7 @@ a.card_img.trending-products__img {
     display: block;
     width: 100%;
     margin: 0;
+    padding: 0;
     list-style: none;
     text-align: center;
     z-index: 1000;
@@ -2597,6 +2599,7 @@ a.card_img.trending-products__img {
     width: 9px;
     height: 8px;
     margin: 0 5px;
+    padding: 0;
     cursor: pointer;
     background: #fff;
     border-radius: 24px;
@@ -2664,6 +2667,7 @@ a.card_img.trending-products__img {
 
 .normal-card__content {
     border-radius: 0.25rem;
+    padding: 0;
 }
 
 .normal-card__img {
@@ -3382,6 +3386,7 @@ span.tour-content__title.ml-1 {
 
 .form-guest-search__title {
     border: none;
+    padding: 0;
     font-size: 16px;
     font-weight: 700;
     color: #000;
@@ -3685,6 +3690,7 @@ span.header-listGroup.faq-icon.added i {
     list-style: none;
     justify-content: center;
     align-items: center;
+    padding: 0;
     gap: 5px;
 }
 
@@ -4988,6 +4994,7 @@ button.booking-assistant__btn {
     justify-content: center;
     /* width: 100%; */
     align-items: center;
+    padding: 0;
     gap: 9px;
 }
 
@@ -6341,6 +6348,7 @@ span.select2-dropdown.select2-dropdown--below {
 .checkout-details .checkout-details__optional .total {
     font-weight: 700;
     color: #000;
+    padding: 0;
 }
 
 .checkout-details__header .title-content {
