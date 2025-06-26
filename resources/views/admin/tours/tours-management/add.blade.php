@@ -782,15 +782,31 @@
                                             </div>
 
 
-                                            <div x-data="{
-                                                pickupLocations: [],
-                                                dropoffLocations: [],
-                                                formData: {
-                                                    pickup: [],
-                                                    dropoff: []
-                                                },
-                                                inheritFromPickup: true
-                                            }">
+                                            <div x-data="handlePickupDropoff()">
+                                                <template x-if="inheritFromPickup">
+                                                    <div class="d-none">
+                                                        <template x-for="(entry, index) in formData.dropoff"
+                                                            :key="index">
+                                                            <div>
+                                                                <input type="hidden"
+                                                                    :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][city]`"
+                                                                    :value="entry.city">
+                                                                <template x-for="(point, pointIndex) in entry.points"
+                                                                    :key="pointIndex">
+                                                                    <input type="hidden"
+                                                                        :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][points][${pointIndex}]`"
+                                                                        :value="point">
+                                                                </template>
+                                                            </div>
+                                                        </template>
+                                                        <template x-for="(loc, index) in dropoffLocations"
+                                                            :key="index">
+                                                            <input type="hidden"
+                                                                :name="`itinerary_experience[dropoff_locations][${index}]`"
+                                                                :value="loc">
+                                                        </template>
+                                                    </div>
+                                                </template>
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="form-fields mt-3">
@@ -831,7 +847,7 @@
                                                                             :name="`itinerary_experience[pickup_dropoff_details][pickup][${index}][city]`">
                                                                             <option value="">Select Location</option>
                                                                             <template
-                                                                                x-for="loc in pickupLocations.filter(l => l.trim())"
+                                                                                x-for="loc in pickupLocations.filter(l => l.trim() && !formData.pickup.some((entry, i) => i !== index && entry.city === l))"
                                                                                 :key="loc">
                                                                                 <option :value="loc"
                                                                                     x-text="loc"></option>
@@ -877,7 +893,8 @@
                                                             <label class="title title--sm">Dropoff Locations:</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" checked
-                                                                    id="copyFromPickup" x-model="inheritFromPickup">
+                                                                    id="copyFromPickup" x-model="inheritFromPickup"
+                                                                    :name="`itinerary_experience[pickup_dropoff_details][inheritFromPickup]`">
                                                                 <label class="form-check-label" for="copyFromPickup">
                                                                     Same as Pickup
                                                                 </label>
@@ -921,7 +938,7 @@
 
                                                                             <option value="">Select Location</option>
                                                                             <template
-                                                                                x-for="loc in dropoffLocations.filter(l => l.trim())"
+                                                                                x-for="(loc, index) in dropoffLocations.filter(l => l.trim() && !formData.dropoff.some((loc, i) => i !== index && loc.city === l))"
                                                                                 :key="loc">
                                                                                 <option :value="loc"
                                                                                     x-text="loc"></option>
@@ -2262,6 +2279,44 @@
                 removeAddOn(index) {
                     this.formData.addOns.splice(index, 1)
                     this.initChoices()
+                }
+            }
+        }
+
+
+        function handlePickupDropoff() {
+            return {
+                pickupLocations: [],
+                dropoffLocations: [],
+                formData: {
+                    pickup: [],
+                    dropoff: []
+                },
+                inheritFromPickup: true,
+
+                syncDropoff() {
+                    if (this.inheritFromPickup) {
+                        this.formData.dropoff = JSON.parse(JSON.stringify(this.formData.pickup))
+                        this.dropoffLocations = [...this.pickupLocations]
+                    }
+                },
+
+                init() {
+                    this.$watch('inheritFromPickup', value => {
+                        if (value) {
+                            this.syncDropoff()
+                        } else {
+                            this.formData.dropoff = []
+                            this.dropoffLocations = []
+                        }
+                    })
+
+                    this.$watch('formData.pickup', () => this.syncDropoff(), {
+                        deep: true
+                    })
+                    this.$watch('pickupLocations', () => this.syncDropoff(), {
+                        deep: true
+                    })
                 }
             }
         }
