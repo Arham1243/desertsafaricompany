@@ -781,34 +781,189 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="row mt-4">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-fields">
-                                                        <label class="title">Pickup locations:</label>
-                                                        <input class="choice-select"
-                                                            name="itinerary_experience[pickup_locations]"
-                                                            placeholder="Pickup Location Title">
-                                                        @error('itinerary_experience[pickup_locations]')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+
+                                            <div x-data="{
+                                                pickupLocations: [],
+                                                dropoffLocations: [],
+                                                formData: {
+                                                    pickup: [],
+                                                    dropoff: []
+                                                },
+                                                inheritFromPickup: true
+                                            }">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="form-fields mt-3">
+                                                            <label class="title title--sm">Pickup Locations:</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields border p-3">
+                                                            <label class="title mb-2">Pickup Locations</label>
+                                                            <template x-for="(loc, index) in pickupLocations"
+                                                                :key="index">
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <input type="text" class="field"
+                                                                        x-model="pickupLocations[index]"
+                                                                        :name="`itinerary_experience[pickup_locations][${index}]`">
+                                                                    <button type="button"
+                                                                        @click="pickupLocations.splice(index, 1)"
+                                                                        class="delete-btn delete-btn--static align-self-center">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </template>
+                                                            <button type="button" class="themeBtn mt-2"
+                                                                @click="pickupLocations.push('')">
+                                                                Add <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields border p-3">
+                                                            <label class="title mb-2">Pickup Sub Locations</label>
+                                                            <template x-for="(entry, index) in formData.pickup"
+                                                                :key="index">
+                                                                <div class="mb-3">
+                                                                    <div class="d-flex gap-2 mb-2">
+                                                                        <select class="form-select field"
+                                                                            x-model.lazy="entry.city"
+                                                                            :name="`itinerary_experience[pickup_dropoff_details][pickup][${index}][city]`">
+                                                                            <option value="">Select Location</option>
+                                                                            <template
+                                                                                x-for="loc in pickupLocations.filter(l => l.trim())"
+                                                                                :key="loc">
+                                                                                <option :value="loc"
+                                                                                    x-text="loc"></option>
+                                                                            </template>
+                                                                        </select>
+                                                                        <button type="button"
+                                                                            class="delete-btn delete-btn--static align-self-center"
+                                                                            @click="formData.pickup.splice(index, 1)">
+                                                                            <i class="bx bxs-trash-alt"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <template x-for="(point, pointIndex) in entry.points"
+                                                                        :key="pointIndex">
+                                                                        <div class="d-flex gap-2 mb-2 ms-4">
+                                                                            <input type="text" class="field"
+                                                                                x-model="entry.points[pointIndex]"
+                                                                                :name="`itinerary_experience[pickup_dropoff_details][pickup][${index}][points][${pointIndex}]`">
+                                                                            <button type="button"
+                                                                                class="delete-btn delete-btn--static align-self-center"
+                                                                                @click="entry.points.splice(pointIndex, 1)">
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <button type="button" class="themeBtn mt-1 ms-4"
+                                                                        @click="entry.points.push('')">
+                                                                        Add Sub Location <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </template>
+                                                            <button type="button" class="themeBtn"
+                                                                @click="formData.pickup.push({ city: '', points: [''] })">
+                                                                Add <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-fields">
-                                                        <label class="title">Dropoff locations:</label>
-                                                        <input class="choice-select"
-                                                            name="itinerary_experience[dropoff_locations]"
-                                                            placeholder="Dropoff Location Title">
-                                                        @error('itinerary_experience[dropoff_locations]')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div
+                                                            class="form-fields d-flex align-items-center justify-content-between mt-3">
+                                                            <label class="title title--sm">Dropoff Locations:</label>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox" checked
+                                                                    id="copyFromPickup" x-model="inheritFromPickup">
+                                                                <label class="form-check-label" for="copyFromPickup">
+                                                                    Same as Pickup
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6" x-show="!inheritFromPickup">
+                                                        <div class="form-fields border p-3">
+                                                            <label class="title mb-2">Dropoff Locations</label>
+                                                            <template x-for="(loc, index) in dropoffLocations"
+                                                                :key="index">
+                                                                <div class="d-flex gap-2 mb-2">
+                                                                    <input type="text" class="field"
+                                                                        x-model="dropoffLocations[index]"
+                                                                        :name="`itinerary_experience[dropoff_locations][${index}]`">
+                                                                    <button type="button"
+                                                                        @click="dropoffLocations.splice(index, 1)"
+                                                                        class="delete-btn delete-btn--static align-self-center">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </template>
+                                                            <button type="button" class="themeBtn mt-2"
+                                                                @click="dropoffLocations.push('')">
+                                                                Add <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-lg-6" x-show="!inheritFromPickup">
+                                                        <div class="form-fields border p-3">
+                                                            <label class="title mb-2">Dropoff Sub Locations</label>
+                                                            <template x-for="(entry, index) in formData.dropoff"
+                                                                :key="index">
+                                                                <div class="mb-3">
+                                                                    <div class="d-flex gap-2 mb-2">
+                                                                        <select class="form-select field"
+                                                                            x-model.lazy="entry.city"
+                                                                            :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][city]`">
+
+                                                                            <option value="">Select Location</option>
+                                                                            <template
+                                                                                x-for="loc in dropoffLocations.filter(l => l.trim())"
+                                                                                :key="loc">
+                                                                                <option :value="loc"
+                                                                                    x-text="loc"></option>
+                                                                            </template>
+                                                                        </select>
+                                                                        <button type="button"
+                                                                            class="delete-btn delete-btn--static align-self-center"
+                                                                            @click="formData.dropoff.splice(index, 1)">
+                                                                            <i class="bx bxs-trash-alt"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <template x-for="(point, pointIndex) in entry.points"
+                                                                        :key="pointIndex">
+                                                                        <div class="d-flex gap-2 mb-2 ms-4">
+                                                                            <input type="text" class="field"
+                                                                                x-model="entry.points[pointIndex]"
+                                                                                :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][points][${pointIndex}]`">
+                                                                            <button type="button"
+                                                                                class="delete-btn delete-btn--static align-self-center"
+                                                                                @click="entry.points.splice(pointIndex, 1)">
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <button type="button" class="themeBtn mt-1 ms-4"
+                                                                        @click="entry.points.push('')">
+                                                                        Add Sub Location <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </template>
+                                                            <button type="button" class="themeBtn"
+                                                                @click="formData.dropoff.push({ city: '', points: [''] })">
+                                                                Add <i class="bx bx-plus"></i>
+                                                            </button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-3 repeater-table">
+                                            <div class="form-fields mt-4 repeater-table">
                                                 <div class="form-fields">
-                                                    <label class="title title--sm">Experience:</label>
+                                                    <label class="title title--sm">Itinerary:</label>
                                                 </div>
                                                 <table class="table table-bordered">
                                                     <thead>

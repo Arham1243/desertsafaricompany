@@ -32,7 +32,10 @@
 
     <div class="tour-views">
         <div class="tour-views__icon"><i class="bx bx-show"></i></div>
-        <div class="tour-views__count">Over 80 views today, so act now!</div>
+        <div class="tour-views__count">
+            {{ $todayViews == 1 ? '1 view' : 'Over ' . $todayViews . ' views' }} today, so act now!
+        </div>
+
     </div>
 
     <div class=form-guest__btn>

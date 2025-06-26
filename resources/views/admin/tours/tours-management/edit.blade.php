@@ -893,6 +893,7 @@
                                                         'order' => $stop['order'],
                                                         'type' => 'stop',
                                                         'title' => $stop['title'],
+                                                        'icon_class' => $stop['icon_class'],
                                                         'activities' => $stop['activities'],
                                                         'sub_stops' => [], // Initialize sub_stops as an empty array
                                                     ];
@@ -968,33 +969,6 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="row mt-4">
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-fields">
-                                                        <label class="title">Pickup locations:</label>
-                                                        <input class="choice-select"
-                                                            name="itinerary_experience[pickup_locations]"
-                                                            value="{{ $itineraryExperience['pickup_locations'] ?? '' }}"
-                                                            placeholder="Pickup Location Title">
-                                                        @error('itinerary_experience[pickup_locations]')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-12">
-                                                    <div class="form-fields">
-                                                        <label class="title">Dropoff locations:</label>
-
-                                                        <input class="choice-select"
-                                                            name="itinerary_experience[dropoff_locations]"
-                                                            value="{{ $itineraryExperience['dropoff_locations'] ?? '' }}"
-                                                            placeholder="Dropoff Location Title">
-                                                        @error('itinerary_experience[dropoff_locations]')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <div class="form-fields mt-3 repeater-table">
                                                 <div class="form-fields">
@@ -1027,14 +1001,21 @@
                                                                         <div class="d-flex align-items-center gap-1"><i
                                                                                 class='bx bxs-car'></i>Vehicle</div>
                                                                     </td>
-                                                                    <td><input
+                                                                    <td><label class="title">Icon class: <a
+                                                                                class="p-0 ps-2 nav-link"
+                                                                                href="https://boxicons.com/"
+                                                                                target="_blank">Boxicons</a></label><input
+                                                                            name="itinerary_experience[vehicles][{{ $i }}][icon_class]"
+                                                                            type="text" class="field"
+                                                                            value="{{ $plan['icon_class'] }}"></td>
+                                                                    <td><label class="title">Name:</label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][name]"
                                                                             value="{{ $plan['name'] }}" type="text"
-                                                                            class="field" placeholder="Name"></td>
-                                                                    <td><input
+                                                                            class="field"></td>
+                                                                    <td><label class="title">Time (mins):</label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][time]"
                                                                             value="{{ $plan['time'] }}" type="number"
-                                                                            class="field" placeholder="Time (mins)"></td>
+                                                                            class="field"></td>
                                                                     <td><button type="button"
                                                                             class="delete-btn ms-auto delete-btn--static"><i
                                                                                 class='bx bxs-trash-alt'></i></button></td>
@@ -1055,15 +1036,21 @@
                                                                         <div class="d-flex align-items-center gap-1"><i
                                                                                 class="bx bx-star"></i>Stop</div>
                                                                     </td>
-                                                                    <td><input
+                                                                    <td><label class="title">Icon class: <a
+                                                                                class="p-0 ps-2 nav-link"
+                                                                                href="https://boxicons.com/"
+                                                                                target="_blank">Boxicons</a></label><input
+                                                                            name="itinerary_experience[stops][{{ $i }}][icon_class]"
+                                                                            type="text" class="field"
+                                                                            value="{{ $plan['icon_class'] }}"></td>
+                                                                    <td><label class="title">Title:</label><input
                                                                             name="itinerary_experience[stops][{{ $i }}][title]"
                                                                             value="{{ $plan['title'] }}" type="text"
-                                                                            class="field" placeholder="Title"></td>
-                                                                    <td><input
+                                                                            class="field"></td>
+                                                                    <td><label class="title">Activities:</label><input
                                                                             name="itinerary_experience[stops][{{ $i }}][activities]"
                                                                             value="{{ $plan['activities'] }}"
-                                                                            type="text" class="field"
-                                                                            placeholder="Activities"></td>
+                                                                            type="text" class="field"></td>
                                                                     <td><button type="button"
                                                                             class="delete-btn ms-auto delete-btn--static"><i
                                                                                 class='bx bxs-trash-alt'></i></button></td>

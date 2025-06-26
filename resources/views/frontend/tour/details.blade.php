@@ -531,6 +531,7 @@
                                             'order' => isset($vehicle['order']) ? $vehicle['order'] : -1,
                                             'type' => 'vehicle',
                                             'name' => $vehicle['name'],
+                                            'icon_class' => $vehicle['icon_class'] ?? null,
                                             'time' => $vehicle['time'],
                                         ]);
                                     }
@@ -540,6 +541,7 @@
                                             'order' => isset($stop['order']) ? $stop['order'] : -1,
                                             'type' => 'stop',
                                             'title' => $stop['title'],
+                                            'icon_class' => $stop['icon_class'] ?? null,
                                             'activities' => $stop['activities'],
                                             'sub_stops' => [],
                                         ];
@@ -593,7 +595,7 @@
                                         <div class="row align-items-start mb-5 pb-2 g-0">
                                             <div class=col-md-4>
                                                 <ul class=experience-itinerary-timeline>
-                                                    @if ($itineraryExperience['pickup_locations'])
+                                                    {{-- @if ($itineraryExperience['pickup_locations'])
                                                         <li class=activity-itinerary-timeline__item>
                                                             <div class=timeline-item__wrapper>
                                                                 <div class=timeline-item-stop>
@@ -616,7 +618,7 @@
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                    @endif
+                                                    @endif --}}
 
                                                     @foreach ($orderedItems as $item)
                                                         @if ($item['type'] == 'vehicle')
@@ -625,7 +627,7 @@
                                                                     <div class="timeline-item-stop">
                                                                         <span
                                                                             class="timeline-item__icon timeline-item__staricon">
-                                                                            <i class='bx bxs-car'></i>
+                                                                            <i class='{{ $item['icon_class'] }}'></i>
                                                                         </span>
                                                                         <div
                                                                             class="timeline-item-info timeline-item__info">
@@ -650,7 +652,7 @@
                                                                     <div class="timeline-item-stop">
                                                                         <span
                                                                             class="timeline-item__icon timeline-item__staricon">
-                                                                            <i class="bx bx-star"></i>
+                                                                            <i class='{{ $item['icon_class'] }}'></i>
                                                                         </span>
                                                                         <div
                                                                             class="timeline-item-info timeline-item__info">
@@ -702,8 +704,7 @@
                                                         @endif
                                                     @endforeach
 
-
-                                                    @if ($itineraryExperience['dropoff_locations'])
+                                                    {{-- @if ($itineraryExperience['dropoff_locations'])
                                                         <li>
                                                             <div class=timeline-item__wrapper>
                                                                 <div class=timeline-item-stop>
@@ -727,7 +728,7 @@
                                                                 </div>
                                                             </div>
                                                         </li>
-                                                    @endif
+                                                    @endif --}}
                                                 </ul>
                                             </div>
                                             <div class=col-md-8>

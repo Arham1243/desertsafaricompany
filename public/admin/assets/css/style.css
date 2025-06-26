@@ -309,7 +309,7 @@ ul.sidebar-nav li .active {
 }
 
 .custom-sec--form {
-    padding-top: 1.35rem;
+    padding-top: 0.5rem;
 }
 
 .custom-sec__header {
@@ -2410,4 +2410,7 @@ body .badge.badge-sm {
     font-size: 10px !important;
     padding: 0.28rem 0.5rem;
     border-radius: 100px !important;
+}
+.breadcrumb {
+    margin-bottom: 1rem !important;
 }

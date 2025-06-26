@@ -67,8 +67,9 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 <input type="hidden" name="itinerary_experience[vehicles][${order}][order]" value="${order}">
                 <input type="hidden" name="itinerary_experience[vehicles][${order}][type]" value="vehicle"></td>
                 <td><div class="d-flex align-items-center gap-1"><i class='bx bxs-car'></i>Vehicle</div></td>
-                <td><input name="itinerary_experience[vehicles][${order}][name]" type="text" class="field" placeholder="Name"></td>
-                <td><input name="itinerary_experience[vehicles][${order}][time]" type="number" class="field" placeholder="Time (mins)"></td>
+                <td><label class="title">Icon class: <a class="p-0 ps-2 nav-link" href="https://boxicons.com/" target="_blank">Boxicons</a></label><input name="itinerary_experience[vehicles][${order}][icon_class]" type="text" class="field" value="bx bxs-car"></td>
+                <td><label class="title">Name:</label><input name="itinerary_experience[vehicles][${order}][name]" type="text" class="field"></td>
+                <td><label class="title">Time (mins):</label><input name="itinerary_experience[vehicles][${order}][time]" type="number" class="field"></td>
                 <td><button type="button" class="delete-btn ms-auto delete-btn--static"><i class='bx bxs-trash-alt'></i></button></td>
             </tr>`;
         } else if (type === "stop") {
@@ -78,8 +79,9 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 <input type="hidden" name="itinerary_experience[stops][${order}][order]" value="${order}">
                 <input type="hidden" name="itinerary_experience[stops][${order}][type]" value="stop"></td>
                 <td><div class="d-flex align-items-center gap-1"><i class="bx bx-star"></i>Stop</div></td>
-                <td><input name="itinerary_experience[stops][${order}][title]" type="text" class="field" placeholder="Title"></td>
-                <td><input name="itinerary_experience[stops][${order}][activities]" type="text" class="field" placeholder="Activities"></td>
+                <td><label class="title">Icon class: <a class="p-0 ps-2 nav-link" href="https://boxicons.com/" target="_blank">Boxicons</a></label><input name="itinerary_experience[stops][${order}][icon_class]" type="text" class="field" value="bx bx-star"></td>
+                <td><label class="title">Title:</label><input name="itinerary_experience[stops][${order}][title]" type="text" class="field"></td>
+                <td><label class="title">Activities:</label><input name="itinerary_experience[stops][${order}][activities]" type="text" class="field"></td>
                 <td><button type="button" class="delete-btn ms-auto delete-btn--static"><i class='bx bxs-trash-alt'></i></button></td>
             </tr>`;
         }

@@ -3207,7 +3207,7 @@ span.timeline-item__icon {
     top: 30px;
     width: 12px;
     content: "";
-    height: 92%;
+    height: 89%;
     background-color: #f53;
     z-index: -1;
     border-radius: 1rem;
@@ -6919,7 +6919,7 @@ button[disabled] {
     align-items: center;
     justify-content: space-between;
     background: #F6EBFE;
-    border: 2px dashed #685d6c82;
+    border: 3px dashed #8330c7b0;
     border-radius: 0.25rem;
     padding: 0.75rem 0.85rem;
     margin: 1.25rem 0 1.26rem;
