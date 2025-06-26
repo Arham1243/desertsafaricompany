@@ -75,6 +75,33 @@
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
+            const startDate = ref(null)
+            const tourId = ref(@json($tour->id))
+            const fetchingPromoPrices = ref(null)
+
+            const getTourPromoPricesByDay = async (tourId, isWeekend) => {
+                try {
+                    fetchingPromoPrices.value = true;
+                    const route = `{{ route('tours.promo-prices-by-day') }}`
+                    const payload = {
+                        tour_id: tourId,
+                        isWeekend: isWeekend
+                    }
+                    const response = await axios.post(route, payload)
+                    promoTourData.value = response.data
+                } catch (error) {
+                    showToast('error', error.response.data.message)
+                } finally {
+                    fetchingPromoPrices.value = false;
+                }
+            };
+
+            const handleDateChange = (e) => {
+                startDate.value = e.target.value
+                const day = new Date(startDate.value).getDay()
+                const isWeekend = day === 5 || day === 6 || day === 0
+                getTourPromoPricesByDay(tourId.value, isWeekend)
+            }
 
             const visiblePromos = computed(() =>
                 showAllPromos.value ? promoTourData.value : promoTourData.value.slice(0, 4)
@@ -205,7 +232,10 @@
                 formatNameForInput,
                 showAllPromos,
                 visiblePromos,
-                toggleShowAll
+                toggleShowAll,
+                startDate,
+                handleDateChange,
+                fetchingPromoPrices
             };
         },
     });

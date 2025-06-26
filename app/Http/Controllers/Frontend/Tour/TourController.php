@@ -99,4 +99,46 @@ class TourController extends Controller
             'view_date' => $today,
         ]);
     }
+
+    public function getTourPromoPricesByDay(Request $request)
+    {
+        $tourId = $request->input('tour_id');
+        $isWeekend = filter_var($request->input('isWeekend'), FILTER_VALIDATE_BOOLEAN);
+
+        $tour = Tour::with('promoPrices')->findOrFail($tourId);
+
+        $now = now();
+        $hourOfDay = $now->hour;
+
+        $promoDiscountConfig = $tour->promo_discount_config
+            ? json_decode($tour->promo_discount_config, true)
+            : [];
+
+        $promoTourData = $tour->promoPrices->map(function ($promoPrice) use ($promoDiscountConfig, $hourOfDay, $isWeekend) {
+            $originalPrice = (float) $promoPrice->original_price;
+
+            $discountPercent = $isWeekend
+                ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
+                : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+
+            $timerHours = (int) ($isWeekend
+                ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
+                : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
+
+            $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
+
+            $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
+
+            return [
+                'promo_title' => $promoPrice->promo_title,
+                'original_price' => number_format($originalPrice, 2),
+                'discount_percent' => $discountPercent,
+                'discounted_price' => number_format($discountedPrice, 2),
+                'quantity' => 0,
+                'hours_left' => $hoursLeft,
+            ];
+        });
+
+        return response()->json($promoTourData);
+    }
 }
