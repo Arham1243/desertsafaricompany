@@ -1007,7 +1007,7 @@
                                                                                 target="_blank">Boxicons</a></label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][icon_class]"
                                                                             type="text" class="field"
-                                                                            value="{{ $plan['icon_class'] }}"></td>
+                                                                            value="{{ $plan['icon_class'] ?? '' }}"></td>
                                                                     <td><label class="title">Name:</label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][name]"
                                                                             value="{{ $plan['name'] }}" type="text"
@@ -1042,7 +1042,7 @@
                                                                                 target="_blank">Boxicons</a></label><input
                                                                             name="itinerary_experience[stops][{{ $i }}][icon_class]"
                                                                             type="text" class="field"
-                                                                            value="{{ $plan['icon_class'] }}"></td>
+                                                                            value="{{ $plan['icon_class'] ?? '' }}"></td>
                                                                     <td><label class="title">Title:</label><input
                                                                             name="itinerary_experience[stops][{{ $i }}][title]"
                                                                             value="{{ $plan['title'] }}" type="text"
