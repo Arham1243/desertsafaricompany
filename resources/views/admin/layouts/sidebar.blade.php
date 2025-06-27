@@ -366,7 +366,7 @@
                 [
                     'title' => 'Tour',
                     'icon' => 'bx bx-map',
-                    'route' => route('admin.settings.edit', ['resource' => 'tour']),
+                    'route' => route('admin.settings.edit', ['resource' => 'tour-inner']),
                 ],
                 [
                     'title' => 'News',

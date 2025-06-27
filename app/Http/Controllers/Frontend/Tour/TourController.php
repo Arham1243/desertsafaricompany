@@ -27,9 +27,7 @@ class TourController extends Controller
 
     public function details(Request $request, $slug)
     {
-        $settings = Setting::where('group', 'tour')->pluck('value', 'key');
-        $bannerStyle = $settings->get('banner_style');
-        $perks = $settings->get('perks');
+        $settings = Setting::where('group', 'tour-inner')->pluck('value', 'key');
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
@@ -38,7 +36,7 @@ class TourController extends Controller
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
         if ($tour) {
             $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'bannerStyle', 'perks', 'todayViews');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }

@@ -127,12 +127,25 @@
                                     <div class=tour-content__headerLocation--details>
                                         @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
                                             <span class=pipeDivider></span>
+                                            @php
+                                                $bgColor = $settings->get('badge_background_color');
+                                                $iconColor = $settings->get('badge_icon_color');
+                                                $badge = json_decode($tour->badge);
+                                                $iconClass = $badge->icon_class ?? '';
+                                                $badgeName = $badge->name ?? '';
+
+                                                $style = '';
+                                                if ($bgColor) {
+                                                    $style .= "background-color: $bgColor;";
+                                                }
+                                                if ($iconColor) {
+                                                    $style .= "color: $iconColor;";
+                                                }
+                                            @endphp
 
                                             <div class="badge-of-excellence">
-                                                <i style="{{ optional(json_decode($tour->badge))->background_color ? 'background-color: ' . json_decode($tour->badge)->background_color . ';' : '' }}
-                                                {{ optional(json_decode($tour->badge))->icon_color ? 'color: ' . json_decode($tour->badge)->icon_color . ';' : '' }}"
-                                                    class="{{ json_decode($tour->badge)->icon_class }}"></i>
-                                                {{ json_decode($tour->badge)->name }}
+                                                <i style="{{ $style }}" class="{{ $iconClass }}"></i>
+                                                {{ $badgeName }}
                                             </div>
                                         @endif
                                         @if ($tour->cities->isNotEmpty())
@@ -186,7 +199,9 @@
                 </div>
             </div>
         </div>
-
+        @php
+            $bannerStyle = $settings->get('banner_style');
+        @endphp
         @if ($bannerStyle === 'style-1')
             <div class=tour-details_banner>
                 <div class=tour-details_img>
@@ -331,6 +346,9 @@
                         @endphp
 
                         @if ($features)
+                            @php
+                                $features_icon_color = $settings->get('features_icon_color');
+                            @endphp
                             <div class="features-list">
                                 <div class=row>
                                     @foreach ($features as $i => $feature)
@@ -339,7 +357,7 @@
                                                 <div class="features-item">
                                                     <div class="icon">
                                                         @if (isset($feature->icon))
-                                                            <i @if (isset($feature->icon_color)) style="color: {{ $feature->icon_color }};" @endif
+                                                            <i @if ($features_icon_color) style="color: {{ $features_icon_color }};" @endif
                                                                 class="{{ $feature->icon }}"></i>
                                                         @endif
                                                     </div>
@@ -389,6 +407,9 @@
                                         @endif
                                         <div class="row pt-2">
                                             @if (json_decode($tour->inclusions))
+                                                @php
+                                                    $inclusion_icon_color = $settings->get('inclusion_icon_color');
+                                                @endphp
                                                 <div class="col-md-12">
                                                     <div class="tour-content__title mb-3">
                                                         @if (isset($tour->exclusions_inclusions_heading) &&
@@ -401,7 +422,8 @@
                                                     </div>
                                                     @foreach (json_decode($tour->inclusions) as $inclusion)
                                                         <div class=Price-Includes__content>
-                                                            <div class="tour-content__pra-icon">
+                                                            <div class="tour-content__pra-icon"
+                                                                @if ($inclusion_icon_color) style="color:{{ $inclusion_icon_color }};" @endif>
                                                                 <i class="bx bx-check mr-3"></i>
                                                             </div>
                                                             <div class=tour-content__pra>
@@ -412,6 +434,9 @@
                                                 </div>
                                             @endif
                                             @if (json_decode($tour->exclusions))
+                                                @php
+                                                    $exclusion_icon_color = $settings->get('exclusion_icon_color');
+                                                @endphp
                                                 <div class="col-md-12 pb-4">
                                                     <div class="tour-content__title mb-3">
                                                         @if (isset($tour->exclusions_inclusions_heading) &&
@@ -424,7 +449,8 @@
                                                     </div>
                                                     @foreach (json_decode($tour->exclusions) as $exclusion)
                                                         <div class=Price-Includes__content>
-                                                            <div class="tour-content__pra-icon x-icon">
+                                                            <div class="tour-content__pra-icon x-icon"
+                                                                @if ($exclusion_icon_color) style="color:{{ $exclusion_icon_color }};" @endif>
                                                                 <i class="bx bx-x mr-3"></i>
                                                             </div>
                                                             <div class=tour-content__pra>
@@ -1067,6 +1093,10 @@
             'appComponent' => 'tour-pricing',
             'appJs' => 'tour-pricing',
         ])
+        @php
+            $perks = $settings->get('perks');
+            $perks_icon_color = $settings->get('perks_icon_color');
+        @endphp
         @if (json_decode($perks))
             <div class=tour-content_book_app>
                 <div class=Why-Book-Us>
@@ -1076,7 +1106,7 @@
                     @foreach (json_decode($perks) as $perk)
                         <div class=Why-Book-Us__content>
                             <div class="Why-Book-Us__icon tour-content__pra-icon"
-                                @if ($perk->icon_color) style="color:{{ $perk->icon_color }};" @endif>
+                                @if ($perks_icon_color) style="color:{{ $perks_icon_color }};" @endif>
                                 <i class="{{ $perk->icon }}"></i>
                             </div>
                             <div class=tour-content__pra>

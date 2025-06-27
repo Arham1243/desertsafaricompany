@@ -15,7 +15,7 @@
                     @include('admin.settings.layouts.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <form action="{{ route('admin.settings.update', ['resource' => 'tour']) }}" method="POST"
+                    <form action="{{ route('admin.settings.update', ['resource' => 'tour-inner']) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @php
@@ -77,6 +77,163 @@
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
+                                <div class="title">Color Settings</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Badge Icon:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/badge-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Background Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="background-color-picker-badge" data-color-picker></label>
+                                                <input id="background-color-picker-badge" type="text"
+                                                    data-color-picker-input name="badge_background_color"
+                                                    value="{{ $settings->get('badge_background_color') ?? '#edab56' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-badge" data-color-picker></label>
+                                                <input id="icon-color-picker-badge" type="text" data-color-picker-input
+                                                    name="badge_icon_color"
+                                                    value="{{ $settings->get('badge_icon_color') ?? '#000000' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Features Icons:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/feature-icon-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-feature" data-color-picker></label>
+                                                <input id="icon-color-picker-feature" type="text"
+                                                    data-color-picker-input name="features_icon_color"
+                                                    value="{{ $settings->get('features_icon_color') ?? '#1c4d99' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Inclusions Icons:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/inclusion-icon-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-inclusion" data-color-picker></label>
+                                                <input id="icon-color-picker-inclusion" type="text"
+                                                    data-color-picker-input name="inclusion_icon_color"
+                                                    value="{{ $settings->get('inclusion_icon_color') ?? '#1c4d99' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Exclusions Icons:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/exclusion-icon-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-exclusion" data-color-picker></label>
+                                                <input id="icon-color-picker-exclusion" type="text"
+                                                    data-color-picker-input name="exclusion_icon_color"
+                                                    value="{{ $settings->get('exclusion_icon_color') ?? '#ff0000' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                'Why Book With Us?' Icons:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/perks-icon-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-perks" data-color-picker></label>
+                                                <input id="icon-color-picker-perks" type="text" data-color-picker-input
+                                                    name="perks_icon_color"
+                                                    value="{{ $settings->get('perks_icon_color') ?? '#1c4d99' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
                                 <div class="title">Why Book With Us?</div>
                             </div>
                             <div class="form-box__body">
@@ -91,13 +248,6 @@
                                                                 Icon:
                                                                 <a class="p-0 nav-link" href="//boxicons.com"
                                                                     target="_blank">boxicons</a>
-                                                            </div>
-                                                        </th>
-                                                        <th scope="col">
-                                                            <div class="d-flex align-items-center gap-2">
-                                                                Icon Color:
-                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Color Codes</a>
                                                             </div>
                                                         </th>
                                                         <th scope="col">Title</th>
@@ -116,17 +266,6 @@
                                                                         placeholder="Enter icon class">
                                                                     <i style="font-size: 1.5rem"
                                                                         :class="` ${feature.icon}  `" data-preview-icon></i>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="field color-picker" data-color-picker-container>
-                                                                    <label :for="`icon-color-picker-${index}`"
-                                                                        data-color-picker></label>
-                                                                    <input type="text" data-color-picker-input
-                                                                        :id="`icon-color-picker-${index}`"
-                                                                        :name="`perks[${index}][icon_color]`"
-                                                                        x-model="feature.icon_color"
-                                                                        placeholder="Enter color code">
                                                                 </div>
                                                             </td>
                                                             <td>
@@ -153,7 +292,7 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="themeBtn ms-auto ">Save Changes</button>
+                        <button class="themeBtn ms-auto ">Save Changes <i class="bx bx-check"></i></button>
                     </form>
                 </div>
             </div>
