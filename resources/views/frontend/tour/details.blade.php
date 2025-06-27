@@ -594,7 +594,7 @@
                                     <div class="col-md-6">
                                         <div class="journey-details">
                                             @if (isset($itineraryExperience['pickup_locations']))
-                                                <div class="journey-details__stop journey-details__stop--pickup">
+                                                <div class="journey-details__stop journey-details__stop--location">
                                                     <div class="content-wrapper">
                                                         <div class="icon">
                                                             <i
@@ -611,11 +611,25 @@
                                                                 {{ $pickupCount }}
                                                                 {{ $pickupCount === 1 ? 'pickup location' : 'pickup locations' }}:
                                                             </div>
-                                                            <div class="sub-title">
-                                                                {{ $formattedPickups }}
-                                                            </div>
+                                                            <div class="sub-title">{{ $formattedPickups }}</div>
                                                         </div>
                                                     </div>
+
+                                                    @foreach ($itineraryExperience['pickup_dropoff_details']['pickup'] ?? [] as $entry)
+                                                        @if (!empty($entry['points']))
+                                                            <div class="journey-details__stop journey-details__stop--sub">
+                                                                <div class="content-wrapper">
+                                                                    <div class="sub-icon"></div>
+                                                                    <div class="info">
+                                                                        <div class="title">{{ $entry['city'] }}
+                                                                        </div>
+                                                                        <div class="sub-title">
+                                                                            {{ implode(', ', $entry['points']) }}</div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @endif
+                                                    @endforeach
                                                 </div>
                                             @endif
 
@@ -685,7 +699,7 @@
                     @endif
 
                     @if (isset($itineraryExperience['dropoff_locations']))
-                        <div class="journey-details__stop journey-details__stop--pickup">
+                        <div class="journey-details__stop  journey-details__stop--dropoff journey-details__stop--location">
                             <div class="content-wrapper">
                                 <div class="icon">
                                     <i
@@ -704,6 +718,20 @@
                                     <div class="sub-title">{{ $formattedDropoffs }}</div>
                                 </div>
                             </div>
+
+                            @foreach ($itineraryExperience['pickup_dropoff_details']['dropoff'] ?? [] as $entry)
+                                @if (!empty($entry['points']))
+                                    <div class="journey-details__stop journey-details__stop--sub">
+                                        <div class="content-wrapper">
+                                            <div class="sub-icon"></div>
+                                            <div class="info">
+                                                <div class="title">{{ $entry['city'] }}</div>
+                                                <div class="sub-title">{{ implode(', ', $entry['points']) }}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
                         </div>
                     @endif
                 </div>
@@ -846,7 +874,8 @@
                         <div class=main-reviews__box>
                             <div class="text-center">
                                 <h2 class="main-reviews__detailsNum">
-                                    {{ number_format($averageRating, 1) }}<span class="main-reviews__detailsNum">/5</span>
+                                    {{ number_format($averageRating, 1) }}<span
+                                        class="main-reviews__detailsNum">/5</span>
                                 </h2>
                                 <div class="tour-content__title mb-3">
                                     {{ $mostCommonCategory }}

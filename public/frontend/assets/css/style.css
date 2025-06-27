@@ -7088,10 +7088,10 @@ button[disabled] {
     font-size: 1.15rem;
 }
 .journey-details__stop {
-    margin-bottom: 2.19rem;
+    margin-bottom: 2rem;
 }
 .journey-details__stop.journey-details__stop--sub {
-    margin: 1.75rem 0 0 2.75rem;
+    margin: 1.35rem 0 0 2.85rem;
 }
 .journey-details__stop .content-wrapper {
     display: flex;
@@ -7112,7 +7112,7 @@ button[disabled] {
 }
 .journey-details__stop .sub-icon {
     font-size: 1.05rem;
-    width: 31px;
+    width: 26px;
     aspect-ratio: 1/1;
     border-radius: 100%;
     border: 0.128rem solid #8B8C90;
@@ -7153,6 +7153,20 @@ button[disabled] {
     border-radius: 100px;
     z-index: -1;
 }
+.journey-details__stop--dropoff{
+    position: relative;
+}
+.journey-details__stop--dropoff::after {
+    content: "";
+    width: 11px;
+    height: 95%;
+    position: absolute;
+    left: 9px;
+    top: 0;
+    background: #fff;
+    border-radius: 100px;
+    z-index: -1;
+}
 .journey-details__stop--vehicle .icon{
     width: 34px;
     font-size: 1.09rem;
@@ -7160,7 +7174,7 @@ button[disabled] {
     border: 1px solid #DCDED6;
 background: #fff;
 }
-.journey-details__stop--pickup .icon{
+.journey-details__stop--location .icon{
     color: #fff;
     border: 1px solid #fff;
 background: #FD4503;
