@@ -439,6 +439,24 @@
         margin-left: auto;
     }
 
+    .share-popup {
+        width: 100%;
+        margin: 0 0.75rem;
+    }    
+    .platform .icon {
+        width: 45px;
+    }
+    .platform .icon i {
+        font-size: 1.75rem;
+    }
+    .platform img
+ {
+    width: 20px;    
+ }
+ .platform .title {
+    font-size: 12px;}
+    .copy-link {
+        margin: 1.5rem 0 1.5rem;}
     .journey-map {
         width: 100%;
         left: 0;
@@ -446,7 +464,7 @@
     .journey-details{
         padding-right: 0;
     }
-    
+
     .tour-content__header {
         flex-wrap: wrap;
     }
