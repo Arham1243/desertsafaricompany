@@ -187,45 +187,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12 mt-4">
-                                            <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
-                                                    <div>Badge Background Color:</div>
-                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                        target="_blank">Get Color Codes</a>
-                                                </div>
-                                                <div class="field color-picker" data-color-picker-container>
-                                                    <label for="background-color-picker" data-color-picker></label>
-                                                    <input id="background-color-picker" type="text"
-                                                        name="tour[badge][background_color]" data-color-picker-input
-                                                        value="{{ old('tour.badge.background_color', optional(json_decode($tour->badge))->background_color ?? '#edab56') }}"
-                                                        inputmode="text">
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12 mt-4">
-                                            <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
-                                                    <div>Badge Icon Color:</div>
-                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                        target="_blank">Get Color Codes</a>
-                                                </div>
-                                                <div class="field color-picker" data-color-picker-container>
-                                                    <label for="icon-color-picker" data-color-picker></label>
-                                                    <input id="icon-color-picker" type="text"
-                                                        name="tour[badge][icon_color]" data-color-picker-input
-                                                        value="{{ old('tour.badge.icon_color', optional(json_decode($tour->badge))->icon_color ?? '#000000') }}"
-                                                        inputmode="text">
-                                                </div>
-                                            </div>
-                                        </div>
-
-
-
-
-
-
 
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
@@ -241,14 +202,6 @@
                                                                             Icon:
                                                                             <a class="p-0 nav-link" href="//boxicons.com"
                                                                                 target="_blank">boxicons</a>
-                                                                        </div>
-                                                                    </th>
-                                                                    <th scope="col">
-                                                                        <div class="d-flex align-items-center gap-2">
-                                                                            Icon Color:
-                                                                            <a class="p-0 nav-link"
-                                                                                href="//html-color-codes.info"
-                                                                                target="_blank">Get Color Codes</a>
                                                                         </div>
                                                                     </th>
                                                                     <th scope="col">Title</th>
@@ -270,19 +223,6 @@
                                                                                 <i style="font-size: 1.5rem"
                                                                                     :class="` ${feature.icon}  `"
                                                                                     data-preview-icon></i>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td>
-                                                                            <div class="field color-picker"
-                                                                                data-color-picker-container>
-                                                                                <label :for="`icon-color-picker-${index}`"
-                                                                                    data-color-picker></label>
-                                                                                <input type="text"
-                                                                                    data-color-picker-input
-                                                                                    :id="`icon-color-picker-${index}`"
-                                                                                    :name="`tour[general][features][${index}][icon_color]`"
-                                                                                    x-model="feature.icon_color"
-                                                                                    placeholder="Enter color code">
                                                                             </div>
                                                                         </td>
                                                                         <td>
@@ -1738,8 +1678,7 @@
                                                                                     <td>
                                                                                         <input
                                                                                             name="tour[pricing][water][water_price][]"
-                                                                                            type="number"
-                                                                                            class="field"
+                                                                                            type="number" class="field"
                                                                                             placeholder="Price"
                                                                                             step="0.01"
                                                                                             value="{{ $waterTourPrice['water_price'] }}"
