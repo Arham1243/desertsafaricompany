@@ -597,7 +597,8 @@
                                                 <div class="journey-details__stop journey-details__stop--pickup">
                                                     <div class="content-wrapper">
                                                         <div class="icon">
-                                                            <i class='bx bx-refresh'></i>
+                                                            <i
+                                                                class='{{ $itineraryExperience['pickup_dropoff_details']['pickup_icon_class'] ?? '' }}'></i>
                                                         </div>
                                                         <div class="info">
                                                             @php
@@ -686,7 +687,10 @@
                     @if (isset($itineraryExperience['dropoff_locations']))
                         <div class="journey-details__stop journey-details__stop--pickup">
                             <div class="content-wrapper">
-                                <div class="icon"></div>
+                                <div class="icon">
+                                    <i
+                                        class='{{ $itineraryExperience['pickup_dropoff_details']['dropoff_icon_class'] ?? '' }}'></i>
+                                </div>
                                 <div class="info">
                                     @php
                                         $dropoffs = $itineraryExperience['dropoff_locations'] ?? [];

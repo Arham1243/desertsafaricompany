@@ -813,6 +813,21 @@
                                                             <label class="title title--sm">Pickup Locations:</label>
                                                         </div>
                                                     </div>
+                                                    <div class="col-md-12 mb-4">
+                                                        <div class="form-fields">
+                                                            <label class="title">Pickup Row Icon:
+                                                                <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                                    target="_blank">boxicons</a>
+                                                            </label>
+                                                            <div class="d-flex align-items-center gap-3">
+                                                                <input type="text" x-model="pickupIconClass"
+                                                                    name="itinerary_experience[pickup_dropoff_details][pickup_icon_class]"
+                                                                    style="width: 42% !important;" class="field"
+                                                                    placeholder="">
+                                                                <i :class="`${pickupIconClass} bx-md`"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields border p-3">
                                                             <label class="title mb-2">Pickup Locations</label>
@@ -885,12 +900,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <div
-                                                            class="form-fields d-flex align-items-center justify-content-between mt-3">
-                                                            <label class="title title--sm">Dropoff Locations:</label>
+                                                        <div class="form-fields d-flex align-items-center gap-4 mt-3">
+                                                            <label class="title title--sm ">Dropoff
+                                                                Locations:</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" checked
                                                                     id="copyFromPickup" x-model="inheritFromPickup"
@@ -898,6 +912,22 @@
                                                                 <label class="form-check-label" for="copyFromPickup">
                                                                     Same as Pickup
                                                                 </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 mb-4" x-show="!inheritFromPickup">
+                                                        <div class="form-fields">
+                                                            <label class="title">Dropoff Row Icon:
+                                                                <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                                    target="_blank">boxicons</a>
+                                                            </label>
+                                                            <div class="d-flex align-items-center gap-3">
+                                                                <input type="text" x-model="dropoffIconClass"
+                                                                    name="itinerary_experience[pickup_dropoff_details][dropoff_icon_class]"
+                                                                    style="width: 42% !important;" class="field"
+                                                                    placeholder="">
+                                                                <i :class="`${dropoffIconClass} bx-md`"></i>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2292,12 +2322,15 @@
                     pickup: [],
                     dropoff: []
                 },
+                pickupIconClass: 'bx bx-refresh',
+                dropoffIconClass: 'bx bx-refresh',
                 inheritFromPickup: true,
 
                 syncDropoff() {
                     if (this.inheritFromPickup) {
                         this.formData.dropoff = JSON.parse(JSON.stringify(this.formData.pickup))
                         this.dropoffLocations = [...this.pickupLocations]
+                        this.dropoffIconClass = this.pickupIconClass
                     }
                 },
 
@@ -2308,6 +2341,7 @@
                         } else {
                             this.formData.dropoff = []
                             this.dropoffLocations = []
+                            this.dropoffIconClass = 'bx bx-refresh'
                         }
                     })
 
@@ -2317,6 +2351,7 @@
                     this.$watch('pickupLocations', () => this.syncDropoff(), {
                         deep: true
                     })
+                    this.$watch('pickupIconClass', () => this.syncDropoff())
                 }
             }
         }
