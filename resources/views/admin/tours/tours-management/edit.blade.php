@@ -1094,7 +1094,7 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="form-fields d-flex align-items-center gap-4 mt-3">
-                                                            <label class="title title--sm">Dropoff Locations:</label>
+                                                            <label class="title title--sm mb-0">Dropoff Locations:</label>
                                                             <div class="form-check">
                                                                 <input class="form-check-input" type="checkbox" checked
                                                                     id="copyFromPickup" x-model="inheritFromPickup"
