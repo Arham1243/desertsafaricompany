@@ -8,13 +8,13 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .activity-experience-map-wrapper{
+    .activity-experience-map-wrapper {
         margin: 0;
     }
     .input-details .app-btn.themeBtn {
         flex: 0.5;
-    }    
-    .line-form{
+    }
+    .line-form {
         flex-direction: column;
     }
     .banner-shape {
@@ -425,8 +425,28 @@
     .tour-content__headerLocation {
         flex-wrap: wrap;
         margin-bottom: 18px;
+        gap: 0.75rem 0;
+    }
+    .badge-of-excellence {
+        align-items: flex-end;
+        line-height: 1.1;
     }
 
+    .pipeDivider {
+        display: none;
+    }
+    ul.header-listGroup {
+        margin-left: auto;
+    }
+
+    .journey-map {
+        width: 100%;
+        left: 0;
+    }
+    .journey-details{
+        padding-right: 0;
+    }
+    
     .tour-content__header {
         flex-wrap: wrap;
     }
@@ -552,7 +572,7 @@
     .country-container {
         padding: 1rem 0;
     }
-    .date-search__btns{
+    .date-search__btns {
         flex-wrap: wrap;
     }
 }
