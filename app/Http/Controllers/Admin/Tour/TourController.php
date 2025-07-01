@@ -121,6 +121,7 @@ class TourController extends Controller
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
             'extra_prices' => $extraPrices ?? null,
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
+            'enable_discount_by_persons' => $pricing['enable_discount_by_persons'] ?? 0,
             'service_fee_price' => $pricing['service_fee_price'] ?? null,
             'show_phone' => $pricing['show_phone'] ?? 0,
             'phone_country_code' => $pricing['phone_country_code'] ?? null,
@@ -267,7 +268,7 @@ class TourController extends Controller
 
         handleSeoData($request, $tour, 'Tour');
 
-        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
+        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('activeTab', $request->activeTab);
     }
 
     public function edit($id)
@@ -355,6 +356,7 @@ class TourController extends Controller
             'sale_price' => $pricing['sale_price'] ?? null,
             'is_person_type_enabled' => $pricing['is_person_type_enabled'] ?? 0,
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
+            'enable_discount_by_persons' => $pricing['enable_discount_by_persons'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
             'extra_prices' => $extraPrices ?? null,
@@ -542,7 +544,7 @@ class TourController extends Controller
 
         handleSeoData($request, $tour, 'Tour');
 
-        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('active_tab', 'details');
+        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('activeTab', $request->activeTab);
     }
 
     public function duplicate($id)

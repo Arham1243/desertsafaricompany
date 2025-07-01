@@ -48,6 +48,13 @@
         ];
     });
     $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
+    
+        $promoDiscountConfig =
+            isset($tour->promo_discount_config) && $tour->promo_discount_config
+                ? json_decode($tour->promo_discount_config, true)
+                : [];
+    $weekend_discount_percent = $promoDiscountConfig['weekend_discount_percent'] ?? 0;
+    $weekday_discount_percent = $promoDiscountConfig['weekday_discount_percent'] ?? 0;
 @endphp
 <script>
     const PricingBox = createApp({
@@ -78,6 +85,31 @@
             const startDate = ref(null)
             const tourId = ref(@json($tour->id))
             const fetchingPromoPrices = ref(null)
+
+            const lowestPromoOriginalPrice = computed(() => {
+                if (!promoTourData.value?.length) return null;
+
+                const lowest = promoTourData.value.reduce((min, item) =>
+                    parseFloat(item.discounted_price) < parseFloat(min.discounted_price) ? item : min
+                );
+
+                return parseFloat(lowest.original_price);
+            });
+
+            const weekdayDiscountPercent = {{ $weekday_discount_percent }}
+            const weekendDiscountPercent = {{ $weekend_discount_percent }}
+            const lowestPromoWeekdayDiscountPrice = computed(() => {
+    if (!lowestPromoOriginalPrice.value) return null;
+    return Math.floor(lowestPromoOriginalPrice.value * (1 - (weekdayDiscountPercent / 100)));
+});
+
+const lowestPromoWeekendDiscountPrice = computed(() => {
+    if (!lowestPromoOriginalPrice.value) return null;
+    return Math.floor(lowestPromoOriginalPrice.value * (1 - (weekendDiscountPercent / 100)));
+});
+
+            window.lowestPromoWeekdayDiscountPrice = lowestPromoWeekdayDiscountPrice.value
+            window.lowestPromoWeekendDiscountPrice = lowestPromoWeekendDiscountPrice.value
 
             const getTourPromoPricesByDay = async (tourId, isWeekend) => {
                 try {

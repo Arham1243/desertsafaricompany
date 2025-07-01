@@ -1,7 +1,7 @@
 <a href="javascript:void(0)" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
 @php
-    $headerLogo = App\Models\Setting::where('key', 'header_logo')->first()->value;
-    $headerLogoAltText = App\Models\Setting::where('key', 'header_logo_alt_text')->first()->value;
+    $headerLogo = App\Models\Setting::where('key', 'header_logo')->first()->value ?? null;
+    $headerLogoAltText = App\Models\Setting::where('key', 'header_logo_alt_text')->first()->value ?? null;
 @endphp
 <header class="header" id="header">
     <div class="container">

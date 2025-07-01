@@ -2,9 +2,10 @@
         <div class="tour-content__pra form-book__pra px-0">
             Start Date
         </div>
-        <div class="tour-content__title form-book__title">
+        <div class="tour-content__title form-book__title position-relative">
             <input type="date" class="form-book__date" name="start_date" required id="start_date" ref="startDate"
-                @change="handleDateChange">
+                @change="handleDateChange" placeholder="mm/dd/yyyy" >
+                <div class="cal-icon"><i class='bx bxs-calendar'></i></div>
             <input type="hidden" name="price_type" value="{{ $tour->price_type }}">
         </div>
     </div>

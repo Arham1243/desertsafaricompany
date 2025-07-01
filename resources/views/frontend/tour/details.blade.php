@@ -427,7 +427,7 @@
                                                                 <i class="bx bx-check mr-3"></i>
                                                             </div>
                                                             <div class=tour-content__pra>
-                                                                {{ $inclusion }}
+                                                                {!! $inclusion !!}
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -454,7 +454,7 @@
                                                                 <i class="bx bx-x mr-3"></i>
                                                             </div>
                                                             <div class=tour-content__pra>
-                                                                {{ $exclusion }}
+                                                                {!! $exclusion !!}
                                                             </div>
                                                         </div>
                                                     @endforeach
@@ -484,7 +484,7 @@
                                                     @if ($item->tourAttributes->contains($attribute->id))
                                                         <li>
                                                             <i class="bx bx-check-circle"></i>
-                                                            <div>{{ $item->item ?? '' }}</div>
+                                                            <div>{!! $item->item ?? '' !!}</div>
                                                         </li>
                                                     @endif
                                                 @endforeach
@@ -885,7 +885,7 @@
                             @if (!empty($section['category']['items']))
                                 <ul class="tour-details__items">
                                     @foreach ($section['category']['items'] as $item)
-                                        <li>{{ $item }}</li>
+                                        <li>{!! $item !!}</li>
                                     @endforeach
                                 </ul>
                             @endif
@@ -911,7 +911,7 @@
                         </div>
                         <div class="faqs-single__content accordian-content">
                             <div class="hidden-wrapper tour-content__pra">
-                                {!! nl2br(e($faq->answer)) !!}
+                                {!! $faq->answer !!}
                             </div>
                         </div>
                     </div>
@@ -1151,11 +1151,13 @@
     </div>
     </div>
     <div class=col-md-4>
+        <div class="tour-pricing-wrapper">
         @include('frontend.vue.main', [
             'appId' => 'tour-pricing',
             'appComponent' => 'tour-pricing',
             'appJs' => 'tour-pricing',
         ])
+        </div>
         @php
             $perks = $settings->get('perks');
             $perks_icon_color = $settings->get('perks_icon_color');
@@ -1221,6 +1223,8 @@
     </div>
 @endsection
 @push('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style type="text/css">
         @font-face {
             font-family: "gt-eesti";
@@ -1331,8 +1335,34 @@
             loader.style.display = "none";
         });
 
-        document.getElementById('start_date').addEventListener('click', function() {
-            this.showPicker && this.showPicker();
-        });
+        document.addEventListener("DOMContentLoaded", function () {
+    const today = new Date();
+    const weekdayPrice = window.lowestPromoWeekdayDiscountPrice;
+    const weekendPrice = window.lowestPromoWeekendDiscountPrice;
+
+    flatpickr("#start_date", {
+        dateFormat: "Y-m-d",
+        disable: [
+            function(date) {
+                return date < today.setHours(0,0,0,0); 
+            }
+        ],
+        onDayCreate: function(dObj, dStr, fp, dayElem) {
+            const date = dayElem.dateObj;
+            if (date < new Date().setHours(0,0,0,0)) return;
+
+            const day = date.getDay();
+            const isWeekend = [0, 5, 6].includes(day);
+            const price = isWeekend ? weekendPrice : weekdayPrice;
+
+            const priceTag = document.createElement("div");
+            priceTag.innerText = `$${price}`;
+            priceTag.className = "price";
+
+            dayElem.appendChild(priceTag);
+        }
+    });
+});
+
     </script>
 @endpush
