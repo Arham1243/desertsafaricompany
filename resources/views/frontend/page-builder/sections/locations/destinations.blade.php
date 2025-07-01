@@ -201,7 +201,7 @@
                     @endphp
 
                     <div
-                        class="row g-0 {{ $content->destination_style_type === 'carousel' ? 'four-items-slider' : '' }}">
+                        class="row g-0 {{ $content->destination_style_type === 'carousel' ? 'five-items-slider' : '' }}">
                         @foreach ($resourcesToShow as $resource)
                             @php
                                 $resourceType = '';
