@@ -548,6 +548,33 @@
 
                         @if ($tour->location_type === 'itinerary_experience')
                             @php
+                                $itinerary_section_background_line_color = $settings->get(
+                                    'itinerary_section_background_line_color',
+                                );
+                                $itinerary_section_pickup_circle_background_color = $settings->get(
+                                    'itinerary_section_pickup_circle_background_color',
+                                );
+                                $itinerary_section_pickup_circle_icon_color = $settings->get(
+                                    'itinerary_section_pickup_circle_icon_color',
+                                );
+                                $itinerary_section_dropoff_circle_background_color = $settings->get(
+                                    'itinerary_section_dropoff_circle_background_color',
+                                );
+                                $itinerary_section_dropoff_circle_icon_color = $settings->get(
+                                    'itinerary_section_dropoff_circle_icon_color',
+                                );
+                                $itinerary_section_vehicles_circle_background_color = $settings->get(
+                                    'itinerary_section_vehicles_circle_background_color',
+                                );
+                                $itinerary_section_vehicles_circle_icon_color = $settings->get(
+                                    'itinerary_section_vehicles_circle_icon_color',
+                                );
+                                $itinerary_section_stops_circle_background_color = $settings->get(
+                                    'itinerary_section_stops_circle_background_color',
+                                );
+                                $itinerary_section_stops_circle_icon_color = $settings->get(
+                                    'itinerary_section_stops_circle_icon_color',
+                                );
                                 $itineraryExperience = json_decode($tour->itinerary_experience, true);
                                 $orderedItems = collect();
 
@@ -610,6 +637,40 @@
                                 $orderedItems = $orderedItems
                                     ->reject(fn($item) => $item['order'] === -1)
                                     ->sortBy('order');
+
+                                $itinerary_section_style = [];
+
+                                if ($itinerary_section_background_line_color) {
+                                    $itinerary_section_style[] = "--background-line-color: {$itinerary_section_background_line_color}";
+                                }
+                                if ($itinerary_section_pickup_circle_background_color) {
+                                    $itinerary_section_style[] = "--pickup-circle-background-color: {$itinerary_section_pickup_circle_background_color}";
+                                }
+                                if ($itinerary_section_pickup_circle_icon_color) {
+                                    $itinerary_section_style[] = "--pickup-circle-icon-color: {$itinerary_section_pickup_circle_icon_color}";
+                                }
+                                if ($itinerary_section_dropoff_circle_background_color) {
+                                    $itinerary_section_style[] = "--dropoff-circle-background-color: {$itinerary_section_dropoff_circle_background_color}";
+                                }
+                                if ($itinerary_section_dropoff_circle_icon_color) {
+                                    $itinerary_section_style[] = "--dropoff-circle-icon-color: {$itinerary_section_dropoff_circle_icon_color}";
+                                }
+                                if ($itinerary_section_vehicles_circle_background_color) {
+                                    $itinerary_section_style[] = "--vehicles-circle-background-color: {$itinerary_section_vehicles_circle_background_color}";
+                                }
+                                if ($itinerary_section_vehicles_circle_icon_color) {
+                                    $itinerary_section_style[] = "--vehicles-circle-icon-color: {$itinerary_section_vehicles_circle_icon_color}";
+                                }
+                                if ($itinerary_section_stops_circle_background_color) {
+                                    $itinerary_section_style[] = "--stops-circle-background-color: {$itinerary_section_stops_circle_background_color}";
+                                }
+                                if ($itinerary_section_stops_circle_icon_color) {
+                                    $itinerary_section_style[] = "--stops-circle-icon-color: {$itinerary_section_stops_circle_icon_color}";
+                                }
+
+                                $itinerary_section_style_attribute = empty($itinerary_section_style)
+                                    ? ''
+                                    : 'style="' . implode('; ', $itinerary_section_style) . '"';
                             @endphp
                             <div class="tour-content__line"></div>
                             <div class="journey">
@@ -618,9 +679,10 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <div class="journey-details">
+                                        <div class="journey-details" {!! $itinerary_section_style_attribute !!}>
                                             @if (isset($itineraryExperience['pickup_locations']))
-                                                <div class="journey-details__stop journey-details__stop--location">
+                                                <div
+                                                    class="journey-details__stop journey-details__stop--pickup journey-details__stop--location">
                                                     <div class="content-wrapper">
                                                         <div class="icon">
                                                             <i
@@ -713,7 +775,7 @@
                                 </div>
                                 <div class="info">
                                     <div class="title">{{ $item['name'] }}</div>
-                                    <div class="sub-title">({{ $item['time'] }} minutes)</div>
+                                    <div class="sub-title">{{ $item['time'] }}</div>
                                 </div>
                             </div>
                         </div>
@@ -797,31 +859,6 @@
         </div>
     @endif
 
-    @if ($tour->faqs->isNotEmpty())
-        <div class=tour-content__line></div>
-        <div class="pb-2 pt-3">
-            <div class="faqs">
-                <div class="tour-content__SubTitle">
-                    FAQS
-                </div>
-                @foreach ($tour->faqs as $faq)
-                    <div class="faqs-single accordian {{ $loop->first ? 'active' : '' }}">
-                        <div class="faqs-single__header accordian-header">
-                            <div class="faq-icon"><i class="bx bx-plus"></i></div>
-                            <div class="tour-content__title">{{ $faq->question }}
-                            </div>
-                        </div>
-                        <div class="faqs-single__content accordian-content">
-                            <div class="hidden-wrapper tour-content__pra">
-                                {!! nl2br(e($faq->answer)) !!}
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
-        </div>
-    @endif
-
     @php
         $tourDetails = json_decode($tour->details, true) ?? [
             'sections' => [],
@@ -859,7 +896,33 @@
         </div>
     @endif
 
+    @if ($tour->faqs->isNotEmpty())
+        <div class="pb-2 pt-3">
+            <div class="faqs">
+                <div class="tour-content__SubTitle">
+                    FAQS
+                </div>
+                @foreach ($tour->faqs as $faq)
+                    <div class="faqs-single accordian {{ $loop->first ? 'active' : '' }}">
+                        <div class="faqs-single__header accordian-header">
+                            <div class="faq-icon"><i class="bx bx-plus"></i></div>
+                            <div class="tour-content__title">{{ $faq->question }}
+                            </div>
+                        </div>
+                        <div class="faqs-single__content accordian-content">
+                            <div class="hidden-wrapper tour-content__pra">
+                                {!! nl2br(e($faq->answer)) !!}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+
     @if ($tour->reviews->isNotEmpty())
+        <div class=tour-content__line></div>
         <div class="pb-2 pt-3">
             <div class=main-reviews__details>
                 <div class=tour-content__SubTitle>

@@ -330,8 +330,7 @@ i.bx {
 }
 
 .header-logo a {
-    height: 33.69px;
-    width: 112px;
+    width: 130px;
 }
 
 .header-nav ul i {
@@ -6190,6 +6189,10 @@ span.select2-dropdown.select2-dropdown--below {
     line-height: 1;
 }
 
+.total-price-wrapper :is(.form-guest-search__title, .tour-content__pra) {
+    font-size: 19px;
+}
+
 .green {
     color: green;
 }
@@ -7043,18 +7046,29 @@ button[disabled] {
 .journey-details {
     padding-right: 8rem;
     position: relative;
+    --background-line-color: #ff4507;
+    --pickup-circle-background-color: #fd4503;
+    --pickup-circle-icon-color: #fff;
+    --dropoff-circle-background-color: #fd4503;
+    --dropoff-circle-icon-color: #ffffff;
+    --vehicles-circle-background-color: #ffffff;
+    --vehicles-circle-icon-color: #364f65;
+    --stops-circle-background-color: #364f65;
+    --stops-circle-icon-color: #ffffff;
 }
 .journey-details::after {
     content: "";
     position: absolute;
     left: 11px;
     top: 0px;
-    width: 100%;
+    width: 9px;
     height: 94%;
-    background-image: url('../images/dots-new.png');
+    background-image: url("../images/dots-new.png");
     background-repeat: repeat-y;
     background-size: 9px auto;
     z-index: -2;
+    background-color: var(--background-line-color);
+    border-radius: 100px;
 }
 
 .journey-map {
@@ -7071,7 +7085,7 @@ button[disabled] {
     overflow: hidden;
     object-fit: cover;
 }
-.journey-map :is(iframe,.journey-map__label) {
+.journey-map :is(iframe, .journey-map__label) {
     position: relative;
     top: -62px;
 }
@@ -7098,8 +7112,8 @@ button[disabled] {
     gap: 0.85rem;
 }
 .journey-details__stop .icon {
-    background: #364f65;
-    color: #fff;
+    background: var(--stops-circle-background-color);
+    color: var(--stops-circle-icon-color);
     font-size: 1rem;
     width: 30px;
     aspect-ratio: 1/1;
@@ -7115,7 +7129,7 @@ button[disabled] {
     width: 26px;
     aspect-ratio: 1/1;
     border-radius: 100%;
-    border: 0.128rem solid #8B8C90;
+    border: 0.128rem solid #8b8c90;
     align-self: flex-start;
     box-shadow: 0 0 15px 1px #0000000e;
 }
@@ -7148,12 +7162,12 @@ button[disabled] {
     position: absolute;
     left: 9px;
     top: 0;
-    background: #ff4507;
+    background: var(--background-line-color);
     border: 1px solid #ce5e36;
     border-radius: 100px;
     z-index: -1;
 }
-.journey-details__stop--dropoff{
+.journey-details__stop--dropoff {
     position: relative;
 }
 .journey-details__stop--dropoff::after {
@@ -7167,17 +7181,17 @@ button[disabled] {
     border-radius: 100px;
     z-index: -1;
 }
-.journey-details__stop--vehicle .icon{
+.journey-details__stop--vehicle .icon {
     width: 34px;
     font-size: 1.09rem;
-    color: #364f65;
-    border: 1px solid #DCDED6;
-background: #fff;
+    color: var(--vehicles-circle-icon-color);
+    border: 1px solid #dcded6;
+    background: var(--vehicles-circle-background-color);
 }
-.journey-details__stop--location .icon{
+.journey-details__stop--location .icon {
     color: #fff;
     border: 1px solid #fff;
-background: #FD4503;
-font-size: 1.35rem;
+    background: #fd4503;
+    font-size: 1.05rem;
 }
 /* itenirary journey */

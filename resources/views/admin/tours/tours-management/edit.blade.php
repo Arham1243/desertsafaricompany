@@ -1181,9 +1181,9 @@
                                                                             name="itinerary_experience[vehicles][{{ $i }}][name]"
                                                                             value="{{ $plan['name'] }}" type="text"
                                                                             class="field"></td>
-                                                                    <td><label class="title">Time (mins):</label><input
+                                                                    <td><label class="title">Time:</label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][time]"
-                                                                            value="{{ $plan['time'] }}" type="number"
+                                                                            value="{{ $plan['time'] }}" type="text"
                                                                             class="field"></td>
                                                                     <td><button type="button"
                                                                             class="delete-btn ms-auto delete-btn--static"><i

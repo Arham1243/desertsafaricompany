@@ -54,7 +54,18 @@
                                             </td>
                                             <td>
                                                 <a href="{{ route('admin.pages.edit', $item->id) }}"
-                                                    class="link">{{ $item->title }}</a>
+                                                    class="link">{{ $item->title }}</a><br />
+
+                                                @if ($item->id == $homepage_id)
+                                                    <a target="_blank" style="font-size: 0.76rem;"
+                                                        href="{{ url('/') }}" class="link">{{ url('/') }}</a>
+                                                    <span
+                                                        class="badge rounded-pill bg-success d-inline-block ms-5">Home</span>
+                                                @else
+                                                    <a target="_blank" style="font-size: 0.76rem;"
+                                                        href="{{ buildUrl(url('/'), 'page/' . $item->slug) }}"
+                                                        class="link">{{ buildUrl(url('/'), 'page/' . $item->slug) }}</a>
+                                                @endif
                                             </td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>

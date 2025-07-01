@@ -111,7 +111,7 @@
                     @endphp
 
                     <div
-                        class="row g-0 {{ isset($content->destination_style_type) && $content->destination_style_type === 'carousel' ? 'destinations-slider' : '' }}  {{ $content->destination_style_type === 'normal' && $content->destination_style_type === 'normal' ? 'row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-5' : '' }}">
+                        class="row g-0 {{ isset($content->destination_style_type) && $content->destination_style_type === 'carousel' ? 'four-items-slider' : '' }}  {{ $content->destination_style_type === 'normal' && $content->destination_style_type === 'normal' ? 'row-cols-1 row-cols-md-3 row-cols-lg-3 row-cols-xl-5' : '' }}">
                         @foreach ($resourcesToShow as $resource)
                             @php
                                 $resourceType = '';

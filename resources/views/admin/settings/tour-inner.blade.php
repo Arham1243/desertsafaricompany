@@ -124,8 +124,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-5">
-                                    <div class="col-md-6 col-12">
+                                <hr class="my-5">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
                                                 Features Icons:
@@ -151,7 +152,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-5">
+                                <hr class="my-5">
+                                <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
@@ -203,8 +205,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-5">
-                                    <div class="col-md-6 col-12">
+                                <hr class="my-5">
+                                <div class="row">
+                                    <div class="col-md-12 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
                                                 'Why Book With Us?' Icons:
@@ -225,6 +228,187 @@
                                                 <input id="icon-color-picker-perks" type="text" data-color-picker-input
                                                     name="perks_icon_color"
                                                     value="{{ $settings->get('perks_icon_color') ?? '#1c4d99' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-5">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Itinerary Section:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/itinerary-section-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Background dotted/solid line color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-line"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-line" type="text"
+                                                    data-color-picker-input name="itinerary_section_background_line_color"
+                                                    value="{{ $settings->get('itinerary_section_background_line_color') ?? '#ff4507' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Pickup circle background color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-pickup-circle"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-pickup-circle"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_pickup_circle_background_color"
+                                                    value="{{ $settings->get('itinerary_section_pickup_circle_background_color') ?? '#FD4503' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Pickup circle icon color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-pickup-circle-icon"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-pickup-circle-icon"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_pickup_circle_icon_color"
+                                                    value="{{ $settings->get('itinerary_section_pickup_circle_icon_color') ?? '#ffffff' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Dropoff circle background color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-dropoff-circle"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-dropoff-circle"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_dropoff_circle_background_color"
+                                                    value="{{ $settings->get('itinerary_section_dropoff_circle_background_color') ?? '#FD4503' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Dropoff circle icon color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-dropoff-circle-icon"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-dropoff-circle-icon"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_dropoff_circle_icon_color"
+                                                    value="{{ $settings->get('itinerary_section_dropoff_circle_icon_color') ?? '#ffffff' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Vehicles circle background color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-vehicles-circle"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-vehicles-circle"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_vehicles_circle_background_color"
+                                                    value="{{ $settings->get('itinerary_section_vehicles_circle_background_color') ?? '#ffffff' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Vehicles circle icon color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-vehicles-circle-icon"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-vehicles-circle-icon"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_vehicles_circle_icon_color"
+                                                    value="{{ $settings->get('itinerary_section_vehicles_circle_icon_color') ?? '#364f65' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Stops circle background color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-stops-circle"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-stops-circle"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_stops_circle_background_color"
+                                                    value="{{ $settings->get('itinerary_section_stops_circle_background_color') ?? '#364f65' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Stops circle icon color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="icon-color-picker-itinerary-section-stops-circle-icon"
+                                                    data-color-picker></label>
+                                                <input id="icon-color-picker-itinerary-section-stops-circle-icon"
+                                                    type="text" data-color-picker-input
+                                                    name="itinerary_section_stops_circle_icon_color"
+                                                    value="{{ $settings->get('itinerary_section_stops_circle_icon_color') ?? '#ffffff' }}"
                                                     inputmode="text">
                                             </div>
                                         </div>

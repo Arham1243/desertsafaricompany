@@ -39,6 +39,9 @@ class IndexController extends Controller
 
         $settings = Setting::where('group', 'general')->pluck('value', 'key');
         $homepage = $settings->get('page_for_homepage');
+        if (request()->is('/') && ! $homepage) {
+            return 'No page selected as homepage. Please select a page from Settings > General Settings > Page for Homepage.';
+        }
         $query = Page::find($homepage);
         if (request()->query('viewer') !== 'admin') {
             $query->where('status', 'publish');

@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\News;
 use App\Models\Page;
 use App\Models\Section;
+use App\Models\Setting;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\TourCategory;
@@ -23,8 +24,14 @@ class PageController extends Controller
 
     public function index()
     {
-        $pages = Page::latest()->get();
-        $data = compact('pages');
+        $settings = Setting::where('group', 'general')->pluck('value', 'key');
+        $homepage_id = $settings->get('page_for_homepage');
+
+        $pages = Page::latest()->get()->sortByDesc(function ($page) use ($homepage_id) {
+            return $page->id == $homepage_id ? 1 : 0;
+        })->values();
+
+        $data = compact('pages', 'homepage_id');
 
         return view('admin.pages.pages-management.list')->with('title', 'All Pages')->with($data);
     }

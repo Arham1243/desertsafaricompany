@@ -69,7 +69,7 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 <td><div class="d-flex align-items-center gap-1"><i class='bx bxs-car'></i>Vehicle</div></td>
                 <td><label class="title">Icon class: <a class="p-0 ps-2 nav-link" href="https://boxicons.com/" target="_blank">Boxicons</a></label><input name="itinerary_experience[vehicles][${order}][icon_class]" type="text" class="field" value="bx bxs-car"></td>
                 <td><label class="title">Name:</label><input name="itinerary_experience[vehicles][${order}][name]" type="text" class="field"></td>
-                <td><label class="title">Time (mins):</label><input name="itinerary_experience[vehicles][${order}][time]" type="number" class="field"></td>
+                <td><label class="title">Time:</label><input name="itinerary_experience[vehicles][${order}][time]" type="text" class="field"></td>
                 <td><button type="button" class="delete-btn ms-auto delete-btn--static"><i class='bx bxs-trash-alt'></i></button></td>
             </tr>`;
         } else if (type === "stop") {
