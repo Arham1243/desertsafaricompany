@@ -1152,11 +1152,11 @@
     </div>
     <div class=col-md-4>
         <div class="tour-pricing-wrapper">
-        @include('frontend.vue.main', [
-            'appId' => 'tour-pricing',
-            'appComponent' => 'tour-pricing',
-            'appJs' => 'tour-pricing',
-        ])
+            @include('frontend.vue.main', [
+                'appId' => 'tour-pricing',
+                'appComponent' => 'tour-pricing',
+                'appJs' => 'tour-pricing',
+            ])
         </div>
         @php
             $perks = $settings->get('perks');
@@ -1335,34 +1335,33 @@
             loader.style.display = "none";
         });
 
-        document.addEventListener("DOMContentLoaded", function () {
-    const today = new Date();
-    const weekdayPrice = window.lowestPromoWeekdayDiscountPrice;
-    const weekendPrice = window.lowestPromoWeekendDiscountPrice;
+        document.addEventListener("DOMContentLoaded", function() {
+            const today = new Date();
+            const weekdayPrice = window.lowestPromoWeekdayDiscountPrice;
+            const weekendPrice = window.lowestPromoWeekendDiscountPrice;
 
-    flatpickr("#start_date", {
-        dateFormat: "Y-m-d",
-        disable: [
-            function(date) {
-                return date < today.setHours(0,0,0,0); 
-            }
-        ],
-        onDayCreate: function(dObj, dStr, fp, dayElem) {
-            const date = dayElem.dateObj;
-            if (date < new Date().setHours(0,0,0,0)) return;
+            flatpickr("#start_date", {
+                dateFormat: "Y-m-d",
+                disable: [
+                    function(date) {
+                        return date < today.setHours(0, 0, 0, 0);
+                    }
+                ],
+                onDayCreate: function(dObj, dStr, fp, dayElem) {
+                    const date = dayElem.dateObj;
+                    if (date < new Date().setHours(0, 0, 0, 0)) return;
 
-            const day = date.getDay();
-            const isWeekend = [0, 5, 6].includes(day);
-            const price = isWeekend ? weekendPrice : weekdayPrice;
+                    const day = date.getDay();
+                    const isWeekend = [0, 5, 6].includes(day);
+                    const price = isWeekend ? weekendPrice : weekdayPrice;
 
-            const priceTag = document.createElement("div");
-            priceTag.innerText = `$${price}`;
-            priceTag.className = "price";
+                    const priceTag = document.createElement("div");
+                    priceTag.innerText = `$${price}`;
+                    priceTag.className = "price";
 
-            dayElem.appendChild(priceTag);
-        }
-    });
-});
-
+                    dayElem.appendChild(priceTag);
+                }
+            });
+        });
     </script>
 @endpush

@@ -28,7 +28,7 @@
                             Tour</a>
                     </div>
                 </div>
-                <div class="row" x-data="{ optionTab: '{{session('activeTab') ?? 'general'}}' }">
+                <div class="row" x-data="{ optionTab: '{{ session('activeTab') ?? 'general' }}' }">
                     <input type="hidden" name="activeTab" x-model="optionTab">
                     <div class="col-md-3">
                         <div class="form-box">
@@ -1678,7 +1678,8 @@
                                                                                     <td>
                                                                                         <input
                                                                                             name="tour[pricing][water][water_price][]"
-                                                                                            type="number" class="field"
+                                                                                            type="number"
+                                                                                            class="field"
                                                                                             placeholder="Price"
                                                                                             step="0.01"
                                                                                             value="{{ $waterTourPrice['water_price'] }}"
@@ -1993,19 +1994,19 @@
                                                                                     )
                                                                                         ? $tourDiscounts
                                                                                         : [
-                                                                                                'people_from' => [],
-                                                                                                'people_to' => [],
-                                                                                                'discount' => [],
-                                                                                                'type' => [],
+                                                                                            'people_from' => [],
+                                                                                            'people_to' => [],
+                                                                                            'discount' => [],
+                                                                                            'type' => [],
                                                                                         ];
-                                                                                         $people_froms =
-                                                                                                $tourDiscounts->people_from;
-                                                                                            $people_tos =
-                                                                                                $tourDiscounts->people_to;
-                                                                                            $discount_prices =
-                                                                                                $tourDiscounts->discount ;
-                                                                                            $discount_types =
-                                                                                            $tourDiscounts->type;
+                                                                                    $people_froms =
+                                                                                        $tourDiscounts->people_from;
+                                                                                    $people_tos =
+                                                                                        $tourDiscounts->people_to;
+                                                                                    $discount_prices =
+                                                                                        $tourDiscounts->discount;
+                                                                                    $discount_types =
+                                                                                        $tourDiscounts->type;
                                                                                 @endphp
 
                                                                                 <tbody data-repeater-list>
