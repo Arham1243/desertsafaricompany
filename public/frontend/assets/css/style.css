@@ -2988,20 +2988,15 @@ ul.tour-content__pra li {
     position: sticky;
     top: 0
 }
-#tour-pricing{
-    height: 100vh;
-    position: relative;
-    overflow-y: auto;
-}
-#tour-pricing::-webkit-scrollbar {
+.tour-content_book_app::-webkit-scrollbar {
   width: 5px;
 }
 
-#tour-pricing::-webkit-scrollbar-track {
+.tour-content_book_app::-webkit-scrollbar-track {
   background: #89898923;
 }
 
-#tour-pricing::-webkit-scrollbar-thumb {
+.tour-content_book_app::-webkit-scrollbar-thumb {
   background: #8989899c;
   border-radius: 100px;
 }
@@ -3422,9 +3417,11 @@ span.tour-content__title.ml-1 {
 }
 
 .tour-content_book_app.sale {
-    padding-top: 3rem;
+    padding-top: 2rem;
+    height: 100vh;
+    position: relative;
+    overflow-y: auto;
 }
-
 .sale-box {
     position: absolute;
     right: 15px;
