@@ -2984,10 +2984,6 @@ ul.tour-content__pra li {
     color: var(--color-primary);
     pointer-events: none;
 }
-.tour-pricing-wrapper {
-    position: sticky;
-    top: 0;
-}
 #tour-pricing{
     height: 100vh;
     position: relative;
@@ -3015,20 +3011,22 @@ ul.tour-content__pra li {
     color: #303057;
     font-size: 13px;
     font-weight: 600;
-    margin: 3px 0;
-    height: 40px;
+    margin: 0 0 3px;
+    height: 41px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     flex-direction: column;
+    line-height: 1;
+    padding-top: 8px;
 }
 .flatpickr-day .price{
-    font-size: 10px;
+    font-size: 12px;
     margin-top: 2px;
     color: green;
     font-weight: bold;
     position: absolute;
-    bottom: 2px;
+    bottom: 5px;
     line-height: 1;
 }
 
@@ -3045,7 +3043,7 @@ span.flatpickr-day.selected .price {
 
 .flatpickr-day.today {
     border: none !important;
-    background: #4c8cf052 !important;
+    background: #e6e6e6 !important;
 }
 
 .flatpickr-day.today:hover, .flatpickr-day.today:focus {
