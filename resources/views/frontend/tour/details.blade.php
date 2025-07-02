@@ -1157,31 +1157,31 @@
                 'appComponent' => 'tour-pricing',
                 'appJs' => 'tour-pricing',
             ])
-        </div>
-        @php
-            $perks = $settings->get('perks');
-            $perks_icon_color = $settings->get('perks_icon_color');
-        @endphp
-        @if (json_decode($perks))
-            <div class=tour-content_book_app>
-                <div class=Why-Book-Us>
-                    <h6 class="tour-content__title mb-4">
-                        Why Book With Us?
-                    </h6>
-                    @foreach (json_decode($perks) as $perk)
-                        <div class=Why-Book-Us__content>
-                            <div class="Why-Book-Us__icon tour-content__pra-icon"
-                                @if ($perks_icon_color) style="color:{{ $perks_icon_color }};" @endif>
-                                <i class="{{ $perk->icon }}"></i>
+            @php
+                $perks = $settings->get('perks');
+                $perks_icon_color = $settings->get('perks_icon_color');
+            @endphp
+            @if (json_decode($perks))
+                <div class="tour-content_book_app mt-4">
+                    <div class=Why-Book-Us>
+                        <h6 class="tour-content__title mb-4">
+                            Why Book With Us?
+                        </h6>
+                        @foreach (json_decode($perks) as $perk)
+                            <div class=Why-Book-Us__content>
+                                <div class="Why-Book-Us__icon tour-content__pra-icon"
+                                    @if ($perks_icon_color) style="color:{{ $perks_icon_color }};" @endif>
+                                    <i class="{{ $perk->icon }}"></i>
+                                </div>
+                                <div class=tour-content__pra>
+                                    {{ $perk->title }}
+                                </div>
                             </div>
-                            <div class=tour-content__pra>
-                                {{ $perk->title }}
-                            </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
-            </div>
-        @endif
+            @endif
+        </div>
     </div>
     </div>
     </div>
