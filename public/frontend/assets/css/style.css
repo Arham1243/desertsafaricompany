@@ -2984,6 +2984,10 @@ ul.tour-content__pra li {
     color: var(--color-primary);
     pointer-events: none;
 }
+.tour-pricing-wrapper{
+    position: sticky;
+    top: 0
+}
 #tour-pricing{
     height: 100vh;
     position: relative;
@@ -3424,11 +3428,6 @@ span.tour-content__title.ml-1 {
 .sale-box {
     position: absolute;
     right: 15px;
-    top: 0;
-}
-
-.tour-content_book_wrap {
-    position: sticky;
     top: 0;
 }
 
