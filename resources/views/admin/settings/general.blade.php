@@ -242,7 +242,7 @@
 
                         <div class="form-box">
                             <div class="form-box__header">
-                                <div class="title">Social Media</div>
+                                <div class="title">Social</div>
                             </div>
                             <div class="form-box__body">
                                 <div class="row">
