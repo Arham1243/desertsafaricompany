@@ -1,4 +1,9 @@
-<link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+@php
+    $favicon = $settings->get('favicon');
+@endphp
+@if ($favicon)
+    <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">
+@endif
 <script defer src="{{ asset('admin/assets/js/alpine.min.js') }}"></script>
 <link href="{{ asset('admin/assets/css/dataTables.min.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('admin/assets/css/select2.min.css?v=' . time()) }}" rel="stylesheet" />

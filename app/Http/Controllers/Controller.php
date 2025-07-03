@@ -12,7 +12,7 @@ abstract class Controller
     public function __construct()
     {
         $cart = Session::get('cart', []);
-        $settings = Setting::where('group', 'general')->pluck('value', 'key');
+        $settings = Setting::pluck('value', 'key');
 
         $currentUrl = request()->path();
 
