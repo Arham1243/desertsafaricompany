@@ -18,6 +18,7 @@ use App\Models\Section;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\TourAttribute;
+use App\Models\TourAuthor;
 use App\Models\TourCategory;
 use App\Models\TourReview;
 use Illuminate\Http\Request;
@@ -87,6 +88,11 @@ class BulkActionController extends Controller
                 $column = 'id';
                 $redirectRoute = 'admin.tour-categories.index';
                 $isParent = true;
+                break;
+            case 'tour-authors':
+                $modelClass = TourAuthor::class;
+                $column = 'id';
+                $redirectRoute = 'admin.tour-authors.index';
                 break;
             case 'tour-attributes':
                 $modelClass = TourAttribute::class;

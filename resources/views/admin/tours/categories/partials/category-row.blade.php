@@ -14,7 +14,7 @@
             {{ $category->status }}
         </span>
     </td>
-    <td>{{ formatDateTime($category->deleted_at) }}</td>
+    <td>{{ formatDateTime($category->created_at) }}</td>
 </tr>
 
 @foreach ($category->children as $child)

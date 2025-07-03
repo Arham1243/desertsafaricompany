@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
+use App\Http\Controllers\Admin\Tour\AuthorController as TourAuthorController;
 use App\Http\Controllers\Admin\Tour\AvailabilityController;
 use App\Http\Controllers\Admin\Tour\BookingController;
 use App\Http\Controllers\Admin\Tour\CategoryController as TourCategoryController;
@@ -59,6 +60,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('tour-attributes', AttributesController::class);
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
     Route::resource('tour-categories', TourCategoryController::class);
+    Route::resource('tour-authors', TourAuthorController::class);
     Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {
         Route::controller(ReviewController::class)->group(function () {
             Route::get('/approved', 'approved')->name('approved');

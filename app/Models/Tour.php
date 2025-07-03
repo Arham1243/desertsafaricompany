@@ -90,6 +90,11 @@ class Tour extends Model
         return $this->hasOne(TourPricing::class)->where('price_type', 'private');
     }
 
+    public function author()
+    {
+        return $this->belongsTo(TourAuthor::class, 'author_id');
+    }
+
     public function waterPrices()
     {
         return $this->hasMany(TourPricing::class)->where('price_type', 'water');

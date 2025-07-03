@@ -2626,10 +2626,10 @@
                                         <select class="select2-select" name="tour[status][author_id]"
                                             data-error="Author">
                                             <option value="" selected>Select</option>
-                                            @foreach ($users as $user)
-                                                <option value="{{ $user->id }}"
-                                                    {{ $tour->author_id == $user->id ? 'selected' : '' }}>
-                                                    {{ $user->full_name }}
+                                            @foreach ($authors as $author)
+                                                <option value="{{ $author->id }}"
+                                                    {{ $tour->author_id == $author->id ? 'selected' : '' }}>
+                                                    {{ $author->name }}
                                                 </option>
                                             @endforeach
                                         </select>

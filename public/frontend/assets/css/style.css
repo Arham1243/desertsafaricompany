@@ -2840,6 +2840,7 @@ h2.more-offers-title {
     align-items: center;
     justify-content: center;
     gap: 6px;
+    line-height: 1;
 }
 
 .badge-of-excellence i {
@@ -2847,7 +2848,9 @@ h2.more-offers-title {
     color: #000;
     border-radius: 11px;
     font-size: 16px;
-    padding: 2px;
+    padding: 3px;
+    position: relative;
+    bottom: 2px;
 }
 
 ul.header-listGroup {
@@ -7271,3 +7274,8 @@ button[disabled] {
     font-size: 1.05rem;
 }
 /* itenirary journey */
+
+.bold-primary {
+    font-weight: bold;
+    color: var(--color-primary);
+}

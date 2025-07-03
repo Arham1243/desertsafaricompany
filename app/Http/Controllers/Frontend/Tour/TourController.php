@@ -27,7 +27,7 @@ class TourController extends Controller
 
     public function details(Request $request, $slug)
     {
-        $settings = Setting::where('group', 'tour-inner')->pluck('value', 'key');
+        $settings = Setting::pluck('value', 'key');
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();

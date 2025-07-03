@@ -60,14 +60,14 @@
                                 <div class="row">
                                     <div class="col-md-12 mb-4">
                                         <div class="form-fields">
-                                            <label class="title">App Name</label>
+                                            <label class="title">System Name:</label>
                                             <input type="text" name="app_name" value="{{ $appName ?? '' }}"
                                                 class="field">
                                         </div>
                                     </div>
                                     <div class="col-md-12 mb-4">
                                         <div class="form-fields">
-                                            <label class="title">App Currency</label>
+                                            <label class="title">System Currency:</label>
                                             <select name="app_currency" placeholder="Select" class="select2-select">
                                                 <option value="" disabled selected>Select</option>
                                                 @foreach ($currencies as $code => $currency)
@@ -81,7 +81,7 @@
                                     </div>
                                     <div class="col-md-12">
                                         <div class="form-fields">
-                                            <label class="title">App timezone</label>
+                                            <label class="title">System timezone:</label>
                                             <select name="app_timezone" placeholder="Select" class="select2-select">
                                                 <option value="" disabled selected>Select</option>
                                                 @foreach ($timezones as $timezone)
@@ -122,7 +122,7 @@
                                 <div class="row">
                                     <div class="col-md-4">
                                         <div class="form-fields">
-                                            <label class="title">Header Logo</label>
+                                            <label class="title">Header Logo:</label>
                                             <div class="upload" data-upload>
                                                 <div class="upload-box-wrapper">
                                                     <div class="upload-box {{ empty($headerLogo) ? 'show' : '' }}"
@@ -160,7 +160,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-fields">
-                                            <label class="title">Footer Logo</label>
+                                            <label class="title">Footer Logo:</label>
                                             <div class="upload" data-upload>
                                                 <div class="upload-box-wrapper">
                                                     <div class="upload-box {{ empty($footerLogo) ? 'show' : '' }}"
@@ -199,7 +199,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-fields">
-                                            <label class="title">Favicon</label>
+                                            <label class="title">Favicon:</label>
                                             <div class="upload" data-upload>
                                                 <div class="upload-box-wrapper">
                                                     <div class="upload-box {{ empty($favicon) ? 'show' : '' }}"
@@ -236,6 +236,71 @@
                                 </div>
                             </div>
                         </div>
+                        @php
+                            $socialMediaPlatforms = [['platform' => 'instagram', 'label' => 'Instagram']];
+                        @endphp
+
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Social Media</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-fields">
+                                            <label class="title">instagram Username: <span
+                                                    class="ms-2 text-lowercase">(e.g. yourcompany)</span></label>
+                                            <input type="text" name="instagram_username"
+                                                value="{{ $settings->get('instagram_username') }}" class="field">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-fields">
+                                            <label class="title">Facebook Username: <span
+                                                    class="ms-2 text-lowercase">(e.g. yourcompany)</span></label>
+                                            <input type="text" name="facebook_username"
+                                                value="{{ $settings->get('facebook_username') }}" class="field">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-fields">
+                                            <label class="title">Company Email:</label>
+                                            <input type="email" name="company_email"
+                                                value="{{ $settings->get('company_email') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 mb-4">
+                                        <div class="form-fields">
+                                            <label class="title">Marketing Email:</label>
+                                            <input type="email" name="marketing_email"
+                                                value="{{ $settings->get('marketing_email') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title">WhatsApp Number:</label>
+                                            <div data-flag-input-wrapper>
+                                                <input type="hidden" name="whatsapp_number_dial_code"
+                                                    data-flag-input-dial-code
+                                                    value="{{ $settings->get('whatsapp_number_dial_code') }}">
+                                                <input type="hidden" name="whatsapp_number_country_code"
+                                                    data-flag-input-country-code
+                                                    value="{{ $settings->get('whatsapp_number_country_code') }}">
+                                                <input type="text" name="whatsapp_number" class="field flag-input"
+                                                    data-flag-input value="{{ $settings->get('whatsapp_number') }}"
+                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
+                                                    pattern="[0-9]*"
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                    maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="title">Footer</div>
@@ -244,7 +309,7 @@
                                 <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-fields">
-                                            <label class="title">Footer Copyright Text</label>
+                                            <label class="title">Footer Copyright Text:</label>
                                             <input type="text" name="footer_copyright_text"
                                                 value="{{ $footerCopyrightText ?? '' }}" class="field">
                                         </div>
@@ -259,3 +324,9 @@
         </div>
     </div>
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+@endpush
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
+@endpush

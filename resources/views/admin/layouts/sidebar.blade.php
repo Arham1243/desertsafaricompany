@@ -184,6 +184,22 @@
                     ],
                 ],
                 [
+                    'title' => 'Authors',
+                    'icon' => 'bx bxs-user',
+                    'submenu' => [
+                        [
+                            'title' => 'Authors',
+                            'icon' => 'bx bx-list-ul',
+                            'route' => route('admin.tour-authors.index'),
+                        ],
+                        [
+                            'title' => 'Recovery',
+                            'icon' => 'bx bx-refresh',
+                            'route' => route('admin.recovery.index', ['resource' => 'tour-authors']),
+                        ],
+                    ],
+                ],
+                [
                     'title' => 'Attributes',
                     'icon' => 'bx bx-check-circle',
                     'submenu' => [

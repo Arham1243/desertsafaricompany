@@ -418,6 +418,31 @@
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
+                                <div class="title">Author Settings</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Author prefix:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/author-text.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <label class="title">Prefix Text:</label>
+                                            <input type="text" name="tour_author_prefix_text"
+                                                value="{{ $settings->get('tour_author_prefix_text') ?? 'Designed and Developed by' }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
                                 <div class="title">Why Book With Us?</div>
                             </div>
                             <div class="form-box__body">

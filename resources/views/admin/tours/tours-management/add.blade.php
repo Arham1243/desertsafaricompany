@@ -2112,10 +2112,10 @@
                                         <select class="select2-select" name="tour[status][author_id]"
                                             data-error="Author">
                                             <option value="" selected>Select</option>
-                                            @foreach ($users as $users)
-                                                <option value="{{ $users->id }}"
-                                                    {{ old('tour[status][author_id]') == $users->id ? 'selected' : '' }}>
-                                                    {{ $users->full_name }}
+                                            @foreach ($authors as $author)
+                                                <option value="{{ $author->id }}"
+                                                    {{ old('tour[status][author_id]') == $author->id || $author->system === 1 ? 'selected' : '' }}>
+                                                    {{ $author->name }}
                                                 </option>
                                             @endforeach
                                         </select>

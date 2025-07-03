@@ -12,7 +12,17 @@
                 <div class="share-popup__body">
                     <ul class="platforms">
                         <li class="platform">
-                            <a href="https://wa.me/?text={{ $tour->title }}%20{{ url()->current() }}" target="_blank">
+                            @php
+                                $whatsappNumberDialCode = trim($settings->get('whatsapp_number_dial_code'));
+                                $whatsappNumberRaw = trim($settings->get('whatsapp_number'));
+                                $whatsappNumber = ltrim(preg_replace('/\D/', '', $whatsappNumberRaw), '0');
+                                $fullWhatsappNumber = $whatsappNumberDialCode . $whatsappNumber;
+                                $text = rawurlencode(
+                                    "Hi, I'm interested in this tour:\n{$tour->title}\n" . url()->current(),
+                                );
+                            @endphp
+
+                            <a href="https://wa.me/{{ $fullWhatsappNumber }}?text={{ $text }}" target="_blank">
                                 <div class="icon" style="background: #27D469;">
                                     <i class='bx bxl-whatsapp'></i>
                                 </div>
@@ -20,16 +30,24 @@
                             </a>
                         </li>
                         <li class="platform">
-                            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ url()->current() }}&title={{ $tour->title }}"
-                                target="_blank">
-                                <div class="icon" style="background: #0179B7;">
-                                    <i class='bx bxl-linkedin'></i>
+                            @php
+                                $instagramUsername = $settings->get('instagram_username');
+                            @endphp
+                            <a href="https://instagram.com/{{ $instagramUsername }}" target="_blank">
+                                <div class="icon"
+                                    style="background: #d6249f;
+  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); 
+">
+                                    <i class="bx bxl-instagram"></i>
                                 </div>
-                                <div class="title">LinkedIn</div>
+                                <div class="title">Instagram</div>
                             </a>
-                        </li>
                         <li class="platform">
-                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ url()->current() }}" target="_blank">
+                            @php
+                                $fbPageIdOrUsername = $settings->get('facebook_username');
+                            @endphp
+
+                            <a href="https://m.me/{{ $fbPageIdOrUsername }}" target="_blank">
                                 <div class="icon" style="background: #3D5A98;">
                                     <i class='bx bxl-facebook'></i>
                                 </div>
@@ -46,7 +64,17 @@
                             </a>
                         </li>
                         <li class="platform">
-                            <a href="mailto:?subject={{ $tour->title }}&body={{ url()->current() }}" target="_blank">
+                            @php
+                                $companyEmail = $settings->get('company_email');
+                                $subject = rawurlencode("Inquiry: {$tour->title}");
+                                $body = rawurlencode(
+                                    "Hi,\nI'm interested in the following tour:\n\nTitle: {$tour->title}\nLink: " .
+                                        url()->current(),
+                                );
+                            @endphp
+
+                            <a href="mailto:{{ $companyEmail }}?subject={{ $subject }}&body={{ $body }}"
+                                target="_blank">
                                 <div class="icon" style="background: grey;">
                                     <i class='bx bxs-envelope'></i>
                                 </div>
@@ -125,27 +153,35 @@
                                         </div>
                                     </div>
                                     <div class=tour-content__headerLocation--details>
+                                        @php
+                                            $authorPrefixText = $settings->get('tour_author_prefix_text');
+                                            $bgColor = $settings->get('badge_background_color');
+                                            $iconColor = $settings->get('badge_icon_color');
+                                            $iconColor = $settings->get('badge_icon_color');
+                                            $badge = json_decode($tour->badge);
+                                            $iconClass = $badge->icon_class ?? '';
+                                            $badgeName = $badge->name ?? '';
+
+                                            $style = '';
+                                            if ($bgColor) {
+                                                $style .= "background-color: $bgColor;";
+                                            }
+                                            if ($iconColor) {
+                                                $style .= "color: $iconColor;";
+                                            }
+                                        @endphp
                                         @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
                                             <span class=pipeDivider></span>
-                                            @php
-                                                $bgColor = $settings->get('badge_background_color');
-                                                $iconColor = $settings->get('badge_icon_color');
-                                                $badge = json_decode($tour->badge);
-                                                $iconClass = $badge->icon_class ?? '';
-                                                $badgeName = $badge->name ?? '';
-
-                                                $style = '';
-                                                if ($bgColor) {
-                                                    $style .= "background-color: $bgColor;";
-                                                }
-                                                if ($iconColor) {
-                                                    $style .= "color: $iconColor;";
-                                                }
-                                            @endphp
-
                                             <div class="badge-of-excellence">
                                                 <i style="{{ $style }}" class="{{ $iconClass }}"></i>
                                                 {{ $badgeName }}
+                                            </div>
+                                        @else
+                                            <span class=pipeDivider></span>
+                                            <div class="badge-of-excellence">
+                                                <i style="{{ $style }}" class="{{ $iconClass }}"></i>
+                                                <span>{{ $authorPrefixText ?? 'Designed and Developed by' }}</span>
+                                                <div class="bold-primary">{{ $tour->author->name }}</div>
                                             </div>
                                         @endif
                                         @if ($tour->cities->isNotEmpty())

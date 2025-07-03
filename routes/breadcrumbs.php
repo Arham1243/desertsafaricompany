@@ -134,6 +134,19 @@ Breadcrumbs::for('admin.tour-categories.edit', function (BreadcrumbTrail $trail,
     $trail->push($item->name ?? 'N/A', route('admin.tour-categories.edit', $item->id));
 });
 
+Breadcrumbs::for('admin.tour-authors.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tours.index');
+    $trail->push('Authors', route('admin.tour-authors.index'));
+});
+Breadcrumbs::for('admin.tour-authors.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tour-authors.index');
+    $trail->push('Add Author', route('admin.tour-authors.create'));
+});
+Breadcrumbs::for('admin.tour-authors.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.tour-authors.index');
+    $trail->push($item->name ?? 'N/A', route('admin.tour-authors.edit', $item->id));
+});
+
 Breadcrumbs::for('admin.tour-attributes.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.tours.index');
     $trail->push('Attributes', route('admin.tour-attributes.index'));

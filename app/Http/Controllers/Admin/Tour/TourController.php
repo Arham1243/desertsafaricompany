@@ -7,11 +7,11 @@ use App\Models\City;
 use App\Models\Tour;
 use App\Models\TourAddOn;
 use App\Models\TourAttribute;
+use App\Models\TourAuthor;
 use App\Models\TourCategory;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
 use App\Models\TourPricing;
-use App\Models\User;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -34,7 +34,7 @@ class TourController extends Controller
         $categories = TourCategory::where('status', 'publish')->latest()->get();
 
         $tours = Tour::all();
-        $users = User::where('is_active', 1)->get();
+        $authors = TourAuthor::where('status', 'active')->get();
         $attributes = TourAttribute::where('status', 'active')
             ->latest()->get();
 
@@ -44,7 +44,7 @@ class TourController extends Controller
             'cities',
             'attributes',
             'tours',
-            'users'
+            'authors'
         );
 
         return view('admin.tours.tours-management.add', $data)->with('title', 'Add New Tour');
@@ -83,6 +83,7 @@ class TourController extends Controller
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
+        $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -103,7 +104,7 @@ class TourController extends Controller
             'details' => $details,
             'features' => $features,
             'status' => $statusTab['status'],
-            'author_id' => $statusTab['author_id'],
+            'author_id' => $statusTab['author_id'] ?? optional($systemAuthor)->id,
             'is_featured' => $statusTab['is_featured'] ?? 0,
             'featured_state' => $statusTab['featured_state'] ?? null,
             'ical_import_url' => $statusTab['ical_import_url'] ?? null,
@@ -279,10 +280,10 @@ class TourController extends Controller
         $categories = TourCategory::where('status', 'publish')->latest()->get();
 
         $tours = Tour::where('id', '!=', $id)->get();
-        $users = User::where('is_active', 1)->get();
+        $authors = TourAuthor::where('status', 'active')->get();
 
         $cities = City::where('status', 'publish')->get();
-        $data = compact('tour', 'categories', 'cities', 'tours', 'users', 'attributes');
+        $data = compact('tour', 'categories', 'cities', 'tours', 'authors', 'attributes');
 
         return view('admin.tours.tours-management.edit', $data)->with('title', ucfirst(strtolower($tour->title)));
     }
@@ -322,6 +323,7 @@ class TourController extends Controller
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
+        $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour->update([
             'title' => $general['title'] ?? null,
@@ -342,7 +344,7 @@ class TourController extends Controller
             'exclusions' => $exclusions,
             'features' => $features,
             'status' => $statusTab['status'],
-            'author_id' => $statusTab['author_id'],
+            'author_id' => $statusTab['author_id'] ?? optional($systemAuthor)->id,
             'is_featured' => $statusTab['is_featured'] ?? 0,
             'is_open_hours' => $availabilityData['is_open_hours'] ?? 0,
             'featured_state' => $statusTab['featured_state'] ?? null,
