@@ -39,8 +39,8 @@
                                                 $socialMediaValue = $settings->get($socialMedia['platform']);
                                             @endphp
                                             <div class="form-fields">
-                                                <label class="title">{{ $socialMedia['label'] }}</label>
-                                                <input type="url" name="{{ $socialMedia['platform'] }}"
+                                                <label class="title">{{ $socialMedia['label'] }} Url:</label>
+                                                <input type="url" name="{{ $socialMedia['platform'] }}_urls"
                                                     value="{{ $socialMediaValue ?? '' }}" class="field">
                                             </div>
                                         </div>
