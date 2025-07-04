@@ -832,3 +832,12 @@ function calculatePromoPrice() {
         $(this).find("[promo-price]").val(promoPrice.toFixed(2));
     });
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const dateInputs = document.querySelectorAll('input[type="datetime-local"], input[type="date"]');
+    if (dateInputs.length) {
+        dateInputs.forEach(input => {
+            input.addEventListener('click', () => input.showPicker && input.showPicker());
+        });
+    }
+});

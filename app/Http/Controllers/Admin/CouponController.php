@@ -22,15 +22,24 @@ class CouponController extends Controller
 
     public function store(Request $request)
     {
+        $request->merge([
+            'no_expiry' => $request->has('no_expiry') ? 1 : 0,
+        ]);
+
         $validatedData = $request->validate([
             'code' => 'required|string|max:255|unique:coupons,code',
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric|min:0',
             'discount_type' => 'required|in:percentage,fixed',
-            'minimum_order_amount' => 'required|numeric|min:0',
-            'expiry_date' => 'required|date|after_or_equal:today',
+            'minimum_order_amount' => 'nullable|numeric|min:0',
+            'no_expiry' => 'nullable|boolean',
+            'expiry_date' => 'nullable|date|after_or_equal:today',
             'status' => 'required|in:active,inactive',
         ]);
+
+        if (! $validatedData['no_expiry']) {
+            $validatedData['expiry_date'] = null;
+        }
 
         Coupon::create($validatedData);
 
@@ -48,15 +57,24 @@ class CouponController extends Controller
     {
         $coupon = Coupon::findOrFail($id);
 
+        $request->merge([
+            'no_expiry' => $request->has('no_expiry') ? 1 : 0,
+        ]);
+
         $validatedData = $request->validate([
             'code' => 'required|string|max:255|unique:coupons,code,'.$id,
             'name' => 'required|string|min:3',
             'amount' => 'required|numeric|min:0',
             'discount_type' => 'required|in:percentage,fixed',
-            'minimum_order_amount' => 'required|numeric|min:0',
-            'expiry_date' => 'required|date|after_or_equal:today',
+            'minimum_order_amount' => 'nullable|numeric|min:0',
+            'expiry_date' => 'nullable|date|after_or_equal:today',
+            'no_expiry' => 'nullable|boolean',
             'status' => 'required|in:active,inactive',
         ]);
+
+        if (! $validatedData['no_expiry']) {
+            $validatedData['expiry_date'] = null;
+        }
 
         $coupon->update($validatedData);
 

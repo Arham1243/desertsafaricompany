@@ -56,15 +56,15 @@
                                                         class="bulk-item" name="bulk_select[]" value="{{ $item->id }}">
                                                 </div>
                                             </td>
-                                            <td>{{ $item->code }}</td>
                                             <td>
                                                 <a href="{{ route('admin.coupons.edit', $item->id) }}"
                                                     class="link">{{ $item->name }}</a>
                                             </td>
+                                            <td>{{ $item->code }}</td>
                                             <td>{{ $item->amount }}</td>
                                             <td style="text-transform: capitalize">{{ $item->discount_type }}</td>
                                             <td>
-                                                {{ formatDateTime($item->expiry_date) }}
+                                                {{ !$item->no_expiry ? 'No Expiry' : formatDateTime($item->expiry_date) }}
                                             </td>
                                             <td>
                                                 {{ formatDateTime($item->created_at) }}
@@ -79,7 +79,7 @@
                                                         );
                                                 @endphp
                                                 <span
-                                                    class="badge rounded-pill bg-{{ $isExpired ? 'warning' : ($item->status == 'active' ? 'success' : 'warning') }}">
+                                                    class="badge rounded-pill bg-{{ $isExpired ? 'warning' : ($item->status == 'active' ? 'success' : 'danger') }}">
                                                     {{ $isExpired ? 'Expired' : ucfirst($item->status) }}
                                                 </span>
                                             </td>

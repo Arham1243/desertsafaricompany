@@ -42,53 +42,70 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 mb-4">
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Discount Type <span class="text-danger">*</span>
                                                     :</label>
-                                                <select name="discount_type" class="field" data-required data-error="Name">
+                                                <select name="discount_type" class="field" data-required
+                                                    data-error="Discount Type">
                                                     <option value="" selected disabled>Select</option>
-                                                    <option value="percentage">Percentage</option>
-                                                    <option value="fixed">Fixed</option>
+                                                    <option value="percentage"
+                                                        {{ old('discount_type') == 'percentage' ? 'selected' : '' }}>
+                                                        Percentage</option>
+                                                    <option value="fixed"
+                                                        {{ old('discount_type') == 'fixed' ? 'selected' : '' }}>Fixed
+                                                    </option>
                                                 </select>
                                                 @error('discount_type')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-4">
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Amount <span class="text-danger">*</span> :</label>
-                                                <input type="text" name="amount" class="field"
+                                                <label class="title">Enter Amount or Percentage <span
+                                                        class="text-danger">*</span> :</label>
+                                                <input type="number" name="amount" class="field"
                                                     value="{{ old('amount') }}" data-required data-error="Amount">
                                                 @error('amount')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-4">
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Minimum Order Amount <span
-                                                        class="text-danger">*</span> :</label>
-                                                <input type="text" name="minimum_order_amount" class="field"
-                                                    value="{{ old('minimum_order_amount') }}" data-required
-                                                    data-error="Minimum Order Amount">
+                                                <label class="title">Minimum Order Amount :</label>
+                                                <input type="number" name="minimum_order_amount" class="field"
+                                                    value="{{ old('minimum_order_amount') }}">
                                                 @error('minimum_order_amount')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-
-                                        <div class="col-md-6 mb-4">
+                                        <div class="col-md-12 mb-4" x-data="{ hasExpiry: {{ old('no_expiry', 0) ? 'false' : 'true' }} }">
                                             <div class="form-fields">
-                                                <label class="title">Expiry Date <span class="text-danger">*</span>
-                                                    :</label>
-                                                <input type="datetime-local" name="expiry_date" class="field"
-                                                    value="{{ old('expiry_date') }}" data-required data-error="Expiry Date"
-                                                    min="{{ now()->toDateString() }}">
-                                                @error('expiry_date')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                <div class="form-check mb-3">
+                                                    <input class="form-check-input" type="checkbox" id="no_expiry"
+                                                        name="no_expiry" value="1" x-model="hasExpiry"
+                                                        :value="!hasExpiry ? 1 : 0">
+                                                    <label class="form-check-label" for="no_expiry">Has Expiry</label>
+                                                </div>
+
+                                                <template x-if="hasExpiry">
+                                                    <div>
+                                                        <label class="title">Expiry Date <span class="text-danger">*</span>
+                                                            :</label>
+                                                        <input type="datetime-local" name="expiry_date" class="field"
+                                                            value="{{ old('expiry_date') }}" data-required
+                                                            data-error="Expiry Date"
+                                                            min="{{ now()->format('Y-m-d\TH:i') }}"
+                                                            x-init="$el.addEventListener('click', () => $el.showPicker && $el.showPicker())">
+
+                                                        @error('expiry_date')
+                                                            <div class="text-danger">{{ $message }}</div>
+                                                        @enderror
+                                                    </div>
+                                                </template>
                                             </div>
                                         </div>
                                     </div>

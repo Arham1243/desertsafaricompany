@@ -42,7 +42,11 @@ if (! function_exists('handleSeoData')) {
 if (! function_exists('formatDateTime')) {
     function formatDateTime($date)
     {
-        return Carbon::parse($date)->format('M j, Y - g:i A');
+        if (empty($date)) {
+            return '-';
+        }
+
+        return \Carbon\Carbon::parse($date)->format('M j, Y - g:i A');
     }
 }
 if (! function_exists('formatDate')) {
