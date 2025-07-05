@@ -39,9 +39,11 @@
                                 </div>
                             </td>
                             <td>
-                                <a href="{{ route('admin.tour-authors.edit', $systemAuthor->id) }}" class="link">
-                                    {{ $systemAuthor->name }}
-                                </a>
+                                @if ($systemAuthor)
+                                    <a href="{{ route('admin.tour-authors.edit', $systemAuthor->id) }}" class="link">
+                                        {{ $systemAuthor->name }}
+                                    </a>
+                                @endif
                             </td>
                             <td class="p-0">
                                 <span class="badge rounded-pill bg-warning">
