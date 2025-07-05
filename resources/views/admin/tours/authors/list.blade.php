@@ -32,26 +32,26 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>
-                                <div class="selection item-select-container">
-                                    <input type="checkbox" disabled style="pointer-events: none;">
-                                </div>
-                            </td>
-                            <td>
-                                @if ($systemAuthor)
+                        @if ($systemAuthor)
+                            <tr>
+                                <td>
+                                    <div class="selection item-select-container">
+                                        <input type="checkbox" disabled style="pointer-events: none;">
+                                    </div>
+                                </td>
+                                <td>
                                     <a href="{{ route('admin.tour-authors.edit', $systemAuthor->id) }}" class="link">
                                         {{ $systemAuthor->name }}
                                     </a>
-                                @endif
-                            </td>
-                            <td class="p-0">
-                                <span class="badge rounded-pill bg-warning">
-                                    default
-                                </span>
-                            </td>
-                            <td>{{ formatDateTime($systemAuthor->created_at) }}</td>
-                        </tr>
+                                </td>
+                                <td class="p-0">
+                                    <span class="badge rounded-pill bg-warning">
+                                        default
+                                    </span>
+                                </td>
+                                <td>{{ formatDateTime($systemAuthor->created_at) }}</td>
+                            </tr>
+                        @endif
                         @foreach ($authors as $author)
                             <tr>
                                 <td>
