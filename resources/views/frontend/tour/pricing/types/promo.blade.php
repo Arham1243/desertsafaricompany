@@ -33,6 +33,10 @@
                 </div>
             </div>
         </div>
+        <a v-if="promoTourData.filter(p => p.source === 'promo').length > 4" href="javascript:void(0)"
+            @click="toggleShowAll" class="see-more-promo">
+            @{{ showAllPromos ? 'Show Less' : `See All ${promoTourData.filter(p => p.source === 'promo').length} Options` }}
+        </a>
         <div class="promo-addOns-wrapper" v-if="hasAnyPromoQuantity && promoAddOnsTourData.length > 0">
             <div class="form-guest-search__title"> Available Upgrades </div>
             <template v-for="(addOn, index) in promoAddOnsTourData" :key="index">
@@ -140,9 +144,6 @@
                 </div>
             </template>
         </div>
-        <a v-if="promoTourData.length > 4" href="javascript:void(0)" @click="toggleShowAll" class="see-more-promo">
-            @{{ showAllPromos ? 'Show Less' : `See All ${promoTourData.filter(p => p.source === 'promo').length} Options` }}
-        </a>
     </template>
     <template v-else>
         <div v-for="i in 3" :key="i" class="form-group form-guest-search">
