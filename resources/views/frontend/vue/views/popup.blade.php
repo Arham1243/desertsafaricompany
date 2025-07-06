@@ -26,7 +26,7 @@
                 <form @submit.prevent="checkEmail">
                     <div class="loginSignup-popup__email">
                         <input v-model="email" type="email" placeholder="Email address" class="check-fields" required
-                            name="email" autocomplete="off">
+                            name="email">
                     </div>
                     <button type="submit" class="loginSignup-popup__btn" :class="{ 'disabled': !isEmailValid }"
                         :disabled="loading">

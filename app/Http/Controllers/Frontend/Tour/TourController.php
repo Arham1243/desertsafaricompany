@@ -17,12 +17,12 @@ class TourController extends Controller
 {
     public function index()
     {
-
         $tours = Tour::where('status', 'publish')->get();
         $data = compact('tours');
 
         return view('frontend.tour.index')
-            ->with('title', 'Top Tours')->with($data);
+            ->with('title', 'Top Tours')
+            ->with($data);
     }
 
     public function details(Request $request, $slug)
@@ -30,7 +30,8 @@ class TourController extends Controller
         $settings = Setting::pluck('value', 'key');
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
-            ->latest()->get();
+            ->latest()
+            ->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
         $this->trackTourView($request, $tour->id);
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
@@ -103,40 +104,94 @@ class TourController extends Controller
         $tourId = $request->input('tour_id');
         $isWeekend = filter_var($request->input('isWeekend'), FILTER_VALIDATE_BOOLEAN);
 
-        $tour = Tour::with('promoPrices')->findOrFail($tourId);
+        $tour = Tour::with(['promoPrices', 'promoAddons'])->findOrFail($tourId);
 
         $now = now();
         $hourOfDay = $now->hour;
 
-        $promoDiscountConfig = $tour->promo_discount_config
-            ? json_decode($tour->promo_discount_config, true)
-            : [];
+        $config = $tour->promo_discount_config ? json_decode($tour->promo_discount_config, true) : [];
 
-        $promoTourData = $tour->promoPrices->map(function ($promoPrice) use ($promoDiscountConfig, $hourOfDay, $isWeekend) {
-            $originalPrice = (float) $promoPrice->original_price;
+        $discountPercent = $isWeekend ? $config['weekend_discount_percent'] ?? 0 : $config['weekday_discount_percent'] ?? 0;
 
-            $discountPercent = $isWeekend
-                ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
-                : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+        $timerHours = (int) ($isWeekend ? $config['weekend_timer_hours'] ?? 0 : $config['weekday_timer_hours'] ?? 0);
 
-            $timerHours = (int) ($isWeekend
-                ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
-                : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
+        $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
 
-            $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
+        $promoData = collect();
 
-            $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
+        // Promo prices
+        $promoData = $promoData->concat(
+            $tour->promoPrices->map(function ($promoPrice) use ($discountPercent, $hoursLeft) {
+                $original = (float) $promoPrice->original_price;
+                $discounted = $original - $original * ($discountPercent / 100);
 
-            return [
-                'promo_title' => $promoPrice->promo_title,
-                'original_price' => number_format($originalPrice, 2),
-                'discount_percent' => $discountPercent,
-                'discounted_price' => number_format($discountedPrice, 2),
-                'quantity' => 0,
-                'hours_left' => $hoursLeft,
-            ];
-        });
+                return [
+                    'source' => 'promo',
+                    'title' => $promoPrice->promo_title,
+                    'original_price' => number_format($original, 2),
+                    'discount_percent' => $discountPercent,
+                    'discounted_price' => number_format($discounted, 2),
+                    'quantity' => 0,
+                    'hours_left' => $hoursLeft,
+                ];
+            }),
+        );
 
-        return response()->json($promoTourData);
+        // Promo addons
+        $promoData = $promoData->concat(
+            $tour->promoAddons->flatMap(function ($pricing) use ($discountPercent, $hoursLeft) {
+                $addons = json_decode($pricing->promo_addons ?? '[]', true);
+
+                return collect($addons)
+                    ->map(function ($addon) use ($discountPercent, $hoursLeft) {
+                        if ($addon['type'] === 'simple') {
+                            $original = floatval($addon['price']);
+                            $discounted = $original - ($original * $discountPercent) / 100;
+
+                            return [
+                                'source' => 'addon',
+                                'type' => 'simple',
+                                'title' => $addon['title'],
+                                'original_price' => number_format($original, 2),
+                                'discount_percent' => $discountPercent,
+                                'discounted_price' => number_format($discounted, 2),
+                                'quantity' => 0,
+                                'hours_left' => $hoursLeft,
+                                'is_selected' => false,
+                            ];
+                        }
+
+                        if ($addon['type'] === 'timeslot') {
+                            $slots = collect($addon['slots'] ?? []);
+
+                            return [
+                                'source' => 'addon',
+                                'type' => 'timeslot',
+                                'title' => $addon['title'],
+                                'discount_percent' => $discountPercent,
+                                'quantity' => 0,
+                                'selected_slots' => [],
+                                'hours_left' => $hoursLeft,
+                                'is_selected' => false,
+                                'slots' => $slots->map(function ($slot) use ($discountPercent) {
+                                    $price = floatval($slot['price']);
+                                    $discounted = $price - ($price * $discountPercent) / 100;
+
+                                    return [
+                                        'time' => $slot['time'],
+                                        'original_price' => number_format($price, 2),
+                                        'discounted_price' => number_format($discounted, 2),
+                                    ];
+                                })->values(),
+                            ];
+                        }
+
+                        return null;
+                    })
+                    ->filter();
+            }),
+        );
+
+        return response()->json($promoData->values());
     }
 }

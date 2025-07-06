@@ -105,6 +105,11 @@ class Tour extends Model
         return $this->hasMany(TourPricing::class)->where('price_type', 'promo');
     }
 
+    public function promoAddons()
+    {
+        return $this->hasMany(TourPricing::class)->where('price_type', 'promoAddOn');
+    }
+
     public function getFormatedPriceTypeAttribute()
     {
         $types = [

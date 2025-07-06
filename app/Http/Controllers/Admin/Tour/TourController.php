@@ -30,13 +30,13 @@ class TourController extends Controller
 
     public function create()
     {
-
         $categories = TourCategory::where('status', 'publish')->latest()->get();
 
         $tours = Tour::all();
         $authors = TourAuthor::where('status', 'active')->get();
         $attributes = TourAttribute::where('status', 'active')
-            ->latest()->get();
+            ->latest()
+            ->get();
 
         $cities = City::where('status', 'publish')->get();
         $data = compact(
@@ -58,6 +58,7 @@ class TourController extends Controller
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
+        $promoAddOns = $request->input('tour.pricing.promo.addOns', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours');
@@ -120,6 +121,7 @@ class TourController extends Controller
             'is_person_type_enabled' => $pricing['is_person_type_enabled'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
+            'enable_promo_addOns' => $pricing['enable_promo_addOns'] ?? 0,
             'extra_prices' => $extraPrices ?? null,
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
             'enable_discount_by_persons' => $pricing['enable_discount_by_persons'] ?? 0,
@@ -159,7 +161,6 @@ class TourController extends Controller
         }
 
         if (isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == '1') {
-
             if ($pricing['price_type'] === 'normal' && isset($pricing['normal'])) {
                 foreach ($pricing['normal']['person_type'] as $index => $personType) {
                     TourPricing::create([
@@ -202,6 +203,13 @@ class TourController extends Controller
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
+                    ]);
+                }
+                if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
+                    TourPricing::create([
+                        'tour_id' => $tour->id,
+                        'price_type' => 'promoAddOn',
+                        'promo_addons' => ! empty($promoAddOns) ? json_encode($promoAddOns) : null,
                     ]);
                 }
             }
@@ -276,7 +284,8 @@ class TourController extends Controller
     {
         $tour = Tour::with(['attributes', 'attributes.attributeItems'])->find($id);
         $attributes = TourAttribute::where('status', 'active')
-            ->latest()->get();
+            ->latest()
+            ->get();
         $categories = TourCategory::where('status', 'publish')->latest()->get();
 
         $tours = Tour::where('id', '!=', $id)->get();
@@ -297,6 +306,7 @@ class TourController extends Controller
         $availabilityData = $request->input('tour.availability', []);
         $pricing = $request->input('tour.pricing', []);
         $location = $request->input('tour.location', []);
+        $promoAddOns = $request->input('tour.pricing.promo.addOns', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
@@ -318,8 +328,8 @@ class TourController extends Controller
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
         $discounts = ! empty($pricing['discount']) ? json_encode($pricing['discount']) : null;
         $promoDiscountConfig = isset($request->tour['pricing']['promo']['discount'])
-    ? json_encode($request->tour['pricing']['promo']['discount'])
-    : null;
+            ? json_encode($request->tour['pricing']['promo']['discount'])
+            : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
@@ -361,6 +371,7 @@ class TourController extends Controller
             'enable_discount_by_persons' => $pricing['enable_discount_by_persons'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
+            'enable_promo_addOns' => $pricing['enable_promo_addOns'] ?? 0,
             'extra_prices' => $extraPrices ?? null,
             'service_fee_price' => $pricing['service_fee_price'] ?? null,
             'show_phone' => $pricing['show_phone'] ?? 0,
@@ -448,6 +459,13 @@ class TourController extends Controller
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);
                 }
+                if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
+                    TourPricing::create([
+                        'tour_id' => $tour->id,
+                        'price_type' => 'promoAddOn',
+                        'promo_addons' => ! empty($promoAddOns) ? json_encode($promoAddOns) : null,
+                    ]);
+                }
             }
         }
 
@@ -458,7 +476,6 @@ class TourController extends Controller
             }
 
             if ($location['location_type'] === 'normal_itinerary') {
-
                 $ids = $location['normal_itinerary']['ids'] ?? [];
                 $tour->normalItineraries()->whereNotIn('id', $ids)->delete();
 
@@ -485,7 +502,6 @@ class TourController extends Controller
                                 ]);
                             }
                         } else {
-
                             TourItinerary::create([
                                 'tour_id' => $tour->id,
                                 'day' => $day ?? null,
@@ -551,7 +567,6 @@ class TourController extends Controller
 
     public function duplicate($id)
     {
-
         $tour = Tour::findOrFail($id);
 
         $newTour = $tour->replicate();
@@ -576,11 +591,9 @@ class TourController extends Controller
 
     public function duplicateSeoData($tour, $newTour)
     {
-
         $tour->load('seo');
 
         if ($tour->seo) {
-
             $newSeoData = $tour->seo->replicate();
 
             $newSeoData->seoable_id = $newTour->id;

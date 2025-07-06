@@ -1,41 +1,93 @@
 @php
-    use Carbon\Carbon;
+    $now = now();
+    $today = strtolower($now->englishDayOfWeek);
+    $hourOfDay = $now->hour;
 
-    $promoTourData = $tour->promoPrices->map(function ($promoPrice) use ($tour) {
-        $now = Carbon::now();
-        $today = strtolower($now->englishDayOfWeek);
-        $hourOfDay = $now->hour;
+    $isWeekend = in_array($today, ['friday', 'saturday', 'sunday']);
 
-        $originalPrice = (float) $promoPrice->original_price;
+    $config = $tour->promo_discount_config ? json_decode($tour->promo_discount_config, true) : [];
 
-        $promoDiscountConfig =
-            isset($tour->promo_discount_config) && $tour->promo_discount_config
-                ? json_decode($tour->promo_discount_config, true)
-                : [];
+    $discountPercent = $isWeekend ? $config['weekend_discount_percent'] ?? 0 : $config['weekday_discount_percent'] ?? 0;
 
-        $isWeekend = in_array($today, ['friday', 'saturday', 'sunday']);
+    $timerHours = (int) ($isWeekend ? $config['weekend_timer_hours'] ?? 0 : $config['weekday_timer_hours'] ?? 0);
 
-        $discountPercent = $isWeekend
-            ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
-            : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+    $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
 
-        $timerHours = (int) ($isWeekend
-            ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
-            : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
+    $promoData = collect();
 
-        $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
+    $promoData = $promoData->concat(
+        $tour->promoPrices->map(function ($promoPrice) use ($discountPercent, $hoursLeft) {
+            $original = (float) $promoPrice->original_price;
+            $discounted = $original - $original * ($discountPercent / 100);
 
-        $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
+            return [
+                'source' => 'promo',
+                'title' => $promoPrice->promo_title,
+                'original_price' => number_format($original, 2),
+                'discount_percent' => $discountPercent,
+                'discounted_price' => number_format($discounted, 2),
+                'quantity' => 0,
+                'hours_left' => $hoursLeft,
+            ];
+        }),
+    );
 
-        return [
-            'promo_title' => $promoPrice->promo_title,
-            'original_price' => number_format($originalPrice, 2),
-            'discount_percent' => $discountPercent,
-            'discounted_price' => number_format($discountedPrice, 2),
-            'quantity' => 0,
-            'hours_left' => $hoursLeft,
-        ];
-    });
+    $promoData = $promoData->concat(
+        $tour->promoAddons->flatMap(function ($pricing) use ($discountPercent, $hoursLeft) {
+            $addons = json_decode($pricing->promo_addons ?? '[]', true);
+
+            return collect($addons)
+                ->map(function ($addon) use ($discountPercent, $hoursLeft) {
+                    if ($addon['type'] === 'simple') {
+                        $original = floatval($addon['price']);
+                        $discounted = $original - ($original * $discountPercent) / 100;
+
+                        return [
+                            'source' => 'addon',
+                            'type' => 'simple',
+                            'title' => $addon['title'],
+                            'original_price' => number_format($original, 2),
+                            'discount_percent' => $discountPercent,
+                            'discounted_price' => number_format($discounted, 2),
+                            'quantity' => 0,
+                            'hours_left' => $hoursLeft,
+                            'is_selected' => false,
+                        ];
+                    }
+
+                    if ($addon['type'] === 'timeslot') {
+                        $slots = collect($addon['slots'] ?? []);
+
+                        return [
+                            'source' => 'addon',
+                            'type' => 'timeslot',
+                            'title' => $addon['title'],
+                            'discount_percent' => $discountPercent,
+                            'hours_left' => $hoursLeft,
+                            'quantity' => 0,
+                            'selected_slots' => [],
+                            'is_selected' => false,
+                            'slots' => $slots
+                                ->map(function ($slot) use ($discountPercent) {
+                                    $price = floatval($slot['price']);
+                                    $discounted = $price - ($price * $discountPercent) / 100;
+                                    return [
+                                        'time' => $slot['time'],
+                                        'original_price' => number_format($price, 2),
+                                        'discounted_price' => number_format($discounted, 2),
+                                    ];
+                                })
+                                ->values(),
+                        ];
+                    }
+
+                    return null;
+                })
+                ->filter();
+        }),
+    );
+
+    $promoTourData = $promoData->values();
 
     $normalTourData = $tour->normalPrices->mapWithKeys(function ($price) {
         return [
@@ -86,6 +138,14 @@
             const tourId = ref(@json($tour->id))
             const fetchingPromoPrices = ref(null)
 
+            const hasAnyPromoQuantity = computed(() =>
+                promoTourData.value.some(item => item.quantity > 0 && item.source === 'promo')
+            )
+
+            const promoAddOnsTourData = computed(() =>
+                promoTourData.value.filter(item => item.source === 'addon')
+            )
+
             const lowestPromoOriginalPrice = computed(() => {
                 if (!promoTourData.value?.length) return null;
 
@@ -124,12 +184,49 @@
                     }
                     const response = await axios.post(route, payload)
                     promoTourData.value = response.data
+                    updateTotalPrice()
                 } catch (error) {
                     showToast('error', error.response.data.message)
                 } finally {
                     fetchingPromoPrices.value = false;
                 }
             };
+
+            const handleSelectedSlotChange = (addOn) => {
+                if (!Array.isArray(addOn.selected_slots)) return
+
+                addOn.selected_slots.forEach((time) => {
+                    const slot = addOn.slots.find(s => s.time === time)
+                    if (slot) {
+                        updateTotalPrice()
+                    }
+                })
+            }
+
+            const handleAddonSelection = (addOn) => {
+                if (!addOn.is_selected) {
+                    const matched = promoTourData.value.find(
+                        item => item.title === addOn.title && item.source === 'addon'
+                    )
+
+                    if (matched) {
+                        matched.quantity = 0
+
+                        if (matched.type === 'timeslot') {
+                            matched.selected_slots = []
+                        }
+                    }
+
+                    updateTotalPrice()
+                }
+            }
+
+            const formatTimeLabel = (time) => {
+                const [hours, minutes] = time.split(':').map(Number)
+                if (hours && minutes) return `${hours} hr ${minutes} mins`
+                if (hours) return `${hours} hour`
+                return `${minutes} mins`
+            }
 
             const handleDateChange = (e) => {
                 startDate.value = e.target.value
@@ -155,10 +252,49 @@
                 @endif
                 totalPrice.value = initialTotalPrice;
 
-                promoTourData.value.forEach((promo) => {
-                    const applicablePrice = promo.discounted_price;
-                    totalPrice.value += applicablePrice * promo.quantity;
-                });
+                if (priceType === "promo") {
+                    const totalPromoQty = promoTourData.value
+                        .filter(item => item.source === 'promo')
+                        .reduce((sum, item) => sum + item.quantity, 0)
+
+                    if (totalPromoQty === 0) {
+                        promoTourData.value.forEach((item) => {
+                            if (item.source === 'addon') {
+                                item.is_selected = false
+                                item.quantity = 0
+                                if (item.type === 'timeslot') item.selected_slots = []
+                            }
+                        })
+                    }
+
+                    promoTourData.value.forEach((item) => {
+                        const price = parseFloat(item.discounted_price) || 0
+
+                        if (item.source === 'promo') {
+                            totalPrice.value += price * item.quantity
+                        }
+
+                        if (item.source === 'addon') {
+                            if (item.type === 'simple' && item.is_selected) {
+                                totalPrice.value += price * item.quantity
+                            }
+
+                            if (item.type === 'timeslot' && item.is_selected && Array.isArray(item
+                                    .selected_slots)) {
+                                if (item.quantity === 0) {
+                                    item.selected_slots = []
+                                }
+                                item.selected_slots.slice(0, item.quantity).forEach((slotTime) => {
+                                    const slot = item.slots.find((s) => s.time === slotTime)
+                                    if (slot) {
+                                        totalPrice.value += parseFloat(slot
+                                            .discounted_price) || 0
+                                    }
+                                })
+                            }
+                        }
+                    })
+                }
 
                 if (priceType === "normal") {
                     totalPrice.value += Object.values(normalTourData.value).reduce(
@@ -212,7 +348,7 @@
 
             const updatePromoQuantity = (action, personType) => {
                 const promoData = promoTourData.value.find(promo => formatNameForInput(promo
-                    .promo_title) === personType);
+                    .title) === personType);
                 if (!promoData) return;
 
                 promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData
@@ -270,7 +406,12 @@
                 toggleShowAll,
                 startDate,
                 handleDateChange,
-                fetchingPromoPrices
+                fetchingPromoPrices,
+                hasAnyPromoQuantity,
+                promoAddOnsTourData,
+                formatTimeLabel,
+                handleSelectedSlotChange,
+                handleAddonSelection,
             };
         },
     });

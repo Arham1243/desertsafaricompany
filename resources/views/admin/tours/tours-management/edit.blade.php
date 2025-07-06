@@ -1843,6 +1843,159 @@
                                                                         <i class="bx bx-plus"></i>
                                                                     </button>
                                                                 </div>
+                                                                <div x-data="{ enablePromoAddOns: {{ $tour->enable_promo_addOns == '1' ? '1' : '0' }} }">
+                                                                    <div x-data="promoAddons()"
+                                                                        class="repeater-table my-4">
+                                                                        <div class="form-fields">
+                                                                            <label class="title title--sm">Promo
+                                                                                Addons:</label>
+                                                                        </div>
+                                                                        <div class="form-fields">
+                                                                            <div class="form-check">
+                                                                                <input class="form-check-input"
+                                                                                    type="checkbox"
+                                                                                    id="enable_promo_addOns"
+                                                                                    {{ $tour->enable_promo_addOns == '1' ? 'checked' : '' }}
+                                                                                    value="1"
+                                                                                    name="tour[pricing][enable_promo_addOns]"
+                                                                                    x-model="enablePromoAddOns"
+                                                                                    @change="enablePromoAddOns = enablePromoAddOns ? 1 : 0">
+                                                                                <label class="form-check-label"
+                                                                                    for="enable_promo_addOns">
+                                                                                    Enable Addons
+                                                                                </label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div x-show="enablePromoAddOns == 1">
+                                                                            <template x-for="(addon, index) in addons"
+                                                                                :key="index">
+                                                                                <div class="border p-3 rounded mb-3">
+                                                                                    <div class="row g-3 align-items-end">
+                                                                                        <div class="col-md">
+                                                                                            <label
+                                                                                                class="title">Type:</label>
+                                                                                            <select class="field w-100"
+                                                                                                x-model="addon.type"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][type]`">
+                                                                                                <option value="simple">
+                                                                                                    Simple
+                                                                                                </option>
+                                                                                                <option value="timeslot">
+                                                                                                    Timeslot
+                                                                                                </option>
+                                                                                            </select>
+                                                                                        </div>
+
+                                                                                        <div class="col-md">
+                                                                                            <label class="title">Addon
+                                                                                                Title:</label>
+                                                                                            <input type="text"
+                                                                                                class="field w-100"
+                                                                                                x-model="addon.title"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][title]`">
+                                                                                        </div>
+
+                                                                                        <div
+                                                                                            class="col-md-1 text-end mb-2">
+                                                                                            <button type="button"
+                                                                                                class="delete-btn delete-btn--static px-3"
+                                                                                                @click="remove(index)">
+                                                                                                <i
+                                                                                                    class='bx bxs-trash-alt'></i>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div x-show="addon.type === 'simple'"
+                                                                                        class="row mt-3">
+                                                                                        <div class="col-12">
+                                                                                            <label
+                                                                                                class="title">Price:</label>
+                                                                                            <input type="number"
+                                                                                                class="field w-100"
+                                                                                                min="0"
+                                                                                                step="0.01"
+                                                                                                x-model="addon.price"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][price]`">
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div x-show="addon.type === 'timeslot'"
+                                                                                        class="mt-3">
+                                                                                        <template
+                                                                                            x-for="(slot, sIndex) in addon.slots"
+                                                                                            :key="sIndex">
+                                                                                            <div
+                                                                                                class="row g-3 align-items-end mb-3">
+                                                                                                <div class="col-md">
+                                                                                                    <label
+                                                                                                        class="title">Time
+                                                                                                        Slot:</label>
+                                                                                                    <select
+                                                                                                        class="field w-100"
+                                                                                                        x-model="slot.time"
+                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][time]`">
+                                                                                                        <option
+                                                                                                            value="">
+                                                                                                            Select Time
+                                                                                                        </option>
+                                                                                                        <template
+                                                                                                            x-for="slotOpt in timeSlots"
+                                                                                                            :key="slotOpt">
+                                                                                                            <option
+                                                                                                                :selected="slot.time ===
+                                                                                                                    slotOpt"
+                                                                                                                :value="slotOpt"
+                                                                                                                x-text="formatTime(slotOpt)">
+                                                                                                            </option>
+                                                                                                        </template>
+                                                                                                    </select>
+                                                                                                </div>
+
+                                                                                                <div class="col-md">
+                                                                                                    <label
+                                                                                                        class="title">Price:</label>
+                                                                                                    <input type="number"
+                                                                                                        class="field w-100"
+                                                                                                        min="0"
+                                                                                                        step="0.01"
+                                                                                                        x-model="slot.price"
+                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][price]`">
+                                                                                                </div>
+
+                                                                                                <div
+                                                                                                    class="col-md-1 text-end mb-2">
+                                                                                                    <button type="button"
+                                                                                                        class="delete-btn delete-btn--static px-2"
+                                                                                                        @click="removeSlot(index, sIndex)">
+                                                                                                        <i
+                                                                                                            class='bx bxs-trash-alt'></i>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </template>
+
+                                                                                        <div class="text-end">
+                                                                                            <button type="button"
+                                                                                                class="themeBtn mt-2"
+                                                                                                @click="addSlot(index)">
+                                                                                                Add Timeslot <i
+                                                                                                    class="bx bx-plus"></i>
+                                                                                            </button>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </template>
+                                                                            <div class="text-end">
+                                                                                <button type="button"
+                                                                                    class="themeBtn mt-2"
+                                                                                    @click="add()">
+                                                                                    Add Addon <i class="bx bx-plus"></i>
+                                                                                </button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2754,6 +2907,10 @@
             'dropoff_locations' => $itineraryPickupDropoff['dropoff_locations'] ?? [],
         ];
     @endphp
+    @php
+        $decodedPromoAddons = json_decode(optional($tour->promoAddons->first())->promo_addons, true) ?? [];
+    @endphp
+
     <script>
         window.pickupDropoffData = {!! json_encode($pickupDropoffData) !!};
 
@@ -2865,6 +3022,49 @@
                 removeAddOn(index) {
                     this.formData.addOns.splice(index, 1)
                     this.initChoices()
+                }
+            }
+        }
+
+        function promoAddons() {
+            return {
+                timeSlots: [
+                    '00:15', '00:30', '00:45', '01:00',
+                    '01:15', '01:30', '01:45', '02:00',
+                    '02:15', '02:30', '02:45', '03:00',
+                    '03:15', '03:30', '03:45', '04:00'
+                ],
+                addons: @json($decodedPromoAddons).map(addon => ({
+                    ...addon,
+                    slots: addon.slots?.map(slot => ({
+                        time: slot.time ?? '',
+                        price: parseFloat(slot.price) || null
+                    })) || []
+                })),
+
+                formatTime(t) {
+                    const [h, m] = t.split(':').map(Number)
+                    return `${t} (${h * 60 + m} mins)`
+                },
+                add() {
+                    this.addons.push({
+                        title: '',
+                        type: 'simple',
+                        price: null,
+                        slots: []
+                    })
+                },
+                remove(index) {
+                    this.addons.splice(index, 1)
+                },
+                addSlot(addonIndex) {
+                    this.addons[addonIndex].slots.push({
+                        time: '',
+                        price: null
+                    })
+                },
+                removeSlot(addonIndex, slotIndex) {
+                    this.addons[addonIndex].slots.splice(slotIndex, 1)
                 }
             }
         }
