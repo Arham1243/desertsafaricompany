@@ -53,7 +53,6 @@
                                 <div class="promo-price cut">@{{ formatPrice(addOn.original_price) }}</div>
                                 <div class="promo-price green">@{{ formatPrice(addOn.discounted_price) }}</div>
                                 <span class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
-                                <div class="text-muted small"style="margin-bottom: .15rem;">per person</div>
                             </div>
                             <div class="promo-og-offer">
                                 <span class="offer">@{{ formatPrice(addOn.discounted_price) }} with promo</span>
@@ -96,7 +95,6 @@
                                 <div class="promo-price cut">@{{ formatPrice(addOn.slots[0].original_price) }}</div>
                                 <div class="promo-price green">@{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
                                 <span class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
-                                <div class="text-muted small">per person</div>
                             </div>
 
                             <div class="promo-og-offer">
