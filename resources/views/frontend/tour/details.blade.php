@@ -181,7 +181,7 @@
                                             <div class="badge-of-excellence">
                                                 <i style="{{ $style }}" class="{{ $iconClass }}"></i>
                                                 <span>{{ $authorPrefixText ?? 'Designed and Developed by' }}</span>
-                                                <div class="bold-primary">{{ $tour->author->name }}</div>
+                                                <div>{{ $tour->author->name }}</div>
                                             </div>
                                         @endif
                                         @if ($tour->cities->isNotEmpty())
