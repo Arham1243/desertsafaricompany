@@ -180,7 +180,7 @@
                                             <span class=pipeDivider></span>
                                             <div class="badge-of-excellence">
                                                 <i style="{{ $style }}" class="{{ $iconClass }}"></i>
-                                                <span>{{ $authorPrefixText ?? 'Designed and Developed by' }}</span>
+                                                <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
                                                 <div>{{ $tour->author->name }}</div>
                                             </div>
                                         @endif
