@@ -250,7 +250,21 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">Title</th>
+                                                                <th scope="col">
+                                                                    Title
+                                                                    <span
+                                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                        <span>To add a link:</span>
+                                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                                            href="//google.com"
+                                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                                        <button class="themeBtn copy-btn py-1 px-2"
+                                                                            type="button"
+                                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                            Copy
+                                                                        </button>
+                                                                    </span>
+                                                                </th>
                                                                 <th class="text-end" scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
@@ -289,7 +303,20 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">Title</th>
+                                                                <th scope="col">Title
+                                                                    <span
+                                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                        <span>To add a link:</span>
+                                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                                            href="//google.com"
+                                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                                        <button class="themeBtn copy-btn py-1 px-2"
+                                                                            type="button"
+                                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                            Copy
+                                                                        </button>
+                                                                    </span>
+                                                                </th>
                                                                 <th class="text-end" scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
@@ -421,7 +448,18 @@
                                                         <thead>
                                                             <tr>
                                                                 <th scope="col">Question</th>
-                                                                <th scope="col">Answer</th>
+                                                                <th scope="col">Answer <span
+                                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                        <span>To add a link:</span>
+                                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                                            href="//google.com"
+                                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                                        <button class="themeBtn copy-btn py-1 px-2"
+                                                                            type="button"
+                                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                            Copy
+                                                                        </button>
+                                                                    </span></th>
                                                                 <th class="text-end" scope="col">Remove</th>
                                                             </tr>
                                                         </thead>
@@ -2515,6 +2553,13 @@
                 }
             }
         }
+
+        document.addEventListener('click', e => {
+            if (e.target.matches('.copy-btn')) {
+                const text = e.target.getAttribute('text-to-copy')
+                if (text) navigator.clipboard.writeText(text)
+            }
+        })
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>

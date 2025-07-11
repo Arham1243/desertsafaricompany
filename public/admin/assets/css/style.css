@@ -2414,3 +2414,7 @@ body .badge.badge-sm {
 .breadcrumb {
     margin-bottom: 1rem !important;
 }
+
+.copy-btn {
+    font-size: 0.75rem !important;
+}
