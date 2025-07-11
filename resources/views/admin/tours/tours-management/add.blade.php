@@ -466,10 +466,10 @@
                                                         <tbody data-repeater-list>
                                                             <tr data-repeater-item>
                                                                 <td>
-                                                                    <textarea name="tour[general][faq][question][]" class="field"rows="2"></textarea>
+                                                                    <textarea name="tour[general][faq][question][]" class="field" rows="6"></textarea>
                                                                 </td>
                                                                 <td>
-                                                                    <textarea name="tour[general][faq][answer][]" class="field"rows="2"></textarea>
+                                                                    <textarea name="tour[general][faq][answer][]" class="field" rows="6"></textarea>
                                                                 </td>
                                                                 <td>
                                                                     <button type="button"

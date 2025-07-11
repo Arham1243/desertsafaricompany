@@ -514,10 +514,10 @@
                                                             @foreach ($faqs as $faq)
                                                                 <tr data-repeater-item>
                                                                     <td>
-                                                                        <textarea name="tour[general][faq][question][]" class="field" rows="2">{{ $faq['question'] ?? '' }}</textarea>
+                                                                        <textarea name="tour[general][faq][question][]" class="field" rows="6">{{ $faq['question'] ?? '' }}</textarea>
                                                                     </td>
                                                                     <td>
-                                                                        <textarea name="tour[general][faq][answer][]" class="field" rows="2">{{ $faq['answer'] ?? '' }}</textarea>
+                                                                        <textarea name="tour[general][faq][answer][]" class="field" rows="6">{{ $faq['answer'] ?? '' }}</textarea>
                                                                     </td>
                                                                     <td>
                                                                         <button type="button"
