@@ -20,10 +20,10 @@
                         @csrf
                         @php
                             $socialMediaPlatforms = [
-                                ['platform' => 'facebook', 'label' => 'Facebook'],
-                                ['platform' => 'twitter', 'label' => 'Twitter'],
-                                ['platform' => 'instagram', 'label' => 'Instagram'],
-                                ['platform' => 'linkedin', 'label' => 'LinkedIn'],
+                                ['platform' => 'facebook_url', 'label' => 'Facebook'],
+                                ['platform' => 'twitter_url', 'label' => 'Twitter'],
+                                ['platform' => 'instagram_url', 'label' => 'Instagram'],
+                                ['platform' => 'linkedin_url', 'label' => 'LinkedIn'],
                             ];
                         @endphp
 
@@ -40,7 +40,7 @@
                                             @endphp
                                             <div class="form-fields">
                                                 <label class="title">{{ $socialMedia['label'] }} Url:</label>
-                                                <input type="url" name="{{ $socialMedia['platform'] }}_urls"
+                                                <input type="url" name="{{ $socialMedia['platform'] }}"
                                                     value="{{ $socialMediaValue ?? '' }}" class="field">
                                             </div>
                                         </div>
