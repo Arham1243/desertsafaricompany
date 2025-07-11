@@ -390,6 +390,11 @@
                     'route' => route('admin.settings.edit', ['resource' => 'social_media']),
                 ],
                 [
+                    'title' => 'Payment',
+                    'icon' => 'bx bx-credit-card',
+                    'route' => route('admin.settings.edit', ['resource' => 'payment']),
+                ],
+                [
                     'title' => 'News',
                     'icon' => 'bx bx-news',
                     'route' => route('admin.settings.edit', ['resource' => 'news']),
@@ -425,11 +430,6 @@
                     'icon' => 'bx bx-book',
                     'route' => route('admin.settings.edit', ['resource' => 'booking']),
                     'status' => 'pending',
-                ],
-                [
-                    'title' => 'Payment',
-                    'icon' => 'bx bx-credit-card',
-                    'route' => route('admin.settings.edit', ['resource' => 'payment']),
                 ],
                 [
                     'title' => 'Voucher',

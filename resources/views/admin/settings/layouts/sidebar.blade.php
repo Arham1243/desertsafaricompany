@@ -30,6 +30,11 @@
             'label' => 'Social Media',
         ],
         [
+            'route' => 'payment',
+            'icon' => 'bx-credit-card',
+            'label' => 'Payment',
+        ],
+        [
             'route' => 'news',
             'icon' => 'bx-news',
             'label' => 'News',
@@ -64,11 +69,6 @@
             'icon' => 'bx-book',
             'label' => 'Booking',
             'status' => 'pending',
-        ],
-        [
-            'route' => 'payment',
-            'icon' => 'bx-credit-card',
-            'label' => 'Payment',
         ],
         [
             'route' => 'voucher',
