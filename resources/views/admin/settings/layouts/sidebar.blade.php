@@ -25,6 +25,11 @@
             ],
         ],
         [
+            'route' => 'social_media',
+            'icon' => 'bx-share-alt',
+            'label' => 'Social Media',
+        ],
+        [
             'route' => 'news',
             'icon' => 'bx-news',
             'label' => 'News',
@@ -130,11 +135,6 @@
             'icon' => 'bx-file',
             'label' => 'Quotations',
             'status' => 'pending',
-        ],
-        [
-            'route' => 'social_media',
-            'icon' => 'bx-share-alt',
-            'label' => 'Social Media',
         ],
     ];
 

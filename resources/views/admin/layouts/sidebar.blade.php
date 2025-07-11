@@ -385,6 +385,11 @@
                     'route' => route('admin.settings.edit', ['resource' => 'tour-inner']),
                 ],
                 [
+                    'title' => 'Social Media',
+                    'icon' => 'bx bx-share-alt',
+                    'route' => route('admin.settings.edit', ['resource' => 'social_media']),
+                ],
+                [
                     'title' => 'News',
                     'icon' => 'bx bx-news',
                     'route' => route('admin.settings.edit', ['resource' => 'news']),
@@ -494,11 +499,6 @@
                     'icon' => 'bx bx-file',
                     'route' => route('admin.settings.edit', ['resource' => 'quotations']),
                     'status' => 'pending',
-                ],
-                [
-                    'title' => 'Social Media',
-                    'icon' => 'bx bx-share-alt',
-                    'route' => route('admin.settings.edit', ['resource' => 'social_media']),
                 ],
             ],
         ],
