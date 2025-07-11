@@ -5,15 +5,22 @@
                 <div class="promo-title">@{{ promo.title }}</div>
                 <div class="promo-price-wrapper">
                     <div class="promo-price cut">@{{ formatPrice(promo.original_price) }}</div>
-                    <div class="promo-price green">@{{ formatPrice(promo.discounted_price) }}</div>
-                    <span class="percent-off-tag">@{{ promo.discount_percent }}% Off</span>
+                    <div v-if="promo.original_discounted_price" class="promo-price green price-cut">@{{ formatPrice(promo.original_discounted_price) }}
+                    </div>
+                    <div v-else class="promo-price green">@{{ formatPrice(promo.discounted_price) }}</div>
+                    <div v-if="promo.original_discounted_price" class="promo-price purple">@{{ formatPrice(promo.discounted_price) }}</div>
+                    <span v-if="!promo.original_discounted_price" class="percent-off-tag">@{{ promo.discount_percent }}%
+                        Off</span>
                 </div>
-                <div class="promo-og-offer">
-                    <span class="offer">@{{ formatPrice(promo.discounted_price) }} with promo</span>
+                <div class="promo-og-offer purple">
+                    <span class="offer" v-if="promo.original_discounted_price">@{{ formatPrice(promo.original_discounted_price) }} with promo</span>
+                    <span class="offer" v-else>@{{ formatPrice(promo.discounted_price) }} with promo</span>
                     <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                     </span>
                 </div>
+                <span v-if="isFirstOrderCouponrApplied" class="promo-applied purple  d-flex align-items-center mt-1"> <i
+                        style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                 <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
                     <div class="already-bought"></div>
                     <div class="quantity-counter">
@@ -51,15 +58,25 @@
                             </div>
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut">@{{ formatPrice(addOn.original_price) }}</div>
-                                <div class="promo-price green">@{{ formatPrice(addOn.discounted_price) }}</div>
-                                <span class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
+                                <div v-if="addOn.original_discounted_price" class="promo-price green price-cut">
+                                    @{{ formatPrice(addOn.original_discounted_price) }}</div>
+                                <div v-else class="promo-price green">@{{ formatPrice(addOn.discounted_price) }}</div>
+                                <div v-if="addOn.original_discounted_price" class="promo-price purple">
+                                    @{{ formatPrice(addOn.discounted_price) }}</div>
+                                <span v-if="!addOn.original_discounted_price"
+                                    class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
                             </div>
-                            <div class="promo-og-offer">
-                                <span class="offer">@{{ formatPrice(addOn.discounted_price) }} with promo</span>
+                            <div class="promo-og-offer purple">
+                                <span class="offer" v-if="addOn.original_discounted_price">@{{ formatPrice(addOn.original_discounted_price) }} with
+                                    promo</span>
+                                <span class="offer" v-else>@{{ formatPrice(addOn.discounted_price) }} with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
                             </div>
+                            <span v-if="isFirstOrderCouponrApplied"
+                                class="promo-applied purple  d-flex align-items-center mt-1"> <i
+                                    style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div v-if="addOn.is_selected" class="form-guest-search__items justify-content-between"
                                 style="margin-top: 0.25rem">
                                 <div class="already-bought"></div>
@@ -90,20 +107,30 @@
 
                         <div class="promo-info-wrapper">
                             <div class="promo-title">@{{ addOn.title }}</div>
-
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut">@{{ formatPrice(addOn.slots[0].original_price) }}</div>
-                                <div class="promo-price green">@{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
-                                <span class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
+                                <div v-if="addOn.slots[0].original_discounted_price"
+                                    class="promo-price green price-cut">
+                                    @{{ formatPrice(addOn.slots[0].original_discounted_price) }}</div>
+                                <div v-else class="promo-price green">@{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
+                                <div v-if="addOn.slots[0].original_discounted_price" class="promo-price purple">
+                                    @{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
+                                <span v-if="!addOn.slots[0].original_discounted_price"
+                                    class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
                             </div>
 
-                            <div class="promo-og-offer">
-                                <span class="offer">@{{ formatPrice(addOn.slots[0].discounted_price) }} with promo</span>
+                            <div class="promo-og-offer purple">
+                                <span class="offer"
+                                    v-if="addOn.slots[0].original_discounted_price">@{{ formatPrice(addOn.slots[0].original_discounted_price) }} with
+                                    promo</span>
+                                <span class="offer" v-else>@{{ formatPrice(addOn.slots[0].discounted_price) }} with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
                             </div>
-
+                            <span v-if="isFirstOrderCouponrApplied"
+                                class="promo-applied purple  d-flex align-items-center mt-1"> <i
+                                    style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div v-if="addOn.is_selected" class="form-guest-search__items justify-content-between"
                                 style="margin-top: 0.25rem">
                                 <div class="already-bought"></div>
@@ -152,32 +179,6 @@
             </div>
         </div>
     </template>
-
-    <div class="promo-code applied">
-        <div class="promo-code__info">
-            <div class="icon" style="rotate: 140deg;">
-                <i class="bx bx-tag"></i>
-            </div>
-            <div class="content">
-                <div class="title">
-                    Extra 10% off
-                </div>
-                <div class="subtitle">Promo Code PROMO.</div>
-            </div>
-        </div>
-        <button type="button" class='promo-code__apply'>Apply</button>
-        {{-- <div class="promo-code__info">
-            <div class="icon">
-                <i class="bx bxs-check-circle"></i>
-            </div>
-            <div class="content">
-                <div class="title">
-                    Promo Applied
-                </div>
-                <div class="subtitle">Promo savings will be applied to eligible options at checkout.</div>
-            </div>
-        </div> --}}
-    </div>
 @endif
 @push('css')
     <style>

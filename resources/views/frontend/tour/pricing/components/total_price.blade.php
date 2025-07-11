@@ -1,3 +1,59 @@
+<div class="promo-code applied" v-if="firstOrderCoupon && !hasUsedFirstOrderCoupon && !isTourInCart">
+    <div class="promo-code__info" v-if="!isFirstOrderCouponrApplied">
+        <div class="icon" style="rotate: 140deg;">
+            <i class="bx bx-tag"></i>
+        </div>
+        <div class="content">
+            <div class="title">
+                <template v-if="firstOrderCoupon.discount_type === 'percentage'">
+                    Extra @{{ parseFloat(firstOrderCoupon.amount) }}% off
+                </template>
+                <template v-else>
+                    Extra {{ env('APP_CURRENCY') }}@{{ parseFloat(firstOrderCoupon.amount) }} off
+                </template>
+            </div>
+            <div class="subtitle">Promo Code @{{ firstOrderCoupon.code }}.</div>
+        </div>
+    </div>
+
+    <button v-if="!isFirstOrderCouponrApplied" type="button" class="promo-code__apply" @click="applyFirstOrderCoupon">
+        Apply
+    </button>
+
+    <div class="promo-code__info" v-else>
+        <div class="icon">
+            <i class="bx bxs-check-circle"></i>
+        </div>
+        <div class="content">
+            <div class="title">Promo Applied</div>
+            <div class="subtitle">Promo savings will be applied at checkout.</div>
+        </div>
+    </div>
+
+    <input type="hidden" name="applied_coupons[0][coupon]" :value="firstOrderCoupon.id"
+        v-if="isFirstOrderCouponrApplied">
+    <input type="hidden" name="applied_coupons[0][code]" :value="firstOrderCoupon.code"
+        v-if="isFirstOrderCouponrApplied">
+    <input type="hidden" name="applied_coupons[0][type]" :value="firstOrderCoupon.discount_type"
+        v-if="isFirstOrderCouponrApplied">
+    <input type="hidden" name="applied_coupons[0][amount]" :value="firstOrderCoupon.amount"
+        v-if="isFirstOrderCouponrApplied">
+    <input type="hidden" name="applied_coupons[0][is_first_order_coupon]"
+        :value="firstOrderCoupon.is_first_order_coupon" v-if="isFirstOrderCouponrApplied">
+</div>
+
+{{-- <div class="promo-code applied" v-if="hasUsedFirstOrderCouponOnThisTour">
+    <div class="promo-code__info">
+        <div class="icon">
+            <i class="bx bxs-check-circle"></i>
+        </div>
+        <div class="content">
+            <div class="title">Promo Applied</div>
+            <div class="subtitle">Promo savings will be applied at checkout.</div>
+        </div>
+    </div>
+</div>   --}}
+
 <div class="form-group form-guest-search">
     <div class=form-guest-search__title>
         <div class="form-guest-search__items Service-fee__content mb-2 total-price-wrapper">

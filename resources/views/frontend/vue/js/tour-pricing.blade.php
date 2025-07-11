@@ -129,14 +129,26 @@
                 }, {});
             });
 
+            const firstOrderCoupon = ref(@json($firstOrderCoupon));
+            const tourId = ref(@json($tour->id))
+            const cartData = ref(@json($cart));
             const initialTotalPrice = parseFloat("{{ $tour->initial_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
             const startDate = ref(null)
-            const tourId = ref(@json($tour->id))
             const fetchingPromoPrices = ref(null)
+            const isFirstOrderCouponrApplied = ref(false)
+
+            const hasUsedFirstOrderCoupon = computed(() => {
+                const coupons = cartData.value?.applied_coupons
+                return Array.isArray(coupons) && coupons.some(c => c?.is_first_order_coupon == 1)
+            })
+
+            const isTourInCart = computed(() => {
+                return !!cartData.value?.tours?.[tourId.value]
+            })
 
             const hasAnyPromoQuantity = computed(() =>
                 promoTourData.value.some(item => item.quantity > 0 && item.source === 'promo')
@@ -174,6 +186,45 @@
             window.lowestPromoWeekdayDiscountPrice = lowestPromoWeekdayDiscountPrice.value
             window.lowestPromoWeekendDiscountPrice = lowestPromoWeekendDiscountPrice.value
 
+            const applyFirstOrderCoupon = () => {
+                isFirstOrderCouponrApplied.value = true
+                const coupon = firstOrderCoupon.value
+
+                promoTourData.value = promoTourData.value.map(item => {
+                    if (item.source === 'addon' && item.type === 'timeslot') {
+                        item.slots = item.slots.map(slot => {
+                            if (!slot.original_discounted_price) {
+                                slot.original_discounted_price = slot.discounted_price
+                            }
+                            let price = parseFloat(slot.discounted_price)
+                            if (coupon.discount_type === 'percentage') {
+                                price -= price * (parseFloat(coupon.amount) / 100)
+                            } else {
+                                price -= parseFloat(coupon.amount)
+                            }
+                            return {
+                                ...slot,
+                                discounted_price: price.toFixed(2)
+                            }
+                        })
+                    } else if (item.discounted_price) {
+                        if (!item.original_discounted_price) {
+                            item.original_discounted_price = item.discounted_price
+                        }
+                        let price = parseFloat(item.discounted_price)
+                        if (coupon.discount_type === 'percentage') {
+                            price -= price * (parseFloat(coupon.amount) / 100)
+                        } else {
+                            price -= parseFloat(coupon.amount)
+                        }
+                        item.discounted_price = price.toFixed(2)
+                    }
+                    return item
+                })
+
+                updateTotalPrice()
+            }
+
             const getTourPromoPricesByDay = async (tourId, isWeekend) => {
                 try {
                     fetchingPromoPrices.value = true;
@@ -184,6 +235,7 @@
                     }
                     const response = await axios.post(route, payload)
                     promoTourData.value = response.data
+                    isFirstOrderCouponrApplied.value = false
                     updateTotalPrice()
                 } catch (error) {
                     showToast('error', error.response.data.message)
@@ -412,6 +464,11 @@
                 formatTimeLabel,
                 handleSelectedSlotChange,
                 handleAddonSelection,
+                firstOrderCoupon,
+                isFirstOrderCouponrApplied,
+                applyFirstOrderCoupon,
+                hasUsedFirstOrderCoupon,
+                isTourInCart,
             };
         },
     });

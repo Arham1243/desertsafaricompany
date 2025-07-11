@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Tour;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Coupon;
 use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourAttribute;
@@ -28,6 +29,7 @@ class TourController extends Controller
     public function details(Request $request, $slug)
     {
         $settings = Setting::pluck('value', 'key');
+        $firstOrderCoupon = Coupon::where('is_first_order_coupon', 1)->where('status', 'active')->first();
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()
@@ -37,7 +39,7 @@ class TourController extends Controller
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
         if ($tour) {
             $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }

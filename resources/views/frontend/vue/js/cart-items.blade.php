@@ -293,9 +293,10 @@
             };
 
             const minusCartPrices = (tour) => {
-                cart.value.subtotal -= tour['data']['subtotal'];
-                cart.value.service_fee -= tour['data']['service_fee'];
-                cart.value.total_price -= tour['data']['total_price'];
+                cart.value.subtotal = Math.max(0, cart.value.subtotal - tour.data.subtotal)
+                cart.value.service_fee = Math.max(0, cart.value.service_fee - tour.data.service_fee)
+                cart.value.total_price = Math.max(0, cart.value.total_price - tour.data.total_price)
+
                 totalPrice.value = cart.value.total_price
             }
 

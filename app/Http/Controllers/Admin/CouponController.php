@@ -10,9 +10,10 @@ class CouponController extends Controller
 {
     public function index()
     {
-        $items = Coupon::latest()->get();
+        $items = Coupon::where('is_first_order_coupon', '!=', 1)->latest()->get();
+        $isFirstOrderCoupon = Coupon::where('is_first_order_coupon', 1)->first();
 
-        return view('admin.coupon-management.list', compact('items'))->with('title', 'Coupons');
+        return view('admin.coupon-management.list', compact('items', 'isFirstOrderCoupon'))->with('title', 'Coupons');
     }
 
     public function create()

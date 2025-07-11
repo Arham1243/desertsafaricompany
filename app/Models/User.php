@@ -26,4 +26,9 @@ class User extends Authenticatable
             'tour_id'
         )->withTimestamps();
     }
+
+    public function coupons()
+    {
+        return $this->belongsToMany(Coupon::class)->withTimestamps();
+    }
 }

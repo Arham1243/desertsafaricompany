@@ -38,8 +38,8 @@
                                                     id="select-all">
                                             </div>
                                         </th>
-                                        <th>Code</th>
                                         <th>Name</th>
+                                        <th>Code</th>
                                         <th>Amount</th>
                                         <th>Discount Type</th>
                                         <th>Expiry Date</th>
@@ -49,6 +49,51 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @if ($isFirstOrderCoupon)
+                                        <tr>
+                                            <td>
+                                                <div class="selection item-select-container"><input type="checkbox"
+                                                        value="{{ $isFirstOrderCoupon->id }}" disabled>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <a href="{{ route('admin.coupons.edit', $isFirstOrderCoupon->id) }}"
+                                                    class="link">{{ $isFirstOrderCoupon->name }}</a>
+                                                <span class="d-block mt-2 badge rounded-pill bg-success">
+                                                    First Order coupon
+                                                </span>
+                                            </td>
+                                            <td>{{ $isFirstOrderCoupon->code }}</td>
+                                            <td>{{ $isFirstOrderCoupon->amount }}</td>
+                                            <td style="text-transform: capitalize">{{ $isFirstOrderCoupon->discount_type }}
+                                            </td>
+                                            <td>
+                                                {{ !$isFirstOrderCoupon->no_expiry ? 'No Expiry' : formatDateTime($isFirstOrderCoupon->expiry_date) }}
+                                            </td>
+                                            <td>
+                                                {{ formatDateTime($isFirstOrderCoupon->created_at) }}
+                                            </td>
+                                            <td>
+                                                @php
+                                                    $isExpired =
+                                                        isset($isFirstOrderCoupon->expiry_date) &&
+                                                        !empty($isFirstOrderCoupon->expiry_date) &&
+                                                        \Carbon\Carbon::now()->gt(
+                                                            \Carbon\Carbon::parse($isFirstOrderCoupon->expiry_date),
+                                                        );
+                                                @endphp
+                                                <span
+                                                    class="badge rounded-pill bg-{{ $isExpired ? 'warning' : ($isFirstOrderCoupon->status == 'active' ? 'success' : 'danger') }}">
+                                                    {{ $isExpired ? 'Expired' : ucfirst($isFirstOrderCoupon->status) }}
+                                                </span>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('admin.coupons.edit', $isFirstOrderCoupon->id) }}"
+                                                    class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
+                                            </td>
+                                        </tr>
+                                    @endif
                                     @foreach ($items as $item)
                                         <tr>
                                             <td>

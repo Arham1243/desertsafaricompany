@@ -28,7 +28,8 @@ class CheckoutController extends Controller
             $data = compact('tours', 'cart');
 
             return view('frontend.tour.checkout.index')
-                ->with('title', 'Checkout')->with($data);
+                ->with('title', 'Checkout')
+                ->with($data);
         }
 
         return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
@@ -54,7 +55,8 @@ class CheckoutController extends Controller
             $response = $this->createStripeSession($request, $order, $totalAmount);
             $payment_error = 'Failed to create Stripe session. Please try again.';
             if (! $response || ! isset($response->id)) {
-                return redirect()->route('checkout.error', ['order_id' => $order->id])
+                return redirect()
+                    ->route('checkout.error', ['order_id' => $order->id])
                     ->with('notify_error', $payment_error)
                     ->with('error_message', $payment_error);
             }
@@ -67,7 +69,8 @@ class CheckoutController extends Controller
             $response = $this->createTabbySession($request, $order, $totalAmount);
 
             if (isset($response['error'])) {
-                return redirect()->route('checkout.error', ['order_id' => $order->id])
+                return redirect()
+                    ->route('checkout.error', ['order_id' => $order->id])
                     ->with('notify_error', $response['error'])
                     ->with('error_message', $response['error']);
             }
@@ -104,7 +107,6 @@ class CheckoutController extends Controller
 
             $lineItems = [];
             foreach ($tourTitles as $index => $title) {
-
                 if (! isset($tourPrices[$index]) || ! is_numeric($tourPrices[$index])) {
                     return response()->json(['error' => 'Invalid price provided for one or more tours.']);
                 }
@@ -134,10 +136,8 @@ class CheckoutController extends Controller
 
             return $session;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-
             return response()->json(['error' => 'Stripe API error: '.$e->getMessage()]);
         } catch (\Exception $e) {
-
             return response()->json(['error' => 'An error occurred: '.$e->getMessage()]);
         }
     }
@@ -256,6 +256,20 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
+        $cart = Session::get('cart');
+
+        if (! empty($cart['applied_coupons'])) {
+            foreach ($cart['applied_coupons'] as $coupon) {
+                CouponUser::updateOrCreate([
+                    'coupon_id' => $coupon['coupon'],
+                    'user_id' => auth()->id(),
+                    'order_id' => $order->id,
+                ], [
+                    'discount_applied_amount' => $coupon['amount'],
+                ]);
+            }
+        }
+
         Session::forget('cart');
 
         return view('frontend.tour.checkout.success')
@@ -299,14 +313,16 @@ class CheckoutController extends Controller
             ->first();
 
         if (! $coupon) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('notify_error', 'Invalid coupon code.')
                 ->withErrors(['code' => 'Invalid coupon code.'])
                 ->withInput();
         }
 
         if ($coupon->expiry_date && \Carbon\Carbon::parse($coupon->expiry_date)->isPast()) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('notify_error', 'This coupon has expired.')
                 ->withErrors(['code' => 'This coupon has expired.'])
                 ->withInput();
@@ -314,12 +330,14 @@ class CheckoutController extends Controller
 
         $cart = Session::get('cart', []);
         if (empty($cart) || ! isset($cart['total_price'])) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('notify_error', 'Cart is empty.');
         }
 
         if (isset($cart['applied_coupons']) && in_array($coupon->id, array_column($cart['applied_coupons'], 'coupon'))) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with('notify_error', 'You have already used this coupon.')
                 ->withErrors(['code' => 'You have already used this coupon.'])
                 ->withInput();
@@ -329,7 +347,8 @@ class CheckoutController extends Controller
         $totalSubtotalAmount = $cart['subtotal'];
 
         if ($coupon->minimum_order_amount && $totalSubtotalAmount < $coupon->minimum_order_amount) {
-            return redirect()->back()
+            return redirect()
+                ->back()
                 ->with(
                     'notify_error',
                     'Your total cart amount should be at least '.formatPrice($coupon->minimum_order_amount).' to apply this coupon.'
@@ -362,7 +381,8 @@ class CheckoutController extends Controller
 
         Session::put('cart', $cart);
 
-        return redirect()->back()
+        return redirect()
+            ->back()
             ->with('notify_success', 'Coupon applied successfully!');
     }
 }

@@ -5598,7 +5598,7 @@ a.country-card__details {
     align-items: flex-end;
     gap: 0.5rem;
     line-height: 1;
-    margin-bottom: 2px;
+    margin: 6px 0 5px;
 }
 
 .percent-off-tag {
@@ -5609,11 +5609,11 @@ a.country-card__details {
     font-weight: 600;
     border-radius: 0.25rem;
     display: block;
-    margin-bottom: 1px;
+    margin-bottom: 2px;
 }
 
 .promo-price {
-    font-size: 18px;
+    font-size: 19px;
     font-weight: 500;
 }
 
@@ -5629,12 +5629,23 @@ a.country-card__details {
 }
 
 .promo-og-offer .offer {
-    font-size: 17px;
+    font-size: 16px;
     font-weight: 500;
 }
 
-.promo-og-offer {
+.purple{
     color: #8330c7;
+}
+.promo-applied {
+    font-size: 14px;
+    gap: 0.4rem;
+}
+
+.promo-applied i {
+    font-size: 1.05rem;
+}
+.price-cut{
+    text-decoration: line-through !important;
 }
 
 .promo-og-offer .offer .time-left {

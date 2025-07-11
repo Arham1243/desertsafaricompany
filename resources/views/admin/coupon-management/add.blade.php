@@ -23,20 +23,20 @@
                                     <div class="row">
                                         <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Code <span class="text-danger">*</span> :</label>
-                                                <input type="text" name="code" class="field"
-                                                    value="{{ old('code') }}" data-required data-error="Code">
-                                                @error('code')
+                                                <label class="title">Name <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="name" class="field"
+                                                    value="{{ old('name') }}">
+                                                @error('name')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Name <span class="text-danger">*</span> :</label>
-                                                <input type="text" name="name" class="field"
-                                                    value="{{ old('name') }}">
-                                                @error('name')
+                                                <label class="title">Code <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="code" class="field"
+                                                    value="{{ old('code') }}" data-required data-error="Code">
+                                                @error('code')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>

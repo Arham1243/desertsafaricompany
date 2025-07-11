@@ -16,24 +16,22 @@ class CartController extends Controller
         $data = compact('tours', 'cart');
 
         return view('frontend.tour.cart.index')
-            ->with('title', 'Cart')->with($data);
+            ->with('title', 'Cart')
+            ->with($data);
     }
 
     public function add(Request $request, $tourId)
     {
-        $cardData = $request->except('_token');
-        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
+        $cardData = $request->except('_token', 'applied_coupons');
 
+        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
+        if ($request->has('applied_coupons')) {
+            $cart['applied_coupons'] = $request->input('applied_coupons');
+        }
         if (! isset($cart['tours'][$tourId])) {
-            if (! isset($cardData['subtotal'])) {
-                $cardData['subtotal'] = 0;
-            }
-            if (! isset($cardData['service_fee'])) {
-                $cardData['service_fee'] = 0;
-            }
-            if (! isset($cardData['total_price'])) {
-                $cardData['total_price'] = $cardData['subtotal'] + $cardData['service_fee'];
-            }
+            $cardData['subtotal'] = $cardData['subtotal'] ?? 0;
+            $cardData['service_fee'] = $cardData['service_fee'] ?? 0;
+            $cardData['total_price'] = $cardData['total_price'] ?? ($cardData['subtotal'] + $cardData['service_fee']);
 
             $cart['tours'][$tourId] = [
                 'data' => $cardData,
@@ -42,9 +40,9 @@ class CartController extends Controller
             Session::put('cart', $this->updateCombinedTotals($cart, $request, 'add'));
 
             return redirect()->route('cart.index')->with('notify_success', 'Tour added to cart successfully.');
-        } else {
-            return redirect()->route('cart.index')->with('notify_error', 'Tour already in cart.');
         }
+
+        return redirect()->route('cart.index')->with('notify_error', 'Tour already in cart.');
     }
 
     public function update(Request $request)
@@ -60,12 +58,15 @@ class CartController extends Controller
         $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
 
         if (isset($cart['tours'][$tourId])) {
-
             $cart = $this->updateCombinedTotals($cart, $tourId, 'remove');
 
             unset($cart['tours'][$tourId]);
 
-            Session::put('cart', $cart);
+            if ($cart['subtotal'] <= 0 || $cart['total_price'] <= 0) {
+                Session::forget('cart');
+            } else {
+                Session::put('cart', $cart);
+            }
 
             return redirect()->back()->with('notify_success', 'Item removed from cart successfully.');
         }
