@@ -399,8 +399,7 @@
                                                     </div>
                                                     <div class="content">
                                                         @if (isset($feature->title))
-                                                            <div class="title">{{ $feature->title }}
-                                                            </div>
+                                                            <div class="title">{!! $feature->title !!}</div>
                                                         @endif
                                                         @if (isset($feature->content))
                                                             <p>{!! $feature->content !!}</p>

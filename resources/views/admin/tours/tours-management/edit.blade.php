@@ -239,10 +239,9 @@
                                                                             </div>
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text"
-                                                                                :name="`tour[general][features][${index}][title]`"
-                                                                                x-model="feature.title" class="field"
-                                                                                maxlength="50" placeholder="Enter title">
+                                                                            <textarea :name="`tour[general][features][${index}][title]`" x-model="feature.title" class="field" rows="5"
+                                                                                placeholder="Enter title">
+                                                                        </textarea>
                                                                         </td>
                                                                         <td>
                                                                             <textarea :name="`tour[general][features][${index}][content]`" x-model="feature.content" class="field"
