@@ -22,7 +22,7 @@ function toggleAddStopButton() {
     const addStopBtn = document.getElementById("add-stop-btn");
     const hasValue = Array.from(
         itineraryTableBody.querySelectorAll(
-            'input[name^="itinerary_experience[stops]"][name$="[title]"]',
+            'textarea[name^="itinerary_experience[stops]"][name$="[title]"]',
         ),
     ).some((input) => input.value.trim() !== "");
     if (stops.length > 0 && hasValue) {
@@ -80,8 +80,8 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 <input type="hidden" name="itinerary_experience[stops][${order}][type]" value="stop"></td>
                 <td><div class="d-flex align-items-center gap-1"><i class="bx bx-star"></i>Stop</div></td>
                 <td><label class="title">Icon class: <a class="p-0 ps-2 nav-link" href="https://boxicons.com/" target="_blank">Boxicons</a></label><input name="itinerary_experience[stops][${order}][icon_class]" type="text" class="field" value="bx bx-star"></td>
-                <td><label class="title">Title:</label><input name="itinerary_experience[stops][${order}][title]" type="text" class="field"></td>
-                <td><label class="title">Activities:</label><input name="itinerary_experience[stops][${order}][activities]" type="text" class="field"></td>
+                <td> <label class="title">Title:</label> <textarea name="itinerary_experience[stops][${order}][title]" rows="4" class="field"></textarea> </td>
+                <td> <label class="title">Activities:</label> <textarea name="itinerary_experience[stops][${order}][activities]" rows="4" class="field"></textarea> </td>
                 <td><button type="button" class="delete-btn ms-auto delete-btn--static"><i class='bx bxs-trash-alt'></i></button></td>
             </tr>`;
         }
@@ -130,7 +130,7 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
     });
 
     function populateMainStopDropdown() {
-        const stopNames = document.querySelectorAll("input[name^='itinerary_experience[stops]'][name$='[title]']");
+        const stopNames = document.querySelectorAll("textarea[name^='itinerary_experience[stops]'][name$='[title]']");
         const mainStopDropdowns = document.querySelectorAll(".main-stop-dropdown");
     
         // Store currently selected values for each dropdown

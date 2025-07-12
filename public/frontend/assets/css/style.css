@@ -2977,6 +2977,7 @@ ul.tour-content__pra li {
 }
 .tour-content__pra > a {
     color: var(--color-primary);
+    font: inherit;
     font-weight: 500;
 }
 .cal-icon {
@@ -3051,9 +3052,6 @@ span.flatpickr-day.selected .price {
 .flatpickr-day.today:hover, .flatpickr-day.today:focus {
     background: #1c4d9952 !important;
     color: #303057 !important;
-}
-.tour-content__pra > a:hover {
-    text-decoration: underline !important;
 }
 .itinerary-card__body {
     padding-left: 2.2rem;
@@ -7303,7 +7301,23 @@ button[disabled] {
 }
 /* itenirary journey */
 
-.bold-primary {
-    font-weight: bold;
+.features-item a {
     color: var(--color-primary);
+    font: inherit;
+    font-weight: 500;
+}
+.tour-details__items li a {
+    color: var(--color-primary);
+    font: inherit;
+    font-weight: 500;
+}
+.journey-details__stop .sub-title a {
+    color: var(--color-primary);
+    font: inherit;
+    font-weight: 500;
+}
+.journey-details__stop .title a {
+    color: var(--color-primary);
+    font: inherit;
+    font-weight: 500;
 }

@@ -172,7 +172,20 @@
                                         </div>
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
-                                                <label class="title title--sm">Features:</label>
+                                                <div class="d-flex mb-2">
+                                                    <label class="title title--sm mb-0">Features:</label>
+                                                    <span
+                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                        <span>To add a link:</span>
+                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                            href="//google.com"
+                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                        <button class="themeBtn copy-btn py-1 px-2" type="button"
+                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                            Copy
+                                                        </button>
+                                                    </span>
+                                                </div>
                                                 <div x-data="featuresManager">
                                                     <div class="repeater-table">
                                                         <table class="table table-bordered">
@@ -213,11 +226,8 @@
                                                                                 maxlength="50" placeholder="Enter title">
                                                                         </td>
                                                                         <td>
-                                                                            <input type="text"
-                                                                                :name="`tour[general][features][${index}][content]`"
-                                                                                x-model="feature.content" class="field"
-                                                                                maxlength="50"
-                                                                                placeholder="Enter content">
+                                                                            <textarea :name="`tour[general][features][${index}][content]`" x-model="feature.content" class="field"
+                                                                                placeholder="Enter content" rows="5"></textarea>
                                                                         </td>
                                                                         <td>
                                                                             <button type="button"
@@ -345,9 +355,20 @@
                                         </div>
                                         <div class="col-md-12 mt-4">
                                             <div class="form-fields">
-                                                <label
-                                                    class=" d-flex align-items-center mb-3 justify-content-between"><span
-                                                        class="title title--sm mb-0">Tour Information:</span>
+                                                <div class="d-flex mb-2">
+                                                    <label class="title title--sm mb-0">Tour Information:</label>
+                                                    <span
+                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                        <span>To add a link:</span>
+                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                            href="//google.com"
+                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                        <button class="themeBtn copy-btn py-1 px-2" type="button"
+                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                            Copy
+                                                        </button>
+                                                    </span>
+                                                </div>
 
                                                 </label>
                                                 <div x-data="{
@@ -392,12 +413,10 @@
                                                                                         x-for="(item, itemIndex) in section.category.items"
                                                                                         :key="itemIndex">
                                                                                         <div class="d-flex gap-3 mb-2">
-                                                                                            <input
-                                                                                                x-model="section.category.items[itemIndex]"
-                                                                                                :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`"
-                                                                                                type="text"
-                                                                                                placeholder="Item"
+                                                                                            <textarea x-model="section.category.items[itemIndex]"
+                                                                                                :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`" rows="5" placeholder="Content"
                                                                                                 class="field">
+</textarea>
                                                                                             <button type="button"
                                                                                                 @click="section.category.items.splice(itemIndex, 1)"
                                                                                                 class="delete-btn delete-btn--static align-self-center">
@@ -642,7 +661,7 @@
                                     </div>
                                     <div x-show="locationType === 'normal_itinerary'">
                                         <div class="form-fields">
-                                            <label class=" d-flex align-items-center mb-3 justify-content-between"><span
+                                            <label class=" d-flex align-items-center justify-content-between"><span
                                                     class="title title--sm mb-0">Itinerary:</span>
                                                 <span class="title d-flex align-items-center gap-1">Section
                                                     Preview:
@@ -651,6 +670,16 @@
                                                         title="Section Preivew"><i class='bx  bxs-show'></i></a>
                                                 </span>
                                             </label>
+                                            <span class=" mb-3 small text-muted d-inline-flex align-items-center gap-2">
+                                                <span>To add a link:</span>
+                                                <code class="text-nowrap text-lowercase">&lt;a
+                                                    href="//google.com"
+                                                    target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                <button class="themeBtn copy-btn py-1 px-2" type="button"
+                                                    text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                    Copy
+                                                </button>
+                                            </span>
                                             <div class="repeater-table" data-repeater>
                                                 <table class="table table-bordered">
                                                     <thead>
@@ -673,7 +702,7 @@
                                                                     placeholder="Title">
                                                             </td>
                                                             <td>
-                                                                <textarea name="tour[location][normal_itinerary][description][]" class="field"rows="2"></textarea>
+                                                                <textarea name="tour[location][normal_itinerary][description][]" class="field"rows="7"></textarea>
                                                             </td>
                                                             <td class="w-25">
                                                                 <div class="upload upload--sm" data-upload>
@@ -793,7 +822,22 @@
                                                 <div class="row">
                                                     <div class="col-lg-12">
                                                         <div class="form-fields mt-3">
-                                                            <label class="title title--sm">Pickup Locations:</label>
+                                                            <div class="d-flex mb-2">
+                                                                <label class="title title--sm mb-0">Pickup
+                                                                    Locations:</label>
+                                                                <span
+                                                                    class="ms-2 small text-muted d-inline-flex align-items-center gap-2">
+                                                                    <span>To add a link:</span>
+                                                                    <code class="text-nowrap text-lowercase">&lt;a
+                                                                        href="//google.com"
+                                                                        target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                                    <button class="themeBtn copy-btn py-1 px-2"
+                                                                        type="button"
+                                                                        text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                        Copy
+                                                                    </button>
+                                                                </span>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-12 mb-4">
@@ -860,9 +904,9 @@
                                                                     <template x-for="(point, pointIndex) in entry.points"
                                                                         :key="pointIndex">
                                                                         <div class="d-flex gap-2 mb-2 ms-4">
-                                                                            <input type="text" class="field"
-                                                                                x-model="entry.points[pointIndex]"
-                                                                                :name="`itinerary_experience[pickup_dropoff_details][pickup][${index}][points][${pointIndex}]`">
+                                                                            <textarea class="field" x-model="entry.points[pointIndex]"
+                                                                                :name="`itinerary_experience[pickup_dropoff_details][pickup][${index}][points][${pointIndex}]`" rows="3">
+                                                                        </textarea>
                                                                             <button type="button"
                                                                                 class="delete-btn delete-btn--static align-self-center"
                                                                                 @click="entry.points.splice(pointIndex, 1)">
@@ -885,7 +929,7 @@
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-12">
-                                                        <div class="form-fields d-flex align-items-center gap-4 mt-3">
+                                                        <div class="form-fields d-flex align-items-center gap-4 mt-3 mb-2">
                                                             <label class="title title--sm mb-0">Dropoff
                                                                 Locations:</label>
                                                             <div class="form-check">
@@ -966,9 +1010,10 @@
                                                                     <template x-for="(point, pointIndex) in entry.points"
                                                                         :key="pointIndex">
                                                                         <div class="d-flex gap-2 mb-2 ms-4">
-                                                                            <input type="text" class="field"
-                                                                                x-model="entry.points[pointIndex]"
-                                                                                :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][points][${pointIndex}]`">
+                                                                            <textarea class="field" x-model="entry.points[pointIndex]"
+                                                                                :name="`itinerary_experience[pickup_dropoff_details][dropoff][${index}][points][${pointIndex}]`" rows="3">
+                                                                        </textarea>
+
                                                                             <button type="button"
                                                                                 class="delete-btn delete-btn--static align-self-center"
                                                                                 @click="entry.points.splice(pointIndex, 1)">
@@ -993,7 +1038,20 @@
 
                                             <div class="form-fields mt-4 repeater-table">
                                                 <div class="form-fields">
-                                                    <label class="title title--sm">Itinerary:</label>
+                                                    <div class="d-flex">
+                                                        <label class="title title--sm mb-0">Itinerary:</label>
+                                                        <span
+                                                            class="ms-2 small text-muted d-inline-flex align-items-center gap-2">
+                                                            <span>To add a link:</span>
+                                                            <code class="text-nowrap text-lowercase">&lt;a
+                                                                href="//google.com"
+                                                                target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                            <button class="themeBtn copy-btn py-1 px-2" type="button"
+                                                                text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                Copy
+                                                            </button>
+                                                        </span>
+                                                    </div>
                                                 </div>
                                                 <table class="table table-bordered">
                                                     <thead>
@@ -1064,10 +1122,9 @@
                                                                         placeholder="Title">
                                                                     <br>
                                                                     <div class="mt-3">
-                                                                        <input
-                                                                            name="itinerary_experience[stops][sub_stops][activities][]"
-                                                                            type="text" class="field"
-                                                                            placeholder="Activities">
+                                                                        <textarea name="itinerary_experience[stops][sub_stops][activities][]" class="field" placeholder="Activities"
+                                                                            rows="3">
+                                                                    </textarea>
                                                                     </div>
                                                                 </td>
                                                                 <td>
@@ -1453,9 +1510,11 @@
                                                                                     <div>
                                                                                         <input
                                                                                             name="tour[pricing][promo][original_price][]"
-                                                                                            type="number" class="field"
+                                                                                            type="number"
+                                                                                            class="field"
                                                                                             placeholder="Price"
-                                                                                            step="0.01" min="0">
+                                                                                            step="0.01"
+                                                                                            min="0">
                                                                                     </div>
                                                                                 </td>
                                                                                 <td>

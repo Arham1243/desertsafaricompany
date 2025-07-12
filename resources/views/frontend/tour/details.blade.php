@@ -403,7 +403,7 @@
                                                             </div>
                                                         @endif
                                                         @if (isset($feature->content))
-                                                            <p>{{ $feature->content }}</p>
+                                                            <p>{!! $feature->content !!}</p>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -550,7 +550,7 @@
                                                             <div class="tour-content__pra-icon">
                                                             </div>
                                                             <div class="tour-content__title tour-content__title--Blue">
-                                                                Day {{ $itinerary->day }} <span class="px-2">-</span>
+                                                                {{ $itinerary->day }} <span class="px-2">-</span>
                                                             </div>
                                                             <h6 class="tour-content__title text-left mb-0">
                                                                 {{ $itinerary->title }}</h6>
@@ -560,7 +560,7 @@
                                                 <div class="itinerary-card__body accordian-2-content">
                                                     <div class="hidden-wrapper">
                                                         <p class="tour-content__pra mb-1">
-                                                            {{ $itinerary->description }}
+                                                            {!! $itinerary->description !!}
                                                         </p>
                                                         @if ($itinerary->featured_image)
                                                             <div class="itinerary-card__body__img">
@@ -748,7 +748,7 @@
                                                                         <div class="title">{{ $entry['city'] }}
                                                                         </div>
                                                                         <div class="sub-title">
-                                                                            {{ implode(', ', $entry['points']) }}</div>
+                                                                            {!! implode(', ', $entry['points']) !!}</div>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -773,10 +773,10 @@
                                                             </div>
                                                             <div class="info">
                                                                 <div class="title">
-                                                                    {{ is_array($item['title']) ? implode(', ', $item['title']) : $item['title'] }}
+                                                                    {!! is_array($item['title']) ? implode(', ', $item['title']) : $item['title'] !!}
                                                                 </div>
                                                                 <div class="sub-title">
-                                                                    {{ is_array($item['activities']) ? implode(', ', $item['activities']) : $item['activities'] }}
+                                                                    {!! is_array($item['activities']) ? implode(', ', $item['activities']) : $item['activities'] !!}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -791,7 +791,7 @@
                                                                             <div class="title">{{ $subStop['title'] }}
                                                                             </div>
                                                                             <div class="sub-title">
-                                                                                {{ $subStop['activities'] }}</div>
+                                                                                {!! $subStop['activities'] !!}</div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -850,7 +850,7 @@
                                             <div class="sub-icon"></div>
                                             <div class="info">
                                                 <div class="title">{{ $entry['city'] }}</div>
-                                                <div class="sub-title">{{ implode(', ', $entry['points']) }}</div>
+                                                <div class="sub-title">{!! implode(', ', $entry['points']) !!}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -999,8 +999,7 @@
                         <div class=main-reviews__box>
                             <div class="text-center">
                                 <h2 class="main-reviews__detailsNum">
-                                    {{ number_format($averageRating, 1) }}<span
-                                        class="main-reviews__detailsNum">/5</span>
+                                    {{ number_format($averageRating, 1) }}<span class="main-reviews__detailsNum">/5</span>
                                 </h2>
                                 <div class="tour-content__title mb-3">
                                     {{ $mostCommonCategory }}
