@@ -7360,3 +7360,7 @@ button[disabled] {
     font: inherit;
     font-weight: 500;
 }
+.text-red {
+    color: #d70000;
+    font-weight: 700;
+}

@@ -415,6 +415,12 @@
                 return `${currencySymbolHtml}${formattedPrice}`;
             };
 
+            const highlightTitle = (title, cls = 'text-danger', sep = ':') => {
+                const i = title.indexOf(sep)
+                return i === -1 ? title :
+                    `<span class="${cls}">${title.slice(0, i + sep.length)}</span>${title.slice(i + sep.length)}`
+            }
+
             const formatNameForInput = (name) => {
                 return name.toLowerCase().replace(/ /g, '_');
             };
@@ -447,6 +453,7 @@
                 firstOrderCoupon,
                 isFirstOrderCouponrApplied,
                 applyFirstOrderCoupon,
+                highlightTitle,
                 hasUsedFirstOrderCoupon,
                 isTourInCart,
             };
