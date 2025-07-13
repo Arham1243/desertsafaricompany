@@ -9,7 +9,7 @@
                     Extra @{{ parseFloat(firstOrderCoupon.amount) }}% off
                 </template>
                 <template v-else>
-                    Extra {{ env('APP_CURRENCY') }}@{{ parseFloat(firstOrderCoupon.amount) }} off
+                    Extra {!! currencySymbol() !!}@{{ parseFloat(firstOrderCoupon.amount) }} off
                 </template>
             </div>
             <div class="subtitle">Promo Code @{{ firstOrderCoupon.code }}.</div>
@@ -66,7 +66,7 @@
                         {{ $tour->enabled_custom_service_fee === 1 && $tour->service_fee_price ? $tour->service_fee_price : 0 }}"
                     name="subtotal" />
                 <input type="hidden" :value="totalPrice" name="total_price" />
-                <span class="green" style="font-weight:500;">@{{ formatPrice(totalPrice) }}</span>
+                <span class="green" style="font-weight:500;" v-html="formatPrice(totalPrice)"></span>
             </div>
         </div>
     </div>

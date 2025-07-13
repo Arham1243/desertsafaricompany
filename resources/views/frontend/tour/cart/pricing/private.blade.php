@@ -9,7 +9,9 @@
                     Max: @{{ getPrivateTourPricing(tour.id)['persons']['max_person'] }}
                     Persons
                     <div clFass=form-guest-search__smallTitle>
-                        @{{ formatPrice(getPrivateTourPricing(tour.id)['persons']['car_price']) }} per person</div>
+                        <span v-html="formatPrice(getPrivateTourPricing(tour.id)['persons']['car_price'])"></span> per
+                        person
+                    </div>
                 </div>
                 <div class="cart__productQuantity-btns">
                     <button type="button" @click="updateQuantity('minus','persons',tour)"><i

@@ -6,6 +6,11 @@
     src: url("../fonts/boxicons/boxicons.woff2");
 }
 
+@font-face {
+    font-family: "UAEDirham";
+    src: url("../fonts/UAE-dirham/aed-Regular.otf");
+}
+
 /* Root Styling */
 :root {
     --heading-font: "Philosopher", sans-serif;
@@ -71,7 +76,10 @@ i.bx {
     font-family: boxicons;
     vertical-align: middle;
 }
-
+body :is(.dirham.dirham) {
+    font-family: "UAEDirham" !important;
+    font-weight: 400 !important;
+}
 .padd-y {
     padding: 5rem 0;
 }

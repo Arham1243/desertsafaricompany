@@ -51,7 +51,6 @@
                             'discounted_price' => number_format($discounted, 2),
                             'quantity' => 0,
                             'hours_left' => $hoursLeft,
-                            'is_selected' => false,
                         ];
                     }
 
@@ -66,7 +65,6 @@
                             'hours_left' => $hoursLeft,
                             'quantity' => 0,
                             'selected_slots' => [],
-                            'is_selected' => false,
                             'slots' => $slots
                                 ->map(function ($slot) use ($discountPercent) {
                                     $price = floatval($slot['price']);
@@ -255,24 +253,6 @@
                 })
             }
 
-            const handleAddonSelection = (addOn) => {
-                if (!addOn.is_selected) {
-                    const matched = promoTourData.value.find(
-                        item => item.title === addOn.title && item.source === 'addon'
-                    )
-
-                    if (matched) {
-                        matched.quantity = 0
-
-                        if (matched.type === 'timeslot') {
-                            matched.selected_slots = []
-                        }
-                    }
-
-                    updateTotalPrice()
-                }
-            }
-
             const formatTimeLabel = (time) => {
                 const [hours, minutes] = time.split(':').map(Number)
                 if (hours && minutes) return `${hours} hr ${minutes} mins`
@@ -312,7 +292,6 @@
                     if (totalPromoQty === 0) {
                         promoTourData.value.forEach((item) => {
                             if (item.source === 'addon') {
-                                item.is_selected = false
                                 item.quantity = 0
                                 if (item.type === 'timeslot') item.selected_slots = []
                             }
@@ -327,11 +306,11 @@
                         }
 
                         if (item.source === 'addon') {
-                            if (item.type === 'simple' && item.is_selected) {
+                            if (item.type === 'simple') {
                                 totalPrice.value += price * item.quantity
                             }
 
-                            if (item.type === 'timeslot' && item.is_selected && Array.isArray(item
+                            if (item.type === 'timeslot' && Array.isArray(item
                                     .selected_slots)) {
                                 if (item.quantity === 0) {
                                     item.selected_slots = []
@@ -428,12 +407,14 @@
             };
 
             const formatPrice = (price) => {
+                const currencySymbolHtml = @json(currencySymbol()->toHtml());
                 const formattedPrice = Number(price).toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
-                return `{{ env('APP_CURRENCY') }}${formattedPrice}`;
+                return `${currencySymbolHtml}${formattedPrice}`;
             };
+
             const formatNameForInput = (name) => {
                 return name.toLowerCase().replace(/ /g, '_');
             };
@@ -463,7 +444,6 @@
                 promoAddOnsTourData,
                 formatTimeLabel,
                 handleSelectedSlotChange,
-                handleAddonSelection,
                 firstOrderCoupon,
                 isFirstOrderCouponrApplied,
                 applyFirstOrderCoupon,

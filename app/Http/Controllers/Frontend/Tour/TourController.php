@@ -159,7 +159,6 @@ class TourController extends Controller
                                 'discounted_price' => number_format($discounted, 2),
                                 'quantity' => 0,
                                 'hours_left' => $hoursLeft,
-                                'is_selected' => false,
                             ];
                         }
 
@@ -174,7 +173,6 @@ class TourController extends Controller
                                 'quantity' => 0,
                                 'selected_slots' => [],
                                 'hours_left' => $hoursLeft,
-                                'is_selected' => false,
                                 'slots' => $slots->map(function ($slot) use ($discountPercent) {
                                     $price = floatval($slot['price']);
                                     $discounted = $price - ($price * $discountPercent) / 100;

@@ -305,11 +305,12 @@
                     '{{ asset('admin/assets/images/placeholder.png') }}';
             }
             const formatPrice = (price) => {
+                const currencySymbolHtml = @json(currencySymbol()->toHtml());
                 const formattedPrice = Number(price).toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
                 });
-                return `{{ env('APP_CURRENCY') }}${formattedPrice}`;
+                return `${currencySymbolHtml}${formattedPrice}`;
             };
 
             const updateNormalQuantity = (action, personType, tour, nomalIndex) => {

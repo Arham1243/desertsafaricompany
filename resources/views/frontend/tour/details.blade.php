@@ -1390,7 +1390,7 @@
                     const price = isWeekend ? weekendPrice : weekdayPrice;
 
                     const priceTag = document.createElement("div");
-                    priceTag.innerText = `$${price}`;
+                    priceTag.innerHTML = `{{ currencySymbol() }}${price}`;
                     priceTag.className = "price";
 
                     dayElem.appendChild(priceTag);

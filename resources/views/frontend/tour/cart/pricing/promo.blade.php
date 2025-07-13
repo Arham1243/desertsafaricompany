@@ -4,12 +4,12 @@
         <div class="form-guest-search__details promo">
             <div class="promo-title">@{{ promo.promo_title }}</div>
             <div class="promo-price-wrapper">
-                <div class="promo-price cut">@{{ formatPrice(promo.original_price) }}</div>
-                <div class="promo-price green">@{{ formatPrice(promo.discounted_price) }}</div>
+                <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
+                <div class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span></div>
                 <span class="percent-off-tag">@{{ promo.discount_percent }}% Off</span>
             </div>
             <div class="promo-og-offer">
-                <span class="offer">@{{ formatPrice(promo.discounted_price) }} with promo</span>
+                <span class="offer"><span v-html="formatPrice(promo.discounted_price)"></span> with promo</span>
                 <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
                     @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                 </span>

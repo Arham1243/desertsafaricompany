@@ -62,16 +62,16 @@
                             <div class="optional-wrapper-padding">
                                 <div class="sub-total">
                                     <div class="title">Subtotal</div>
-                                    <div class="price">@{{ formatPrice(cart.subtotal) }}</div>
+                                    <div class="price"><span v-html="formatPrice(cart.subtotal)"></span></div>
                                 </div>
                                 <div class="sub-total">
                                     <div class="title">Service Fee</div>
-                                    <div class="price">@{{ formatPrice(cart.service_fee) }}</div>
+                                    <div class="price"><span v-html="formatPrice(cart.service_fee)"></span></div>
                                 </div>
                                 <hr>
                                 <div class="sub-total total all-total">
                                     <div class="title">Total Payable</div>
-                                    <div class="price">@{{ formatPrice(totalPrice) }}</div>
+                                    <div class="price"><span v-html="formatPrice(totalPrice)"></span></div>
                                 </div>
                                 <button ref="submitButton" class="primary-btn w-100 mt-4">Proceed
                                     to Checkout

@@ -2,6 +2,7 @@
 
 use App\Helpers\SeoHelper;
 use Carbon\Carbon;
+use Illuminate\Support\HtmlString;
 
 if (! function_exists('buildUrl')) {
     function buildUrl($base, $resource = null, $slug = null)
@@ -23,12 +24,22 @@ if (! function_exists('sanitizedLink')) {
         return '//'.preg_replace('/^(https?:\/\/)?(www\.)?/', '', $url);
     }
 }
-if (! function_exists('formatPrice')) {
-    function formatPrice($price)
-    {
-        $formattedPrice = number_format($price, 2, '.', ',');
 
-        return env('APP_CURRENCY').$formattedPrice;
+if (! function_exists('currencySymbol')) {
+    function currencySymbol(): HtmlString
+    {
+        $c = env('APP_CURRENCY');
+
+        return new HtmlString($c === 'AED' ? '<span class="dirham">D</span>' : $c);
+    }
+}
+
+if (! function_exists('formatPrice')) {
+    function formatPrice($price): HtmlString
+    {
+        $val = number_format($price, 2, '.', ',');
+
+        return new HtmlString(currencySymbol()->toHtml().$val);
     }
 }
 

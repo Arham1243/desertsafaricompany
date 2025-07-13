@@ -1,9 +1,9 @@
 <template v-if="getWaterTourPricing(tour.id)">
     <div class="tour-content__pra m-0">Select Timeslot:</div>
     <select @change="handleTimeSlotChange($event, tour.id)" name="time_slot"
-        v-model="cart['tours'][tour.id]['data']['time_slot']" class="select-field" required>
+        v-model="cart['tours'][tour.id]['data']['time_slot']" class="select-field dirham" required>
         <option v-for="water in getWaterTourTimeSlots(tour.id)" :value="water.time" :time-price="water.water_price">
-            @{{ water.time }} (@{{ formatPrice(water.water_price) }})
+            @{{ water.time }} (<span v-html="formatPrice(water.water_price)"></span>)
         </option>
     </select>
     <div class="form-group form-guest-search">
@@ -13,7 +13,7 @@
                 <div class="form-book__title form-guest-search__title">
                     @{{ cart['tours'][tour.id]['data']['time_slot'] || 'Water activity' }}
                     <div class="form-guest-search__smallTitle">
-                        @{{ formatPrice(cart['tours'][tour.id]['data']['time_slot_price'] || 0) }}
+                        <span v-html="formatPrice(cart['tours'][tour.id]['data']['time_slot_price'] || 0)"></span>
                     </div>
                 </div>
                 <div class="cart__productQuantity-btns">

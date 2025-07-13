@@ -6,7 +6,7 @@
             <div class="form-guest-search__items">
                 <div class="form-book__title form-guest-search__title">
                     @{{ normalPrice.person_description }}
-                    <div class="form-guest-search__smallTitle">@{{ formatPrice(normalPrice.price) }} per
+                    <div class="form-guest-search__smallTitle"><span v-html="formatPrice(normalPrice.price)"></span> per
                         person</div>
                 </div>
                 <div class="cart__productQuantity-btns">

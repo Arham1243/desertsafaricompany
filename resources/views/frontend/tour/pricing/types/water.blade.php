@@ -19,7 +19,8 @@
                     @{{ waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.time || 'Water activity' }}
                     <div class="form-guest-search__smallTitle">
                         <span v-if="timeSlot">
-                            @{{ formatPrice(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0) }}
+                            <span
+                                v-html="formatPrice(waterPrices[waterPricesTimeSlots.indexOf(timeSlot)]?.water_price || 0)"></span>
                         </span>
                         <span v-else>Select a timeslot</span>
                     </div>

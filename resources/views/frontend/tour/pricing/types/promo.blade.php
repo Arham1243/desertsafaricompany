@@ -4,17 +4,22 @@
             <div class="form-guest-search__details promo" v-if="promo.source === 'promo'">
                 <div class="promo-title">@{{ promo.title }}</div>
                 <div class="promo-price-wrapper">
-                    <div class="promo-price cut">@{{ formatPrice(promo.original_price) }}</div>
-                    <div v-if="promo.original_discounted_price" class="promo-price green price-cut">@{{ formatPrice(promo.original_discounted_price) }}
+                    <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
+                    <div v-if="promo.original_discounted_price" class="promo-price green price-cut"><span
+                            v-html="formatPrice(promo.original_discounted_price)"></span>
                     </div>
-                    <div v-else class="promo-price green">@{{ formatPrice(promo.discounted_price) }}</div>
-                    <div v-if="promo.original_discounted_price" class="promo-price purple">@{{ formatPrice(promo.discounted_price) }}</div>
+                    <div v-else class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span>
+                    </div>
+                    <div v-if="promo.original_discounted_price" class="promo-price purple"><span
+                            v-html="formatPrice(promo.discounted_price)"></span></div>
                     <span v-if="!promo.original_discounted_price" class="percent-off-tag">@{{ promo.discount_percent }}%
                         Off</span>
                 </div>
                 <div class="promo-og-offer purple">
-                    <span class="offer" v-if="promo.original_discounted_price">@{{ formatPrice(promo.original_discounted_price) }} with promo</span>
-                    <span class="offer" v-else>@{{ formatPrice(promo.discounted_price) }} with promo</span>
+                    <span class="offer" v-if="promo.original_discounted_price"><span
+                            v-html="formatPrice(promo.original_discounted_price)"></span> with promo</span>
+                    <span class="offer" v-else><span v-html="formatPrice(promo.discounted_price)"></span> with
+                        promo</span>
                     <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                     </span>
@@ -49,27 +54,30 @@
             <template v-for="(addOn, index) in promoAddOnsTourData" :key="index">
                 <div class="form-group form-guest-search promo-addOn" v-if="addOn.type === 'simple'">
                     <div class="form-guest-search__details promo pt-3">
-                        <input @change="handleAddonSelection(addOn)" type="checkbox" class="promo-addon-check"
-                            v-model="addOn.is_selected" />
-
                         <div class="promo-info-wrapper">
                             <div class="promo-title">
                                 @{{ addOn.title }}
                             </div>
                             <div class="promo-price-wrapper">
-                                <div class="promo-price cut">@{{ formatPrice(addOn.original_price) }}</div>
+                                <div class="promo-price cut"><span v-html="formatPrice(addOn.original_price)"></span>
+                                </div>
                                 <div v-if="addOn.original_discounted_price" class="promo-price green price-cut">
-                                    @{{ formatPrice(addOn.original_discounted_price) }}</div>
-                                <div v-else class="promo-price green">@{{ formatPrice(addOn.discounted_price) }}</div>
+                                    <span v-html="formatPrice(addOn.original_discounted_price)"></span>
+                                </div>
+                                <div v-else class="promo-price green"><span
+                                        v-html="formatPrice(addOn.discounted_price)"></span></div>
                                 <div v-if="addOn.original_discounted_price" class="promo-price purple">
-                                    @{{ formatPrice(addOn.discounted_price) }}</div>
+                                    <span v-html="formatPrice(addOn.discounted_price)"></span>
+                                </div>
                                 <span v-if="!addOn.original_discounted_price"
                                     class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
                             </div>
                             <div class="promo-og-offer purple">
-                                <span class="offer" v-if="addOn.original_discounted_price">@{{ formatPrice(addOn.original_discounted_price) }} with
+                                <span class="offer" v-if="addOn.original_discounted_price"><span
+                                        v-html="formatPrice(addOn.original_discounted_price)"></span> with
                                     promo</span>
-                                <span class="offer" v-else>@{{ formatPrice(addOn.discounted_price) }} with promo</span>
+                                <span class="offer" v-else><span v-html="formatPrice(addOn.discounted_price)"></span>
+                                    with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
@@ -77,8 +85,7 @@
                             <span v-if="isFirstOrderCouponrApplied"
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
-                            <div v-if="addOn.is_selected" class="form-guest-search__items justify-content-between"
-                                style="margin-top: 0.25rem">
+                            <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
                                 <div class="already-bought"></div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
@@ -102,28 +109,30 @@
                 <div class="form-group form-guest-search promo-addOn"
                     v-else-if="addOn.type === 'timeslot' && addOn.slots?.length > 0">
                     <div class="form-guest-search__details promo pt-3">
-                        <input @change="handleAddonSelection(addOn)" type="checkbox" class="promo-addon-check"
-                            v-model="addOn.is_selected" />
-
                         <div class="promo-info-wrapper">
                             <div class="promo-title">@{{ addOn.title }}</div>
                             <div class="promo-price-wrapper">
-                                <div class="promo-price cut">@{{ formatPrice(addOn.slots[0].original_price) }}</div>
+                                <div class="promo-price cut"><span
+                                        v-html="formatPrice(addOn.slots[0].original_price)"></span></div>
                                 <div v-if="addOn.slots[0].original_discounted_price"
                                     class="promo-price green price-cut">
-                                    @{{ formatPrice(addOn.slots[0].original_discounted_price) }}</div>
-                                <div v-else class="promo-price green">@{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
+                                    <span v-html="formatPrice(addOn.slots[0].original_discounted_price)"></span>
+                                </div>
+                                <div v-else class="promo-price green"><span
+                                        v-html="formatPrice(addOn.slots[0].discounted_price)"></span></div>
                                 <div v-if="addOn.slots[0].original_discounted_price" class="promo-price purple">
-                                    @{{ formatPrice(addOn.slots[0].discounted_price) }}</div>
+                                    <span v-html="formatPrice(addOn.slots[0].discounted_price)"></span>
+                                </div>
                                 <span v-if="!addOn.slots[0].original_discounted_price"
                                     class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
                             </div>
 
                             <div class="promo-og-offer purple">
-                                <span class="offer"
-                                    v-if="addOn.slots[0].original_discounted_price">@{{ formatPrice(addOn.slots[0].original_discounted_price) }} with
+                                <span class="offer" v-if="addOn.slots[0].original_discounted_price"><span
+                                        v-html="formatPrice(addOn.slots[0].original_discounted_price)"></span> with
                                     promo</span>
-                                <span class="offer" v-else>@{{ formatPrice(addOn.slots[0].discounted_price) }} with promo</span>
+                                <span class="offer" v-else><span
+                                        v-html="formatPrice(addOn.slots[0].discounted_price)"></span> with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
@@ -131,8 +140,7 @@
                             <span v-if="isFirstOrderCouponrApplied"
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
-                            <div v-if="addOn.is_selected" class="form-guest-search__items justify-content-between"
-                                style="margin-top: 0.25rem">
+                            <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
                                 <div class="already-bought"></div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
@@ -150,15 +158,16 @@
                                     </button>
                                 </div>
                             </div>
-                            <div class="timeslot-group-wrapper" v-if="addOn.is_selected && addOn.quantity > 0">
+                            <div class="timeslot-group-wrapper" v-if="addOn.quantity > 0">
                                 <div class="row" v-for="n in addOn.quantity" :key="n">
                                     <div class="col-12 mb-2">
                                         <label class="promo-title mb-0">#@{{ n }} Duration</label>
-                                        <select class="select-field mt-1" v-model="addOn.selected_slots[n - 1]"
+                                        <select class="select-field mt-1 dirham" v-model="addOn.selected_slots[n - 1]"
                                             @change="handleSelectedSlotChange(addOn)">
                                             <option v-for="slot in addOn.slots" :key="slot.time"
                                                 :value="slot.time">
-                                                @{{ formatTimeLabel(slot.time) }} — @{{ formatPrice(slot.discounted_price) }}
+                                                <span v-html="formatTimeLabel(slot.time)"></span> — <span
+                                                    v-html="formatPrice(slot.discounted_price)"></span>
                                             </option>
                                         </select>
                                     </div>
