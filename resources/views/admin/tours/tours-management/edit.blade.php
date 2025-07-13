@@ -2903,9 +2903,9 @@
                                                 <div class="d-flex align-items-center gap-3">
                                                     <input type="text" name="tour[status][author_config][icon_class]"
                                                         class="field"
-                                                        value="{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class) }}"
+                                                        value="{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? '') }}"
                                                         placeholder="" oninput="showIcon(this)">
-                                                    <i class="{{ $authorConfig->icon_class }} bx-md"
+                                                    <i class="{{ $authorConfig->icon_class ?? '' }} bx-md"
                                                         data-preview-icon></i>
                                                 </div>
                                             </div>
@@ -2923,7 +2923,7 @@
                                                     <input id="background-color-picker-author" type="text"
                                                         data-color-picker-input
                                                         name="tour[status][author_config][background_color]"
-                                                        value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color) }}"
+                                                        value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '') }}"
                                                         inputmode="text">
                                                 </div>
                                             </div>
@@ -2941,7 +2941,7 @@
                                                     <input id="icon-color-picker-author" type="text"
                                                         data-color-picker-input
                                                         name="tour[status][author_config][icon_color]"
-                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color) }}"
+                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '') }}"
                                                         inputmode="text">
                                                 </div>
                                             </div>

@@ -157,13 +157,13 @@
                                             $authorConfig = $tour->author_config
                                                 ? json_decode($tour->author_config)
                                                 : null;
-                                            $authorPrefixText = $settings->get('tour_author_prefix_text');
-                                            $authorBgColor = $authorConfig->background_color;
-                                            $authorIconColor = $authorConfig->icon_color;
+                                            $authorPrefixText = $settings->get('tour_author_prefix_text') ?? '';
+                                            $authorBgColor = $authorConfig->background_color ?? '';
+                                            $authorIconColor = $authorConfig->icon_color ?? '';
                                             $authorIconClass = $authorConfig->icon_class ?? '';
-                                            $badgeBgColor = $settings->get('badge_background_color');
-                                            $badgeIconColor = $settings->get('badge_icon_color');
-                                            $badge = json_decode($tour->badge);
+                                            $badgeBgColor = $settings->get('badge_background_color') ?? '';
+                                            $badgeIconColor = $settings->get('badge_icon_color') ?? '';
+                                            $badge = $tour->badge ? json_decode($tour->badge) : null;
                                             $badgeIconClass = $badge->icon_class ?? '';
                                             $badgeName = $badge->name ?? '';
 
