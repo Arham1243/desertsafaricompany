@@ -154,32 +154,49 @@
                                     </div>
                                     <div class=tour-content__headerLocation--details>
                                         @php
+                                            $authorConfig = $tour->author_config
+                                                ? json_decode($tour->author_config)
+                                                : null;
                                             $authorPrefixText = $settings->get('tour_author_prefix_text');
-                                            $bgColor = $settings->get('badge_background_color');
-                                            $iconColor = $settings->get('badge_icon_color');
-                                            $iconColor = $settings->get('badge_icon_color');
+                                            $authorBgColor = $authorConfig->background_color;
+                                            $authorIconColor = $authorConfig->icon_color;
+                                            $authorIconClass = $authorConfig->icon_class ?? '';
+                                            $badgeBgColor = $settings->get('badge_background_color');
+                                            $badgeIconColor = $settings->get('badge_icon_color');
                                             $badge = json_decode($tour->badge);
-                                            $iconClass = $badge->icon_class ?? '';
+                                            $badgeIconClass = $badge->icon_class ?? '';
                                             $badgeName = $badge->name ?? '';
 
-                                            $style = '';
-                                            if ($bgColor) {
-                                                $style .= "background-color: $bgColor;";
+                                            $authorStyle = '';
+                                            if ($authorBgColor) {
+                                                $authorStyle .= "background-color: $authorBgColor;";
                                             }
-                                            if ($iconColor) {
-                                                $style .= "color: $iconColor;";
+                                            if ($authorIconColor) {
+                                                $authorStyle .= "color: $authorIconColor;";
+                                            }
+
+                                            $badgeStyle = '';
+                                            if ($badgeBgColor) {
+                                                $badgeStyle .= "background-color: $badgeBgColor;";
+                                            }
+                                            if ($badgeIconColor) {
+                                                $badgeStyle .= "color: $badgeIconColor;";
                                             }
                                         @endphp
                                         @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
                                             <span class=pipeDivider></span>
                                             <div class="badge-of-excellence">
-                                                <i style="{{ $style }}" class="{{ $iconClass }}"></i>
+                                                @if ($badgeStyle && $badgeIconClass)
+                                                    <i style="{{ $badgeStyle }}" class="{{ $badgeIconClass }}"></i>
+                                                @endif
                                                 {{ $badgeName }}
                                             </div>
                                         @else
                                             <span class=pipeDivider></span>
                                             <div class="badge-of-excellence">
-                                                <i style="{{ $style }}" class="{{ $iconClass }}"></i>
+                                                @if ($authorStyle && $authorIconClass)
+                                                    <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
+                                                @endif
                                                 <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
                                                 <div>{{ $tour->author->name }}</div>
                                             </div>

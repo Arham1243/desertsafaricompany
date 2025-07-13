@@ -84,6 +84,7 @@ class TourController extends Controller
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
+        $authorConfig = ! empty($statusTab['author_config']) ? json_encode($statusTab['author_config']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour = Tour::create([
@@ -91,6 +92,7 @@ class TourController extends Controller
             'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'slug' => $slug ?? null,
             'badge' => $badge ?? null,
+            'author_config' => $authorConfig ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'description_line_limit' => $general['description_line_limit'] ?? null,
@@ -333,6 +335,7 @@ class TourController extends Controller
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
+        $authorConfig = ! empty($statusTab['author_config']) ? json_encode($statusTab['author_config']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour->update([
@@ -341,6 +344,7 @@ class TourController extends Controller
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'details' => $details,
+            'author_config' => $authorConfig ?? null,
             'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'badge' => $badge ?? null,
