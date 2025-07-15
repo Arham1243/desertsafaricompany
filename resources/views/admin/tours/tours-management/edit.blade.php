@@ -1961,8 +1961,9 @@
                                                                             <template x-for="(addon, index) in addons"
                                                                                 :key="index">
                                                                                 <div class="border p-3 rounded mb-3">
-                                                                                    <div class="row g-3 align-items-end">
-                                                                                        <div class="col-md">
+                                                                                    <div
+                                                                                        class="row g-3 align-items-center">
+                                                                                        <div class="col-md-12">
                                                                                             <label
                                                                                                 class="title">Type:</label>
                                                                                             <select class="field w-100"
@@ -1977,19 +1978,17 @@
                                                                                             </select>
                                                                                         </div>
 
-                                                                                        <div class="col-md">
+                                                                                        <div class="col-md-11">
                                                                                             <label class="title">Addon
                                                                                                 Title:</label>
-                                                                                            <input type="text"
-                                                                                                class="field w-100"
-                                                                                                x-model="addon.title"
-                                                                                                :name="`tour[pricing][promo][addOns][${index}][title]`">
+                                                                                            <textarea rows="3" class="field w-100" x-model="addon.title"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][title]`"></textarea>
                                                                                         </div>
 
                                                                                         <div
                                                                                             class="col-md-1 text-end mb-2">
                                                                                             <button type="button"
-                                                                                                class="delete-btn delete-btn--static px-3"
+                                                                                                class="delete-btn delete-btn--static px-3 mx-auto"
                                                                                                 @click="remove(index)">
                                                                                                 <i
                                                                                                     class='bx bxs-trash-alt'></i>

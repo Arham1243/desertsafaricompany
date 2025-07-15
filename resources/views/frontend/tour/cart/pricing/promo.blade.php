@@ -2,7 +2,7 @@
     <div v-for="(promo, index) in getPromoTourPricing(tour.id)" :key="index"
         class="form-group form-guest-search">
         <div class="form-guest-search__details promo">
-            <div class="promo-title">@{{ promo.promo_title }}</div>
+            <div class="promo-title" v-html="promo.promo_title"></div>
             <div class="promo-price-wrapper">
                 <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
                 <div class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span></div>

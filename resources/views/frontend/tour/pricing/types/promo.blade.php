@@ -2,7 +2,7 @@
     <template v-if="!fetchingPromoPrices">
         <div v-for="(promo, index) in visiblePromos" :key="index" class="form-group form-guest-search">
             <div class="form-guest-search__details promo" v-if="promo.source === 'promo'">
-                <div class="promo-title">@{{ promo.title }}</div>
+                <div class="promo-title" v-html="promo.title"></div>
                 <div class="promo-price-wrapper">
                     <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
                     <div v-if="promo.original_discounted_price" class="promo-price green price-cut"><span
@@ -55,9 +55,7 @@
                 <div class="form-group form-guest-search promo-addOn" v-if="addOn.type === 'simple'">
                     <div class="form-guest-search__details promo pt-3">
                         <div class="promo-info-wrapper">
-                            <div class="promo-title">
-                                @{{ addOn.title }}
-                            </div>
+                            <div class="promo-title" v-html="addOn.title"></div>
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut"><span v-html="formatPrice(addOn.original_price)"></span>
                                 </div>
@@ -110,7 +108,7 @@
                     v-else-if="addOn.type === 'timeslot' && addOn.slots?.length > 0">
                     <div class="form-guest-search__details promo pt-3">
                         <div class="promo-info-wrapper">
-                            <div class="promo-title">@{{ addOn.title }}</div>
+                            <div class="promo-title" v-html="addOn.title"></div>
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut"><span
                                         v-html="formatPrice(addOn.slots[0].original_price)"></span></div>
