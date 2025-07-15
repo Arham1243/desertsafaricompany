@@ -1490,13 +1490,88 @@
                                                                     </div>
                                                                 </div>
                                                                 <div class="repeater-table" data-repeater>
-                                                                    <label class="title title--sm">Promo Pricing:</label>
+                                                                    <div class="mb-4" x-data="customTextBlock()"
+                                                                        x-init="init()">
+                                                                        <div class="d-flex align-items-center gap-4  mb-2">
+                                                                            <label class="title title--sm mb-0">Promo
+                                                                                Pricing:</label>
+                                                                            <button class=" themeBtn" type="button"
+                                                                                @click="enabled = !enabled"
+                                                                                style="line-height: 1.2;padding: 0.75rem 1rem;">
+                                                                                Make Custom Text <i
+                                                                                    class="bx bxs-edit ms-1 bx-xs"></i>
+                                                                            </button>
+                                                                        </div>
+
+                                                                        <template x-if="enabled">
+                                                                            <div class="row mt-3">
+                                                                                <div class="col-md-6">
+                                                                                    <label class="title">Enter
+                                                                                        Text:</label>
+                                                                                    <input type="text"
+                                                                                        class="field w-100"
+                                                                                        x-model="labelText"
+                                                                                        autocomplete="off">
+                                                                                </div>
+
+                                                                                <div class="col-md-6">
+                                                                                    <div
+                                                                                        class="title d-flex align-items-center gap-2">
+                                                                                        <div>Text Color:</div>
+                                                                                        <a class="p-0 nav-link"
+                                                                                            href="//html-color-codes.info"
+                                                                                            target="_blank">Get
+                                                                                            Color Codes</a>
+                                                                                    </div>
+                                                                                    <div class="field color-picker"
+                                                                                        data-color-picker-container>
+                                                                                        <label
+                                                                                            for="custom-label-color-picker"
+                                                                                            data-color-picker></label>
+                                                                                        <input
+                                                                                            id="custom-label-color-picker"
+                                                                                            type="text"
+                                                                                            data-color-picker-input
+                                                                                            name="tour[pricing][promo][custom_label][color]"
+                                                                                            :value="labelColor"
+                                                                                            inputmode="text"
+                                                                                            x-model="labelColor">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div class="col-md-12 mt-3">
+                                                                                    <div class="title title--sm mb-0">
+                                                                                        Preview:</div>
+                                                                                    <div
+                                                                                        class="small col-12 d-flex align-items-center gap-2 mt-1">
+                                                                                        <span
+                                                                                            :style="`font-weight: 500; color: ${labelColor}`"
+                                                                                            x-text="labelText"></span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12 mt-3 mb-3">
+                                                                                    <div class="title title--sm mb-0">HTML
+                                                                                        Code:</div>
+                                                                                    <div
+                                                                                        class="small col-12 d-flex align-items-center gap-2">
+                                                                                        <code x-text="snippet"></code>
+                                                                                        <button
+                                                                                            style="font-size: 0.75rem !important;"
+                                                                                            class="themeBtn py-1 px-2"
+                                                                                            type="button"
+                                                                                            @click="copy()">Copy</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                    </div>
                                                                     <table class="table table-bordered">
                                                                         <thead>
                                                                             <tr>
                                                                                 <th scope="col">Title</th>
                                                                                 <th scope="col">Price</th>
-                                                                                <th class="text-end" scope="col">Remove
+                                                                                <th class="text-end" scope="col">
+                                                                                    Remove
                                                                                 </th>
                                                                             </tr>
                                                                         </thead>
@@ -2679,6 +2754,59 @@
                 if (text) navigator.clipboard.writeText(text)
             }
         })
+
+        function customTextBlock() {
+            return {
+                enabled: false,
+                defaultText: 'Text Here',
+                defaultColor: '#ff0000',
+                labelText: 'Text Here',
+                labelColor: '#ff0000',
+
+                get snippet() {
+                    return `<span style="color: ${this.labelColor}">${this.labelText}</span>`
+                },
+
+                init() {
+                    this.$watch('enabled', on => {
+                        if (!on) return
+                        this.$nextTick(() => {
+                            this.labelText = this.defaultText
+                            this.labelColor = this.defaultColor
+
+                            const box = this.$el.querySelector('[data-color-picker-container]')
+                            if (!box) return
+
+                            const input = box.querySelector('[data-color-picker-input]')
+                            input.value = this.labelColor
+
+                            InitializeColorPickers(box)
+
+                            input.addEventListener('input', () => (this.labelColor = input.value))
+
+                            const proto = Object.getPrototypeOf(input)
+                            const {
+                                get,
+                                set
+                            } = Object.getOwnPropertyDescriptor(proto, 'value')
+                            Object.defineProperty(input, 'value', {
+                                get() {
+                                    return get.call(this)
+                                },
+                                set: v => {
+                                    set.call(input, v);
+                                    this.labelColor = v
+                                }
+                            })
+                        })
+                    })
+                },
+
+                copy() {
+                    navigator.clipboard.writeText(this.snippet)
+                }
+            }
+        }
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
