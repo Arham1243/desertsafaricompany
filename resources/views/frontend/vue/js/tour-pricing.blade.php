@@ -23,6 +23,7 @@
             return [
                 'source' => 'promo',
                 'title' => $promoPrice->promo_title,
+                'slug' => $promoPrice->promo_slug,
                 'original_price' => number_format($original, 2),
                 'discount_percent' => $discountPercent,
                 'discounted_price' => number_format($discounted, 2),
@@ -46,6 +47,7 @@
                             'source' => 'addon',
                             'type' => 'simple',
                             'title' => $addon['title'],
+                            'slug' => $addon['promo_slug'],
                             'original_price' => number_format($original, 2),
                             'discount_percent' => $discountPercent,
                             'discounted_price' => number_format($discounted, 2),
@@ -61,6 +63,7 @@
                             'source' => 'addon',
                             'type' => 'timeslot',
                             'title' => $addon['title'],
+                            'slug' => $addon['promo_slug'],
                             'discount_percent' => $discountPercent,
                             'hours_left' => $hoursLeft,
                             'quantity' => 0,
@@ -379,7 +382,7 @@
 
             const updatePromoQuantity = (action, personType) => {
                 const promoData = promoTourData.value.find(promo => formatNameForInput(promo
-                    .title) === personType);
+                    .slug) === personType);
                 if (!promoData) return;
 
                 promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData

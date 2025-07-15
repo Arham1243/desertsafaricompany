@@ -121,6 +121,7 @@
                 return [
                     'tour_id' => $tour->id,
                     'promo_title' => $promoPrice->promo_title,
+                    'promo_slug' => $promoPrice->promo_slug,
                     'original_price' => number_format($originalPrice, 2),
                     'discount_percent' => $discountPercent,
                     'discounted_price' => number_format($discountedPrice, 2),
@@ -324,7 +325,7 @@
             const updatePromoQuantity = (action, personType, tour, promoIndex) => {
                 const promoTourData = getPromoTourPricing(tour.id);
                 const promoData = promoTourData.find(promo => formatNameForInput(promo
-                        .promo_title) ===
+                        .promo_slug) ===
                     formatNameForInput(personType));
                 if (!promoData) return;
 
