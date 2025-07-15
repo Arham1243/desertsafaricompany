@@ -2815,6 +2815,7 @@ h2.more-offers-title {
 /* .tour-content */
 .tour-content {
     padding: 2.5rem 0 3rem;
+    --promo-label-color: #d70000;
 }
 
 .headerReviews--icon ul li i {
@@ -7361,6 +7362,6 @@ button[disabled] {
     font-weight: 500;
 }
 .text-red {
-    color: #d70000;
+    color: var(--promo-label-color);
     font-weight: 700;
 }

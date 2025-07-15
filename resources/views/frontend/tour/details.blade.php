@@ -1276,6 +1276,13 @@
 @push('css')
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    @if ($settings->get('promo_pricing_label_color'))
+        <style type="text/css">
+            .tour-content {
+                --promo-label-color: {{ $settings->get('promo_pricing_label_color') }};
+            }
+        </style>
+    @endif
     <style type="text/css">
         @font-face {
             font-family: "gt-eesti";

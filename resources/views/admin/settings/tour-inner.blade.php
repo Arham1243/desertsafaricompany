@@ -235,6 +235,34 @@
                                 </div>
                                 <hr class="my-5">
                                 <div class="row">
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Promo Package Title:
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/promo-tour-pricing-label.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Title Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="text-color-picker-promo-label" data-color-picker></label>
+                                                <input id="text-color-picker-promo-label" type="text"
+                                                    data-color-picker-input name="promo_pricing_label_color"
+                                                    value="{{ $settings->get('promo_pricing_label_color') ?? '#d70000' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-5">
+                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
