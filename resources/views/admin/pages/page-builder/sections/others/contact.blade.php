@@ -77,7 +77,7 @@
                         <tr>
                             <th scope="col">
                                 <div class="d-flex align-items-center gap-2"> Icon
-                                    <a class="p-0 nav-link" href="//boxicons.com" target="_blank">Boxicons</a>
+                                    <a class="p-0 nav-link" href="//v2.boxicons.com" target="_blank">Boxicons</a>
                                 </div>
 
                             </th>

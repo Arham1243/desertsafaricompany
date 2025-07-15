@@ -149,7 +149,7 @@
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-2">
                                                     <span class="title mb-0">Badge Icon:
-                                                        <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                        <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
                                                             target="_blank">boxicons</a>
                                                     </span>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
@@ -213,7 +213,8 @@
                                                                     <th scope="col">
                                                                         <div class="d-flex align-items-center gap-2">
                                                                             Icon:
-                                                                            <a class="p-0 nav-link" href="//boxicons.com"
+                                                                            <a class="p-0 nav-link"
+                                                                                href="//v2.boxicons.com"
                                                                                 target="_blank">boxicons</a>
                                                                         </div>
                                                                     </th>
@@ -1019,7 +1020,7 @@
                                                     <div class="col-md-12 mb-4">
                                                         <div class="form-fields">
                                                             <label class="title">Pickup Row Icon:
-                                                                <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                                <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
                                                                     target="_blank">boxicons</a>
                                                             </label>
                                                             <div class="d-flex align-items-center gap-3">
@@ -1126,7 +1127,7 @@
                                                     <div class="col-md-12 mb-4" x-show="!inheritFromPickup">
                                                         <div class="form-fields">
                                                             <label class="title">Dropoff Row Icon:
-                                                                <a class="p-0 ps-2 nav-link" href="//boxicons.com"
+                                                                <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
                                                                     target="_blank">boxicons</a>
                                                             </label>
                                                             <div class="d-flex align-items-center gap-3">
@@ -1264,7 +1265,7 @@
                                                                     </td>
                                                                     <td><label class="title">Icon class: <a
                                                                                 class="p-0 ps-2 nav-link"
-                                                                                href="https://boxicons.com/"
+                                                                                href="https://v2.boxicons.com/"
                                                                                 target="_blank">Boxicons</a></label><input
                                                                             name="itinerary_experience[vehicles][{{ $i }}][icon_class]"
                                                                             type="text" class="field"
@@ -1299,7 +1300,7 @@
                                                                     </td>
                                                                     <td><label class="title">Icon class: <a
                                                                                 class="p-0 ps-2 nav-link"
-                                                                                href="https://boxicons.com/"
+                                                                                href="https://v2.boxicons.com/"
                                                                                 target="_blank">Boxicons</a></label><input
                                                                             name="itinerary_experience[stops][{{ $i }}][icon_class]"
                                                                             type="text" class="field"
@@ -2898,7 +2899,7 @@
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-2">
                                                     <span class="title mb-0">Author icon : <a class="p-0 ps-2 nav-link"
-                                                            href="//boxicons.com" target="_blank">boxicons</a></span>
+                                                            href="//v2.boxicons.com" target="_blank">boxicons</a></span>
                                                 </div>
                                                 <div class="d-flex align-items-center gap-3">
                                                     <input type="text" name="tour[status][author_config][icon_class]"
