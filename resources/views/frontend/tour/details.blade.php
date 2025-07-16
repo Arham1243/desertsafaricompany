@@ -773,7 +773,8 @@
                                                 </div>
                                             @endif
 
-                                            @php$insideStopsWrapper = false;
+                                            @php
+                                                $insideStopsWrapper = false;
                                                 $stopCount = collect($orderedItems)->where('type', 'stop')->count();
                                             @endphp
 
