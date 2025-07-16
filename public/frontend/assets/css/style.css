@@ -7338,6 +7338,14 @@ button[disabled] {
     background: #fd4503;
     font-size: 1.05rem;
 }
+.journey-details__stop--location.journey-details__stop--pickup .icon {
+    color: var(--pickup-circle-icon-color);
+    background: var(--pickup-circle-background-color);
+}
+.journey-details__stop--location.journey-details__stop--dropoff .icon {
+    color: var(--dropoff-circle-icon-color);
+    background: var(--dropoff-circle-background-color);
+}
 /* itenirary journey */
 
 .features-item a {
