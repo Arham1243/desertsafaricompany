@@ -7301,11 +7301,11 @@ button[disabled] {
 }
 .destinations-wrapper::after {
     content: "";
-    width: 11px;
-    height: 95%;
+    width: 10px;
+    height: 70%;
     position: absolute;
-    left: 9px;
-    top: 0;
+    left: 10px;
+    top: 4px;
     background: var(--background-line-color);
     border: 1px solid var(--background-line-color);
     border-radius: 100px;
