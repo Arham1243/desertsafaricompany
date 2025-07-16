@@ -3458,9 +3458,9 @@ span.tour-content__title.ml-1 {
 
 .tour-content_book_app.sale {
     padding-top: 2rem;
-    height: 100vh;
+    /* height: 100vh; */
     position: relative;
-    overflow-y: auto;
+    /* overflow-y: auto; */
 }
 .sale-box {
     position: absolute;
@@ -7231,7 +7231,7 @@ button[disabled] {
 }
 .journey-map :is(iframe, .journey-map__label) {
     position: relative;
-    top: -62px;
+    top: -70px;
 }
 .journey-map__label {
     color: #3e4468;
@@ -7307,7 +7307,7 @@ button[disabled] {
     left: 9px;
     top: 0;
     background: var(--background-line-color);
-    border: 1px solid #ce5e36;
+    border: 1px solid var(--background-line-color);
     border-radius: 100px;
     z-index: -1;
 }

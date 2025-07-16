@@ -1,7 +1,7 @@
 @php
-    $footerLogo = $settings->get('footer_logo');
-    $footerLogoAltText = $settings->get('footer_logo_alt_text');
-    $footerCopyrightText = $settings->get('footer_copyright_text');
+    $footerLogo = App\Models\Setting::where('key', 'footer_logo')->first()->value ?? null;
+    $footerLogoAltText = App\Models\Setting::where('key', 'footer_logo_alt_text')->first()->value ?? null;
+    $footerCopyrightText = App\Models\Setting::where('key', 'footer_copyright_text')->first()->value ?? null;
 @endphp
 <footer class=footer>
     <div class=container>
@@ -84,8 +84,9 @@
         <div class=container>
             <div class=footer-2__content>
                 <div class=footer-logo>
-                    <a href="{{ route('index') }}"> <img src="{{ asset($footerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
-                        alt={{ $footerLogoAltText ?? 'logo' }} class=imgFluid width=112.03 height=33.69></a>
+                    <a href="{{ route('index') }}"> <img
+                            src="{{ asset($footerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
+                            alt={{ $footerLogoAltText ?? 'logo' }} class=imgFluid width=112.03 height=33.69></a>
                 </div>
             </div>
         </div>

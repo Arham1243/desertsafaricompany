@@ -50,7 +50,7 @@
             @{{ showAllPromos ? 'Show Less' : `See All ${promoTourData.filter(p => p.source === 'promo').length} Options` }}
         </a>
         <div class="promo-addOns-wrapper" v-if="hasAnyPromoQuantity && promoAddOnsTourData.length > 0">
-            <div class="form-guest-search__title"> Available Upgrades </div>
+            <div class="form-guest-search__title">you may also like </div>
             <template v-for="(addOn, index) in promoAddOnsTourData" :key="index">
                 <div class="form-group form-guest-search promo-addOn" v-if="addOn.type === 'simple'">
                     <div class="form-guest-search__details promo pt-3">

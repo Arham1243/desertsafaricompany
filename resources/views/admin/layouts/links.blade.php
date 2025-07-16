@@ -1,5 +1,5 @@
 @php
-    $favicon = $settings->get('favicon');
+    $favicon = App\Models\Setting::where('key', 'favicon')->first()->value ?? null;
 @endphp
 @if ($favicon)
     <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">

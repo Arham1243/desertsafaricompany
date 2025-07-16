@@ -506,8 +506,8 @@
 @endphp
 
 @php
-    $headerLogo = $settings->get('header_logo');
-    $headerLogoAltText = $settings->get('header_logo_alt_text');
+    $headerLogo = App\Models\Setting::where('key', 'header_logo')->first()->value ?? null;
+    $headerLogoAltText = App\Models\Setting::where('key', 'header_logo_alt_text')->first()->value ?? null;
 @endphp
 
 
