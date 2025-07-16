@@ -7205,9 +7205,9 @@ button[disabled] {
     position: absolute;
     left: 11px;
     top: 0px;
-    width: 9px;
+    width: 8.8px;
     height: 94%;
-    background-image: url("../images/dots-new-transparent.png");
+    background-image: url(../images/dots-new-transparent.png);
     background-repeat: repeat-y;
     background-size: 9px auto;
     z-index: -2;
@@ -7299,7 +7299,7 @@ button[disabled] {
 .destinations-wrapper {
     position: relative;
 }
-.destinations-wrapper::after {
+.destinations-wrapper:not(.one-stop)::after {
     content: "";
     width: 10px;
     height: 70%;
@@ -7331,6 +7331,8 @@ button[disabled] {
     color: var(--vehicles-circle-icon-color);
     border: 1px solid #dcded6;
     background: var(--vehicles-circle-background-color);
+    position: relative;
+    left: -1px;
 }
 .journey-details__stop--location .icon {
     color: #fff;

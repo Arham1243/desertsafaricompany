@@ -773,12 +773,15 @@
                                                 </div>
                                             @endif
 
-                                            @php $insideStopsWrapper = false; @endphp
+                                            @php$insideStopsWrapper = false;
+                                                $stopCount = collect($orderedItems)->where('type', 'stop')->count();
+                                            @endphp
 
                                             @foreach ($orderedItems as $item)
                                                 @if ($item['type'] === 'stop' && !$insideStopsWrapper)
                                                     @php $insideStopsWrapper = true; @endphp
-                                                    <div class="destinations-wrapper">
+                                                    <div
+                                                        class="destinations-wrapper {{ $stopCount === 1 ? 'one-stop' : '' }}">
                                                 @endif
 
                                                 @if ($item['type'] === 'stop')
