@@ -117,7 +117,7 @@ class TourController extends Controller
 
         $timerHours = (int) ($isWeekend ? $config['weekend_timer_hours'] ?? 0 : $config['weekday_timer_hours'] ?? 0);
 
-        $hoursLeft = $timerHours > 0 ? $timerHours - ($hourOfDay % $timerHours) : 0;
+        $hoursLeft = $timerHours > 0 ? ($hourOfDay % $timerHours === 0 ? $timerHours : $timerHours - ($hourOfDay % $timerHours)) : 0;
 
         $promoData = collect();
 
