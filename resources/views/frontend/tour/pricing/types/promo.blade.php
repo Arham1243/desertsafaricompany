@@ -30,15 +30,15 @@
                     <div class="already-bought"></div>
                     <div class="quantity-counter">
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('minus', formatNameForInput(promo.title))">
+                            @click="updateQuantity('minus', formatNameForInput(promo.slug))">
                             <i class="bx bx-chevron-down"></i>
                         </button>
                         <input readonly type="number" class="quantity-counter__btn quantity-counter__btn--quantity"
                             min="0" v-model="promo.quantity"
-                            :name="`price[${formatNameForInput(promo.title)}][quantity]`">
+                            :name="`price[${formatNameForInput(promo.slug)}][quantity]`">
 
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('plus', formatNameForInput(promo.title))">
+                            @click="updateQuantity('plus', formatNameForInput(promo.slug))">
                             <i class="bx bx-chevron-up"></i>
                         </button>
                     </div>
@@ -87,16 +87,16 @@
                                 <div class="already-bought"></div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('minus', formatNameForInput(addOn.title))">
+                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))">
                                         <i class="bx bx-chevron-down"></i>
                                     </button>
                                     <input readonly type="number"
                                         class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
                                         v-model="addOn.quantity"
-                                        :name="`price[${formatNameForInput(addOn.title)}][quantity]`">
+                                        :name="`price[${formatNameForInput(addOn.slug)}][quantity]`">
 
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('plus', formatNameForInput(addOn.title))">
+                                        @click="updateQuantity('plus', formatNameForInput(addOn.slug))">
                                         <i class="bx bx-chevron-up"></i>
                                     </button>
                                 </div>
@@ -142,16 +142,15 @@
                                 <div class="already-bought"></div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('minus', formatNameForInput(addOn.title))">
+                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))">
                                         <i class="bx bx-chevron-down"></i>
                                     </button>
                                     <input readonly type="number"
                                         class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
-                                        v-model="addOn.quantity"
-                                        :name="`price[${formatNameForInput(addOn.title)}][quantity]`">
+                                        v-model="addOn.quantity" :name="`price[${(addOn.slug)}][quantity]`">
 
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('plus', formatNameForInput(addOn.title))">
+                                        @click="updateQuantity('plus', (addOn.slug))">
                                         <i class="bx bx-chevron-up"></i>
                                     </button>
                                 </div>
@@ -164,8 +163,8 @@
                                             @change="handleSelectedSlotChange(addOn)">
                                             <option v-for="slot in addOn.slots" :key="slot.time"
                                                 :value="slot.time">
-                                                <span v-html="formatTimeLabel(slot.time)"></span> — <span
-                                                    v-html="formatPrice(slot.discounted_price)"></span>
+                                                @{{ formatTimeLabel(slot.time) }} —
+                                                <span v-html="formatPrice(slot.discounted_price)"></span>
                                             </option>
                                         </select>
                                     </div>
