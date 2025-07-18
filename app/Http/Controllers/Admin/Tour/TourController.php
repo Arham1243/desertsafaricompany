@@ -15,6 +15,7 @@ use App\Models\TourPricing;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class TourController extends Controller
 {
@@ -200,14 +201,22 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
+                    $promoSlug = Str::slug(strip_tags($promoTitle)).'-'.uniqid();
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
+                        'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);
                 }
                 if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
+                    $promoAddOns = collect($promoAddOns)->map(function ($addon) {
+                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])).'-'.uniqid();
+
+                        return $addon;
+                    })->all();
+
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => 'promoAddOn',
@@ -456,14 +465,22 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
+                    $promoSlug = Str::slug(strip_tags($promoTitle)).'-'.uniqid();
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
+                        'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);
                 }
                 if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
+                    $promoAddOns = collect($promoAddOns)->map(function ($addon) {
+                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])).'-'.uniqid();
+
+                        return $addon;
+                    })->all();
+
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => 'promoAddOn',
