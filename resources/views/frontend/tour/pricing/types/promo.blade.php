@@ -24,8 +24,9 @@
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                     </span>
                 </div>
-                <span v-if="isFirstOrderCouponrApplied" class="promo-applied purple  d-flex align-items-center mt-1"> <i
-                        style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
+                <span v-if="isFirstOrderCouponrApplied && !promo.promo_is_free"
+                    class="promo-applied purple  d-flex align-items-center mt-1"> <i style="font-size:1.1rem;"
+                        class="bx bxs-check-circle"></i> Promo Applied</span>
                 <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
                     <div class="already-bought"></div>
                     <div class="quantity-counter">
