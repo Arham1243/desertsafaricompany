@@ -35,6 +35,9 @@ class TourController extends Controller
             ->latest()
             ->get();
         $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->first();
+        if (! $tour) {
+            abort(404);
+        }
         $this->trackTourView($request, $tour->id);
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
         if ($tour) {
