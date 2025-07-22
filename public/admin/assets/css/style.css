@@ -2426,3 +2426,6 @@ body .badge.badge-sm {
 .copy-btn {
     font-size: 0.75rem !important;
 }
+a.delete-btn:hover {
+    background: red;
+}

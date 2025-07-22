@@ -111,7 +111,15 @@
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                            <li style="color: #6c757d;" class="breadcrumb-item">/</li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
+                            <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                            @if ($tour->category)
+                                <li class="breadcrumb-item"><a
+                                        href="{{ route('tours.category.details', $tour->category->slug) }}">{{ $tour->category->name ?? '' }}</a>
+                                </li>
+                                <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                            @endif
                             <li class="breadcrumb-item active" aria-current="page">{{ $tour->slug }}</li>
                         </ol>
                     </nav>
@@ -133,15 +141,12 @@
                                 <div class=tour-content__headerLocation>
                                     <div class=tour-content__headerReviews>
                                         <div class=headerReviews-content>
-
-
                                             <ul class="headerReviews--icon">
                                                 <li>
                                                     <x-star-rating :rating="$tour->average_rating" />
                                                 </li>
                                             </ul>
-
-                                            <span>
+                                            <span style="margin-top: 4px;">
                                                 @if ($tour->reviews->count() > 0)
                                                     {{ $tour->reviews->count() }}
                                                     Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
@@ -149,9 +154,39 @@
                                                     No Reviews Yet
                                                 @endif
                                             </span>
-
                                         </div>
                                     </div>
+                                    <ul class="header-listGroup show-in-mobile">
+                                        @if (Auth::check())
+                                            @php
+                                                $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
+                                            @endphp
+                                            <li>
+                                                @if ($isFavorited)
+                                                    <a href="{{ route('tours.favorites.index') }}">
+                                                        <span class="header-listGroup faq-icon added">
+                                                            <i class="bx bxs-heart"></i>
+                                                        </span>
+                                                    </a>
+                                                @else
+                                                    <span class="header-listGroup faq-icon">
+
+                                                        <form action="{{ route('tours.favorites.add', $tour->id) }}"
+                                                            method="post">
+                                                            @csrf
+                                                            <button type="submit"> <i class="bx bx-heart"></i></button>
+                                                        </form>
+                                                    </span>
+                                                @endif
+                                            </li>
+                                        @endif
+                                        <li>
+                                            <a href='javascript:void(0)' data-send-button>
+                                                <span class="header-listGroup faq-icon"> <i
+                                                        class="bx bx-share-alt"></i></span>
+                                            </a>
+                                        </li>
+                                    </ul>
                                     <div class=tour-content__headerLocation--details>
                                         @php
                                             $authorConfig = $tour->author_config
@@ -184,7 +219,7 @@
                                             }
                                         @endphp
                                         @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
-                                            <span class=pipeDivider></span>
+                                            <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
                                                 @if ($badgeStyle && $badgeIconClass)
                                                     <i style="{{ $badgeStyle }}" class="{{ $badgeIconClass }}"></i>
@@ -192,7 +227,7 @@
                                                 {{ $badgeName }}
                                             </div>
                                         @else
-                                            <span class=pipeDivider></span>
+                                            <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
                                                 @if ($authorStyle && $authorIconClass)
                                                     <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
@@ -203,7 +238,7 @@
                                         @endif
                                         @if ($tour->cities->isNotEmpty())
                                             <div class=location-headerLocation--details>
-                                                <span class=pipeDivider></span>
+                                                <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                                 @foreach ($tour->cities as $i => $city)
                                                     <span>
                                                         {{ $city->name }}
@@ -217,7 +252,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <ul class=header-listGroup>
+                            <ul class="header-listGroup show-in-desktop">
                                 @if (Auth::check())
                                     @php
                                         $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
@@ -283,8 +318,8 @@
                             <a href="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
                                 data-fancybox="gallery-2" class="media-gallery__item--1">
                                 <img data-src="{{ asset($tour->media[0]->file_path ?? 'frontend/assets/images/placeholder.png') }}"
-                                    alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy" width="662.5"
-                                    height="400">
+                                    alt="{{ $tour->media[0]->alt_text ?? 'image' }}" class="imgFluid lazy"
+                                    width="662.5" height="400">
                             </a>
                         </div>
                         <div class="col-lg-3">
@@ -959,7 +994,7 @@
                     FAQS
                 </div>
                 @foreach ($tour->faqs as $faq)
-                    <div class="faqs-single accordian {{ $loop->first ? 'active' : '' }}">
+                    <div class="faqs-single accordian">
                         <div class="faqs-single__header accordian-header">
                             <div class="faq-icon"><i class="bx bx-plus"></i></div>
                             <div class="tour-content__title">{{ $faq->question }}
@@ -1019,7 +1054,8 @@
                         <div class=main-reviews__box>
                             <div class="text-center">
                                 <h2 class="main-reviews__detailsNum">
-                                    {{ number_format($averageRating, 1) }}<span class="main-reviews__detailsNum">/5</span>
+                                    {{ number_format($averageRating, 1) }}<span
+                                        class="main-reviews__detailsNum">/5</span>
                                 </h2>
                                 <div class="tour-content__title mb-3">
                                     {{ $mostCommonCategory }}

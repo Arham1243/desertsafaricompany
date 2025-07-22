@@ -262,7 +262,7 @@ body :is(.dirham.dirham) {
     font-size: 1.5rem;
     line-height: 1.15;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.45rem;
     text-transform: capitalize;
     color: #243064;
 }
@@ -2840,9 +2840,8 @@ h2.more-offers-title {
     padding: 0 0.75rem;
 }
 
-.pipeDivider:after {
-    content: "";
-    border-left: 1px solid #000;
+.pipeDivider i {
+    font-size: 0.45rem;
 }
 
 .badge-of-excellence {
@@ -2997,10 +2996,6 @@ ul.tour-content__pra li {
     transform: translateY(-50%);
     color: var(--color-primary);
     pointer-events: none;
-}
-.tour-pricing-wrapper {
-    position: sticky;
-    top: 0;
 }
 .tour-content_book_app::-webkit-scrollbar {
     width: 5px;
@@ -7369,4 +7364,13 @@ button[disabled] {
     color: var(--color-primary);
     font: inherit;
     font-weight: 500;
+}
+ul.show-in-mobile{
+    display: none;
+}
+ul.show-in-desktop{
+    display: flex;
+}
+.breadcrumb-item+.breadcrumb-item::before{
+    display: none;
 }

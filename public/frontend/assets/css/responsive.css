@@ -442,26 +442,27 @@
     .share-popup {
         width: 100%;
         margin: 0 0.75rem;
-    }    
+    }
     .platform .icon {
         width: 45px;
     }
     .platform .icon i {
         font-size: 1.75rem;
     }
-    .platform img
- {
-    width: 20px;    
- }
- .platform .title {
-    font-size: 12px;}
+    .platform img {
+        width: 20px;
+    }
+    .platform .title {
+        font-size: 12px;
+    }
     .copy-link {
-        margin: 1.5rem 0 1.5rem;}
+        margin: 1.5rem 0 1.5rem;
+    }
     .journey-map {
         width: 100%;
         left: 0;
     }
-    .journey-details{
+    .journey-details {
         padding-right: 0;
     }
 
@@ -592,5 +593,25 @@
     }
     .date-search__btns {
         flex-wrap: wrap;
+    }
+    ul.show-in-mobile {
+        display: flex;
+    }
+    ul.show-in-desktop {
+        display: none;
+    }
+    .faq-icon {
+        padding: 0.35rem;
+        font-size: 1.05rem;
+    }
+    ul.header-listGroup {
+        gap: 0.65rem;
+    }
+    .breadcrumb {
+        flex-wrap: nowrap;
+        overflow: scroll;
+        width: 100%;
+        white-space: nowrap;
+        padding-bottom: 0.5rem;
     }
 }

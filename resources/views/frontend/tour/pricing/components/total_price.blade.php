@@ -6,12 +6,7 @@
             </div>
             <div class="content">
                 <div class="title">
-                    <template v-if="firstOrderCoupon.discount_type === 'percentage'">
-                        Extra @{{ parseFloat(firstOrderCoupon.amount) }}% off
-                    </template>
-                    <template v-else>
-                        Extra {!! currencySymbol() !!}@{{ parseFloat(firstOrderCoupon.amount) }} off
-                    </template>
+                    @{{ firstOrderCoupon.name }}
                 </div>
                 <div class="subtitle">Promo Code @{{ firstOrderCoupon.code }}.</div>
             </div>

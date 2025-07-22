@@ -13,7 +13,7 @@
                             </div>
                             <a href="{{ route('admin.tours.create') }}" class="themeBtn">Add Tour</a>
                         </div>
-                        <div class="row mb-4">
+                        <div class="row align-items-end justify-content-between mb-4">
                             <div class="col-md-5">
                                 <form class="custom-form ">
                                     <div class="form-fields d-flex gap-3">
@@ -27,6 +27,28 @@
                                             class="themeBtn">Apply</button>
                                     </div>
                                 </form>
+                            </div>
+                            <div class="col-md-7">
+                                <div class="row align-items-end">
+                                    <div class="col-md-5">
+                                        @php
+                                            $filteredCategory = isset($_GET['category']) ? $_GET['category'] : null;
+                                        @endphp
+                                        <form id="filter-form">
+                                            <div class="form-fields">
+                                                <label class="title">Search by Category:</label>
+                                                <select onchange="document.getElementById('filter-form').submit()"
+                                                    name="category" class="select2-select" should-sort='false'
+                                                    id="search-by-categpry">
+                                                    <option value="" disabled selected>Select Category</option>
+                                                    @php
+                                                        renderCategories($tourCategories, $filteredCategory);
+                                                    @endphp
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="table-responsive">

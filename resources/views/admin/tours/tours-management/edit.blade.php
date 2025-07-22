@@ -134,7 +134,8 @@
                                                 <label class="title">Select category
                                                     :</label>
                                                 <select name="tour[general][category_id]" class="select2-select"
-                                                    data-error="Category" placeholder="Select Categories">
+                                                    data-error="Category" placeholder="Select Categories"
+                                                    should-sort='false'>
                                                     @php
                                                         renderCategories($categories, $tour->category->id ?? null);
                                                     @endphp
@@ -513,8 +514,7 @@
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
-                                                                <th scope="col">Question</th>
-                                                                <th scope="col">Answer <span
+                                                                <th scope="col">Faq content <span
                                                                         class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
                                                                         <span>To add a link:</span>
                                                                         <code class="text-nowrap text-lowercase">&lt;a
@@ -533,10 +533,14 @@
                                                             @foreach ($faqs as $faq)
                                                                 <tr data-repeater-item>
                                                                     <td>
-                                                                        <textarea name="tour[general][faq][question][]" class="field" rows="6">{{ $faq['question'] ?? '' }}</textarea>
-                                                                    </td>
-                                                                    <td>
-                                                                        <textarea name="tour[general][faq][answer][]" class="field" rows="6">{{ $faq['answer'] ?? '' }}</textarea>
+                                                                        <div class="mb-3">
+                                                                            <label class="title">Question:</label>
+                                                                            <textarea name="tour[general][faq][question][]" class="field mb-1" rows="6">{{ $faq['question'] ?? '' }}</textarea>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label class="title">Answer:</label>
+                                                                            <textarea name="tour[general][faq][answer][]" class="field" rows="6">{{ $faq['answer'] ?? '' }}</textarea>
+                                                                        </div>
                                                                     </td>
                                                                     <td>
                                                                         <button type="button"
@@ -1930,9 +1934,9 @@
                                                                                         Preview:</div>
                                                                                     <div
                                                                                         class="small col-12 d-flex align-items-center gap-2 mt-1">
-                                                                                        <span
-                                                                                            :style="`font-weight: 500; color: ${labelColor}`"
-                                                                                            x-text="labelText"></span>
+                                                                                        <strong
+                                                                                            :style="`color: ${labelColor}`"
+                                                                                            x-text="labelText"></strong>
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-md-12 mt-3 mb-3">
@@ -1952,63 +1956,85 @@
                                                                         </template>
                                                                     </div>
 
-                                                                    <table class="table table-bordered">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">Title</th>
-                                                                                <th scope="col">Price</th>
-                                                                                <th class="text-end" scope="col">
-                                                                                    Remove
-                                                                                </th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        @php
-                                                                            $promoTourPrices = !$tour->promoPrices->isEmpty()
-                                                                                ? $tour->promoPrices
-                                                                                : [
-                                                                                    [
-                                                                                        'promo_title' => '',
-                                                                                        'original_price' => '',
-                                                                                    ],
-                                                                                ];
-                                                                        @endphp
-                                                                        <tbody data-repeater-list>
-                                                                            @foreach ($promoTourPrices as $i => $promoTourPrice)
-                                                                                <tr data-repeater-item>
-                                                                                    <td>
-                                                                                        <textarea rows="6" name="tour[pricing][promo][promo_title][]" class="field" placeholder="E.g., Adult"
-                                                                                            data-error="Package Title">{{ $promoTourPrice['promo_title'] }}</textarea>
-
-                                                                                    </td>
-                                                                                    <td style="width: 35%"
-                                                                                        calculate-promo-price>
-                                                                                        <div>
-                                                                                            <input
-                                                                                                name="tour[pricing][promo][original_price][]"
-                                                                                                type="number"
+                                                                    <div x-data="{
+                                                                        promos: {{ json_encode(
+                                                                            $tour->promoPrices->isNotEmpty()
+                                                                                ? $tour->promoPrices->map(
+                                                                                        fn($p) => [
+                                                                                            'title' => $p->promo_title,
+                                                                                            'price' => $p->original_price,
+                                                                                            'is_free' => (bool) $p->promo_is_free,
+                                                                                        ],
+                                                                                    )->values()
+                                                                                : [['title' => '', 'price' => '', 'is_free' => false]],
+                                                                        ) }},
+                                                                        addRow() {
+                                                                            this.promos.push({ title: '', price: '', is_free: false })
+                                                                        },
+                                                                        removeRow(index) {
+                                                                            this.promos.splice(index, 1)
+                                                                        }
+                                                                    }">
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">Title</th>
+                                                                                    <th scope="col">Price</th>
+                                                                                    <th scope="col">No Price (Free)
+                                                                                    </th>
+                                                                                    <th class="text-end" scope="col">
+                                                                                        Remove</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody>
+                                                                                <template x-for="(promo, index) in promos"
+                                                                                    :key="index">
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <textarea rows="6" class="field" placeholder="E.g., Adult" :name="`tour[pricing][promo][promo_title][]`"
+                                                                                                x-model="promo.title"></textarea>
+                                                                                        </td>
+                                                                                        <td style="width: 35%">
+                                                                                            <input type="number"
                                                                                                 class="field"
                                                                                                 placeholder="Original Price"
-                                                                                                value="{{ $promoTourPrice['original_price'] }}"
                                                                                                 step="0.01"
-                                                                                                min="0">
-                                                                                        </div>
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                                            data-repeater-remove disabled>
-                                                                                            <i
-                                                                                                class='bx bxs-trash-alt'></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <button type="button" class="themeBtn ms-auto"
-                                                                        data-repeater-create>Add
-                                                                        <i class="bx bx-plus"></i>
-                                                                    </button>
+                                                                                                min="0"
+                                                                                                :name="`tour[pricing][promo][original_price][]`"
+                                                                                                x-model="promo.price">
+                                                                                        </td>
+                                                                                        <td style="width: 20%">
+                                                                                            <div
+                                                                                                class="form-check d-flex justify-content-center">
+                                                                                                <input type="hidden"
+                                                                                                    :name="`tour[pricing][promo][promo_is_free][]`"
+                                                                                                    :value="promo.is_free ? 1 :
+                                                                                                        0">
+                                                                                                <input type="checkbox"
+                                                                                                    class="form-check-input"
+                                                                                                    style="scale: 1.5"
+                                                                                                    x-model="promo.is_free">
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <button type="button"
+                                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                                @click="removeRow(index)"
+                                                                                                x-bind:disabled="promos.length === 1">
+                                                                                                <i
+                                                                                                    class='bx bxs-trash-alt'></i>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                </template>
+                                                                            </tbody>
+                                                                        </table>
+
+                                                                        <button type="button" class="themeBtn ms-auto"
+                                                                            @click="addRow()">
+                                                                            Add <i class="bx bx-plus"></i>
+                                                                        </button>
+                                                                    </div>
                                                                 </div>
                                                                 <div x-data="{ enablePromoAddOns: {{ $tour->enable_promo_addOns == '1' ? '1' : '0' }} }">
                                                                     <div x-data="promoAddons()"
@@ -3317,7 +3343,7 @@
                 labelColor: '#ff0000',
 
                 get snippet() {
-                    return `<span style="color: ${this.labelColor}">${this.labelText}</span>`
+                    return `<strong style="color: ${this.labelColor}">${this.labelText}</strong>`
                 },
 
                 init() {

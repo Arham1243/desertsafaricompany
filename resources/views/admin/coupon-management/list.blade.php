@@ -59,9 +59,8 @@
                                             <td>
                                                 <a href="{{ route('admin.coupons.edit', $isFirstOrderCoupon->id) }}"
                                                     class="link">{{ $isFirstOrderCoupon->name }}</a>
-                                                <span class="d-block mt-2 badge rounded-pill bg-success">
-                                                    First Order coupon
-                                                </span>
+                                                <span class="d-block mt-2 badge rounded-pill bg-success"
+                                                    style=" width: fit-content; "> First Order coupon </span>
                                             </td>
                                             <td>{{ $isFirstOrderCoupon->code }}</td>
                                             <td>{{ $isFirstOrderCoupon->amount }}</td>

@@ -24,9 +24,17 @@ class TourController extends Controller
 
     public function index()
     {
-        $tours = Tour::with(['category'])->latest()->get();
+        $tourCategories = TourCategory::get();
+        $filteredCategory = request()->query('category');
 
-        return view('admin.tours.tours-management.list', compact('tours'))->with('title', 'All Tours');
+        $tours = Tour::with('category')
+            ->when($filteredCategory, function ($query) use ($filteredCategory) {
+                $query->where('category_id', $filteredCategory);
+            })
+            ->latest()
+            ->get();
+
+        return view('admin.tours.tours-management.list', compact('tours', 'tourCategories'))->with('title', 'All Tours');
     }
 
     public function create()
@@ -206,6 +214,7 @@ class TourController extends Controller
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
+                        'promo_is_free' => (int) $pricing['promo']['promo_is_free'][$index] ?? 0,
                         'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);
@@ -470,6 +479,7 @@ class TourController extends Controller
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
+                        'promo_is_free' => (int) $pricing['promo']['promo_is_free'][$index] ?? 0,
                         'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);

@@ -824,15 +824,6 @@ function initializeFeatures() {
         });
 }
 
-function calculatePromoPrice() {
-    $("[calculate-promo-price]").each(function () {
-        const originalPrice = parseFloat($(this).find("[og-promo-price]").val());
-        const discount = parseFloat($(this).find("[discounted-promo-price]").val());
-        const promoPrice = Math.max(0, originalPrice - discount);
-        $(this).find("[promo-price]").val(promoPrice.toFixed(2));
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     const dateInputs = document.querySelectorAll('input[type="datetime-local"], input[type="date"]');
     if (dateInputs.length) {
