@@ -164,7 +164,11 @@
             const lowestPromoOriginalPrice = computed(() => {
                 if (!promoTourData.value?.length) return null;
 
-                const lowest = promoTourData.value.reduce((min, item) =>
+                const filtered = promoTourData.value.filter(item => parseFloat(item.original_price) >
+                    0);
+                if (!filtered.length) return null;
+
+                const lowest = filtered.reduce((min, item) =>
                     parseFloat(item.discounted_price) < parseFloat(min.discounted_price) ? item :
                     min
                 );
@@ -175,7 +179,7 @@
             const weekdayDiscountPercent = {{ $weekday_discount_percent }}
             const weekendDiscountPercent = {{ $weekend_discount_percent }}
             const lowestPromoWeekdayDiscountPrice = computed(() => {
-                if (!lowestPromoOriginalPrice.value) return null;
+                if (!lowestPromoOriginalPrice.value) return 'null';
                 return Math.floor(lowestPromoOriginalPrice.value * (1 - (weekdayDiscountPercent /
                     100)));
             });
