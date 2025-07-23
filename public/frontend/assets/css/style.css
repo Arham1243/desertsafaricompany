@@ -3104,7 +3104,6 @@ span.flatpickr-day.selected .price {
     color: var(--global-paragraph-color);
     font-size: 16px;
     line-height: 1.7;
-    opacity: 0.6;
     padding-left: 0.5rem;
 }
 
