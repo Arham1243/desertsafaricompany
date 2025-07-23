@@ -3,7 +3,7 @@
         <div v-for="(promo, index) in visiblePromos" :key="index" class="form-group form-guest-search">
             <div class="form-guest-search__details promo" v-if="promo.source === 'promo'">
                 <div class="promo-title" v-html="promo.title"></div>
-                <div class="promo-price-wrapper" v-if="promo.promo_is_free === '0'">
+                <div class="promo-price-wrapper" v-if="!promo.promo_is_free">
                     <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
                     <div v-if="promo.original_discounted_price" class="promo-price green price-cut"><span
                             v-html="formatPrice(promo.original_discounted_price)"></span>
@@ -15,7 +15,7 @@
                     <span v-if="!promo.original_discounted_price" class="percent-off-tag">@{{ promo.discount_percent }}%
                         Off</span>
                 </div>
-                <div class="promo-og-offer purple" v-if="promo.promo_is_free === '0'">
+                <div class="promo-og-offer purple" v-if="!promo.promo_is_free">
                     <span class="offer" v-if="promo.original_discounted_price"><span
                             v-html="formatPrice(promo.original_discounted_price)"></span> with promo</span>
                     <span class="offer" v-else><span v-html="formatPrice(promo.discounted_price)"></span> with
@@ -24,7 +24,7 @@
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                     </span>
                 </div>
-                <template v-if="promo.promo_is_free === '0'">
+                <template v-if="!promo.promo_is_free">
                     <span v-if="isFirstOrderCouponrApplied"
                         class="promo-applied purple  d-flex align-items-center mt-1"> <i style="font-size:1.1rem;"
                             class="bx bxs-check-circle"></i> Promo Applied</span>

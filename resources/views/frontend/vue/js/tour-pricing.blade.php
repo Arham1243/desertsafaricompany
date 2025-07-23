@@ -25,7 +25,7 @@
                 'source' => 'promo',
                 'title' => $promoPrice->promo_title,
                 'slug' => $promoPrice->promo_slug,
-                'promo_is_free' => $promoPrice->promo_is_free,
+                'promo_is_free' => (int) $promoPrice->promo_is_free,
                 'original_price' => number_format($original, 2),
                 'discount_percent' => $discountPercent,
                 'discounted_price' => number_format($discounted, 2),
