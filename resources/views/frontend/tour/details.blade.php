@@ -35,9 +35,7 @@
                             @endphp
                             <a href="https://instagram.com/{{ $instagramUsername }}" target="_blank">
                                 <div class="icon"
-                                    style="background: #d6249f;
-  background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%); 
-">
+                                    style="background: #d6249f; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);  ">
                                     <i class="bx bxl-instagram"></i>
                                 </div>
                                 <div class="title">Instagram</div>
@@ -425,7 +423,25 @@
             </div>
         @endif
 
-        <div class="tour-content pt-4">
+        @php
+            $global_heading_color = $settings->get('global_heading_color');
+            $global_paragraph_color = $settings->get('global_paragraph_color');
+
+            $global_color_style = [];
+
+            if ($global_heading_color) {
+                $global_color_style[] = "--global-heading-color: {$global_heading_color}";
+            }
+            if ($global_paragraph_color) {
+                $global_color_style[] = "--global-paragraph-color: {$global_paragraph_color}";
+            }
+
+            $global_color_style_attribute = empty($global_color_style)
+                ? ''
+                : 'style="' . implode('; ', $global_color_style) . '"';
+
+        @endphp
+        <div class="tour-content pt-4" {!! $global_color_style_attribute !!}>
             <div class=container>
                 <div class=row>
                     <div class=col-md-8>
@@ -990,7 +1006,7 @@
     @if ($tour->faqs->isNotEmpty())
         <div class="pb-2 pt-3">
             <div class="faqs">
-                <div class="tour-content__SubTitle">
+                <div class="tour-content__SubTitle mb-4">
                     FAQS
                 </div>
                 @foreach ($tour->faqs as $faq)

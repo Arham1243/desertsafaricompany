@@ -13,7 +13,7 @@ function setupRepeaterSlickSlider(selector, slidesToShow, responsiveSettings) {
     $(selector).slick({
         dots: false,
         arrows: true,
-        infinite: false,
+        infinite: true,
         slidesToShow: slidesToShow,
         slidesToScroll: 1,
         autoplay: true,

@@ -84,6 +84,51 @@
                                     <div class="col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Content Color Settings
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Headings Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="heading-color-picker" data-color-picker></label>
+                                                <input id="heading-color-picker" type="text" data-color-picker-input
+                                                    name="global_heading_color"
+                                                    value="{{ $settings->get('global_heading_color') ?? '#343a40' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Paragraphs Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                    Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="paragraph-color-picker" data-color-picker></label>
+                                                <input id="paragraph-color-picker" type="text" data-color-picker-input
+                                                    name="global_paragraph_color"
+                                                    value="{{ $settings->get('global_paragraph_color') ?? '#5e6d77' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-5">
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
                                                 Badge Icon:
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/badge-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
@@ -95,7 +140,8 @@
                                         <div class="form-fields">
                                             <div class="title d-flex align-items-center gap-2">
                                                 <div>Background Color:</div>
-                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
                                                     Color Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>
@@ -111,7 +157,8 @@
                                         <div class="form-fields">
                                             <div class="title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
-                                                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get
                                                     Color Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>

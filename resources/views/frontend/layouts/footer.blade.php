@@ -23,7 +23,7 @@
                     <div class=footer-details>SERVICES</div>
                     <ul class=footer-link>
                         <li><a href=#>Tours</a></li>
-                        <li><a href=#>Restourants</a></li>
+                        <li><a href=#>Restaurants</a></li>
                         <li><a href=#>Tattoos</a></li>
                         <li><a href=#>Bar</a></li>
                     </ul>
@@ -34,7 +34,7 @@
                     <div class=footer-details>ACCOUNT</div>
                     <ul class=footer-link>
                         <li><a href=#>Log In</a></li>
-                        <li><a href=#>Sing Up</a></li>
+                        <li><a href=#>Sign Up</a></li>
                         <li><a href=#>Forgot Password?</a></li>
                         <li><a href=#>Become a Supplier</a></li>
                     </ul>
@@ -55,38 +55,9 @@
                 <div class=payment-section id=payment-section>
                     <label class=footer-details>Ways You Can Pay</label>
                     <div class=payment-images>
-                        <div><img alt=Paypal src={{ asset('frontend/assets/images/paypal_border.webp') }}
-                                class=imgFluid></div>
-                        <div><img alt=Mastercard src={{ asset('frontend/assets/images/mastercard.webp') }}
-                                class=imgFluid></div>
-                        <div><img alt=Visa src={{ asset('frontend/assets/images/visa.webp') }} class=imgFluid></div>
-                        <div><img alt=Maestro src={{ asset('frontend/assets/images/maestro.webp') }} class=imgFluid>
+                        <div><img alt=Paypal src={{ asset('frontend/assets/images/payments.png') }} class=imgFluid>
                         </div>
-                        <div><img alt="American Express" src={{ asset('frontend/assets/images/amex.webp') }}></div>
-                        <div><img alt=Jcb src={{ asset('frontend/assets/images/jcb.webp') }} class=imgFluid></div>
-                        <div><img alt=Discover src={{ asset('frontend/assets/images/discover.webp') }} class=imgFluid>
-                        </div>
-                        <div><img alt=Sofort src={{ asset('frontend/assets/images/sofort.webp') }} class=imgFluid></div>
-                        <div><img alt=Klarna src={{ asset('frontend/assets/images/klarna.webp') }} class=imgFluid>
-                        </div>
-                        <div><img alt="Google Pay" src={{ asset('frontend/assets/images/googlepay.webp') }}
-                                class=imgFluid></div>
-                        <div><img alt="Apple Pay" src={{ asset('frontend/assets/images/applepay.webp') }}
-                                class=imgFluid></div>
-                        <div><img alt=Bancontact src={{ asset('frontend/assets/images/bancontact.webp') }}
-                                class=imgFluid></div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class=footer-2>
-        <div class=container>
-            <div class=footer-2__content>
-                <div class=footer-logo>
-                    <a href="{{ route('index') }}"> <img
-                            src="{{ asset($footerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
-                            alt={{ $footerLogoAltText ?? 'logo' }} class=imgFluid width=112.03 height=33.69></a>
                 </div>
             </div>
         </div>
