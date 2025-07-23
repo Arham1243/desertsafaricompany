@@ -2359,7 +2359,7 @@ input.form-book__date {
     width: 100%;
     border-bottom: 2px solid #e4e4e4;
     padding: 0.25rem 0;
-    margin-top: 0.35rem;
+    margin-top: 3px;
 }
 
 .baseline-pricing__category {
@@ -3483,6 +3483,9 @@ span.tour-content__title.ml-1 {
 
 .form-book__pra {
     margin: 0;
+    opacity: 1;
+    font-weight: 600;
+    color: var(--global-heading-color);
 }
 
 .review-message {
