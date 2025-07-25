@@ -791,8 +791,7 @@
                                     <label class="title">Top 4 featured tours <span class="text-danger">*</span>
                                         :</label>
                                     <select name="top_featured_tour_ids[]" multiple class="select2-select"
-                                        data-max-items="4" placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                        data-error="Top 4 featured tours">
+                                        data-max-items="4" placeholder="Select Tours" data-error="Top 4 featured tours">
                                         @foreach ($tours as $topFeaturedTour)
                                             <option value="{{ $topFeaturedTour->id }}"
                                                 {{ in_array($topFeaturedTour->id, old('top_featured_tour_ids', $selectedTopFeaturedTours)) ? 'selected' : '' }}>
@@ -812,8 +811,7 @@
                                     <label class="title">Bottom featured tours <span class="text-danger">*</span>
                                         :</label>
                                     <select name="bottom_featured_tour_ids[]" multiple class="select2-select"
-                                        placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                        data-error="Bottom featured tours">
+                                        placeholder="Select Tours" data-error="Bottom featured tours">
                                         @foreach ($tours as $bottomFeaturedTour)
                                             <option value="{{ $bottomFeaturedTour->id }}"
                                                 {{ in_array($bottomFeaturedTour->id, old('bottom_featured_tour_ids', $selectedBottomFeaturedTours)) ? 'selected' : '' }}>
@@ -833,8 +831,7 @@
                                     <label class="title">Recommended tours <span class="text-danger">*</span>
                                         :</label>
                                     <select name="recommended_tour_ids[]" multiple class="select2-select"
-                                        data-max-items="4" placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                        data-error="Recommended tours">
+                                        data-max-items="4" placeholder="Select Tours" data-error="Recommended tours">
                                         @foreach ($tours as $recommendedFeaturedTour)
                                             <option value="{{ $recommendedFeaturedTour->id }}"
                                                 {{ in_array($recommendedFeaturedTour->id, old('recommended_tour_ids', $selectedRecommendedTours)) ? 'selected' : '' }}>

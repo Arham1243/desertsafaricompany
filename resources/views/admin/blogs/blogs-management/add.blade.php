@@ -62,8 +62,7 @@
                                                 class="text-danger">*</span>
                                             :</label>
                                         <select name="top_highlighted_tour_id" placeholder="Select Tour"
-                                            class="select2-select" {{ !$tours->isEmpty() ? '' : '' }}
-                                            data-error="Right Side Top Highlighted Tour Card">
+                                            class="select2-select" data-error="Right Side Top Highlighted Tour Card">
                                             <option value="" selected disabled>Select</option>
                                             @foreach ($tours as $tour)
                                                 <option value="{{ $tour->id }}"
@@ -81,7 +80,7 @@
                                             :</label>
                                         <select name="featured_tours_ids[]" multiple class="select2-select"
                                             data-max-items="4" placeholder="Select Tours"
-                                            {{ !$tours->isEmpty() ? '' : '' }} data-error="Below Blog Slider Tour Card">
+                                            data-error="Below Blog Slider Tour Card">
                                             @foreach ($tours as $tour)
                                                 <option value="{{ $tour->id }}"
                                                     {{ old('featured_tours_ids') == $tour->id ? 'selected' : '' }}>

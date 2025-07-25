@@ -10,6 +10,7 @@ use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
+use App\Models\TourDetailPopup;
 use App\Models\TourView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -29,6 +30,7 @@ class TourController extends Controller
     public function details(Request $request, $slug)
     {
         $settings = Setting::pluck('value', 'key');
+        $detailPopups = TourDetailPopup::where('status', 'active')->get();
         $firstOrderCoupon = Coupon::where('is_first_order_coupon', 1)->where('status', 'active')->first();
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')
@@ -42,7 +44,7 @@ class TourController extends Controller
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
         if ($tour) {
             $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon');
+            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon', 'detailPopups');
 
             return view('frontend.tour.details')->with('title', $tour->title)->with($data);
         }

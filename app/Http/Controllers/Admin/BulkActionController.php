@@ -20,6 +20,7 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourAuthor;
 use App\Models\TourCategory;
+use App\Models\TourDetailPopup;
 use App\Models\TourReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -93,6 +94,11 @@ class BulkActionController extends Controller
                 $modelClass = TourAuthor::class;
                 $column = 'id';
                 $redirectRoute = 'admin.tour-authors.index';
+                break;
+            case 'tour-popups':
+                $modelClass = TourDetailPopup::class;
+                $column = 'id';
+                $redirectRoute = 'admin.tour-popups.index';
                 break;
             case 'tour-attributes':
                 $modelClass = TourAttribute::class;

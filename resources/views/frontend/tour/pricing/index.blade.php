@@ -58,3 +58,128 @@
             <button class="app-btn themeBtn w-100" disabled>Login to Continue</button>
         @endif
     </div>
+
+    @if ((int) $settings->get('is_enabled_detail_popup_trigger_box') === 1);
+        @php
+            $detail_popup_trigger_box_icon = $settings->get('detail_popup_trigger_box_icon');
+            $detail_popup_trigger_box_icon_color = $settings->get('detail_popup_trigger_box_icon_color');
+            $detail_popup_trigger_box_background_color = $settings->get('detail_popup_trigger_box_background_color');
+            $detail_popup_trigger_box_text_color = $settings->get('detail_popup_trigger_box_text_color');
+
+            $detail_popup_box_style = [];
+
+            if ($detail_popup_trigger_box_icon_color) {
+                $detail_popup_box_style[] = "--detail-popup-trigger-box-icon-color: {$detail_popup_trigger_box_icon_color}";
+            }
+            if ($detail_popup_trigger_box_background_color) {
+                $detail_popup_box_style[] = "--detail-popup-trigger-box-background-color: {$detail_popup_trigger_box_background_color}";
+            }
+            if ($detail_popup_trigger_box_text_color) {
+                $detail_popup_box_style[] = "--detail-popup-trigger-box-text-color: {$detail_popup_trigger_box_text_color}";
+            }
+
+            $detail_popup_box_style_attribute = empty($detail_popup_box_style)
+                ? ''
+                : 'style="' . implode('; ', $detail_popup_box_style) . '"';
+
+            $selectedDetailPopupsIds = $settings->get('detail_popup_ids')
+                ? json_decode($settings->get('detail_popup_ids'))
+                : [];
+            $selectedDetailPopups = $detailPopups->whereIn('id', $selectedDetailPopupsIds);
+        @endphp
+        @if ($selectedDetailPopups->isNotEmpty())
+            <div class="detail-popups" {!! $detail_popup_box_style_attribute !!}>
+                @foreach ($selectedDetailPopups as $selectedDetailPopup)
+                    <div class="detail-popups-item">
+                        <div class="detail-popups-item__icon">
+                            <i class='{{ $detail_popup_trigger_box_icon ?? '' }}'></i>
+                        </div>
+                        <div class="detail-popups-item__info">
+                            <span class="trigger-text" detail-popup-trigger
+                                detail-popup-id="{{ $selectedDetailPopup->type }}">{{ $selectedDetailPopup->popup_trigger_text ?? '' }}</span>
+                            <span class="user-label">{{ $selectedDetailPopup->user_showing_text ?? '' }}</span>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+
+            @foreach ($selectedDetailPopups as $selectedDetailPopupsModal)
+                <div class="global-popup-wrapper detail-popup" id="{{ $selectedDetailPopupsModal->type }}">
+                    <div class="global-popup">
+                        <div class="global-popup__header">
+                            <div class="title">{{ $selectedDetailPopupsModal->main_heading ?? '' }}</div>
+                            <div class="close-icon" detail-popup-close>
+                                <i class="bx bx-x"></i>
+                            </div>
+                        </div>
+
+                        @if ($selectedDetailPopupsModal->type === 'reserve_now_and_pay_later')
+                            @php
+                                $reserveNowAndPayLaterPopupContent = $selectedDetailPopupsModal->content
+                                    ? json_decode($selectedDetailPopupsModal->content)
+                                    : null;
+                            @endphp
+                            <div class="global-popup__content editor-content">
+                                {!! $reserveNowAndPayLaterPopupContent->editor_content ?? '' !!}
+                            </div>
+                        @elseif ($selectedDetailPopupsModal->type === 'cancellation_policy')
+                            @php
+                                $cancellationPolicyPopupContent = $selectedDetailPopupsModal->content
+                                    ? json_decode($selectedDetailPopupsModal->content)
+                                    : null;
+                            @endphp
+                            <div class="global-popup__content editor-content">
+                                <h4>{{ $cancellationPolicyPopupContent->sub_heading ?? '' }}</h4>
+                                <div class="refund-policy">
+                                    <div class="refund-policy-item refund-policy-item--green">
+                                        <div class="refund-policy-item__time">
+                                            {{ $cancellationPolicyPopupContent->condition_1 ?? '' }}</div>
+                                        <div class="refund-policy-item__result">
+                                            {{ $cancellationPolicyPopupContent->outcome_1 ?? '' }}</div>
+                                    </div>
+                                    <div class="refund-policy-item refund-policy-item--red">
+                                        <div class="refund-policy-item__time">
+                                            {{ $cancellationPolicyPopupContent->condition_2 ?? '' }}</div>
+                                        <div class="refund-policy-item__result">
+                                            {{ $cancellationPolicyPopupContent->outcome_2 ?? '' }}</div>
+                                    </div>
+                                </div>
+                                {!! $cancellationPolicyPopupContent->editor_content ?? '' !!}
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            @endforeach
+            @push('js')
+                <script>
+                    document.addEventListener('DOMContentLoaded', () => {
+                        const triggers = document.querySelectorAll('[detail-popup-trigger]');
+                        const popups = document.querySelectorAll('.global-popup-wrapper');
+
+                        triggers.forEach(trigger => {
+                            trigger.addEventListener('click', () => {
+                                const id = trigger.getAttribute('detail-popup-id');
+                                popups.forEach(popup => {
+                                    popup.classList.remove('open');
+                                    if (popup.id === id) popup.classList.add('open');
+                                });
+                            });
+                        });
+                        popups.forEach(popup => {
+                            popup.addEventListener('click', function(e) {
+                                if (e.target === popup) {
+                                    popup.classList.remove('open');
+                                }
+                            });
+                        });
+
+                        document.querySelectorAll('[detail-popup-close]').forEach(close => {
+                            close.addEventListener('click', () => {
+                                close.closest('.global-popup-wrapper').classList.remove('open');
+                            });
+                        });
+                    });
+                </script>
+            @endpush
+        @endif
+    @endif

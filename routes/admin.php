@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\Tour\AuthorController as TourAuthorController;
 use App\Http\Controllers\Admin\Tour\AvailabilityController;
 use App\Http\Controllers\Admin\Tour\BookingController;
 use App\Http\Controllers\Admin\Tour\CategoryController as TourCategoryController;
+use App\Http\Controllers\Admin\Tour\DetailPopupController as TourDetailPopupController;
 use App\Http\Controllers\Admin\Tour\ReviewController;
 use App\Http\Controllers\Admin\Tour\TourController;
 use Illuminate\Support\Facades\Route;
@@ -61,6 +62,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
     Route::resource('tour-categories', TourCategoryController::class);
     Route::resource('tour-authors', TourAuthorController::class);
+    Route::resource('tour-popups', TourDetailPopupController::class);
     Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {
         Route::controller(ReviewController::class)->group(function () {
             Route::get('/approved', 'approved')->name('approved');

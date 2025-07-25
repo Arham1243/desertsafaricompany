@@ -8,6 +8,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\News;
 use App\Models\Page;
+use App\Models\Popup;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\TourAttribute;
@@ -39,6 +40,10 @@ class RecoveryController extends Controller
             'name' => 'Name',
             'country' => 'Country',
             'slug' => 'Slug',
+            'deleted_at' => 'Deleted On',
+        ],
+        'popups' => [
+            'title' => 'Title',
             'deleted_at' => 'Deleted On',
         ],
         'tours' => [
@@ -81,6 +86,9 @@ class RecoveryController extends Controller
                 break;
             case 'cities':
                 $items = City::onlyTrashed()->get();
+                break;
+            case 'popups':
+                $items = Popup::onlyTrashed()->get();
                 break;
             case 'tours':
                 $items = Tour::onlyTrashed()->get();
