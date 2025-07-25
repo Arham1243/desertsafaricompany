@@ -7390,7 +7390,7 @@ ul.show-in-desktop {
     --detail-popup-trigger-box-text-color: #000000;
     --detail-popup-trigger-box-icon-color: #1c4d99;
     background: var(--detail-popup-trigger-box-background-color);
-    padding: 0.85rem 1rem;
+    padding: 0.99rem 1rem;
     border-radius: 0.35rem;
     margin-top: 1.5rem;
 }
@@ -7400,14 +7400,14 @@ ul.show-in-desktop {
 }
 .detail-popups-item__icon i {
     color: var(--detail-popup-trigger-box-icon-color);
-    font-size: 1.05rem;
+    font-size: 1.09rem;
 }
 .detail-popups-item__info {
-    line-height: 1.25;
+    line-height: 1.4;
     color: var(--detail-popup-trigger-box-text-color);
 }
 .detail-popups-item__info span {
-    font-size: 0.93rem;
+    font-size: 0.95rem;
 }
 .detail-popups-item__info .trigger-text {
     cursor: pointer;
@@ -7419,7 +7419,7 @@ ul.show-in-desktop {
     padding-left: 0.25rem;
 }
 .detail-popups-item:not(:last-child) {
-    margin-bottom: 0.85rem;
+    margin-bottom: 0.9rem;
 }
 .refund-policy {
     width: 100%;
