@@ -428,8 +428,10 @@
         gap: 0.75rem 0;
     }
     .badge-of-excellence {
-        align-items: flex-end;
-        line-height: 1.1;
+        align-items: center;
+        line-height: 1.35;
+        justify-content: flex-start;
+        flex-wrap: wrap;
     }
 
     .pipeDivider {
@@ -614,4 +616,28 @@
         white-space: nowrap;
         padding-bottom: 0.5rem;
     }
+    .global-popup {
+        width: 85%;
+        margin: 0;
+    }
+    .global-popup-wrapper.detail-popup .global-popup__header .title {
+        font-size: 1.1rem;
+    }
+    .editor-content :is(p, li, strong) {
+        font-size: 15px;
+    }
+    .refund-policy {
+        margin: 1.25rem 0 2rem;
+    }
+    .refund-policy-item__result {
+        font-size: 14px;
+    }
+    .refund-policy-item__time {
+        font-size: 13px;
+    }
+    .global-popup__content{
+        height: 70vh;
+    overflow-y: auto;
+    }    
+    
 }

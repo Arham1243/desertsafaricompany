@@ -216,6 +216,11 @@
                     ],
                 ],
                 [
+                    'title' => 'Detail Popups',
+                    'icon' => 'bx bx-message-square-detail',
+                    'route' => route('admin.tour-popups.index'),
+                ],
+                [
                     'title' => 'Availability',
                     'icon' => 'bx bx-calendar',
                     'route' => route('admin.tour-availability.index'),
@@ -240,6 +245,11 @@
                     'title' => 'Add Popup',
                     'icon' => 'bx bx-plus',
                     'route' => route('admin.popups.create'),
+                ],
+                [
+                    'title' => 'Recovery',
+                    'icon' => 'bx bx-refresh',
+                    'route' => route('admin.recovery.index', ['resource' => 'popups']),
                 ],
             ],
         ],

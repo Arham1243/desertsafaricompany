@@ -41,7 +41,7 @@ Breadcrumbs::for('admin.blogs-tags.edit', function (BreadcrumbTrail $trail, $ite
 // ---------------Blogs---------------
 
 Breadcrumbs::for('admin.recovery.index', function (BreadcrumbTrail $trail, $resource) {
-    $trail->parent("admin.$resource.index"); // Dynamically set the parent breadcrumb
+    $trail->parent("admin.$resource.index");
     $trail->push('Recovery', route('admin.recovery.index', ['resource' => $resource]));
 });
 
@@ -145,6 +145,18 @@ Breadcrumbs::for('admin.tour-authors.create', function (BreadcrumbTrail $trail) 
 Breadcrumbs::for('admin.tour-authors.edit', function (BreadcrumbTrail $trail, $item) {
     $trail->parent('admin.tour-authors.index');
     $trail->push($item->name ?? 'N/A', route('admin.tour-authors.edit', $item->id));
+});
+Breadcrumbs::for('admin.tour-popups.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tours.index');
+    $trail->push('Detail Popups', route('admin.tour-popups.index'));
+});
+Breadcrumbs::for('admin.tour-popups.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tour-popups.index');
+    $trail->push('Add Detail Popup', route('admin.tour-popups.create'));
+});
+Breadcrumbs::for('admin.tour-popups.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.tour-popups.index');
+    $trail->push($item->main_heading ?? 'N/A', route('admin.tour-popups.edit', $item->id));
 });
 
 Breadcrumbs::for('admin.tour-attributes.index', function (BreadcrumbTrail $trail) {

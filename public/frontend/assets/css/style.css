@@ -6363,7 +6363,7 @@ span.select2-dropdown.select2-dropdown--below {
 
 /* full calendar */
 
-/* popup */
+/* global-popup-wrapper */
 .global-popup__header {
     display: flex;
     align-items: center;
@@ -6442,7 +6442,14 @@ span.select2-dropdown.select2-dropdown--below {
     scale: 0.85;
     transition: all 150ms ease-in;
 }
+.global-popup-wrapper.detail-popup, .global-popup-wrapper.detail-popup .editor-content * {
+    color: #000000d9;
+}
 
+.global-popup-wrapper.detail-popup .global-popup__header .title {
+    font-size: 1.36rem;
+}
+/* global-popup-wrapper */
 .select-field {
     width: 100%;
     padding: 0.65rem 0.75rem;
@@ -7204,7 +7211,7 @@ button[disabled] {
     position: absolute;
     left: 11px;
     top: 0px;
-    width: 8px;
+    width: 9px;
     height: 94%;
     background-image: url(../images/dots-new-transparent.png);
     background-repeat: repeat-y;
@@ -7377,3 +7384,74 @@ ul.show-in-desktop {
 .breadcrumb-item + .breadcrumb-item::before {
     display: none;
 }
+/* tour detail popups */
+.detail-popups {
+    --detail-popup-trigger-box-background-color: #edf4fa;
+    --detail-popup-trigger-box-text-color: #000000;
+    --detail-popup-trigger-box-icon-color: #1c4d99;
+    background: var(--detail-popup-trigger-box-background-color);
+    padding: 0.85rem 1rem;
+    border-radius: 0.35rem;
+    margin-top: 1.5rem;
+}
+.detail-popups-item {
+    display: flex;
+    gap: 0.7rem;
+}
+.detail-popups-item__icon i {
+    color: var(--detail-popup-trigger-box-icon-color);
+    font-size: 1.05rem;
+}
+.detail-popups-item__info {
+    line-height: 1.25;
+    color: var(--detail-popup-trigger-box-text-color);
+}
+.detail-popups-item__info span {
+    font-size: 0.93rem;
+}
+.detail-popups-item__info .trigger-text {
+    cursor: pointer;
+    text-decoration: underline !important;
+    font-weight: 700;
+}
+.detail-popups-item__info .user-label {
+    font-weight: 400;
+    padding-left: 0.25rem;
+}
+.detail-popups-item:not(:last-child) {
+    margin-bottom: 0.85rem;
+}
+.refund-policy {
+    width: 100%;
+    display: flex;
+    margin: 1.75rem 0 2.75rem;
+}
+.refund-policy-item{
+    text-align: center;
+    width: 100%;
+}
+.refund-policy-item__time {
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+.refund-policy-item__result{
+    font-weight: 600;
+    font-size: 1rem;
+    width: 100%;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.6rem;
+}
+.refund-policy-item--green .refund-policy-item__result{
+    background: #59D9BD;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+.refund-policy-item--red .refund-policy-item__result{
+    background: #EA5974;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+/* tour detail popups */

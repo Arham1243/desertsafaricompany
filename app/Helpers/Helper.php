@@ -116,6 +116,13 @@ if (! function_exists('formatNameForInput')) {
         return strtolower(str_replace(' ', '_', $name));
     }
 }
+if (! function_exists('formatKey')) {
+
+    function formatKey($value)
+    {
+        return ucwords(str_replace('_', ' ', $value));
+    }
+}
 if (! function_exists('formatBigNumber')) {
     function formatBigNumber($num)
     {

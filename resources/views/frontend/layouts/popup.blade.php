@@ -1,8 +1,8 @@
-<div class="global-popup-wrapper">
+<div class="global-popup-wrapper" global-popup-wrapper>
     <div class="global-popup">
         <div class="global-popup__header">
             <div class="title">{{ $popup->title ?? '' }}</div>
-            <div class="close-icon">
+            <div class="close-icon" close-icon>
                 <i class="bx bx-x"></i>
             </div>
         </div>
@@ -14,8 +14,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const popupWrapper = document.querySelector('.global-popup-wrapper');
-        const closeIcon = document.querySelector('.close-icon');
+        const popupWrapper = document.querySelector('[global-popup-wrapper]');
+        const closeIcon = popupWrapper.querySelector('[close-icon]');
 
         setTimeout(() => {
             popupWrapper.classList.add('open');

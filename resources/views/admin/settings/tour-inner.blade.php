@@ -254,34 +254,6 @@
                                 </div>
                                 <hr class="my-5">
                                 <div class="row">
-                                    <div class="col-md-12 col-12">
-                                        <div class="form-fields">
-                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                'Why Book With Us?' Icons:
-                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/perks-icon-preview.png') }}"
-                                                    data-fancybox="gallery" title="section preview"
-                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
-                                                        class="bx bxs-show"></i></a></label>
-                                        </div>
-                                        <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
-                                                <div>Icon Color:</div>
-                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                    target="_blank">Get
-                                                    Color Codes</a>
-                                            </div>
-                                            <div class="field color-picker" data-color-picker-container>
-                                                <label for="icon-color-picker-perks" data-color-picker></label>
-                                                <input id="icon-color-picker-perks" type="text" data-color-picker-input
-                                                    name="perks_icon_color"
-                                                    value="{{ $settings->get('perks_icon_color') ?? '#1c4d99' }}"
-                                                    inputmode="text">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-5">
-                                <div class="row">
                                     <div class="col-md-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
@@ -490,10 +462,164 @@
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
-                                <div class="title">Why Book With Us?</div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">Detail Popups Settings</div>
+                                    <div x-data="{ enabled: {{ (int) $settings->get('is_enabled_detail_popup_trigger_box') === 1 ? 'true' : 'false' }} }" class="form-check form-switch"
+                                        data-enabled-text="Enabled" data-disabled-text="Disabled">
+
+                                        <input type="hidden" name="is_enabled_detail_popup_trigger_box"
+                                            :value="enabled ? 1 : 0">
+
+                                        <input class="form-check-input" type="checkbox"
+                                            id="enable-detail_popup_trigger_box" x-model="enabled">
+
+                                        <label class="form-check-label" for="enable-detail_popup_trigger_box"
+                                            x-text="enabled ? 'Enabled' : 'Disabled'"></label>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-box__body">
                                 <div class="form-fields">
+                                    <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                        Popup trigger Box Settings:
+                                        <a href="{{ asset('admin/assets/images/tour-detail-popup-trigger.png') }}"
+                                            data-fancybox="gallery" title="section preview"
+                                            class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                class="bx bxs-show"></i></a></label>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon:</div>
+                                                <a class="p-0 nav-link" href="//v2.boxicons.com"
+                                                    target="_blank">boxicons</a>
+                                            </div>
+                                            <div x-data="{ icon: '{{ $settings->get('detail_popup_trigger_box_icon') ?? 'bx bxs-check-circle' }}' }" class="d-flex align-items-center gap-3">
+                                                <input type="text" id="detail_popup_trigger_box_icon"
+                                                    name="detail_popup_trigger_box_icon" class="field" x-model="icon">
+                                                <i :class="`${icon} bx-sm`" style="font-size: 1.5rem"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="detail_popup_trigger_box_icon_color" data-color-picker></label>
+                                                <input id="detail_popup_trigger_box_icon_color" type="text"
+                                                    data-color-picker-input name="detail_popup_trigger_box_icon_color"
+                                                    value="{{ $settings->get('detail_popup_trigger_box_icon_color') ?? '#1c4d99' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Box Background:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="detail_popup_trigger_box_background_color"
+                                                    data-color-picker></label>
+                                                <input id="detail_popup_trigger_box_background_color" type="text"
+                                                    data-color-picker-input
+                                                    name="detail_popup_trigger_box_background_color"
+                                                    value="{{ $settings->get('detail_popup_trigger_box_background_color') ?? '#EDF4FA' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="title d-flex align-items-center gap-2">
+                                                <div>Box Text Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="detail_popup_trigger_box_text_color" data-color-picker></label>
+                                                <input id="detail_popup_trigger_box_text_color" type="text"
+                                                    data-color-picker-input name="detail_popup_trigger_box_text_color"
+                                                    value="{{ $settings->get('detail_popup_trigger_box_text_color') ?? '#000000' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mt-4">
+                                        @php
+                                            $selectedPopups = $settings->get('detail_popup_ids')
+                                                ? json_decode($settings->get('detail_popup_ids'))
+                                                : [];
+                                        @endphp
+
+                                        <div class="form-fields">
+                                            <label class="title" style="text-transform: initial">Select Detail
+                                                Popup(s):</label>
+                                            <select name="detail_popup_ids[]" class="field select2-select"
+                                                data-max-items="2" multiple>
+                                                @foreach ($detailPopups as $popup)
+                                                    <option value="{{ $popup->id }}"
+                                                        {{ in_array($popup->id, $selectedPopups) ? 'selected' : '' }}>
+                                                        {{ $popup->main_heading }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">"Why Book With Us?" Settings</div>
+
+                                    <div x-data="{ enabled: {{ (int) $settings->get('is_enabled_why_book_with_us') === 1 ? 'true' : 'false' }} }" class="form-check form-switch"
+                                        data-enabled-text="Enabled" data-disabled-text="Disabled">
+
+                                        <input type="hidden" name="is_enabled_why_book_with_us" :value="enabled ? 1 : 0">
+
+                                        <input class="form-check-input" type="checkbox" id="enable-why-book-with-us"
+                                            x-model="enabled">
+
+                                        <label class="form-check-label" for="enable-why-book-with-us"
+                                            x-text="enabled ? 'Enabled' : 'Disabled'"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-fields">
+                                    <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                        Icons:
+                                        <a href="{{ asset('admin/assets/images/tour-inner-settings/perks-icon-preview.png') }}"
+                                            data-fancybox="gallery" title="section preview"
+                                            class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                class="bx bxs-show"></i></a></label>
+                                </div>
+                                <div class="form-fields">
+                                    <div class="title d-flex align-items-center gap-2">
+                                        <div>Icon Color:</div>
+                                        <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
+                                            Color Codes</a>
+                                    </div>
+                                    <div class="field color-picker" data-color-picker-container>
+                                        <label for="icon-color-picker-perks" data-color-picker></label>
+                                        <input id="icon-color-picker-perks" type="text" data-color-picker-input
+                                            name="perks_icon_color"
+                                            value="{{ $settings->get('perks_icon_color') ?? '#1c4d99' }}"
+                                            inputmode="text">
+                                    </div>
+                                </div>
+                                <div class="form-fields mt-4 pt-2">
                                     <div x-data="featuresManager">
                                         <div class="repeater-table">
                                             <table class="table table-bordered">

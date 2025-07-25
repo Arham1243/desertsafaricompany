@@ -433,8 +433,7 @@
                                         <label class="title">Best Things To do <span class="text-danger">*</span>
                                             :</label>
                                         <select name="best_tours_ids[]" multiple class="select2-select"
-                                            placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                            data-error="Top 4 featured tours">
+                                            placeholder="Select Tours" data-error="Top 4 featured tours">
                                             @foreach ($tours as $tour)
                                                 <option value="{{ $tour->id }}"
                                                     {{ in_array($tour->id, old('best_tours_ids', $selectedBestTours)) ? 'selected' : '' }}>
@@ -453,8 +452,7 @@
                                         <label class="title">Popular Activities <span class="text-danger">*</span>
                                             :</label>
                                         <select name="popular_tours_ids[]" multiple class="select2-select"
-                                            placeholder="Select Tours" {{ !$tours->isEmpty() ? '' : '' }}
-                                            data-error="Top 4 featured tours">
+                                            placeholder="Select Tours" data-error="Top 4 featured tours">
                                             @foreach ($tours as $tour)
                                                 <option value="{{ $tour->id }}"
                                                     {{ in_array($tour->id, old('popular_tours_ids', $selectedPopularTours)) ? 'selected' : '' }}>
