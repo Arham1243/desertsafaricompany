@@ -21,7 +21,8 @@
         display: none;
     }
     .loginSignup-popup {
-        width: 300px;
+        width: 100%;
+        margin: 0 0.75rem;
     }
 
     button.loginSignup-popup__icons {
@@ -607,8 +608,8 @@
         display: none;
     }
     .faq-icon {
-        padding: 0.35rem;
-        font-size: 1.05rem;
+        padding: 0.45rem;
+        font-size: 1.35rem;
     }
     ul.header-listGroup {
         gap: 0.65rem;
@@ -621,8 +622,8 @@
         padding-bottom: 0.5rem;
     }
     .global-popup {
-        width: 85%;
-        margin: 0;
+        width: 100%;
+        margin: 0 0.75rem;
     }
     .global-popup-wrapper.detail-popup .global-popup__header .title {
         font-size: 1.1rem;
@@ -659,11 +660,13 @@
         margin-top: 0.5rem;
     }
     .availability-bar {
-    padding: 0.45rem 0.35rem 0.5rem;
+    padding: 0.45rem 0.35rem 1rem;
 }
     .details-btn-wrapper .wishlist-btn {
-    width: 49px;
-    font-size: 0.85rem;
+    width: 40px;
+}
+    .details-btn-wrapper .wishlist-btn i{
+    font-size: 1.4rem;
 }
     .details-btn-wrapper .primary-btn{
         flex: 1;
@@ -676,4 +679,8 @@
     .availability-bar .details-wrapper{
         display: none;
     }
+    .faqs-single__header
+ {
+    gap: 1rem;
+}
 }

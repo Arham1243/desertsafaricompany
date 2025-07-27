@@ -13,7 +13,7 @@
             <div class="share-popup light">
                 <div class="share-popup__header">
                     <div class="title">Share</div>
-                    <div class="close-btn">
+                    <div class="popup-close-icon close-btn">
                         <i class='bx bx-x'></i>
                     </div>
                 </div>

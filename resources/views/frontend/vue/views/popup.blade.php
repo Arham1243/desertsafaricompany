@@ -4,8 +4,8 @@
     </a>
     <div class="login-wrapper" ref="loginPopup">
         <div class="loginSignup-popup">
-            <a href="javascript:void(0)" @click="closeLoginPopup" class="loginSignup-popup__close" title="close"><i
-                    class='bx bx-x'></i></a>
+            <a href="javascript:void(0)" @click="closeLoginPopup" class="loginSignup-popup__close popup-close-icon"
+                title="close"><i class='bx bx-x'></i></a>
             <div v-if="challenge === 'check_email'">
                 <h3>Log in or sign up</h3>
                 <p>Check out more easily and access your tickets on any device with your GetYourGuide account.</p>

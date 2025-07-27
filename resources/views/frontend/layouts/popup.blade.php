@@ -2,7 +2,7 @@
     <div class="global-popup">
         <div class="global-popup__header">
             <div class="title">{{ $popup->title ?? '' }}</div>
-            <div class="close-icon" close-icon>
+            <div class="close-icon popup-close-icon" close-icon>
                 <i class="bx bx-x"></i>
             </div>
         </div>

@@ -109,7 +109,7 @@
                     <div class="global-popup">
                         <div class="global-popup__header">
                             <div class="title">{{ $selectedDetailPopupsModal->main_heading ?? '' }}</div>
-                            <div class="close-icon" detail-popup-close>
+                            <div class="close-icon popup-close-icon" detail-popup-close>
                                 <i class="bx bx-x"></i>
                             </div>
                         </div>
