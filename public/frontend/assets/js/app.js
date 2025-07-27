@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
         {
             rootMargin: "200px 0px",
             threshold: 0.1,
-        }
+        },
     );
     images.forEach((image) => {
         observer.observe(image);
@@ -124,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
 const quantityWrappers = document.querySelectorAll(".quantity-counter");
 quantityWrappers.forEach((counter) => {
     const quantityField = counter.querySelector(
-        ".quantity-counter__btn--quantity"
+        ".quantity-counter__btn--quantity",
     );
     const minusBtn = counter.querySelector(".quantity-counter__btn--minus");
     const plusBtn = counter.querySelector(".quantity-counter__btn--plus");
@@ -162,11 +162,11 @@ document.addEventListener("DOMContentLoaded", function () {
 const todayDate = new Date().toISOString().split("T")[0];
 document.getElementById("start_date")?.setAttribute("min", todayDate);
 const emptyParas = Array.from(document.querySelectorAll("p")).filter(
-    (p) => p.innerHTML.trim() === "&nbsp;"
+    (p) => p.innerHTML.trim() === "&nbsp;",
 );
 
 if (emptyParas.length > 0) {
-    emptyParas.forEach((p) => (p.classList.add('empty')));
+    emptyParas.forEach((p) => p.classList.add("empty"));
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -196,10 +196,36 @@ document.addEventListener("DOMContentLoaded", function () {
             const isTruncated = content.scrollHeight > content.clientHeight;
 
             if (isTruncated) {
-                button.style.display = 'inline-block'; // 
+                button.style.display = "inline-block"; //
             } else {
-                button.style.display = 'none';
+                button.style.display = "none";
             }
         }
     });
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const loginButtons = document.querySelectorAll("[open-vue-login-popup]");
+    if (loginButtons.length > 0) {
+        loginButtons.forEach((btn, index) => {
+            btn.addEventListener("click", () => {
+                document.querySelector('.sideBar')?.classList.remove('show')
+                LoginPopupApp.openLoginPopup();
+            });
+        });
+    }
+});
+
+
+document.addEventListener('click', function(e) {
+    if (e.target === document.querySelector('.login-wrapper')) {
+        document.querySelector('.login-wrapper')?.classList.remove('open');
+    }
+});
+
+
+document.addEventListener('click', function(e) {
+    if (e.target === document.querySelector('[data-send-popup]')) {
+        document.querySelector('[data-send-popup]').classList.remove('open');
+    }
 });

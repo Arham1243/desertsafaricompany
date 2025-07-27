@@ -32,7 +32,10 @@
         display: none;
     }
 
-    ul.header-btns__list {
+    li.header-btns__item:not(.login-li) {
+        display: none;
+    }
+    li.header-btns__item.login-li a.login-anchor{
         display: none;
     }
 
@@ -651,5 +654,26 @@
     }
     .tour-content__header .section-content .heading {
         margin-bottom: 0.75rem;
+    }
+    .details-btn-wrapper {
+        margin-top: 0.5rem;
+    }
+    .availability-bar {
+    padding: 0.45rem 0.35rem 0.5rem;
+}
+    .details-btn-wrapper .wishlist-btn {
+    width: 49px;
+    font-size: 0.85rem;
+}
+    .details-btn-wrapper .primary-btn{
+        flex: 1;
+        font-size: 0.85rem;
+        padding: 0.7rem 0;
+    }
+    .availability-bar-padding{
+        padding-inline: 0;
+    }
+    .availability-bar .details-wrapper{
+        display: none;
     }
 }

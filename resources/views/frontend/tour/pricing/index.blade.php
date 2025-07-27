@@ -55,7 +55,7 @@
                     Cart</a>
             @endif
         @else
-            <button class="app-btn themeBtn w-100" disabled>Login to Continue</button>
+            <button type="button" class="app-btn themeBtn w-100" open-vue-login-popup>Login to Continue</button>
         @endif
     </div>
 

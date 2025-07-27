@@ -22,7 +22,7 @@
             </div>
             <div class="header-btns">
                 <ul class="header-btns__list">
-                    <li class="header-btns__item">
+                    <li class="header-btns__item login-li">
                         @include('frontend.vue.main', [
                             'appId' => 'login-popup',
                             'appComponent' => 'popup',
@@ -90,7 +90,8 @@
                                 @endif
                             </ul>
                         </div>
-
+                    </li>
+                </ul>
             </div>
 
 
@@ -106,7 +107,7 @@
 </header>
 
 <div class="sideBar" id="sideBar">
-    <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()">×</a>
+    <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()"><i class='bx bx-x'></i></a>
     <a href="{{ route('index') }}" class="sideBar__logo">
         <img class="imgFluid" src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
             alt='{{ $headerLogoAltText ?? 'logo' }}'>
@@ -116,4 +117,7 @@
         <li><a href="#">Local Guide</a></li>
         <li><a href="#">Help</a></li>
     </ul>
+    <a href="javascript:void(0)" class="primary-btn w-75 mx-auto mt-4" open-vue-login-popup>
+        <span><b>Login</b> or <b> SignUp </b></span>
+    </a>
 </div>

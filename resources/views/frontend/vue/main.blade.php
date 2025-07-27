@@ -22,7 +22,7 @@
             if (type === "error") {
                 $.toast({
                     heading: "Error!",
-                    position: "bottom-right",
+                    position: "top-right",
                     loaderBg: "#ff6849",
                     icon: "error",
                     hideAfter: 5000,

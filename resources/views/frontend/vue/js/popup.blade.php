@@ -162,5 +162,5 @@
             setup() {}
         });
     @endif
-    LoginPopup.mount('#login-popup');
+    const LoginPopupApp = LoginPopup.mount('#login-popup');
 </script>

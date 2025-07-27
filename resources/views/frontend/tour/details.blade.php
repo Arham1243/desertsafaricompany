@@ -1,5 +1,13 @@
 @extends('frontend.layouts.main')
 @section('content')
+    @php
+        $isFavorited = Auth::check() ? Auth::user()->favoriteTours->contains($tour->id) : null;
+        $whatsappNumberDialCode = trim($settings->get('whatsapp_number_dial_code'));
+        $whatsappNumberRaw = trim($settings->get('whatsapp_number'));
+        $whatsappNumber = ltrim(preg_replace('/\D/', '', $whatsappNumberRaw), '0');
+        $fullWhatsappNumber = $whatsappNumberDialCode . $whatsappNumber;
+        $text = rawurlencode("Hi, I'm interested in this tour:\n{$tour->title}\n" . url()->current());
+    @endphp
     <div class="gt-eesti">
         <div class="share-popup-wrapper" data-send-popup>
             <div class="share-popup light">
@@ -12,16 +20,6 @@
                 <div class="share-popup__body">
                     <ul class="platforms">
                         <li class="platform">
-                            @php
-                                $whatsappNumberDialCode = trim($settings->get('whatsapp_number_dial_code'));
-                                $whatsappNumberRaw = trim($settings->get('whatsapp_number'));
-                                $whatsappNumber = ltrim(preg_replace('/\D/', '', $whatsappNumberRaw), '0');
-                                $fullWhatsappNumber = $whatsappNumberDialCode . $whatsappNumber;
-                                $text = rawurlencode(
-                                    "Hi, I'm interested in this tour:\n{$tour->title}\n" . url()->current(),
-                                );
-                            @endphp
-
                             <a href="https://wa.me/{{ $fullWhatsappNumber }}?text={{ $text }}" target="_blank">
                                 <div class="icon" style="background: #27D469;">
                                     <i class='bx bxl-whatsapp'></i>
@@ -155,29 +153,28 @@
                                         </div>
                                     </div>
                                     <ul class="header-listGroup show-in-mobile">
-                                        @if (Auth::check())
-                                            @php
-                                                $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
-                                            @endphp
-                                            <li>
-                                                @if ($isFavorited)
-                                                    <a href="{{ route('tours.favorites.index') }}">
-                                                        <span class="header-listGroup faq-icon added">
-                                                            <i class="bx bxs-heart"></i>
-                                                        </span>
-                                                    </a>
-                                                @else
-                                                    <span class="header-listGroup faq-icon">
-
-                                                        <form action="{{ route('tours.favorites.add', $tour->id) }}"
-                                                            method="post">
-                                                            @csrf
-                                                            <button type="submit"> <i class="bx bx-heart"></i></button>
-                                                        </form>
+                                        <li>
+                                            @if (!Auth::check())
+                                                <span open-vue-login-popup class="header-listGroup faq-icon not-logged-in"
+                                                    onclick="showMessage('Please log in to add this tour to favorites.', 'error','top-right')">
+                                                    <i class="bx bx-heart"></i>
+                                                </span>
+                                            @elseif ($isFavorited)
+                                                <a href="{{ route('tours.favorites.index') }}">
+                                                    <span class="header-listGroup faq-icon added">
+                                                        <i class="bx bxs-heart"></i>
                                                     </span>
-                                                @endif
-                                            </li>
-                                        @endif
+                                                </a>
+                                            @else
+                                                <span class="header-listGroup faq-icon">
+                                                    <form action="{{ route('tours.favorites.add', $tour->id) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        <button type="submit"><i class="bx bx-heart"></i></button>
+                                                    </form>
+                                                </span>
+                                            @endif
+                                        </li>
                                         <li>
                                             <a href='javascript:void(0)' data-send-button>
                                                 <span class="header-listGroup faq-icon"> <i
@@ -251,29 +248,27 @@
                                 </div>
                             </div>
                             <ul class="header-listGroup show-in-desktop">
-                                @if (Auth::check())
-                                    @php
-                                        $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
-                                    @endphp
-                                    <li>
-                                        @if ($isFavorited)
-                                            <a href="{{ route('tours.favorites.index') }}">
-                                                <span class="header-listGroup faq-icon added">
-                                                    <i class="bx bxs-heart"></i>
-                                                </span>
-                                            </a>
-                                        @else
-                                            <span class="header-listGroup faq-icon">
-
-                                                <form action="{{ route('tours.favorites.add', $tour->id) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    <button type="submit"> <i class="bx bx-heart"></i></button>
-                                                </form>
+                                <li>
+                                    @if (!Auth::check())
+                                        <span open-vue-login-popup class="header-listGroup faq-icon not-logged-in"
+                                            onclick="showMessage('Please log in to add this tour to favorites.', 'error','top-right')">
+                                            <i class="bx bx-heart"></i>
+                                        </span>
+                                    @elseif ($isFavorited)
+                                        <a href="{{ route('tours.favorites.index') }}">
+                                            <span class="header-listGroup faq-icon added">
+                                                <i class="bx bxs-heart"></i>
                                             </span>
-                                        @endif
-                                    </li>
-                                @endif
+                                        </a>
+                                    @else
+                                        <span class="header-listGroup faq-icon">
+                                            <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                                                @csrf
+                                                <button type="submit"><i class="bx bx-heart"></i></button>
+                                            </form>
+                                        </span>
+                                    @endif
+                                </li>
                                 <li>
                                     <a href='javascript:void(0)' data-send-button>
                                         <span class="header-listGroup faq-icon"> <i class="bx bx-share-alt"></i></span>
@@ -442,6 +437,45 @@
 
         @endphp
         <div class="tour-content pt-4" {!! $global_color_style_attribute !!}>
+            <div class="availability-bar" availability-bar>
+                <div class="container">
+                    <div class="availability-bar-padding">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-md-6">
+                                <div class="details-wrapper">
+                                    <div class="details">from <span availability-bar-lowest-price></span> per person </div>
+                                    <div class="details sub">Lowest Price Guarantee</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="details-btn-wrapper">
+                                    <button type="button" class="primary-btn"
+                                        data-action="scroll-to-pricing-and-open-calendar">Check Availability</button>
+                                    @if (!Auth::check())
+                                        <button open-vue-login-popup type="button" class="wishlist-btn"
+                                            title="Add to wishlist"
+                                            onclick="showMessage('Please log in to add this tour to favorites.', 'error','top-right')">
+                                            <i class='bx bx-heart'></i>
+                                        </button>
+                                    @elseif ($isFavorited)
+                                        <a href="{{ route('tours.favorites.index') }}" title="View favorites"
+                                            class="wishlist-btn" style="color: #DD0029;">
+                                            <i class='bx bxs-heart'></i>
+                                        </a>
+                                    @else
+                                        <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                                            @csrf
+                                            <button type="submit" title="Add to wishlist" class="wishlist-btn">
+                                                <i class='bx bx-heart'></i>
+                                            </button>
+                                        </form>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class=container>
                 <div class="row flex-column-reverse flex-md-row">
                     <div class=col-md-8>
@@ -1251,7 +1285,7 @@
         </div>
     @else
         <div class="review-message tour-content__title">
-            You must <a href="#header" class="loginBtn">log in</a> to write
+            You must <a href="javascript:void(0)" class="loginBtn" open-vue-login-popup>log in</a> to write
             review
         </div>
     @endif
@@ -1463,13 +1497,56 @@
                     const day = date.getDay();
                     const isWeekend = [0, 5, 6].includes(day);
                     const price = isWeekend ? weekendPrice : weekdayPrice;
+                    const formatedPrice = `{{ currencySymbol() }}${price}`
+                    const formatedFloatPrice = `{{ currencySymbol() }}${parseFloat(price).toFixed(2)}`
 
                     const priceTag = document.createElement("div");
-                    priceTag.innerHTML = `{{ currencySymbol() }}${price}`;
+                    const availabilityBarLowesPrice = document.querySelector(
+                        "[availability-bar-lowest-price]");
+                    availabilityBarLowesPrice.innerHTML = formatedFloatPrice
+                    priceTag.innerHTML = formatedPrice;
                     priceTag.className = "price";
 
                     dayElem.appendChild(priceTag);
                 }
+            });
+        });
+        document.addEventListener('DOMContentLoaded', () => {
+            const tourPricing = document.querySelector('#tour-pricing');
+            const bar = document.querySelector('[availability-bar]');
+            const startDateInput = document.getElementById('start_date');
+            if (!tourPricing || !bar || !startDateInput) return;
+
+            window.addEventListener('scroll', () => {
+                const rect = tourPricing.getBoundingClientRect();
+                const scrollBottom = window.innerHeight + 150;
+                if (rect.bottom <= scrollBottom) {
+                    bar.classList.add('show');
+                } else {
+                    bar.classList.remove('show');
+                }
+            });
+            const btn = document.querySelector('[data-action="scroll-to-pricing-and-open-calendar"]');
+            const section = document.querySelector('#tour-pricing');
+            const input = document.getElementById('start_date');
+
+            if (!btn || !section || !input) return;
+
+            btn.addEventListener('click', () => {
+                const observer = new IntersectionObserver((entries, observer) => {
+                    if (entries[0].isIntersecting) {
+                        observer.disconnect();
+                        setTimeout(() => input.click(), 300);
+                    }
+                }, {
+                    threshold: 0.6
+                });
+
+                observer.observe(section);
+                section.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             });
         });
     </script>

@@ -2783,11 +2783,10 @@ h2.more-offers-title {
 .tour-details_btns {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 13px;
     position: absolute;
-    margin-top: -6rem;
-    right: 0;
-    margin-right: 57px;
+    right: 1rem;
+    bottom: 1rem;
 }
 
 .tour-details_img img {
@@ -3645,6 +3644,7 @@ label.form-guest-search__item-clean input {
     align-items: center;
     justify-content: center;
     height: fit-content;
+    cursor: pointer;
 }
 
 ul.header-listGroup button {
@@ -3659,13 +3659,9 @@ ul.header-listGroup form {
 }
 
 span.header-listGroup.faq-icon.added {
-    background: #fe4838;
-    border: none;
+    color: #DD0029;
 }
 
-span.header-listGroup.faq-icon.added i {
-    color: #fff;
-}
 
 /* accordian */
 .accordian-header,
@@ -4082,14 +4078,7 @@ a h5.blogDet-card__title:hover {
         0 0 64px #00000014,
         0 8px 16px #00000029;
     width: 460px;
-    /* right: 0; */
-    /* top: 105px; */
-    /* margin: 0 87px; */
-    /* position: fixed; */
-    /* top: 50%; */
-    /* left: 50%; */
-    /* transform: translate(-50%, -50%); */
-    /* z-index: 1000; */
+    transition: none;
 }
 
 .hidden {
@@ -4111,10 +4100,10 @@ a h5.blogDet-card__title:hover {
     align-items: center;
     justify-content: center;
     z-index: 1001;
+    backdrop-filter: blur(1px);
 }
 
 .loginSignup-popup {
-    transition: all 200ms 200ms;
     position: relative;
 }
 
@@ -4783,7 +4772,7 @@ body.fancybox-active.compensate-for-scrollbar {
     background: #fff;
     padding: 3rem 0 4rem;
     transform: translateX(-100%);
-    height: 101vh;
+    height: 100vh;
     z-index: 100;
     width: 310px;
     box-shadow: rgba(0, 0, 0, 0.125) 0px 0px 20px 5px;
@@ -4814,17 +4803,16 @@ body.fancybox-active.compensate-for-scrollbar {
 
 .sideBar__close {
     position: absolute;
-    top: -9px;
+    top: 0;
     font-size: 1.5rem;
     background: var(--color-primary);
-    width: 39px;
+    width: 40px;
     height: 40px;
     align-items: center;
     justify-content: center;
     display: flex;
     right: 0px;
     color: rgb(255, 255, 255) !important;
-    aspect-ratio: 1/1;
 }
 
 .sideBar__logo {
@@ -6408,7 +6396,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .global-popup-wrapper {
-    background: #000000ba;
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -6421,7 +6409,7 @@ span.select2-dropdown.select2-dropdown--below {
     opacity: 0;
     visibility: hidden;
     transition: all 150ms ease-in;
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(1px);
 }
 
 .global-popup-wrapper.open {
@@ -6801,7 +6789,7 @@ span.select2-dropdown.select2-dropdown--below {
 
 /* share popup */
 .share-popup-wrapper {
-    background: #00000057;
+    background: rgba(0, 0, 0, 0.5);
     width: 100%;
     height: 100%;
     position: fixed;
@@ -7455,3 +7443,65 @@ ul.show-in-desktop {
     border-bottom-left-radius: 0;
 }
 /* tour detail popups */
+
+
+/* availability-bar */
+.availability-bar{
+    width: 100%;
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 15px 5px #0000001a;
+    padding: 0.75rem 0;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    transform: translateY(100%);
+    transition: all 150ms;
+    opacity: 0;
+}
+.availability-bar.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+.availability-bar .details-btn-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.85rem;
+}
+.details-btn-wrapper .primary-btn{flex: 0.8;font-size: 16px;padding: 0.73rem 1rem;}
+.details-btn-wrapper .wishlist-btn{
+    width: 48px;
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: none;
+    outline: none;
+    border: 1px solid #B3B3B3;
+    border-radius: 100%;
+}
+.details-btn-wrapper .wishlist-btn:hover{
+    background: #F5F5F5;
+}
+.details-btn-wrapper .wishlist-btn i{
+    font-size: 1.55rem;
+}.availability-bar .details {
+    font-size: 17px;
+    font-weight: 400;
+}
+
+.availability-bar .details-wrapper{
+    line-height: 1.4;
+    }
+.availability-bar .details.sub {
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline !important;
+}
+.availability-bar .details span{font-weight: 700;font-size: 21px;}
+.availability-bar-padding{
+    padding-inline: 3rem;
+}
+/* availability-bar */

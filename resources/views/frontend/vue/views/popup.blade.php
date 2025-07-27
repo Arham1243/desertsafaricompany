@@ -1,5 +1,5 @@
 @if (!Auth::check())
-    <a href="javascript:void(0)" @click="openLoginPopup" class="item__become-supplier loginBtn">
+    <a href="javascript:void(0)" @click="openLoginPopup" class="item__become-supplier loginBtn login-anchor">
         <span><b>Login</b> or <b> SignUp </b></span>
     </a>
     <div class="login-wrapper" ref="loginPopup">
