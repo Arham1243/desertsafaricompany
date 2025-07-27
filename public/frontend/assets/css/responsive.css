@@ -648,4 +648,7 @@
     .detail-popups-item__info span {
         font-size: 0.9rem;
     }
+    .tour-content__header .section-content .heading {
+        margin-bottom: 0.75rem;
+    }
 }
