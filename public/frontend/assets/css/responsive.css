@@ -470,6 +470,7 @@
 
     .tour-content__header {
         flex-wrap: wrap;
+        margin-bottom: 5px;
     }
 
     ul.tour-content__moreDetail--content {
