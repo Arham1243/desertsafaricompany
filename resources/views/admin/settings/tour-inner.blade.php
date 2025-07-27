@@ -561,6 +561,7 @@
                                                 : [];
                                         @endphp
 
+                                        <input type="hidden" name="detail_popup_ids[]" value="">
                                         <div class="form-fields">
                                             <label class="title" style="text-transform: initial">Select Detail
                                                 Popup(s):</label>
