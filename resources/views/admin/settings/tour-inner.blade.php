@@ -564,7 +564,8 @@
                                         <div class="form-fields">
                                             <label class="title" style="text-transform: initial">Select Detail
                                                 Popup(s):</label>
-                                            <select name="detail_popup_ids[]" class="field select2-select" multiple>
+                                            <select name="detail_popup_ids[]" class="field select2-select" multiple
+                                                should-sort="false">
                                                 @foreach ($detailPopups as $popup)
                                                     <option value="{{ $popup->id }}"
                                                         {{ in_array($popup->id, $selectedPopups) ? 'selected' : '' }}>
