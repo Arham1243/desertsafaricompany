@@ -17,26 +17,25 @@ class DetailPopupController extends Controller
 
     public function create()
     {
-        $types = TourDetailPopup::pluck('type')->toArray();
-
-        if (in_array('cancellation_policy', $types) && in_array('reserve_now_and_pay_later', $types)) {
-            abort(404);
-        }
-
         return view('admin.tours.popups.add');
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
-            'type' => 'required|in:cancellation_policy,reserve_now_and_pay_later',
+            'type' => 'required|in:policy,info',
             'main_heading' => 'required|string|max:255',
+            'popup_trigger_text' => 'required|string|max:255',
+            'user_showing_text' => 'required|string|max:255',
+            'content' => 'nullable|array',
             'status' => 'required|in:active,inactive',
         ]);
 
-        TourDetailPopup::create($data);
+        $data['content'] = json_encode($data['content']);
 
-        return redirect()->route('admin.tour-popups.index')->with('title', 'Add Detail Popup');
+        $popup = TourDetailPopup::create($data);
+
+        return redirect()->route('admin.tour-popups.index')->with('notify_success', 'Popup Added successfully.');
     }
 
     public function edit($id)
@@ -51,10 +50,11 @@ class DetailPopupController extends Controller
         $popup = TourDetailPopup::findOrFail($id);
 
         $data = $request->validate([
+            'type' => 'required|in:policy,info',
             'main_heading' => 'required|string|max:255',
             'popup_trigger_text' => 'required|string|max:255',
             'user_showing_text' => 'required|string|max:255',
-            'content' => 'required|array',
+            'content' => 'nullable|array',
             'status' => 'required|in:active,inactive',
         ]);
 
@@ -62,6 +62,6 @@ class DetailPopupController extends Controller
 
         $popup->update($data);
 
-        return redirect()->route('admin.tour-popups.index');
+        return redirect()->route('admin.tour-popups.index')->with('notify_success', 'Popup Updated successfully.');
     }
 }

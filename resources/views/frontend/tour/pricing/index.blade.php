@@ -59,7 +59,7 @@
         @endif
     </div>
 
-    @if ((int) $settings->get('is_enabled_detail_popup_trigger_box') === 1);
+    @if ((int) $settings->get('is_enabled_detail_popup_trigger_box') === 1)
         @php
             $detail_popup_trigger_box_icon = $settings->get('detail_popup_trigger_box_icon');
             $detail_popup_trigger_box_icon_color = $settings->get('detail_popup_trigger_box_icon_color');
@@ -96,7 +96,8 @@
                         </div>
                         <div class="detail-popups-item__info">
                             <span class="trigger-text" detail-popup-trigger
-                                detail-popup-id="{{ $selectedDetailPopup->type }}">{{ $selectedDetailPopup->popup_trigger_text ?? '' }}</span>
+                                detail-popup-id="popup-{{ $selectedDetailPopup->id }}">
+                                {{ $selectedDetailPopup->popup_trigger_text ?? '' }}</span>
                             <span class="user-label">{{ $selectedDetailPopup->user_showing_text ?? '' }}</span>
                         </div>
                     </div>
@@ -104,7 +105,7 @@
             </div>
 
             @foreach ($selectedDetailPopups as $selectedDetailPopupsModal)
-                <div class="global-popup-wrapper detail-popup" id="{{ $selectedDetailPopupsModal->type }}">
+                <div class="global-popup-wrapper detail-popup" id="popup-{{ $selectedDetailPopupsModal->id }}">
                     <div class="global-popup">
                         <div class="global-popup__header">
                             <div class="title">{{ $selectedDetailPopupsModal->main_heading ?? '' }}</div>
@@ -113,40 +114,41 @@
                             </div>
                         </div>
 
-                        @if ($selectedDetailPopupsModal->type === 'reserve_now_and_pay_later')
-                            @php
-                                $reserveNowAndPayLaterPopupContent = $selectedDetailPopupsModal->content
-                                    ? json_decode($selectedDetailPopupsModal->content)
-                                    : null;
-                            @endphp
-                            <div class="global-popup__content editor-content">
-                                {!! $reserveNowAndPayLaterPopupContent->editor_content ?? '' !!}
-                            </div>
-                        @elseif ($selectedDetailPopupsModal->type === 'cancellation_policy')
-                            @php
-                                $cancellationPolicyPopupContent = $selectedDetailPopupsModal->content
-                                    ? json_decode($selectedDetailPopupsModal->content)
-                                    : null;
-                            @endphp
-                            <div class="global-popup__content editor-content">
-                                <h4>{{ $cancellationPolicyPopupContent->sub_heading ?? '' }}</h4>
+                        @php
+                            $content = $selectedDetailPopupsModal->content
+                                ? json_decode($selectedDetailPopupsModal->content)
+                                : null;
+                        @endphp
+
+                        <div class="global-popup__content editor-content">
+                            @if (!empty($content->sub_heading))
+                                <h4>{{ $content->sub_heading }}</h4>
+                            @endif
+
+                            @if (!empty($content->condition_1) || !empty($content->condition_2))
                                 <div class="refund-policy">
-                                    <div class="refund-policy-item refund-policy-item--green">
-                                        <div class="refund-policy-item__time">
-                                            {{ $cancellationPolicyPopupContent->condition_1 ?? '' }}</div>
-                                        <div class="refund-policy-item__result">
-                                            {{ $cancellationPolicyPopupContent->outcome_1 ?? '' }}</div>
-                                    </div>
-                                    <div class="refund-policy-item refund-policy-item--red">
-                                        <div class="refund-policy-item__time">
-                                            {{ $cancellationPolicyPopupContent->condition_2 ?? '' }}</div>
-                                        <div class="refund-policy-item__result">
-                                            {{ $cancellationPolicyPopupContent->outcome_2 ?? '' }}</div>
-                                    </div>
+                                    @if (!empty($content->condition_1) || !empty($content->outcome_1))
+                                        <div class="refund-policy-item refund-policy-item--green">
+                                            <div class="refund-policy-item__time">{{ $content->condition_1 ?? '' }}
+                                            </div>
+                                            <div class="refund-policy-item__result">{{ $content->outcome_1 ?? '' }}
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if (!empty($content->condition_2) || !empty($content->outcome_2))
+                                        <div class="refund-policy-item refund-policy-item--red">
+                                            <div class="refund-policy-item__time">{{ $content->condition_2 ?? '' }}
+                                            </div>
+                                            <div class="refund-policy-item__result">{{ $content->outcome_2 ?? '' }}
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
-                                {!! $cancellationPolicyPopupContent->editor_content ?? '' !!}
-                            </div>
-                        @endif
+                            @endif
+
+                            {!! $content->editor_content ?? '' !!}
+                        </div>
                     </div>
                 </div>
             @endforeach

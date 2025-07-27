@@ -11,6 +11,7 @@
                             <div class="section-content">
                                 <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                             </div>
+                            <a href="{{ route('admin.tour-popups.create') }}" class="themeBtn">Add popup</a>
                         </div>
                         <div class="row mb-4">
                             <div class="col-md-5">
@@ -64,8 +65,15 @@
                                             </td>
                                             <td>
                                                 <span
-                                                    class="badge rounded-pill bg-{{ $item->status == 'active' ? 'success' : 'danger' }} ">
-                                                    {{ $item->status }}
+                                                    class="badge rounded-pill 
+                                                bg-{{ $item->status === 'active'
+                                                    ? 'success'
+                                                    : ($item->status === 'inactive'
+                                                        ? 'danger'
+                                                        : ($item->status === 'draft'
+                                                            ? 'warning'
+                                                            : 'secondary')) }}">
+                                                    {{ ucfirst($item->status) }}
                                                 </span>
                                             </td>
                                             <td>
