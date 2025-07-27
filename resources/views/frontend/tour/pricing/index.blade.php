@@ -43,7 +43,7 @@
     <div class=form-guest__btn>
         @if (Auth::check())
             @if (isset($isTourInCart) && !$isTourInCart)
-                <button class="app-btn themeBtn w-100"
+                <button class="primary-btn w-100"
                     @if ($tour->price_type && $tour->price_type !== 'private') :disabled="!isSubmitEnabled"
                     @elseif ($tour->price_type === 'private')
                 :disabled="!carQuantity>0" 
@@ -51,11 +51,11 @@
                     @if (!$isDataValid) disabled @endif>Book
                     Now</button>
             @else
-                <a href="{{ route('cart.index') }}" class="app-btn themeBtn w-100">View
+                <a href="{{ route('cart.index') }}" class="primary-btn w-100">View
                     Cart</a>
             @endif
         @else
-            <button type="button" class="app-btn themeBtn w-100" open-vue-login-popup>Login to Continue</button>
+            <button type="button" class="primary-btn w-100" open-vue-login-popup>Login to Continue</button>
         @endif
     </div>
 
