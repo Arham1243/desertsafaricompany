@@ -135,7 +135,6 @@ body :is(.dirham.dirham) {
     border: none;
     position: relative;
     z-index: 1;
-    text-transform: capitalize;
     transition: all 300ms;
     cursor: pointer;
 }
