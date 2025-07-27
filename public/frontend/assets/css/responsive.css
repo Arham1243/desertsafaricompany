@@ -637,7 +637,7 @@
     }
     .global-popup__content{
         height: 70vh;
-    overflow-y: auto;
+        overflow-y: auto;
     }    
     .tour-content_book_app{
         padding: 1rem 1.25rem 1.5rem;
