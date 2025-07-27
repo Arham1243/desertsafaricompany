@@ -639,5 +639,13 @@
         height: 70vh;
     overflow-y: auto;
     }    
-    
+    .tour-content_book_app{
+        padding: 1rem 1.25rem 1.5rem;
+    }
+    .detail-popups {
+        padding: 0.99rem 0.75rem;
+    }
+    .detail-popups-item__info span {
+        font-size: 0.9rem;
+    }
 }

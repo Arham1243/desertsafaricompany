@@ -7400,7 +7400,7 @@ ul.show-in-desktop {
 }
 .detail-popups-item__icon i {
     color: var(--detail-popup-trigger-box-icon-color);
-    font-size: 1.09rem;
+    font-size: 1.1rem;
 }
 .detail-popups-item__info {
     line-height: 1.4;

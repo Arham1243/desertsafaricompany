@@ -443,7 +443,7 @@
         @endphp
         <div class="tour-content pt-4" {!! $global_color_style_attribute !!}>
             <div class=container>
-                <div class=row>
+                <div class="row flex-column-reverse flex-md-row">
                     <div class=col-md-8>
                         @php
                             $features = json_decode($tour->features);
