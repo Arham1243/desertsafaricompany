@@ -58,7 +58,13 @@
                                                     class="link">{{ $item->main_heading }}</a>
                                             </td>
                                             <td>
-                                                {{ formatKey($item->type) }}
+                                                @php
+                                                    $typeLabels = [
+                                                        'info' => 'Informational',
+                                                        'policy' => 'Policy / Terms',
+                                                    ];
+                                                @endphp
+                                                {{ $typeLabels[$item->type] }}
                                             </td>
                                             <td>
                                                 {{ formatDateTime($item->created_at) }}
