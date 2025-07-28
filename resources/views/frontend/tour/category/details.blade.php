@@ -7,7 +7,7 @@
 @section('content')
     <div class="header-form mb-5">
         <div class="container">
-            <div class="row">
+            {{-- <div class="row">
                 <div class="for-generic ">
                     <form action="#" class="input-details generic-form">
                         <i class='bx bx-search'></i>
@@ -15,7 +15,7 @@
                         <button class="app-btn themeBtn">SEND</button>
                     </form>
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="header-form__banner mt-5">
@@ -61,8 +61,8 @@
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
-                        <a href="javascript:void(0)" class="loginBtn mt-2" data-show-more-btn more-text="See more"
-                            less-text='Show less'> See more</a>
+                        <a href="javascript:void(0)" class="loginBtn mt-1" data-show-more-btn more-text="Read more"
+                            less-text='Read less'> Read more</a>
                     @endif
                 </div>
             </div>
@@ -71,7 +71,7 @@
 
 
     @if ($featuredTours->isNotEmpty())
-        <div class="section-padding pb-4">
+        <div class="my-5">
             <div class="container">
                 <div class="activity-sorting-block">
                     <div class="search-header__activity">
@@ -208,7 +208,7 @@
 
 
     @if ($bottomFeaturedTours->isNotEmpty())
-        <div class="section-padding pt-4">
+        <div class="my-5">
             <div class="container">
                 <div class="row">
                     @foreach ($bottomFeaturedTours as $tour)

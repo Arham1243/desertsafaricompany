@@ -2819,9 +2819,8 @@ h2.more-offers-title {
 .tour-content__headerLocation {
     display: flex;
     align-items: center;
-    /* gap: 9px; */
     font-size: 15px;
-    color: #77838f !important;
+    color: #000;
     font-weight: 500;
 }
 

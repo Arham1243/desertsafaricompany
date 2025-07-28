@@ -1,3 +1,6 @@
+@php
+    $favicon = App\Models\Setting::where('key', 'favicon')->first()->value ?? null;
+@endphp
 <div class="seo-options">
     <div class="form-box">
         <div class="form-box__header d-flex align-items-center justify-content-between">
@@ -9,7 +12,8 @@
             <div class="google-preview">
                 <div class="google-preview__header">
                     <div class="logo">
-                        <img src="{{ asset('favicon.ico') }}" alt="Favicon" class="imgFluid">
+                        <img src="{{ $favicon ? asset($favicon) : asset('favicon.ico') }}" alt="Favicon"
+                            class="imgFluid">
                     </div>
                     <div class="content">
                         <div class="title">{{ env('APP_NAME') }}</div>

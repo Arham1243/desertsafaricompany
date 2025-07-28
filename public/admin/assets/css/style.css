@@ -1643,7 +1643,7 @@ body .choices__list--multiple .choices__item {
 }
 
 .google-preview__header .logo {
-    width: 10px;
+    width: 43px;
     aspect-ratio: 1/1;
     border-radius: 100%;
     background: #f1f2f3;
@@ -1652,7 +1652,9 @@ body .choices__list--multiple .choices__item {
     align-items: center;
     justify-content: center;
 }
-
+.google-preview__header .logo img {
+    width: 23px;
+}
 .google-preview .google-preview__header {
     display: flex;
     align-items: center;

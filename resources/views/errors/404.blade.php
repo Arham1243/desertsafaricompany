@@ -5,7 +5,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 - Page Not Found</title>
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
+    @php
+        $favicon = App\Models\Setting::where('key', 'favicon')->first()->value ?? null;
+    @endphp
+    @if ($favicon)
+        <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">
+    @endif
 </head>
 
 

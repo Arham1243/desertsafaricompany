@@ -1978,8 +1978,7 @@
                                                                         <table class="table table-bordered">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th scope="col">Title</th>
-                                                                                    <th scope="col">Price</th>
+                                                                                    <th scope="col">Content</th>
                                                                                     <th scope="col">No Price (Free)
                                                                                     </th>
                                                                                     <th class="text-end" scope="col">
@@ -1991,19 +1990,25 @@
                                                                                     :key="index">
                                                                                     <tr>
                                                                                         <td>
-                                                                                            <textarea rows="6" class="field" placeholder="E.g., Adult" :name="`tour[pricing][promo][promo_title][]`"
-                                                                                                x-model="promo.title"></textarea>
+                                                                                            <div class="mb-3">
+                                                                                                <label
+                                                                                                    class="title">Title:</label>
+                                                                                                <textarea rows="6" class="field" placeholder="E.g., Adult" :name="`tour[pricing][promo][promo_title][]`"
+                                                                                                    x-model="promo.title"></textarea>
+                                                                                            </div>
+                                                                                            <div>
+                                                                                                <label
+                                                                                                    class="title">Price:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field"
+                                                                                                    placeholder="Price"
+                                                                                                    step="0.01"
+                                                                                                    min="0"
+                                                                                                    :name="`tour[pricing][promo][original_price][]`"
+                                                                                                    x-model="promo.price">
+                                                                                            </div>
                                                                                         </td>
-                                                                                        <td style="width: 35%">
-                                                                                            <input type="number"
-                                                                                                class="field"
-                                                                                                placeholder="Original Price"
-                                                                                                step="0.01"
-                                                                                                min="0"
-                                                                                                :name="`tour[pricing][promo][original_price][]`"
-                                                                                                x-model="promo.price">
-                                                                                        </td>
-                                                                                        <td style="width: 20%">
+                                                                                        <td style="width: 19%">
                                                                                             <div
                                                                                                 class="form-check d-flex justify-content-center">
                                                                                                 <input type="hidden"

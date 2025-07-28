@@ -593,7 +593,7 @@ class TourController extends Controller
 
         handleSeoData($request, $tour, 'Tour');
 
-        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('activeTab', $request->activeTab);
+        return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Updated successfully.')->with('activeTab', $request->activeTab);
     }
 
     public function duplicate($id)

@@ -120,7 +120,7 @@ class CategoryController extends Controller
             }
         }
 
-        return redirect()->route('admin.tour-categories.index')->with('notify_success', 'Category updated successfully.');
+        return redirect()->route('admin.tour-categories.edit', $category->id)->with('notify_success', 'Category Updated successfully.');
     }
 
     public function handleSectionData(array $newData, ?array $existingData, string $sectionKey)
