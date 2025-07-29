@@ -2,6 +2,7 @@
 @section('content')
     @php
         $sectionContent = json_decode($category->section_content);
+        $jsonContent = json_decode($category->json_content, true) ?? null;
         $tourCountContent = $sectionContent->tour_count ?? null;
         $callToActionContent = $sectionContent->call_to_action ?? null;
     @endphp
@@ -54,7 +55,7 @@
                                     <div class="form-fields">
                                         <label class="title">Parent <span class="text-danger">*</span> :</label>
                                         <select name="parent_category_id" class="select2-select category-select"
-                                            {{ !$dropdownCategories->isEmpty() ? '' : '' }} data-error="Category">
+                                            data-error="Category">
                                             <option value="" selected>Parent Category</option>
                                             @php
                                                 renderCategories($dropdownCategories, $category->parent_category_id);
@@ -84,14 +85,15 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
-                                    <div class="form-fields mt-4">
+                                    <hr class="my-5">
+                                    <div class="form-fields">
+                                        <div class="title title--sm mb-3">Featured Slider images:</div>
                                         <div class="multiple-upload" data-upload-multiple>
                                             <input type="file" class="gallery-input d-none" multiple
                                                 data-upload-multiple-input accept="image/*" id="banners" name="gallery[]">
                                             <label class="multiple-upload__btn themeBtn" for="banners">
                                                 <i class='bx bx-plus'></i>
-                                                Choose Slider images
+                                                Choose
                                             </label>
                                             <div class="dimensions mt-3">
                                                 <strong>Dimensions:</strong> 1116 &times; 250
@@ -124,28 +126,145 @@
                                                     </li>
                                                 @endforeach
                                             </ul>
-
                                         </div>
                                     @endif
                                 </div>
                             </div>
-                            <div class="form-box">
+                            <div x-data="{ enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category based Tour Block</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_based_tour_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_based_tour_block" value="1"
+                                                name="json_content[category_based_tour_block][is_enabled]"
+                                                x-model="enabled">
+                                            <label class="form-check-label"
+                                                for="category_based_tour_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <label class="title text-dark">Heading :</label>
+                                        <input name="json_content[category_based_tour_block][heading]" type="text"
+                                            class="field"
+                                            value="{{ $jsonContent ? $jsonContent['category_based_tour_block']['heading'] : '' }}">
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="title text-dark">Select Category :</label>
+                                        <select name="json_content[category_based_tour_block][category_id]"
+                                            class="select2-select" placeholder="Select Categories" should-sort="false">
+                                            <option value="" selected>Select Category</option>
+                                            @foreach ($allCategories as $dropdownCategory)
+                                                <option value="{{ $dropdownCategory->id }}"
+                                                    {{ isset($jsonContent['category_based_tour_block']['category_id']) && $jsonContent['category_based_tour_block']['category_id'] == $dropdownCategory->id ? 'selected' : '' }}>
+                                                    {{ $dropdownCategory->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">First Tour Block</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[first_tour_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="first_tour_block" value="1"
+                                                name="json_content[first_tour_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="first_tour_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <label class="title text-dark">Heading :</label>
+                                        <input name="json_content[first_tour_block][heading]" type="text"
+                                            class="field"
+                                            value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="title text-dark">Select Tours :</label>
+                                        <select name="json_content[first_tour_block][tour_ids][]" multiple
+                                            class="select2-select">
+                                            @foreach ($tours as $firstTourBlockT)
+                                                <option value="{{ $firstTourBlockT->id }}"
+                                                    {{ in_array($firstTourBlockT->id, $jsonContent['first_tour_block']['tour_ids'] ?? []) ? 'selected' : '' }}>
+                                                    {{ $firstTourBlockT->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data="{ enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Second Tour Block</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[second_tour_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="second_tour_block" value="1"
+                                                name="json_content[second_tour_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="second_tour_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <label class="title text-dark">Heading :</label>
+                                        <input name="json_content[second_tour_block][heading]" type="text"
+                                            class="field"
+                                            value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="title text-dark">Select Tours :</label>
+                                        <select name="json_content[second_tour_block][tour_ids][]" multiple
+                                            class="select2-select">
+                                            @foreach ($tours as $secondTourBlockT)
+                                                <option value="{{ $secondTourBlockT->id }}"
+                                                    {{ in_array($secondTourBlockT->id, $jsonContent['second_tour_block']['tour_ids'] ?? []) ? 'selected' : '' }}>
+                                                    {{ $secondTourBlockT->title }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{ enabled: {{ isset($tourCountContent->is_enabled) && $tourCountContent->is_enabled == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($tourCountContent->is_button_enabled) && $tourCountContent->is_button_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Tour Count Section</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
-                                            <input class="form-check-input" data-toggle-switch=""
-                                                {{ isset($tourCountContent->is_enabled) ? 'checked' : '' }}
-                                                type="checkbox" id="tour_count_enabled" value="1"
-                                                name="content[tour_count][is_enabled]">
+                                            <input type="hidden" value="0" name="content[tour_count][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="tour_count_enabled" value="1"
+                                                name="content[tour_count][is_enabled]" x-model="enabled">
                                             <label class="form-check-label" for="tour_count_enabled">Enabled</label>
                                         </div>
                                     </div>
                                     <a href="{{ asset('admin/assets/images/ctas-blocks/3.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-2"><i class='bx bxs-show'></i></a>
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
                                 </div>
-                                <div class="form-box__body">
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="row">
@@ -191,20 +310,22 @@
                                                     <label class="title title--sm mb-0">Call to Action Button:</label>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
-                                                        <input class="form-check-input" data-toggle-switch=""
-                                                            {{ isset($tourCountContent->is_button_enabled) ? 'checked' : '' }}
-                                                            type="checkbox" id="cta_btn_enabled_tour" value="1"
+                                                        <input type="hidden" value="0"
                                                             name="content[tour_count][is_button_enabled]">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="cta_btn_enabled_tour" value="1"
+                                                            name="content[tour_count][is_button_enabled]"
+                                                            x-model="btnEnabled">
                                                         <label class="form-check-label"
                                                             for="cta_btn_enabled_tour">Enabled</label>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+
+                                                <div class="row" x-show="btnEnabled" x-transition>
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="form-fields">
                                                             <label class="title">Button Text <span
-                                                                    class="text-danger">*</span>
-                                                                :</label>
+                                                                    class="text-danger">*</span>:</label>
                                                             <input type="text"
                                                                 value="{{ $tourCountContent->btn_text ?? '' }}"
                                                                 name="content[tour_count][btn_text]" class="field"
@@ -215,9 +336,7 @@
                                                         <div class="form-fields">
                                                             <label class="title">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link </div>
-
-
+                                                                    <div class="mt-1">Button Link</div>
                                                                     <button data-bs-placement="top"
                                                                         title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
                                                                         type="button" data-tooltip="tooltip"
@@ -236,13 +355,10 @@
                                                     <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <div class="title d-flex align-items-center gap-2">
-                                                                <div>
-                                                                    Button Background Color <span
-                                                                        class="text-danger">*</span>:
-                                                                </div>
+                                                                <div>Button Background Color <span
+                                                                        class="text-danger">*</span>:</div>
                                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color
-                                                                    Codes</a>
+                                                                    target="_blank">Get Color Codes</a>
                                                             </div>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="color-picker" data-color-picker></label>
@@ -257,12 +373,10 @@
                                                     <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <div class="title d-flex align-items-center gap-2">
-                                                                <div>
-                                                                    Button Text Color <span class="text-danger">*</span>:
+                                                                <div>Button Text Color <span class="text-danger">*</span>:
                                                                 </div>
                                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color
-                                                                    Codes</a>
+                                                                    target="_blank">Get Color Codes</a>
                                                             </div>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="color-picker" data-color-picker></label>
@@ -276,6 +390,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
 
 
@@ -358,7 +473,7 @@
                                                                             Please upload a valid image file
                                                                         </div>
                                                                         <div class="dimensions text-center mt-3">
-                                                                            <strong>Dimensions:</strong> 1116 &times; 210
+                                                                            <strong>Dimensions:</strong> 270 &times; 260
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -401,23 +516,25 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-box">
+                            <div x-data="{ enabled: {{ isset($callToActionContent->is_enabled) && $callToActionContent->is_enabled == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($callToActionContent->is_button_enabled) && $callToActionContent->is_button_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Call to Action Section</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
-                                            <input class="form-check-input" data-toggle-switch=""
-                                                {{ isset($callToActionContent->is_enabled) ? 'checked' : '' }}
-                                                type="checkbox" id="cta_btn_enabled" value="1"
+                                            <input type="hidden" value="0"
                                                 name="content[call_to_action][is_enabled]">
+                                            <input class="form-check-input" type="checkbox" id="cta_btn_enabled"
+                                                value="1" name="content[call_to_action][is_enabled]"
+                                                x-model="enabled">
                                             <label class="form-check-label" for="cta_btn_enabled">Enabled</label>
                                         </div>
                                     </div>
                                     <a href="{{ asset('admin/assets/images/ctas-blocks/1.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-2"><i class='bx bxs-show'></i></a>
                                 </div>
-                                <div class="form-box__body">
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <div class="row">
@@ -491,20 +608,23 @@
                                                     <label class="title title--sm mb-0">Call to Action Button:</label>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
-                                                        <input class="form-check-input" data-toggle-switch=""
-                                                            {{ isset($callToActionContent->is_button_enabled) ? 'checked' : '' }}
-                                                            type="checkbox" id="cta_btn_enabled_cta" value="1"
-                                                            name="content[call_to_action][is_button_enabled]">
+                                                        <input type="hidden"
+                                                            name="content[call_to_action][is_button_enabled]"
+                                                            value="0">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="cta_btn_enabled_cta" value="1"
+                                                            name="content[call_to_action][is_button_enabled]"
+                                                            x-model="btnEnabled">
                                                         <label class="form-check-label"
                                                             for="cta_btn_enabled_cta">Enabled</label>
                                                     </div>
                                                 </div>
-                                                <div class="row">
+
+                                                <div class="row" x-show="btnEnabled" x-transition>
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="form-fields">
                                                             <label class="title">Button Text <span
-                                                                    class="text-danger">*</span>
-                                                                :</label>
+                                                                    class="text-danger">*</span>:</label>
                                                             <input type="text"
                                                                 value="{{ $callToActionContent->btn_text ?? '' }}"
                                                                 name="content[call_to_action][btn_text]" class="field"
@@ -515,9 +635,7 @@
                                                         <div class="form-fields">
                                                             <label class="title">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link </div>
-
-
+                                                                    <div class="mt-1">Button Link</div>
                                                                     <button data-bs-placement="top"
                                                                         title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
                                                                         type="button" data-tooltip="tooltip"
@@ -536,13 +654,10 @@
                                                     <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <div class="title d-flex align-items-center gap-2">
-                                                                <div>
-                                                                    Button Background Color <span
-                                                                        class="text-danger">*</span>:
-                                                                </div>
+                                                                <div>Button Background Color <span
+                                                                        class="text-danger">*</span>:</div>
                                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color
-                                                                    Codes</a>
+                                                                    target="_blank">Get Color Codes</a>
                                                             </div>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="color-picker" data-color-picker></label>
@@ -557,12 +672,10 @@
                                                     <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <div class="title d-flex align-items-center gap-2">
-                                                                <div>
-                                                                    Button Text Color <span class="text-danger">*</span>:
+                                                                <div>Button Text Color <span class="text-danger">*</span>:
                                                                 </div>
                                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color
-                                                                    Codes</a>
+                                                                    target="_blank">Get Color Codes</a>
                                                             </div>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="color-picker" data-color-picker></label>
@@ -576,6 +689,7 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
                                         <div class="col-12">
                                             <hr />
@@ -726,123 +840,6 @@
                                     </label>
                                 </div>
                                 <button class="themeBtn ms-auto mt-4">Save Changes</button>
-                            </div>
-                        </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Feature Image</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="form-fields">
-                                    <div class="upload" data-upload>
-                                        <div class="upload-box-wrapper">
-                                            <div class="upload-box {{ empty($category->featured_image) ? 'show' : '' }}"
-                                                data-upload-box>
-                                                <input type="file" name="featured_image"
-                                                    {{ empty($category->featured_image) ? '' : '' }}
-                                                    data-error="Feature Image" id="featured_image"
-                                                    class="upload-box__file d-none" accept="image/*" data-file-input>
-                                                <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
-                                                </div>
-                                                <label for="featured_image" class="upload-box__btn themeBtn">Upload
-                                                    Image</label>
-                                            </div>
-                                            <div class="upload-box__img {{ !empty($category->featured_image) ? 'show' : '' }}"
-                                                data-upload-img>
-                                                <button type="button" class="delete-btn" data-delete-btn><i
-                                                        class='bx bxs-trash-alt'></i></button>
-                                                <a href="{{ asset($category->featured_image ?? 'admin/assets/images/loading.webp') }}"
-                                                    class="mask" data-fancybox="gallery">
-                                                    <img src="{{ asset($category->featured_image) }}"
-                                                        alt="{{ $category->featured_image_alt_text }}" class="imgFluid"
-                                                        data-upload-preview>
-                                                </a>
-                                                <input type="text" name="featured_image_alt_text" class="field"
-                                                    placeholder="Enter alt text"
-                                                    value="{{ $category->featured_image_alt_text }}">
-                                            </div>
-                                        </div>
-                                        <div data-error-message class="text-danger mt-2 d-none text-center">Please
-                                            upload a
-                                            valid image file
-                                        </div>
-                                        @error('featured_image')
-                                            <div class="text-danger mt-2 text-center">{{ $message }}
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="dimensions text-center mt-3">
-                                        <strong>Dimensions:</strong> 270 &times; 260
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Tours</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="form-fields">
-                                    @php
-                                        $selectedTopFeaturedTours =
-                                            json_decode($category->top_featured_tour_ids, true) ?? [];
-                                    @endphp
-                                    <label class="title">Top 4 featured tours <span class="text-danger">*</span>
-                                        :</label>
-                                    <select name="top_featured_tour_ids[]" multiple class="select2-select"
-                                        data-max-items="4" placeholder="Select Tours" data-error="Top 4 featured tours">
-                                        @foreach ($tours as $topFeaturedTour)
-                                            <option value="{{ $topFeaturedTour->id }}"
-                                                {{ in_array($topFeaturedTour->id, old('top_featured_tour_ids', $selectedTopFeaturedTours)) ? 'selected' : '' }}>
-                                                {{ $topFeaturedTour->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('top_featured_tour_ids')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-fields">
-                                    @php
-                                        $selectedBottomFeaturedTours =
-                                            json_decode($category->bottom_featured_tour_ids, true) ?? [];
-                                    @endphp
-                                    <label class="title">Bottom featured tours <span class="text-danger">*</span>
-                                        :</label>
-                                    <select name="bottom_featured_tour_ids[]" multiple class="select2-select"
-                                        placeholder="Select Tours" data-error="Bottom featured tours">
-                                        @foreach ($tours as $bottomFeaturedTour)
-                                            <option value="{{ $bottomFeaturedTour->id }}"
-                                                {{ in_array($bottomFeaturedTour->id, old('bottom_featured_tour_ids', $selectedBottomFeaturedTours)) ? 'selected' : '' }}>
-                                                {{ $bottomFeaturedTour->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('bottom_featured_tour_ids')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                                <div class="form-fields">
-                                    @php
-                                        $selectedRecommendedTours =
-                                            json_decode($category->recommended_tour_ids, true) ?? [];
-                                    @endphp
-                                    <label class="title">Recommended tours <span class="text-danger">*</span>
-                                        :</label>
-                                    <select name="recommended_tour_ids[]" multiple class="select2-select"
-                                        data-max-items="4" placeholder="Select Tours" data-error="Recommended tours">
-                                        @foreach ($tours as $recommendedFeaturedTour)
-                                            <option value="{{ $recommendedFeaturedTour->id }}"
-                                                {{ in_array($recommendedFeaturedTour->id, old('recommended_tour_ids', $selectedRecommendedTours)) ? 'selected' : '' }}>
-                                                {{ $recommendedFeaturedTour->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('recommended_tour_ids')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
                             </div>
                         </div>
                         <div class="form-box">

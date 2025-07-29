@@ -1,4 +1,4 @@
-$(".banner-slider").slick({
+$(".one-item-fade-slider").slick({
     dots: false,
     arrows: false,
     infinite: true,

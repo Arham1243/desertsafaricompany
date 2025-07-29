@@ -191,7 +191,7 @@
         </div>
     @elseif($content->background_type === 'slider_carousel')
         <div class="banner-slider-wrapper">
-            <div class="banner-slider">
+            <div class="banner-slider one-item-fade-slider">
                 @for ($i = 0; $i < 4; $i++)
                     @php
                         $background_image =

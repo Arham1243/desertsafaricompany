@@ -72,9 +72,10 @@ class CategoryController extends Controller
         $category = TourCategory::findOrFail($id);
         $tours = Tour::where('status', 'publish')->get();
         $dropdownCategories = TourCategory::whereNotIn('id', [$id])->get();
+        $allCategories = TourCategory::get();
         $toursReviews = TourReview::where('status', 'active')->get();
         $seo = $category->seo()->first();
-        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories');
+        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories');
 
         return view('admin.tours.categories.edit')->with('title', ucfirst(strtolower($category->name)))->with($data);
     }
@@ -92,9 +93,7 @@ class CategoryController extends Controller
 
         $data['slug'] = $slug;
 
-        $data['bottom_featured_tour_ids'] = json_encode($request->input('bottom_featured_tour_ids', []));
-        $data['recommended_tour_ids'] = json_encode($request->input('recommended_tour_ids', []));
-        $data['tour_reviews_ids'] = json_encode($request->input('tour_reviews_ids', []));
+        $data['json_content'] = json_encode($request->input('json_content', null));
 
         $sectionData = $request->input('content', []);
         $updatedContent = [];
@@ -111,7 +110,7 @@ class CategoryController extends Controller
 
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $index => $image) {
-                $path = $this->simpleUploadImg($image, 'Testimonial/Other-images');
+                $path = $this->simpleUploadImg($image, 'Tours/Categories/Feature-Images');
                 $altText = $request['gallery_alt_texts'][$index] ?? null;
                 $category->media()->create([
                     'file_path' => $path,
