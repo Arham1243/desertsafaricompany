@@ -1,8 +1,11 @@
-<a href="javascript:void(0)" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
 @php
     $headerLogo = App\Models\Setting::where('key', 'header_logo')->first()->value ?? null;
     $headerLogoAltText = App\Models\Setting::where('key', 'header_logo_alt_text')->first()->value ?? null;
+    $globalWhatsappNumber = App\Models\Setting::where('key', 'whatsapp_number')->first()->value ?? null;
 @endphp
+@if ($globalWhatsappNumber && preg_match('/^\+?\d{10,15}$/', $globalWhatsappNumber))
+    <a href="tel:{{ $globalWhatsappNumber }}" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
+@endif
 <header class="header" id="header">
     <div class="container">
         <div class="header-main">

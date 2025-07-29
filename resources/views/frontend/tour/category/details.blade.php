@@ -32,19 +32,26 @@
                                     <i class='bx bxs-purchase-tag-alt'></i>
                                 </div>
                                 <div class="highlights-item__pra">
-                                    <p>Booked 3,000+ times last week</p>
+                                    @php
+                                        $count = 250 + ($thisWeekViews ?? 0);
+                                    @endphp
+
+                                    <p>Booked {{ number_format($count) }}+ times last week</p>
                                 </div>
 
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-md-4">
-                        <div class="header-form__img">
-                            <img data-src={{ asset($item->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                alt="{{ $item->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
+                    @if ($item->media->isNotEmpty())
+                        <div class="col-md-4">
+                            <div class="header-form__img one-item-fade-slider">
+                                @foreach ($item->media as $itemMedia)
+                                    <img data-src={{ asset($itemMedia->file_path ?? 'admin/assets/images/placeholder.png') }}
+                                        alt="{{ $itemMedia->alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
+                                @endforeach
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -69,89 +76,50 @@
         </div>
     @endif
 
+    @php
+        $jsonContent = json_decode($item->json_content, true) ?? null;
+        $category_based_tour_block = $jsonContent ? $jsonContent['category_based_tour_block'] : null;
+        $category_based_tour_category_id = $jsonContent ? $category_based_tour_block['category_id'] : null;
+        $all_sub_category_Ids = getAllCategoryIds($category_based_tour_category_id);
+        $category_based_tour_tours = $tours->whereIn('category_id', $all_sub_category_Ids);
 
-    @if ($featuredTours->isNotEmpty())
+        $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
+        $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
+        $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
+
+        $second_tour_block = $jsonContent ? $jsonContent['second_tour_block'] : null;
+        $second_tour_block_tour_ids = $second_tour_block['tour_ids'] ?? [];
+        $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
+    @endphp
+
+    @if (isset($category_based_tour_block['is_enabled']) &&
+            $category_based_tour_block['is_enabled'] === '1' &&
+            $category_based_tour_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
-                <div class="activity-sorting-block">
-                    <div class="search-header__activity">
-                        <div class="activities-found">
-                            {{ $totalActivities }} activities found
-                            <div class="activities-found__icon">
-                                <i class='bx bxs-error-circle'></i>
-                            </div>
-
+                <div class="row mb-3">
+                    <div class="col-md-7">
+                        <div class="section-content">
+                            <h2 class="subHeading">
+                                {{ $category_based_tour_block['heading'] ?? '' }}
+                            </h2>
                         </div>
-
-                        {{-- <div class="sort-by">
-                            <div class="sort-by__title">
-                                Sort by :
-                            </div>
-                            <label class="dropdown-label">
-                                <select class="dropdown-select">
-                                    <option value="recommended">Recommended</option>
-                                </select>
-                            </label>
-                        </div> --}}
-                    </div>
-                </div>
-                <div class="row">
-                    @foreach ($featuredTours as $tour)
-                        <div class="col-md-3">
-                            <div class=card-content>
-                                <a href=# class=card_img>
-                                    <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                        alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
-                                        loading="lazy">
-                                    <div class=price-details>
-                                        @if ($tour->orders()->count() > 5)
-                                            <div class=price>
-                                                <span>
-                                                    Top pick
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class=heart-icon>
-                                            <div class=service-wishlist>
-                                                <i class="bx bx-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class=tour-activity-card__details>
-                                    <div class=vertical-activity-card__header>
-                                        @if ($tour->category)
-                                            <div><span> {{ $tour->category->name }}</span></div>
-                                        @else
-                                            <div><span> {{ $item->name }}</span></div>
-                                        @endif
-                                        <div data-tooltip="tooltip" title="{{ $tour->title }}"
-                                            class="tour-activity-card__details--title text-truncate">{{ $tour->title }}
-                                        </div>
-                                    </div>
-                                    <div class=card-rating>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                        <span>1 Reviews</span>
-                                    </div>
-                                    <div class="baseline-pricing__value baseline-pricing__value--high">
-                                        <p class=baseline-pricing__from>
-                                            <span class="baseline-pricing__from--text receive">Receive voucher
-                                                instantly</span>
-                                        </p>
-                                    </div>
-                                    <div class="baseline-pricing__value baseline-pricing__value--high">
-                                        <p class=baseline-pricing__from>
-                                            <span class=baseline-pricing__from--text>From </span>
-                                            <span class="baseline-pricing__from--value green">
-                                                {{ formatPrice($tour->regular_price) }}</span>
-                                        </p>
+                        <div class="activity-sorting-block mt-2">
+                            <div class="search-header__activity">
+                                <div class="activities-found">
+                                    {{ $category_based_tour_tours->count() }} activities found
+                                    <div class="activities-found__icon">
+                                        <i class='bx bxs-error-circle'></i>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($category_based_tour_tours as $category_based_tour_tour)
+                        <div class="col-md-3">
+                            <x-tour-card :tour="$category_based_tour_tour" style="style3" />
                         </div>
                     @endforeach
                 </div>
@@ -166,7 +134,7 @@
         $callToActionContent = $sectionContent->call_to_action ?? null;
     @endphp
 
-    @if (isset($callToActionContent->is_enabled))
+    @if (isset($callToActionContent->is_enabled) && $callToActionContent->is_enabled === '1')
         @php
             $isCtaBackgroundColor = isset($callToActionContent->call_to_action_background_type)
                 ? $callToActionContent->call_to_action_background_type === 'background_color'
@@ -189,7 +157,7 @@
                             @if ($callToActionContent->title_color) style="color: {{ $callToActionContent->title_color }};" @endif>{{ $callToActionContent->title ?? '' }}</span>
                         <span class=GroupTourCard_subtitle
                             @if ($callToActionContent->description_color) style="color: {{ $callToActionContent->description_color }};" @endif>{{ $callToActionContent->description ?? '' }}</span>
-                        @if (isset($callToActionContent->is_button_enabled))
+                        @if (isset($callToActionContent->is_button_enabled) && $callToActionContent->is_button_enabled === '1')
                             <div class="GroupTourCard_callBackButton pt-3">
                                 <a href="{{ sanitizedLink($callToActionContent->btn_link) ?? '' }}"
                                     style="
@@ -207,80 +175,32 @@
     @endif
 
 
-    @if ($bottomFeaturedTours->isNotEmpty())
+    @if (isset($first_tour_block['is_enabled']) &&
+            $first_tour_block['is_enabled'] === '1' &&
+            $first_tour_block_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
+                <div class="row mb-3">
+                    <div class="col-md-7">
+                        <div class="section-content">
+                            <h2 class="subHeading">
+                                {{ $first_tour_block['heading'] ?? '' }}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
                 <div class="row">
-                    @foreach ($bottomFeaturedTours as $tour)
+                    @foreach ($first_tour_block_tours as $first_tour_block_tour)
                         <div class="col-md-3">
-                            <div class=card-content>
-                                <a href=# class=card_img>
-                                    <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                        alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
-                                        loading="lazy">
-                                    <div class=price-details>
-                                        @if ($tour->orders()->count() > 5)
-                                            <div class=price>
-                                                <span>
-                                                    Top pick
-                                                </span>
-                                            </div>
-                                        @endif
-                                        <div class=heart-icon>
-                                            <div class=service-wishlist>
-                                                <i class="bx bx-heart"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </a>
-                                <div class=tour-activity-card__details>
-                                    <div class=vertical-activity-card__header>
-                                        @if ($tour->category)
-                                            <div><span> {{ $tour->category->name }}</span></div>
-                                        @else
-                                            <div><span> {{ $item->name }}</span></div>
-                                        @endif
-                                        <div data-tooltip="tooltip" title="{{ $tour->title }}"
-                                            class="tour-activity-card__details--title text-truncate">{{ $tour->title }}
-                                        </div>
-                                    </div>
-                                    <div class=card-rating>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star yellow-star"></i>
-                                        <i class="bx bxs-star"></i>
-                                        <span>1 Reviews</span>
-                                    </div>
-                                    <div class="baseline-pricing__value baseline-pricing__value--high">
-                                        <p class=baseline-pricing__from>
-                                            <span class="baseline-pricing__from--text receive">Receive voucher
-                                                instantly</span>
-                                        </p>
-                                    </div>
-                                    <div class="baseline-pricing__value baseline-pricing__value--high">
-                                        <p class=baseline-pricing__from>
-                                            <span class=baseline-pricing__from--text>From </span>
-                                            <span class="baseline-pricing__from--value green">
-                                                {{ formatPrice($tour->regular_price) }}</span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-tour-card :tour="$first_tour_block_tour" style="style3" />
                         </div>
                     @endforeach
                 </div>
-                @if ($bottomFeaturedTours->count() > 8)
-                    <div class="show-more pt-3">
-                        <button type="submit" class="app-btn themeBtn"> See more</button>
-                    </div>
-                @endif
             </div>
         </div>
     @endif
 
-
-    @if (isset($tourCountContent->is_enabled))
+    @if (isset($tourCountContent->is_enabled) && $tourCountContent->is_enabled === '1')
         @php
             $isCountBackgroundColor = isset($tourCountContent->tour_count_background_type)
                 ? $tourCountContent->tour_count_background_type === 'background_color'
@@ -308,7 +228,8 @@
                                     {{ $tourCountContent->heading ?? '' }}</div>
                             </h1>
                         </div>
-                        @if (isset($tourCountContent->is_button_enabled))
+
+                        @if (isset($tourCountContent->is_button_enabled) && $tourCountContent->is_button_enabled === '1')
                             <a href="{{ sanitizedLink($tourCountContent->btn_link ?? 'javascript:void(0)') }}"
                                 style="
     {{ $tourCountContent->btn_background_color ? 'background-color: ' . $tourCountContent->btn_background_color . ';' : '' }}
@@ -324,24 +245,31 @@
     @endif
 
 
-    @if ($recomTours->isNotEmpty())
+    @if (isset($second_tour_block['is_enabled']) &&
+            $second_tour_block['is_enabled'] === '1' &&
+            $second_tour_block_tours->isNotEmpty())
         <div class="py-5">
             <div class="container">
-                <div class="section-content">
-                    <h2 class="subHeading">
-                        Our most recommended {{ $item->name }}
-                    </h2>
+                <div class="row">
+                    <div class="col-md-8 mb-3">
+                        <div class="section-content">
+                            <h2 class="subHeading">
+                                {{ $second_tour_block['heading'] ?? '' }}
+                            </h2>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="row">
-                    @foreach ($recomTours as $tour)
+                    @foreach ($second_tour_block_tours as $second_tour_block_tour)
                         <div class="col-md-6 mt-4">
                             <div class="highlight">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <a href="#" class="highlight__image" target="_blank">
-                                            <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                                alt="{{ $tour->featured_image_alt_text ?? 'image' }}"
+                                        <a href="{{ route('tours.details', $second_tour_block_tour->slug) }}"
+                                            class="highlight__image" target="_blank">
+                                            <img data-src={{ asset($second_tour_block_tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
+                                                alt="{{ $second_tour_block_tour->featured_image_alt_text ?? 'image' }}"
                                                 class="imgFluid lazy" loading="lazy">
                                         </a>
                                     </div>
@@ -350,14 +278,14 @@
                                             <div class="highlight__text">
                                                 <a href="dubai-l173/burj-khalifa-ticket-t49019/"
                                                     class="highlight__text-link" target="_blank">
-                                                    <p class="highlight__title">{{ $tour->title }}</p>
+                                                    <p class="highlight__title">{{ $second_tour_block_tour->title }}</p>
                                                 </a>
                                                 <div class="highlight__description editor-content">
-                                                    {!! $tour->content !!}
+                                                    {!! $second_tour_block_tour->content !!}
                                                 </div>
                                             </div>
                                             <div class="highlight__button-wrapper">
-                                                <a type="button">
+                                                <a href="{{ route('tours.details', $second_tour_block_tour->slug) }}">
                                                     See more
                                                 </a>
                                             </div>

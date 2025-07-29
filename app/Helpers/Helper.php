@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\SeoHelper;
+use App\Models\TourCategory;
 use Carbon\Carbon;
 use Illuminate\Support\HtmlString;
 
@@ -83,7 +84,6 @@ if (! function_exists('renderCategories')) {
     }
 }
 if (! function_exists('getTimeLeft')) {
-
     function getTimeLeft($expireAt)
     {
         $now = new DateTime;
@@ -110,14 +110,12 @@ if (! function_exists('getTimeLeft')) {
     }
 }
 if (! function_exists('formatNameForInput')) {
-
     function formatNameForInput($name)
     {
         return strtolower(str_replace(' ', '_', $name));
     }
 }
 if (! function_exists('formatKey')) {
-
     function formatKey($value)
     {
         return ucwords(str_replace('_', ' ', $value));
@@ -137,5 +135,18 @@ if (! function_exists('formatBigNumber')) {
         }
 
         return (string) $num;
+    }
+}
+if (! function_exists('getAllCategoryIds')) {
+    function getAllCategoryIds($categoryId)
+    {
+        $ids = [$categoryId];
+        $children = TourCategory::where('parent_category_id', $categoryId)->pluck('id');
+
+        foreach ($children as $childId) {
+            $ids = array_merge($ids, getAllCategoryIds($childId));
+        }
+
+        return $ids;
     }
 }
