@@ -15,19 +15,15 @@
 <body class="responsive">
     <input type="hidden" id="web_base_url" value="{{ url('/') }}" />
     @if (!isset($is_login))
-        <div class="dashboard">
+        <div class="dashboard" id="main-dashboard-wrapper">
             <div class="container-fluid p-0">
-                <div class="row g-0">
-                    <div class="col-md-2">
-                        @include('admin.layouts.sidebar')
-                    </div>
-                    <div class="col-md-10">
-                        <div class="row g-0">
-                            <div class="col-12">
-                                @include('admin.layouts.header')
-                            </div>
-                            @yield('content')
-                        </div>
+                <div class="layout-sidebar">
+                    @include('admin.layouts.sidebar')
+                </div>
+                <div class="layout-content-wrapper">
+                    <div class="row g-0">
+                        @include('admin.layouts.header')
+                        @yield('content')
                     </div>
                 </div>
             </div>
