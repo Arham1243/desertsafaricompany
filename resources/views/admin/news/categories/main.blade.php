@@ -4,7 +4,7 @@
     <div class="col-md-12">
         <div class="dashboard-content">
             {{ Breadcrumbs::render('admin.news-categories.index') }}
-            <div class="section-content mt-5 mb-4">
+            <div class="section-content mt-2 mb-3">
                 <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
             </div>
             <div class="row">

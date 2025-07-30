@@ -275,7 +275,7 @@ ul.sidebar-nav li .active {
 .layout-content-wrapper{
     --main-content-margin: var(--sidebar-width);
     margin-left: var(--main-content-margin);
-    padding: 1.25rem 1.35rem 2rem 1.75rem;
+    padding: 1.25rem 1.75rem 2rem 1.75rem;
     transition: margin .2s;
 }
 .dashboard.close-sidebar .sidebar {transform: translateX(-100%);}
