@@ -561,7 +561,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="pe-2">
+        <div class="ps-4">
             <div class="recent-act">
                 <div class="recent-act__header">
                     <div class="title">Recent Inquiry</div>

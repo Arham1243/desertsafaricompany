@@ -832,3 +832,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+document.getElementById('sidebarToggle')?.addEventListener('click', () => {
+    document.getElementById('main-dashboard-wrapper')?.classList.toggle('close-sidebar');
+});

@@ -14,15 +14,13 @@
 /* Root Styling */
 :root {
     --heading-font: "Philosopher", sans-serif;
-    /* --color-primary: #1c4d99; */
-    /* --color-bg: #f5f3f7; */
-    /* --color-primary-light: #0d0d0d1f; */
     --color-primary: #1c4d99;
     --color-primary-dark: #053070;
     --color-bg: #f5f3f7;
     --color-primary-light: #1c4d9912;
     --text-color: #555256;
     --pcr-color: #fff;
+    --sidebar-width: 16rem;
 }
 
 html {
@@ -175,12 +173,15 @@ body :is(.dirham.dirham) {
 }
 
 .sidebar {
-    padding: 1rem 0.95rem 1rem 0;
-    width: 100%;
+    width: var(--sidebar-width);
     min-height: 100vh;
     background: #fff;
     height: 100%;
-    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    transition: transform .2s;
 }
 
 .sidebar-header__icon img {
@@ -190,7 +191,7 @@ body :is(.dirham.dirham) {
 }
 
 .sidebar-header__icon {
-    width: 117px;
+    width: 150px;
     height: 35px;
 }
 
@@ -199,7 +200,7 @@ a.sidebar-header {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 0.95rem 0.65rem;
+    padding: 2.5rem 0 1rem;
 }
 
 a.sidebar-header h2 {
@@ -209,7 +210,9 @@ a.sidebar-header h2 {
 }
 
 ul.sidebar-nav {
-    padding: 2rem 0 3rem;
+    padding: 1.5rem 1rem 2.5rem 0;
+    overflow-y: auto;
+    height: 90vh;
 }
 
 .sidebar-nav .icon {
@@ -235,6 +238,7 @@ ul.sidebar-nav {
 
 .sidebar-nav .icon.icon i {
     font: inherit;
+    font-weight: 600;
 }
 
 ul.sidebar-nav > li > a {
@@ -242,7 +246,7 @@ ul.sidebar-nav > li > a {
     border-radius: 10px;
     display: flex;
     align-items: center;
-    padding: 13px 14px;
+    padding: 13px 7px 13px 14px;
     font-size: 14px;
     font-weight: 600;
     text-transform: capitalize;
@@ -268,24 +272,57 @@ ul.sidebar-nav li .active {
     height: 100%;
 }
 
-.dashboard-header {
-    padding: 1rem;
+.layout-content-wrapper{
+    --main-content-margin: var(--sidebar-width);
+    margin-left: var(--main-content-margin);
+    padding: 1.25rem 1.35rem 2rem 1.75rem;
+    transition: margin .2s;
 }
+.dashboard.close-sidebar .sidebar {transform: translateX(-100%);}
+
+.dashboard.close-sidebar .layout-content-wrapper {--main-content-margin: 0;}
+
 
 .dashboard-header .wrapper {
     display: flex;
     justify-content: space-between;
 }
 
-:is(.dashboard-header, .dashboard-content) {
-    padding-inline: 1.5rem !important;
+.global-heading-wrapper {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
 }
 
+.sidebar-toggle {
+    width: 36px;
+    aspect-ratio: 1/1;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    transition: background 150ms;
+    cursor: pointer;
+    position: relative;
+    left: -7px;
+}
+
+.sidebar-toggle i {
+    font-size: 1.5rem;
+    transition: all 150ms;
+}
+
+.sidebar-toggle:hover {
+    background: var(--color-primary);
+    color: #ffff;
+}
 .dashboard-header h2 {
     font-size: 1.65rem;
     text-transform: capitalize;
     font-weight: 600;
     color: #49424d;
+    margin-bottom: 0;
 }
 
 .input-search {
@@ -317,7 +354,7 @@ ul.sidebar-nav li .active {
 }
 
 .custom-sec--form {
-    padding-top: 0.5rem;
+    padding-top: 0.25rem;
 }
 
 .custom-sec__header {
@@ -478,12 +515,15 @@ a.custom-card__img img {
 .user-profile {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 10px;
 }
 
 .user-profile .name {
     text-align: end;
     line-height: 1.35;
+}
+.user-image-icon {
+    cursor: pointer;
 }
 
 .user-profile .name1 {
@@ -493,9 +533,10 @@ a.custom-card__img img {
 }
 
 .user-profile .role {
-    color: #777;
+    color: var(--color-primary);
     font-size: 0.85rem;
     text-transform: capitalize;
+    font-weight: 700;
 }
 
 .notifi-icon {
@@ -1311,7 +1352,7 @@ ul.sidebar-nav li > a:not(.active):hover {
 
 .values-wrapper li a {
     color: #000;
-    padding: 8px 6px;
+    padding: 8px 0 8px 6px;
     font-size: 13px;
     font-weight: 500;
     text-transform: capitalize;
@@ -1838,7 +1879,8 @@ body.responsive.fancybox-active.compensate-for-scrollbar {
 
 [disabled] {
     opacity: 0.65;
-    cursor: not-allowed;
+    cursor: initial;
+    pointer-events: none;
 }
 
 .repeater-table th {
@@ -2422,12 +2464,16 @@ body .badge.badge-sm {
     border-radius: 100px !important;
 }
 .breadcrumb {
-    margin-bottom: 1rem !important;
+    margin: 0.85rem  0 0.8rem!important;
 }
-
 .copy-btn {
     font-size: 0.75rem !important;
 }
 a.delete-btn:hover {
     background: red;
+}
+a.dropdown-item {
+    font-size: 0.85rem;
+    padding: 0.5rem 1rem;
+    font-weight: 500;
 }
