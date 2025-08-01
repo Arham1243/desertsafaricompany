@@ -2,6 +2,16 @@
 
 @php
     $seo = $item->seo ?? null;
+    $jsonContent = json_decode($item->json_content, true) ?? null;
+    $bannerTitle =
+        isset($jsonContent['h1_banner_text']['title']) && $jsonContent['h1_banner_text']['title']
+            ? $jsonContent['h1_banner_text']['title']
+            : null;
+    $bannerSubtitle =
+        isset($jsonContent['h1_banner_text']['subtitle']) && $jsonContent['h1_banner_text']['subtitle']
+            ? $jsonContent['h1_banner_text']['subtitle']
+            : null;
+
 @endphp
 
 @section('content')
@@ -23,9 +33,16 @@
                     <div class="col-md-8">
                         <div class="header-form__title header-banner__heading">
                             <h1 class="banner-heading banner-alt-heading">
-                                {{ explode(' ', $item->name)[0] }}
-                                <div class="bannerMain-title">{{ implode(' ', array_slice(explode(' ', $item->name), 1)) }}
-                                </div>
+                                @if ($bannerTitle || $bannerSubtitle)
+                                    {{ $bannerTitle }}
+                                    @if ($bannerSubtitle)
+                                        <div class="bannerMain-title">{{ $bannerSubtitle }}</div>
+                                    @endif
+                                @else
+                                    {{ explode(' ', $item->name)[0] }}
+                                    <div class="bannerMain-title">
+                                        {{ implode(' ', array_slice(explode(' ', $item->name), 1)) }}</div>
+                                @endif
                             </h1>
                             <div class="highlights-item__container">
                                 <div class="highlights-item__icon">
@@ -77,7 +94,6 @@
     @endif
 
     @php
-        $jsonContent = json_decode($item->json_content, true) ?? null;
         $category_based_tour_block = $jsonContent ? $jsonContent['category_based_tour_block'] : null;
         $category_based_tour_category_id = $jsonContent ? $category_based_tour_block['category_id'] : null;
         $all_sub_category_Ids = getAllCategoryIds($category_based_tour_category_id);
@@ -229,14 +245,30 @@
                             </h1>
                         </div>
 
+                        @php
+                            $tourCountCategory = $tourCategories->firstWhere(
+                                'id',
+                                $tourCountContent->btn_link_category ?? null,
+                            );
+                            $tourCountBtnLink = $tourCountCategory
+                                ? route('tours.category.details', ['slug' => $tourCountCategory->slug])
+                                : 'javascript:void(0)';
+                            $tour_count_all_sub_category_Ids = getAllCategoryIds($tourCountCategory->id);
+                            $tour_count_all_sub_category_Ids_tours = $tours->whereIn(
+                                'category_id',
+                                $tour_count_all_sub_category_Ids,
+                            );
+                            $tourCountCategory->tours_count = $tour_count_all_sub_category_Ids_tours->count();
+                        @endphp
+
                         @if (isset($tourCountContent->is_button_enabled) && $tourCountContent->is_button_enabled === '1')
-                            <a href="{{ sanitizedLink($tourCountContent->btn_link ?? 'javascript:void(0)') }}"
+                            <a target="_blank" href="{{ sanitizedLink($tourCountBtnLink) }}"
                                 style="
-    {{ $tourCountContent->btn_background_color ? 'background-color: ' . $tourCountContent->btn_background_color . ';' : '' }}
-    {{ $tourCountContent->btn_text_color ? 'color: ' . $tourCountContent->btn_text_color . ';' : '' }}"
-                                class="app-btn
-                                themeBtn"
-                                type="button">{{ $tourCountContent->btn_text ?? 'Click' }} </a>
+                                {{ $tourCountContent->btn_background_color ? 'background-color: ' . $tourCountContent->btn_background_color . ';' : '' }}
+                                {{ $tourCountContent->btn_text_color ? 'color: ' . $tourCountContent->btn_text_color . ';' : '' }}"
+                                class="app-btn themeBtn" type="button">
+                                {{ str_replace('{x}', $tourCountCategory?->tours_count ?? 0, $tourCountContent->btn_text ?? 'Explore more') }}
+                            </a>
                         @endif
                     </div>
                 </div>

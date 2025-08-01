@@ -52,6 +52,17 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="form-fields mb-4">
+                                        <label class="title text-dark">Banner Title:</label>
+                                        <input name="json_content[h1_banner_text][title]" type="text" class="field"
+                                            value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
+                                    </div>
+
+                                    <div class="form-fields mb-4">
+                                        <label class="title text-dark">Banner Subtitle:</label>
+                                        <input name="json_content[h1_banner_text][subtitle]" type="text" class="field"
+                                            value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
+                                    </div>
                                     <div class="form-fields">
                                         <label class="title">Parent <span class="text-danger">*</span> :</label>
                                         <select name="parent_category_id" class="select2-select category-select"
@@ -121,8 +132,8 @@
                                                             <img src="{{ asset($media->file_path) }}" class="imgFluid"
                                                                 alt="{{ $media->alt_text }}" />
                                                         </a>
-                                                        <input type="text" value="{{ $media->alt_text }}" class="field"
-                                                            readonly>
+                                                        <input type="text" value="{{ $media->alt_text }}"
+                                                            class="field" readonly>
                                                     </li>
                                                 @endforeach
                                             </ul>
@@ -292,7 +303,7 @@
                                                             <input id="color-picker" type="text"
                                                                 name="content[tour_count][heading_color]"
                                                                 data-color-picker-input
-                                                                value="{{ $tourCountContent->heading_color ?? '#000000' }}"
+                                                                value="{{ $tourCountContent->heading_color ?? '#ffffff' }}"
                                                                 data-error="background Color" inputmode="text">
 
                                                         </div>
@@ -324,31 +335,35 @@
                                                 <div class="row" x-show="btnEnabled" x-transition>
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="form-fields">
-                                                            <label class="title">Button Text <span
-                                                                    class="text-danger">*</span>:</label>
+                                                            <label class="title">
+                                                                Button Text
+                                                                <span class="text-danger">*</span>
+                                                            </label>
                                                             <input type="text"
                                                                 value="{{ $tourCountContent->btn_text ?? '' }}"
                                                                 name="content[tour_count][btn_text]" class="field"
-                                                                placeholder="" data-error="Button Text" maxlength="28">
+                                                                data-error="Button Text" maxlength="60">
+                                                            <small class="d-block text-muted mt-1">
+                                                                Use <code>{x}</code> where you want the tour count to
+                                                                appear.
+                                                            </small>
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 mb-4">
                                                         <div class="form-fields">
-                                                            <label class="title">
-                                                                <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link</div>
-                                                                    <button data-bs-placement="top"
-                                                                        title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
-                                                                        type="button" data-tooltip="tooltip"
-                                                                        class="tooltip-lg">
-                                                                        <i class='bx bxs-info-circle'></i>
-                                                                    </button>
-                                                                </div>
-                                                            </label>
-                                                            <input type="text"
-                                                                value="{{ $tourCountContent->btn_link ?? '' }}"
-                                                                name="content[tour_count][btn_link]" class="field"
-                                                                placeholder="" data-error="Button Link">
+                                                            <label class="title text-dark">Select Category for Button Link
+                                                                <span class="text-danger">*</span>:</label>
+                                                            <select name="content[tour_count][btn_link_category]"
+                                                                class="select2-select" placeholder="Select Category"
+                                                                data-error="Category">
+                                                                <option value="" selected>Select Category</option>
+                                                                @foreach ($allCategories as $dropdownCategory)
+                                                                    <option value="{{ $dropdownCategory->id }}"
+                                                                        {{ ($tourCountContent->btn_link_category ?? '') == $dropdownCategory->id ? 'selected' : '' }}>
+                                                                        {{ $dropdownCategory->name }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
                                                         </div>
                                                     </div>
 
@@ -436,13 +451,13 @@
                                                                                 <input type="file"
                                                                                     name="content[tour_count][background_image]"
                                                                                     data-error="Feature Image"
-                                                                                    id="background_image_count"
+                                                                                    id="background_image_file_count"
                                                                                     class="upload-box__file d-none"
                                                                                     accept="image/*" data-file-input />
                                                                                 <div class="upload-box__placeholder">
                                                                                     <i class="bx bxs-image"></i>
                                                                                 </div>
-                                                                                <label for="background_image_count"
+                                                                                <label for="background_image_file_count"
                                                                                     class="upload-box__btn themeBtn">Upload
                                                                                     Image</label>
                                                                             </div>

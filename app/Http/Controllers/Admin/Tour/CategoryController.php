@@ -95,7 +95,7 @@ class CategoryController extends Controller
 
         $data['json_content'] = json_encode($request->input('json_content', null));
 
-        $sectionData = $request->input('content', []);
+        $sectionData = $request->all()['content'] ?? [];
         $updatedContent = [];
         foreach ($sectionData as $sectionKey => $content) {
             $existingSectionContent = $category->section_content ? json_decode($category->section_content, true) : [];
@@ -105,8 +105,6 @@ class CategoryController extends Controller
         $category->update($data);
 
         handleSeoData($request, $category, 'Tours/Categories');
-
-        $this->uploadImg('featured_image', 'Tours/Categories/Featured-image', $category, 'featured_image');
 
         if ($request->hasFile('gallery')) {
             foreach ($request->file('gallery') as $index => $image) {

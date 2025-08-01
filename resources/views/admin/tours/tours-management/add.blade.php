@@ -2556,7 +2556,7 @@
                                             </label>
                                         </div>
                                     </div>
-                                    <div class="form-fields mt-3">
+                                    <div class="form-fields">
                                         <label class="title">Default State :</label>
                                         <select name="tour[status][featured_state]" class="field">
 
@@ -2567,6 +2567,137 @@
                                         @error('tour[status][featured_state]')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
+                                    </div>
+                                    <div x-data="{ certifiedTagEnabled: {{ !empty($jsonContent['status']['certified_tag']['enabled']) ? 'true' : 'false' }} }">
+                                        <div class="row mt-4">
+                                            <div class="col-md-6">
+                                                <div class="form-fields mb-3">
+                                                    <input type="hidden" name="tour[status][certified_tag][enabled]"
+                                                        value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="tour[status][certified_tag][enabled]"
+                                                            id="certified_tag_enabled" value="1"
+                                                            x-model="certifiedTagEnabled">
+                                                        <label class="form-check-label" for="certified_tag_enabled">
+                                                            Enable Certified Tag
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <template x-if="certifiedTagEnabled">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Icon:</div>
+                                                            <a class="p-0 nav-link" href="//v2.boxicons.com"
+                                                                target="_blank">boxicons</a>
+                                                        </div>
+                                                        <div x-data="{ icon: '{{ $jsonContent['status']['certified_tag']['icon'] ?? 'bx bxs-badge-check' }}' }"
+                                                            class="d-flex align-items-center gap-3">
+                                                            <input type="text"
+                                                                name="tour[status][certified_tag][icon]" class="field"
+                                                                x-model="icon">
+                                                            <i :class="`${icon} bx-sm`" style="font-size: 1.5rem"></i>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-fields mb-3">
+                                                        <label class="title text-dark">Label:</label>
+                                                        <input name="tour[status][certified_tag][label]" type="text"
+                                                            class="field"
+                                                            value="{{ $jsonContent['status']['certified_tag']['label'] ?? '' }}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </template>
+                                    </div>
+                                    <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', false) ? 'true' : 'false' }}">
+                                        <div class="row mt-2">
+                                            <div class="col-md-6">
+                                                <div class="form-fields mb-3">
+                                                    <input type="hidden" name="tour[status][booked_text][enabled]"
+                                                        value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="tour[status][booked_text][enabled]"
+                                                            id="booked_text_enabled" value="1"
+                                                            x-model="showBookedText">
+                                                        <label class="form-check-label" for="booked_text_enabled">
+                                                            Show “Booked X times yesterday” text
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', false) ? 'true' : 'false' }}">
+                                        <div class="row mt-2">
+                                            <div class="col-md-12">
+                                                <div class="form-fields mb-3">
+                                                    <input type="hidden" name="tour[status][badge_tag][enabled]"
+                                                        value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="tour[status][badge_tag][enabled]"
+                                                            id="badge_tag_enabled" value="1"
+                                                            x-model="badgeTagEnabled">
+                                                        <label class="form-check-label" for="badge_tag_enabled">
+                                                            Enable Badge Tag
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" x-show="badgeTagEnabled">
+                                            <div class="col-md-12">
+                                                <div class="form-fields mb-3">
+                                                    <label class="title text-dark" for="badge_tag_label">Badge
+                                                        Label:</label>
+                                                    <input type="text" name="tour[status][badge_tag][label]"
+                                                        id="badge_tag_label" class="field"
+                                                        value="{{ old('tour.status.badge_tag.label', '') }}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Background:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="badge_tag_bg_color" data-color-picker></label>
+                                                        <input id="badge_tag_bg_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][badge_tag][background_color]"
+                                                            value="{{ old('tour.status.badge_tag.background_color', '#1c4d99') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Text Color:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="badge_tag_text_color" data-color-picker></label>
+                                                        <input id="badge_tag_text_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][badge_tag][text_color]"
+                                                            value="{{ old('tour.status.badge_tag.text_color', '#ffffff') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

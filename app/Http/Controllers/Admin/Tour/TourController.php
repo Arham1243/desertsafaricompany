@@ -94,6 +94,9 @@ class TourController extends Controller
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
         $authorConfig = ! empty($statusTab['author_config']) ? json_encode($statusTab['author_config']) : null;
+        $certifiedTag = ! empty($statusTab['certified_tag']) ? json_encode($statusTab['certified_tag']) : null;
+        $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
+        $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour = Tour::create([
@@ -102,6 +105,9 @@ class TourController extends Controller
             'slug' => $slug ?? null,
             'badge' => $badge ?? null,
             'author_config' => $authorConfig ?? null,
+            'certified_tag' => $certifiedTag ?? null,
+            'booked_text' => $bookedText ?? null,
+            'badge_tag' => $badgeTag ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'description_line_limit' => $general['description_line_limit'] ?? null,
@@ -354,6 +360,9 @@ class TourController extends Controller
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
         $authorConfig = ! empty($statusTab['author_config']) ? json_encode($statusTab['author_config']) : null;
+        $certifiedTag = ! empty($statusTab['certified_tag']) ? json_encode($statusTab['certified_tag']) : null;
+        $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
+        $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
 
         $tour->update([
@@ -363,6 +372,9 @@ class TourController extends Controller
             'category_id' => $general['category_id'] ?? null,
             'details' => $details,
             'author_config' => $authorConfig ?? null,
+            'certified_tag' => $certifiedTag ?? null,
+            'booked_text' => $bookedText ?? null,
+            'badge_tag' => $badgeTag ?? null,
             'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'badge' => $badge ?? null,

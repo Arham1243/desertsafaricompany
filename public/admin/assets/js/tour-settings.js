@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "[data-sub-repeater-create]"
             );
             if(addBtn){
-                addBtn.addEventListener("click", function () {
+                addBtn?.addEventListener("click", function () {
                     addSubItem(subContainer);
                 });
     
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (repeaters.length > 0) {
         repeaters.forEach((container) => {
             const addBtn = container.querySelector("[data-repeater-create]");
-            addBtn.addEventListener("click", function () {
+            addBtn?.addEventListener("click", function () {
                 addItem(container);
             });
 

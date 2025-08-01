@@ -16,7 +16,6 @@ class CategoryController extends Controller
     {
         $item = TourCategory::where('slug', $slug)->firstOrFail();
         $tourCategories = TourCategory::where('status', 'publish')
-            ->where('id', '!=', $item->id)
             ->latest()
             ->get();
         $tours = Tour::where('status', 'publish')->latest()->get();

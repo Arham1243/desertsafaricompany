@@ -2170,7 +2170,7 @@ form.input-details.generic-form i {
     height: 100%;
     border-radius: 12px;
     overflow: hidden;
-    filter: brightness(0.5);
+    filter: brightness(0.55);
 }
 
 .location-banner__img img {
@@ -2204,6 +2204,7 @@ form.input-details.generic-form i {
     -webkit-text-stroke-color: #fff !important;
     font-size: 4rem;
     margin-bottom: 15px;
+    font-weight: 800;
 }
 
 .show-more {
