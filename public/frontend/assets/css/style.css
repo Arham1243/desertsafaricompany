@@ -7496,10 +7496,10 @@ ul.show-in-desktop {
     border: 1px solid #dcdfe4;
     border-radius: 0.5rem;
     color: #1a2b49;
-    margin: 0.85rem 0;
+    margin: 0.7rem 0;
 }
 .tour-card.tour-card--style3 {
-    height: 398px;
+    height: 397px;
 }
 .tour-card__img {
     position: relative;
@@ -7549,7 +7549,7 @@ ul.show-in-desktop {
     height: 67px;
 }
 .tour-card__content {
-    padding: 0.45rem 0.85rem;
+    padding: 7px 12px;
 }
 .tour-card__img > .img-wrapper {
     width: 100%;
@@ -7607,7 +7607,7 @@ ul.show-in-desktop {
     padding-bottom: 11px;
 }
 .tour-card .pricing-details-wrapper {
-    line-height: 1.1;
+    line-height: 1.12;
     margin-top: 6px;
     height: 40px;
 }
