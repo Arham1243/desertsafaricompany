@@ -78,7 +78,7 @@
         <div class="my-5">
             <div class=container>
                 <div class="tour-content__details " data-show-more>
-                    <div class="editor-content line-clamp" data-show-more-content
+                    <div style="color: #243064;" class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }};
             " @endif>
