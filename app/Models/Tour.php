@@ -110,6 +110,47 @@ class Tour extends Model
         return $this->hasMany(TourPricing::class)->where('price_type', 'promoAddOn');
     }
 
+    public function getLowestPromoPriceAttribute()
+    {
+        if (! $this->promoPrices || ! $this->promo_discount_config) {
+            return null;
+        }
+
+        $now = now();
+        $day = strtolower($now->englishDayOfWeek);
+        $hour = $now->hour;
+
+        $config = json_decode($this->promo_discount_config, true);
+
+        $isWeekend = in_array($day, ['friday', 'saturday', 'sunday']);
+
+        $discountPercent = $isWeekend
+            ? ($config['weekend_discount_percent'] ?? 0)
+            : ($config['weekday_discount_percent'] ?? 0);
+
+        $prices = $this->promoPrices->map(function ($promo) use ($discountPercent) {
+            $original = (float) $promo->original_price;
+            $discounted = $original - ($original * ($discountPercent / 100));
+
+            return [
+                'original' => $original,
+                'discounted' => $discounted,
+            ];
+        });
+
+        $lowest = $prices
+            ->filter(fn ($p) => $p['discounted'] > 0)
+            ->sortBy('discounted')
+            ->first();
+
+        return $lowest
+            ? [
+                'original' => number_format($lowest['original'], 2),
+                'discounted' => number_format($lowest['discounted'], 2),
+            ]
+            : null;
+    }
+
     public function getFormatedPriceTypeAttribute()
     {
         $types = [
@@ -129,7 +170,8 @@ class Tour extends Model
 
     public function attributes()
     {
-        return $this->belongsToMany(TourAttribute::class, 'tour_attribute_tour_attribute_item')
+        return $this
+            ->belongsToMany(TourAttribute::class, 'tour_attribute_tour_attribute_item')
             ->withPivot('tour_attribute_item_id')
             ->withTimestamps();
     }
@@ -204,16 +246,16 @@ class Tour extends Model
     public static function deleteImageIfNotUsed($imagePath)
     {
         if ($imagePath) {
-
             $imageUsedByAnotherTour = \App\Models\Tour::whereHas('seo', function ($query) use ($imagePath) {
-                $query->where('seo_featured_image', $imagePath)
+                $query
+                    ->where('seo_featured_image', $imagePath)
                     ->orWhere('fb_featured_image', $imagePath)
                     ->orWhere('tw_featured_image', $imagePath);
             })->orWhereHas('media', function ($query) use ($imagePath) {
                 $query->where('file_path', $imagePath);
             })->orWhere(function ($query) use ($imagePath) {
-
-                $query->where('promotional_image', $imagePath)
+                $query
+                    ->where('promotional_image', $imagePath)
                     ->orWhere('banner_image', $imagePath)
                     ->orWhere('featured_image', $imagePath);
             })->exists();

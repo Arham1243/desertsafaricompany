@@ -148,6 +148,7 @@
         $sectionContent = json_decode($item->section_content);
         $tourCountContent = $sectionContent->tour_count ?? null;
         $callToActionContent = $sectionContent->call_to_action ?? null;
+        $newsletterContent = $sectionContent->newsletter ?? null;
     @endphp
 
     @if (isset($callToActionContent->is_enabled) && $callToActionContent->is_enabled === '1')
@@ -225,12 +226,12 @@
                 ? $tourCountContent->tour_count_background_type === 'background_image'
                 : null;
         @endphp
-        <div class="location-banner mb-3">
+        <div class="location-banner mb-3 img-zoom-wrapper">
             <div class="container">
                 <div class="location-banner__content"
                     style="{{ $isCountBackgroundColor && $tourCountContent->background_color ? 'background-color: ' . $tourCountContent->background_color : '' }}">
                     @if ($isCountBackgroundImage)
-                        <div class="location-banner__img">
+                        <div class="location-banner__img img-zoom">
                             <img data-src="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/placeholder.png') }}"
                                 alt="{{ $tourCountContent->background_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                 loading="lazy">
@@ -395,43 +396,49 @@
         </div>
     @endif
 
-    <div class="newsletter pt-3 pb-5 mb-2">
-        <div class=container>
-            <div class="row g-0">
-                <div class=col-md-6>
-                    <div class=newsletter__img>
-                        <img src="{{ asset('frontend/assets/images/173.webp') }}" alt="image" class="imgFluid"
-                            loading="lazy">
-                    </div>
-                </div>
-                <div class=col-md-6>
-                    <div class=newsletter__content>
-                        <div class=section-content>
-                            <h2 class=subHeading>
-                                Your Dubai itinerary is waiting.
-                            </h2>
+    @if (isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled === '1')
+        <div class="newsletter section-padding">
+            <div class="container">
+                <div class="row g-0">
+                    <div class="col-md-6">
+                        <div class="newsletter__img">
+                            <img src="{{ asset($newsletterContent->left_image ?? 'admin/assets/images/placeholder.png') }}"
+                                alt="{{ $newsletterContent->left_image_alt_text ?? 'image' }}" class="imgFluid"
+                                loading="lazy">
                         </div>
-                        <p>Receive a curated 48-hour itinerary featuring the most iconic experiences in Dubai, straight to
-                            your inbox.
-
-                        </p>
-                        <form class=line-form method="POST" action="#">
-                            <div class=line-form__input>
-                                <input id=email type=email name=email placeholder="Email" required>
-                                <i class="bx bx-envelope"></i>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="newsletter__content">
+                            <div class="section-content">
+                                <h2 class="subHeading"
+                                    @if ($newsletterContent->title_text_color) style="color: {{ $newsletterContent->title_text_color }}" @endif>
+                                    {{ $newsletterContent->title ?? '' }}
+                                </h2>
                             </div>
-                            <button type=submit class="primary-btn">Sign up</button>
-                        </form>
+                            <p
+                                @if ($newsletterContent->description_text_color) style="color: {{ $newsletterContent->description_text_color }}" @endif>
+                                {{ $newsletterContent->description ?? '' }}
+                            </p>
+
+                            <form class="line-form" method="POST" action="{{ route('save-newsletter') }}">
+                                @csrf
+                                <div class="line-form__input">
+                                    <input id="email" type="email" name="email" placeholder="Email" required>
+                                    <i class="bx bx-envelope"></i>
+                                </div>
+                                <button type="submit" class="primary-btn"
+                                    @if ($newsletterContent->btn_background_color || $newsletterContent->btn_text_color) style="{{ $newsletterContent->btn_background_color ? 'background: ' . $newsletterContent->btn_background_color . ';' : '' }}{{ $newsletterContent->btn_text_color ? 'color: ' . $newsletterContent->btn_text_color . ';' : '' }}" @endif>
+                                    {{ $newsletterContent->btn_text ?? 'Sign up' }}
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class=privacy-content>
-                <p class="mb-0">By signing up, you agree to receive promotional emails on activities and insider tips.
-                    You
-                    can
-                    unsubscribe or withdraw your consent at any time with future effect. For more information, read our
-                    Privacy statement</p>
+                <div class="privacy-content"
+                    @if ($newsletterContent->privacy_statement_text_color) style="color: {{ $newsletterContent->privacy_statement_text_color }}" @endif>
+                    <p>{!! $newsletterContent->privacy_statement ?? '' !!}</p>
+                </div>
             </div>
         </div>
-    </div>
+    @endif
 @endsection

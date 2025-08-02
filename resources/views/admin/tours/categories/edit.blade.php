@@ -5,6 +5,7 @@
         $jsonContent = json_decode($category->json_content, true) ?? null;
         $tourCountContent = $sectionContent->tour_count ?? null;
         $callToActionContent = $sectionContent->call_to_action ?? null;
+        $newsletterContent = $sectionContent->newsletter ?? null;
     @endphp
 
     <div class="col-md-12">
@@ -285,7 +286,7 @@
                                                             :</label>
                                                         <input type="text" name="content[tour_count][heading]"
                                                             class="field" value="{{ $tourCountContent->heading ?? '' }}"
-                                                            placeholder="Heading" maxlength="30">
+                                                            placeholder="Heading">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-4">
@@ -342,7 +343,7 @@
                                                             <input type="text"
                                                                 value="{{ $tourCountContent->btn_text ?? '' }}"
                                                                 name="content[tour_count][btn_text]" class="field"
-                                                                data-error="Button Text" maxlength="60">
+                                                                data-error="Button Text">
                                                             <small class="d-block text-muted mt-1">
                                                                 Use <code>{x}</code> where you want the tour count to
                                                                 appear.
@@ -559,8 +560,7 @@
                                                             :</label>
                                                         <input type="text" name="content[call_to_action][title]"
                                                             class="field" placeholder="" data-error="title"
-                                                            value="{{ $callToActionContent->title ?? '' }}"
-                                                            maxlength="69">
+                                                            value="{{ $callToActionContent->title ?? '' }}">
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 mb-4">
@@ -588,7 +588,7 @@
                                                     <div class="form-fields">
                                                         <label class="title">Description <span
                                                                 class="text-danger">*</span> :</label>
-                                                        <textarea name="content[call_to_action][description]" class="field" rows="2" maxlength="255">{{ $callToActionContent->description ?? '' }} </textarea>
+                                                        <textarea name="content[call_to_action][description]" class="field" rows="2">{{ $callToActionContent->description ?? '' }} </textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12 mb-3">
@@ -643,7 +643,7 @@
                                                             <input type="text"
                                                                 value="{{ $callToActionContent->btn_text ?? '' }}"
                                                                 name="content[call_to_action][btn_text]" class="field"
-                                                                placeholder="" data-error="Button Text" maxlength="28">
+                                                                placeholder="" data-error="Button Text">
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-6 mb-4">
@@ -829,62 +829,345 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div x-data="{ enabled: {{ isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Newsletter Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0" name="content[newsletter][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="newsletter" value="1" name="content[newsletter][is_enabled]"
+                                                x-model="enabled">
+                                            <label class="form-check-label" for="newsletter">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/sections/newsletter.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2"><i class="bx bxs-show"></i></a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="row">
+                                        <div class="col-lg-12 pt-3 pb-4">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <label class="title">Heading:</label>
+                                                        <input type="text" name="content[newsletter][title]"
+                                                            class="field" placeholder="" data-error="Title"
+                                                            value="{{ $newsletterContent->title ?? '' }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>
+                                                                Heading Color:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][title_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->title_text_color ?? '#1c4d99' }}"
+                                                                inputmode="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-lg-12 pt-3 pb-4">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Paragraph:</label>
+                                                        <textarea name="content[newsletter][description]" class="field" rows="2">{{ $newsletterContent->description ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>
+                                                                Paragraph Color:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][description_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->description_text_color ?? '#000000' }}"
+                                                                inputmode="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-lg-12 pt-3 pb-4">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <label class="title title--sm mb-0">Signup Button:</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Button Text <span
+                                                                class="text-danger">*</span> :</label>
+                                                        <input type="text"
+                                                            value="{{ $newsletterContent->btn_text ?? '' }}"
+                                                            name="content[newsletter][btn_text]" class="field"
+                                                            placeholder="" data-error="Button Text">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>
+                                                                Button Background Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][btn_background_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->btn_background_color ?? '#1c4d99' }}"
+                                                                data-error="background Color" inputmode="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>
+                                                                Button Text Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][btn_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->btn_text_color ?? '#ffffff' }}"
+                                                                data-error="background Color" inputmode="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-lg-12 pt-3 pb-4">
+                                            <div class="form-fields">
+                                                <div class="d-flex mb-2">
+                                                    <label class="title title--sm mb-0">Privacy Statement:</label>
+                                                    <span
+                                                        class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                        <span>To add a link:</span>
+                                                        <code class="text-nowrap text-lowercase">&lt;a
+                                                            href="//google.com"
+                                                            target="_blank"&gt;Text&lt;/a&gt;</code>
+                                                        <button class="themeBtn copy-btn py-1 px-2" type="button"
+                                                            text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                            Copy
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Text:</label>
+                                                        <textarea rows="3" name="content[newsletter][privacy_statement]" class="field">{{ $newsletterContent->privacy_statement ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>
+                                                                Text Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][privacy_statement_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->privacy_statement_text_color ?? '#000000' }}"
+                                                                inputmode="text" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr>
+                                        </div>
+                                        <div class="col-lg-12 pt-3 pb-4">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <label class="title title--sm mb-0">Background Color/Image:</label>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Left Side Image <span
+                                                                class="text-danger">*</span>:</label>
+                                                        <div class="upload upload--sm mx-0" data-upload>
+                                                            <div class="upload-box-wrapper">
+                                                                <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
+                                                                    data-upload-box>
+                                                                    <input type="file"
+                                                                        name="content[newsletter][left_image]"
+                                                                        data-error="Feature Image" id="left_image"
+                                                                        class="upload-box__file d-none" accept="image/*"
+                                                                        data-file-input>
+                                                                    <div class="upload-box__placeholder"><i
+                                                                            class='bx bxs-image'></i>
+                                                                    </div>
+                                                                    <label for="left_image"
+                                                                        class="upload-box__btn themeBtn">Upload
+                                                                        Image</label>
+                                                                </div>
+                                                                <div class="upload-box__img {{ !empty($newsletterContent->left_image) ? 'show' : '' }}"
+                                                                    data-upload-img>
+                                                                    <button type="button" class="delete-btn"
+                                                                        data-delete-btn=""><i
+                                                                            class='bx bxs-edit-alt'></i></button>
+                                                                    <a href="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                        class="mask" data-fancybox="gallery">
+                                                                        <img src="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                            alt="Uploaded Image" class="imgFluid"
+                                                                            data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
+                                                                            data-upload-preview="">
+                                                                    </a>
+                                                                    <input type="text"
+                                                                        name="content[newsletter][left_image_alt_text]"
+                                                                        class="field" placeholder="Enter alt text"
+                                                                        value="{{ $newsletterContent->left_image_alt_text ?? 'Alt Text' }}">
+                                                                </div>
+                                                            </div>
+                                                            <div data-error-message
+                                                                class="text-danger mt-2 d-none text-center">Please
+                                                                upload a
+                                                                valid image file
+                                                            </div>
+                                                            <div class="dimensions text-center mt-3">
+                                                                <strong>Dimensions:</strong> 560 &times; 325
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Right Background Color <span class="text-danger">*</span>:
+                                                            </div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                                target="_blank">Get
+                                                                Color
+                                                                Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="color-picker" data-color-picker></label>
+                                                            <input id="color-picker" type="text"
+                                                                name="content[newsletter][right_background_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsletterContent->right_background_color ?? '#d1f6e2' }}"
+                                                                data-error="background Color" inputmode="text">
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <x-seo-options :seo="$seo ?? null" :resource="'tours/category'" :slug="$category->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Publish</div>
+                        <div class="sticky-save-boxes">
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Publish</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="publish"
+                                            value="publish"
+                                            {{ old('status', $category->status ?? '') == 'publish' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="publish">
+                                            Publish
+                                        </label>
+                                    </div>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="status" id="draft"
+                                            value="draft"
+                                            {{ old('status', $category->status ?? '') == 'draft' ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="draft">
+                                            Draft
+                                        </label>
+                                    </div>
+                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
+                                </div>
                             </div>
-                            <div class="form-box__body">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="publish"
-                                        value="publish"
-                                        {{ old('status', $category->status ?? '') == 'publish' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="publish">
-                                        Publish
-                                    </label>
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Reviews</div>
                                 </div>
-                                <div class="form-check mt-2">
-                                    <input class="form-check-input" type="radio" name="status" id="draft"
-                                        value="draft"
-                                        {{ old('status', $category->status ?? '') == 'draft' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="draft">
-                                        Draft
-                                    </label>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        @php
+                                            $selectedtoursReviews =
+                                                json_decode($category->tour_reviews_ids, true) ?? [];
+                                        @endphp
+                                        <label class="title">Featured Reviews<span class="text-danger">*</span>
+                                            :</label>
+                                        <select name="tour_reviews_ids[]" multiple class="select2-select"
+                                            data-max-items="4" placeholder="Select Reviews"
+                                            {{ !$toursReviews->isEmpty() ? '' : '' }} data-error="Featured Reviews">
+                                            @foreach ($toursReviews as $review)
+                                                <option value="{{ $review->id }}"
+                                                    {{ in_array($review->id, old('tour_reviews_ids', $selectedtoursReviews)) ? 'selected' : '' }}>
+                                                    {{ $review->title }} (Rating: {{ $review->rating }}/5)
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('tour_reviews_ids')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                                <button class="themeBtn ms-auto mt-4">Save Changes</button>
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Reviews</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="form-fields">
-                                    @php
-                                        $selectedtoursReviews = json_decode($category->tour_reviews_ids, true) ?? [];
-                                    @endphp
-                                    <label class="title">Featured Reviews<span class="text-danger">*</span>
-                                        :</label>
-                                    <select name="tour_reviews_ids[]" multiple class="select2-select" data-max-items="4"
-                                        placeholder="Select Reviews" {{ !$toursReviews->isEmpty() ? '' : '' }}
-                                        data-error="Featured Reviews">
-                                        @foreach ($toursReviews as $review)
-                                            <option value="{{ $review->id }}"
-                                                {{ in_array($review->id, old('tour_reviews_ids', $selectedtoursReviews)) ? 'selected' : '' }}>
-                                                {{ $review->title }} (Rating: {{ $review->rating }}/5)
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('tour_reviews_ids')
-                                        <div class="text-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
                 </div>
             </form>
@@ -901,6 +1184,13 @@
                 ?.forEach((element) => {
                     InitializeColorPickers(element);
                 });
+        })
+
+        document.addEventListener('click', e => {
+            if (e.target.matches('.copy-btn')) {
+                const text = e.target.getAttribute('text-to-copy')
+                if (text) navigator.clipboard.writeText(text)
+            }
         })
     </script>
 @endpush

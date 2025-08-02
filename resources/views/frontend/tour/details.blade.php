@@ -129,6 +129,14 @@
                     <div class=col-md-12>
                         <div class=tour-content__header>
                             <div>
+                                @php
+                                    $certifiedTagContent = json_decode($tour->certified_tag) ?? null;
+                                @endphp
+                                @if ($certifiedTagContent && $certifiedTagContent->enabled === '1')
+                                    <div class="certified-tag line-clamp-2"><i
+                                            class='{{ $certifiedTagContent->icon }}'></i>
+                                        {{ $certifiedTagContent->label }}</div>
+                                @endif
                                 <div class=section-content>
                                     <h2 class="heading">
                                         {{ $tour->title }}
@@ -147,7 +155,7 @@
                                                     {{ $tour->reviews->count() }}
                                                     Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                                                 @else
-                                                    No Reviews Yet
+                                                    No reviews yet
                                                 @endif
                                             </span>
                                         </div>
@@ -161,7 +169,7 @@
                                                 </span>
                                             @elseif ($isFavorited)
                                                 <a href="{{ route('tours.favorites.index') }}">
-                                                    <span class="header-listGroup faq-icon added">
+                                                    <span class="header-listGroup faq-icon red-heart">
                                                         <i class="bx bxs-heart"></i>
                                                     </span>
                                                 </a>
@@ -256,7 +264,7 @@
                                         </span>
                                     @elseif ($isFavorited)
                                         <a href="{{ route('tours.favorites.index') }}">
-                                            <span class="header-listGroup faq-icon added">
+                                            <span class="header-listGroup faq-icon red-heart">
                                                 <i class="bx bxs-heart"></i>
                                             </span>
                                         </a>

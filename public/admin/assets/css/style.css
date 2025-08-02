@@ -2708,3 +2708,7 @@ a.dropdown-item {
         font-size: 1.1rem;
     }
 }
+.sticky-save-boxes {
+    position: sticky;
+    top: 0.5rem;
+}

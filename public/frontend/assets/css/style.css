@@ -73,6 +73,10 @@ i.bx {
 body :is(.dirham.dirham) {
     font-family: "UAEDirham" !important;
     font-weight: 400 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    font-size: inherit !important;
+    color: inherit !important;
 }
 
 .padd-y {
@@ -264,6 +268,9 @@ body :is(.dirham.dirham) {
     margin-bottom: 0.45rem;
     text-transform: capitalize;
     color: #243064;
+}
+.tour-content__header .section-content .heading{
+    margin-bottom: 0.25rem;
 }
 
 .location-headerLocation--details span:not(:first-child) {
@@ -1205,11 +1212,11 @@ a.card-title:hover {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-
-.newsletter p {
-    font-size: 14px;
+.privacy-content a {
+    font-weight: 700;
+    text-decoration: underline !important;
+    color: inherit;
 }
-
 .footer-logo {
     width: 10%;
     height: 100%;
@@ -1488,7 +1495,7 @@ img.ocizgi.imgFluid {
 }
 
 .card-rating i {
-    font-size: 17px;
+    font-size: 16px;
     color: #d6d9dc;
 }
 
@@ -1563,7 +1570,7 @@ img.ocizgi.imgFluid {
 }
 
 .privacy-content {
-    font-size: 0.875rem;
+    font-size: 14px;
     font-weight: 500;
     color: #000;
     margin-top: 8px;
@@ -2272,13 +2279,10 @@ form.input-details.generic-form i {
     font-size: 0.75rem;
     line-height: 1.125rem;
     font-weight: 800;
-    display: inline-flex;
-    align-items: center;
     border-radius: 4px;
-    background-color: var(--supportive-transparent);
     color: #63687a;
     text-transform: uppercase;
-    display: flex;
+    display: inline-flex;
     gap: 0.25rem;
     align-items: center;
 }
@@ -2576,7 +2580,8 @@ a.card_img.trending-products__img {
 .card-rating span {
     color: #666;
     margin-top: 3px;
-    margin-left: 1px;
+    margin-left: 5px;
+    font-weight: 700;
 }
 
 .card-content.trending-products__content h3 {
@@ -3657,10 +3662,9 @@ ul.header-listGroup form {
     line-height: 0;
 }
 
-span.header-listGroup.faq-icon.added {
-    color: #DD0029;
+.red-heart {
+    color: #dd0029 !important;
 }
-
 
 /* accordian */
 .accordian-header,
@@ -6421,7 +6425,8 @@ span.select2-dropdown.select2-dropdown--below {
     scale: 0.85;
     transition: all 150ms ease-in;
 }
-.global-popup-wrapper.detail-popup, .global-popup-wrapper.detail-popup .editor-content * {
+.global-popup-wrapper.detail-popup,
+.global-popup-wrapper.detail-popup .editor-content * {
     color: #000000d9;
 }
 
@@ -7388,7 +7393,7 @@ ul.show-in-desktop {
     display: flex;
     margin: 1.75rem 0 2.75rem;
 }
-.refund-policy-item{
+.refund-policy-item {
     text-align: center;
     width: 100%;
 }
@@ -7396,7 +7401,7 @@ ul.show-in-desktop {
     font-size: 0.85rem;
     font-weight: 500;
 }
-.refund-policy-item__result{
+.refund-policy-item__result {
     font-weight: 600;
     font-size: 1rem;
     width: 100%;
@@ -7406,21 +7411,20 @@ ul.show-in-desktop {
     justify-content: center;
     border-radius: 0.6rem;
 }
-.refund-policy-item--green .refund-policy-item__result{
-    background: #59D9BD;
+.refund-policy-item--green .refund-policy-item__result {
+    background: #59d9bd;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
-.refund-policy-item--red .refund-policy-item__result{
-    background: #EA5974;
+.refund-policy-item--red .refund-policy-item__result {
+    background: #ea5974;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 /* tour detail popups */
 
-
 /* availability-bar */
-.availability-bar{
+.availability-bar {
     width: 100%;
     background: #fff;
     color: #000;
@@ -7438,14 +7442,18 @@ ul.show-in-desktop {
     transform: translateY(0);
     opacity: 1;
 }
-.availability-bar .details-btn-wrapper{
+.availability-bar .details-btn-wrapper {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: 0.85rem;
 }
-.details-btn-wrapper .primary-btn{flex: 0.8;font-size: 16px;padding: 0.73rem 1rem;}
-.details-btn-wrapper .wishlist-btn{
+.details-btn-wrapper .primary-btn {
+    flex: 0.8;
+    font-size: 16px;
+    padding: 0.73rem 1rem;
+}
+.details-btn-wrapper .wishlist-btn {
     width: 48px;
     aspect-ratio: 1/1;
     display: flex;
@@ -7453,29 +7461,186 @@ ul.show-in-desktop {
     justify-content: center;
     background: none;
     outline: none;
-    border: 1px solid #B3B3B3;
+    border: 1px solid #b3b3b3;
     border-radius: 100%;
 }
-.details-btn-wrapper .wishlist-btn:hover{
-    background: #F5F5F5;
+.details-btn-wrapper .wishlist-btn:hover {
+    background: #f5f5f5;
 }
-.details-btn-wrapper .wishlist-btn i{
+.details-btn-wrapper .wishlist-btn i {
     font-size: 1.55rem;
-}.availability-bar .details {
+}
+.availability-bar .details {
     font-size: 17px;
     font-weight: 400;
 }
 
-.availability-bar .details-wrapper{
+.availability-bar .details-wrapper {
     line-height: 1.4;
-    }
+}
 .availability-bar .details.sub {
     font-size: 14px;
     font-weight: 600;
     text-decoration: underline !important;
 }
-.availability-bar .details span{font-weight: 700;font-size: 21px;}
-.availability-bar-padding{
+.availability-bar .details span {
+    font-weight: 700;
+    font-size: 21px;
+}
+.availability-bar-padding {
     padding-inline: 3rem;
 }
 /* availability-bar */
+/* tour-card */
+.tour-card {
+    border: 1px solid #dcdfe4;
+    border-radius: 0.5rem;
+    color: #1a2b49;
+    margin: 0.85rem 0;
+}
+.tour-card__img {
+    position: relative;
+    width: 100%;
+    height: 180px;
+}
+
+.tour-card__img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.tour-card .tour-actions {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.4rem 0.65rem;
+    z-index: 10;
+}
+.tour-card .tour-actions .top-badge {
+    background: var(--color-primary);
+    color: #fff;
+    padding: 4px 10px;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 0.3rem;
+}
+.tour-card .tour-actions .heart-icon {
+    background: none;
+    border: none;
+    outline: none;
+}
+.tour-card .tour-actions .heart-icon i {
+    font-size: 1.1rem;
+    background: #fff;
+    color: #000;
+    padding: 0.25rem;
+    border-radius: 0.3rem;
+}
+.tour-card__content > .title {
+    font-size: 15.5px;
+    color: var(--color-primary);
+    font-weight: 800;
+    line-height: 1.45;
+    height: 67px;
+}
+.tour-card__content {
+    padding: 0.45rem 0.85rem;
+}
+.tour-card__img > .img-wrapper {
+    width: 100%;
+    height: 100%;
+}
+.tour-card__content .certified-tag {
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.tour-card__content .certified-tag i {
+    font-size: 17px;
+}
+.tour-card__content .booked-details {
+    font-size: 12px;
+    font-weight: 800;
+    background: #ebeef1;
+    width: fit-content;
+    padding: 3px 9px;
+    border-radius: 0.25rem;
+}
+.tour-card .pricing-details {
+    color: #63687a;
+    font-size: 12px;
+    font-weight: 600;
+    display: block;
+}
+.tour-card .pricing-details .new-price {
+    color: #c72a3d;
+    font-size: 20px;
+    font-weight: 800;
+}
+.tour-card .pricing-details--del {
+    text-decoration: line-through !important;
+}
+.tour-card .pricing-details--ins {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.tour-card .certified-tag-wrapper {
+    height: 29px;
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1px;
+}
+
+.tour-card .booked-details-wrapper {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    padding-bottom: 7px;
+}
+.tour-card .pricing-details-wrapper {
+    line-height: 1.25;
+    margin-top: 3px;
+    height: 40px;
+}
+[class*="line-clamp-"] {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.line-clamp-1 {
+    -webkit-line-clamp: 1;
+}
+.line-clamp-2 {
+    -webkit-line-clamp: 2;
+}
+.line-clamp-3 {
+    -webkit-line-clamp: 3;
+}
+/* card-hover */
+.img-zoom {
+    overflow: hidden;
+}
+.img-zoom > img{
+    transition: all 0.5s;
+}
+.img-zoom-wrapper:hover .img-zoom > img {
+    transform: scale(1.2);
+}
+/* card-hover */
+/* tour-card */
+
+.certified-tag {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.3rem;
+}
+.certified-tag i {
+    font-size: 1.05rem;
+}

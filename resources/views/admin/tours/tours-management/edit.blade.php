@@ -2866,7 +2866,7 @@
                                                     @enderror
                                                 </div>
                                                 <div class="dimensions text-center mt-3">
-                                                    <strong>Dimensions:</strong> 270 &times; 260
+                                                    <strong>Dimensions:</strong> 260 &times; 180
                                                 </div>
                                             </div>
                                         </div>

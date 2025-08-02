@@ -7,7 +7,7 @@
                 <div class=price-details>
                     <div class=price>
                         <span>
-                            <b>{{ $tour->formated_price_type ?? formatPrice($tour->sale_price) . ' From' }}</b>
+                            <b>{!! $tour->formated_price_type ?? formatPrice($tour->sale_price) . ' From' !!}</b>
                         </span>
                     </div>
                     @if (Auth::check())
@@ -47,7 +47,7 @@
                         {{ $tour->reviews->count() }}
                         Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                     @else
-                        <span>No Reviews Yet</span>
+                        <span>No reviews yet</span>
                     @endif
                 </div>
             </div>
@@ -82,8 +82,12 @@
             </a>
             <div class=tour-activity-card__details>
                 <div class=vertical-activity-card__header>
-                    <div><span>
-                            {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}</span>
+                    <div>
+                        @if ($tour->formated_price_type)
+                            <span>{{ $tour->formated_price_type }}</span>
+                        @else
+                            <span>From<div class="flex">{!! formatPrice($tour->sale_price) !!}</div></span>
+                        @endif
                     </div>
                     <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
                         {{ $tour->title }}
@@ -96,7 +100,7 @@
                             {{ $tour->reviews->count() }}
                             Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                         @else
-                            <span>No Reviews Yet</span>
+                            <span>No reviews yet</span>
                         @endif
                     </div>
                     <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
@@ -112,72 +116,157 @@
     @break
 
     @case('style3')
-        <div class=card-content>
-            <a href={{ route('tours.details', $tour->slug) }} class=card_img>
-                <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                    alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
-                <div class=price-details>
-                    @if ($tour->orders()->count() > 5)
-                        <div class=price>
-                            <span>
-                                Top pick
-                            </span>
-                        </div>
-                    @endif
-                    @if (Auth::check())
-                        <div class="heart-icon">
-                            @php
-                                $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
-                            @endphp
-                            @if ($isFavorited)
-                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
-                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
-                                </form>
+        {{-- <div class=card-content>
+                <a href={{ route('tours.details', $tour->slug) }} class=card_img>
+                    <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
+                        alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
+                    <div class=price-details>
+                        @if ($tour->orders()->count() > 5)
+                            <div class=price>
+                                <span>
+                                    Top pick
+                                </span>
+                            </div>
+                        @endif
+                        @if (Auth::check())
+                            <div class="heart-icon">
+                                @php
+                                    $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
+                                @endphp
+                                @if ($isFavorited)
+                                    <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                        <button type="submit"> <i class="bx bxs-heart"></i></button>
+                                    </form>
+                                @else
+                                    <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
+                                        method="post">
+                                        @csrf
+                                        <button type="submit"> <i class="bx bx-heart"></i></button>
+                                    </form>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                </a>
+                <div class=tour-activity-card__details>
+                    <div class=vertical-activity-card__header>
+                        @if ($tour->category)
+                            <div><span> {{ $tour->category->name }}</span></div>
+                        @endif
+                        <a href="{{ route('tours.details', $tour->slug) }}"
+                            class="tour-activity-card__details--title">{{ $tour->title }}</a>
+                    </div>
+                    <div class=card-rating>
+                        <x-star-rating :rating="$tour->average_rating" />
+                        @if ($tour->reviews->count() > 0)
+                            {{ $tour->reviews->count() }}
+                            Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                        @else
+                            <span>No reviews yet</span>
+                        @endif
+                    </div>
+                    <div class="baseline-pricing__value baseline-pricing__value--high">
+                        <p class=baseline-pricing__from>
+                            <span class="baseline-pricing__from--text receive">Receive voucher
+                                instantly</span>
+                        </p>
+                    </div>
+                    <div class="baseline-pricing__value baseline-pricing__value--high">
+                        <p class=baseline-pricing__from>
+                            @if ($tour->formated_price_type)
+                                <span class="baseline-pricing__from--value green">{{ $tour->formated_price_type }}</span>
                             @else
-                                <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
-                                    method="post">
-                                    @csrf
-                                    <button type="submit"> <i class="bx bx-heart"></i></button>
-                                </form>
+                                <span class=baseline-pricing__from--text>From </span>
+                                <span class="baseline-pricing__from--value green">
+                                    {!! formatPrice($tour->sale_price) !!}</span>
                             @endif
+                        </p>
+                    </div>
+                </div>
+            </div> --}}
+
+        <div class="tour-card tour-card--style3 img-zoom-wrapper">
+            @php
+                $certifiedTagContent = json_decode($tour->certified_tag) ?? null;
+                $bookedTextContent = json_decode($tour->booked_text) ?? null;
+                $badgeTagContent = json_decode($tour->badge_tag) ?? null;
+            @endphp
+            <div class="tour-card__img">
+                <div class="tour-actions">
+                    <div>
+                        @if ($badgeTagContent && $badgeTagContent->enabled === '1')
+                            <div class="top-badge"
+                                @if ($badgeTagContent->background_color || $badgeTagContent->text_color) style="
+                                    {{ $badgeTagContent->background_color ? 'background:' . $badgeTagContent->background_color . ';' : '' }}
+                                    {{ $badgeTagContent->text_color ? 'color:' . $badgeTagContent->text_color . ';' : '' }}" @endif>
+                                {{ $badgeTagContent->label }}
+                            </div>
+                        @endif
+
+                    </div>
+                    @php
+                        $isFavorited = Auth::check() ? Auth::user()->favoriteTours->contains($tour->id) : null;
+                    @endphp
+                    @if (!Auth::check())
+                        <button open-vue-login-popup
+                            onclick="showMessage('Please log in to add this tour to favorites.', 'error','top-right')"
+                            type="button" class="heart-icon">
+                            <i class="bx bx-heart"></i>
+                        </button>
+                    @elseif ($isFavorited)
+                        <a href="{{ route('tours.favorites.index') }}">
+                            <button class="heart-icon">
+                                <i class="bx bxs-heart red-heart"></i>
+                            </button>
+                        </a>
+                    @else
+                        <form action="{{ route('tours.favorites.add', $tour->id) }}" method="post">
+                            @csrf
+                            <button class="heart-icon" type="submit"> <i class="bx bx-heart"></i></button>
+                        </form>
+                    @endif
+                </div>
+                <a href={{ route('tours.details', $tour->slug) }} class="img-wrapper img-zoom">
+                    <img data-src="={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                        alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
+                </a>
+            </div>
+            <div class="tour-card__content">
+                <a href="{{ route('tours.details', $tour->slug) }}" class="title line-clamp-3"
+                    {{ strlen($tour->title) > 80 ? 'data-tooltip="tooltip"' : '' }}
+                    title="{{ $tour->title }}">{{ $tour->title }}</a>
+                <div class="certified-tag-wrapper">
+                    @if ($certifiedTagContent && $certifiedTagContent->enabled === '1')
+                        <div class="certified-tag line-clamp-2"><i class='{{ $certifiedTagContent->icon }}'></i>
+                            {{ $certifiedTagContent->label }}</div>
+                    @endif
+                </div>
+                <div class="booked-details-wrapper">
+                    @if ($bookedTextContent && $bookedTextContent->enabled === '1')
+                        <div class="booked-details line-clamp-1">
+                            Booked {{ rand(10, 50) }} times yesterday
                         </div>
                     @endif
                 </div>
-            </a>
-            <div class=tour-activity-card__details>
-                <div class=vertical-activity-card__header>
-                    @if ($tour->category)
-                        <div><span> {{ $tour->category->name }}</span></div>
-                    @endif
-                    <a href="{{ route('tours.details', $tour->slug) }}"
-                        class="tour-activity-card__details--title">{{ $tour->title }}</a>
-                </div>
-                <div class=card-rating>
+                <div class="card-rating">
                     <x-star-rating :rating="$tour->average_rating" />
                     @if ($tour->reviews->count() > 0)
                         {{ $tour->reviews->count() }}
                         Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                     @else
-                        <span>No Reviews Yet</span>
+                        <span>No reviews yet</span>
                     @endif
                 </div>
-                <div class="baseline-pricing__value baseline-pricing__value--high">
-                    <p class=baseline-pricing__from>
-                        <span class="baseline-pricing__from--text receive">Receive voucher
-                            instantly</span>
-                    </p>
-                </div>
-                <div class="baseline-pricing__value baseline-pricing__value--high">
-                    <p class=baseline-pricing__from>
-                        @if ($tour->formated_price_type)
-                            <span class="baseline-pricing__from--value green">{{ $tour->formated_price_type }}</span>
-                        @else
-                            <span class=baseline-pricing__from--text>From </span>
-                            <span class="baseline-pricing__from--value green">
-                                {{ formatPrice($tour->sale_price) }}</span>
-                        @endif
-                    </p>
-                </div>
+                @if ($tour->lowest_promo_price)
+                    <div class="pricing-details-wrapper">
+                        <del class="pricing-details pricing-details--del">From
+                            {{ formatPrice($tour->lowest_promo_price['original'], false) }}</del>
+                        <ins class="pricing-details pricing-details--ins"><span
+                                class="new-price">{{ formatPrice($tour->lowest_promo_price['discounted'], false) }}</span> per
+                            person</ins>
+                    </div>
+                @endif
+
             </div>
         </div>
     @break
@@ -234,7 +323,7 @@
                                 {{ $tour->reviews->count() }}
                                 Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
                             @else
-                                <span>No Reviews Yet</span>
+                                <span>No reviews yet</span>
                             @endif
                             @if ($tour->orders()->count() > 0)
                                 | {{ formatBigNumber($tour->orders()->count()) }} Booked
@@ -243,7 +332,7 @@
                     </div>
                 </div>
                 <div class="top10-trending-products__price">
-                    {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}
+                    {!! $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) !!}
                 </div>
             </div>
         </div>

@@ -36,14 +36,15 @@ if (! function_exists('currencySymbol')) {
 }
 
 if (! function_exists('formatPrice')) {
-    function formatPrice($price): HtmlString
+    function formatPrice($price, bool $float = true): HtmlString
     {
-        $val = number_format($price, 2, '.', ',');
+        $val = $float
+            ? number_format($price, 2, '.', ',')
+            : number_format($price, 0, '.', ',');
 
         return new HtmlString(currencySymbol()->toHtml().$val);
     }
 }
-
 if (! function_exists('handleSeoData')) {
     function handleSeoData($request, $entry, $resource)
     {
