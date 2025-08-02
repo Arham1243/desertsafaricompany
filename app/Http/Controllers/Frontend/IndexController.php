@@ -37,7 +37,6 @@ class IndexController extends Controller
 
     public function index()
     {
-
         $settings = Setting::where('group', 'general')->pluck('value', 'key');
         $homepage = $settings->get('page_for_homepage');
         if (request()->is('/') && ! $homepage) {
@@ -64,7 +63,6 @@ class IndexController extends Controller
         }
 
         return view('frontend.page-builder.page', compact('page', 'sections', 'reviewDetails'));
-
     }
 
     public function save_newsletter(Request $request)
@@ -92,15 +90,58 @@ class IndexController extends Controller
         return back()->with('notify_success', 'Review Pending For Admin Approval!');
     }
 
+    use Illuminate\Http\Request;
+    use Illuminate\Support\Facades\Mail;
+
     public function send_bulk_email(Request $request)
     {
         $emails = [
             'arham404khan@gmail.com',
         ];
 
+        $subject = "🎉 AI Mastery Bootcamp - You're In!";
+
+        $body = <<<'HTML'
+            <p>Dear Ashna Khan,</p>
+
+            <p><strong>𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀!</strong><br>
+            You have been selected for the <strong>AI Mastery Bootcamp</strong> organized by <strong>Hiba Skills Academy</strong>.</p>
+
+            <p>📌 <strong>Bootcamp Details:</strong><br>
+            <strong>Domain:</strong> Course Name<br>
+            <strong>Duration:</strong> 10th August 2025 - 12th August 2025 (3 Days)</p>
+
+            <p>📢 <strong>Mandatory Steps:</strong><br>
+            ✅ <strong>Join the Official WhatsApp Group:</strong> <a href="https://whatsapp.com/channel/0029VbB6MtADjiOYfzZVNY28" target="_blank">Click to Join</a><br>
+            ✅ <strong>Join our WhatsApp Community:</strong> <a href="https://whatsapp.com/channel/0029VbB6MtADjiOYfzZVNY28" target="_blank">Click to Join</a><br>
+            ✅ <strong>Like & Follow our Facebook Page:</strong> <a href="https://www.facebook.com/profile.php?id=61577976457541" target="_blank">Click to Join</a><br>
+            ✅ <strong>Connect with us on LinkedIn:</strong> <a href="https://www.linkedin.com/company/hibaskillacademy/" target="_blank">Click to Join</a></p>
+
+            <p>🎯 <strong>Your First Task</strong><br>
+            We’ve shared a Welcome Poster (editable).</p>
+
+            <p>📌 <strong>What You Need to Do:</strong></p>
+            <ol>
+            <li>Open the poster link (but don’t edit it directly)</li>
+            <li>Go to File → Make a Copy</li>
+            <li>Add your name and picture</li>
+            <li>From the Share button, Download the post</li>
+            <li>Post it on LinkedIn as an achievement</li>
+            <li>Tag <strong>@HibaSkillsAcademy</strong> and use tags: <code>#HibaSkillsAcademy</code></li>
+            </ol>
+
+            <p>📽️ <strong>Canva Tutorial:</strong> <a href="https://drive.google.com/file/d/1p2ctW5oHb-K3GYuKrz8EJgCc8jc_pjRv/view" target="_blank">Click to Watch</a></p>
+
+            <p>📌 Timely completion is required to receive your certificate.</p>
+
+            <p>Best,<br>
+            Ashna Khan<br>
+            HR Team, Hiba Skills Academy</p>
+            HTML;
+
         foreach ($emails as $email) {
-            Mail::raw('This is a bulk test email.', function ($msg) use ($email) {
-                $msg->to($email)->subject('Bulk Email Test');
+            Mail::html($body, function ($msg) use ($email, $subject) {
+                $msg->to($email)->subject($subject);
             });
         }
 
