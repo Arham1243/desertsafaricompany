@@ -9,6 +9,7 @@ use App\Models\Setting;
 use App\Models\TourReview;
 use App\Traits\Sluggable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class IndexController extends Controller
 {
