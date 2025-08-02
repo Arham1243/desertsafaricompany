@@ -7608,7 +7608,7 @@ ul.show-in-desktop {
 }
 .tour-card .pricing-details-wrapper {
     line-height: 1.15;
-    margin-top: 5px;
+    margin-top: 4px;
     height: 40px;
 }
 [class*="line-clamp-"] {
