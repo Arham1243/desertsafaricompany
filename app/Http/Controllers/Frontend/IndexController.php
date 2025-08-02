@@ -2637,13 +2637,19 @@ class IndexController extends Controller
             [
                 'email' => 'safiahaider650@gmail.com',
                 'name' => 'Safia Haider',
-                'course' => 'AI & ML',
+                'course' => 'Artificial intelligence',
                 'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
             ],
             [
                 'email' => 'xehipe2364@hostbyt.com',
                 'name' => 'Xehipe',
                 'course' => 'Blockchain',
+                'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
+            ],
+            [
+                'email' => 'xehipe2364@hostbyt.com',
+                'name' => 'Xehipe',
+                'course' => 'Artificial intelligence',
                 'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
             ],
         ];
