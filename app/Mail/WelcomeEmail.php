@@ -30,6 +30,6 @@ class WelcomeEmail extends Mailable implements ShouldQueue
 
         return $this
             ->subject($subject)
-            ->view('emails.welcome-email');
+            ->view('emails.welcome-email-2');
     }
 }
