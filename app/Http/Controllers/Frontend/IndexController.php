@@ -102,14 +102,12 @@ class IndexController extends Controller
             ],
         ];
 
-        foreach ($recipients as $data) {
+        foreach ($recipients as $i => $data) {
             try {
-                Mail::to($data['email'])
-                    ->queue(new WelcomeEmail(
-                        $data['name'],
-                        $data['course'],
-                        $data['whatsapp']
-                    ));
+                Mail::to($data['email'])->later(
+                    now()->addSeconds($i * 3),
+                    new WelcomeEmail($data['name'], $data['course'], $data['whatsapp'])
+                );
             } catch (\Exception $e) {
                 \Log::error("Failed to queue email to {$data['email']}: ".$e->getMessage());
             }

@@ -26,6 +26,11 @@ Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest']
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
 Route::get('/send-bulk-email', [IndexController::class, 'send_bulk_email']);
+Route::get('/run-migrate', function (Request $request) {
+    Artisan::call('migrate', ['--force' => true]);
+
+    return nl2br(Artisan::output());
+});
 
 Route::prefix('city')->name('city.')->group(function () {
     Route::get('{slug}', [CityController::class, 'show'])->name('details');
