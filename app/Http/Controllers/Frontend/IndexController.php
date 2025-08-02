@@ -92,54 +92,40 @@ class IndexController extends Controller
 
     public function send_bulk_email(Request $request)
     {
-        $emails = [
-            'arham404khan@gmail.com',
+        $recipients = [
+            [
+                'email' => 'arham404khan@gmail.com',
+                'name' => 'Arham Khan',
+                'course' => 'MERN Stack Development',
+                'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
+            ],
+            [
+                'email' => 'ashnak151@gmail.com',
+                'name' => 'Ashna Khan',
+                'course' => 'AI Mastery Bootcamp',
+                'whatsapp' => 'https://chat.whatsapp.com/J9oPeuQ3pUi3E0dpsnjxfT?mode=ac_t',
+            ],
+            [
+                'email' => 'safiahaider650@gmail.com',
+                'name' => 'Safia Haider',
+                'course' => 'UI/UX Design Fundamentals',
+                'whatsapp' => 'https://chat.whatsapp.com/IbHwFWL4pdkB7wFejIOGV5?mode=ac_t',
+            ],
         ];
 
-        $subject = "🎉 AI Mastery Bootcamp - You're In!";
-
-        $body = <<<'HTML'
-            <p>Dear Ashna Khan,</p>
-
-            <p><strong>𝗖𝗼𝗻𝗴𝗿𝗮𝘁𝘂𝗹𝗮𝘁𝗶𝗼𝗻𝘀!</strong><br>
-            You have been selected for the <strong>AI Mastery Bootcamp</strong> organized by <strong>Hiba Skills Academy</strong>.</p>
-
-            <p>📌 <strong>Bootcamp Details:</strong><br>
-            <strong>Domain:</strong> Course Name<br>
-            <strong>Duration:</strong> 10th August 2025 - 12th August 2025 (3 Days)</p>
-
-            <p>📢 <strong>Mandatory Steps:</strong><br>
-            ✅ <strong>Join the Official WhatsApp Group:</strong> <a href="https://whatsapp.com/channel/0029VbB6MtADjiOYfzZVNY28" target="_blank">Click to Join</a><br>
-            ✅ <strong>Join our WhatsApp Community:</strong> <a href="https://whatsapp.com/channel/0029VbB6MtADjiOYfzZVNY28" target="_blank">Click to Join</a><br>
-            ✅ <strong>Like & Follow our Facebook Page:</strong> <a href="https://www.facebook.com/profile.php?id=61577976457541" target="_blank">Click to Join</a><br>
-            ✅ <strong>Connect with us on LinkedIn:</strong> <a href="https://www.linkedin.com/company/hibaskillacademy/" target="_blank">Click to Join</a></p>
-
-            <p>🎯 <strong>Your First Task</strong><br>
-            We’ve shared a Welcome Poster (editable).</p>
-
-            <p>📌 <strong>What You Need to Do:</strong></p>
-            <ol>
-            <li>Open the poster link (but don’t edit it directly)</li>
-            <li>Go to File → Make a Copy</li>
-            <li>Add your name and picture</li>
-            <li>From the Share button, Download the post</li>
-            <li>Post it on LinkedIn as an achievement</li>
-            <li>Tag <strong>@HibaSkillsAcademy</strong> and use tags: <code>#HibaSkillsAcademy</code></li>
-            </ol>
-
-            <p>📽️ <strong>Canva Tutorial:</strong> <a href="https://drive.google.com/file/d/1p2ctW5oHb-K3GYuKrz8EJgCc8jc_pjRv/view" target="_blank">Click to Watch</a></p>
-
-            <p>📌 Timely completion is required to receive your certificate.</p>
-
-            <p>Best,<br>
-            Ashna Khan<br>
-            HR Team, Hiba Skills Academy</p>
-            HTML;
-
-        foreach ($emails as $email) {
-            Mail::html($body, function ($msg) use ($email, $subject) {
-                $msg->to($email)->subject($subject);
-            });
+        foreach ($recipients as $data) {
+            $subject = "You're Selected: Join the {$data['course']} Bootcamp by Hiba Skills Academy";
+            try {
+                Mail::send('emails.welcome-email', [
+                    'name' => $data['name'],
+                    'course' => $data['course'],
+                    'whatsapp' => $data['whatsapp'],
+                ], function ($message) use ($data, $subject) {
+                    $message->to($data['email'])->subject($subject);
+                });
+            } catch (\Exception $e) {
+                Log::error("Mail to {$data['email']} failed: ".$e->getMessage());
+            }
         }
 
         return response()->json(['status' => 'Bulk emails sent']);
