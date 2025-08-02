@@ -90,4 +90,19 @@ class IndexController extends Controller
 
         return back()->with('notify_success', 'Review Pending For Admin Approval!');
     }
+
+    public function send_bulk_email(Request $request)
+    {
+        $emails = [
+            'arham404khan@gmail.com',
+        ];
+
+        foreach ($emails as $email) {
+            Mail::raw('This is a bulk test email.', function ($msg) use ($email) {
+                $msg->to($email)->subject('Bulk Email Test');
+            });
+        }
+
+        return response()->json(['status' => 'Bulk emails sent']);
+    }
 }

@@ -25,6 +25,7 @@ Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->na
 Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest'])->name('search.suggestions');
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
+Route::post('/send-bulk-email', [IndexController::class, 'send_bulk_email']);
 
 Route::prefix('city')->name('city.')->group(function () {
     Route::get('{slug}', [CityController::class, 'show'])->name('details');
