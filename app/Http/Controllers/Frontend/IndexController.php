@@ -2647,8 +2647,8 @@ class IndexController extends Controller
                 'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
             ],
             [
-                'email' => 'xehipe2364@hostbyt.com',
-                'name' => 'Xehipe',
+                'email' => 'ashnak035@gmail.com',
+                'name' => 'Ashna Khan',
                 'course' => 'Artificial intelligence',
                 'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
             ],
