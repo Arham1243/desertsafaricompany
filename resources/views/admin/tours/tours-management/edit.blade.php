@@ -2978,82 +2978,70 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="row">
-                                        <div class="col-md-6 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Author :</label>
-                                                <select class="select2-select" name="tour[status][author_id]"
-                                                    data-error="Author">
-                                                    <option value="" selected>Select</option>
-                                                    @foreach ($authors as $author)
-                                                        <option value="{{ $author->id }}"
-                                                            {{ $tour->author_id == $author->id ? 'selected' : '' }}>
-                                                            {{ $author->name }}
-                                                        </option>
-                                                    @endforeach
-                                                </select>
-                                                @error('tour[status][author_id]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
                                         @php
                                             $authorConfig = $tour->author_config
                                                 ? json_decode($tour->author_config)
                                                 : null;
                                         @endphp
+
+                                        <div class="col-md-6 col-12">
+                                            <div class="form-fields">
+                                                <label class="title">Author & Background Color :</label>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="background-color-picker-author" data-color-picker></label>
+                                                    <input id="background-color-picker-author" type="hidden"
+                                                        data-color-picker-input
+                                                        name="tour[status][author_config][background_color]"
+                                                        value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '#edab56') }}"
+                                                        inputmode="text">
+
+                                                    <select class="select2-select" name="tour[status][author_id]"
+                                                        data-error="Author">
+                                                        <option value="" selected>Select</option>
+                                                        @foreach ($authors as $author)
+                                                            <option value="{{ $author->id }}"
+                                                                {{ old('tour[status][author_id]', $tour->author_id) == $author->id || $author->system === 1 ? 'selected' : '' }}>
+                                                                {{ $author->name }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                                @error('tour[status][author_id]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
                                         <div class="col-md-6 col-12">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-2">
-                                                    <span class="title mb-0">Author icon : <a class="p-0 ps-2 nav-link"
-                                                            href="//v2.boxicons.com" target="_blank">boxicons</a></span>
+                                                    <span class="title mb-0">
+                                                        Author icon :
+                                                        <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
+                                                            target="_blank">boxicons</a>
+                                                    </span>
                                                 </div>
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <input type="text" name="tour[status][author_config][icon_class]"
-                                                        class="field"
-                                                        value="{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? '') }}"
-                                                        placeholder="" oninput="showIcon(this)">
-                                                    <i class="{{ $authorConfig->icon_class ?? '' }} bx-md"
-                                                        data-preview-icon></i>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
-                                                    <div>Author Icon Background Color :</div>
-                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                        target="_blank">Get
-                                                        Color Codes</a>
-                                                </div>
-                                                <div class="field color-picker" data-color-picker-container>
-                                                    <label for="background-color-picker-author" data-color-picker></label>
-                                                    <input id="background-color-picker-author" type="text"
-                                                        data-color-picker-input
-                                                        name="tour[status][author_config][background_color]"
-                                                        value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '') }}"
-                                                        inputmode="text">
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
-                                                    <div>Author Icon Color :</div>
-                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                        target="_blank">Get
-                                                        Color Codes</a>
-                                                </div>
-                                                <div class="field color-picker" data-color-picker-container>
-                                                    <label for="icon-color-picker-author" data-color-picker></label>
-                                                    <input id="icon-color-picker-author" type="text"
-                                                        data-color-picker-input
-                                                        name="tour[status][author_config][icon_color]"
-                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '') }}"
-                                                        inputmode="text">
+
+                                                <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? 'bx bx-badge-check') }}' }">
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="icon-color-picker-author" data-color-picker></label>
+                                                        <input id="icon-color-picker-author" type="hidden"
+                                                            data-color-picker-input
+                                                            name="tour[status][author_config][icon_color]"
+                                                            value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '#000000') }}"
+                                                            inputmode="text">
+
+                                                        <input type="text"
+                                                            name="tour[status][author_config][icon_class]"
+                                                            x-model="iconClass" placeholder="">
+                                                    </div>
+
+                                                    <i :class="iconClass + ' bx-md'"></i>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             <div class="form-box">

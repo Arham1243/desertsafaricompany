@@ -162,14 +162,6 @@
     </div>
 @endsection
 
-@push('css')
-    <style>
-        .tooltip-inner {
-            max-width: inherit !important;
-        }
-    </style>
-@endpush
-
 @push('js')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.14.0/Sortable.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />

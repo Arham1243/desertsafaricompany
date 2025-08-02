@@ -56,7 +56,7 @@ a {
 
 ul:not(.ck-editor *),
 ol:not(.ck-editor *),
-dl:not(.ck-editor *)  {
+dl:not(.ck-editor *) {
     margin-bottom: 0;
     padding: 0;
 }
@@ -181,7 +181,7 @@ body :is(.dirham.dirham) {
     top: 0;
     left: 0;
     z-index: 1000;
-    transition: transform .2s;
+    transition: transform 0.2s;
 }
 
 .sidebar-header__icon img {
@@ -272,16 +272,19 @@ ul.sidebar-nav li .active {
     height: 100%;
 }
 
-.layout-content-wrapper{
+.layout-content-wrapper {
     --main-content-margin: var(--sidebar-width);
     margin-left: var(--main-content-margin);
     padding: 1.25rem 1.7rem 2rem 1.65rem;
-    transition: margin .2s;
+    transition: margin 0.2s;
 }
-.dashboard.close-sidebar .sidebar {transform: translateX(-100%);}
+.dashboard.close-sidebar .sidebar {
+    transform: translateX(-100%);
+}
 
-.dashboard.close-sidebar .layout-content-wrapper {--main-content-margin: 0;}
-
+.dashboard.close-sidebar .layout-content-wrapper {
+    --main-content-margin: 0;
+}
 
 .dashboard-header .wrapper {
     display: flex;
@@ -2464,7 +2467,7 @@ body .badge.badge-sm {
     border-radius: 100px !important;
 }
 .breadcrumb {
-    margin: 0.85rem  0 0.8rem!important;
+    margin: 0.85rem 0 0.8rem !important;
 }
 .copy-btn {
     font-size: 0.75rem !important;
@@ -2670,17 +2673,17 @@ a.dropdown-item {
     .global-search-wrapper {
         width: 200px;
     }
-    
+
     .global-search-input {
         padding: 0.5rem 2rem 0.5rem 0.8rem;
         font-size: 0.8rem;
     }
-    
+
     .search-icon {
         right: 0.6rem;
         font-size: 0.9rem;
     }
-    
+
     .header-actions-wrapper {
         gap: 1rem !important;
     }
@@ -2690,20 +2693,20 @@ a.dropdown-item {
     .global-search-wrapper {
         width: 160px;
     }
-    
+
     .global-search-input::placeholder {
         content: "Search...";
     }
-    
+
     .header-actions-wrapper {
         gap: 0.75rem !important;
     }
-    
+
     .header-actions-wrapper .notifi-icon {
         width: 36px;
         height: 36px;
     }
-    
+
     .header-actions-wrapper .notifi-icon i {
         font-size: 1.1rem;
     }
@@ -2711,4 +2714,12 @@ a.dropdown-item {
 .sticky-save-boxes {
     position: sticky;
     top: 0.5rem;
+}
+
+.color-picker .select2-selection--single {
+    padding-left: 0 !important;
+    border: none !important;
+}
+.tooltip-inner {
+    max-width: inherit !important;
 }

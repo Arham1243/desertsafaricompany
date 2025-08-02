@@ -160,7 +160,7 @@
                 ? $callToActionContent->call_to_action_background_type === 'background_image'
                 : null;
         @endphp
-        <div class="offers-section section-padding">
+        <div class="offers-section my-5">
             <div class=container>
                 <div class=offers-section__details
                     style="{{ $isCtaBackgroundColor && $callToActionContent->background_color ? 'background-color: ' . $callToActionContent->background_color : '' }}">
@@ -226,7 +226,7 @@
                 ? $tourCountContent->tour_count_background_type === 'background_image'
                 : null;
         @endphp
-        <div class="location-banner mb-3 img-zoom-wrapper">
+        <div class="location-banner my-5 img-zoom-wrapper">
             <div class="container">
                 <div class="location-banner__content"
                     style="{{ $isCountBackgroundColor && $tourCountContent->background_color ? 'background-color: ' . $tourCountContent->background_color : '' }}">
@@ -281,7 +281,7 @@
     @if (isset($second_tour_block['is_enabled']) &&
             $second_tour_block['is_enabled'] === '1' &&
             $second_tour_block_tours->isNotEmpty())
-        <div class="py-5">
+        <div class="my-5">
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 mb-3">
@@ -397,7 +397,7 @@
     @endif
 
     @if (isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled === '1')
-        <div class="newsletter section-padding">
+        <div class="newsletter my-5">
             <div class="container">
                 <div class="row g-0">
                     <div class="col-md-6">

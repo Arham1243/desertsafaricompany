@@ -46,7 +46,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Name <span class="text-danger">*</span> :</label>
+                                        <label class="title">Name:</label>
                                         <input type="text" name="name" class="field"
                                             value="{{ old('name', $category->name) }}" placeholder="Name" data-error="Name">
                                         @error('name')
@@ -65,7 +65,7 @@
                                             value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title">Parent <span class="text-danger">*</span> :</label>
+                                        <label class="title">Parent:</label>
                                         <select name="parent_category_id" class="select2-select category-select"
                                             data-error="Category">
                                             <option value="" selected>Parent Category</option>
@@ -162,13 +162,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading :</label>
+                                        <label class="title text-dark">Heading:</label>
                                         <input name="json_content[category_based_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['category_based_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Category :</label>
+                                        <label class="title text-dark">Select Category:</label>
                                         <select name="json_content[category_based_tour_block][category_id]"
                                             class="select2-select" placeholder="Select Categories" should-sort="false">
                                             <option value="" selected>Select Category</option>
@@ -200,13 +200,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading :</label>
+                                        <label class="title text-dark">Heading:</label>
                                         <input name="json_content[first_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours :</label>
+                                        <label class="title text-dark">Select Tours:</label>
                                         <select name="json_content[first_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $firstTourBlockT)
@@ -238,13 +238,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading :</label>
+                                        <label class="title text-dark">Heading:</label>
                                         <input name="json_content[second_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours :</label>
+                                        <label class="title text-dark">Select Tours:</label>
                                         <select name="json_content[second_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $secondTourBlockT)
@@ -282,36 +282,22 @@
                                             <div class="row">
                                                 <div class="col-lg-6 mb-4">
                                                     <div class="form-fields">
-                                                        <label class="title">Heading <span class="text-danger">*</span>
-                                                            :</label>
-                                                        <input type="text" name="content[tour_count][heading]"
-                                                            class="field" value="{{ $tourCountContent->heading ?? '' }}"
-                                                            placeholder="Heading">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mb-4">
-                                                    <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>Heading Text Color <span class="text-danger">*</span>:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get
-                                                                Color
-                                                                Codes</a>
-                                                        </div>
+                                                        <label class="title">Heading:</label>
                                                         <div class="field color-picker" data-color-picker-container>
                                                             <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
+                                                            <input id="color-picker" type="hidden"
                                                                 name="content[tour_count][heading_color]"
                                                                 data-color-picker-input
                                                                 value="{{ $tourCountContent->heading_color ?? '#ffffff' }}"
-                                                                data-error="background Color" inputmode="text">
+                                                                data-error="Heading Color" inputmode="text">
 
+                                                            <input type="text" name="content[tour_count][heading]"
+                                                                value="{{ $tourCountContent->heading ?? '' }}"
+                                                                placeholder="Heading">
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
                                         <div class="col-12">
                                             <hr />
@@ -334,76 +320,65 @@
                                                 </div>
 
                                                 <div class="row" x-show="btnEnabled" x-transition>
-                                                    <div class="col-lg-6 mb-4">
-                                                        <div class="form-fields">
-                                                            <label class="title">
-                                                                Button Text
-                                                                <span class="text-danger">*</span>
-                                                            </label>
-                                                            <input type="text"
-                                                                value="{{ $tourCountContent->btn_text ?? '' }}"
-                                                                name="content[tour_count][btn_text]" class="field"
-                                                                data-error="Button Text">
-                                                            <small class="d-block text-muted mt-1">
-                                                                Use <code>{x}</code> where you want the tour count to
-                                                                appear.
-                                                            </small>
+                                                    <div class="row">
+                                                        <div class="col-lg-6">
+                                                            <div class="form-fields">
+                                                                <label class="title text-dark">
+                                                                    Button Link & Background:
+                                                                </label>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container>
+                                                                    <label for="btn-bg-color" data-color-picker></label>
+                                                                    <input id="btn-bg-color" type="hidden"
+                                                                        name="content[tour_count][btn_background_color]"
+                                                                        data-color-picker-input
+                                                                        value="{{ $tourCountContent->btn_background_color ?? '#1c4d99' }}"
+                                                                        data-error="Background Color" inputmode="text" />
+
+                                                                    <select name="content[tour_count][btn_link_category]"
+                                                                        class="select2-select"
+                                                                        placeholder="Select Category"
+                                                                        data-error="Category">
+                                                                        <option value="" selected>Select Category
+                                                                        </option>
+                                                                        @foreach ($allCategories as $dropdownCategory)
+                                                                            <option value="{{ $dropdownCategory->id }}"
+                                                                                {{ ($tourCountContent->btn_link_category ?? '') == $dropdownCategory->id ? 'selected' : '' }}>
+                                                                                {{ $dropdownCategory->name }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-lg-6 mb-4">
-                                                        <div class="form-fields">
-                                                            <label class="title text-dark">Select Category for Button Link
-                                                                <span class="text-danger">*</span>:</label>
-                                                            <select name="content[tour_count][btn_link_category]"
-                                                                class="select2-select" placeholder="Select Category"
-                                                                data-error="Category">
-                                                                <option value="" selected>Select Category</option>
-                                                                @foreach ($allCategories as $dropdownCategory)
-                                                                    <option value="{{ $dropdownCategory->id }}"
-                                                                        {{ ($tourCountContent->btn_link_category ?? '') == $dropdownCategory->id ? 'selected' : '' }}>
-                                                                        {{ $dropdownCategory->name }}
-                                                                    </option>
-                                                                @endforeach
-                                                            </select>
+                                                        <div class="col-lg-6">
+                                                            <div class="form-fields">
+                                                                <label class="title">
+                                                                    Button Text & Text Color:
+                                                                </label>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container>
+                                                                    <label for="btn-text-color" data-color-picker></label>
+                                                                    <input id="btn-text-color" type="hidden"
+                                                                        name="content[tour_count][btn_text_color]"
+                                                                        data-color-picker-input
+                                                                        value="{{ $tourCountContent->btn_text_color ?? '#ffffff' }}"
+                                                                        data-error="Text Color" inputmode="text" />
+
+                                                                    <input type="text"
+                                                                        name="content[tour_count][btn_text]"
+                                                                        value="{{ $tourCountContent->btn_text ?? '' }}"
+                                                                        data-error="Button Text"
+                                                                        placeholder="Button Text" />
+                                                                </div>
+                                                                <small class="d-block text-muted mt-1">
+                                                                    Use <code>{x}</code> where you want the tour count to
+                                                                    appear.
+                                                                </small>
+                                                            </div>
                                                         </div>
                                                     </div>
 
-                                                    <div class="col-md-6">
-                                                        <div class="form-fields">
-                                                            <div class="title d-flex align-items-center gap-2">
-                                                                <div>Button Background Color <span
-                                                                        class="text-danger">*</span>:</div>
-                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color Codes</a>
-                                                            </div>
-                                                            <div class="field color-picker" data-color-picker-container>
-                                                                <label for="color-picker" data-color-picker></label>
-                                                                <input id="color-picker" type="text"
-                                                                    name="content[tour_count][btn_background_color]"
-                                                                    data-color-picker-input
-                                                                    value="{{ $tourCountContent->btn_background_color ?? '#1c4d99' }}"
-                                                                    data-error="background Color" inputmode="text" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-fields">
-                                                            <div class="title d-flex align-items-center gap-2">
-                                                                <div>Button Text Color <span class="text-danger">*</span>:
-                                                                </div>
-                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color Codes</a>
-                                                            </div>
-                                                            <div class="field color-picker" data-color-picker-container>
-                                                                <label for="color-picker" data-color-picker></label>
-                                                                <input id="color-picker" type="text"
-                                                                    name="content[tour_count][btn_text_color]"
-                                                                    data-color-picker-input
-                                                                    value="{{ $tourCountContent->btn_text_color ?? '#ffffff' }}"
-                                                                    data-error="background Color" inputmode="text" />
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
 
@@ -443,8 +418,7 @@
                                                         <div class="row pt-4">
                                                             <div class="col-md-4 mb-4">
                                                                 <div class="form-fields">
-                                                                    <label class="title">Background Image <span
-                                                                            class="text-danger">*</span>:</label>
+                                                                    <label class="title">Background Image:</label>
                                                                     <div class="upload upload--sm mx-0" data-upload>
                                                                         <div class="upload-box-wrapper">
                                                                             <div class="upload-box {{ empty($tourCountContent->background_image) ? 'show' : '' }}"
@@ -502,8 +476,7 @@
                                                                 <div class="form-fields">
                                                                     <div class="title d-flex align-items-center gap-2">
                                                                         <div>
-                                                                            Select Background Color <span
-                                                                                class="text-danger">*</span>:
+                                                                            Select Background Color:
                                                                         </div>
                                                                         <a class="p-0 nav-link"
                                                                             href="//html-color-codes.info"
@@ -552,65 +525,35 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="row">
-                                                <div class="col-lg-6 mb-4">
-                                                    <div class="form-fields">
-                                                        <label class="title">Title <span class="text-danger">*</span>
-                                                            :</label>
-                                                        <input type="text" name="content[call_to_action][title]"
-                                                            class="field" placeholder="" data-error="title"
-                                                            value="{{ $callToActionContent->title ?? '' }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-lg-6 mb-4">
-                                                    <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>Title Text Color <span class="text-danger">*</span>:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get
-                                                                Color
-                                                                Codes</a>
-                                                        </div>
-                                                        <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
-                                                                name="content[call_to_action][title_color]"
-                                                                data-color-picker-input
-                                                                value="{{ $callToActionContent->title_color ?? '#000000' }}"
-                                                                data-error="background Color" inputmode="text">
+                                        <div class="col-lg-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Heading & Text Color:</label>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="title-color-picker" data-color-picker></label>
+                                                    <input id="title-color-picker" type="hidden"
+                                                        name="content[call_to_action][title_color]" data-color-picker-input
+                                                        value="{{ $callToActionContent->title_color ?? '#000000' }}"
+                                                        data-error="Title Color" inputmode="text">
 
-                                                        </div>
-                                                    </div>
+                                                    <input type="text" name="content[call_to_action][title]"
+                                                        value="{{ $callToActionContent->title ?? '' }}" placeholder=""
+                                                        data-error="title">
                                                 </div>
-                                                <div class="col-md-12 mb-3">
-                                                    <div class="form-fields">
-                                                        <label class="title">Description <span
-                                                                class="text-danger">*</span> :</label>
-                                                        <textarea name="content[call_to_action][description]" class="field" rows="2">{{ $callToActionContent->description ?? '' }} </textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 mb-3">
-                                                    <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>Description Text Color <span class="text-danger">*</span>:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get
-                                                                Color
-                                                                Codes</a>
-                                                        </div>
-                                                        <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
-                                                                name="content[call_to_action][description_color]"
-                                                                data-color-picker-input
-                                                                value="{{ $callToActionContent->description_color ?? '#000000' }}"
-                                                                data-error="background Color" inputmode="text">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Description & Text Color:</label>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="description-color-picker" data-color-picker></label>
+                                                    <input id="description-color-picker" type="hidden"
+                                                        name="content[call_to_action][description_color]"
+                                                        data-color-picker-input
+                                                        value="{{ $callToActionContent->description_color ?? '#000000' }}"
+                                                        data-error="Description Color" inputmode="text">
 
-                                                        </div>
-                                                    </div>
+                                                    <input type="text" name="content[call_to_action][description]"
+                                                        value="{{ $callToActionContent->description ?? '' }}">
                                                 </div>
                                             </div>
                                         </div>
@@ -636,21 +579,11 @@
                                                 </div>
 
                                                 <div class="row" x-show="btnEnabled" x-transition>
-                                                    <div class="col-lg-6 mb-4">
-                                                        <div class="form-fields">
-                                                            <label class="title">Button Text <span
-                                                                    class="text-danger">*</span>:</label>
-                                                            <input type="text"
-                                                                value="{{ $callToActionContent->btn_text ?? '' }}"
-                                                                name="content[call_to_action][btn_text]" class="field"
-                                                                placeholder="" data-error="Button Text">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-lg-6 mb-4">
+                                                    <div class="col-lg-6">
                                                         <div class="form-fields">
                                                             <label class="title">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link</div>
+                                                                    <div class="mt-1">Button Link & Background</div>
                                                                     <button data-bs-placement="top"
                                                                         title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
                                                                         type="button" data-tooltip="tooltip"
@@ -659,46 +592,36 @@
                                                                     </button>
                                                                 </div>
                                                             </label>
-                                                            <input type="text"
-                                                                value="{{ $callToActionContent->btn_link ?? '' }}"
-                                                                name="content[call_to_action][btn_link]" class="field"
-                                                                placeholder="" data-error="Button Link">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <div class="form-fields">
-                                                            <div class="title d-flex align-items-center gap-2">
-                                                                <div>Button Background Color <span
-                                                                        class="text-danger">*</span>:</div>
-                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color Codes</a>
-                                                            </div>
                                                             <div class="field color-picker" data-color-picker-container>
-                                                                <label for="color-picker" data-color-picker></label>
-                                                                <input id="color-picker" type="text"
+                                                                <label for="cta-btn-bg-color" data-color-picker></label>
+                                                                <input id="cta-btn-bg-color" type="hidden"
                                                                     name="content[call_to_action][btn_background_color]"
                                                                     data-color-picker-input
                                                                     value="{{ $callToActionContent->btn_background_color ?? '#1c4d99' }}"
-                                                                    data-error="background Color" inputmode="text" />
+                                                                    data-error="Background Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="content[call_to_action][btn_link]"
+                                                                    value="{{ $callToActionContent->btn_link ?? '' }}"
+                                                                    placeholder="" data-error="Button Link" />
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-6">
+                                                    <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <div class="title d-flex align-items-center gap-2">
-                                                                <div>Button Text Color <span class="text-danger">*</span>:
-                                                                </div>
-                                                                <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                    target="_blank">Get Color Codes</a>
-                                                            </div>
+                                                            <label class="title">Button Text & Text Color:</label>
                                                             <div class="field color-picker" data-color-picker-container>
-                                                                <label for="color-picker" data-color-picker></label>
-                                                                <input id="color-picker" type="text"
+                                                                <label for="cta-btn-text-color" data-color-picker></label>
+                                                                <input id="cta-btn-text-color" type="hidden"
                                                                     name="content[call_to_action][btn_text_color]"
                                                                     data-color-picker-input
                                                                     value="{{ $callToActionContent->btn_text_color ?? '#ffffff' }}"
-                                                                    data-error="background Color" inputmode="text" />
+                                                                    data-error="Text Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="content[call_to_action][btn_text]"
+                                                                    value="{{ $callToActionContent->btn_text ?? '' }}"
+                                                                    placeholder="" data-error="Button Text" />
                                                             </div>
                                                         </div>
                                                     </div>
@@ -739,8 +662,7 @@
                                                         <div class="row pt-4">
                                                             <div class="col-md-4 mb-4">
                                                                 <div class="form-fields">
-                                                                    <label class="title">Background Image <span
-                                                                            class="text-danger">*</span>:</label>
+                                                                    <label class="title">Background Image:</label>
                                                                     <div class="upload upload--sm mx-0" data-upload>
                                                                         <div class="upload-box-wrapper">
                                                                             <div class="upload-box {{ empty($callToActionContent->background_image) ? 'show' : '' }}"
@@ -799,8 +721,7 @@
                                                                 <div class="form-fields">
                                                                     <div class="title d-flex align-items-center gap-2">
                                                                         <div>
-                                                                            Select Background Color <span
-                                                                                class="text-danger">*</span>:
+                                                                            Select Background Color:
                                                                         </div>
                                                                         <a class="p-0 nav-link"
                                                                             href="//html-color-codes.info"
@@ -849,66 +770,39 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="row">
-                                        <div class="col-lg-12 pt-3 pb-4">
+                                        <div class="col-lg-12 pb-4">
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12 mb-4">
                                                     <div class="form-fields">
-                                                        <label class="title">Heading:</label>
-                                                        <input type="text" name="content[newsletter][title]"
-                                                            class="field" placeholder="" data-error="Title"
-                                                            value="{{ $newsletterContent->title ?? '' }}">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>
-                                                                Heading Color:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get Color
-                                                                Codes</a>
-                                                        </div>
+                                                        <label class="title">Heading & Text Color:</label>
                                                         <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
+                                                            <label for="newsletter-title-color" data-color-picker></label>
+                                                            <input id="newsletter-title-color" type="hidden"
                                                                 name="content[newsletter][title_text_color]"
                                                                 data-color-picker-input
                                                                 value="{{ $newsletterContent->title_text_color ?? '#1c4d99' }}"
                                                                 inputmode="text" />
+
+                                                            <input type="text" name="content[newsletter][title]"
+                                                                value="{{ $newsletterContent->title ?? '' }}"
+                                                                placeholder="" data-error="Title" />
                                                         </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <hr>
-                                        </div>
-                                        <div class="col-lg-12 pt-3 pb-4">
-                                            <div class="row">
-                                                <div class="col-md-12 mb-4">
-                                                    <div class="form-fields">
-                                                        <label class="title">Paragraph:</label>
-                                                        <textarea name="content[newsletter][description]" class="field" rows="2">{{ $newsletterContent->description ?? '' }}</textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-12">
                                                     <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>
-                                                                Paragraph Color:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get Color
-                                                                Codes</a>
-                                                        </div>
+                                                        <label class="title">Paragraph & Text Color:</label>
                                                         <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
+                                                            <label for="newsletter-desc-color" data-color-picker></label>
+                                                            <input id="newsletter-desc-color" type="hidden"
                                                                 name="content[newsletter][description_text_color]"
                                                                 data-color-picker-input
                                                                 value="{{ $newsletterContent->description_text_color ?? '#000000' }}"
                                                                 inputmode="text" />
+
+                                                            <input type="text" name="content[newsletter][description]"
+                                                                value="{{ $newsletterContent->description ?? '' }}"
+                                                                placeholder="" data-error="Paragraph" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -924,21 +818,11 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-lg-12 mb-4">
-                                                    <div class="form-fields">
-                                                        <label class="title">Button Text <span
-                                                                class="text-danger">*</span> :</label>
-                                                        <input type="text"
-                                                            value="{{ $newsletterContent->btn_text ?? '' }}"
-                                                            name="content[newsletter][btn_text]" class="field"
-                                                            placeholder="" data-error="Button Text">
-                                                    </div>
-                                                </div>
                                                 <div class="col-md-6">
                                                     <div class="form-fields">
                                                         <div class="title d-flex align-items-center gap-2">
                                                             <div>
-                                                                Button Background Color <span class="text-danger">*</span>:
+                                                                Button Background Color:
                                                             </div>
                                                             <a class="p-0 nav-link" href="//html-color-codes.info"
                                                                 target="_blank">Get Color
@@ -956,21 +840,20 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>
-                                                                Button Text Color <span class="text-danger">*</span>:
-                                                            </div>
-                                                            <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                                target="_blank">Get Color
-                                                                Codes</a>
-                                                        </div>
+                                                        <label class="title">Button Text & Text Color:</label>
                                                         <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="text"
+                                                            <label for="newsletter-btn-text-color"
+                                                                data-color-picker></label>
+
+                                                            <input id="newsletter-btn-text-color" type="hidden"
                                                                 name="content[newsletter][btn_text_color]"
                                                                 data-color-picker-input
                                                                 value="{{ $newsletterContent->btn_text_color ?? '#ffffff' }}"
-                                                                data-error="background Color" inputmode="text" />
+                                                                inputmode="text" />
+
+                                                            <input type="text" name="content[newsletter][btn_text]"
+                                                                value="{{ $newsletterContent->btn_text ?? '' }}"
+                                                                placeholder="" data-error="Button Text" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1007,7 +890,7 @@
                                                     <div class="form-fields">
                                                         <div class="title d-flex align-items-center gap-2">
                                                             <div>
-                                                                Text Color <span class="text-danger">*</span>:
+                                                                Text Color:
                                                             </div>
                                                             <a class="p-0 nav-link" href="//html-color-codes.info"
                                                                 target="_blank">Get Color
@@ -1037,8 +920,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-fields">
-                                                        <label class="title">Left Side Image <span
-                                                                class="text-danger">*</span>:</label>
+                                                        <label class="title">Left Side Image:</label>
                                                         <div class="upload upload--sm mx-0" data-upload>
                                                             <div class="upload-box-wrapper">
                                                                 <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
@@ -1087,7 +969,7 @@
                                                 <div class="col-md-8">
                                                     <div class="form-fields">
                                                         <div class="title d-flex align-items-center gap-2">
-                                                            <div>Right Background Color <span class="text-danger">*</span>:
+                                                            <div>Right Background Color:
                                                             </div>
                                                             <a class="p-0 nav-link" href="//html-color-codes.info"
                                                                 target="_blank">Get
@@ -1149,8 +1031,7 @@
                                             $selectedtoursReviews =
                                                 json_decode($category->tour_reviews_ids, true) ?? [];
                                         @endphp
-                                        <label class="title">Featured Reviews<span class="text-danger">*</span>
-                                            :</label>
+                                        <label class="title">Featured Reviews:</label>
                                         <select name="tour_reviews_ids[]" multiple class="select2-select"
                                             data-max-items="4" placeholder="Select Reviews"
                                             {{ !$toursReviews->isEmpty() ? '' : '' }} data-error="Featured Reviews">
