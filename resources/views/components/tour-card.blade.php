@@ -233,7 +233,7 @@
             </div>
             <div class="tour-card__content">
                 <a href="{{ route('tours.details', $tour->slug) }}" class="title line-clamp-3"
-                    {{ strlen($tour->title) > 80 ? 'data-tooltip="tooltip"' : '' }}
+                    @if (strlen($tour->title) > 80) data-tooltip="tooltip" @endif
                     title="{{ $tour->title }}">{{ $tour->title }}</a>
                 <div class="certified-tag-wrapper">
                     @if ($certifiedTagContent && $certifiedTagContent->enabled === '1')

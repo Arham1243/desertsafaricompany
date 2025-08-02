@@ -7594,7 +7594,7 @@ ul.show-in-desktop {
     gap: 0.3rem;
 }
 .tour-card .certified-tag-wrapper {
-    height: 36px;
+    height: 33px;
     display: flex;
     align-items: flex-end;
     padding-bottom: 0;
@@ -7604,7 +7604,7 @@ ul.show-in-desktop {
     height: 35px;
     display: flex;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 11px;
 }
 .tour-card .pricing-details-wrapper {
     line-height: 1.25;
