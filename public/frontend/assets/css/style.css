@@ -7499,7 +7499,7 @@ ul.show-in-desktop {
     margin: 0.85rem 0;
 }
 .tour-card.tour-card--style3 {
-    height: 400px;
+    height: 398px;
 }
 .tour-card__img {
     position: relative;
@@ -7607,8 +7607,8 @@ ul.show-in-desktop {
     padding-bottom: 11px;
 }
 .tour-card .pricing-details-wrapper {
-    line-height: 1.25;
-    margin-top: 3px;
+    line-height: 1.15;
+    margin-top: 5px;
     height: 40px;
 }
 [class*="line-clamp-"] {
