@@ -90,9 +90,6 @@ class IndexController extends Controller
         return back()->with('notify_success', 'Review Pending For Admin Approval!');
     }
 
-    use Illuminate\Http\Request;
-    use Illuminate\Support\Facades\Mail;
-
     public function send_bulk_email(Request $request)
     {
         $emails = [
