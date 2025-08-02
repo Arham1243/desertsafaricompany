@@ -2583,7 +2583,7 @@
                                                             <a class="p-0 nav-link" href="//v2.boxicons.com"
                                                                 target="_blank">boxicons</a>
                                                         </div>
-                                                        <div x-data="{ icon: '{{ $jsonContent['status']['certified_tag']['icon'] ?? 'bx bxs-badge-check' }}' }"
+                                                        <div x-data="{ icon: '{{ $jsonContent['status']['certified_tag']['icon'] ?? 'bx bx-badge-check' }}' }"
                                                             class="d-flex align-items-center gap-3">
                                                             <input type="text"
                                                                 name="tour[status][certified_tag][icon]" class="field"
