@@ -5,16 +5,18 @@
         "dev": "vite",
         "build": "vite build",
         "configure-husky": "npx husky-init",
-         "prepare": "husky install"
+        "prepare": "husky install"
     },
     "devDependencies": {
         "blade-formatter": "^1.41.1",
         "husky": "^8.0.0",
         "lint-staged": "^15.2.10",
+        "prettier": "^3.6.2",
         "vite": "^5.0"
     },
     "lint-staged": {
         "*.php": "php ./vendor/bin/pint",
-        "*.blade.php": "blade-formatter --write"
+        "*.blade.php": "blade-formatter --write",
+        "*.{js,ts,css,scss,json,md,html}": "prettier --write"
     }
 }
