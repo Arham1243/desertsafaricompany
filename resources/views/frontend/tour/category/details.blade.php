@@ -402,7 +402,7 @@
                 <div class="row g-0">
                     <div class="col-md-6">
                         <div class="newsletter__img">
-                            <img src="{{ asset($newsletterContent->left_image ?? 'admin/assets/images/placeholder.png') }}"
+                            <img data-src="{{ asset($newsletterContent->left_image ?? 'admin/assets/images/placeholder.png') }}"
                                 alt="{{ $newsletterContent->left_image_alt_text ?? 'image' }}" class="imgFluid"
                                 loading="lazy">
                         </div>
