@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Mail\WelcomeEmail;
 use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\Setting;
@@ -99,35 +100,24 @@ class IndexController extends Controller
                 'course' => 'MERN Stack Development',
                 'whatsapp' => 'https://chat.whatsapp.com/I1gvuiLqPxaKaCm2eAIr5v?mode=ac_t',
             ],
-            [
-                'email' => 'ashnak151@gmail.com',
-                'name' => 'Ashna Khan',
-                'course' => 'AI Mastery Bootcamp',
-                'whatsapp' => 'https://chat.whatsapp.com/J9oPeuQ3pUi3E0dpsnjxfT?mode=ac_t',
-            ],
-            [
-                'email' => 'safiahaider650@gmail.com',
-                'name' => 'Safia Haider',
-                'course' => 'UI/UX Design Fundamentals',
-                'whatsapp' => 'https://chat.whatsapp.com/IbHwFWL4pdkB7wFejIOGV5?mode=ac_t',
-            ],
         ];
 
         foreach ($recipients as $data) {
-            $subject = "You're Selected: Join the {$data['course']} Bootcamp by Hiba Skills Academy";
             try {
-                Mail::send('emails.welcome-email', [
-                    'name' => $data['name'],
-                    'course' => $data['course'],
-                    'whatsapp' => $data['whatsapp'],
-                ], function ($message) use ($data, $subject) {
-                    $message->to($data['email'])->subject($subject);
-                });
+                Mail::to($data['email'])
+                    ->queue(new WelcomeEmail(
+                        $data['name'],
+                        $data['course'],
+                        $data['whatsapp']
+                    ));
             } catch (\Exception $e) {
-                Log::error("Mail to {$data['email']} failed: ".$e->getMessage());
+                \Log::error("Failed to queue email to {$data['email']}: ".$e->getMessage());
             }
         }
 
-        return response()->json(['status' => 'Bulk emails sent']);
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Bulk emails are being processed in the background',
+        ]);
     }
 }
