@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\TerminalController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
 use App\Http\Controllers\Admin\Tour\AuthorController as TourAuthorController;
@@ -42,6 +43,9 @@ Route::middleware('guest')->prefix('admin')->namespace('Admin')->group(function 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
+
+    Route::get('/terminal', [TerminalController::class, 'index']);
+    Route::post('/terminal/run', [TerminalController::class, 'run']);
 
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
