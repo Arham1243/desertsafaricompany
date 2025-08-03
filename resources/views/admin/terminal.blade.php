@@ -520,21 +520,8 @@
         // Traffic light functionality (optional)
         document.querySelector('.close').addEventListener('click', () => {
             if (confirm('Close terminal?')) {
-                window.close();
+                window.location.href = '/admin/dashboard';
             }
-        });
-
-        document.querySelector('.minimize').addEventListener('click', () => {
-            document.body.style.transform = 'scale(0.1)';
-            document.body.style.opacity = '0';
-            setTimeout(() => {
-                document.body.style.transform = 'scale(1)';
-                document.body.style.opacity = '1';
-            }, 300);
-        });
-
-        document.querySelector('.maximize').addEventListener('click', () => {
-            document.documentElement.requestFullscreen?.();
         });
     </script>
 </body>
