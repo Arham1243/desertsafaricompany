@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Blog\CategoriesController as BlogCategoriesContro
 use App\Http\Controllers\Admin\Blog\TagsController as BlogTagsController;
 use App\Http\Controllers\Admin\BulkActionController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\EnvEditorController;
 use App\Http\Controllers\Admin\IcalController;
 use App\Http\Controllers\Admin\Locations\CityController;
 use App\Http\Controllers\Admin\Locations\CountryController;
@@ -46,6 +47,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/terminal', [TerminalController::class, 'index']);
     Route::post('/terminal/run', [TerminalController::class, 'run']);
+
+    Route::get('/env-editor', [EnvEditorController::class, 'index'])->name('env');
+    Route::post('/env-editor', [EnvEditorController::class, 'save'])->name('env.save');
 
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
