@@ -3281,8 +3281,8 @@
                         <div x-show="optionTab === 'seo'" class="seo-options">
                             <x-seo-options :seo="$tour->seo ?? null" :resource="'tours'" :slug="$tour->slug" />
                         </div>
-                        <button type="submit" class="themeBtn mt-4 ms-auto">Save Changes<i
-                                class='bx bx-check'></i></button>
+                        <button style=" position: sticky; bottom: 1rem; " type="submit"
+                            class="themeBtn mt-4 ms-auto">Save Changes<i class='bx bx-check'></i></button>
                     </div>
                 </div>
 
