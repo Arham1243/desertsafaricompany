@@ -3478,9 +3478,9 @@
             return {
                 enabled: false,
                 defaultText: 'Text Here',
-                defaultColor: '#ff0000',
+                defaultColor: '#d00606',
                 labelText: 'Text Here',
-                labelColor: '#ff0000',
+                labelColor: '#d00606',
 
                 get snippet() {
                     return `<strong style="color: ${this.labelColor}">${this.labelText}</strong>`

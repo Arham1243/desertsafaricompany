@@ -246,7 +246,7 @@
                                                 <label for="icon-color-picker-exclusion" data-color-picker></label>
                                                 <input id="icon-color-picker-exclusion" type="text"
                                                     data-color-picker-input name="exclusion_icon_color"
-                                                    value="{{ $settings->get('exclusion_icon_color') ?? '#ff0000' }}"
+                                                    value="{{ $settings->get('exclusion_icon_color') ?? '#d00606' }}"
                                                     inputmode="text">
                                             </div>
                                         </div>
