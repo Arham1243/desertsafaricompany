@@ -5609,7 +5609,9 @@ a.country-card__details {
     opacity: 0.67;
     font-weight: 500;
 }
-
+.promo-title > strong {
+    opacity: 1 !important;
+}
 .promo-price-wrapper {
     display: flex;
     align-items: flex-end;
