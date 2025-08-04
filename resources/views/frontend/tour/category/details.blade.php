@@ -408,7 +408,8 @@
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="newsletter__content">
+                        <div class="newsletter__content"
+                            @if ($newsletterContent->right_background_color) style="background-color: {{ $newsletterContent->right_background_color }}" @endif>
                             <div class="section-content">
                                 <h2 class="subHeading"
                                     @if ($newsletterContent->title_text_color) style="color: {{ $newsletterContent->title_text_color }}" @endif>
