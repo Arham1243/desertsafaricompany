@@ -251,19 +251,28 @@
                                 'id',
                                 $tourCountContent->btn_link_category ?? null,
                             );
-                            $tourCountBtnLink =
-                                $tourCountCategory && $tourCountCategory->city
-                                    ? route('tours.category.details', [
-                                        $tourCountCategory->city->slug,
-                                        $tourCountCategory->slug,
-                                    ])
-                                    : 'javascript:void(0)';
-                            $tour_count_all_sub_category_Ids = getAllCategoryIds($tourCountCategory->id);
+
+                            if ($tourCountCategory && $tourCountCategory->city) {
+                                $tourCountBtnLink = route('tours.category.details', [
+                                    $tourCountCategory->city->slug,
+                                    $tourCountCategory->slug,
+                                ]);
+                            } else {
+                                $tourCountBtnLink = 'javascript:void(0)';
+                            }
+
+                            $tour_count_all_sub_category_Ids = $tourCountCategory
+                                ? getAllCategoryIds($tourCountCategory->id)
+                                : [];
+
                             $tour_count_all_sub_category_Ids_tours = $tours->whereIn(
                                 'category_id',
                                 $tour_count_all_sub_category_Ids,
                             );
-                            $tourCountCategory->tours_count = $tour_count_all_sub_category_Ids_tours->count();
+
+                            if ($tourCountCategory) {
+                                $tourCountCategory->tours_count = $tour_count_all_sub_category_Ids_tours->count();
+                            }
                         @endphp
 
                         @if (isset($tourCountContent->is_button_enabled) && $tourCountContent->is_button_enabled === '1')

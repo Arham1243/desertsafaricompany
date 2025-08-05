@@ -69,7 +69,7 @@
                                     </div>
 
 
-                                    <div class="form-fields mb-4"">
+                                    <div class="form-fields mb-4">
                                         <label class="title">City:</label>
                                         <select name="city_id" class="select2-select" data-error="City">
                                             <option value="">Select City</option>
@@ -341,62 +341,53 @@
                                                 </div>
 
                                                 <div class="row" x-show="btnEnabled" x-transition>
-                                                    <div class="row">
-                                                        <div class="col-lg-6">
-                                                            <div class="form-fields">
-                                                                <label class="title text-dark">
-                                                                    Button Link & Background:
-                                                                </label>
-                                                                <div class="field color-picker"
-                                                                    data-color-picker-container>
-                                                                    <label for="btn-bg-color" data-color-picker></label>
-                                                                    <input id="btn-bg-color" type="hidden"
-                                                                        name="content[tour_count][btn_background_color]"
-                                                                        data-color-picker-input
-                                                                        value="{{ $tourCountContent->btn_background_color ?? '#1c4d99' }}"
-                                                                        data-error="Background Color" inputmode="text" />
 
-                                                                    <select name="content[tour_count][btn_link_category]"
-                                                                        class="select2-select"
-                                                                        placeholder="Select Category"
-                                                                        data-error="Category">
-                                                                        <option value="" selected>Select Category
-                                                                        </option>
-                                                                        @foreach ($allCategories as $dropdownCategory)
-                                                                            <option value="{{ $dropdownCategory->id }}"
-                                                                                {{ ($tourCountContent->btn_link_category ?? '') == $dropdownCategory->id ? 'selected' : '' }}>
-                                                                                {{ $dropdownCategory->name }}
-                                                                            </option>
-                                                                        @endforeach
-                                                                    </select>
-                                                                </div>
+                                                    @php
+                                                        $tourCountBtnSeletedCategory = $allCategories
+                                                            ->where('id', $tourCountContent->btn_link_category)
+                                                            ->first();
+                                                    @endphp
+                                                    <div class="col-12">
+                                                        <x-admin.category-filter-by-city :cities="$cities" :categories="$allCategories"
+                                                            :selectedCityId="$tourCountBtnSeletedCategory->city_id ?? null" :selectedCategoryId="$tourCountBtnSeletedCategory->id ?? null"
+                                                            field-name="content[tour_count][btn_link_category]" />
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title text-dark">
+                                                                Button Background:
+                                                            </label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="btn-bg-color" data-color-picker></label>
+                                                                <input id="btn-bg-color" type="text"
+                                                                    name="content[tour_count][btn_background_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $tourCountContent->btn_background_color ?? '#1c4d99' }}"
+                                                                    data-error="Background Color" inputmode="text" />
                                                             </div>
                                                         </div>
-                                                        <div class="col-lg-6">
-                                                            <div class="form-fields">
-                                                                <label class="title">
-                                                                    Button Text & Text Color:
-                                                                </label>
-                                                                <div class="field color-picker"
-                                                                    data-color-picker-container>
-                                                                    <label for="btn-text-color" data-color-picker></label>
-                                                                    <input id="btn-text-color" type="hidden"
-                                                                        name="content[tour_count][btn_text_color]"
-                                                                        data-color-picker-input
-                                                                        value="{{ $tourCountContent->btn_text_color ?? '#ffffff' }}"
-                                                                        data-error="Text Color" inputmode="text" />
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title">
+                                                                Button Text & Text Color:
+                                                            </label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="btn-text-color" data-color-picker></label>
+                                                                <input id="btn-text-color" type="hidden"
+                                                                    name="content[tour_count][btn_text_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $tourCountContent->btn_text_color ?? '#ffffff' }}"
+                                                                    data-error="Text Color" inputmode="text" />
 
-                                                                    <input type="text"
-                                                                        name="content[tour_count][btn_text]"
-                                                                        value="{{ $tourCountContent->btn_text ?? '' }}"
-                                                                        data-error="Button Text"
-                                                                        placeholder="Button Text" />
-                                                                </div>
-                                                                <small class="d-block text-muted mt-1">
-                                                                    Use <code>{x}</code> where you want the tour count to
-                                                                    appear.
-                                                                </small>
+                                                                <input type="text" name="content[tour_count][btn_text]"
+                                                                    value="{{ $tourCountContent->btn_text ?? '' }}"
+                                                                    data-error="Button Text" placeholder="Button Text" />
                                                             </div>
+                                                            <small class="d-block text-muted mt-1">
+                                                                Use <code>{x}</code> where you want the tour count to
+                                                                appear.
+                                                            </small>
                                                         </div>
                                                     </div>
 
@@ -604,7 +595,7 @@
                                                         <div class="form-fields">
                                                             <label class="title">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link & Background</div>
+                                                                    <div class="mt-1">Button Link & Background:</div>
                                                                     <button data-bs-placement="top"
                                                                         title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
                                                                         type="button" data-tooltip="tooltip"

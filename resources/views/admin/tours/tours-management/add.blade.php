@@ -119,20 +119,8 @@
                                             </div>
                                         </div>
                                         <div class="col-12  mt-4">
-                                            <div class="form-fields">
-                                                <label class="title">Select category
-                                                    :</label>
-                                                <select name="tour[general][category_id]" class="select2-select"
-                                                    data-error="Category" should-sort='false'>
-                                                    <option value="" disabled selected>Select Category</option>
-                                                    @php
-                                                        renderCategories($categories);
-                                                    @endphp
-                                                </select>
-                                                @error('tour[general][category_id]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
+                                            <x-admin.category-filter-by-city :cities="$cities" :categories="$categories"
+                                                field-name="tour[general][category_id]" />
                                         </div>
                                         <div class="col-md-6 col-12 mt-4">
                                             <div class="form-fields">

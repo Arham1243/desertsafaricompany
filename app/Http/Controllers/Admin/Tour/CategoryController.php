@@ -73,7 +73,7 @@ class CategoryController extends Controller
         $category = TourCategory::findOrFail($id);
         $tours = Tour::where('status', 'publish')->get();
         $dropdownCategories = TourCategory::whereNotIn('id', [$id])->get();
-        $allCategories = TourCategory::get();
+        $allCategories = TourCategory::where('status', 'publish')->latest()->get();
         $toursReviews = TourReview::where('status', 'active')->get();
         $seo = $category->seo()->first();
         $cities = City::where('status', 'publish')->latest()->get();
@@ -124,7 +124,6 @@ class CategoryController extends Controller
 
     public function handleSectionData(array $newData, ?array $existingData, string $sectionKey)
     {
-
         switch ($sectionKey) {
             case 'tour_count':
                 $newData['background_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'background_image');
@@ -154,5 +153,14 @@ class CategoryController extends Controller
         }
 
         return $existingData[$field] ?? null;
+    }
+
+    public function getByCity($cityId)
+    {
+        $categories = TourCategory::where('city_id', $cityId)
+            ->where('status', 'publish')
+            ->get(['id', 'name', 'parent_category_id']);
+
+        return response()->json($categories);
     }
 }
