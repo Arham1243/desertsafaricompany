@@ -344,9 +344,10 @@
 
                                                     @php
                                                         $tourCountBtnSeletedCategory = $allCategories
-                                                            ->where('id', $tourCountContent->btn_link_category)
+                                                            ->where('id', $tourCountContent->btn_link_category ?? null)
                                                             ->first();
                                                     @endphp
+
                                                     <div class="col-12">
                                                         <x-admin.category-filter-by-city :cities="$cities" :categories="$allCategories"
                                                             :selectedCityId="$tourCountBtnSeletedCategory->city_id ?? null" :selectedCategoryId="$tourCountBtnSeletedCategory->id ?? null"
