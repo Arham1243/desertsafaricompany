@@ -23,7 +23,9 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildUrl(url('/'), 'tours/category/') }}</div>
+                                    <div class="full-url">
+                                        {{ buildUrl(url('/'), 'tours/' . strtolower($category->city->name ?? 'N/A') . '/') }}
+                                    </div>
                                     <input value="{{ $category->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
                                     <input type="hidden" id="slug" value="{{ $category->slug ?? '#' }}"
@@ -31,9 +33,10 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('tours.category.details', $category->slug) }}" target="_blank"
-                            class="themeBtn">View
-                            Category</a>
+                        @if ($category->city && $category->slug)
+                            <a href="{{ route('tours.category.details', [$category->city->slug, $category->slug]) }}"
+                                target="_blank" class="themeBtn">View Category</a>
+                        @endif
                     </div>
                 </div>
 
@@ -64,6 +67,24 @@
                                         <input name="json_content[h1_banner_text][subtitle]" type="text" class="field"
                                             value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
                                     </div>
+
+
+                                    <div class="form-fields mb-4"">
+                                        <label class="title">City:</label>
+                                        <select name="city_id" class="select2-select" data-error="City">
+                                            <option value="">Select City</option>
+                                            @foreach ($cities as $city)
+                                                <option value="{{ $city->id }}"
+                                                    {{ old('city_id', $category->city_id ?? null) == $city->id ? 'selected' : '' }}>
+                                                    {{ $city->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('city_id')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
                                     <div class="form-fields">
                                         <label class="title">Parent:</label>
                                         <select name="parent_category_id" class="select2-select category-select"

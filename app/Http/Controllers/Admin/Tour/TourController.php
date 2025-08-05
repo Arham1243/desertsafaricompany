@@ -47,7 +47,7 @@ class TourController extends Controller
             ->latest()
             ->get();
 
-        $cities = City::where('status', 'publish')->get();
+        $cities = City::where('status', 'publish')->latest()->get();
         $data = compact(
             'categories',
             'cities',

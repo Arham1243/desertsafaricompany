@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Tour;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourReview;
@@ -75,7 +76,8 @@ class CategoryController extends Controller
         $allCategories = TourCategory::get();
         $toursReviews = TourReview::where('status', 'active')->get();
         $seo = $category->seo()->first();
-        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories');
+        $cities = City::where('status', 'publish')->latest()->get();
+        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories', 'cities');
 
         return view('admin.tours.categories.edit')->with('title', ucfirst(strtolower($category->name)))->with($data);
     }

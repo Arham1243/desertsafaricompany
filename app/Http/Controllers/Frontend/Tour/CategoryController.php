@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Frontend\Tour;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\TourCategory;
@@ -12,9 +13,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function details(Request $request, $slug)
+    public function details(Request $request, $city, $category)
     {
-        $item = TourCategory::where('slug', $slug)->firstOrFail();
+        $cityModel = City::where('slug', $city)->firstOrFail();
+        $item = TourCategory::where('slug', $category)
+            ->where('city_id', $cityModel->id)
+            ->firstOrFail();
         $tourCategories = TourCategory::where('status', 'publish')
             ->latest()
             ->get();

@@ -39,21 +39,16 @@ Route::prefix('page')->name('page.')->group(function () {
 });
 
 Route::prefix('tours')->name('tours.')->group(function () {
-
     Route::get('/', [TourController::class, 'index'])->name('index');
     Route::post('/api/promo-prices-by-day', [TourController::class, 'getTourPromoPricesByDay'])->name('promo-prices-by-day');
     Route::get('/search', [TourController::class, 'search'])->name('search');
     Route::get('/{slug}', [TourController::class, 'details'])->name('details');
-
-    Route::prefix('category')->name('category.')->group(function () {
-        Route::get('{slug}', [CategoryController::class, 'details'])->name('details');
-    });
+    Route::get('/{city}/{category}', [CategoryController::class, 'details'])->name('category.details');
     Route::prefix('favorites')->name('favorites.')->group(function () {
         Route::get('/index', [FavoriteController::class, 'index'])->name('index');
         Route::post('/add/{tour}', [FavoriteController::class, 'add'])->name('add');
         Route::post('/remove/{tour}', [FavoriteController::class, 'remove'])->name('remove');
     });
-
 });
 
 Route::prefix('cart')->name('cart.')->group(function () {
