@@ -130,8 +130,16 @@
                 class="row {{ in_array($content->box_type, ['slider_carousel', 'slider_carousel_with_background_color']) ? 'four-items-slider' : 'row-cols-1 row-cols-md-2row-cols-xl-3' }}">
                 @foreach ($resourcesToShow as $resource)
                     <div class=col-md-3>
-                        <a href="{{ route($columns['route'], $resource->{$columns['slug']}) }}"
-                            class=popular-related-destinations__content>
+                        @php
+                            $routeName = $columns['route'];
+                            $slugParam = $resource->{$columns['slug']};
+
+                            $link =
+                                $resource instanceof \App\Models\TourCategory && $resource->city
+                                    ? route($routeName, [$resource->city->slug, $slugParam])
+                                    : route($routeName, $slugParam);
+                        @endphp
+                        <a href="{{ $link }}" class=popular-related-destinations__content>
                             <div class=popular-related-destinations__img>
                                 <img data-src={{ asset($resource->{$columns['image']} ?? 'admin/assets/images/placeholder.png') }}
                                     alt="{{ $resource->{$columns['alt_text']} }}" class="imgFluid lazy">

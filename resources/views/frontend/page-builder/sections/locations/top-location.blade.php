@@ -148,9 +148,17 @@
                                         $resourceType = 'category';
                                     }
                                 @endphp
-                                <li class="locations-list__item"><a
-                                        href="{{ route($columns['route'], $resource->{$columns['slug']}) }}"
-                                        target="_blank">
+                                <li class="locations-list__item">
+                                    @php
+                                        $link =
+                                            $resourceType === 'category' && $resource->city
+                                                ? route('tours.category.details', [
+                                                    $resource->city->slug,
+                                                    $resource->slug,
+                                                ])
+                                                : route($columns['route'], $resource->{$columns['slug']});
+                                    @endphp
+                                    <a href="{{ $link }}" target="_blank">
                                         <span class="name" title="{{ $resource->{$columns['name']} }}"
                                             data-tooltip="tooltip">
 

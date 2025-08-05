@@ -251,9 +251,13 @@
                                 'id',
                                 $tourCountContent->btn_link_category ?? null,
                             );
-                            $tourCountBtnLink = $tourCountCategory
-                                ? route('tours.category.details', ['slug' => $tourCountCategory->slug])
-                                : 'javascript:void(0)';
+                            $tourCountBtnLink =
+                                $tourCountCategory && $tourCountCategory->city
+                                    ? route('tours.category.details', [
+                                        $tourCountCategory->city->slug,
+                                        $tourCountCategory->slug,
+                                    ])
+                                    : 'javascript:void(0)';
                             $tour_count_all_sub_category_Ids = getAllCategoryIds($tourCountCategory->id);
                             $tour_count_all_sub_category_Ids_tours = $tours->whereIn(
                                 'category_id',
