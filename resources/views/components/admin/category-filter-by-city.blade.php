@@ -1,7 +1,7 @@
 @props([
     'cities' => [],
     'categories' => [],
-    'fieldName' => 'tour[general][category_id]',
+    'fieldName' => '',
     'selectedCityId' => null,
     'selectedCategoryId' => null,
     'citySelectId' => 'filter-categories-by-city-' . Str::random(5),
@@ -42,7 +42,7 @@
         function categoryFilter() {
             return {
                 selectedCity: '{{ $selectedCityId }}',
-                categoryOptions: `{!! renderCategories($categories, $selectedCategoryId) !!}`,
+                categoryOptions: `<option value="" disabled>Select Category</option>`,
 
                 init() {
                     const citySelect = document.getElementById('{{ $citySelectId }}');
@@ -54,7 +54,11 @@
                         }
                     });
 
-                    initializeSelect2();
+                    if (this.selectedCity) {
+                        this.fetchCategories();
+                    } else {
+                        initializeSelect2();
+                    }
                 },
 
                 fetchCategories() {
