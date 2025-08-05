@@ -24,7 +24,7 @@
                                 <div class="title">Permalink:</div>
                                 <div class="title">
                                     <div class="full-url">
-                                        {{ buildUrl(url('/'), 'tours/' . strtolower($category->city->name ?? 'N/A') . '/') }}
+                                        {{ buildUrl(url('/'), 'tours/' . strtolower($category->city->slug ?? 'N/A') . '/') }}
                                     </div>
                                     <input value="{{ $category->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
