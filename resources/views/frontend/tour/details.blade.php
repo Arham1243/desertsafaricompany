@@ -129,14 +129,6 @@
                     <div class=col-md-12>
                         <div class=tour-content__header>
                             <div>
-                                @php
-                                    $certifiedTagContent = json_decode($tour->certified_tag) ?? null;
-                                @endphp
-                                @if ($certifiedTagContent && $certifiedTagContent->enabled === '1')
-                                    <div class="certified-tag line-clamp-2"><i
-                                            class='{{ $certifiedTagContent->icon }}'></i>
-                                        {{ $certifiedTagContent->label }}</div>
-                                @endif
                                 <div class=section-content>
                                     <h2 class="heading">
                                         {{ $tour->title }}

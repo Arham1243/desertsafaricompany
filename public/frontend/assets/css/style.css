@@ -7638,14 +7638,3 @@ ul.show-in-desktop {
 }
 /* card-hover */
 /* tour-card */
-
-.certified-tag {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    font-size: 0.8rem;
-    margin-bottom: 0.3rem;
-}
-.certified-tag i {
-    font-size: 1.05rem;
-}
