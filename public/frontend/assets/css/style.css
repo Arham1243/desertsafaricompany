@@ -1530,7 +1530,7 @@ img.ocizgi.imgFluid {
     border: none;
     outline: none;
     font-size: 0.85rem;
-    padding: 0.9rem 0;
+    padding: 0.75rem 0;
     font-weight: 600;
 }
 
@@ -1538,11 +1538,7 @@ img.ocizgi.imgFluid {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.1rem;
-}
-
-.line-form .primary-btn {
-    flex: 0.2;
+    gap: 1.5rem;
 }
 
 .newsletter__content {
