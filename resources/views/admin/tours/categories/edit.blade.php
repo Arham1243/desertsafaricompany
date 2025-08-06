@@ -1023,7 +1023,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'tours/category'" :slug="$category->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="'tours/' . strtolower($category->city->slug ?? 'N/A')" :slug="$category->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">
