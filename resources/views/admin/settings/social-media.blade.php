@@ -15,7 +15,7 @@
                     @include('admin.settings.layouts.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <form action="{{ route('admin.settings.update', ['resource' => 'social_media']) }}" method="POST"
+                    <form action="{{ route('admin.settings.update', ['resource' => 'social-media']) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         @php

@@ -75,18 +75,24 @@
     </div>
 
     @if ($item->long_description)
+        @php
+            $tour_category_content_color = $settings->get('tour_category_content_color');
+            $tour_category_content_read_more_color = $settings->get('tour_category_content_read_more_color');
+        @endphp
         <div class="my-5">
             <div class=container>
                 <div class="tour-content__details " data-show-more>
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
-            -webkit-line-clamp: {{ $item->long_description_line_limit }}; color: #243064;
-            " @endif>
+            -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
+                                           @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
                         <a href="javascript:void(0)" class="loginBtn mt-1" data-show-more-btn more-text="Read more"
-                            less-text='Read less'> Read more</a>
+                            less-text='Read less'
+                            style="@if ($tour_category_content_read_more_color) color:{{ $tour_category_content_read_more_color }}; @endif">
+                            Read more</a>
                     @endif
                 </div>
             </div>
@@ -115,11 +121,13 @@
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-7">
-                        <div class="section-content">
-                            <h2 class="subHeading">
-                                {{ $category_based_tour_block['heading'] ?? '' }}
-                            </h2>
-                        </div>
+                        @if (isset($category_based_tour_block['heading_enabled']) && $category_based_tour_block['heading_enabled'] === '1')
+                            <div class="section-content">
+                                <h2 class="subHeading">
+                                    {{ $category_based_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
+                        @endif
                         <div class="activity-sorting-block mt-2">
                             <div class="search-header__activity">
                                 <div class="activities-found">

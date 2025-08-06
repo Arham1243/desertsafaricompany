@@ -49,7 +49,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Name:</label>
+                                        <label class="title">Category Name:</label>
                                         <input type="text" name="name" class="field"
                                             value="{{ old('name', $category->name) }}" placeholder="Name" data-error="Name">
                                         @error('name')
@@ -163,7 +163,10 @@
                                     @endif
                                 </div>
                             </div>
-                            <div x-data="{ enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_based_tour_block']['heading_enabled']) && $jsonContent['category_based_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
                                 <div class="form-box__header">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Category based Tour Block</div>
@@ -183,11 +186,26 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
-                                        <input name="json_content[category_based_tour_block][heading]" type="text"
-                                            class="field"
-                                            value="{{ $jsonContent ? $jsonContent['category_based_tour_block']['heading'] : '' }}">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title text-dark mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_based_tour_block][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_based_tour_block_heading" value="1"
+                                                    name="json_content[category_based_tour_block][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_based_tour_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_based_tour_block][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_based_tour_block']['heading'] ?? '' }}">
                                     </div>
+
                                     <div class="form-fields">
                                         <label class="title text-dark">Select Category:</label>
                                         <select name="json_content[category_based_tour_block][category_id]"

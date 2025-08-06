@@ -25,7 +25,7 @@
             ],
         ],
         [
-            'route' => 'social_media',
+            'route' => 'social-media',
             'icon' => 'bx-share-alt',
             'label' => 'Social Media',
         ],

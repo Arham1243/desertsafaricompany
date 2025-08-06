@@ -5606,11 +5606,7 @@ a.country-card__details {
     font-size: 16px;
     line-height: 1.4;
     margin-bottom: 3px;
-    opacity: 0.67;
     font-weight: 500;
-}
-.promo-title > strong {
-    opacity: 1 !important;
 }
 .promo-price-wrapper {
     display: flex;
@@ -5637,7 +5633,7 @@ a.country-card__details {
 }
 
 .promo-price.cut {
-    color: #625c66ba;
+    color: #333;
     text-decoration: line-through !important;
 }
 

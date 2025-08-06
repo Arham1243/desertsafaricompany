@@ -397,7 +397,7 @@ return [
             [
                 'title' => 'Social Media',
                 'icon' => 'bx bx-share-alt',
-                'route' => route('admin.settings.edit', ['resource' => 'social_media']),
+                'route' => route('admin.settings.edit', ['resource' => 'social-media']),
             ],
             [
                 'title' => 'Payment',

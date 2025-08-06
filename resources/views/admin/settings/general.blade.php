@@ -317,7 +317,8 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="themeBtn ms-auto ">Save Changes</button>
+                        <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i
+                                class="bx bx-check"></i></button>
                     </form>
                 </div>
             </div>
