@@ -8,7 +8,7 @@
                 title="close"><i class='bx bx-x'></i></a>
             <div v-if="challenge === 'check_email'">
                 <h3>Log in or sign up</h3>
-                <p>Check out more easily and access your tickets on any device with your GetYourGuide account.</p>
+                <p>Check out faster and access your tickets anytime on any device with your account.</p>
                 <div class="loginSignup-popup__buttons">
                     <a href="{{ route('auth.socialite', ['social' => 'google']) }}" class="loginSignup-popup__icons">
                         <div class="loginSignup-popup__img">
