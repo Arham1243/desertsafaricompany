@@ -43,10 +43,6 @@ Route::middleware('guest')->prefix('admin')->namespace('Admin')->group(function 
 });
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/tables', function () {
-        return DB::select('SHOW TABLES');
-    });
-
     Route::get('/dashboard', [AdminDashController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AdminLoginController::class, 'logout'])->name('logout');
 
