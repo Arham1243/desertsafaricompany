@@ -43,15 +43,8 @@ Route::middleware('guest')->prefix('admin')->namespace('Admin')->group(function 
 });
 
 Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/fix-migrations', function () {
-        DB::table('migrations')->whereIn('migration', [
-            '2025_08_07_074647_create_tour_times_table',
-            '2025_08_07_075836_create_tour_category_tour_time_table',
-            '2025_08_07_075920_add_tour_time_id_to_tours_table',
-            '2025_08_07_081344_create_tour_time_views_table',
-        ])->delete();
-
-        return 'Done';
+    Route::get('/tables', function () {
+        return DB::select('SHOW TABLES');
     });
 
     Route::get('/dashboard', [AdminDashController::class, 'dashboard'])->name('dashboard');
