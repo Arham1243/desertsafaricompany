@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\Blog\CategoriesController as BlogCategoriesContro
 use App\Http\Controllers\Admin\Blog\TagsController as BlogTagsController;
 use App\Http\Controllers\Admin\BulkActionController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\DBConsoleController;
 use App\Http\Controllers\Admin\EnvEditorController;
 use App\Http\Controllers\Admin\IcalController;
 use App\Http\Controllers\Admin\Locations\CityController;
@@ -48,6 +49,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/terminal', [TerminalController::class, 'index']);
     Route::post('/terminal/run', [TerminalController::class, 'run']);
+
+    Route::get('/db-console', [DBConsoleController::class, 'index']);
+    Route::post('/db-console', [DBConsoleController::class, 'run'])->name('db.console.run');
 
     Route::get('/env-editor', [EnvEditorController::class, 'index'])->name('env');
     Route::post('/env-editor', [EnvEditorController::class, 'save'])->name('env.save');
