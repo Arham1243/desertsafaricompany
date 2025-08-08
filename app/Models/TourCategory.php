@@ -49,14 +49,17 @@ class TourCategory extends Model
         return $this->hasMany(TourCategory::class, 'parent_category_id');
     }
 
+    public function tourTimes()
+    {
+        return $this->belongsToMany(TourTime::class);
+    }
+
     protected static function boot()
     {
         parent::boot();
 
         static::deleting(function ($item) {
             if ($item->isForceDeleting()) {
-                self::deleteImage($item->featured_image);
-                self::deleteImage($item->tour_count_image);
                 if ($item->seo) {
                     self::deleteImage($item->seo->seo_featured_image);
                     self::deleteImage($item->seo->fb_featured_image);

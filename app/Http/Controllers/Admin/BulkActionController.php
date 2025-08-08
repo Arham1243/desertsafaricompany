@@ -22,6 +22,7 @@ use App\Models\TourAuthor;
 use App\Models\TourCategory;
 use App\Models\TourDetailPopup;
 use App\Models\TourReview;
+use App\Models\TourTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -89,6 +90,11 @@ class BulkActionController extends Controller
                 $column = 'id';
                 $redirectRoute = 'admin.tour-categories.index';
                 $isParent = true;
+                break;
+            case 'tour-times':
+                $modelClass = TourTime::class;
+                $column = 'id';
+                $redirectRoute = 'admin.tour-times.index';
                 break;
             case 'tour-authors':
                 $modelClass = TourAuthor::class;

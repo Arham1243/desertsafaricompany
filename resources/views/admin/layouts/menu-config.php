@@ -185,8 +185,24 @@ return [
                 ],
             ],
             [
+                'title' => 'Times',
+                'icon' => 'bx bx-time',
+                'submenu' => [
+                    [
+                        'title' => 'Times',
+                        'icon' => 'bx bx-list-ul',
+                        'route' => route('admin.tour-times.index'),
+                    ],
+                    [
+                        'title' => 'Recovery',
+                        'icon' => 'bx bx-refresh',
+                        'route' => route('admin.recovery.index', ['resource' => 'tour-times']),
+                    ],
+                ],
+            ],
+            [
                 'title' => 'Authors',
-                'icon' => 'bx bxs-user',
+                'icon' => 'bx bxs-group',
                 'submenu' => [
                     [
                         'title' => 'Authors',

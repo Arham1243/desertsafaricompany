@@ -30,6 +30,7 @@ use App\Http\Controllers\Admin\Tour\CategoryController as TourCategoryController
 use App\Http\Controllers\Admin\Tour\DetailPopupController as TourDetailPopupController;
 use App\Http\Controllers\Admin\Tour\ReviewController;
 use App\Http\Controllers\Admin\Tour\TourController;
+use App\Http\Controllers\Admin\Tour\TourTimeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admins', function () {
@@ -68,9 +69,15 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('tour-media/{media}', [TourController::class, 'deleteMedia'])->name('tour-media.delete');
     Route::resource('tour-attributes', AttributesController::class);
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
+
     Route::resource('tour-categories', TourCategoryController::class);
     Route::get('/tour-categories/city/{city}', [TourCategoryController::class, 'getByCity'])
         ->name('tour-categories.by-city');
+
+    Route::resource('tour-times', TourTimeController::class);
+    Route::get('/tour-times/city/{city}', [TourTimeController::class, 'getByCity'])
+        ->name('tour-times.by-city');
+
     Route::resource('tour-authors', TourAuthorController::class);
     Route::resource('tour-popups', TourDetailPopupController::class);
     Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {

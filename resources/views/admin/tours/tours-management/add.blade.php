@@ -118,9 +118,27 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-12  mt-4">
+                                        <div class="col-12 mt-4">
                                             <x-admin.category-filter-by-city :cities="$cities" :categories="$categories"
                                                 field-name="tour[general][category_id]" />
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-fields mb-4">
+                                                <label class="title">Select Time:</label>
+                                                <select name="tour[general][tour_time_id]" class="select2-select"
+                                                    data-error="Available Time">
+                                                    <option value="">Select Time</option>
+                                                    @foreach ($times as $time)
+                                                        <option value="{{ $time->id }}"
+                                                            {{ old('tour.general.tour_time_id') == $time->id ? 'selected' : '' }}>
+                                                            {{ $time->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('tour.general.tour_time_id')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="col-md-6 col-12 mt-4">
                                             <div class="form-fields">

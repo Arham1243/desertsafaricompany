@@ -84,6 +84,22 @@ if (! function_exists('renderCategories')) {
         }
     }
 }
+if (! function_exists('renderCategoriesMulti')) {
+    function renderCategoriesMulti($categories, $selectedCategories = [], $parent_id = null, $level = 0)
+    {
+        foreach ($categories as $category) {
+            if ($category->parent_category_id == $parent_id) {
+                $selected = in_array($category->id, (array) $selectedCategories) ? 'selected' : '';
+
+                echo '<option value="'.$category->id.'" '.$selected.'>';
+                echo str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' '.$category->name;
+                echo '</option>';
+
+                renderCategoriesMulti($categories, $selectedCategories, $category->id, $level + 1);
+            }
+        }
+    }
+}
 if (! function_exists('getTimeLeft')) {
     function getTimeLeft($expireAt)
     {

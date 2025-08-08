@@ -753,7 +753,8 @@ th.no-sort span.dt-column-order::before {
     border-bottom: 1px solid #dce1e5;
 }
 
-.universal-table tbody tr td .link {
+.universal-table tbody tr td .link,
+.custom-link {
     color: #1c4d99;
     font-size: 16px;
     font-weight: 600;

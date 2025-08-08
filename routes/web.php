@@ -11,6 +11,7 @@ use App\Http\Controllers\Frontend\Tour\CategoryController;
 use App\Http\Controllers\Frontend\Tour\CheckoutController;
 use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
+use App\Http\Controllers\Frontend\Tour\TourTimeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
@@ -42,6 +43,7 @@ Route::prefix('tours')->name('tours.')->group(function () {
     Route::get('/', [TourController::class, 'index'])->name('index');
     Route::post('/api/promo-prices-by-day', [TourController::class, 'getTourPromoPricesByDay'])->name('promo-prices-by-day');
     Route::get('/search', [TourController::class, 'search'])->name('search');
+    Route::get('/{city}/{category}/{time}', [TourTimeController::class, 'details'])->name('time.details');
     Route::get('/{slug}', [TourController::class, 'details'])->name('details');
     Route::get('/{city}/{category}', [CategoryController::class, 'details'])->name('category.details');
     Route::prefix('favorites')->name('favorites.')->group(function () {

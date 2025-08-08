@@ -209,14 +209,13 @@
                                     <div class="form-fields">
                                         <label class="title text-dark">Select Category:</label>
                                         <select name="json_content[category_based_tour_block][category_id]"
-                                            class="select2-select" placeholder="Select Categories" should-sort="false">
-                                            <option value="" selected>Select Category</option>
-                                            @foreach ($allCategories as $dropdownCategory)
-                                                <option value="{{ $dropdownCategory->id }}"
-                                                    {{ isset($jsonContent['category_based_tour_block']['category_id']) && $jsonContent['category_based_tour_block']['category_id'] == $dropdownCategory->id ? 'selected' : '' }}>
-                                                    {{ $dropdownCategory->name }}
-                                                </option>
-                                            @endforeach
+                                            class="select2-select" data-error="Category" should-sort="false">
+                                            <option value="" disabled>Select Category</option>
+                                            {!! renderCategories(
+                                                $allCategories,
+                                                isset($jsonContent['category_based_tour_block']['category_id']) &&
+                                                    $jsonContent['category_based_tour_block']['category_id'] ?? null,
+                                            ) !!}
                                         </select>
                                     </div>
                                 </div>

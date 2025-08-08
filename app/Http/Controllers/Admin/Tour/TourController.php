@@ -12,6 +12,7 @@ use App\Models\TourCategory;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
 use App\Models\TourPricing;
+use App\Models\TourTime;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -48,12 +49,14 @@ class TourController extends Controller
             ->get();
 
         $cities = City::where('status', 'publish')->latest()->get();
+        $times = TourTime::where('status', 'publish')->latest()->get();
         $data = compact(
             'categories',
             'cities',
             'attributes',
             'tours',
-            'authors'
+            'authors',
+            'times'
         );
 
         return view('admin.tours.tours-management.add', $data)->with('title', 'Add New Tour');
@@ -110,6 +113,7 @@ class TourController extends Controller
             'badge_tag' => $badgeTag ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
+            'tour_time_id' => $general['tour_time_id'] ?? null,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
@@ -313,12 +317,12 @@ class TourController extends Controller
             ->latest()
             ->get();
         $categories = TourCategory::where('status', 'publish')->latest()->get();
-
+        $times = TourTime::where('status', 'publish')->latest()->get();
         $tours = Tour::where('id', '!=', $id)->get();
         $authors = TourAuthor::where('status', 'active')->get();
 
         $cities = City::where('status', 'publish')->get();
-        $data = compact('tour', 'categories', 'cities', 'tours', 'authors', 'attributes');
+        $data = compact('tour', 'categories', 'cities', 'tours', 'authors', 'attributes', 'times');
 
         return view('admin.tours.tours-management.edit', $data)->with('title', ucfirst(strtolower($tour->title)));
     }
@@ -370,6 +374,7 @@ class TourController extends Controller
             'slug' => $slug ?? null,
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
+            'tour_time_id' => $general['tour_time_id'] ?? null,
             'details' => $details,
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,

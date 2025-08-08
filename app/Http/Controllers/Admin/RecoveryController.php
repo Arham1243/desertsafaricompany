@@ -14,6 +14,7 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourAuthor;
 use App\Models\TourCategory;
+use App\Models\TourTime;
 use Illuminate\Support\Facades\Redirect;
 
 class RecoveryController extends Controller
@@ -51,6 +52,10 @@ class RecoveryController extends Controller
             'deleted_at' => 'Deleted On',
         ],
         'tour-categories' => [
+            'name' => 'Name',
+            'deleted_at' => 'Deleted On',
+        ],
+        'tour-times' => [
             'name' => 'Name',
             'deleted_at' => 'Deleted On',
         ],
@@ -96,6 +101,9 @@ class RecoveryController extends Controller
                 break;
             case 'tour-categories':
                 $items = TourCategory::onlyTrashed()->get();
+                break;
+            case 'tour-times':
+                $items = TourTime::onlyTrashed()->get();
                 break;
             case 'tour-authors':
                 $items = TourAuthor::onlyTrashed()->get();
