@@ -12,11 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tours', function (Blueprint $table) {
-            $table
-                ->foreignId('tour_time_id')
-                ->nullable()
-                ->constrained('tour_times')
-                ->nullOnDelete();
+            $table->unsignedBigInteger('tour_time_id')->nullable()->after('category_id');
+            $table->foreign('tour_time_id')->references('id')->on('tour_times')->onDelete('set null');
         });
     }
 
