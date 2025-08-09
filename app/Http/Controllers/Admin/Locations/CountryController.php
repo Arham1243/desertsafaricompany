@@ -29,6 +29,7 @@ class CountryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'nullable|min:3|max:255',
+            'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
@@ -37,6 +38,8 @@ class CountryController extends Controller
             'banner_image' => 'nullable|image',
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
+
+        $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
         $slug = $this->createSlug($validatedData['name'], 'countries');
 
         $featuredImage = null;
@@ -67,7 +70,7 @@ class CountryController extends Controller
 
         handleSeoData($request, $item, 'Country');
 
-        return redirect()->route('admin.countries.index')->with('notify_success', 'Country Added successfully!');
+        return redirect()->route('admin.countries.edit', $item->id)->with('notify_success', 'Country Added successfully!');
     }
 
     public function edit($id)
@@ -86,6 +89,7 @@ class CountryController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'nullable|min:3|max:255',
+            'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
             'best_tours_ids' => 'nullable|array',
             'popular_tours_ids' => 'nullable|array',
@@ -96,6 +100,7 @@ class CountryController extends Controller
             'banner_image' => 'nullable|image',
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
+        $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
 
         $item = Country::find($id);
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['name'];

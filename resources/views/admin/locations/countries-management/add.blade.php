@@ -21,22 +21,40 @@
                                     <div class="title">Country Content</div>
                                 </div>
                                 <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Name <span class="text-danger">*</span> :</label>
-                                        <input type="text" name="name" class="field" value="{{ old('name') }}"
-                                            placeholder="Name" data-error="Name">
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Content <span class="text-danger">*</span> :</label>
-                                        <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
-                                            {{ old('content') }}
-                                        </textarea>
-                                        @error('content')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Name <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="name" class="field"
+                                                    value="{{ old('name') }}" placeholder="Name" data-error="Name">
+                                                @error('name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">ISO Alpha-2 Code <span class="text-danger">*</span>
+                                                    :</label>
+                                                <input type="text" name="iso_alpha2" class="field"
+                                                    value="{{ old('iso_alpha2') }}" placeholder="e.g. ae" maxlength="2"
+                                                    data-error="ISO Alpha-2 Code">
+                                                @error('iso_alpha2')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-fields">
+                                                <label class="title">Content <span class="text-danger">*</span> :</label>
+                                                <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
+                                                    {{ old('content') }}
+                                                </textarea>
+                                                @error('content')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

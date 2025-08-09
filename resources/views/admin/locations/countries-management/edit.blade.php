@@ -36,22 +36,42 @@
                                     <div class="title">Country Content</div>
                                 </div>
                                 <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Name <span class="text-danger">*</span> :</label>
-                                        <input type="text" name="name" class="field"
-                                            value="{{ old('name', $item->name) }}" placeholder="Name" data-error="Name">
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Content <span class="text-danger">*</span> :</label>
-                                        <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
-                                            {!! old('content', $item->content) !!}
-                                        </textarea>
-                                        @error('content')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Name <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="name" class="field"
+                                                    value="{{ old('name', $item->name) }}" placeholder="Name"
+                                                    data-error="Name">
+                                                @error('name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">ISO Alpha-2 Code <span class="text-danger">*</span>
+                                                    :</label>
+                                                <input type="text" name="iso_alpha2" class="field"
+                                                    value="{{ old('iso_alpha2', $item->iso_alpha2) }}" placeholder="e.g. ae"
+                                                    maxlength="2" data-error="ISO Alpha-2 Code">
+                                                @error('iso_alpha2')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-fields">
+                                                <label class="title">Content <span class="text-danger">*</span>
+                                                    :</label>
+                                                <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
+                                                {!! old('content', $item->content) !!}
+                                            </textarea>
+                                                @error('content')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -178,7 +198,8 @@
                                         <div class="col-lg-12 py-4">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-3">
-                                                    <label class="title title--sm mb-0">Call to Action Button:</label>
+                                                    <label class="title title--sm mb-0">Call to Action
+                                                        Button:</label>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
                                                         <input class="form-check-input" data-toggle-switch=""
@@ -357,7 +378,8 @@
                                                         value="{{ $item->featured_image_alt_text }}">
                                                 </div>
                                             </div>
-                                            <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                            <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                Please
                                                 upload a
                                                 valid image file
                                             </div>
@@ -406,7 +428,8 @@
                                                         value="{{ $item->banner_image_alt_text }}">
                                                 </div>
                                             </div>
-                                            <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                            <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                Please
                                                 upload a
                                                 valid image file
                                             </div>
