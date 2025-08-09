@@ -17,17 +17,6 @@
 @section('content')
     <div class="header-form mb-5">
         <div class="container">
-            {{-- <div class="row">
-                <div class="for-generic ">
-                    <form action="#" class="input-details generic-form">
-                        <i class='bx bx-search'></i>
-                        <input type="text" name="" placeholder="Search generic " class="mobile-number-app app-input">
-                        <button class="app-btn themeBtn">SEND</button>
-                    </form>
-                </div>
-            </div> --}}
-
-
             <div class="header-form__banner mt-5">
                 <div class="row">
                     <div class="col-md-8">
@@ -85,7 +74,7 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                           @endif>
+                                                @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -120,7 +109,7 @@
         <div class="my-5">
             <div class="container">
                 <div class="row mb-3">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         @if (isset($category_based_tour_block['heading_enabled']) && $category_based_tour_block['heading_enabled'] === '1')
                             <div class="section-content">
                                 <h2 class="subHeading">
@@ -206,7 +195,7 @@
         <div class="my-5">
             <div class="container">
                 <div class="row mb-3">
-                    <div class="col-md-7">
+                    <div class="col-md-12">
                         <div class="section-content">
                             <h2 class="subHeading">
                                 {{ $first_tour_block['heading'] ?? '' }}
@@ -304,8 +293,8 @@
             $second_tour_block_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-8 mb-3">
+                <div class="row mb-3">
+                    <div class="col-md-12">
                         <div class="section-content">
                             <h2 class="subHeading">
                                 {{ $second_tour_block['heading'] ?? '' }}

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Locations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\Tour;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -22,13 +23,15 @@ class CountryController extends Controller
 
     public function create()
     {
-        return view('admin.locations.countries-management.add')->with('title', 'Add New Country');
+        $tours = Tour::where('status', 'publish')->get();
+
+        return view('admin.locations.countries-management.add', compact('tours'))->with('title', 'Add New Country');
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|min:3|max:255',
+            'name' => 'required|min:3|max:255',
             'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
@@ -40,6 +43,7 @@ class CountryController extends Controller
         ]);
 
         $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
+        $validatedData['json_content'] = json_encode($request->input('json_content', null));
         $slug = $this->createSlug($validatedData['name'], 'countries');
 
         $featuredImage = null;
@@ -76,9 +80,7 @@ class CountryController extends Controller
     public function edit($id)
     {
         $item = Country::find($id);
-        $tours = $item->cities->flatMap(function ($city) {
-            return $city->tours;
-        });
+        $tours = Tour::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
         return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours'))->with('title', ucfirst(strtolower($item->name)));
@@ -86,13 +88,10 @@ class CountryController extends Controller
 
     public function update(Request $request, $id)
     {
-
         $validatedData = $request->validate([
-            'name' => 'nullable|min:3|max:255',
+            'name' => 'required|min:3|max:255',
             'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
-            'best_tours_ids' => 'nullable|array',
-            'popular_tours_ids' => 'nullable|array',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
@@ -100,6 +99,8 @@ class CountryController extends Controller
             'banner_image' => 'nullable|image',
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
+
+        $validatedData['json_content'] = json_encode($request->input('json_content', null));
         $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
 
         $item = Country::find($id);
@@ -133,7 +134,7 @@ class CountryController extends Controller
 
         handleSeoData($request, $item, 'Country');
 
-        return redirect()->route('admin.countries.index')
+        return redirect()->route('admin.countries.edit', $item->id)
             ->with('notify_success', 'Country updated successfully.');
     }
 

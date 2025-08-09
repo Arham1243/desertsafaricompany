@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Locations;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Tour;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -24,14 +25,15 @@ class CityController extends Controller
     public function create()
     {
         $countries = Country::where('status', 'publish')->get();
+        $tours = Tour::where('status', 'publish')->get();
 
-        return view('admin.locations.cities-management.add', compact('countries'))->with('title', 'Add New City');
+        return view('admin.locations.cities-management.add', compact('countries', 'tours'))->with('title', 'Add New City');
     }
 
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|min:3|max:255',
+            'name' => 'required|min:3|max:255',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
@@ -42,7 +44,7 @@ class CityController extends Controller
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
         $slug = $this->createSlug($validatedData['name'], 'cities');
-
+        $validatedData['json_content'] = json_encode($request->input('json_content', null));
         $featuredImage = null;
         $bannerImage = null;
 
@@ -71,26 +73,25 @@ class CityController extends Controller
 
         handleSeoData($request, $item, 'City');
 
-        return redirect()->route('admin.cities.index')->with('notify_success', 'City Added successfully!');
+        return redirect()->route('admin.cities.edit', $item->id)->with('notify_success', 'City Added successfully!');
     }
 
     public function edit($id)
     {
         $item = City::find($id);
         $countries = Country::where('status', 'publish')->get();
+        $tours = Tour::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries', 'tours'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)
     {
         $validatedData = $request->validate([
-            'name' => 'nullable|min:3|max:255',
+            'name' => 'required|min:3|max:255',
             'slug' => 'nullable|string|max:255',
             'country_id' => 'nullable|int',
-            'best_tours_ids' => 'nullable|array',
-            'popular_tours_ids' => 'nullable|array',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
@@ -101,7 +102,7 @@ class CityController extends Controller
         $item = City::find($id);
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['name'];
         $slug = $this->createSlug($slugText, 'cities', $item->slug);
-
+        $validatedData['json_content'] = json_encode($request->input('json_content', null));
         $featuredImage = $item->featured_image;
         $bannerImage = $item->banner_image;
 
@@ -129,7 +130,7 @@ class CityController extends Controller
         $item->update($data);
         handleSeoData($request, $item, 'City');
 
-        return redirect()->route('admin.cities.index')
+        return redirect()->route('admin.cities.edit', $item->id)
             ->with('notify_success', 'City updated successfully.');
     }
 

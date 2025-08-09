@@ -257,7 +257,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div x-data="{ enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header">
                                     <div class="d-flex align-items-center gap-3">
@@ -313,7 +312,6 @@
                                         <i class='bx bxs-show'></i>
                                     </a>
                                 </div>
-
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="row">
                                         <div class="col-lg-12">
@@ -322,8 +320,8 @@
                                                     <div class="form-fields">
                                                         <label class="title">Heading:</label>
                                                         <div class="field color-picker" data-color-picker-container>
-                                                            <label for="color-picker" data-color-picker></label>
-                                                            <input id="color-picker" type="hidden"
+                                                            <label for="header-color-picker" data-color-picker></label>
+                                                            <input id="header-color-picker" type="hidden"
                                                                 name="content[tour_count][heading_color]"
                                                                 data-color-picker-input
                                                                 value="{{ $tourCountContent->heading_color ?? '#ffffff' }}"
