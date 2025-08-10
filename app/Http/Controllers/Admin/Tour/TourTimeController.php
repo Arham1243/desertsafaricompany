@@ -149,13 +149,4 @@ class TourTimeController extends Controller
 
         return $existingData[$field] ?? null;
     }
-
-    public function getByCity($cityId)
-    {
-        $categories = TourTime::where('city_id', $cityId)
-            ->where('status', 'publish')
-            ->get(['id', 'name']);
-
-        return response()->json($categories);
-    }
 }

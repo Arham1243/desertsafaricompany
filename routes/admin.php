@@ -77,12 +77,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
 
     Route::resource('tour-categories', TourCategoryController::class);
-    Route::get('/tour-categories/city/{city}', [TourCategoryController::class, 'getByCity'])
-        ->name('tour-categories.by-city');
+    Route::post('/tour-categories/city/{city?}', [TourCategoryController::class, 'getByCity']);
 
     Route::resource('tour-times', TourTimeController::class);
-    Route::get('/tour-times/city/{city}', [TourTimeController::class, 'getByCity'])
-        ->name('tour-times.by-city');
 
     Route::resource('tour-authors', TourAuthorController::class);
 

@@ -27,26 +27,37 @@ class TourController extends Controller
             ->with($data);
     }
 
-    public function details(Request $request, $slug)
+    public function details(Request $request, $country, $city, $category, $slug)
     {
         $settings = Setting::pluck('value', 'key');
         $detailPopups = TourDetailPopup::where('status', 'active')->get();
         $firstOrderCoupon = Coupon::where('is_first_order_coupon', 1)->where('status', 'active')->first();
         $cart = Session::get('cart', []);
-        $attributes = TourAttribute::where('status', 'active')
-            ->latest()
-            ->get();
-        $tour = Tour::where('slug', $slug)->with('tourAttributes.items')->firstOrFail();
+        $attributes = TourAttribute::where('status', 'active')->latest()->get();
+
+        $tour = Tour::with(['tourAttributes.items', 'category.city', 'category.country'])
+            ->where('slug', $slug)
+            ->whereHas('category', function ($q) use ($category, $city, $country) {
+                $q
+                    ->where('slug', $category)
+                    ->whereHas('city', function ($q) use ($city) {
+                        $q->where('slug', $city);
+                    })
+                    ->whereHas('country', function ($q) use ($country) {
+                        $q->where('iso_alpha2', strtoupper($country));
+                    });
+            })
+            ->firstOrFail();
+
         $this->trackTourView($request, $tour->id);
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
-        if ($tour) {
-            $isTourInCart = isset($cart['tours'][$tour->id]);
-            $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon', 'detailPopups');
+        $isTourInCart = isset($cart['tours'][$tour->id]);
 
-            return view('frontend.tour.details')->with('title', $tour->title)->with($data);
-        }
+        $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon', 'detailPopups');
 
-        return redirect()->route('index')->with('notify_error', 'Page Not Found');
+        return view('frontend.tour.details')
+            ->with('title', $tour->title)
+            ->with($data);
     }
 
     public function search(Request $request)

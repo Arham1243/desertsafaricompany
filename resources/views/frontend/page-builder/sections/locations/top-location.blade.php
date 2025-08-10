@@ -153,6 +153,7 @@
                                         $link =
                                             $resourceType === 'category' && $resource->city
                                                 ? route('tours.category.details', [
+                                                    $resource->country->iso_alpha2,
                                                     $resource->city->slug,
                                                     $resource->slug,
                                                 ])

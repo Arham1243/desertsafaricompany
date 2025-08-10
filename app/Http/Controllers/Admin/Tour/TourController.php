@@ -114,6 +114,7 @@ class TourController extends Controller
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'tour_time_id' => $general['tour_time_id'] ?? null,
+            'city_id' => $location['normal_location']['city_id'] ?? null,
             'description_line_limit' => $general['description_line_limit'] ?? null,
             'banner_image_alt_text' => $request->input('banner_image_alt_text'),
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
@@ -248,7 +249,7 @@ class TourController extends Controller
         if (isset($location['location_type'])) {
             if ($location['location_type'] == 'normal_location') {
                 $cityIds = $location['normal_location']['city_ids'] ?? [];
-                $tour->cities()->sync($cityIds);
+                // $tour->cities()->sync($cityIds);
             }
             if ($location['location_type'] === 'normal_itinerary') {
                 $days = array_filter($location['normal_itinerary']['days'] ?? []);
@@ -375,6 +376,7 @@ class TourController extends Controller
             'content' => $general['content'] ?? null,
             'category_id' => $general['category_id'] ?? null,
             'tour_time_id' => $general['tour_time_id'] ?? null,
+            'city_id' => $location['normal_location']['city_id'] ?? null,
             'details' => $details,
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,
@@ -520,7 +522,7 @@ class TourController extends Controller
         if (isset($location['location_type'])) {
             if ($location['location_type'] == 'normal_location') {
                 $cityIds = $location['normal_location']['city_ids'] ?? [];
-                $tour->cities()->sync($cityIds);
+                // $tour->cities()->sync($cityIds);
             }
 
             if ($location['location_type'] === 'normal_itinerary') {

@@ -40,18 +40,22 @@ Route::name('locations.')->group(function () {
 });
 
 Route::name('tours.')->group(function () {
-    Route::get('/{country}/{category}', [CategoryController::class, 'details'])
-        ->where([
-            'country' => '[a-zA-Z]{2}',
-            'category' => '[a-z0-9-]+',
-        ]);
-
     Route::get('/{country}/{city}/{category}', [CategoryController::class, 'details'])
         ->where([
             'country' => '[a-zA-Z]{2}',
             'city' => '[a-z0-9-]+',
             'category' => '[a-z0-9-]+',
-        ]);
+        ])
+        ->name('category.details');
+
+    Route::get('/{country}/{city}/{category}/{slug}', [TourController::class, 'details'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'city' => '[a-z0-9-]+',
+            'category' => '[a-z0-9-]+',
+            'slug' => '[a-z0-9-]+',
+        ])
+        ->name('details');
 });
 
 Route::prefix('tours')->name('tours.')->group(function () {
@@ -59,8 +63,8 @@ Route::prefix('tours')->name('tours.')->group(function () {
     Route::post('/api/promo-prices-by-day', [TourController::class, 'getTourPromoPricesByDay'])->name('promo-prices-by-day');
     Route::get('/search', [TourController::class, 'search'])->name('search');
     Route::get('/{city}/{category}/{time}', [TourTimeController::class, 'details'])->name('time.details');
-    Route::get('/{slug}', [TourController::class, 'details'])->name('details');
-    Route::get('/{city}/{category}', [CategoryController::class, 'details'])->name('category.details');
+    // Route::get('/{slug}', [TourController::class, 'details'])->name('details');
+    // Route::get('/{city}/{category}', [CategoryController::class, 'details'])->name('category.details');
     Route::prefix('favorites')->name('favorites.')->group(function () {
         Route::get('/index', [FavoriteController::class, 'index'])->name('index');
         Route::post('/add/{tour}', [FavoriteController::class, 'add'])->name('add');

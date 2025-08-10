@@ -1,7 +1,7 @@
 @switch($style)
     @case('style1')
         <div class=card-content>
-            <a href={{ route('tours.details', $tour->slug) }} class=card_img>
+            <a href={{ $detailUrl }} class=card_img>
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class=price-details>
@@ -31,7 +31,7 @@
                 </div>
             </a>
             <div class=card-details>
-                <a href={{ route('tours.details', $tour->slug) }} data-tooltip="tooltip" class=card-title
+                <a href={{ $detailUrl }} data-tooltip="tooltip" class=card-title
                     title="{{ $tour->title }}">{{ $tour->title }}</a>
                 @if ($tour->cities->isNotEmpty())
                     <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
@@ -56,7 +56,7 @@
 
     @case('style2')
         <div class=card-content>
-            <a href={{ route('tours.details', $tour->slug) }} class=card_img>
+            <a href={{ $detailUrl }} class=card_img>
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class=price-details>
@@ -89,7 +89,7 @@
                             <span>From<div class="flex">{!! formatPrice($tour->sale_price) !!}</div></span>
                         @endif
                     </div>
-                    <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
+                    <a href="{{ $detailUrl }}" class="tour-activity-card__details--title">
                         {{ $tour->title }}
                     </a>
                 </div>
@@ -117,7 +117,7 @@
 
     @case('style3')
         {{-- <div class=card-content>
-                <a href={{ route('tours.details', $tour->slug) }} class=card_img>
+                <a href={{ $detailUrl }} class=card_img>
                     <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                     <div class=price-details>
@@ -153,7 +153,7 @@
                         @if ($tour->category)
                             <div><span> {{ $tour->category->name }}</span></div>
                         @endif
-                        <a href="{{ route('tours.details', $tour->slug) }}"
+                        <a href="{{ $detailUrl }}"
                             class="tour-activity-card__details--title">{{ $tour->title }}</a>
                     </div>
                     <div class=card-rating>
@@ -226,13 +226,13 @@
                         </form>
                     @endif
                 </div>
-                <a href={{ route('tours.details', $tour->slug) }} class="img-wrapper img-zoom">
+                <a href={{ $detailUrl }} class="img-wrapper img-zoom">
                     <img data-src="={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 </a>
             </div>
             <div class="tour-card__content">
-                <a href="{{ route('tours.details', $tour->slug) }}" class="title line-clamp-3"
+                <a href="{{ $detailUrl }}" class="title line-clamp-3"
                     @if (strlen($tour->title) > 90) data-tooltip="tooltip" @endif
                     title="{{ $tour->title }}">{{ $tour->title }}</a>
                 <div class="certified-tag-wrapper">
@@ -273,7 +273,7 @@
 
     @case('style4')
         <div class="card-content trending-products__content">
-            <a href="{{ route('tours.details', $tour->slug) }} " class="card_img trending-products__img" tabindex="0">
+            <a href="{{ $detailUrl }} " class="card_img trending-products__img" tabindex="0">
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class="product-rank">
@@ -309,7 +309,7 @@
             </a>
             <div class="tour-activity-card__details">
                 <div class="vertical-activity-card__header">
-                    <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
+                    <a href="{{ $detailUrl }}" class="tour-activity-card__details--title">
                         {{ $tour->title }}
                     </a>
                     <div class="product-card__tag"><span title="Receive voucher instantly" class="tag">Receive
@@ -340,7 +340,7 @@
 
     @case('style5')
         <div class="card-content normal-card__content">
-            <a href="{{ route('tours.details', $tour->slug) }} " class="card_img normal-card__img">
+            <a href="{{ $detailUrl }} " class="card_img normal-card__img">
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class="price-details">
@@ -375,7 +375,7 @@
                             <i class="bx bxs-paper-plane"></i>{{ $tour->cities[0]->name }}
                         </div>
                     @endif
-                    <a href="{{ route('tours.details', $tour->slug) }}" class="tour-activity-card__details--title">
+                    <a href="{{ $detailUrl }}" class="tour-activity-card__details--title">
                         {{ $tour->title }}</a>
                 </div>
                 <div class="tour-listing__info normal-card__info">

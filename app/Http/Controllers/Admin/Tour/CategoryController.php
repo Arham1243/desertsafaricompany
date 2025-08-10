@@ -98,7 +98,7 @@ class CategoryController extends Controller
         $data['slug'] = $slug;
 
         $data['json_content'] = json_encode($request->input('json_content', null));
-        $fieldsToNullify = ['country_id', 'city_id', 'parent_category_id'];
+        $fieldsToNullify = ['parent_category_id'];
 
         foreach ($fieldsToNullify as $field) {
             if (! $request->has($field)) {
@@ -164,12 +164,18 @@ class CategoryController extends Controller
         return $existingData[$field] ?? null;
     }
 
-    public function getByCity($cityId)
+    public function getByCity(Request $request)
     {
-        $categories = TourCategory::where('city_id', $cityId)
-            ->where('status', 'publish')
-            ->get(['id', 'name', 'parent_category_id']);
+        $cityId = $request->input('city_id');
 
-        return response()->json($categories);
+        $query = TourCategory::where('status', 'publish');
+
+        if (! empty($cityId)) {
+            $query->where('city_id', $cityId);
+        }
+
+        return response()->json(
+            $query->get(['id', 'name', 'parent_category_id'])
+        );
     }
 }

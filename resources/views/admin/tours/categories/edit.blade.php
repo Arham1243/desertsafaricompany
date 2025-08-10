@@ -31,17 +31,11 @@
                                         ) {
                                             $parts = [];
 
-                                            if ($category->country?->iso_alpha2) {
-                                                $parts[] = $category->country->iso_alpha2;
-                                            }
+                                            $parts[] = $category->country?->iso_alpha2 ?? 'no-country';
+                                            $parts[] = $category->city?->slug ?? 'no-city';
+                                            $parts[] = $includeCategorySlug ? $category->slug ?? 'no-category' : null;
 
-                                            if ($category->city?->slug) {
-                                                $parts[] = $category->city->slug;
-                                            }
-
-                                            if ($includeCategorySlug && $category->slug) {
-                                                $parts[] = $category->slug;
-                                            }
+                                            $parts = array_filter($parts, fn($part) => $part !== null);
 
                                             $path = implode('/', $parts);
 

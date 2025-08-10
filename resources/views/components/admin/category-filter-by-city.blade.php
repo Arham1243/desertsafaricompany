@@ -4,6 +4,7 @@
     'fieldName' => '',
     'selectedCityId' => null,
     'selectedCategoryId' => null,
+    'isCategoryRequired' => false,
     'citySelectId' => 'filter-categories-by-city-' . Str::random(5),
 ])
 
@@ -24,9 +25,11 @@
 
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields">
-            <label class="title">Select Category:</label>
-            <select name="{{ $fieldName }}" x-html="categoryOptions" class="select2-select" data-error="Category"
-                should-sort="false">
+            <label class="title">Select Category @if ($isCategoryRequired)
+                    <span class="text-danger"> *</span>
+                @endif:</label>
+            <select data-error="Category" {{ $isCategoryRequired ? 'data-required' : '' }} name="{{ $fieldName }}"
+                x-html="categoryOptions" class="select2-select" data-error="Category" should-sort="false">
                 <option value="" disabled>Select Category</option>
                 {!! renderCategories($categories, $selectedCategoryId) !!}
             </select>
@@ -47,28 +50,27 @@
                 init() {
                     const citySelect = document.getElementById('{{ $citySelectId }}');
                     $(citySelect).off('change').on('change', (e) => {
-                        const newCity = e.target.value;
+                        const newCity = e.target.value || '';
                         if (this.selectedCity !== newCity) {
                             this.selectedCity = newCity;
                             this.fetchCategories();
                         }
                     });
 
-                    if (this.selectedCity) {
-                        this.fetchCategories();
-                    } else {
-                        initializeSelect2();
-                    }
+                    this.fetchCategories();
                 },
 
                 fetchCategories() {
-                    if (!this.selectedCity) {
-                        this.categoryOptions = `<option value="" disabled selected>Select Category</option>`;
-                        this.$nextTick(() => initializeSelect2());
-                        return;
-                    }
-
-                    fetch(`{{ url('admin/tour-categories/city') }}/${this.selectedCity}`)
+                    fetch(`{{ url('admin/tour-categories/city') }}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                            body: JSON.stringify({
+                                city_id: this.selectedCity || ''
+                            })
+                        })
                         .then(res => res.json())
                         .then(data => {
                             this.categoryOptions = this.buildOptions(data);
@@ -95,9 +97,9 @@
                         return cats.flatMap(cat => {
                             const padding = '&nbsp;&nbsp;'.repeat(level) + '-'.repeat(level);
                             const selected = cat.id == '{{ $selectedCategoryId }}' ? 'selected' : '';
-                            const option =
-                                `<option value="${cat.id}" ${selected}>${padding} ${cat.name}</option>`;
-                            return [option, ...build(cat.children, level + 1)];
+                            return [`<option value="${cat.id}" ${selected}>${padding} ${cat.name}</option>`, ...
+                                build(cat.children, level + 1)
+                            ];
                         });
                     };
 

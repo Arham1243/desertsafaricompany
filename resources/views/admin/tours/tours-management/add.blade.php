@@ -88,10 +88,10 @@
                                     <div class="row">
                                         <div class="col-12">
                                             <div class="form-fields">
-                                                <label class="title">Title :</label>
+                                                <label class="title">Title <span class="text-danger">*</span>:</label>
                                                 <input type="text" name="tour[general][title]" class="field"
                                                     value="{{ old('tour[general][title]') }}" placeholder=""
-                                                    data-error="Title">
+                                                    data-error="Title" data-required>
                                                 @error('tour[general][title]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -120,7 +120,7 @@
                                         </div>
                                         <div class="col-12 mt-4">
                                             <x-admin.category-filter-by-city :cities="$cities" :categories="$categories"
-                                                field-name="tour[general][category_id]" />
+                                                field-name="tour[general][category_id]" :isCategoryRequired="true" />
                                         </div>
                                         <div class="col-12">
                                             <div class="form-fields mb-4">
@@ -641,13 +641,14 @@
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
                                         <div class="form-fields">
-                                            <label class="title">Location :</label>
-                                            <select name="tour[location][normal_location][city_ids][]"
-                                                class="select2-select" data-error="Location" multiple
-                                                placeholder="Select Locations" autocomplete="new-password">
+                                            <label class="title">Select City :</label>
+                                            <select name="tour[location][normal_location][city_id]" class="select2-select"
+                                                data-error="Location > City" placeholder="Select City"
+                                                autocomplete="new-password">
+                                                <option value="" selected disabled>Select City</option>
                                                 @foreach ($cities as $city)
                                                     <option value="{{ $city->id }}"
-                                                        {{ old('city_ids') == $city->id ? 'selected' : '' }}>
+                                                        {{ old('city_id') == $city->id ? 'selected' : '' }}>
                                                         {{ $city->name }}
                                                     </option>
                                                 @endforeach

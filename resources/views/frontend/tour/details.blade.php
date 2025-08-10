@@ -113,7 +113,7 @@
                             @if ($tour->category && $tour->category->city)
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tours.category.details', [$tour->category->city->slug, $tour->category->slug]) }}">
+                                        href="{{ route('tours.category.details', [$tour->category->country->iso_alpha2, $tour->category->city->slug, $tour->category->slug]) }}">
                                         {{ $tour->category->name ?? '' }}
                                     </a>
                                 </li>
