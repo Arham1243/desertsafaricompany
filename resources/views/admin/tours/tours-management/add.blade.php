@@ -644,7 +644,7 @@
                                             <label class="title">Select City :</label>
                                             <select name="tour[location][normal_location][city_id]" class="select2-select"
                                                 data-error="Location > City" placeholder="Select City"
-                                                autocomplete="new-password">
+                                                autocomplete="new-password" data-required>
                                                 <option value="" selected disabled>Select City</option>
                                                 @foreach ($cities as $city)
                                                     <option value="{{ $city->id }}"

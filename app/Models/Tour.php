@@ -19,9 +19,9 @@ class Tour extends Model
         return $this->belongsTo(TourCategory::class);
     }
 
-    public function cities()
+    public function city()
     {
-        return $this->belongsToMany(City::class, 'city_tour', 'tour_id', 'city_id');
+        return $this->belongsTo(City::class, 'city_id');
     }
 
     public function availabilities()

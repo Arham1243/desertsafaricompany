@@ -170,8 +170,8 @@ if (! function_exists('getAllCategoryIds')) {
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour)
     {
-        $country = strtolower($tour->category->country->iso_alpha2 ?? 'xx');
-        $city = $tour->category->city->slug ?? 'no-city';
+        $city = $tour->city->slug ?? 'no-city';
+        $country = $tour->city->country->iso_alpha2 ?? 'no-citycountry';
         $category = $tour->category->slug ?? 'no-category';
         $slug = $tour->slug ?? 'no-slug';
 
