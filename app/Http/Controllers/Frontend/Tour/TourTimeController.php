@@ -13,10 +13,10 @@ use Illuminate\Http\Request;
 
 class TourTimeController extends Controller
 {
-    public function details(Request $request, $city, $category, $time)
+    public function details(Request $request, $country, $city, $category, $slug)
     {
         $cityModel = City::where('slug', $city)->firstOrFail();
-        $item = TourTime::where('slug', $time)
+        $item = TourTime::where('slug', $slug)
             ->where('city_id', $cityModel->id)
             ->firstOrFail();
         $tourCategories = TourTime::where('status', 'publish')

@@ -11,6 +11,7 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
 use App\Models\TourDetailPopup;
+use App\Models\TourTime;
 use App\Models\TourView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -27,6 +28,21 @@ class TourController extends Controller
             ->with($data);
     }
 
+    public function resolveSlug(Request $request, $country, $city, $category, $slug)
+    {
+        $countryModel = Country::where('iso_alpha2', $country)->firstOrFail();
+
+        if (Tour::where('slug', $slug)->exists()) {
+            return app(TourController::class)->details($request, $country, $city, $category, $slug);
+        }
+        if (TourTime::where('slug', $slug)->exists()) {
+            $request = Request::create(request()->fullUrl(), 'GET');
+
+            return app(TourTimeController::class)->details($request, $country, $city, $category, $slug);
+        }
+        abort(404);
+    }
+
     public function details(Request $request, $country, $city, $category, $slug)
     {
         $settings = Setting::pluck('value', 'key');
@@ -38,7 +54,8 @@ class TourController extends Controller
         $tour = Tour::with(['tourAttributes.items', 'categories.city', 'categories.country'])
             ->where('slug', $slug)
             ->whereHas('categories', function ($q) use ($category, $city, $country) {
-                $q->where('slug', $category)
+                $q
+                    ->where('slug', $category)
                     ->whereHas('city', fn ($q) => $q->where('slug', $city))
                     ->whereHas('country', fn ($q) => $q->where('iso_alpha2', strtoupper($country)));
             })

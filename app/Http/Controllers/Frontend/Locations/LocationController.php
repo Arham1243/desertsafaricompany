@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class LocationController extends Controller
 {
-    public function handle($country, $slug)
+    public function resolveSlug($country, $slug)
     {
         $countryModel = Country::where('iso_alpha2', $country)->firstOrFail();
 

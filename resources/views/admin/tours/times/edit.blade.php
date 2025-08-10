@@ -20,25 +20,48 @@
                         <div class="section-content">
                             <h3 class="heading">Edit Time: {{ isset($title) ? $title : '' }}</h3>
                             @php
-                                $citySlug = strtolower(optional($time->city)->slug ?? 'N-A');
-                                $categorySlug = strtolower(optional($time->categories->first())->slug ?? 'N-A');
-                                $timeSlug = strtolower($time->slug ?? 'N-A');
-                                $firstTimeDetailUrl = url("tours/{$citySlug}/{$categorySlug}") . '/';
-                                $firstTimeDetailUrlSeo = "tours/{$citySlug}/{$categorySlug}";
+                                function buildTimeDetailUrl(
+                                    $time,
+                                    $includeTimeSlug = true,
+                                    $withBase = false,
+                                    $category = null,
+                                ) {
+                                    $countryCode = strtolower(
+                                        optional($time->city->country)->iso_alpha2 ?? 'no-country',
+                                    );
+                                    $citySlug = strtolower(optional($time->city)->slug ?? 'no-city');
+                                    if ($category === null) {
+                                        $categorySlug = strtolower(
+                                            optional($time->categories->first())->slug ?? 'no-category',
+                                        );
+                                    } else {
+                                        $categorySlug = strtolower($category->slug ?? 'no-category');
+                                    }
+                                    $timeSlug = strtolower($time->slug ?? 'no-time');
+
+                                    $base = $withBase ? url('') . '/' : '';
+
+                                    $url = "{$base}{$countryCode}/{$citySlug}/{$categorySlug}";
+                                    if ($includeTimeSlug) {
+                                        $url .= "/{$timeSlug}";
+                                    }
+
+                                    return $url;
+                                }
                             @endphp
 
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ $firstTimeDetailUrl }}</div>
-                                    <input value="{{ $timeSlug }}" type="button" class="link permalink-input"
+                                    <div class="full-url">{{ buildTimeDetailUrl($time, false, true) }}/</div>
+                                    <input value="{{ $time->slug }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
-                                    <input type="hidden" id="slug" value="{{ $timeSlug }}" name="slug">
+                                    <input type="hidden" id="slug" value="{{ $time->slug }}" name="slug">
                                 </div>
                             </div>
                         </div>
                         @if ($time->categories->first())
-                            <a href="{{ $firstTimeDetailUrl . $timeSlug }}" target="_blank" class="themeBtn">View
+                            <a href="{{ buildTimeDetailUrl($time, true, false) }}" target="_blank" class="themeBtn">View
                                 Category</a>
                         @endif
                     </div>
@@ -53,9 +76,10 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Time Name:</label>
+                                        <label class="title">Time Name <span class="text-danger">*</span>:</label>
                                         <input type="text" name="name" class="field"
-                                            value="{{ old('name', $time->name) }}" placeholder="Name" data-error="Name">
+                                            value="{{ old('name', $time->name) }}" placeholder="Name" data-error="Name"
+                                            data-required>
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
@@ -74,9 +98,9 @@
 
 
                                     <div class="form-fields mb-4">
-                                        <label class="title">City:</label>
-                                        <select name="city_id" class="select2-select" data-error="City">
-                                            <option value="">Select City</option>
+                                        <label class="title">City <span class="text-danger">*</span>:</label>
+                                        <select name="city_id" class="select2-select" data-error="City" data-required>
+                                            <option value="">Select City </option>
                                             @foreach ($cities as $city)
                                                 <option value="{{ $city->id }}"
                                                     {{ old('city_id', $time->city_id ?? null) == $city->id ? 'selected' : '' }}>
@@ -95,16 +119,16 @@
                                                 ? $time->categories->pluck('id')->toArray()
                                                 : [];
                                         @endphp
-                                        <label class="title text-dark">Select Categories:</label>
+                                        <label class="title text-dark">Select categories available for this time <span
+                                                class="text-danger">*</span>:</label>
                                         <select name="category_ids[]" class="select2-select" data-error="Category"
-                                            should-sort="false" multiple>
-                                            <option value="" disabled>Select</option>
+                                            data-required should-sort="false" multiple>
                                             {!! renderCategoriesMulti($allCategories, $tourTimeCategoryIds) !!}
                                         </select>
                                     </div>
 
                                     <div class="form-fields">
-                                        <label class="title text-dark">Selected Categories:</label>
+                                        <label class="title mb-1 text-dark">Selected Categories:</label>
                                         @php
                                             $citySlug = strtolower(optional($time->city)->slug ?? 'n-a');
                                             $timeSlug = strtolower($time->slug ?? 'n-a');
@@ -112,8 +136,7 @@
 
                                         @foreach ($time->categories as $category)
                                             @php
-                                                $categorySlug = strtolower($category->slug ?? 'n-a');
-                                                $url = url("tours/{$citySlug}/{$categorySlug}/{$timeSlug}");
+                                                $url = buildTimeDetailUrl($time, true, true, $category);
                                             @endphp
                                             <a href="{{ $url }}" target="_blank" class="custom-link"
                                                 style="font-size: 0.85rem; ">{{ $url }}</a>
@@ -145,7 +168,8 @@
                                         <div class="title title--sm mb-3">Featured Slider images:</div>
                                         <div class="multiple-upload" data-upload-multiple>
                                             <input type="file" class="gallery-input d-none" multiple
-                                                data-upload-multiple-input accept="image/*" id="banners" name="gallery[]">
+                                                data-upload-multiple-input accept="image/*" id="banners"
+                                                name="gallery[]">
                                             <label class="multiple-upload__btn themeBtn" for="banners">
                                                 <i class='bx bx-plus'></i>
                                                 Choose
@@ -1044,7 +1068,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="$firstTimeDetailUrlSeo" :slug="$time->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="buildTimeDetailUrl($time, true, false)" />
                         </div>
                     </div>
                     <div class="col-md-3">

@@ -10,7 +10,6 @@ use App\Http\Controllers\Frontend\Tour\CategoryController;
 use App\Http\Controllers\Frontend\Tour\CheckoutController;
 use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
-use App\Http\Controllers\Frontend\Tour\TourTimeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
@@ -31,7 +30,7 @@ Route::name('locations.')->group(function () {
         ->where('country', '[a-zA-Z]{2}')
         ->name('country');
 
-    Route::get('/{country}/{slug}', [LocationController::class, 'handle'])
+    Route::get('/{country}/{slug}', [LocationController::class, 'resolveSlug'])
         ->where([
             'country' => '[a-zA-Z]{2}',
             'slug' => '[a-z0-9-]+',
@@ -48,7 +47,7 @@ Route::name('tours.')->group(function () {
         ])
         ->name('category.details');
 
-    Route::get('/{country}/{city}/{category}/{slug}', [TourController::class, 'details'])
+    Route::get('/{country}/{city}/{category}/{slug}', [TourController::class, 'resolveSlug'])
         ->where([
             'country' => '[a-zA-Z]{2}',
             'city' => '[a-z0-9-]+',
@@ -62,7 +61,6 @@ Route::prefix('tours')->name('tours.')->group(function () {
     Route::get('/', [TourController::class, 'index'])->name('index');
     Route::post('/api/promo-prices-by-day', [TourController::class, 'getTourPromoPricesByDay'])->name('promo-prices-by-day');
     Route::get('/search', [TourController::class, 'search'])->name('search');
-    Route::get('/{city}/{category}/{time}', [TourTimeController::class, 'details'])->name('time.details');
 });
 
 Route::prefix('favorites')->name('tours.favorites.')->group(function () {
