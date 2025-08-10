@@ -7,8 +7,8 @@
     'isCategoryRequired' => false,
     'cityLabel' => 'Filter by City',
     'categoryLabel' => 'Select Category',
-    'citySelectId' => 'filter-categories-by-city-' . Str::random(5),
-    'categorySelectId' => 'filter-categories-by-city-' . Str::random(5),
+    'citySelectId' => 'filter-category-by-city-' . Str::random(5),
+    'categorySelectId' => 'filter-category-by-city-' . Str::random(5),
 ])
 
 <div x-data="categoryFilter()" x-init="init()" class="row">

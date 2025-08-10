@@ -133,12 +133,11 @@
                                                 ? $tour->categories->pluck('id')->toArray()
                                                 : [];
                                         @endphp
-                                        <div class="col-12  mt-4">
+                                        <div class="col-12 mt-4">
                                             <x-admin.category-multi-select-by-city :cities="$cities" :categories="$categories"
                                                 :selectedCategoryIds="$tourCategoryIds" field-name="tour[general][category_ids][]"
                                                 :isCategoryRequired="true" cityLabel="Filter by City"
                                                 categoryLabel="Select Categories" />
-
                                         </div>
                                         <div class="col-12">
                                             <div class="form-fields mb-4">

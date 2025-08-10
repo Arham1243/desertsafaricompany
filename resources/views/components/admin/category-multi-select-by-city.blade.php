@@ -2,22 +2,23 @@
     'cities' => [],
     'categories' => [],
     'fieldName' => '',
+    'selectedCityId' => null,
     'selectedCategoryIds' => [],
     'isCategoryRequired' => false,
     'cityLabel' => 'Filter by City',
-    'categoryLabel' => 'Select Category',
+    'categoryLabel' => 'Select Categories',
     'citySelectId' => 'filter-categories-by-city-' . Str::random(5),
     'categorySelectId' => 'filter-categories-by-city-' . Str::random(5),
 ])
 
-<div x-data="categoryFilter()" x-init="init()" class="row">
+<div x-data="categoriesFilter()" x-init="init()" class="row">
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields mb-4">
             <label class="title">{{ $cityLabel }}:</label>
             <select class="select2-select" id="{{ $citySelectId }}">
                 <option value="" selected disabled>Select</option>
                 @foreach ($cities as $city)
-                    <option value="{{ $city->id }}">
+                    <option value="{{ $city->id }}" {{ $selectedCityId == $city->id ? 'selected' : '' }}>
                         {{ $city->name }}
                     </option>
                 @endforeach
@@ -43,7 +44,7 @@
 
 @push('js')
     <script>
-        function categoryFilter() {
+        function categoriesFilter() {
             return {
                 categoryOptions: `<option value="">Select</option>`,
                 categorySelect: null,
