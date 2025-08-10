@@ -61,7 +61,7 @@
                             </div>
                         </div>
                         @if ($time->categories->first())
-                            <a href="{{ buildTimeDetailUrl($time, true, false) }}" target="_blank" class="themeBtn">View
+                            <a href="{{ buildTimeDetailUrl($time, true, true) }}" target="_blank" class="themeBtn">View
                                 Category</a>
                         @endif
                     </div>
