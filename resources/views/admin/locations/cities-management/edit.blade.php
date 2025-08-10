@@ -16,10 +16,19 @@
                     <div class="custom-sec__header">
                         <div class="section-content">
                             <h3 class="heading">Edit city: {{ isset($title) ? $title : '' }}</h3>
+                            @php
+                                function buildCityUrl($city, $includeCitySlug = true, $withBase = false)
+                                {
+                                    $country = strtolower($city->country->iso_alpha2 ?? 'xx');
+                                    $path = $includeCitySlug ? "$country/{$city->slug}" : $country;
+
+                                    return $withBase ? url($path) : $path;
+                                }
+                            @endphp
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildUrl(url('/'), 'city/') }}</div>
+                                    <div class="full-url">{{ buildCityUrl($item, false, true) }}/</div>
                                     <input value="{{ !empty($item->slug) ? $item->slug : '#' }}" type="button"
                                         class="link permalink-input" data-field-id="slug">
                                     <input data-required data-error="Slug" type="hidden" id="slug"
@@ -27,8 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('locations.city', [$item->country->iso_alpha2, $item->slug]) }}" target="_blank"
-                            class="themeBtn">View
+                        <a href="{{ buildCityUrl($item, true, true) }}" target="_blank" class="themeBtn">View
                             City</a>
                     </div>
                 </div>
@@ -326,7 +334,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'city'" :slug="$item->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="buildCityUrl($item, true, false)" />
                         </div>
                     </div>
                     <div class="col-md-3">

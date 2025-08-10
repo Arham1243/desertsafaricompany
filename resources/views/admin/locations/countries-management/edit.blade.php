@@ -16,17 +16,14 @@
                     <div class="custom-sec__header">
                         <div class="section-content">
                             <h3 class="heading">Edit Country: {{ isset($title) ? $title : '' }}</h3>
-                            <div class="permalink">
-                                <div class="title">Permalink:</div>
-                                <div class="title">
-                                    <div class="full-url">{{ buildUrl(url('/'), 'country/') }}</div>
-                                    <input value="{{ !empty($item->slug) ? $item->slug : '#' }}" type="button"
-                                        class="link permalink-input" data-field-id="slug">
-                                    <input type="hidden" id="slug"
-                                        value="{{ !empty($item->slug) ? $item->slug : '' }}" name="slug" data-required
-                                        data-error="Slug">
+                            @if ($item->iso_alpha2)
+                                <div class="permalink">
+                                    <div class="title">Permalink:</div>
+                                    <div class="title">
+                                        <div class="full-url">{{ buildUrl(url('/'), $item->iso_alpha2) }}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                         @if ($item->iso_alpha2)
                             <a href="{{ route('locations.country', $item->iso_alpha2) }}" target="_blank"
@@ -330,7 +327,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'country'" :slug="$item->slug" />
+                            <x-seo-options :seo="$seo ?? null" :slug="$item->iso_alpha2 ?? ''" />
                         </div>
                     </div>
                     <div class="col-md-3">
