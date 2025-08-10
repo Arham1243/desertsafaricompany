@@ -83,6 +83,7 @@
                 },
 
                 fetchCities(isInit = false) {
+                    this.citySelect.disabled = true;
                     if (!this.selectedCountry) {
                         this.selectedCity = ''
                         this.citySelect.innerHTML = `<option value="" selected disabled>Select City</option>`
@@ -101,6 +102,7 @@
                             }).join('')
                             this.citySelect.innerHTML = options
                             initializeSelect2()
+                            this.citySelect.disabled = false;
                         })
                 }
             }

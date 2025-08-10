@@ -5,15 +5,18 @@
     'selectedCityId' => null,
     'selectedCategoryId' => null,
     'isCategoryRequired' => false,
+    'cityLabel' => 'Filter by City',
+    'categoryLabel' => 'Select Category',
     'citySelectId' => 'filter-categories-by-city-' . Str::random(5),
+    'categorySelectId' => 'filter-categories-by-city-' . Str::random(5),
 ])
 
 <div x-data="categoryFilter()" x-init="init()" class="row">
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields mb-4">
-            <label class="title">City:</label>
+            <label class="title">{{ $cityLabel }}:</label>
             <select class="select2-select" id="{{ $citySelectId }}">
-                <option value="">Select City</option>
+                <option value="" selected disabled>Select</option>
                 @foreach ($cities as $city)
                     <option value="{{ $city->id }}" {{ $selectedCityId == $city->id ? 'selected' : '' }}>
                         {{ $city->name }}
@@ -25,12 +28,13 @@
 
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields">
-            <label class="title">Select Category @if ($isCategoryRequired)
+            <label class="title">{{ $categoryLabel }} @if ($isCategoryRequired)
                     <span class="text-danger"> *</span>
                 @endif:</label>
             <select data-error="Category" {{ $isCategoryRequired ? 'data-required' : '' }} name="{{ $fieldName }}"
-                x-html="categoryOptions" class="select2-select" data-error="Category" should-sort="false">
-                <option value="" disabled>Select Category</option>
+                x-html="categoryOptions" class="select2-select" data-error="Category" should-sort="false"
+                id="{{ $categorySelectId }}">
+                <option value="" selected disabled>Select</option>
                 {!! renderCategories($categories, $selectedCategoryId) !!}
             </select>
             @error($fieldName)
@@ -46,7 +50,7 @@
             return {
                 selectedCity: '{{ $selectedCityId }}',
                 categoryOptions: `<option value="" disabled selected>Select Category</option>`,
-
+                categorySelect: document.querySelector(`#{{ $categorySelectId }}`),
                 init() {
                     const citySelect = document.getElementById('{{ $citySelectId }}');
                     $(citySelect).off('change').on('change', (e) => {
@@ -61,6 +65,7 @@
                 },
 
                 fetchCategories() {
+                    this.categorySelect.disabled = true;
                     fetch(`{{ url('admin/tour-categories/city') }}`, {
                             method: 'POST',
                             headers: {
@@ -73,9 +78,18 @@
                         })
                         .then(res => res.json())
                         .then(data => {
-                            this.categoryOptions = this.buildOptions(data);
-                            this.$nextTick(() => initializeSelect2());
+                            if (!data.length) {
+                                this.categoryOptions = `<option disabled selected>No categories found</option>`;
+                            } else {
+                                this.categorySelect.disabled = false;
+                                this.categoryOptions = this.buildOptions(data);
+                            }
+                            this.$nextTick(() => {
+                                initializeSelect2();
+                                this.categorySelect.disabled = false;
+                            });
                         });
+
                 },
 
                 buildOptions(categories) {
