@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Testimonial;
 use App\Models\Tour;
+use App\Models\TourCategory;
 use App\Models\TourTime;
 use App\Models\TourTimeView;
 use Carbon\Carbon;
