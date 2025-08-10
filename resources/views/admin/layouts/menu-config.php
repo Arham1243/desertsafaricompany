@@ -185,11 +185,11 @@ return [
                 ],
             ],
             [
-                'title' => 'Times',
+                'title' => 'Time Categories',
                 'icon' => 'bx bx-time',
                 'submenu' => [
                     [
-                        'title' => 'Times',
+                        'title' => 'Time Categories',
                         'icon' => 'bx bx-list-ul',
                         'route' => route('admin.tour-times.index'),
                     ],
