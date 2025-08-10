@@ -96,7 +96,7 @@ return [
         ],
     ],
     [
-        'title' => 'Location',
+        'title' => 'Locations',
         'icon' => 'bx bx-map',
         'submenu' => [
             [
