@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         @foreach ($tours as $tour)
                             <div class="cart__product">
-                                <a href="{{ route('tours.details', $tour->slug) }}" class="cart__productImg">
+                                <a href="{{ buildTourDetailUrl($tour) }}" class="cart__productImg">
                                     <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                         loading="lazy">
@@ -33,7 +33,7 @@
                                                             class='bx bxs-trash-alt'></i>Remove
                                                         From Wishlit</button>
                                                 </form>
-                                                <a href="{{ route('tours.details', $tour->slug) }}" class="primary-btn"><i
+                                                <a href="{{ buildTourDetailUrl($tour) }}" class="primary-btn"><i
                                                         class='bx bxs-cart'></i>Book Now</a>
                                             </div>
                                         </div>

@@ -167,3 +167,14 @@ if (! function_exists('getAllCategoryIds')) {
         return $ids;
     }
 }
+if (! function_exists('buildTourDetailUrl')) {
+    function buildTourDetailUrl($tour)
+    {
+        $country = strtolower($tour->category->country->iso_alpha2 ?? 'xx');
+        $city = $tour->category->city->slug ?? 'no-city';
+        $category = $tour->category->slug ?? 'no-category';
+        $slug = $tour->slug ?? 'no-slug';
+
+        return url("$country/$city/$category/$slug");
+    }
+}

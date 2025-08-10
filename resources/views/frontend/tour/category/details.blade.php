@@ -74,7 +74,7 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                     @endif>
+                                                          @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -310,7 +310,7 @@
                             <div class="highlight">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <a href="{{ route('tours.details', $second_tour_block_tour->slug) }}"
+                                        <a href="{{ buildTourDetailUrl($second_tour_block_tour) }}"
                                             class="highlight__image" target="_blank">
                                             <img data-src={{ asset($second_tour_block_tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                                                 alt="{{ $second_tour_block_tour->featured_image_alt_text ?? 'image' }}"
@@ -329,7 +329,7 @@
                                                 </div>
                                             </div>
                                             <div class="highlight__button-wrapper">
-                                                <a href="{{ route('tours.details', $second_tour_block_tour->slug) }}">
+                                                <a href="{{ buildTourDetailUrl($second_tour_block_tour) }}">
                                                     See more
                                                 </a>
                                             </div>

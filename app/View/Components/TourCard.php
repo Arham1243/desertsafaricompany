@@ -16,13 +16,7 @@ class TourCard extends Component
     {
         $this->tour = $tour;
         $this->style = $style;
-
-        $country = strtolower($tour->category->country->iso_alpha2 ?? 'xx');
-        $city = $tour->category->city->slug ?? 'no-city';
-        $category = $tour->category->slug ?? 'no-category';
-        $slug = $tour->slug ?? 'no-slug';
-
-        $this->detailUrl = url("$country/$city/$category/$slug");
+        $this->detailUrl = buildTourDetailUrl($tour);
     }
 
     public function render()
