@@ -85,7 +85,7 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                    @endif>
+                                                                              @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -276,9 +276,11 @@
                                 ? getAllCategoryIds($tourCountCategory->id)
                                 : [];
 
-                            $tour_count_all_sub_category_Ids_tours = $tours->whereIn(
-                                'category_id',
-                                $tour_count_all_sub_category_Ids,
+                            $tour_count_all_sub_category_Ids_tours = $tours->filter(
+                                fn($tour) => $tour->categories
+                                    ->pluck('id')
+                                    ->intersect($tour_count_all_sub_category_Ids)
+                                    ->isNotEmpty(),
                             );
 
                             if ($tourCountCategory) {
