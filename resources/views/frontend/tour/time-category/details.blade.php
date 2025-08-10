@@ -85,8 +85,8 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                         
-                                  @endif>
+                                                                                                             
+                                       @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -263,7 +263,6 @@
                                 'id',
                                 (int) $tourCountContent->btn_link_category ?? null,
                             );
-                            dd($tourCountCategory, $item);
 
                             if ($tourCountCategory && $item->city) {
                                 $tourCountBtnLink = route('tours.category.details', [

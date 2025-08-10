@@ -19,7 +19,7 @@ class TourTimeController extends Controller
         $item = TourTime::where('slug', $slug)
             ->where('city_id', $cityModel->id)
             ->firstOrFail();
-        $tourCategories = TourTime::where('status', 'publish')
+        $tourCategories = TourCategory::where('status', 'publish')
             ->latest()
             ->get();
         $tours = Tour::where('status', 'publish')->latest()->get();
