@@ -70,7 +70,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('tours', TourController::class);
     Route::get('tours/duplicate/{id}', [TourController::class, 'duplicate'])->name('tours.duplicate');
+
     Route::get('tour-media/{media}', [TourController::class, 'deleteMedia'])->name('tour-media.delete');
+
     Route::resource('tour-attributes', AttributesController::class);
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
 
@@ -83,7 +85,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
         ->name('tour-times.by-city');
 
     Route::resource('tour-authors', TourAuthorController::class);
+
     Route::resource('tour-popups', TourDetailPopupController::class);
+
     Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {
         Route::controller(ReviewController::class)->group(function () {
             Route::get('/approved', 'approved')->name('approved');
@@ -94,21 +98,27 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     });
 
     Route::resource('tour-availability', AvailabilityController::class);
+
     Route::resource('tour-bookings', BookingController::class);
 
     Route::resource('pages', PageController::class);
-    Route::resource('sections', SectionController::class);
     Route::get('pages/{page}/page-builder', [PageController::class, 'editTemplate'])->name('pages.page-builder');
     Route::post('pages/{page}/page-builder', [PageController::class, 'storeTemplate'])->name('pages.page-builder.store');
     Route::post('pages/{page}/page-builder/sections/{section?}', [PageController::class, 'saveSectionDetails'])->name('pages.page-builder.sections.save');
     Route::get('pages/{page}/page-builder/section-template', [PageController::class, 'getSectionTemplate'])->name('pages.page-builder.section-template');
+    Route::resource('sections', SectionController::class);
 
     Route::get('export-ical', IcalController::class)->name('ical.export');
 
     Route::resource('countries', CountryController::class);
+
     Route::resource('cities', CityController::class);
+    Route::get('/countries/{country}/cities', [CityController::class, 'getByCountry']);
+
     Route::resource('testimonials', TestimonialController::class);
+
     Route::resource('popups', PopupController::class);
+
     Route::resource('coupons', CouponController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');

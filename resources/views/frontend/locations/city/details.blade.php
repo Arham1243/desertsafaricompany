@@ -25,7 +25,7 @@
                             </h2>
                             <ul class="location1-Breadcrumb">
                                 <li><a
-                                        href="{{ route('country.details', $item->country->slug) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
+                                        href="{{ route('locations.country', $item->country->iso_alpha2) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
                                 </li>
                                 <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
                             </ul>
@@ -155,7 +155,7 @@ $btnStyles = [];
                         <div class="col-md-3">
                             <div class="blog-more__dest-content">
                                 <div class="location1-beyond__img">
-                                    <a href="{{ route('city.details', $city->slug) }}">
+                                    <a href="{{ route('locations.city', [$city->country->iso_alpha2, $city->slug]) }}">
                                         <img data-src="{{ asset($city->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
                                             alt='{{ $city->featured_image_alt_text }}' class='imgFluid lazy'
                                             loading='lazy'>

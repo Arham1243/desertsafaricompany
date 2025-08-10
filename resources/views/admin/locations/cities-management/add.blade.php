@@ -27,15 +27,14 @@
                                     <div class="form-fields">
                                         <label class="title">Name <span class="text-danger">*</span> :</label>
                                         <input type="text" name="name" class="field" value="{{ old('name') }}"
-                                            placeholder="Name" data-error="Name">
+                                            placeholder="Name" data-error="Name" data-required>
                                         @error('name')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
                                     <div class="form-fields">
                                         <label class="title">Country <span class="text-danger">*</span> :</label>
-                                        <select name="country_id" class="select2-select"
-                                            {{ !$countries->isEmpty() ? '' : '' }} data-error="Country">
+                                        <select name="country_id" class="select2-select" data-error="Country" data-required>
                                             <option value="" selected disabled>Select Country</option>
                                             @foreach ($countries as $country)
                                                 <option value="{{ $country->id }}"
@@ -49,7 +48,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title">Content <span class="text-danger">*</span> :</label>
+                                        <label class="title">Content:</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
                                             {{ old('content') }}
                                         </textarea>

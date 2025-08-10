@@ -29,14 +29,6 @@ class CategoriesController extends Controller
         return view('admin.blogs.categories.main')->with('title', 'Blogs Categories')->with($data);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -52,14 +44,6 @@ class CategoriesController extends Controller
         BlogCategory::create($data);
 
         return redirect()->route('admin.blogs-categories.index')->with('notify_success', 'Category Added successfully.');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
     }
 
     /**
@@ -96,13 +80,5 @@ class CategoriesController extends Controller
         handleSeoData($request, $category, 'Blog-Categories');
 
         return redirect()->route('admin.blogs-categories.index')->with('notify_success', 'Category updated successfully.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

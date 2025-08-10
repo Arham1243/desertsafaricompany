@@ -19,6 +19,11 @@ class TourCategory extends Model
         return $this->morphOne(Seo::class, 'seoable');
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
     public function city()
     {
         return $this->belongsTo(City::class);

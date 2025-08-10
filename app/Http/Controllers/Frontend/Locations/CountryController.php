@@ -8,18 +8,14 @@ use App\Models\Tour;
 
 class CountryController extends Controller
 {
-    public function show($slug)
+    public function show($country)
     {
-        $item = Country::where('slug', $slug)->firstOrFail();
+        $item = Country::where('iso_alpha2', $country)->firstOrFail();
         $tours = Tour::where('status', 'publish')->latest()->get();
-        $relatedCities = $item->cities()
-            ->where('status', 'publish')
-            ->get();
-
-        $data = compact('item', 'relatedCities', 'tours');
+        $relatedCities = $item->cities()->where('status', 'publish')->get();
 
         return view('frontend.locations.country.details')
             ->with('title', ucfirst(strtolower($item->name)))
-            ->with($data);
+            ->with(compact('item', 'relatedCities', 'tours'));
     }
 }

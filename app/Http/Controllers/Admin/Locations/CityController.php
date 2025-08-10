@@ -130,7 +130,8 @@ class CityController extends Controller
         $item->update($data);
         handleSeoData($request, $item, 'City');
 
-        return redirect()->route('admin.cities.edit', $item->id)
+        return redirect()
+            ->route('admin.cities.edit', $item->id)
             ->with('notify_success', 'City updated successfully.');
     }
 
@@ -140,5 +141,12 @@ class CityController extends Controller
             case 'guide':
                 return $newData;
         }
+    }
+
+    public function getByCountry($countryId)
+    {
+        $cities = City::where('country_id', $countryId)->select('id', 'name')->get();
+
+        return response()->json($cities);
     }
 }

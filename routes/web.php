@@ -4,7 +4,6 @@ use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\Locations\CityController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
-use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchSuggestionController;
 use App\Http\Controllers\Frontend\Tour\CartController;
 use App\Http\Controllers\Frontend\Tour\CategoryController;
@@ -27,16 +26,32 @@ Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest']
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
 
-Route::prefix('city')->name('city.')->group(function () {
-    Route::get('{slug}', [CityController::class, 'show'])->name('details');
+Route::name('locations.')->group(function () {
+    Route::get('/{country}', [CountryController::class, 'show'])
+        ->where('country', '[a-zA-Z]{2}')
+        ->name('country');
+
+    Route::get('/{country}/{city}', [CityController::class, 'show'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'city' => '[a-z0-9-]+',
+        ])
+        ->name('city');
 });
 
-Route::prefix('country')->name('country.')->group(function () {
-    Route::get('{slug}', [CountryController::class, 'show'])->name('details');
-});
+Route::name('tours.')->group(function () {
+    Route::get('/{country}/{category}', [CategoryController::class, 'details'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'category' => '[a-z0-9-]+',
+        ]);
 
-Route::prefix('page')->name('page.')->group(function () {
-    Route::get('{slug}', [PageController::class, 'show'])->name('show');
+    Route::get('/{country}/{city}/{category}', [CategoryController::class, 'details'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'city' => '[a-z0-9-]+',
+            'category' => '[a-z0-9-]+',
+        ]);
 });
 
 Route::prefix('tours')->name('tours.')->group(function () {

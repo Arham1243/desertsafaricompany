@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Tour;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Country;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourReview;
@@ -72,12 +73,13 @@ class CategoryController extends Controller
     {
         $category = TourCategory::findOrFail($id);
         $tours = Tour::where('status', 'publish')->get();
+        $countries = Country::where('status', 'publish')->latest()->get();
         $dropdownCategories = TourCategory::whereNotIn('id', [$id])->get();
         $allCategories = TourCategory::where('status', 'publish')->latest()->get();
         $toursReviews = TourReview::where('status', 'active')->get();
         $seo = $category->seo()->first();
         $cities = City::where('status', 'publish')->latest()->get();
-        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories', 'cities');
+        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories', 'cities', 'countries');
 
         return view('admin.tours.categories.edit')->with('title', ucfirst(strtolower($category->name)))->with($data);
     }
@@ -96,6 +98,13 @@ class CategoryController extends Controller
         $data['slug'] = $slug;
 
         $data['json_content'] = json_encode($request->input('json_content', null));
+        $fieldsToNullify = ['country_id', 'city_id', 'parent_category_id'];
+
+        foreach ($fieldsToNullify as $field) {
+            if (! $request->has($field)) {
+                $data[$field] = null;
+            }
+        }
 
         $sectionData = $request->all()['content'] ?? [];
         $updatedContent = [];

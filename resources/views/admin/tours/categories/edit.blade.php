@@ -23,8 +23,33 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
+                                    @php
+                                        function buildCategoryUrl(
+                                            $category,
+                                            $includeCategorySlug = true,
+                                            $withBase = false,
+                                        ) {
+                                            $parts = [];
+
+                                            if ($category->country?->iso_alpha2) {
+                                                $parts[] = $category->country->iso_alpha2;
+                                            }
+
+                                            if ($category->city?->slug) {
+                                                $parts[] = $category->city->slug;
+                                            }
+
+                                            if ($includeCategorySlug && $category->slug) {
+                                                $parts[] = $category->slug;
+                                            }
+
+                                            $path = implode('/', $parts);
+
+                                            return $withBase ? url($path) : $path;
+                                        }
+                                    @endphp
                                     <div class="full-url">
-                                        {{ buildUrl(url('/'), 'tours/' . strtolower($category->city->slug ?? 'N/A') . '/') }}
+                                        {{ buildCategoryUrl($category, false, true) }}/
                                     </div>
                                     <input value="{{ $category->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
@@ -33,9 +58,10 @@
                                 </div>
                             </div>
                         </div>
-                        @if ($category->city && $category->slug)
-                            <a href="{{ route('tours.category.details', [$category->city->slug, $category->slug]) }}"
-                                target="_blank" class="themeBtn">View Category</a>
+
+                        @if ($category->slug)
+                            <a href="{{ buildCategoryUrl($category, true, true) }}" target="_blank" class="themeBtn">View
+                                Category</a>
                         @endif
                     </div>
                 </div>
@@ -48,119 +74,123 @@
                                     <div class="title">Category Content</div>
                                 </div>
                                 <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Category Name:</label>
-                                        <input type="text" name="name" class="field"
-                                            value="{{ old('name', $category->name) }}" placeholder="Name" data-error="Name">
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields mb-4">
-                                        <label class="title text-dark">Banner Title:</label>
-                                        <input name="json_content[h1_banner_text][title]" type="text" class="field"
-                                            value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
-                                    </div>
-
-                                    <div class="form-fields mb-4">
-                                        <label class="title text-dark">Banner Subtitle:</label>
-                                        <input name="json_content[h1_banner_text][subtitle]" type="text" class="field"
-                                            value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
-                                    </div>
-
-
-                                    <div class="form-fields mb-4">
-                                        <label class="title">City:</label>
-                                        <select name="city_id" class="select2-select" data-error="City">
-                                            <option value="">Select City</option>
-                                            @foreach ($cities as $city)
-                                                <option value="{{ $city->id }}"
-                                                    {{ old('city_id', $category->city_id ?? null) == $city->id ? 'selected' : '' }}>
-                                                    {{ $city->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('city_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-fields">
-                                        <label class="title">Parent:</label>
-                                        <select name="parent_category_id" class="select2-select category-select"
-                                            data-error="Category">
-                                            <option value="" selected>Parent Category</option>
-                                            @php
-                                                renderCategories($dropdownCategories, $category->parent_category_id);
-                                            @endphp
-                                        </select>
-                                        @error('parent_category_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-fields mt-4">
-                                        <label class="title">Content
-                                            :</label>
-                                        <textarea class="editor" name="long_description" data-placeholder="content" data-error="Content"> {{ $category->long_description }} </textarea>
-                                        @error('long_description')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-                                    <div class="form-fields mt-4">
-                                        <label class="title">Lines to Display Before "See More" </label>
-                                        <input oninput="this.value = Math.abs(this.value)" type="number" min="0"
-                                            name="long_description_line_limit" class="field"
-                                            value="{{ $category->long_description_line_limit }}"
-                                            data-error="long_description_line_limit">
-                                        @error('long_description_line_limit')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <hr class="my-5">
-                                    <div class="form-fields">
-                                        <div class="title title--sm mb-3">Featured Slider images:</div>
-                                        <div class="multiple-upload" data-upload-multiple>
-                                            <input type="file" class="gallery-input d-none" multiple
-                                                data-upload-multiple-input accept="image/*" id="banners" name="gallery[]">
-                                            <label class="multiple-upload__btn themeBtn" for="banners">
-                                                <i class='bx bx-plus'></i>
-                                                Choose
-                                            </label>
-                                            <div class="dimensions mt-3">
-                                                <strong>Dimensions:</strong> 1116 &times; 250
-                                            </div>
-                                            <ul class="multiple-upload__imgs" data-upload-multiple-images>
-                                            </ul>
-                                            <div class="text-danger error-message d-none" data-upload-multiple-error>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Category Name <span
+                                                        class="text-danger">*</span>:</label>
+                                                <input type="text" name="name" class="field"
+                                                    value="{{ old('name', $category->name) }}" placeholder="Name"
+                                                    data-required data-error="Name">
                                             </div>
                                         </div>
-                                    </div>
-
-                                    @if (!$category->media->isEmpty())
-                                        <div class="form-fields mt-3">
-                                            <label class="title">Current Slider images:</label>
-                                            <ul class="multiple-upload__imgs">
-                                                @foreach ($category->media as $media)
-                                                    <li class="single-image">
-                                                        <a href="{{ route('admin.media.destroy', $media->id) }}"
-                                                            onclick="return confirm('Are you sure you want to delete this media?')"
-                                                            class="delete-btn">
-                                                            <i class='bx bxs-trash-alt'></i>
-                                                        </a>
-                                                        <a class="mask" href="{{ asset($media->file_path) }}"
-                                                            data-fancybox="gallery">
-                                                            <img src="{{ asset($media->file_path) }}" class="imgFluid"
-                                                                alt="{{ $media->alt_text }}" />
-                                                        </a>
-                                                        <input type="text" value="{{ $media->alt_text }}"
-                                                            class="field" readonly>
-                                                    </li>
-                                                @endforeach
-                                            </ul>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title text-dark">Banner Title:</label>
+                                                <input name="json_content[h1_banner_text][title]" type="text"
+                                                    class="field"
+                                                    value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
+                                            </div>
                                         </div>
-                                    @endif
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title text-dark">Banner Subtitle:</label>
+                                                <input name="json_content[h1_banner_text][subtitle]" type="text"
+                                                    class="field"
+                                                    value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
+                                            </div>
+                                        </div>
+                                        <x-admin.city-filter-by-country :isCountryRequired="true" :isCityRequired="true"
+                                            :countries="$countries" :cities="$cities" wrapperClass="col-md-8 row pe-0"
+                                            selectedCountryId="{{ old('country_id', $category->country_id ?? null) }}"
+                                            selectedCityId="{{ old('city_id', $category->city_id ?? null) }}"
+                                            countryColClass="col-md-6 mb-4 pe-0" cityColClass="col-md-6 mb-4"
+                                            countryName="country_id" cityName="city_id" />
+                                        <div class="col-md-4 pe-0 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Parent:</label>
+                                                <select name="parent_category_id" class="select2-select category-select"
+                                                    data-error="Category">
+                                                    <option value="" selected>Parent Category</option>
+                                                    @php
+                                                        renderCategories(
+                                                            $dropdownCategories,
+                                                            $category->parent_category_id,
+                                                        );
+                                                    @endphp
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <div class="form-fields">
+                                                <label class="title">Content
+                                                    :</label>
+                                                <textarea class="editor" name="long_description" data-placeholder="content" data-error="Content"> {{ $category->long_description }} </textarea>
+                                                @error('long_description')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+
+                                            <div class="form-fields">
+                                                <label class="title">Lines to Display Before "See More" </label>
+                                                <input oninput="this.value = Math.abs(this.value)" type="number"
+                                                    min="0" name="long_description_line_limit" class="field"
+                                                    value="{{ $category->long_description_line_limit }}"
+                                                    data-error="long_description_line_limit">
+                                            </div>
+                                        </div>
+                                        <div class="col-12 my-4">
+                                            <hr>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-fields">
+                                                <div class="title title--sm mb-3">Featured Slider images:</div>
+                                                <div class="multiple-upload" data-upload-multiple>
+                                                    <input type="file" class="gallery-input d-none" multiple
+                                                        data-upload-multiple-input accept="image/*" id="banners"
+                                                        name="gallery[]">
+                                                    <label class="multiple-upload__btn themeBtn" for="banners">
+                                                        <i class='bx bx-plus'></i>
+                                                        Choose
+                                                    </label>
+                                                    <div class="dimensions mt-3">
+                                                        <strong>Dimensions:</strong> 1116 &times; 250
+                                                    </div>
+                                                    <ul class="multiple-upload__imgs" data-upload-multiple-images>
+                                                    </ul>
+                                                    <div class="text-danger error-message d-none"
+                                                        data-upload-multiple-error>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @if (!$category->media->isEmpty())
+                                            <div class="col-12">
+                                                <div class="form-fields mt-3">
+                                                    <label class="title">Current Slider images:</label>
+                                                    <ul class="multiple-upload__imgs">
+                                                        @foreach ($category->media as $media)
+                                                            <li class="single-image">
+                                                                <a href="{{ route('admin.media.destroy', $media->id) }}"
+                                                                    onclick="return confirm('Are you sure you want to delete this media?')"
+                                                                    class="delete-btn">
+                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                </a>
+                                                                <a class="mask" href="{{ asset($media->file_path) }}"
+                                                                    data-fancybox="gallery">
+                                                                    <img src="{{ asset($media->file_path) }}"
+                                                                        class="imgFluid" alt="{{ $media->alt_text }}" />
+                                                                </a>
+                                                                <input type="text" value="{{ $media->alt_text }}"
+                                                                    class="field" readonly>
+                                                            </li>
+                                                        @endforeach
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div x-data="{
@@ -778,7 +808,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <div x-data="{ enabled: {{ isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
@@ -800,7 +829,7 @@
                                     <div class="row">
                                         <div class="col-lg-12 pb-4">
                                             <div class="row">
-                                                <div class="col-md-12 mb-4">
+                                                <div class="col-12 mb-4">
                                                     <div class="form-fields">
                                                         <label class="title">Heading & Text Color:</label>
                                                         <div class="field color-picker" data-color-picker-container>
@@ -908,7 +937,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-12 mb-4">
+                                                <div class="col-12 mb-4">
                                                     <div class="form-fields">
                                                         <label class="title">Text:</label>
                                                         <textarea rows="3" name="content[newsletter][privacy_statement]" class="field">{{ $newsletterContent->privacy_statement ?? '' }}</textarea>
@@ -1020,7 +1049,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'tours/' . strtolower($category->city->slug ?? 'N/A')" :slug="$category->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="buildCategoryUrl($category, false)" :slug="$category->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">

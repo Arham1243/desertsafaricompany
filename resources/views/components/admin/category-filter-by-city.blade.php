@@ -42,7 +42,7 @@
         function categoryFilter() {
             return {
                 selectedCity: '{{ $selectedCityId }}',
-                categoryOptions: `<option value="" disabled>Select Category</option>`,
+                categoryOptions: `<option value="" disabled selected>Select Category</option>`,
 
                 init() {
                     const citySelect = document.getElementById('{{ $citySelectId }}');
@@ -101,7 +101,7 @@
                         });
                     };
 
-                    return `<option value="" disabled>Select Category</option>` + build(roots).join('');
+                    return `<option value="" disabled selected>Select Category</option>` + build(roots).join('');
                 }
             }
         }
