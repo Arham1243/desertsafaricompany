@@ -28,8 +28,11 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ route('locations.country', $item->iso_alpha2) }}" target="_blank" class="themeBtn">View
-                            Country</a>
+                        @if ($item->iso_alpha2)
+                            <a href="{{ route('locations.country', $item->iso_alpha2) }}" target="_blank"
+                                class="themeBtn">View
+                                Country</a>
+                        @endif
                     </div>
                 </div>
 
