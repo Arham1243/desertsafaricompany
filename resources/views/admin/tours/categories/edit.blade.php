@@ -32,10 +32,14 @@
                                             $parts = [];
 
                                             $parts[] = $category->country?->iso_alpha2 ?? 'no-country';
-                                            $parts[] = $category->city?->slug ?? 'no-city';
-                                            $parts[] = $includeCategorySlug ? $category->slug ?? 'no-category' : null;
 
-                                            $parts = array_filter($parts, fn($part) => $part !== null);
+                                            if ($category->city?->slug) {
+                                                $parts[] = $category->city->slug;
+                                            }
+
+                                            if ($includeCategorySlug) {
+                                                $parts[] = $category->slug ?? 'no-category';
+                                            }
 
                                             $path = implode('/', $parts);
 
@@ -94,7 +98,7 @@
                                                     value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
                                             </div>
                                         </div>
-                                        <x-admin.city-filter-by-country :isCountryRequired="true" :isCityRequired="true"
+                                        <x-admin.city-filter-by-country :isCountryRequired="true" :isCityRequired="false"
                                             :countries="$countries" :cities="$cities" wrapperClass="col-md-8 row pe-0"
                                             selectedCountryId="{{ old('country_id', $category->country_id ?? null) }}"
                                             selectedCityId="{{ old('city_id', $category->city_id ?? null) }}"

@@ -110,11 +110,11 @@
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
-                            @if ($tour->category && $tour->category->city)
+                            @if ($currentCategory && $tour->city)
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tours.category.details', [$tour->category->country->iso_alpha2, $tour->category->city->slug, $tour->category->slug]) }}">
-                                        {{ $tour->category->name ?? '' }}
+                                        href="{{ route('tours.category.details', [$tour->city->country->iso_alpha2, $tour->city->slug, $currentCategory->slug]) }}">
+                                        {{ $currentCategory->name ?? '' }}
                                     </a>
                                 </li>
                                 <li style="color: #6c757d;" class="breadcrumb-item">/</li>

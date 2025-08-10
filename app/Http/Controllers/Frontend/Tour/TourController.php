@@ -44,11 +44,13 @@ class TourController extends Controller
             })
             ->firstOrFail();
 
+        $currentCategory = $tour->categories->firstWhere('slug', $category);
+
         $this->trackTourView($request, $tour->id);
         $todayViews = $tour->views()->whereDate('view_date', today())->count();
         $isTourInCart = isset($cart['tours'][$tour->id]);
 
-        $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon', 'detailPopups');
+        $data = compact('tour', 'attributes', 'cart', 'isTourInCart', 'settings', 'todayViews', 'firstOrderCoupon', 'detailPopups', 'currentCategory');
 
         return view('frontend.tour.details')
             ->with('title', $tour->title)

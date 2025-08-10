@@ -145,7 +145,7 @@ $btnStyles = [];
                 <div class="latest-stories__details">
                     <div class="section-content">
                         <h2 class="subHeading">
-                            {{ $item->name }} and beyond
+                            {{ ucfirst($item->name) }} and beyond
                         </h2>
                     </div>
                 </div>
