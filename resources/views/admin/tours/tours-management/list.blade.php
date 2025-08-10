@@ -79,8 +79,8 @@
                                                 <a href="{{ route('admin.tours.edit', $item->id) }}"
                                                     class="link">{{ $item->title }}</a> <br />
                                                 <a target="_blank" style="font-size: 0.76rem;"
-                                                    href="{{ route('tours.details', $item->slug) }}"
-                                                    class="link">{{ buildUrl(url('/'), 'tours/' . $item->slug) }}</a>
+                                                    href="{{ buildTourDetailUrl($item) }}"
+                                                    class="link">{{ buildTourDetailUrl($item) }}</a>
                                             </td>
 
                                             <td>{{ $item->category->name ?? 'N/A' }}</td>
