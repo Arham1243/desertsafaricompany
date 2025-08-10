@@ -12,29 +12,10 @@
                     <div class="custom-sec__header">
                         <div class="section-content">
                             <h3 class="heading">Edit Tour: {{ isset($title) ? $title : '' }}</h3>
-                            @php
-                                function buildTourDetailsUrl($tour, $includeTourSlug = true, $withBase = false)
-                                {
-                                    $parts = [];
-
-                                    $parts[] = strtolower($tour->category?->country?->iso_alpha2 ?? 'no-country');
-                                    $parts[] = $tour->category?->city?->slug ?? 'no-city';
-                                    $parts[] = $tour->category?->slug ?? 'no-category';
-
-                                    if ($includeTourSlug) {
-                                        $parts[] = $tour->slug ?? 'no-slug';
-                                    }
-
-                                    $path = implode('/', $parts);
-
-                                    return $withBase ? url($path) : $path;
-                                }
-                            @endphp
-
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildTourDetailsUrl($tour, false, true) }}/</div>
+                                    <div class="full-url">{{ buildTourDetailUrl($tour, false) }}/</div>
                                     <input value="{{ $tour->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
                                     <input type="hidden" id="slug" value="{{ $tour->slug ?? '#' }}"
@@ -42,7 +23,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ buildTourDetailsUrl($tour, true, true) }}" target="_blank" class="themeBtn">View
+                        <a href="{{ buildTourDetailUrl($tour) }}" target="_blank" class="themeBtn">View
                             Tour</a>
                     </div>
                 </div>
@@ -147,10 +128,16 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @php
+                                            $tourCategoryIds = $tour->categories->isNotEmpty()
+                                                ? $tour->categories->pluck('id')->toArray()
+                                                : [];
+                                        @endphp
                                         <div class="col-12  mt-4">
-                                            <x-admin.category-filter-by-city :cities="$cities" :categories="$categories"
-                                                :selectedCityId="$tour->category->city_id ?? null" :selectedCategoryId="$tour->category->id ?? null" field-name="tour[general][category_id]"
-                                                :isCategoryRequired="true" />
+                                            <x-admin.category-multi-select-by-city :cities="$cities" :categories="$categories"
+                                                :selectedCategoryIds="$tourCategoryIds" field-name="tour[general][category_ids][]"
+                                                :isCategoryRequired="true" cityLabel="Filter by City"
+                                                categoryLabel="Select Categories" />
 
                                         </div>
                                         <div class="col-12">
@@ -745,7 +732,7 @@
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
                                         <div class="form-fields">
-                                            <label class="title">Select City :</label>
+                                            <label class="title">Select City <span class="text-danger">*</span>:</label>
                                             <select name="tour[location][normal_location][city_id]" class="select2-select"
                                                 data-error="Location > City" placeholder="Select City"
                                                 autocomplete="new-password" data-required>
@@ -3306,7 +3293,7 @@
                             </div>
                         </div>
                         <div x-show="optionTab === 'seo'" class="seo-options">
-                            <x-seo-options :seo="$tour->seo ?? null" :resource="buildTourDetailsUrl($tour, true, false)" />
+                            <x-seo-options :seo="$tour->seo ?? null" :resource="buildTourDetailUrl($tour, true, false)" />
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " type="submit"
                             class="themeBtn mt-4 ms-auto">Save Changes<i class='bx bx-check'></i></button>

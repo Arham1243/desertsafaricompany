@@ -98,7 +98,7 @@
                                         <label class="title text-dark">Select Categories:</label>
                                         <select name="category_ids[]" class="select2-select" data-error="Category"
                                             should-sort="false" multiple>
-                                            <option value="" disabled>Select Category</option>
+                                            <option value="" disabled>Select</option>
                                             {!! renderCategoriesMulti($allCategories, $tourTimeCategoryIds) !!}
                                         </select>
                                     </div>

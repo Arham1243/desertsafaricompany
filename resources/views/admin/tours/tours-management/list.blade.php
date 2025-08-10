@@ -61,7 +61,7 @@
                                             </div>
                                         </th>
                                         <th>Title</th>
-                                        <th>Category</th>
+                                        <th>Categories</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -82,8 +82,13 @@
                                                     href="{{ buildTourDetailUrl($item) }}"
                                                     class="link">{{ buildTourDetailUrl($item) }}</a>
                                             </td>
-
-                                            <td>{{ $item->category->name ?? 'N/A' }}</td>
+                                            @php
+                                                $chunks = $item->categories->chunk(1);
+                                                $lines = $chunks->map(
+                                                    fn($chunk) => $chunk->pluck('name')->implode(', '),
+                                                );
+                                            @endphp
+                                            <td>{!! $lines->implode('<br>') ?: 'N/A' !!}</td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span

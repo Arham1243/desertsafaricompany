@@ -226,26 +226,15 @@
                                             </div>
                                         @else
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
-                                            <div class="badge-of-excellence">
-                                                @if ($authorStyle && $authorIconClass)
-                                                    <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
-                                                @endif
-                                                <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
-                                                <div>{{ $tour->author->name }}</div>
-                                            </div>
-                                        @endif
-                                        @if ($tour->cities->isNotEmpty())
-                                            <div class=location-headerLocation--details>
-                                                <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
-                                                @foreach ($tour->cities as $i => $city)
-                                                    <span>
-                                                        {{ $city->name }}
-                                                        @if ($i != count($tour->cities) - 1)
-                                                            ,
-                                                        @endif
-                                                    </span>
-                                                @endforeach
-                                            </div>
+                                            @if ($tour->author)
+                                                <div class="badge-of-excellence">
+                                                    @if ($authorStyle && $authorIconClass)
+                                                        <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
+                                                    @endif
+                                                    <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
+                                                    <div>{{ $tour->author->name }}</div>
+                                                </div>
+                                            @endif
                                         @endif
                                     </div>
                                 </div>

@@ -28,9 +28,11 @@ class TourController extends Controller
         $tourCategories = TourCategory::get();
         $filteredCategory = request()->query('category');
 
-        $tours = Tour::with('category')
+        $tours = Tour::with('categories')
             ->when($filteredCategory, function ($query) use ($filteredCategory) {
-                $query->where('category_id', $filteredCategory);
+                $query->whereHas('categories', function ($q) use ($filteredCategory) {
+                    $q->where('tour_category_id', $filteredCategory);
+                });
             })
             ->latest()
             ->get();
@@ -101,6 +103,7 @@ class TourController extends Controller
         $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
         $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
+        $categoryIds = $general['category_ids'] ?? [];
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -112,7 +115,6 @@ class TourController extends Controller
             'booked_text' => $bookedText ?? null,
             'badge_tag' => $badgeTag ?? null,
             'content' => $general['content'] ?? null,
-            'category_id' => $general['category_id'] ?? null,
             'tour_time_id' => $general['tour_time_id'] ?? null,
             'city_id' => $location['normal_location']['city_id'] ?? null,
             'description_line_limit' => $general['description_line_limit'] ?? null,
@@ -159,6 +161,8 @@ class TourController extends Controller
             'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
+
+        $tour->categories()->sync($categoryIds);
 
         if (isset($general['faq']['question']) && is_array($general['faq']['question'])) {
             foreach ($general['faq']['question'] as $index => $question) {
@@ -247,10 +251,6 @@ class TourController extends Controller
         }
 
         if (isset($location['location_type'])) {
-            if ($location['location_type'] == 'normal_location') {
-                $cityIds = $location['normal_location']['city_ids'] ?? [];
-                // $tour->cities()->sync($cityIds);
-            }
             if ($location['location_type'] === 'normal_itinerary') {
                 $days = array_filter($location['normal_itinerary']['days'] ?? []);
                 $titles = array_filter($location['normal_itinerary']['title'] ?? []);
@@ -369,12 +369,12 @@ class TourController extends Controller
         $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
         $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
+        $categoryIds = $general['category_ids'] ?? [];
 
         $tour->update([
             'title' => $general['title'] ?? null,
             'slug' => $slug ?? null,
             'content' => $general['content'] ?? null,
-            'category_id' => $general['category_id'] ?? null,
             'tour_time_id' => $general['tour_time_id'] ?? null,
             'city_id' => $location['normal_location']['city_id'] ?? null,
             'details' => $details,
@@ -426,6 +426,8 @@ class TourController extends Controller
             'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
         ]);
+
+        $tour->categories()->sync($categoryIds);
 
         if (isset($general['faq']['question']) && is_array($general['faq']['question'])) {
             $tour->faqs()->delete();
@@ -520,11 +522,6 @@ class TourController extends Controller
         }
 
         if (isset($location['location_type'])) {
-            if ($location['location_type'] == 'normal_location') {
-                $cityIds = $location['normal_location']['city_ids'] ?? [];
-                // $tour->cities()->sync($cityIds);
-            }
-
             if ($location['location_type'] === 'normal_itinerary') {
                 $ids = $location['normal_itinerary']['ids'] ?? [];
                 $tour->normalItineraries()->whereNotIn('id', $ids)->delete();
@@ -633,7 +630,7 @@ class TourController extends Controller
         $this->duplicatePricing($tour, $newTour);
         $this->duplicateItinerary($tour, $newTour);
         $this->duplicateAddOns($tour, $newTour);
-        $this->duplicateCities($tour, $newTour);
+        $this->duplicateCategories($tour, $newTour);
         $this->duplicateMedia($tour, $newTour);
 
         return redirect()->route('admin.tours.index')->with('notify_success', 'Tour duplicated successfully.');
@@ -673,20 +670,18 @@ class TourController extends Controller
     private function duplicatePricing($tour, $newTour)
     {
         $priceType = $tour->price_type;
-        switch ($priceType) {
-            case 'normal':
-                $pricings = $tour->normalPrices;
-                break;
-            case 'private':
-                $pricings = $tour->privatePrices;
-                break;
-            case 'water':
-                $pricings = $tour->waterPrices;
-                break;
-            case 'promo':
-                $pricings = $tour->promoPrices;
-                break;
+        $pricings = match ($priceType) {
+            'normal' => $tour->normalPrices,
+            'private' => $tour->privatePrices,
+            'water' => $tour->waterPrices,
+            'promo' => $tour->promoPrices,
+            default => null,
+        };
+
+        if (! $pricings) {
+            return;
         }
+
         foreach ($pricings as $pricing) {
             TourPricing::create([
                 'tour_id' => $newTour->id,
@@ -730,9 +725,9 @@ class TourController extends Controller
         }
     }
 
-    private function duplicateCities($tour, $newTour)
+    private function duplicateCategories($tour, $newTour)
     {
-        $newTour->cities()->sync($tour->cities->pluck('id')->toArray());
+        $newTour->categories()->sync($tour->categories->pluck('id')->toArray());
     }
 
     private function duplicateMedia($tour, $newTour)

@@ -35,17 +35,12 @@ class TourController extends Controller
         $cart = Session::get('cart', []);
         $attributes = TourAttribute::where('status', 'active')->latest()->get();
 
-        $tour = Tour::with(['tourAttributes.items', 'category.city', 'category.country'])
+        $tour = Tour::with(['tourAttributes.items', 'categories.city', 'categories.country'])
             ->where('slug', $slug)
-            ->whereHas('category', function ($q) use ($category, $city, $country) {
-                $q
-                    ->where('slug', $category)
-                    ->whereHas('city', function ($q) use ($city) {
-                        $q->where('slug', $city);
-                    })
-                    ->whereHas('country', function ($q) use ($country) {
-                        $q->where('iso_alpha2', strtoupper($country));
-                    });
+            ->whereHas('categories', function ($q) use ($category, $city, $country) {
+                $q->where('slug', $category)
+                    ->whereHas('city', fn ($q) => $q->where('slug', $city))
+                    ->whereHas('country', fn ($q) => $q->where('iso_alpha2', strtoupper($country)));
             })
             ->firstOrFail();
 

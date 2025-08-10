@@ -118,9 +118,15 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-4">
-                                            <x-admin.category-filter-by-city :cities="$cities" :categories="$categories"
-                                                field-name="tour[general][category_id]" :isCategoryRequired="true" />
+                                        @php
+                                            $tourCategoryIds = [];
+                                        @endphp
+                                        <div class="col-12  mt-4">
+                                            <x-admin.category-multi-select-by-city :cities="$cities" :categories="$categories"
+                                                :selectedCategoryIds="$tourCategoryIds" field-name="tour[general][category_ids][]"
+                                                :isCategoryRequired="true" cityLabel="Filter by City"
+                                                categoryLabel="Select Categories" />
+
                                         </div>
                                         <div class="col-12">
                                             <div class="form-fields mb-4">
@@ -641,7 +647,7 @@
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
                                         <div class="form-fields">
-                                            <label class="title">Select City :</label>
+                                            <label class="title">Select City <span class="text-danger">*</span>:</label>
                                             <select name="tour[location][normal_location][city_id]" class="select2-select"
                                                 data-error="Location > City" placeholder="Select City"
                                                 autocomplete="new-password" data-required>
@@ -1502,7 +1508,8 @@
                                                                 <div class="repeater-table" data-repeater>
                                                                     <div class="mb-4" x-data="customTextBlock()"
                                                                         x-init="init()">
-                                                                        <div class="d-flex align-items-center gap-4  mb-2">
+                                                                        <div
+                                                                            class="d-flex align-items-center gap-4  mb-2">
                                                                             <label class="title title--sm mb-0">Promo
                                                                                 Pricing:</label>
                                                                             <button class=" themeBtn" type="button"
