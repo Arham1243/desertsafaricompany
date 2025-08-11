@@ -80,14 +80,16 @@ $btnStyles = [];
 
     @php
         $jsonContent = json_decode($item->json_content, true) ?? null;
-        $enity_based_tour_block = $jsonContent ? $jsonContent['enity_based_tour_block'] : null;
+        $enity_based_tour_block = isset($jsonContent['enity_based_tour_block'])
+            ? $jsonContent['enity_based_tour_block']
+            : null;
         $enity_based_tour_block_tours = $item->tours;
 
-        $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
+        $first_tour_block = isset($jsonContent['first_tour_block']) ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
         $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
 
-        $second_tour_block = $jsonContent ? $jsonContent['second_tour_block'] : null;
+        $second_tour_block = isset($jsonContent['second_tour_block']) ? $jsonContent['second_tour_block'] : null;
         $second_tour_block_tour_ids = $second_tour_block['tour_ids'] ?? [];
         $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
     @endphp
