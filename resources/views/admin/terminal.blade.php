@@ -8,85 +8,87 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <title>Artisan Terminal</title>
     <style>
+        :root {
+            --bg: #0b0f14;
+            --panel: #10151d;
+            --muted: #9aa4b2;
+            --border: #283546;
+            /* slightly lighter for more prominent edges */
+            --textarea: #0e141b;
+            --accent: #3b82f6;
+            --accent-strong: #2563eb;
+            --text: #e6edf3;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
 
         body {
-            font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-            background: #000;
-            height: 100vh;
-            overflow: hidden;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
-        .terminal-window {
-            width: 100%;
-            height: 100vh;
-            background: #000;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-            display: flex;
-            flex-direction: column;
+        .container {
+            max-width: 980px;
+            margin: 48px auto;
+            padding: 0 18px;
         }
 
-        .terminal-header {
-            background: linear-gradient(180deg, #4a4a4a 0%, #2a2a2a 100%);
-            height: 28px;
+        .card {
+            position: relative;
+            background: var(--panel);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        .header {
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
-            padding: 0 10px;
-            border-bottom: 1px solid #1a1a1a;
+            justify-content: space-between;
+        }
+
+        .title {
+            margin: 0;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--muted);
+            letter-spacing: .02em;
+            text-transform: uppercase;
+        }
+
+        .terminal-pane {
             position: relative;
-        }
-
-        .traffic-lights {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .traffic-light {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            position: relative;
-            border: 0.5px solid rgba(0, 0, 0, 0.2);
-        }
-
-        .close {
-            background: linear-gradient(135deg, #ff5f57 0%, #ff3b30 100%);
-        }
-
-        .minimize {
-            background: linear-gradient(135deg, #ffbd2e 0%, #ff9500 100%);
-        }
-
-        .maximize {
-            background: linear-gradient(135deg, #28ca42 0%, #30d158 100%);
-        }
-
-        .terminal-title {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            color: #fff;
-            font-size: 13px;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
         }
 
         .terminal-body {
-            flex: 1;
-            background: #000;
-            padding: 15px;
-            overflow-y: auto;
+            background: var(--textarea);
+            border: 1.25px solid var(--border);
+            border-radius: 10px;
+            padding: 14px;
+            min-height: 320px;
+            max-height: 60vh;
+            overflow: auto;
+            color: var(--text);
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
             font-size: 13px;
-            line-height: 1.4;
-            color: #fff;
+            line-height: 1.55;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
         .terminal-output {
@@ -104,23 +106,13 @@
             margin-bottom: 2px;
         }
 
-        .prompt-user {
-            color: #4fc3f7;
-            font-weight: 600;
-        }
-
-        .prompt-separator {
-            color: #fff;
-            margin: 0 5px;
-        }
-
         .prompt-path {
             color: #81c784;
             font-weight: 500;
         }
 
         .prompt-symbol {
-            color: #fff;
+            color: var(--text);
             margin: 0 8px 0 5px;
         }
 
@@ -128,33 +120,11 @@
             background: transparent;
             border: none;
             outline: none;
-            color: #fff;
+            color: var(--text);
             font-family: inherit;
             font-size: inherit;
             flex: 1;
-            caret-color: #fff;
-        }
-
-        .terminal-cursor {
-            display: inline-block;
-            width: 8px;
-            height: 16px;
-            background: #fff;
-            animation: blink 1s infinite;
-            margin-left: 2px;
-        }
-
-        @keyframes blink {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0;
-            }
+            caret-color: #93c5fd;
         }
 
         .command-output {
@@ -164,7 +134,7 @@
         }
 
         .command-echo {
-            color: #888;
+            color: #9aa4b2;
             margin-bottom: 5px;
         }
 
@@ -186,39 +156,26 @@
         }
 
         .terminal-body::-webkit-scrollbar-track {
-            background: #1a1a1a;
+            background: #0f1720;
         }
 
         .terminal-body::-webkit-scrollbar-thumb {
-            background: #444;
+            background: #283546;
             border-radius: 4px;
         }
 
         .terminal-body::-webkit-scrollbar-thumb:hover {
-            background: #555;
+            background: #324256;
         }
 
-        /* Welcome message styling */
-        .welcome-message {
-            color: #888;
-            margin-bottom: 15px;
-            font-style: italic;
-        }
-
+        /* Hint */
         .artisan-hint {
-            color: #ffd93d;
-            margin-bottom: 10px;
+            color: var(--muted);
+            margin-bottom: 8px;
             font-size: 12px;
         }
 
-        /* Command history */
-        .history-item {
-            color: #666;
-            font-size: 11px;
-            margin-bottom: 1px;
-        }
-
-        /* Terminal-style text selection */
+        /* Selection */
         ::selection {
             background: #4a90e2;
             color: #fff;
@@ -239,29 +196,26 @@
             color: #fff;
         }
 
-        /* Make output text selectable */
-        .terminal-line {
-            user-select: text;
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
+        @media (max-width: 640px) {
+            .container {
+                margin: 28px auto;
+            }
         }
     </style>
 </head>
 
 <body>
-    <div class="terminal-window">
-        <div class="terminal-header">
-            <div class="traffic-lights">
-                <div class="traffic-light close"></div>
-                <div class="traffic-light minimize"></div>
-                <div class="traffic-light maximize"></div>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <h1 class="title">Artisan Terminal</h1>
             </div>
-            <div class="terminal-title">{{ env('APP_NAME', 'Laravel') }} — Terminal</div>
-        </div>
-        <div class="terminal-body" id="terminal-body">
-            <div class="artisan-hint">This terminal will only execute PHP Artisan commands</div>
-            <div class="terminal-output" id="terminal-output"></div>
+            <div class="terminal-pane">
+                <div class="terminal-body" id="terminal-body">
+                    <div class="artisan-hint">This terminal will only execute PHP Artisan commands</div>
+                    <div class="terminal-output" id="terminal-output"></div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -283,9 +237,7 @@
             }
 
             setupEventListeners() {
-                // Only focus when clicking on empty terminal areas
                 this.terminalBody.addEventListener('click', (e) => {
-                    // Only focus if clicking on the terminal body itself or prompt area
                     if (e.target === this.terminalBody || e.target.closest('.terminal-prompt')) {
                         if (this.currentInput) {
                             this.currentInput.focus();
@@ -517,13 +469,15 @@
         document.addEventListener('DOMContentLoaded', () => {
             new MacTerminal();
         });
-
-        // Traffic light functionality (optional)
-        document.querySelector('.close').addEventListener('click', () => {
-            if (confirm('Close terminal?')) {
-                window.location.href = '/admin/dashboard';
-            }
-        });
+        // Optional close handling if a close button exists in future
+        const closeBtn = document.querySelector('.close');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                if (confirm('Close terminal?')) {
+                    window.location.href = '/admin/dashboard';
+                }
+            });
+        }
     </script>
 </body>
 
