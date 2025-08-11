@@ -80,6 +80,9 @@ $btnStyles = [];
 
     @php
         $jsonContent = json_decode($item->json_content, true) ?? null;
+        $enity_based_tour_block = $jsonContent ? $jsonContent['enity_based_tour_block'] : null;
+        $enity_based_tour_block_tours = $item->tours;
+
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
         $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
@@ -88,6 +91,31 @@ $btnStyles = [];
         $second_tour_block_tour_ids = $second_tour_block['tour_ids'] ?? [];
         $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
     @endphp
+
+    @if (isset($enity_based_tour_block['is_enabled']) &&
+            $enity_based_tour_block['is_enabled'] === '1' &&
+            $enity_based_tour_block_tours->isNotEmpty())
+        <div class="my-5">
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <div class="section-content">
+                            <h2 class="subHeading">
+                                {{ $enity_based_tour_block['heading'] ?? '' }}
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row four-items-slider">
+                    @foreach ($enity_based_tour_block_tours as $enity_based_tour_block_tour)
+                        <div class="col-md-3">
+                            <x-tour-card :tour="$enity_based_tour_block_tour" style="style3" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
 
     @if (isset($first_tour_block['is_enabled']) &&
             $first_tour_block['is_enabled'] === '1' &&
@@ -128,7 +156,7 @@ $btnStyles = [];
                         </div>
                     </div>
                 </div>
-                <div class="row three-items-slider">
+                <div class="row four-items-slider">
                     @foreach ($second_tour_block_tours as $second_tour_block_tour)
                         <div class="col-md-3">
                             <x-tour-card :tour="$second_tour_block_tour" style="style3" />

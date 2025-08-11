@@ -313,7 +313,7 @@ class TourController extends Controller
 
     public function edit($id)
     {
-        $tour = Tour::with(['attributes', 'attributes.attributeItems'])->find($id);
+        $tour = Tour::with(['attributes', 'attributes.attributeItems'])->findOrFail($id);
         $attributes = TourAttribute::where('status', 'active')
             ->latest()
             ->get();

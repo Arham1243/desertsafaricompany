@@ -58,6 +58,30 @@
                                     </div>
                                 </div>
                             </div>
+                            <div x-data="{ enabled: {{ isset($jsonContent['enity_based_tour_block']['is_enabled']) && $jsonContent['enity_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">City Based Tour Block</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[enity_based_tour_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="enity_based_tour_block" value="1"
+                                                name="json_content[enity_based_tour_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="enity_based_tour_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields">
+                                        <label class="title text-dark">Heading:</label>
+                                        <input name="json_content[enity_based_tour_block][heading]" type="text"
+                                            class="field"
+                                            value="{{ isset($jsonContent['enity_based_tour_block']) ? $jsonContent['enity_based_tour_block']['heading'] : '' }}">
+                                    </div>
+                                </div>
+                            </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header">
                                     <div class="d-flex align-items-center gap-3">
@@ -78,7 +102,7 @@
                                     <div class="form-fields mb-4">
                                         <label class="title text-dark">Heading:</label>
                                         <input name="json_content[first_tour_block][heading]" type="text" class="field"
-                                            value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
+                                            value="{{ isset($jsonContent['first_tour_block']) ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
                                         <label class="title text-dark">Select Tours:</label>
@@ -115,7 +139,7 @@
                                         <label class="title text-dark">Heading:</label>
                                         <input name="json_content[second_tour_block][heading]" type="text"
                                             class="field"
-                                            value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
+                                            value="{{ isset($jsonContent['second_tour_block']) ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
                                         <label class="title text-dark">Select Tours:</label>
