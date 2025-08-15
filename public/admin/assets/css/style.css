@@ -1105,6 +1105,9 @@ form .text-danger {
     text-transform: capitalize;
     font-size: 0.9rem;
     display: flex;
+}
+
+.form-fields label.title:not(.title--sm) {
     color: red;
 }
 
