@@ -40,6 +40,6 @@ class AdminLoginController extends Controller
     {
         Auth::guard('admin')->logout();
 
-        return redirect()->route('frontend.index')->with('notify_success', 'Logged Out!');
+        return redirect()->route('admin.login')->with('notify_success', 'Logged Out!');
     }
 }

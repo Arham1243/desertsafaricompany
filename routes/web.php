@@ -12,6 +12,7 @@ use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
+require __DIR__.'/admin.php';
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/home', [IndexController::class, 'index']);
 Route::get('/welcome', [IndexController::class, 'index']);
@@ -85,4 +86,3 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
 });
 
 require __DIR__.'/auth.php';
-require __DIR__.'/admin.php';
