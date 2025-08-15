@@ -1105,6 +1105,7 @@ form .text-danger {
     text-transform: capitalize;
     font-size: 0.9rem;
     display: flex;
+    color: red;
 }
 
 .form-fields .title--sm {
@@ -1977,6 +1978,7 @@ input[readonly]:not(.date-picker, .date-picker-time) {
     text-transform: lowercase;
     outline: none;
     font: inherit;
+    padding-right: 2.5rem;
 }
 
 .permalink .link[type="button"] {
