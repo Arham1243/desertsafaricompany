@@ -37,13 +37,26 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @php
+                                            $countries = require resource_path(
+                                                'views/admin/locations/countries-management/countries.php',
+                                            );
+                                        @endphp
+
                                         <div class="col-md-6 col-12 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">ISO Alpha-2 Code <span class="text-danger">*</span>
-                                                    :</label>
-                                                <input type="text" name="iso_alpha2" class="field"
-                                                    value="{{ old('iso_alpha2') }}" placeholder="e.g. ae" maxlength="2"
+                                                <label class="title">ISO Alpha-2 Code <span
+                                                        class="text-danger">*</span>:</label>
+                                                <select name="iso_alpha2" class="field select2-select"
                                                     data-error="ISO Alpha-2 Code" data-required>
+                                                    <option value="" selected disabled>Select Country</option>
+                                                    @foreach ($countries as $name => $code)
+                                                        <option value="{{ $code }}"
+                                                            {{ old('iso_alpha2') == $code ? 'selected' : '' }}>
+                                                            {{ ucfirst($name) }} - {{ $code }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 @error('iso_alpha2')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror

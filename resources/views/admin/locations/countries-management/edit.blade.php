@@ -20,14 +20,17 @@
                                 <div class="permalink">
                                     <div class="title">Permalink:</div>
                                     <div class="title">
-                                        <div class="full-url">{{ buildUrl(url('/'), $item->iso_alpha2) }}</div>
+                                        <div class="full-url">{{ buildUrl(url('/')) }}/</div>
+                                        <input value="{{ !empty($item->slug) ? $item->slug : '#' }}" type="button"
+                                            class="link permalink-input" data-field-id="slug">
+                                        <input data-required data-error="Slug" type="hidden" id="slug"
+                                            value="{{ !empty($item->slug) ? $item->slug : '' }}" name="slug">
                                     </div>
                                 </div>
                             @endif
                         </div>
                         @if ($item->iso_alpha2)
-                            <a href="{{ route('locations.country', $item->iso_alpha2) }}" target="_blank"
-                                class="themeBtn">View
+                            <a href="{{ route('locations.country', $item->slug) }}" target="_blank" class="themeBtn">View
                                 Country</a>
                         @endif
                     </div>
@@ -53,13 +56,26 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        @php
+                                            $countries = require resource_path(
+                                                'views/admin/locations/countries-management/countries.php',
+                                            );
+                                        @endphp
+
                                         <div class="col-md-6 col-12 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">ISO Alpha-2 Code <span class="text-danger">*</span>
-                                                    :</label>
-                                                <input type="text" name="iso_alpha2" class="field"
-                                                    value="{{ old('iso_alpha2', $item->iso_alpha2) }}" placeholder="e.g. ae"
-                                                    maxlength="2" data-error="ISO Alpha-2 Code" data-required>
+                                                <label class="title">ISO Alpha-2 Code <span
+                                                        class="text-danger">*</span>:</label>
+                                                <select name="iso_alpha2" class="field select2-select"
+                                                    data-error="ISO Alpha-2 Code" data-required>
+                                                    <option value="" disabled>Select Country</option>
+                                                    @foreach ($countries as $name => $code)
+                                                        <option value="{{ $code }}"
+                                                            {{ old('iso_alpha2', $item->iso_alpha2) == $code ? 'selected' : '' }}>
+                                                            {{ ucfirst($name) }} - {{ $code }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
                                                 @error('iso_alpha2')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -327,7 +343,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :slug="$item->iso_alpha2 ?? ''" />
+                            <x-seo-options :seo="$seo ?? null" :slug="$item->slug ?? ''" />
                         </div>
                     </div>
                     <div class="col-md-3">

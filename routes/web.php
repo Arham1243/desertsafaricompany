@@ -27,7 +27,6 @@ Route::post('/save-review', [IndexController::class, 'save_review'])->name('save
 
 Route::name('locations.')->group(function () {
     Route::get('/{country}', [CountryController::class, 'show'])
-        ->where('country', '[a-zA-Z]{2}')
         ->name('country');
 
     Route::get('/{country}/{slug}', [LocationController::class, 'resolveSlug'])

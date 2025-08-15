@@ -25,7 +25,7 @@
                             </h2>
                             <ul class="location1-Breadcrumb">
                                 <li><a
-                                        href="{{ route('locations.country', $item->country->iso_alpha2) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
+                                        href="{{ route('locations.country', $item->country->slug) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
                                 </li>
                                 <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
                             </ul>
