@@ -2480,7 +2480,7 @@ body .badge.badge-sm {
 a.delete-btn:hover {
     background: red;
 }
-a.dropdown-item {
+.dropdown-item {
     font-size: 0.85rem;
     padding: 0.5rem 1rem;
     font-weight: 500;
