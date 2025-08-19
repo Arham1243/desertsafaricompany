@@ -170,12 +170,16 @@ if (! function_exists('getAllCategoryIds')) {
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour, $withSlug = true, $withBase = true)
     {
+        $attachedCategories = $tour->categories;
+
+        $topCategory = $attachedCategories->sortBy('parent_category_id')->first();
+
+        $categorySlug = $topCategory->slug ?? 'no-category';
         $city = $tour->city->slug ?? 'no-city';
         $country = $tour->city->country->iso_alpha2 ?? 'no-citycountry';
-        $category = $tour->categories->first()->slug ?? 'no-category';
         $slug = $tour->slug ?? 'no-slug';
 
-        $path = "$country/$city/$category";
+        $path = "$country/$city/$categorySlug";
         if ($withSlug) {
             $path .= "/$slug";
         }

@@ -42,7 +42,7 @@ class TourController extends Controller
 
     public function create()
     {
-        $categories = TourCategory::where('status', 'publish')->latest()->get();
+        $categories = TourCategory::where('status', 'publish')->get();
 
         $tours = Tour::all();
         $authors = TourAuthor::where('status', 'active')->get();
@@ -143,6 +143,7 @@ class TourController extends Controller
             'regular_price' => $pricing['regular_price'] ?? null,
             'sale_price' => $pricing['sale_price'] ?? null,
             'is_person_type_enabled' => $pricing['is_person_type_enabled'] ?? 0,
+            'simple_pricing_enabled' => $pricing['simple_pricing_enabled'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,
             'is_extra_price_enabled' => $pricing['is_extra_price_enabled'] ?? 0,
             'enable_promo_addOns' => $pricing['enable_promo_addOns'] ?? 0,
@@ -317,7 +318,7 @@ class TourController extends Controller
         $attributes = TourAttribute::where('status', 'active')
             ->latest()
             ->get();
-        $categories = TourCategory::where('status', 'publish')->latest()->get();
+        $categories = TourCategory::where('status', 'publish')->get();
         $times = TourTime::where('status', 'publish')->latest()->get();
         $tours = Tour::where('id', '!=', $id)->get();
         $authors = TourAuthor::where('status', 'active')->get();
@@ -408,6 +409,7 @@ class TourController extends Controller
             'regular_price' => $pricing['regular_price'] ?? null,
             'sale_price' => $pricing['sale_price'] ?? null,
             'is_person_type_enabled' => $pricing['is_person_type_enabled'] ?? 0,
+            'simple_pricing_enabled' => $pricing['simple_pricing_enabled'] ?? 0,
             'enabled_custom_service_fee' => $pricing['enabled_custom_service_fee'] ?? 0,
             'enable_discount_by_persons' => $pricing['enable_discount_by_persons'] ?? 0,
             'price_type' => isset($pricing['is_person_type_enabled']) && $pricing['is_person_type_enabled'] == 1 ? $pricing['price_type'] : null,

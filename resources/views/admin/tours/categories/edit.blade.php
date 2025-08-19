@@ -84,7 +84,7 @@
                                         </div>
                                         <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title text-dark">Banner Title:</label>
+                                                <label class="title">Banner Title:</label>
                                                 <input name="json_content[h1_banner_text][title]" type="text"
                                                     class="field"
                                                     value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
@@ -92,7 +92,7 @@
                                         </div>
                                         <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title text-dark">Banner Subtitle:</label>
+                                                <label class="title">Banner Subtitle:</label>
                                                 <input name="json_content[h1_banner_text][subtitle]" type="text"
                                                     class="field"
                                                     value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
@@ -195,7 +195,7 @@
                                 enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
                                 headingEnabled: {{ isset($jsonContent['category_based_tour_block']['heading_enabled']) && $jsonContent['category_based_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
                             }" class="form-box">
-                                <div class="form-box__header">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Category based Tour Block</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
@@ -210,12 +210,16 @@
                                                 for="category_based_tour_block">Enabled</label>
                                         </div>
                                     </div>
+                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
                                 </div>
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
                                         <div class="d-flex align-items-center gap-3">
-                                            <label class="title text-dark mb-0">Heading</label>
+                                            <label class="title mb-0">Heading</label>
                                             <div class="form-check form-switch" data-enabled-text="Enabled"
                                                 data-disabled-text="Disabled">
                                                 <input type="hidden" value="0"
@@ -235,7 +239,7 @@
                                     </div>
 
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Category:</label>
+                                        <label class="title">Select Category:</label>
                                         <select name="json_content[category_based_tour_block][category_id]"
                                             class="select2-select" data-error="Category" should-sort="false">
                                             <option value="" disabled>Select Category</option>
@@ -249,7 +253,7 @@
                                 </div>
                             </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
-                                <div class="form-box__header">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">First Tour Block</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
@@ -262,17 +266,21 @@
                                             <label class="form-check-label" for="first_tour_block">Enabled</label>
                                         </div>
                                     </div>
+                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
                                 </div>
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[first_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[first_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $firstTourBlockT)
@@ -286,7 +294,7 @@
                                 </div>
                             </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
-                                <div class="form-box__header">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Second Tour Block</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
@@ -299,17 +307,21 @@
                                             <label class="form-check-label" for="second_tour_block">Enabled</label>
                                         </div>
                                     </div>
+                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
                                 </div>
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[second_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[second_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $secondTourBlockT)
@@ -413,7 +425,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title">
+                                                            <label class="title text-dark">
                                                                 Button Text & Text Color:
                                                             </label>
                                                             <div class="field color-picker" data-color-picker-container>
@@ -637,7 +649,7 @@
                                                 <div class="row" x-show="btnEnabled" x-transition>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title">
+                                                            <label class="title text-dark">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
                                                                     <div class="mt-1">Button Link & Background:</div>
                                                                     <button data-bs-placement="top"
@@ -665,7 +677,8 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title">Button Text & Text Color:</label>
+                                                            <label class="title text-dark">Button Text & Text
+                                                                Color:</label>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="cta-btn-text-color" data-color-picker></label>
                                                                 <input id="cta-btn-text-color" type="hidden"
@@ -875,7 +888,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
+                                                        <div class="title text-dark d-flex align-items-center gap-2">
                                                             <div>
                                                                 Button Background Color:
                                                             </div>
@@ -895,7 +908,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-fields">
-                                                        <label class="title">Button Text & Text Color:</label>
+                                                        <label class="title text-dark">Button Text & Text Color:</label>
                                                         <div class="field color-picker" data-color-picker-container>
                                                             <label for="newsletter-btn-text-color"
                                                                 data-color-picker></label>
@@ -937,7 +950,7 @@
                                             <div class="row">
                                                 <div class="col-12 mb-4">
                                                     <div class="form-fields">
-                                                        <label class="title">Text:</label>
+                                                        <label class="title text-dark">Text:</label>
                                                         <textarea rows="3" name="content[newsletter][privacy_statement]" class="field">{{ $newsletterContent->privacy_statement ?? '' }}</textarea>
                                                     </div>
                                                 </div>
@@ -975,7 +988,7 @@
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <div class="form-fields">
-                                                        <label class="title">Left Side Image:</label>
+                                                        <label class="title text-dark">Left Side Image:</label>
                                                         <div class="upload upload--sm mx-0" data-upload>
                                                             <div class="upload-box-wrapper">
                                                                 <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
@@ -1023,7 +1036,7 @@
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
+                                                        <div class=" text-dark title d-flex align-items-center gap-2">
                                                             <div>Right Background Color:
                                                             </div>
                                                             <a class="p-0 nav-link" href="//html-color-codes.info"

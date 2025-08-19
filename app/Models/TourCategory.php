@@ -44,7 +44,7 @@ class TourCategory extends Model
         return $this->hasMany(TourCategoryView::class, 'category_id');
     }
 
-    public function parentCategory()
+    public function parent()
     {
         return $this->belongsTo(TourCategory::class, 'parent_category_id');
     }

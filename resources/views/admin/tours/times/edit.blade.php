@@ -85,13 +85,13 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Banner Title:</label>
+                                        <label class="title">Banner Title:</label>
                                         <input name="json_content[h1_banner_text][title]" type="text" class="field"
                                             value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
                                     </div>
 
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Banner Subtitle:</label>
+                                        <label class="title">Banner Subtitle:</label>
                                         <input name="json_content[h1_banner_text][subtitle]" type="text" class="field"
                                             value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
                                     </div>
@@ -119,7 +119,7 @@
                                                 ? $time->categories->pluck('id')->toArray()
                                                 : [];
                                         @endphp
-                                        <label class="title text-dark">Select categories available for this time <span
+                                        <label class="title">Select categories available for this time <span
                                                 class="text-danger">*</span>:</label>
                                         <select name="category_ids[]" class="select2-select" data-error="Category"
                                             data-required should-sort="false" multiple>
@@ -233,7 +233,7 @@
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
                                         <div class="d-flex align-items-center gap-3">
-                                            <label class="title text-dark mb-0">Heading</label>
+                                            <label class="title mb-0">Heading</label>
                                             <div class="form-check form-switch" data-enabled-text="Enabled"
                                                 data-disabled-text="Disabled">
                                                 <input type="hidden" value="0"
@@ -253,7 +253,7 @@
                                     </div>
 
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Category:</label>
+                                        <label class="title">Select Category:</label>
                                         <select name="json_content[category_based_tour_block][category_id]"
                                             class="select2-select" data-error="Category" should-sort="false">
                                             <option value="" disabled>Select Category</option>
@@ -284,13 +284,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[first_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[first_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $firstTourBlockT)
@@ -322,13 +322,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[second_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[second_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $secondTourBlockT)
@@ -418,7 +418,7 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title text-dark">
+                                                            <label class="title">
                                                                 Button Background:
                                                             </label>
                                                             <div class="field color-picker" data-color-picker-container>

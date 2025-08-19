@@ -123,7 +123,7 @@
                                         @endphp
                                         <div class="col-12  mt-4">
                                             <div class="form-fields mb-4">
-                                                <label class="title text-dark">Select Multi Categories <span
+                                                <label class="title">Select Multi Categories <span
                                                         class="text-danger">*</span>:</label>
                                                 <select name="tour[general][category_ids][]" class="select2-select"
                                                     data-error="Category" data-required should-sort="false" multiple>
@@ -267,7 +267,7 @@
                                             <div class="form-fields">
                                                 <label class="title title--sm mb-3">Include:</label>
                                                 <div class="mb-4">
-                                                    <label class="title">Title</label>
+                                                    <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field">
                                                 </div>
@@ -320,7 +320,7 @@
                                             <div class="form-fields">
                                                 <label class="title title--sm mb-3">Exclude:</label>
                                                 <div class="mb-4">
-                                                    <label class="title">Title</label>
+                                                    <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
                                                         class="field">
                                                 </div>
@@ -540,8 +540,8 @@
 
                                             <div class="form-fields">
                                                 <input type="hidden" name="tour[general][banner_type]" value="1">
-                                                <div class="title">
-                                                    <div>Banner Image :</div>
+                                                <div class="title text-dark">
+                                                    Banner Image :
                                                 </div>
 
                                                 <div class="upload upload--banner" data-upload>
@@ -682,7 +682,7 @@
                                         <div class="form-fields">
                                             <label class=" d-flex align-items-center justify-content-between"><span
                                                     class="title title--sm mb-0">Itinerary:</span>
-                                                <span class="title d-flex align-items-center gap-1">Section
+                                                <span class="title text-dark d-flex align-items-center gap-1">Section
                                                     Preview:
                                                     <a href="{{ asset('admin/assets/images/itinerary.png') }}"
                                                         data-fancybox="gallery" class="themeBtn p-1"
@@ -790,7 +790,7 @@
                                                 <label class="d-flex align-items-center mb-3 justify-content-between">
                                                     <span class="title title--sm mb-0">Plan Itinerary
                                                         Experience:</span>
-                                                    <span class="title d-flex align-items-center gap-1">
+                                                    <span class="title text-dark d-flex align-items-center gap-1">
                                                         Section Preview:
                                                         <a href="{{ asset('admin/assets/images/itinerary-exp.png') }}"
                                                             data-fancybox="gallery" class="themeBtn p-1"
@@ -800,7 +800,7 @@
 
                                             </div>
                                             <div class="form-fields">
-                                                <div class="title d-flex align-items-center gap-2">
+                                                <div class="title text-dark d-flex align-items-center gap-2">
                                                     <div>Map Iframe Link:</div>
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
                                                         target="_blank">Google Map Generator</a>
@@ -861,7 +861,7 @@
                                                     </div>
                                                     <div class="col-md-12 mb-4">
                                                         <div class="form-fields">
-                                                            <label class="title">Pickup Row Icon:
+                                                            <label class="title text-dark">Pickup Row Icon:
                                                                 <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
                                                                     target="_blank">boxicons</a>
                                                             </label>
@@ -964,7 +964,7 @@
 
                                                     <div class="col-md-12 mb-4" x-show="!inheritFromPickup">
                                                         <div class="form-fields">
-                                                            <label class="title">Dropoff Row Icon:
+                                                            <label class="title text-dark">Dropoff Row Icon:
                                                                 <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
                                                                     target="_blank">boxicons</a>
                                                             </label>
@@ -1161,8 +1161,6 @@
                                                         <i class="bx bx-plus"></i></button>
                                                 </div>
                                             </div>
-
-
                                         </div>
                                     </div>
                                 </div>
@@ -1174,35 +1172,45 @@
                                     <div class="title">Pricing</div>
                                 </div>
                                 <div class="form-box__body">
-                                    <div class="row">
+                                    <div x-data="{ enabled: {{ old('tour.pricing.simple_pricing_enabled', 0) ? 'true' : 'false' }} }" class="row">
                                         <div class="col-12 mb-2">
                                             <div class="form-fields">
-                                                <div class="title title--sm">Tour Price:</div>
+                                                <div class="d-flex align-items-center gap-3 mb-2">
+                                                    <div class="title title--sm mb-0">Tour Price:</div>
+                                                    <input type="hidden" name="tour[pricing][simple_pricing_enabled]"
+                                                        value="0">
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="simple_pricing_enabled" value="1"
+                                                            name="tour[pricing][simple_pricing_enabled]"
+                                                            x-model="enabled">
+                                                        <label class="form-check-label"
+                                                            for="simple_pricing_enabled">Enabled</label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12 mb-3">
+
+                                        <div class="col-md-6 col-12 mb-3" x-show="enabled" x-transition>
                                             <div class="form-fields">
                                                 <label class="title">Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][regular_price]" class="field"
-                                                    value="{{ old('tour[pricing][regular_price]') }}" data-error="Price">
-                                                @error('tour[pricing][regular_price]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                    value="{{ old('tour[pricing][regular_price]') }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12">
+
+                                        <div class="col-md-6 col-12" x-show="enabled" x-transition>
                                             <div class="form-fields">
                                                 <label class="title">Sale Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][sale_price]" class="field"
-                                                    value="{{ old('tour[pricing][sale_price]') }}"
-                                                    data-error="Sale Price">
-                                                @error('tour[pricing][sale_price]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
+                                                    value="{{ old('tour[pricing][sale_price]') }}">
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="row">
                                         <div class="col-12 my-2">
                                             <hr>
                                         </div>
@@ -1451,7 +1459,8 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
                                                                         <div class="form-fields">
-                                                                            <label class="title">Renewal Timer (hours)
+                                                                            <label class="title text-dark">Renewal Timer
+                                                                                (hours)
                                                                                 :</label>
                                                                             <select
                                                                                 name="tour[pricing][promo][discount][weekday_timer_hours]"
@@ -1468,7 +1477,8 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
                                                                         <div class="form-fields">
-                                                                            <label class="title">Discount (%) :</label>
+                                                                            <label class="title text-dark">Discount (%)
+                                                                                :</label>
                                                                             <input type="number"
                                                                                 name="tour[pricing][promo][discount][weekday_discount_percent]"
                                                                                 step="0.01" min="0"
@@ -1483,7 +1493,8 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
                                                                         <div class="form-fields">
-                                                                            <label class="title">Renewal Timer (hours)
+                                                                            <label class="title text-dark">Renewal Timer
+                                                                                (hours)
                                                                                 :</label>
                                                                             <select
                                                                                 name="tour[pricing][promo][discount][weekend_timer_hours]"
@@ -1500,7 +1511,8 @@
                                                                     </div>
                                                                     <div class="col-md-6 col-12">
                                                                         <div class="form-fields">
-                                                                            <label class="title">Discount (%) :</label>
+                                                                            <label class="title text-dark">Discount (%)
+                                                                                :</label>
                                                                             <input type="number"
                                                                                 name="tour[pricing][promo][discount][weekend_discount_percent]"
                                                                                 step="0.01" min="0"
@@ -1840,7 +1852,7 @@
                                                     <div class="row">
                                                         <div class="col-12 mt-3">
                                                             <div class="form-fields">
-                                                                <div class="title">Extra Price:</div>
+                                                                <div class="title text-dark">Extra Price:</div>
                                                                 <div class="repeater-table" data-repeater>
                                                                     <table class="table table-bordered">
                                                                         <thead>
@@ -2274,12 +2286,12 @@
                                                             <tr>
                                                                 <td>
                                                                     <div class="form-fields">
-                                                                        <label class="title text-dark">Heading</label>
+                                                                        <label class="title">Heading</label>
                                                                         <input :name="`addOns[${index}][heading]`"
                                                                             type="text" class="field">
                                                                     </div>
                                                                     <div class="form-fields">
-                                                                        <label class="title text-dark">Select
+                                                                        <label class="title">Select
                                                                             tours</label>
                                                                         <select :name="`addOns[${index}][tour_ids][]`"
                                                                             multiple class="choices-select">
@@ -2611,7 +2623,7 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-fields mb-3">
-                                                        <label class="title text-dark">Label:</label>
+                                                        <label class="title">Label:</label>
                                                         <input name="tour[status][certified_tag][label]" type="text"
                                                             class="field"
                                                             value="{{ $jsonContent['status']['certified_tag']['label'] ?? '' }}">
@@ -2660,7 +2672,7 @@
                                         <div class="row" x-show="badgeTagEnabled">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
-                                                    <label class="title text-dark" for="badge_tag_label">Badge
+                                                    <label class="title" for="badge_tag_label">Badge
                                                         Label:</label>
                                                     <input type="text" name="tour[status][badge_tag][label]"
                                                         id="badge_tag_label" class="field"

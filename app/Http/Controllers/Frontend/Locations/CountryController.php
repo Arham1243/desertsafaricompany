@@ -10,7 +10,7 @@ class CountryController extends Controller
 {
     public function show($country)
     {
-        $item = Country::where('slug', $country)->firstOrFail();
+        $item = Country::where('iso_alpha2', $country)->firstOrFail();
         $tours = Tour::where('status', 'publish')->latest()->get();
         $relatedCities = $item->cities()->where('status', 'publish')->get();
 

@@ -1107,7 +1107,7 @@ form .text-danger {
     display: flex;
 }
 
-.form-fields .title:not(.title--sm) {
+.form-fields .title {
     color: red;
 }
 

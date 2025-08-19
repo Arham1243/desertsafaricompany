@@ -14,7 +14,7 @@
 <div x-data="categoryFilter()" x-init="init()" class="row">
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields mb-4">
-            <label class="title">{{ $cityLabel }}:</label>
+            <label class="title text-dark">{{ $cityLabel }}:</label>
             <select class="select2-select" id="{{ $citySelectId }}">
                 <option value="" selected disabled>Select</option>
                 @foreach ($cities as $city)
@@ -28,7 +28,7 @@
 
     <div class="col-md-6 col-12 mt-4">
         <div class="form-fields">
-            <label class="title">{{ $categoryLabel }} @if ($isCategoryRequired)
+            <label class="title text-dark">{{ $categoryLabel }} @if ($isCategoryRequired)
                     <span class="text-danger"> *</span>
                 @endif:</label>
             <select data-error="Category" {{ $isCategoryRequired ? 'data-required' : '' }} name="{{ $fieldName }}"

@@ -53,12 +53,7 @@ class TourController extends Controller
 
         $tour = Tour::with(['tourAttributes.items', 'categories.city', 'categories.country'])
             ->where('slug', $slug)
-            ->whereHas('categories', function ($q) use ($category, $city, $country) {
-                $q
-                    ->where('slug', $category)
-                    ->whereHas('city', fn ($q) => $q->where('slug', $city))
-                    ->whereHas('country', fn ($q) => $q->where('iso_alpha2', strtoupper($country)));
-            })
+            ->whereHas('categories', fn ($q) => $q->where('slug', $category))
             ->firstOrFail();
 
         $currentCategory = $tour->categories->firstWhere('slug', $category);

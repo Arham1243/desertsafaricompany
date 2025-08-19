@@ -20,17 +20,14 @@
                                 <div class="permalink">
                                     <div class="title">Permalink:</div>
                                     <div class="title">
-                                        <div class="full-url">{{ buildUrl(url('/')) }}/</div>
-                                        <input value="{{ !empty($item->slug) ? $item->slug : '#' }}" type="button"
-                                            class="link permalink-input" data-field-id="slug">
-                                        <input data-required data-error="Slug" type="hidden" id="slug"
-                                            value="{{ !empty($item->slug) ? $item->slug : '' }}" name="slug">
+                                        <div class="full-url">{{ buildUrl(url('/')) }}/{{ $item->iso_alpha2 }}</div>
                                     </div>
                                 </div>
                             @endif
                         </div>
                         @if ($item->iso_alpha2)
-                            <a href="{{ route('locations.country', $item->slug) }}" target="_blank" class="themeBtn">View
+                            <a href="{{ route('locations.country', $item->iso_alpha2) }}" target="_blank"
+                                class="themeBtn">View
                                 Country</a>
                         @endif
                     </div>
@@ -113,12 +110,12 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[first_tour_block][heading]" type="text" class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[first_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $firstTourBlockT)
@@ -149,13 +146,13 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title text-dark">Heading:</label>
+                                        <label class="title">Heading:</label>
                                         <input name="json_content[second_tour_block][heading]" type="text"
                                             class="field"
                                             value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title text-dark">Select Tours:</label>
+                                        <label class="title">Select Tours:</label>
                                         <select name="json_content[second_tour_block][tour_ids][]" multiple
                                             class="select2-select">
                                             @foreach ($tours as $secondTourBlockT)
@@ -273,7 +270,8 @@
                                                         <div class="form-fields">
                                                             <label class="title">
                                                                 <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1">Button Link & Background:</div>
+                                                                    <div class="mt-1 text-dark">Button Link & Background:
+                                                                    </div>
                                                                     <button data-bs-placement="top"
                                                                         title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
                                                                         type="button" data-tooltip="tooltip"
@@ -298,7 +296,8 @@
                                                     </div>
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title">Button Text & Text Color:</label>
+                                                            <label class="title text-dark">Button Text & Text
+                                                                Color:</label>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="guide-btn-text-color"
                                                                     data-color-picker></label>
@@ -343,7 +342,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :slug="$item->slug ?? ''" />
+                            <x-seo-options :seo="$seo ?? null" :slug="$item->iso_alpha2 ?? ''" />
                         </div>
                     </div>
                     <div class="col-md-3">
