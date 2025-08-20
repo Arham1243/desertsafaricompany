@@ -581,7 +581,7 @@
                                             <div class="form-fields">
                                                 <label class="d-flex align-items-center justify-content-between"><span
                                                         class="title title--sm mb-0">Banner:</span>
-                                                    <span class="title d-flex align-items-center gap-1">Selected
+                                                    <span class="text-dark title d-flex align-items-center gap-1">Selected
                                                         Banner:
                                                         <a href="{{ asset('admin/assets/images/banner-styles/1.png') }}"
                                                             data-fancybox="gallery" class="themeBtn p-1"><i
@@ -1486,7 +1486,11 @@
                                     <div class="title">Pricing</div>
                                 </div>
                                 <div class="form-box__body">
-
+                                    @php
+                                        $pricingTagline = isset($tour['pricing_tagline'])
+                                            ? json_decode($tour['pricing_tagline'], true)
+                                            : [];
+                                    @endphp
                                     <div x-data="{ boxHeadingEnabled: {{ (int) $tour->pricing_box_heading_enabled === 1 ? 'true' : 'false' }} }" class="row mb-3">
                                         <div class="col-12 mb-2">
                                             <div class="form-fields">
@@ -1519,6 +1523,58 @@
                                             </div>
                                         </div>
 
+                                    </div>
+
+                                    <div x-data="{ taglineEnabled: {{ (int) ($pricingTagline['enabled'] ?? 0) === 1 ? 'true' : 'false' }} }" class="row mb-3">
+                                        <div class="col-12 mb-2">
+                                            <div class="form-fields d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center gap-3 mb-2">
+                                                    <input type="hidden" name="tour[pricing][pricing_tagline][enabled]"
+                                                        value="0">
+                                                    <div class="title title--sm mb-0">Pricing Tagline:</div>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="pricing_tagline_enabled" value="1"
+                                                            name="tour[pricing][pricing_tagline][enabled]"
+                                                            x-model="taglineEnabled">
+                                                        <label class="form-check-label"
+                                                            for="pricing_tagline_enabled">Enabled</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-3" x-show="taglineEnabled" x-transition>
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-2">
+                                                    <span class="text-dark title mb-0">
+                                                        Icon:
+                                                        <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
+                                                            target="_blank">boxicons</a>
+                                                    </span>
+                                                </div>
+
+                                                <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour.pricing.pricing_tagline.icon_class', $pricingTagline['icon_class'] ?? 'bx bx-purchase-tag') }}' }">
+                                                    <input class="field" type="text"
+                                                        name="tour[pricing][pricing_tagline][icon_class]"
+                                                        x-model="iconClass">
+                                                    <i :class="iconClass + ' bx-md'"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-3" x-show="taglineEnabled" x-transition>
+                                            <div class="form-fields">
+                                                <label class="title text-dark">Text :</label>
+                                                <input type="text" name="tour[pricing][pricing_tagline][text]"
+                                                    class="field"
+                                                    value="{{ old('tour.pricing.pricing_tagline.text', $pricingTagline['text'] ?? '') }}">
+                                                @error('tour.pricing.pricing_tagline.text')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <div x-data="{ enabled: {{ (int) $tour->simple_pricing_enabled === 1 ? 'true' : 'false' }} }" class="row">
@@ -1554,7 +1610,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-6 col-12" x-show="enabled" x-transition>
+                                        <div class="col-md-12 col-12" x-show="enabled" x-transition>
                                             <div class="form-fields">
                                                 <label class="title text-dark">Sale Price :</label>
                                                 <input step="0.01" min="0" type="number"

@@ -1,8 +1,27 @@
     <div class=form-book_content>
         @if ($tour->pricing_box_heading_enabled && (int) $tour->pricing_box_heading_enabled === 1)
-            <h3 class="tour-pricing-heading" style="color: {{ $settings->get('pricing_box_heading_color') }}">
+            <h3 class="tour-pricing-heading"
+                @if ($settings->get('pricing_box_heading_color')) style="color: {{ $settings->get('pricing_box_heading_color') }}" @endif>
                 {{ $tour->pricing_box_heading ?? '' }}
             </h3>
+        @endif
+        @php
+            $pricingTagline = isset($tour['pricing_tagline']) ? json_decode($tour['pricing_tagline'], true) : [];
+        @endphp
+        @if ((int) ($pricingTagline['enabled'] ?? 0) === 1)
+            <div class="tour-views tour-views--tagline">
+                <div class="tour-views__icon"><i
+                        @if ($settings->get('pricing_tagline_icon_color')) style="color: {{ $settings->get('pricing_tagline_icon_color') }}" @endif
+                        class="{{ $pricingTagline['icon_class'] ?? '' }}"></i></div>
+                <div class="tour-views__count"
+                    @if ($settings->get('pricing_tagline_text_color') || (int) $settings->get('pricing_tagline_bold') === 1) style="
+                        @if ($settings->get('pricing_tagline_text_color'))
+                            color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
+                    @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
+                  @endif>
+                    {{ $pricingTagline['text'] ?? '' }}
+                </div>
+            </div>
         @endif
         <div class="tour-content__pra form-book__pra px-0">
             Start Date
@@ -40,9 +59,8 @@
     <div class="tour-views">
         <div class="tour-views__icon"><i class="bx bx-show"></i></div>
         <div class="tour-views__count">
-            {{ $todayViews == 1 ? '1 view' : 'Over ' . $todayViews . ' views' }} today, so act now!
+            {{ $todayViews }} {{ Str::plural('view', $todayViews) }} today, so act now!
         </div>
-
     </div>
 
     <div class=form-guest__btn>

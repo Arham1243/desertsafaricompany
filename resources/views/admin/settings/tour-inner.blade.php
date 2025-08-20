@@ -130,8 +130,11 @@
                                     <div class="col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Pricing Box Heading Color
-                                            </label>
+                                                Pricing Box Heading
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/tour-pricing-heading.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
                                         </div>
                                     </div>
 
@@ -140,7 +143,8 @@
                                             <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Heading Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                    target="_blank">Get Color Codes</a>
+                                                    target="_blank">Get
+                                                    Color Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>
                                                 <label for="pricing-box-heading-color-picker" data-color-picker></label>
@@ -154,12 +158,74 @@
                                 </div>
 
                                 <hr class="my-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Pricing Tagline
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/tour-pricing-tagline.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm">
+                                                    <i class="bx bxs-show"></i>
+                                                </a>
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Icon Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="pricing-tagline-icon-color-picker" data-color-picker></label>
+                                                <input id="pricing-tagline-icon-color-picker" type="text"
+                                                    data-color-picker-input name="pricing_tagline_icon_color"
+                                                    value="{{ $settings->get('pricing_tagline_icon_color') ?? '#433f46' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Text Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="pricing-tagline-text-color-picker" data-color-picker></label>
+                                                <input id="pricing-tagline-text-color-picker" type="text"
+                                                    data-color-picker-input name="pricing_tagline_text_color"
+                                                    value="{{ $settings->get('pricing_tagline_text_color') ?? '#625c66' }}"
+                                                    inputmode="text">
+                                            </div>
+                                            <div class="form-fields mt-3">
+                                                <div class="form-check">
+                                                    <input type="hidden" name="pricing_tagline_bold" value="0">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        {{ $settings->get('pricing_tagline_bold') ? 'checked' : '' }}
+                                                        name="pricing_tagline_bold" id="pricing_tagline_bold"
+                                                        value="1">
+                                                    <label class="form-check-label" for="pricing_tagline_bold">
+                                                        Make text Bold
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-5">
 
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Badge Icon:
+                                                Badge Icon
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/badge-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -206,7 +272,7 @@
                                     <div class="col-md-12 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Features Icons:
+                                                Features Icons
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/feature-icon-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -234,7 +300,7 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Inclusions Icons:
+                                                Inclusions Icons
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/inclusion-icon-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -259,7 +325,7 @@
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Exclusions Icons:
+                                                Exclusions Icons
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/exclusion-icon-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -287,7 +353,7 @@
                                     <div class="col-md-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Itinerary Section:
+                                                Itinerary Section
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/itinerary-section-preview.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -474,7 +540,7 @@
                                     <div class="col-md-12">
                                         <div class="form-fields">
                                             <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                                Author prefix:
+                                                Author prefix
                                                 <a href="{{ asset('admin/assets/images/tour-inner-settings/author-text.png') }}"
                                                     data-fancybox="gallery" title="section preview"
                                                     class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -511,7 +577,7 @@
                             <div class="form-box__body">
                                 <div class="form-fields">
                                     <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                        Popup trigger Box Settings:
+                                        Popup trigger Box Settings
                                         <a href="{{ asset('admin/assets/images/tour-detail-popup-trigger.png') }}"
                                             data-fancybox="gallery" title="section preview"
                                             class="themeBtn section-preview-image section-preview-image--sm"><i
@@ -538,7 +604,8 @@
                                             <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                    target="_blank">Get Color Codes</a>
+                                                    target="_blank">Get Color
+                                                    Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>
                                                 <label for="detail_popup_trigger_box_icon_color" data-color-picker></label>
@@ -555,7 +622,8 @@
                                             <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Box Background:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                    target="_blank">Get Color Codes</a>
+                                                    target="_blank">Get Color
+                                                    Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>
                                                 <label for="detail_popup_trigger_box_background_color"
@@ -573,7 +641,8 @@
                                             <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Box Text Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                    target="_blank">Get Color Codes</a>
+                                                    target="_blank">Get Color
+                                                    Codes</a>
                                             </div>
                                             <div class="field color-picker" data-color-picker-container>
                                                 <label for="detail_popup_trigger_box_text_color" data-color-picker></label>
@@ -629,7 +698,7 @@
                             <div class="form-box__body">
                                 <div class="form-fields">
                                     <label class="title title--sm d-flex align-items-center gap-2 mb-3">
-                                        Icons:
+                                        Icons Color Settings
                                         <a href="{{ asset('admin/assets/images/tour-inner-settings/perks-icon-preview.png') }}"
                                             data-fancybox="gallery" title="section preview"
                                             class="themeBtn section-preview-image section-preview-image--sm"><i

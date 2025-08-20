@@ -7110,7 +7110,9 @@ button[disabled] {
     flex-wrap: wrap;
     line-height: 1;
 }
-
+.tour-views--tagline {
+    margin: 0.5rem 0 1.1rem;
+}
 .tour-views__icon {
     font-size: 1.85rem;
     color: #433f46;
