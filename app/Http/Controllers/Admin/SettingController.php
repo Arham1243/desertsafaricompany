@@ -44,8 +44,16 @@ class SettingController extends Controller
             'app_name' => 'APP_NAME',
             'app_timezone' => 'APP_TIMEZONE',
             'app_currency' => 'APP_CURRENCY',
+            'tabby_public_key' => 'TABBY_PUBLIC_KEY',
+            'tabby_secret_key' => 'TABBY_SECRET_KEY',
+            'stripe_publishable_key' => 'STRIPE_PUBLISHABLE_KEY',
             'stripe_secret_key' => 'STRIPE_SECRET_KEY',
-            'tabby_secret_key' => 'TABBY_KEY',
+            'paypal_client_id' => 'PAYPAL_CLIENT_ID',
+            'paypal_secret_key' => 'PAYPAL_SECRET_KEY',
+            'tamara_public_key' => 'TAMARA_PUBLIC_KEY',
+            'tamara_secret_key' => 'TAMARA_SECRET_KEY',
+            'postpay_public_key' => 'POSTPAY_PUBLIC_KEY',
+            'postpay_secret_key' => 'POSTPAY_SECRET_KEY',
         ];
 
         foreach ($envKeys as $inputKey => $envKey) {
