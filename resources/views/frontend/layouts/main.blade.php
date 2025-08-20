@@ -10,6 +10,9 @@
     @include('frontend.layouts.links')
     @yield('css')
     @stack('css')
+    @if ($settings->get('header_scripts'))
+        {!! $settings->get('header_scripts') !!}
+    @endif
 </head>
 <input type="hidden" name="" id="web_base_url" value="{{ url('/') }}">
 
@@ -73,6 +76,10 @@
 
         })()
     </script>
+
+    @if ($settings->get('footer_scripts'))
+        {!! $settings->get('footer_scripts') !!}
+    @endif
 </body>
 
 </html>

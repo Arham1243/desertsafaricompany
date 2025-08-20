@@ -301,6 +301,33 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">Global Script Tags</div>
+                                </div>
+                            </div>
+
+                            <div class="form-box__body">
+                                <div class="form-fields mb-4">
+                                    <label class="title mb-2">
+                                        Header Scripts
+                                    </label>
+                                    <textarea name="header_scripts" class="field" rows="12"
+                                        placeholder="Add your header scripts here (e.g., GTM, schema, analytics)">{{ $settings->get('header_scripts') }}</textarea>
+                                </div>
+
+                                <div class="form-fields">
+                                    <label class="title mb-2">
+                                        Footer Scripts
+                                    </label>
+                                    <textarea name="footer_scripts" class="field" rows="12"
+                                        placeholder="Add your footer scripts here (e.g., GTM, schema, analytics)">{{ $settings->get('footer_scripts') }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="title">Footer</div>
