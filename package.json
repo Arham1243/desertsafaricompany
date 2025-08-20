@@ -8,7 +8,7 @@
         "prepare": "husky install"
     },
     "devDependencies": {
-        "blade-formatter": "^1.41.1",
+        "blade-formatter": "^1.44.2",
         "husky": "^8.0.0",
         "lint-staged": "^15.2.10",
         "prettier": "^3.6.2",
