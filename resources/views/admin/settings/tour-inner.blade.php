@@ -91,7 +91,7 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Headings Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
                                                     Color Codes</a>
@@ -108,7 +108,7 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Paragraphs Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
                                                     Color Codes</a>
@@ -123,6 +123,36 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                                <hr class="my-5">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Pricing Box Heading Color
+                                            </label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-12">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Heading Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="pricing-box-heading-color-picker" data-color-picker></label>
+                                                <input id="pricing-box-heading-color-picker" type="text"
+                                                    data-color-picker-input name="pricing_box_heading_color"
+                                                    value="{{ $settings->get('pricing_box_heading_color') ?? '#343a40' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <hr class="my-5">
 
                                 <div class="row">
@@ -138,7 +168,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Background Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -155,7 +185,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -183,7 +213,7 @@
                                                         class="bx bxs-show"></i></a></label>
                                         </div>
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -211,7 +241,7 @@
                                                         class="bx bxs-show"></i></a></label>
                                         </div>
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -236,7 +266,7 @@
                                                         class="bx bxs-show"></i></a></label>
                                         </div>
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -264,7 +294,7 @@
                                                         class="bx bxs-show"></i></a></label>
                                         </div>
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Background dotted/solid line color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -282,7 +312,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Pickup circle background color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -301,7 +331,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Pickup circle icon color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -320,7 +350,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Dropoff circle background color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -339,7 +369,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Dropoff circle icon color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -358,7 +388,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Vehicles circle background color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -377,7 +407,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Vehicles circle icon color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -396,7 +426,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Stops circle background color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -415,7 +445,7 @@
                                     </div>
                                     <div class="col-md-6 col-12 mt-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Stops circle icon color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get
@@ -451,7 +481,7 @@
                                                         class="bx bxs-show"></i></a></label>
                                         </div>
                                         <div class="form-fields">
-                                            <label class="title">Prefix Text:</label>
+                                            <label class="text-dark title">Prefix Text:</label>
                                             <input type="text" name="tour_author_prefix_text"
                                                 value="{{ $settings->get('tour_author_prefix_text') ?? 'Designed and Developed by' }}"
                                                 class="field">
@@ -490,7 +520,7 @@
                                 <div class="row">
                                     <div class="col-md-6 col-12 mb-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon:</div>
                                                 <a class="p-0 nav-link" href="//v2.boxicons.com"
                                                     target="_blank">boxicons</a>
@@ -505,7 +535,7 @@
 
                                     <div class="col-md-6 col-12 mb-4">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Icon Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get Color Codes</a>
@@ -522,7 +552,7 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Box Background:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get Color Codes</a>
@@ -540,7 +570,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Box Text Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info"
                                                     target="_blank">Get Color Codes</a>
@@ -606,7 +636,7 @@
                                                 class="bx bxs-show"></i></a></label>
                                 </div>
                                 <div class="form-fields">
-                                    <div class="title d-flex align-items-center gap-2">
+                                    <div class=" text-dark title d-flex align-items-center gap-2">
                                         <div>Icon Color:</div>
                                         <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
                                             Color Codes</a>

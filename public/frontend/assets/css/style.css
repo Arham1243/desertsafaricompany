@@ -3450,10 +3450,8 @@ span.tour-content__title.ml-1 {
 }
 
 .tour-content_book_app.sale {
-    padding-top: 2rem;
-    /* height: 100vh; */
+    padding-top: 1.5rem;
     position: relative;
-    /* overflow-y: auto; */
 }
 .sale-box {
     position: absolute;
@@ -7630,3 +7628,9 @@ ul.show-in-desktop {
 }
 /* card-hover */
 /* tour-card */
+
+.tour-pricing-heading {
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin: 0 0 0.75rem;
+}

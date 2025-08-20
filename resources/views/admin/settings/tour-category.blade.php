@@ -37,7 +37,7 @@
 
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Editor Text Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
                                                     Color Codes</a>
@@ -53,7 +53,7 @@
                                     </div>
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
-                                            <div class="title d-flex align-items-center gap-2">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
                                                 <div>Read More/Read Less Text Color:</div>
                                                 <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get
                                                     Color Codes</a>

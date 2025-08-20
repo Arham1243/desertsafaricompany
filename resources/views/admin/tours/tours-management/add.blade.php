@@ -1172,6 +1172,38 @@
                                     <div class="title">Pricing</div>
                                 </div>
                                 <div class="form-box__body">
+                                    <div x-data="{ boxHeadingEnabled: false }" class="row mb-3">
+                                        <div class="col-12 mb-2">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-2">
+                                                    <input type="hidden"
+                                                        name="tour[pricing][pricing_box_heading_enabled]" value="0">
+                                                    <div class="title title--sm mb-0">Pricing Box Heading:</div>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="pricing_box_heading_enabled" value="1"
+                                                            name="tour[pricing][pricing_box_heading_enabled]"
+                                                            x-model="boxHeadingEnabled">
+                                                        <label class="form-check-label"
+                                                            for="pricing_box_heading_enabled">Enabled</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-3" x-show="boxHeadingEnabled" x-transition>
+                                            <div class="form-fields">
+                                                <label class="title text-dark">Heading :</label>
+                                                <input type="text" name="tour[pricing][pricing_box_heading]"
+                                                    class="field" value="{{ old('tour.pricing.pricing_box_heading') }}">
+                                                @error('tour.pricing.pricing_box_heading')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div x-data="{ enabled: {{ old('tour.pricing.simple_pricing_enabled', 0) ? 'true' : 'false' }} }" class="row">
                                         <div class="col-12 mb-2">
                                             <div class="form-fields">
@@ -1194,7 +1226,7 @@
 
                                         <div class="col-md-6 col-12 mb-3" x-show="enabled" x-transition>
                                             <div class="form-fields">
-                                                <label class="title">Price :</label>
+                                                <label class="title text-dark">Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][regular_price]" class="field"
                                                     value="{{ old('tour[pricing][regular_price]') }}">
@@ -1203,7 +1235,7 @@
 
                                         <div class="col-md-6 col-12" x-show="enabled" x-transition>
                                             <div class="form-fields">
-                                                <label class="title">Sale Price :</label>
+                                                <label class="title text-dark">Sale Price :</label>
                                                 <input step="0.01" min="0" type="number"
                                                     name="tour[pricing][sale_price]" class="field"
                                                     value="{{ old('tour[pricing][sale_price]') }}">

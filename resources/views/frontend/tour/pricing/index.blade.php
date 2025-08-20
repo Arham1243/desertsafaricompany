@@ -1,4 +1,9 @@
     <div class=form-book_content>
+        @if ($tour->pricing_box_heading_enabled && (int) $tour->pricing_box_heading_enabled === 1)
+            <h3 class="tour-pricing-heading" style="color: {{ $settings->get('pricing_box_heading_color') }}">
+                {{ $tour->pricing_box_heading ?? '' }}
+            </h3>
+        @endif
         <div class="tour-content__pra form-book__pra px-0">
             Start Date
         </div>
