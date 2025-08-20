@@ -209,23 +209,37 @@ document.addEventListener("DOMContentLoaded", () => {
     if (loginButtons.length > 0) {
         loginButtons.forEach((btn, index) => {
             btn.addEventListener("click", () => {
-                document.querySelector('.sideBar')?.classList.remove('show')
+                document.querySelector(".sideBar")?.classList.remove("show");
                 LoginPopupApp.openLoginPopup();
             });
         });
     }
 });
 
-
-document.addEventListener('click', function(e) {
-    if (e.target === document.querySelector('.login-wrapper')) {
-        document.querySelector('.login-wrapper')?.classList.remove('open');
+document.addEventListener("click", function (e) {
+    if (e.target === document.querySelector(".login-wrapper")) {
+        document.querySelector(".login-wrapper")?.classList.remove("open");
     }
 });
 
-
-document.addEventListener('click', function(e) {
-    if (e.target === document.querySelector('[data-send-popup]')) {
-        document.querySelector('[data-send-popup]').classList.remove('open');
+document.addEventListener("click", function (e) {
+    if (e.target === document.querySelector("[data-send-popup]")) {
+        document.querySelector("[data-send-popup]").classList.remove("open");
     }
 });
+document.addEventListener("DOMContentLoaded", function () {
+    const cookieBar = document.getElementById("cookie-consent");
+    if (!cookieBar) return;
+
+    if (localStorage.getItem("cookieConsent")) {
+        cookieBar.classList.add("hidden");
+    }
+});
+
+function handleCookieConsent(accepted) {
+    const cookieBar = document.getElementById("cookie-consent");
+    if (!cookieBar) return;
+
+    localStorage.setItem("cookieConsent", accepted ? "accepted" : "rejected");
+    cookieBar.classList.add("hidden");
+}
