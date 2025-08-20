@@ -556,25 +556,22 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
+                        <div class="form-box" x-data="{ enabled: {{ (int) $settings->get('is_enabled_detail_popup_trigger_box') === 1 ? 'true' : 'false' }} }">
                             <div class="form-box__header">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="title">Detail Popups Settings</div>
-                                    <div x-data="{ enabled: {{ (int) $settings->get('is_enabled_detail_popup_trigger_box') === 1 ? 'true' : 'false' }} }" class="form-check form-switch"
-                                        data-enabled-text="Enabled" data-disabled-text="Disabled">
-
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
                                         <input type="hidden" name="is_enabled_detail_popup_trigger_box"
                                             :value="enabled ? 1 : 0">
-
                                         <input class="form-check-input" type="checkbox"
                                             id="enable-detail_popup_trigger_box" x-model="enabled">
-
                                         <label class="form-check-label" for="enable-detail_popup_trigger_box"
                                             x-text="enabled ? 'Enabled' : 'Disabled'"></label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-box__body">
+                            <div class="form-box__body" x-show="enabled" x-transition>
                                 <div class="form-fields">
                                     <label class="title title--sm d-flex align-items-center gap-2 mb-3">
                                         Popup trigger Box Settings
@@ -677,25 +674,23 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
+                        <div class="form-box" x-data="{ enabled: {{ (int) $settings->get('is_enabled_why_book_with_us') === 1 ? 'true' : 'false' }} }">
                             <div class="form-box__header">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="title">"Why Book With Us?" Settings</div>
 
-                                    <div x-data="{ enabled: {{ (int) $settings->get('is_enabled_why_book_with_us') === 1 ? 'true' : 'false' }} }" class="form-check form-switch"
-                                        data-enabled-text="Enabled" data-disabled-text="Disabled">
-
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
                                         <input type="hidden" name="is_enabled_why_book_with_us" :value="enabled ? 1 : 0">
-
                                         <input class="form-check-input" type="checkbox" id="enable-why-book-with-us"
                                             x-model="enabled">
-
                                         <label class="form-check-label" for="enable-why-book-with-us"
                                             x-text="enabled ? 'Enabled' : 'Disabled'"></label>
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-box__body">
+
+                            <div class="form-box__body" x-show="enabled" x-transition>
                                 <div class="form-fields">
                                     <label class="title title--sm d-flex align-items-center gap-2 mb-3">
                                         Icons Color Settings
