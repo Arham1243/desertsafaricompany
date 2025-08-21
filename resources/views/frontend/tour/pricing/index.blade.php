@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                     @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                           @endif>
+                              @endif>
                     {{ $pricingTagline['text'] ?? '' }}
                 </div>
             </div>
@@ -94,12 +94,10 @@
             @endif
         @else
             <button type="button" class="primary-btn w-100" open-vue-login-popup
-                :disabled="!$tour - > availability_status['available']" @if (!$tour->availability_status['available'])
-                data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}"
-        @endif
-        >
-        Login to Continue
-        </button>
+                @if (!$tour->availability_status['available']) disabled
+                data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}" @endif>
+                Login to Continue
+            </button>
         @endif
     </div>
 
