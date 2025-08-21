@@ -146,6 +146,9 @@ class CategoryController extends Controller
 
                 return $newData;
 
+            case 'faq_section':
+                return $newData;
+
             case 'newsletter':
                 $newData['left_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'left_image');
 

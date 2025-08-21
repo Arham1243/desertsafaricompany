@@ -6,6 +6,18 @@
         $tourCountContent = $sectionContent->tour_count ?? null;
         $callToActionContent = $sectionContent->call_to_action ?? null;
         $newsletterContent = $sectionContent->newsletter ?? null;
+        $faqContent = $sectionContent->faq_section ?? null;
+        $faqData = [
+            'enabled' => $faqContent->is_enabled ?? 0,
+            'faqs' => collect($faqContent->question ?? [])
+                ->map(function ($q, $i) use ($faqContent) {
+                    return [
+                        'question' => $q,
+                        'answer' => $faqContent->answer[$i] ?? '',
+                    ];
+                })
+                ->values(),
+        ];
     @endphp
 
     <div class="col-md-12">
@@ -814,6 +826,88 @@
                                     </div>
                                 </div>
                             </div>
+                            <div x-data="faqRepeater({{ json_encode($faqData) }})" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">FAQ Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0" name="content[faq_section][is_enabled]">
+                                            <input class="form-check-input" type="checkbox" id="faq_section_enabled"
+                                                value="1" name="content[faq_section][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="faq_section_enabled">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/faq-section.png') }}" data-fancybox="gallery"
+                                        class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm">FAQs:</label>
+                                            <div class="repeater-table">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                FAQ Content
+                                                                <span
+                                                                    class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                    <span>To add a link:</span>
+                                                                    <code class="text-nowrap text-lowercase">
+                                                                        &lt;a href="//google.com"
+                                                                        target="_blank"&gt;Text&lt;/a&gt;
+                                                                    </code>
+                                                                    <button class="themeBtn copy-btn py-1 px-2"
+                                                                        type="button"
+                                                                        text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                        Copy
+                                                                    </button>
+                                                                </span>
+                                                            </th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(faq, index) in faqs" :key="index">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <label class="title">Question <span
+                                                                                class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field mb-1" rows="4" x-model="faq.question"
+                                                                            :name="`content[faq_section][question][${index}]`"></textarea>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="title">Answer <span class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field" rows="4" x-model="faq.answer" :name="`content[faq_section][answer][${index}]`"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        @click="removeFaq(index)">
+                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" @click="addFaq">
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div x-data="{ enabled: {{ isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
@@ -1122,6 +1216,29 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
+        function faqRepeater(initial = {
+            enabled: 0,
+            faqs: []
+        }) {
+            return {
+                enabled: Boolean(Number(initial.enabled)),
+                faqs: initial.faqs.length ? initial.faqs : [{
+                    question: '',
+                    answer: ''
+                }],
+                addFaq() {
+                    this.faqs.push({
+                        question: '',
+                        answer: ''
+                    })
+                },
+                removeFaq(index) {
+                    this.faqs.splice(index, 1)
+                }
+            }
+        }
+
+
         document.addEventListener('DOMContentLoaded', () => {
             document
                 .querySelectorAll("[data-color-picker-container]")

@@ -74,8 +74,9 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                 
-                                                                                    @endif>
+                                                                                                                                                                                     
+                                                                                                                          
+                                                      @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -106,7 +107,7 @@
     @endphp
 
     @if (isset($category_block['is_enabled']) &&
-            $category_block['is_enabled'] === '1' &&
+            (int) $category_block['is_enabled'] === 1 &&
             $category_block_categories->isNotEmpty())
         <div class="my-5">
             <div class="container">
@@ -143,7 +144,6 @@
         </div>
     @endif
 
-
     @php
         $sectionContent = json_decode($item->section_content);
         $tourCountContent = $sectionContent->tour_count ?? null;
@@ -151,7 +151,7 @@
         $newsletterContent = $sectionContent->newsletter ?? null;
     @endphp
 
-    @if (isset($callToActionContent->is_enabled) && $callToActionContent->is_enabled === '1')
+    @if (isset($callToActionContent->is_enabled) && (int) $callToActionContent->is_enabled === 1)
         @php
             $isCtaBackgroundColor = isset($callToActionContent->call_to_action_background_type)
                 ? $callToActionContent->call_to_action_background_type === 'background_color'
@@ -217,7 +217,7 @@
         </div>
     @endif
 
-    @if (isset($tourCountContent->is_enabled) && $tourCountContent->is_enabled === '1')
+    @if (isset($tourCountContent->is_enabled) && (int) $tourCountContent->is_enabled === 1)
         @php
             $isCountBackgroundColor = isset($tourCountContent->tour_count_background_type)
                 ? $tourCountContent->tour_count_background_type === 'background_color'
@@ -374,8 +374,53 @@
             </div>
         </div>
     @endif
+    @php
+        $faqContent = $sectionContent->faq_section ?? null;
+        $faqs = [];
 
-    @if (isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled === '1')
+        if ($faqContent && isset($faqContent->is_enabled)) {
+            $questions = $faqContent->question ?? [];
+            $answers = $faqContent->answer ?? [];
+
+            foreach ($questions as $index => $question) {
+                $faqs[] = (object) [
+                    'question' => $question,
+                    'answer' => $answers[$index] ?? '',
+                ];
+            }
+        }
+    @endphp
+    @if (!empty($faqs) && (int) $faqContent->is_enabled === 1)
+        <div class="faqs faqs-category my-5 py-2">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="section-content">
+                            <h2 class="subHeading">
+                                FAQS
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach ($faqs as $faq)
+                    <div class="faqs-single accordian">
+                        <div class="faqs-single__header accordian-header">
+                            <div class="faq-icon"><i class="bx bx-plus"></i></div>
+                            <div class="tour-content__title">{{ $faq->question }}</div>
+                        </div>
+                        <div class="faqs-single__content accordian-content">
+                            <div class="hidden-wrapper tour-content__pra">
+                                {!! $faq->answer !!}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (isset($newsletterContent->is_enabled) && (int) $newsletterContent->is_enabled === 1)
         <div class="newsletter my-5">
             <div class="container">
                 <div class="row g-0">

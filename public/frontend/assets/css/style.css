@@ -1087,7 +1087,7 @@ a.card-title:hover {
 }
 
 .comment {
-    padding: 10rem 0 4rem;
+    padding: 10rem 0 1rem;
     position: relative;
 }
 
@@ -7749,4 +7749,20 @@ ul.show-in-desktop {
 /* cookie consent */
 .tours-slider .slick-arrow {
     top: 21%;
+}
+.faqs.faqs-category .tour-content__title {
+    font-weight: 600;
+    font-size: 17px;
+    color: #343a40;
+}
+
+.faqs.faqs-category .tour-content__pra {
+    font-size: 15px;
+    color: #5e6d77;
+    font-weight: 500;
+}
+
+.faqs.faqs-category .faqs-single__content {
+    width: auto;
+    margin-left: 60px;
 }
