@@ -3183,7 +3183,11 @@
                                         @enderror
                                     </div>
                                     @php
-                                        $certifiedTag = json_decode($tour->certified_tag ?? '{}', true);
+                                        $certifiedTag = is_string($tour->certified_tag)
+                                            ? json_decode($tour->certified_tag, true)
+                                            : (is_array($tour->certified_tag)
+                                                ? $tour->certified_tag
+                                                : []);
                                     @endphp
                                     <div x-data="{ certifiedTagEnabled: false }" x-init="certifiedTagEnabled = {{ old('tour.status.certified_tag.enabled', $certifiedTag['enabled'] ?? false) ? 'true' : 'false' }}">
 
@@ -3237,7 +3241,11 @@
                                     </div>
 
                                     @php
-                                        $bookedTextConfig = json_decode($tour->booked_text ?? '{}', true);
+                                        $bookedTextConfig = is_string($tour->booked_text)
+                                            ? json_decode($tour->booked_text, true)
+                                            : (is_array($tour->booked_text)
+                                                ? $tour->booked_text
+                                                : []);
                                     @endphp
                                     <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
 
@@ -3261,7 +3269,12 @@
                                     </div>
 
                                     @php
-                                        $badgeTag = json_decode($tour->badge_tag ?? '{}', true);
+                                        $badgeTag = is_string($tour->badge_tag)
+                                            ? json_decode($tour->badge_tag, true)
+                                            : (is_array($tour->badge_tag)
+                                                ? $tour->badge_tag
+                                                : []);
+
                                     @endphp
                                     <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', $badgeTag['enabled'] ?? false) ? 'true' : 'false' }}">
 
