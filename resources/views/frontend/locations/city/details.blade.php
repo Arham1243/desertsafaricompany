@@ -68,7 +68,30 @@
                                 </div>
                                 @if (isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled === '1')
                                     <div class="loaction-guide-btn">
-                                        <a href="{{ sanitizedLink($guideContent->btn_link) }}" target="_blank"
+                                        @php
+                                            $finalLink = null;
+
+                                            if (
+                                                $guideContent->btn_link_type === 'category' &&
+                                                $guideContent->btn_link_category_id
+                                            ) {
+                                                $btnCategory = $categories->firstWhere(
+                                                    'id',
+                                                    $guideContent->btn_link_category_id,
+                                                );
+
+                                                if ($btnCategory) {
+                                                    $finalLink = route('tours.category.details', [
+                                                        $btnCategory->country->iso_alpha2,
+                                                        $btnCategory->city->slug,
+                                                        $btnCategory->slug,
+                                                    ]);
+                                                }
+                                            } else {
+                                                $finalLink = sanitizedLink($guideContent->btn_link);
+                                            }
+                                        @endphp
+                                        <a href="{{ $finalLink ?? 'javascript:void(0)' }}" target="_blank"
                                             class="themeBtn-round"
                                             @php
 $btnStyles = [];

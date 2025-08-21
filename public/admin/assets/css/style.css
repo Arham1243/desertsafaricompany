@@ -2731,4 +2731,6 @@ a.delete-btn:hover {
 .ck.ck-editor__main {
     max-height: 250px;
     overflow-y: auto;
+    border: 1px solid #ccced1;
+    border-inline: none;
 }

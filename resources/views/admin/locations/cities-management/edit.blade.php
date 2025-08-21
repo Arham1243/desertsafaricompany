@@ -206,7 +206,8 @@
                             </div>
                             <div class="form-box" x-data="{
                                 enabled: {{ isset($guideContent->is_enabled) && $guideContent->is_enabled == '1' ? 'true' : 'false' }},
-                                btnEnabled: {{ isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled == '1' ? 'true' : 'false' }}
+                                btnEnabled: {{ isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled == '1' ? 'true' : 'false' }},
+                                linkType: '{{ $guideContent->btn_link_type ?? 'link' }}'
                             }">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
@@ -304,35 +305,73 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="row" x-show="btnEnabled" x-transition>
+                                                <div class="row" x-show="btnEnabled">
+                                                    <div class="col-12 mb-3">
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="link_type_link"
+                                                                name="section_content[guide][btn_link_type]"
+                                                                value="link" x-model="linkType">
+                                                            <label class="form-check-label" for="link_type_link">Normal
+                                                                Link</label>
+                                                        </div>
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="link_type_category"
+                                                                name="section_content[guide][btn_link_type]"
+                                                                value="category" x-model="linkType">
+                                                            <label class="form-check-label"
+                                                                for="link_type_category">Category Page</label>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mb-4" x-show="linkType === 'link'">
+                                                        <div class="form-fields">
+                                                            <label class="title d-flex align-items-center gap-2 lh-1">
+                                                                <div class="mt-1 text-dark">Button Link:</div>
+                                                                <button data-bs-placement="top"
+                                                                    title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
+                                                                    type="button" data-tooltip="tooltip"
+                                                                    class="tooltip-lg">
+                                                                    <i class='bx bxs-info-circle'></i>
+                                                                </button>
+                                                            </label>
+                                                            <input class="field" type="text"
+                                                                name="section_content[guide][btn_link]"
+                                                                value="{{ $guideContent->btn_link ?? '' }}"
+                                                                placeholder="Enter button link"
+                                                                data-error="Button Link" />
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-12 mb-4" x-show="linkType === 'category'"
+                                                        x-transition>
+                                                        <div class="form-fields">
+                                                            <label class="title">Attach Category page to button:</label>
+                                                            <select name="section_content[guide][btn_link_category_id]"
+                                                                class="select2-select" data-error="Category"
+                                                                should-sort="false">
+                                                                <option value="" disabled>Select Category</option>
+                                                                {!! renderCategories($categories, $guideContent->btn_link_category_id ?? null) !!}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
-                                                            <label class="title">
-                                                                <div class="d-flex align-items-center gap-2 lh-1">
-                                                                    <div class="mt-1 text-dark">Button Link & Background:
-                                                                    </div>
-                                                                    <button data-bs-placement="top"
-                                                                        title="<div class='d-flex flex-column'> <div class='d-flex gap-1'> <strong>Link:</strong> https://abc.com</div> <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div> <div class='d-flex gap-1'><strong>Whatsapp:</strong> https://wa.me/971xxxxxxxxx</div> </div>"
-                                                                        type="button" data-tooltip="tooltip"
-                                                                        class="tooltip-lg">
-                                                                        <i class='bx bxs-info-circle'></i>
-                                                                    </button>
-                                                                </div>
-                                                            </label>
+                                                            <label class="title text-dark"> Button Background
+                                                                Color:</label>
                                                             <div class="field color-picker" data-color-picker-container>
                                                                 <label for="guide-btn-bg-color" data-color-picker></label>
-                                                                <input id="guide-btn-bg-color" type="hidden"
+                                                                <input id="guide-btn-bg-color" type="text"
                                                                     name="section_content[guide][btn_background_color]"
                                                                     data-color-picker-input
                                                                     value="{{ $guideContent->btn_background_color ?? '#1c4d99' }}"
                                                                     data-error="Background Color" inputmode="text" />
-                                                                <input type="text"
-                                                                    name="section_content[guide][btn_link]"
-                                                                    value="{{ $guideContent->btn_link ?? '' }}"
-                                                                    placeholder="" data-error="Button Link" />
                                                             </div>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
                                                             <label class="title text-dark">Button Text & Text
@@ -363,7 +402,8 @@
                                         <div class="col-12">
                                             <div class="form-fields">
                                                 <div class="title d-flex align-items-center gap-2">
-                                                    <div>Select Background Color <span class="text-danger">*</span>:</div>
+                                                    <div>Select Box Background Color <span class="text-danger">*</span>:
+                                                    </div>
                                                     <a class="p-0 nav-link" href="//html-color-codes.info"
                                                         target="_blank">Get Color Codes</a>
                                                 </div>

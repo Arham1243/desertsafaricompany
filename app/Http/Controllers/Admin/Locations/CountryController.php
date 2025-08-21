@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Locations;
 use App\Http\Controllers\Controller;
 use App\Models\Country;
 use App\Models\Tour;
+use App\Models\TourCategory;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -24,8 +25,9 @@ class CountryController extends Controller
     public function create()
     {
         $tours = Tour::where('status', 'publish')->get();
+        $categories = TourCategory::where('status', 'publish')->get();
 
-        return view('admin.locations.countries-management.add', compact('tours'))->with('title', 'Add New Country');
+        return view('admin.locations.countries-management.add', compact('tours', 'categories'))->with('title', 'Add New Country');
     }
 
     public function store(Request $request)
@@ -81,10 +83,11 @@ class CountryController extends Controller
     public function edit($id)
     {
         $item = Country::find($id);
+        $categories = TourCategory::where('status', 'publish')->get();
         $tours = Tour::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours', 'categories'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)

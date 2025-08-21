@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Tour;
+use App\Models\TourCategory;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
@@ -25,9 +26,10 @@ class CityController extends Controller
     public function create()
     {
         $countries = Country::where('status', 'publish')->get();
+        $categories = TourCategory::where('status', 'publish')->get();
         $tours = Tour::where('status', 'publish')->get();
 
-        return view('admin.locations.cities-management.add', compact('countries', 'tours'))->with('title', 'Add New City');
+        return view('admin.locations.cities-management.add', compact('countries', 'categories', 'tours'))->with('title', 'Add New City');
     }
 
     public function store(Request $request)
@@ -82,9 +84,10 @@ class CityController extends Controller
         $item = City::find($id);
         $countries = Country::where('status', 'publish')->get();
         $tours = Tour::where('status', 'publish')->get();
+        $categories = TourCategory::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries', 'tours'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries', 'tours', 'categories'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)
