@@ -84,6 +84,14 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <div class="form-fields">
+                                        <label class="title">Lines to Display Before "Read More" </label>
+                                        <input oninput="this.value = Math.abs(this.value)" type="number" min="0"
+                                            name="content_line_limit" class="field"
+                                            value="{{ old('content_line_limit', $item->content_line_limit) }}"
+                                            data-error="content_line_limit">
+                                    </div>
                                 </div>
                             </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['enity_based_tour_block']['is_enabled']) && $jsonContent['enity_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">

@@ -35,6 +35,7 @@ class CountryController extends Controller
             'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
+            'content_line_limit' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
             'featured_image_alt_text' => 'nullable|string|max:255',
@@ -91,8 +92,8 @@ class CountryController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|min:3|max:255',
             'iso_alpha2' => 'nullable|min:2|max:2',
-            'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
+            'content_line_limit' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
             'featured_image_alt_text' => 'nullable|string|max:255',
@@ -104,7 +105,7 @@ class CountryController extends Controller
         $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
 
         $item = Country::find($id);
-        $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['name'];
+        $slugText = isset($validatedData['slug']) && $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['name'];
         $slug = $this->createSlug($slugText, 'countries', $item->slug);
         $featuredImage = $item->featured_image;
         $bannerImage = $item->banner_image;

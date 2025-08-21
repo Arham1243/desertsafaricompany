@@ -2728,3 +2728,7 @@ a.delete-btn:hover {
 .tooltip-inner {
     max-width: inherit !important;
 }
+.ck.ck-editor__main {
+    max-height: 250px;
+    overflow-y: auto;
+}

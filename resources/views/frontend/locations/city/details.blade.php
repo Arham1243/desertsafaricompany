@@ -29,10 +29,19 @@
                                 </li>
                                 <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
                             </ul>
-
                         </div>
-                        <div class="location1-content__section--pra editor-content">
-                            {!! $item->content !!}
+                        <div class="my-3">
+                            <div class="tour-content__details " data-show-more>
+                                <div class="editor-content line-clamp" data-show-more-content
+                                    @if ($item->content_line_limit > 0) style="-webkit-line-clamp: {{ $item->content_line_limit }};" @endif>
+                                    {!! $item->content !!}
+                                </div>
+                                @if ($item->content_line_limit > 0)
+                                    <a href="javascript:void(0)" class="loginBtn mt-1" data-show-more-btn
+                                        more-text="Read more" less-text='Read less'>
+                                        Read more</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>

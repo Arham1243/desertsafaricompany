@@ -131,7 +131,7 @@
                                             </div>
 
                                             <div class="form-fields">
-                                                <label class="title">Lines to Display Before "See More" </label>
+                                                <label class="title">Lines to Display Before "Read More" </label>
                                                 <input oninput="this.value = Math.abs(this.value)" type="number"
                                                     min="0" name="long_description_line_limit" class="field"
                                                     value="{{ $category->long_description_line_limit }}"
