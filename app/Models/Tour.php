@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -12,7 +13,13 @@ class Tour extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
-    protected $appends = ['average_rating', 'formated_price_type'];
+    protected $casts = [
+        'start_date' => 'date',
+        'end_date' => 'date',
+        'availability_open_hours' => 'array',
+    ];
+
+    protected $appends = ['average_rating', 'formated_price_type', 'availability_status'];
 
     public function categories()
     {
@@ -216,6 +223,82 @@ class Tour extends Model
     public function views()
     {
         return $this->hasMany(TourView::class);
+    }
+
+    public function getAvailabilityStatusAttribute(): array
+    {
+        $now = Carbon::now();
+
+        if ((int) $this->is_fixed_date === 1) {
+            if (! $this->start_date || ! $this->end_date) {
+                return [
+                    'available' => false,
+                    'user_message' => 'Tour dates are not set yet. Please check back later.',
+                ];
+            }
+
+            if ($now->lt($this->start_date)) {
+                return [
+                    'available' => false,
+                    'user_message' => 'This tour starts on '.$this->start_date->format('M d, Y').'. Stay tuned!',
+                ];
+            }
+
+            if ($now->gt($this->end_date)) {
+                return [
+                    'available' => false,
+                    'user_message' => 'This tour ended on '.$this->end_date->format('M d, Y').'. Check other tours!',
+                ];
+            }
+        }
+
+        if ((int) $this->is_open_hours === 1) {
+            $hours = json_decode($this->availability_open_hours, true);
+
+            if (! is_array($hours)) {
+                return [
+                    'available' => false,
+                    'user_message' => 'Tour hours data is invalid. Please contact support.',
+                ];
+            }
+
+            $today = strtolower($now->format('l'));
+            $todayHours = collect($hours)
+                ->first(fn ($h) => strtolower($h['day']) === $today);
+
+            if (! $todayHours) {
+                return [
+                    'available' => false,
+                    'user_message' => 'This tour is not available today. Check back on '.ucfirst($this->getNextAvailableDay()).'.',
+                ];
+            }
+
+            try {
+                $open = Carbon::createFromTimeString($todayHours['open_time']);
+                $close = Carbon::createFromTimeString($todayHours['close_time']);
+            } catch (\Exception $e) {
+                return [
+                    'available' => false,
+                    'user_message' => 'Tour hours are invalid today. Please contact support.',
+                ];
+            }
+
+            if ($close->lt($open)) {
+                $close->addDay();
+            }
+
+            if (! ($now->between($open, $close))) {
+                return [
+                    'available' => false,
+                    'user_message' => 'Tour is currently closed. It will be open from '.$open->format('h:i A').' to '.$close->format('h:i A').' today.',
+                ];
+            }
+        }
+
+        return [
+            'available' => true,
+            'user_message' => 'Good news! This tour is available right now.',
+        ];
     }
 
     protected static function boot()

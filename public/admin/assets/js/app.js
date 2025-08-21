@@ -7,7 +7,7 @@ $(function () {
                 autoUpdateInput: false,
                 sameDate: true,
                 autoApply: true,
-                disabledPast: true,
+                minDate: moment(),
                 enableLoading: true,
                 showEventTooltip: true,
                 classNotAvailable: ["disabled", "off"],
@@ -195,10 +195,10 @@ const getSelect2Config = (select, maxItems, shouldSort) => {
         allowClear: true,
         sorter: shouldSort
             ? function (data) {
-                return data.sort(function (a, b) {
-                    return a.text.localeCompare(b.text);
-                });
-            }
+                  return data.sort(function (a, b) {
+                      return a.text.localeCompare(b.text);
+                  });
+              }
             : undefined,
         language: {
             noResults: function () {
@@ -222,10 +222,10 @@ const initializeSelect2 = () => {
 
         // Disable sorting for categories dropdown (you can adjust this condition as needed)
         const shouldSort = select.classList.contains("category-select")
-            ? false  // Disable sorting for category select
-            : (select.hasAttribute("should-sort")
-                ? select.getAttribute("should-sort") === "true"
-                : true);
+            ? false // Disable sorting for category select
+            : select.hasAttribute("should-sort")
+              ? select.getAttribute("should-sort") === "true"
+              : true;
 
         const config = getSelect2Config(select, maxItems, shouldSort);
         // Initialize Select2
@@ -477,13 +477,9 @@ function initializeEditorsSingle(editorElement) {
         height: "300px",
         // Add custom styles here if needed
         // Note: CKEditor 5 does not support `content_style` like TinyMCE
-    })
-        .catch((error) => {
-            console.error(
-                "There was a problem initializing the editor:",
-                error,
-            );
-        });
+    }).catch((error) => {
+        console.error("There was a problem initializing the editor:", error);
+    });
 }
 
 // Function to validate the form
@@ -693,7 +689,7 @@ const InitializeColorPickers = (pickerContainer) => {
 
     const initialColor =
         colorPickerInput.value &&
-            /^#([0-9A-F]{3}){1,2}$/i.test(colorPickerInput.value)
+        /^#([0-9A-F]{3}){1,2}$/i.test(colorPickerInput.value)
             ? colorPickerInput.value
             : colorPickerInput.getAttribute("placeholder");
     if (colorPicker && colorPickerInput) {
@@ -817,21 +813,26 @@ function initializeFeatures() {
         .forEach(function (field) {
             syncToEditable(field);
         });
-    document
-        .querySelectorAll(".editor")
-        .forEach(function (element) {
-            initializeEditorsSingle(element)
-        });
+    document.querySelectorAll(".editor").forEach(function (element) {
+        initializeEditorsSingle(element);
+    });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const dateInputs = document.querySelectorAll('input[type="datetime-local"], input[type="date"]');
+    const dateInputs = document.querySelectorAll(
+        'input[type="datetime-local"], input[type="date"]',
+    );
     if (dateInputs.length) {
-        dateInputs.forEach(input => {
-            input.addEventListener('click', () => input.showPicker && input.showPicker());
+        dateInputs.forEach((input) => {
+            input.addEventListener(
+                "click",
+                () => input.showPicker && input.showPicker(),
+            );
         });
     }
 });
-document.getElementById('sidebarToggle')?.addEventListener('click', () => {
-    document.getElementById('main-dashboard-wrapper')?.classList.toggle('close-sidebar');
+document.getElementById("sidebarToggle")?.addEventListener("click", () => {
+    document
+        .getElementById("main-dashboard-wrapper")
+        ?.classList.toggle("close-sidebar");
 });

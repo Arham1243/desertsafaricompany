@@ -13,6 +13,8 @@ use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
 require __DIR__.'/admin.php';
+require __DIR__.'/auth.php';
+
 Route::get('/', [IndexController::class, 'index'])->name('index');
 Route::get('/home', [IndexController::class, 'index']);
 Route::get('/welcome', [IndexController::class, 'index']);
@@ -25,18 +27,6 @@ Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->na
 Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest'])->name('search.suggestions');
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
-
-Route::name('locations.')->group(function () {
-    Route::get('/{country}', [CountryController::class, 'show'])
-        ->name('country');
-
-    Route::get('/{country}/{slug}', [LocationController::class, 'resolveSlug'])
-        ->where([
-            'country' => '[a-zA-Z]{2}',
-            'slug' => '[a-z0-9-]+',
-        ])
-        ->name('city');
-});
 
 Route::name('tours.')->group(function () {
     Route::get('/{country}/{city}/{category}', [CategoryController::class, 'details'])
@@ -85,4 +75,14 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/apply-code', [CheckoutController::class, 'applyCode'])->name('applyCode');
 });
 
-require __DIR__.'/auth.php';
+Route::name('locations.')->group(function () {
+    Route::get('/{country}', [CountryController::class, 'show'])
+        ->name('country');
+
+    Route::get('/{country}/{slug}', [LocationController::class, 'resolveSlug'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'slug' => '[a-z0-9-]+',
+        ])
+        ->name('city');
+});

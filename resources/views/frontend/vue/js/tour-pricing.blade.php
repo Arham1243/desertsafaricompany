@@ -285,6 +285,9 @@
             }
 
             const updateTotalPrice = () => {
+                @if (!$tour->availability_status['available'])
+                    showToast('error', '{{ $tour->availability_status['user_message'] }}');
+                @endif
                 @if (!Auth::check())
                     showToast('error', 'Please Login to continue.');
                 @endif

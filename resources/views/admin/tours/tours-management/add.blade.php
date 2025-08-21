@@ -2180,7 +2180,7 @@
                                             </div>
                                             <div class="col-12" x-show="fixedDate == 1">
                                                 <div class="row my-2">
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <label class="title">Start Date
                                                                 :</label>
@@ -2193,7 +2193,7 @@
                                                             @enderror
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-4">
+                                                    <div class="col-md-6">
                                                         <div class="form-fields">
                                                             <label class="title">End Date
                                                                 :</label>
@@ -2201,18 +2201,6 @@
                                                                 placeholder="Select a date"
                                                                 name="tour[availability][end_date]" autocomplete="off">
                                                             @error('availability[end_date]')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-4">
-                                                        <div class="form-fields">
-                                                            <label class="title">Last Booking Date
-                                                                :</label>
-                                                            <input readonly type="text" class="field date-picker"
-                                                                placeholder="Select a date" autocomplete="off"
-                                                                name="tour[availability][last_booking_date]">
-                                                            @error('availability[last_booking_date]')
                                                                 <div class="text-danger">{{ $message }}</div>
                                                             @enderror
                                                         </div>
@@ -2243,7 +2231,6 @@
                                                         <table class="table table-bordered">
                                                             <thead>
                                                                 <tr>
-                                                                    <th scope="col">Enable? </th>
                                                                     <th scope="col">Day of Week </th>
                                                                     <th scope="col">Open</th>
                                                                     <th scope="col">Close</th>
@@ -2252,11 +2239,11 @@
                                                             <tbody>
                                                                 @php
                                                                     $days = [
-                                                                        'Monday',
-                                                                        'Tuesday',
-                                                                        'Wednesday',
-                                                                        'Thursday',
-                                                                        'Friday',
+                                                                        'monday',
+                                                                        'tuesday',
+                                                                        'wednesday',
+                                                                        'thursday',
+                                                                        'friday',
                                                                     ];
                                                                     $timeSlots = [
                                                                         '00:00:00',
@@ -2290,19 +2277,6 @@
                                                                         $day = $days[$i];
                                                                     @endphp
                                                                     <tr>
-                                                                        <td>
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="checkbox"
-                                                                                    name="tour[availability][open_hours][{{ $i }}][enabled]"
-                                                                                    id="{{ $day }}"
-                                                                                    value="1">
-                                                                                <label class="form-check-label"
-                                                                                    for="{{ $day }}">
-                                                                                    Enable
-                                                                                </label>
-                                                                            </div>
-                                                                        </td>
                                                                         <td>
                                                                             <input
                                                                                 name="tour[availability][open_hours][{{ $i }}][day]"

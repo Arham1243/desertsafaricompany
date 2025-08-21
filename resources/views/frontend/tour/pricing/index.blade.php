@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                     @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                  @endif>
+                       @endif>
                     {{ $pricingTagline['text'] ?? '' }}
                 </div>
             </div>
@@ -62,23 +62,34 @@
             {{ $todayViews }} {{ Str::plural('view', $todayViews) }} today, so act now!
         </div>
     </div>
-
-    <div class=form-guest__btn>
+    <div class="form-guest__btn">
         @if (Auth::check())
             @if (isset($isTourInCart) && !$isTourInCart)
-                <button class="primary-btn w-100"
-                    @if ($tour->price_type && $tour->price_type !== 'private') :disabled="!isSubmitEnabled"
-                    @elseif ($tour->price_type === 'private')
-                :disabled="!carQuantity>0" 
-                @else @endif
-                    @if (!$isDataValid) disabled @endif>Book
-                    Now</button>
+                @if (!$tour->availability_status['available'])
+                    <button class="primary-btn w-100" disabled data-tooltip="tooltip"
+                        title="{{ $tour->availability_status['user_message'] }}">
+                        Book Now
+                    </button>
+                @else
+                    <button class="primary-btn w-100"
+                        @if ($tour->price_type && $tour->price_type !== 'private') :disabled="!isSubmitEnabled" @elseif ($tour->price_type === 'private') :disabled="!carQuantity>0" @else @endif
+                        @if (!$isDataValid) disabled @endif
+                        @if (!$isDataValid) disabled @endif
+                        @if (!$tour->availability_status['available']) data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}" @endif>
+                        Book Now
+                    </button>
+                @endif
             @else
-                <a href="{{ route('cart.index') }}" class="primary-btn w-100">View
-                    Cart</a>
+                <a href="{{ route('cart.index') }}" class="primary-btn w-100">View Cart</a>
             @endif
         @else
-            <button type="button" class="primary-btn w-100" open-vue-login-popup>Login to Continue</button>
+            <button type="button" class="primary-btn w-100" open-vue-login-popup
+                :disabled="!$tour - > availability_status['available']" @if (!$tour->availability_status['available'])
+                data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}"
+        @endif
+        >
+        Login to Continue
+        </button>
         @endif
     </div>
 
