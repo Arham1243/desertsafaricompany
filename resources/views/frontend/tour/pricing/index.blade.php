@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                     @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                       @endif>
+                           @endif>
                     {{ $pricingTagline['text'] ?? '' }}
                 </div>
             </div>
@@ -62,7 +62,17 @@
             {{ $todayViews }} {{ Str::plural('view', $todayViews) }} today, so act now!
         </div>
     </div>
-    <div class="form-guest__btn">
+
+    <div class="payment-widget mt-4 mb-3">
+        <tamara-widget id="tamara-widget-custom" type="tamara-summary"
+            amount="{{ $tour->lowest_promo_price['discounted'] }}"
+            config='{"badgePosition":"right","showExtraContent":""}' inline-type="2">
+        </tamara-widget>
+    </div>
+
+    <div class="payment-widget" id="tabby-promo-widget" class="my-3"></div>
+
+    <div class="form-guest__btn mt-4">
         @if (Auth::check())
             @if (isset($isTourInCart) && !$isTourInCart)
                 @if (!$tour->availability_status['available'])
