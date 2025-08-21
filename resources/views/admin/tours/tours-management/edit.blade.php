@@ -2758,7 +2758,12 @@
                                                                         '23:00:00',
                                                                     ];
 
-                                                                    $openHour = $tour->availability_open_hours ?? [];
+                                                                    $openHour = $tour->availability_open_hours
+                                                                        ? json_decode(
+                                                                            $tour->availability_open_hours,
+                                                                            true,
+                                                                        )
+                                                                        : [];
 
                                                                     $openHour = array_replace(
                                                                         array_fill(0, count($days), [
