@@ -3084,9 +3084,11 @@
                                 <div class="form-box__body">
                                     <div class="row">
                                         @php
-                                            $authorConfig = $tour->author_config
-                                                ? json_decode($tour->author_config)
-                                                : null;
+                                            $authorConfig = is_string($tour->author_config)
+                                                ? json_decode($tour->author_config, true)
+                                                : (is_array($tour->author_config)
+                                                    ? $tour->author_config
+                                                    : []);
                                         @endphp
 
                                         <div class="col-md-6 col-12">
