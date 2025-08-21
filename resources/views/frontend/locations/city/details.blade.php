@@ -81,11 +81,15 @@
                                                 );
 
                                                 if ($btnCategory) {
-                                                    $finalLink = route('tours.category.details', [
-                                                        $btnCategory->country->iso_alpha2,
-                                                        $btnCategory->city->slug,
-                                                        $btnCategory->slug,
-                                                    ]);
+                                                    $routeParams = [$btnCategory->country->iso_alpha2];
+
+                                                    if ($btnCategory->city) {
+                                                        $routeParams[] = $btnCategory->city->slug;
+                                                    }
+
+                                                    $routeParams[] = $btnCategory->slug;
+
+                                                    $finalLink = route('tours.category.details', $routeParams);
                                                 }
                                             } else {
                                                 $finalLink = sanitizedLink($guideContent->btn_link);

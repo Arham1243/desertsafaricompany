@@ -14,7 +14,7 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function details(Request $request, $country, $param2, $param3 = null)
+    public function details(Request $request, $country, $param2 = null, $param3 = null)
     {
         $countryModel = Country::where('iso_alpha2', $country)->firstOrFail();
 

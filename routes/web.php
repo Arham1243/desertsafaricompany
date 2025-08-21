@@ -28,25 +28,6 @@ Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest']
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);
 Route::post('/save-review', [IndexController::class, 'save_review'])->name('save_review');
 
-Route::name('tours.')->group(function () {
-    Route::get('/{country}/{city}/{category}', [CategoryController::class, 'details'])
-        ->where([
-            'country' => '[a-zA-Z]{2}',
-            'city' => '[a-z0-9-]+',
-            'category' => '[a-z0-9-]+',
-        ])
-        ->name('category.details');
-
-    Route::get('/{country}/{city}/{category}/{slug}', [TourController::class, 'resolveSlug'])
-        ->where([
-            'country' => '[a-zA-Z]{2}',
-            'city' => '[a-z0-9-]+',
-            'category' => '[a-z0-9-]+',
-            'slug' => '[a-z0-9-]+',
-        ])
-        ->name('details');
-});
-
 Route::prefix('tours')->name('tours.')->group(function () {
     Route::get('/', [TourController::class, 'index'])->name('index');
     Route::post('/api/promo-prices-by-day', [TourController::class, 'getTourPromoPricesByDay'])->name('promo-prices-by-day');
@@ -85,4 +66,23 @@ Route::name('locations.')->group(function () {
             'slug' => '[a-z0-9-]+',
         ])
         ->name('city');
+});
+
+Route::name('tours.')->group(function () {
+    Route::get('/{country}/{city?}/{category?}', [CategoryController::class, 'details'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'city' => '[a-z0-9-]+',
+            'category' => '[a-z0-9-]+',
+        ])
+        ->name('category.details');
+
+    Route::get('/{country}/{city}/{category}/{slug}', [TourController::class, 'resolveSlug'])
+        ->where([
+            'country' => '[a-zA-Z]{2}',
+            'city' => '[a-z0-9-]+',
+            'category' => '[a-z0-9-]+',
+            'slug' => '[a-z0-9-]+',
+        ])
+        ->name('details');
 });
