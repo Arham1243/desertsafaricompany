@@ -205,16 +205,20 @@
                         @foreach ($resourcesToShow as $resource)
                             @php
                                 $resourceType = '';
+                                $url = 'javascript:void(0)';
                                 if ($resource instanceof \App\Models\City) {
                                     $resourceType = 'city';
+                                    $url = route('locations.city', [$resource->country->iso_alpha2, $resource->slug]);
                                 } elseif ($resource instanceof \App\Models\Country) {
                                     $resourceType = 'country';
+                                    $url = route('locations.country', [$resource->iso_alpha2, $resource->slug]);
                                 } elseif ($resource instanceof \App\Models\Tour) {
                                     $resourceType = 'tour';
+                                    $url = buildTourDetailUrl($resource);
                                 }
                             @endphp
                             <div class=col-md>
-                                <a href="{{ route($columns['route'], $resource->{$columns['slug']}) }}" class=dst-card>
+                                <a href="{{ $url }}" class=dst-card>
                                     <div class=destinations-img>
                                         <img data-src={{ asset($resource->{$columns['image']} ?? 'admin/assets/images/placeholder.png') }}
                                             alt="{{ $resource->{$columns['alt_text']} }}" class="imgFluid lazy">

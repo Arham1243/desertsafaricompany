@@ -129,17 +129,19 @@
             <div
                 class="row {{ in_array($content->box_type, ['slider_carousel', 'slider_carousel_with_background_color']) ? 'four-items-slider' : 'row-cols-1 row-cols-md-2row-cols-xl-3' }}">
                 @foreach ($resourcesToShow as $resource)
-                    <div class=col-md-3>
-                        @php
-                            $routeName = $columns['route'];
-                            $slugParam = $resource->{$columns['slug']};
+                    @php
+                        $url = 'javascript:void(0)';
 
-                            $link =
-                                $resource instanceof \App\Models\TourCategory && $resource->city
-                                    ? route($routeName, [$resource->city->slug, $slugParam])
-                                    : route($routeName, $slugParam);
-                        @endphp
-                        <a href="{{ $link }}" class=popular-related-destinations__content>
+                        if ($resource instanceof \App\Models\TourCategory) {
+                            $url = buildCategoryDetailUrl($resource);
+                        } elseif ($resource instanceof \App\Models\City) {
+                            $url = route('locations.city', [$resource->country->iso_alpha2, $resource->slug]);
+                        } elseif ($resource instanceof \App\Models\Country) {
+                            $url = route('locations.country', $resource->iso_alpha2);
+                        }
+                    @endphp
+                    <div class=col-md-3>
+                        <a href="{{ $url }}" class=popular-related-destinations__content>
                             <div class=popular-related-destinations__img>
                                 <img data-src={{ asset($resource->{$columns['image']} ?? 'admin/assets/images/placeholder.png') }}
                                     alt="{{ $resource->{$columns['alt_text']} }}" class="imgFluid lazy">

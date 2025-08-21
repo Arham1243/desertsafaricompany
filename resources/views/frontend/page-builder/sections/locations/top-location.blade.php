@@ -140,26 +140,23 @@
                             @foreach ($chunk as $resource)
                                 @php
                                     $resourceType = '';
+                                    $url = 'javascript:void(0)';
                                     if ($resource instanceof \App\Models\City) {
                                         $resourceType = 'city';
+                                        $url = route('locations.city', [
+                                            $resource->country->iso_alpha2,
+                                            $resource->slug,
+                                        ]);
                                     } elseif ($resource instanceof \App\Models\Country) {
                                         $resourceType = 'country';
+                                        $url = route('locations.country', [$resource->iso_alpha2, $resource->slug]);
                                     } elseif ($resource instanceof \App\Models\TourCategory) {
                                         $resourceType = 'category';
+                                        $url = buildCategoryDetailUrl($resource);
                                     }
                                 @endphp
                                 <li class="locations-list__item">
-                                    @php
-                                        $link =
-                                            $resourceType === 'category' && $resource->city
-                                                ? route('tours.category.details', [
-                                                    $resource->country->iso_alpha2,
-                                                    $resource->city->slug,
-                                                    $resource->slug,
-                                                ])
-                                                : route($columns['route'], $resource->{$columns['slug']});
-                                    @endphp
-                                    <a href="{{ $link }}" target="_blank">
+                                    <a href="{{ $url }}" target="_blank">
                                         <span class="name" title="{{ $resource->{$columns['name']} }}"
                                             data-tooltip="tooltip">
 
