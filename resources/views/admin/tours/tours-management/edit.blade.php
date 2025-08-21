@@ -2904,7 +2904,7 @@
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="tour[status][status]"
                                             id="publish" value="publish"
-                                            {{ $tour->status == 'publish' ? 'checked' : '' }}>
+                                            {{ $tour->status === 'publish' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="publish">
                                             Publish
                                         </label>
@@ -2912,7 +2912,7 @@
                                     <div class="form-check mt-2">
                                         <input class="form-check-input" type="radio" name="tour[status][status]"
                                             id="draft" value="draft"
-                                            {{ $tour->status == 'draft' ? 'checked' : '' }}>
+                                            {{ $tour->status === 'draft' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="draft">
                                             Draft
                                         </label>
