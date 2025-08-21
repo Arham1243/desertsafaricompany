@@ -588,9 +588,9 @@
                                             data-disabled-text="Disabled">
                                             <input type="hidden" value="0"
                                                 name="content[call_to_action][is_enabled]">
-                                            <input class="form-check-input" type="checkbox" id="cta_btn_enabled"
-                                                value="1" name="content[call_to_action][is_enabled]"
-                                                x-model="enabled">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="cta_btn_enabled" value="1"
+                                                name="content[call_to_action][is_enabled]" x-model="enabled">
                                             <label class="form-check-label" for="cta_btn_enabled">Enabled</label>
                                         </div>
                                     </div>
@@ -833,8 +833,9 @@
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input type="hidden" value="0" name="content[faq_section][is_enabled]">
-                                            <input class="form-check-input" type="checkbox" id="faq_section_enabled"
-                                                value="1" name="content[faq_section][is_enabled]" x-model="enabled">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="faq_section_enabled" value="1"
+                                                name="content[faq_section][is_enabled]" x-model="enabled">
                                             <label class="form-check-label" for="faq_section_enabled">Enabled</label>
                                         </div>
                                     </div>
