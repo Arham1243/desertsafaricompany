@@ -54,14 +54,14 @@
                                 'image' => 'featured_image',
                                 'alt_text' => 'featured_image_alt_text',
                                 'slug' => 'slug',
-                                'route' => 'city.details',
+                                'route' => 'locations.city',
                             ],
                             'country' => [
                                 'name' => 'name',
                                 'image' => 'featured_image',
                                 'alt_text' => 'featured_image_alt_text',
                                 'slug' => 'slug',
-                                'route' => 'country.details',
+                                'route' => 'locations.country',
                             ],
                             'tour' => [
                                 'name' => 'title',
