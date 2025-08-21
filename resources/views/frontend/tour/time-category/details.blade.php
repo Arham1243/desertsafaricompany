@@ -85,8 +85,8 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                             
-                                       @endif>
+                                                                                                                 
+                                            @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -101,8 +101,8 @@
     @endif
 
     @php
-        $category_based_tour_block = $jsonContent ? $jsonContent['category_based_tour_block'] : null;
-        $category_based_tour_category_id = $jsonContent ? (int) $category_based_tour_block['category_id'] : null;
+        $category_block = $jsonContent ? $jsonContent['category_block'] : null;
+        $category_based_tour_category_id = $jsonContent ? (int) $category_block['category_id'] : null;
         $all_sub_category_Ids = getAllCategoryIds($category_based_tour_category_id);
         $category_based_tour_tours = $tours->filter(
             fn($tour) => $tour->categories->pluck('id')->intersect($all_sub_category_Ids)->isNotEmpty(),
@@ -117,17 +117,17 @@
         $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
     @endphp
 
-    @if (isset($category_based_tour_block['is_enabled']) &&
-            $category_based_tour_block['is_enabled'] === '1' &&
+    @if (isset($category_block['is_enabled']) &&
+            $category_block['is_enabled'] === '1' &&
             $category_based_tour_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-7">
-                        @if (isset($category_based_tour_block['heading_enabled']) && $category_based_tour_block['heading_enabled'] === '1')
+                        @if (isset($category_block['heading_enabled']) && $category_block['heading_enabled'] === '1')
                             <div class="section-content">
                                 <h2 class="subHeading">
-                                    {{ $category_based_tour_block['heading'] ?? '' }}
+                                    {{ $category_block['heading'] ?? '' }}
                                 </h2>
                             </div>
                         @endif

@@ -187,3 +187,27 @@ if (! function_exists('buildTourDetailUrl')) {
         return $withBase ? url($path) : $path;
     }
 }
+if (! function_exists('buildCategoryDetailUrl')) {
+    function buildCategoryDetailUrl($category, $withSlug = true, $withBase = true)
+    {
+        $segments = [];
+
+        if (! empty($category->city?->country?->iso_alpha2)) {
+            $segments[] = strtolower($category->city->country->iso_alpha2);
+        } elseif (! empty($category->country?->iso_alpha2)) {
+            $segments[] = strtolower($category->country->iso_alpha2);
+        }
+
+        if (! empty($category->city?->slug)) {
+            $segments[] = $category->city->slug;
+        }
+
+        if ($withSlug && ! empty($category->slug)) {
+            $segments[] = $category->slug;
+        }
+
+        $path = implode('/', $segments);
+
+        return $withBase ? url($path) : $path;
+    }
+}

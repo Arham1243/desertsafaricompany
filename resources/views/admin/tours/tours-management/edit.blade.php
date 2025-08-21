@@ -136,7 +136,8 @@
                                         <div class="col-12  mt-4">
                                             <div class="form-fields mb-4">
                                                 <label class="title">Select Multi Categories <span
-                                                        class="text-danger">*</span>:</label>
+                                                        class="text-danger">*</span> <span class="text-dark ps-2">(Tour
+                                                        will appear on these selected category pages)</span></label>
                                                 <select name="tour[general][category_ids][]" class="select2-select"
                                                     data-error="Category" data-required should-sort="false" multiple>
                                                     {!! renderCategoriesMulti($categories, $tourCategoryIds) !!}

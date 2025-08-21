@@ -210,8 +210,8 @@
                                 </div>
                             </div>
                             <div x-data="{
-                                enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
-                                headingEnabled: {{ isset($jsonContent['category_based_tour_block']['heading_enabled']) && $jsonContent['category_based_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                                enabled: {{ isset($jsonContent['category_block']['is_enabled']) && $jsonContent['category_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block']['heading_enabled']) && $jsonContent['category_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
                             }" class="form-box">
                                 <div class="form-box__header">
                                     <div class="d-flex align-items-center gap-3">
@@ -219,13 +219,11 @@
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input type="hidden" value="0"
-                                                name="json_content[category_based_tour_block][is_enabled]">
+                                                name="json_content[category_block][is_enabled]">
                                             <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="category_based_tour_block" value="1"
-                                                name="json_content[category_based_tour_block][is_enabled]"
-                                                x-model="enabled">
-                                            <label class="form-check-label"
-                                                for="category_based_tour_block">Enabled</label>
+                                                id="category_block" value="1"
+                                                name="json_content[category_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block">Enabled</label>
                                         </div>
                                     </div>
                                 </div>
@@ -237,30 +235,29 @@
                                             <div class="form-check form-switch" data-enabled-text="Enabled"
                                                 data-disabled-text="Disabled">
                                                 <input type="hidden" value="0"
-                                                    name="json_content[category_based_tour_block][heading_enabled]">
+                                                    name="json_content[category_block][heading_enabled]">
                                                 <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                    id="category_based_tour_block_heading" value="1"
-                                                    name="json_content[category_based_tour_block][heading_enabled]"
+                                                    id="category_block_heading" value="1"
+                                                    name="json_content[category_block][heading_enabled]"
                                                     x-model="headingEnabled">
                                                 <label class="form-check-label"
-                                                    for="category_based_tour_block_heading">Enabled</label>
+                                                    for="category_block_heading">Enabled</label>
                                             </div>
                                         </div>
                                         <input x-show="headingEnabled" x-transition
-                                            name="json_content[category_based_tour_block][heading]" type="text"
+                                            name="json_content[category_block][heading]" type="text"
                                             class="field mt-3"
-                                            value="{{ $jsonContent['category_based_tour_block']['heading'] ?? '' }}">
+                                            value="{{ $jsonContent['category_block']['heading'] ?? '' }}">
                                     </div>
 
                                     <div class="form-fields">
                                         <label class="title">Select Category:</label>
-                                        <select name="json_content[category_based_tour_block][category_id]"
-                                            class="select2-select" data-error="Category" should-sort="false">
+                                        <select name="json_content[category_block][category_id]" class="select2-select"
+                                            data-error="Category" should-sort="false">
                                             <option value="" disabled>Select Category</option>
                                             {!! renderCategories(
                                                 $allCategories,
-                                                isset($jsonContent['category_based_tour_block']['category_id']) &&
-                                                    $jsonContent['category_based_tour_block']['category_id'] ?? null,
+                                                isset($jsonContent['category_block']['category_id']) && $jsonContent['category_block']['category_id'] ?? null,
                                             ) !!}
                                         </select>
                                     </div>

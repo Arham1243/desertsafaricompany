@@ -233,6 +233,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (localStorage.getItem("cookieConsent")) {
         cookieBar.classList.add("hidden");
+    } else {
+        cookieBar.classList.remove("hidden");
     }
 });
 
@@ -241,5 +243,5 @@ function handleCookieConsent(accepted) {
     if (!cookieBar) return;
 
     localStorage.setItem("cookieConsent", accepted ? "accepted" : "rejected");
-    cookieBar.classList.add("hidden");
+    cookieBar.classList.toggle("hidden");
 }

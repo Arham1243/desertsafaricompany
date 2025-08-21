@@ -23,31 +23,8 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    @php
-                                        function buildCategoryUrl(
-                                            $category,
-                                            $includeCategorySlug = true,
-                                            $withBase = false,
-                                        ) {
-                                            $parts = [];
-
-                                            $parts[] = $category->country?->iso_alpha2 ?? 'no-country';
-
-                                            if ($category->city?->slug) {
-                                                $parts[] = $category->city->slug;
-                                            }
-
-                                            if ($includeCategorySlug) {
-                                                $parts[] = $category->slug ?? 'no-category';
-                                            }
-
-                                            $path = implode('/', $parts);
-
-                                            return $withBase ? url($path) : $path;
-                                        }
-                                    @endphp
                                     <div class="full-url">
-                                        {{ buildCategoryUrl($category, false, true) }}/
+                                        {{ buildCategoryDetailUrl($category, false, true) }}/
                                     </div>
                                     <input value="{{ $category->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
@@ -58,7 +35,8 @@
                         </div>
 
                         @if ($category->slug)
-                            <a href="{{ buildCategoryUrl($category, true, true) }}" target="_blank" class="themeBtn">View
+                            <a href="{{ buildCategoryDetailUrl($category, true, true) }}" target="_blank"
+                                class="themeBtn">View
                                 Category</a>
                         @endif
                     </div>
@@ -120,8 +98,24 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-12">
+                                        <div class="col-12 mb-4">
                                             <div class="form-fields">
+                                                <label class="title d-flex align-items-center gap-2 lh-1">
+                                                    Short Description Content
+                                                    <button data-bs-placement="top"
+                                                        title="Used for category card description" type="button"
+                                                        data-tooltip="tooltip" class="tooltip-lg">
+                                                        <i class='bx bxs-info-circle'></i>
+                                                    </button>
+                                                </label>
+                                                <textarea class="field" name="short_description" data-placeholder="content" data-error="Content" rows="6"> {{ $category->short_description }} </textarea>
+                                                @error('short_description')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-12 mb-4">
+                                            <div class="form-fields ">
                                                 <label class="title">Content
                                                     :</label>
                                                 <textarea class="editor" name="long_description" data-placeholder="content" data-error="Content"> {{ $category->long_description }} </textarea>
@@ -129,7 +123,8 @@
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
-
+                                        </div>
+                                        <div class="col-12">
                                             <div class="form-fields">
                                                 <label class="title">Lines to Display Before "Read More" </label>
                                                 <input oninput="this.value = Math.abs(this.value)" type="number"
@@ -192,22 +187,20 @@
                                 </div>
                             </div>
                             <div x-data="{
-                                enabled: {{ isset($jsonContent['category_based_tour_block']['is_enabled']) && $jsonContent['category_based_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
-                                headingEnabled: {{ isset($jsonContent['category_based_tour_block']['heading_enabled']) && $jsonContent['category_based_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                                enabled: {{ isset($jsonContent['category_block']['is_enabled']) && $jsonContent['category_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block']['heading_enabled']) && $jsonContent['category_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
                             }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <div class="title">Category based Tour Block</div>
+                                        <div class="title">Category Block</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input type="hidden" value="0"
-                                                name="json_content[category_based_tour_block][is_enabled]">
+                                                name="json_content[category_block][is_enabled]">
                                             <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="category_based_tour_block" value="1"
-                                                name="json_content[category_based_tour_block][is_enabled]"
-                                                x-model="enabled">
-                                            <label class="form-check-label"
-                                                for="category_based_tour_block">Enabled</label>
+                                                id="category_block" value="1"
+                                                name="json_content[category_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block">Enabled</label>
                                         </div>
                                     </div>
                                     <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
@@ -223,31 +216,33 @@
                                             <div class="form-check form-switch" data-enabled-text="Enabled"
                                                 data-disabled-text="Disabled">
                                                 <input type="hidden" value="0"
-                                                    name="json_content[category_based_tour_block][heading_enabled]">
+                                                    name="json_content[category_block][heading_enabled]">
                                                 <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                    id="category_based_tour_block_heading" value="1"
-                                                    name="json_content[category_based_tour_block][heading_enabled]"
+                                                    id="category_block_heading" value="1"
+                                                    name="json_content[category_block][heading_enabled]"
                                                     x-model="headingEnabled">
                                                 <label class="form-check-label"
-                                                    for="category_based_tour_block_heading">Enabled</label>
+                                                    for="category_block_heading">Enabled</label>
                                             </div>
                                         </div>
                                         <input x-show="headingEnabled" x-transition
-                                            name="json_content[category_based_tour_block][heading]" type="text"
+                                            name="json_content[category_block][heading]" type="text"
                                             class="field mt-3"
-                                            value="{{ $jsonContent['category_based_tour_block']['heading'] ?? '' }}">
+                                            value="{{ $jsonContent['category_block']['heading'] ?? '' }}">
                                     </div>
 
-                                    <div class="form-fields">
-                                        <label class="title">Select Category:</label>
-                                        <select name="json_content[category_based_tour_block][category_id]"
-                                            class="select2-select" data-error="Category" should-sort="false">
-                                            <option value="" disabled>Select Category</option>
-                                            {!! renderCategories(
-                                                $allCategories,
-                                                isset($jsonContent['category_based_tour_block']['category_id']) &&
-                                                    $jsonContent['category_based_tour_block']['category_id'] ?? null,
-                                            ) !!}
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds = isset(
+                                                $jsonContent['category_block']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block][category_ids][]" class="select2-select"
+                                            data-error="Category" should-sort="true" multiple>
+                                            {!! renderCategoriesMulti($dropdownCategories, $tourBlockCategoryIds) !!}
                                         </select>
                                     </div>
                                 </div>
@@ -1060,7 +1055,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="buildCategoryUrl($category, false)" :slug="$category->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="buildCategoryDetailUrl($category, false, false)" :slug="$category->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">

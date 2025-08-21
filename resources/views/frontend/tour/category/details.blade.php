@@ -74,8 +74,8 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                         
-                                                                          @endif>
+                                                                                                                                                 
+                                                                                    @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -90,14 +90,11 @@
     @endif
 
     @php
-        $category_based_tour_block = $jsonContent['category_based_tour_block'] ?? null;
-        $category_based_tour_category_id = isset($category_based_tour_block['category_id'])
-            ? (int) $category_based_tour_block['category_id']
-            : null;
-        $all_sub_category_Ids = getAllCategoryIds($category_based_tour_category_id);
-        $category_based_tour_tours = $tours->filter(
-            fn($tour) => $tour->categories->pluck('id')->intersect($all_sub_category_Ids)->isNotEmpty(),
-        );
+        $category_block = $jsonContent['category_block'] ?? null;
+        $category_block_category_ids = isset($category_block['category_ids'])
+            ? $category_block['category_ids']
+            : [null];
+        $category_block_categories = $tourCategories->whereIn('id', $category_block_category_ids);
 
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
@@ -108,25 +105,25 @@
         $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
     @endphp
 
-    @if (isset($category_based_tour_block['is_enabled']) &&
-            $category_based_tour_block['is_enabled'] === '1' &&
-            $category_based_tour_tours->isNotEmpty())
+    @if (isset($category_block['is_enabled']) &&
+            $category_block['is_enabled'] === '1' &&
+            $category_block_categories->isNotEmpty())
         <div class="my-5">
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        @if (isset($category_based_tour_block['heading_enabled']) && $category_based_tour_block['heading_enabled'] === '1')
+                        @if (isset($category_block['heading_enabled']) && $category_block['heading_enabled'] === '1')
                             <div class="section-content">
                                 <h2 class="subHeading">
-                                    {{ $category_based_tour_block['heading'] ?? '' }}
+                                    {{ $category_block['heading'] ?? '' }}
                                 </h2>
                             </div>
                         @endif
                         <div class="activity-sorting-block mt-2">
                             <div class="search-header__activity">
                                 <div class="activities-found">
-                                    {{ $category_based_tour_tours->count() }}
-                                    {{ Str::plural('activity', $category_based_tour_tours->count()) }} found
+                                    {{ $category_block_categories->count() }}
+                                    {{ Str::plural('activity', $category_block_categories->count()) }} found
                                     <div class="activities-found__icon">
                                         <i class='bx bxs-error-circle'></i>
                                     </div>
@@ -136,9 +133,9 @@
                     </div>
                 </div>
                 <div class="row">
-                    @foreach ($category_based_tour_tours as $category_based_tour_tour)
+                    @foreach ($category_block_categories as $category_block_category)
                         <div class="col-md-3">
-                            <x-tour-card :tour="$category_based_tour_tour" style="style3" />
+                            <x-category-card :category="$category_block_category" style="style3" />
                         </div>
                     @endforeach
                 </div>
@@ -254,11 +251,7 @@
                                 (int) $tourCountContent->btn_link_category ?? null,
                             );
                             if ($tourCountCategory && $item->city) {
-                                $tourCountBtnLink = route('tours.category.details', [
-                                    $item->city->country->iso_alpha2,
-                                    $item->city->slug,
-                                    $tourCountCategory->slug,
-                                ]);
+                                $tourCountBtnLink = buildCategoryDetailUrl($tourCountCategory);
                             } else {
                                 $tourCountBtnLink = 'javascript:void(0)';
                             }
@@ -309,41 +302,10 @@
                         </div>
                     </div>
                 </div>
-
-                <div class="row">
+                <div class="row four-items-slider tours-slider">
                     @foreach ($second_tour_block_tours as $second_tour_block_tour)
-                        <div class="col-md-6 mt-4">
-                            <div class="highlight">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <a href="{{ buildTourDetailUrl($second_tour_block_tour) }}"
-                                            class="highlight__image" target="_blank">
-                                            <img data-src={{ asset($second_tour_block_tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                                                alt="{{ $second_tour_block_tour->featured_image_alt_text ?? 'image' }}"
-                                                class="imgFluid lazy" loading="lazy">
-                                        </a>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="highlight__text-content">
-                                            <div class="highlight__text">
-                                                <a href="dubai-l173/burj-khalifa-ticket-t49019/"
-                                                    class="highlight__text-link" target="_blank">
-                                                    <p class="highlight__title">{{ $second_tour_block_tour->title }}</p>
-                                                </a>
-                                                <div class="highlight__description editor-content">
-                                                    {!! $second_tour_block_tour->content !!}
-                                                </div>
-                                            </div>
-                                            <div class="highlight__button-wrapper">
-                                                <a href="{{ buildTourDetailUrl($second_tour_block_tour) }}">
-                                                    See more
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
+                        <div class="col-md-3">
+                            <x-tour-card :tour="$second_tour_block_tour" style="style3" />
                         </div>
                     @endforeach
                 </div>
@@ -370,8 +332,8 @@
                 <div class="row pt-3">
                     @foreach ($featuredReviews as $testimonial)
                         <div class=col-md-3>
-                            <div class=comment-card>
-                                <div class="comment-card__img one-items-slider">
+                            <div class="comment-card comment-card--shadow">
+                                {{-- <div class="comment-card__img one-items-slider">
                                     <img data-src="{{ asset($testimonial->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                         alt="{{ $testimonial->featured_image_alt_text }}" class="imgFluid lazy"
                                         loading="lazy">
@@ -381,7 +343,7 @@
                                                 alt="{{ $media->alt_text }}" class="imgFluid lazy" loading="lazy">
                                         @endforeach
                                     @endif
-                                </div>
+                                </div> --}}
                                 <div class=comment-card__content>
                                     <div class=comment-details>
                                         <div class="customer-name" title="{{ $testimonial->title ?? '' }}"
@@ -393,7 +355,7 @@
                                         </div>
                                     </div>
                                     <div class=comment-pra>
-                                        {!! $testimonial->content ?? '' !!}
+                                        {!! $testimonial->review ?? '' !!}
                                     </div>
                                     @if (isset($content->is_button_enabled))
                                         <a style="
