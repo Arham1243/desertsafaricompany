@@ -125,7 +125,7 @@
                                             <div class="form-fields mb-4">
                                                 <label class="title">Select Multi Categories <span
                                                         class="text-danger">*</span> <span class="text-dark ps-2">(Tour
-                                                        will appear on these selected category pages)</span></label>
+                                                        will appear on these selected category pages)</span></label>
                                                 <select name="tour[general][category_ids][]" class="select2-select"
                                                     data-error="Category" data-required should-sort="false" multiple>
                                                     {!! renderCategoriesMulti($categories, $tourCategoryIds) !!}
@@ -1820,7 +1820,7 @@
 
                                                                                     <div x-show="addon.type === 'simple'"
                                                                                         class="row mt-3">
-                                                                                        <div class="col-12">
+                                                                                        <div class="col-md-6">
                                                                                             <label
                                                                                                 class="title">Price:</label>
                                                                                             <input type="number"
@@ -1829,6 +1829,17 @@
                                                                                                 step="0.01"
                                                                                                 x-model="addon.price"
                                                                                                 :name="`tour[pricing][promo][addOns][${index}][price]`">
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <label class="title">Discount
+                                                                                                %:</label>
+                                                                                            <input type="number"
+                                                                                                class="field w-100"
+                                                                                                min="0"
+                                                                                                max="99"
+                                                                                                step="0.01"
+                                                                                                x-model="addon.discountedPercent"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][discounted_percent]`">
                                                                                         </div>
                                                                                     </div>
 
@@ -1870,6 +1881,18 @@
                                                                                                         step="0.01"
                                                                                                         x-model="slot.price"
                                                                                                         :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][price]`">
+                                                                                                </div>
+                                                                                                <div class="col-md">
+                                                                                                    <label
+                                                                                                        class="title">Discount
+                                                                                                        %:</label>
+                                                                                                    <input type="number"
+                                                                                                        class="field w-100"
+                                                                                                        min="0"
+                                                                                                        max="99"
+                                                                                                        step="0.01"
+                                                                                                        x-model="slot.discountedPercent"
+                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${index}][discounted_percent]`">
                                                                                                 </div>
 
                                                                                                 <div
@@ -2962,6 +2985,7 @@
                     title: '',
                     type: 'simple',
                     price: null,
+                    discountedPercent: null,
                     slots: []
                 }],
                 formatTime(t) {

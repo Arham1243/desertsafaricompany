@@ -2237,7 +2237,7 @@
 
                                                                                     <div x-show="addon.type === 'simple'"
                                                                                         class="row mt-3">
-                                                                                        <div class="col-12">
+                                                                                        <div class="col-md-6">
                                                                                             <label
                                                                                                 class="title">Price:</label>
                                                                                             <input type="number"
@@ -2246,6 +2246,17 @@
                                                                                                 step="0.01"
                                                                                                 x-model="addon.price"
                                                                                                 :name="`tour[pricing][promo][addOns][${index}][price]`">
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <label class="title">Discount
+                                                                                                %:</label>
+                                                                                            <input type="number"
+                                                                                                class="field w-100"
+                                                                                                min="0"
+                                                                                                max="99"
+                                                                                                step="0.01"
+                                                                                                x-model="addon.discounted_percent"
+                                                                                                :name="`tour[pricing][promo][addOns][${index}][discounted_percent]`">
                                                                                         </div>
                                                                                     </div>
 
@@ -2290,6 +2301,19 @@
                                                                                                         step="0.01"
                                                                                                         x-model="slot.price"
                                                                                                         :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][price]`">
+                                                                                                </div>
+
+                                                                                                <div class="col-md">
+                                                                                                    <label
+                                                                                                        class="title">Discount
+                                                                                                        %:</label>
+                                                                                                    <input type="number"
+                                                                                                        class="field w-100"
+                                                                                                        min="0"
+                                                                                                        max="99"
+                                                                                                        step="0.01"
+                                                                                                        x-model="slot.discountedPercent"
+                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][discounted_percent]`">
                                                                                                 </div>
 
                                                                                                 <div
@@ -3558,7 +3582,8 @@
                     ...addon,
                     slots: addon.slots?.map(slot => ({
                         time: slot.time ?? '',
-                        price: parseFloat(slot.price) || null
+                        price: parseFloat(slot.price) || null,
+                        discountedPercent: parseFloat(slot.discounted_percent) || null
                     })) || []
                 })),
 

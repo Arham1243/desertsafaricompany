@@ -165,13 +165,14 @@ class TourController extends Controller
 
         // Promo addons
         $promoData = $promoData->concat(
-            $tour->promoAddons->flatMap(function ($pricing) use ($discountPercent, $hoursLeft) {
+            $tour->promoAddons->flatMap(function ($pricing) use ($hoursLeft) {
                 $addons = json_decode($pricing->promo_addons ?? '[]', true);
 
                 return collect($addons)
-                    ->map(function ($addon) use ($discountPercent, $hoursLeft) {
+                    ->map(function ($addon) use ($hoursLeft) {
                         if ($addon['type'] === 'simple') {
                             $original = floatval($addon['price']);
+                            $discountPercent = floatval($addon['discounted_percent'] ?? 0);
                             $discounted = $original - ($original * $discountPercent) / 100;
 
                             return [
@@ -189,26 +190,31 @@ class TourController extends Controller
 
                         if ($addon['type'] === 'timeslot') {
                             $slots = collect($addon['slots'] ?? []);
+                            $firstSlotDiscount = floatval($slots[0]['discounted_percent'] ?? 0);
 
                             return [
                                 'source' => 'addon',
                                 'type' => 'timeslot',
                                 'title' => $addon['title'],
                                 'slug' => $addon['promo_slug'],
-                                'discount_percent' => $discountPercent,
+                                'discount_percent' => $firstSlotDiscount,
+                                'hours_left' => $hoursLeft,
                                 'quantity' => 0,
                                 'selected_slots' => [],
-                                'hours_left' => $hoursLeft,
-                                'slots' => $slots->map(function ($slot) use ($discountPercent) {
-                                    $price = floatval($slot['price']);
-                                    $discounted = $price - ($price * $discountPercent) / 100;
+                                'slots' => $slots
+                                    ->map(function ($slot) {
+                                        $price = floatval($slot['price']);
+                                        $discountPercent = floatval($slot['discounted_percent'] ?? 0);
+                                        $discounted = $price - ($price * $discountPercent) / 100;
 
-                                    return [
-                                        'time' => $slot['time'],
-                                        'original_price' => number_format($price, 2),
-                                        'discounted_price' => number_format($discounted, 2),
-                                    ];
-                                })->values(),
+                                        return [
+                                            'time' => $slot['time'],
+                                            'original_price' => number_format($price, 2),
+                                            'discount_percent' => $discountPercent,
+                                            'discounted_price' => number_format($discounted, 2),
+                                        ];
+                                    })
+                                    ->values(),
                             ];
                         }
 
