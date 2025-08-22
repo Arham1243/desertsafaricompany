@@ -77,6 +77,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('delete/attribute-item/{id}', [AttributesController::class, 'deleteItem'])->name('tour-attribute-item.delete');
 
     Route::resource('tour-categories', TourCategoryController::class);
+    Route::get('tour-categories/duplicate/{id}', [TourCategoryController::class, 'duplicate'])->name('tour-categories.duplicate');
     Route::post('/tour-categories/city/{city?}', [TourCategoryController::class, 'getByCity']);
 
     Route::resource('tour-times', TourTimeController::class);
@@ -108,8 +109,10 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('export-ical', IcalController::class)->name('ical.export');
 
     Route::resource('countries', CountryController::class);
+    Route::get('countries/duplicate/{id}', [CountryController::class, 'duplicate'])->name('countries.duplicate');
 
     Route::resource('cities', CityController::class);
+    Route::get('cities/duplicate/{id}', [CityController::class, 'duplicate'])->name('cities.duplicate');
     Route::get('/countries/{country}/cities', [CityController::class, 'getByCountry']);
 
     Route::resource('testimonials', TestimonialController::class);

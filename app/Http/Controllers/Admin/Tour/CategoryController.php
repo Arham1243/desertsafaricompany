@@ -183,4 +183,45 @@ class CategoryController extends Controller
             $query->get(['id', 'name', 'parent_category_id'])
         );
     }
+
+    public function duplicate($id)
+    {
+        $category = TourCategory::findOrFail($id);
+
+        $newCategory = $category->replicate();
+
+        $newCategory->name = $category->name.' - Copy';
+        $newCategory->status = 'draft';
+        $newCategory->slug = $this->createSlug($newCategory->name, 'tour_categories');
+
+        $newCategory->save();
+        $this->duplicateSeoData($category, $newCategory);
+        $this->duplicateMedia($category, $newCategory);
+
+        return redirect()->route('admin.tour-categories.index')->with('notify_success', 'Category duplicated successfully.');
+    }
+
+    public function duplicateSeoData($category, $newCategory)
+    {
+        $category->load('seo');
+
+        if ($category->seo) {
+            $newSeoData = $category->seo->replicate();
+
+            $newSeoData->seoable_id = $newCategory->id;
+            $newSeoData->seoable_type = get_class($newCategory);
+
+            $newSeoData->save();
+        }
+    }
+
+    private function duplicateMedia($category, $newCategory)
+    {
+        foreach ($category->media as $media) {
+            $newCategory->media()->create([
+                'file_path' => $media->file_path,
+                'alt_text' => $media->alt_text,
+            ]);
+        }
+    }
 }

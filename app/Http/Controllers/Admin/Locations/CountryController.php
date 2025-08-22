@@ -138,7 +138,8 @@ class CountryController extends Controller
 
         handleSeoData($request, $item, 'Country');
 
-        return redirect()->route('admin.countries.edit', $item->id)
+        return redirect()
+            ->route('admin.countries.edit', $item->id)
             ->with('notify_success', 'Country updated successfully.');
     }
 
@@ -147,6 +148,36 @@ class CountryController extends Controller
         switch ($sectionKey) {
             case 'guide':
                 return $newData;
+        }
+    }
+
+    public function duplicate($id)
+    {
+        $country = Country::findOrFail($id);
+
+        $newCountry = $country->replicate();
+
+        $newCountry->name = $country->name.' - Copy';
+        $newCountry->status = 'draft';
+        $newCountry->slug = $this->createSlug($newCountry->name, 'countries');
+
+        $newCountry->save();
+        $this->duplicateSeoData($country, $newCountry);
+
+        return redirect()->route('admin.countries.index')->with('notify_success', 'Country duplicated successfully.');
+    }
+
+    public function duplicateSeoData($country, $newCountry)
+    {
+        $country->load('seo');
+
+        if ($country->seo) {
+            $newSeoData = $country->seo->replicate();
+
+            $newSeoData->seoable_id = $newCountry->id;
+            $newSeoData->seoable_type = get_class($newCountry);
+
+            $newSeoData->save();
         }
     }
 }

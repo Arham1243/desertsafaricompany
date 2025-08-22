@@ -1087,7 +1087,7 @@ a.card-title:hover {
 }
 
 .comment {
-    padding: 10rem 0 1rem;
+    padding: 10rem 0 0;
     position: relative;
 }
 

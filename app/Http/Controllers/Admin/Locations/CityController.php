@@ -154,4 +154,34 @@ class CityController extends Controller
 
         return response()->json($cities);
     }
+
+    public function duplicate($id)
+    {
+        $city = City::findOrFail($id);
+
+        $newCity = $city->replicate();
+
+        $newCity->name = $city->name.' - Copy';
+        $newCity->status = 'draft';
+        $newCity->slug = $this->createSlug($newCity->name, 'cities');
+
+        $newCity->save();
+        $this->duplicateSeoData($city, $newCity);
+
+        return redirect()->route('admin.cities.index')->with('notify_success', 'City duplicated successfully.');
+    }
+
+    public function duplicateSeoData($city, $newCity)
+    {
+        $city->load('seo');
+
+        if ($city->seo) {
+            $newSeoData = $city->seo->replicate();
+
+            $newSeoData->seoable_id = $newCity->id;
+            $newSeoData->seoable_type = get_class($newCity);
+
+            $newSeoData->save();
+        }
+    }
 }

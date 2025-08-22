@@ -29,6 +29,7 @@
                             <th>Name</th>
                             <th>Status</th>
                             <th>Date</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>

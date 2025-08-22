@@ -66,8 +66,28 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.countries.edit', $item->id) }}"
-                                                    class="themeBtn"><i class='bx bxs-edit'></i>Edit</a>
+                                                <div class="dropstart bootsrap-dropdown">
+                                                    <button type="button" class="recent-act__icon dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        <i class='bx bx-dots-horizontal-rounded'></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.countries.edit', $item->id) }}">
+                                                                <i class='bx bxs-edit'></i>
+                                                                Edit
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('admin.countries.duplicate', $item->id) }}"
+                                                                onclick="return confirm('Are you sure you want to duplicate this country?')">
+                                                                <i class='bx bxs-copy'></i>
+                                                                Duplicate </a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             </td>
                                         </tr>
                                     @endforeach
