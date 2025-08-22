@@ -140,12 +140,13 @@ class TourController extends Controller
         $timerHours = (int) ($isWeekend ? $config['weekend_timer_hours'] ?? 0 : $config['weekday_timer_hours'] ?? 0);
 
         $hoursLeft = $timerHours > 0 ? ($hourOfDay % $timerHours === 0 ? $timerHours : $timerHours - ($hourOfDay % $timerHours)) : 0;
+        $firstOrderCoupon = Coupon::where('is_first_order_coupon', 1)->where('status', 'active')->first();
 
         $promoData = collect();
 
         // Promo prices
         $promoData = $promoData->concat(
-            $tour->promoPrices->map(function ($promoPrice) use ($discountPercent, $hoursLeft) {
+            $tour->promoPrices->map(function ($promoPrice) use ($firstOrderCoupon, $discountPercent, $hoursLeft) {
                 $original = (float) $promoPrice->original_price;
                 $discounted = $original - $original * ($discountPercent / 100);
 
@@ -156,7 +157,11 @@ class TourController extends Controller
                     'promo_is_free' => (int) $promoPrice->promo_is_free,
                     'original_price' => number_format($original, 2),
                     'discount_percent' => $discountPercent,
+                    'original_discounted_price' => number_format($discounted, 2),
                     'discounted_price' => number_format($discounted, 2),
+                    'promo_discounted_price' => $firstOrderCoupon
+                        ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                        : null,
                     'quantity' => 0,
                     'hours_left' => $hoursLeft,
                 ];
@@ -165,11 +170,11 @@ class TourController extends Controller
 
         // Promo addons
         $promoData = $promoData->concat(
-            $tour->promoAddons->flatMap(function ($pricing) use ($hoursLeft) {
+            $tour->promoAddons->flatMap(function ($pricing) use ($firstOrderCoupon, $hoursLeft) {
                 $addons = json_decode($pricing->promo_addons ?? '[]', true);
 
                 return collect($addons)
-                    ->map(function ($addon) use ($hoursLeft) {
+                    ->map(function ($addon) use ($firstOrderCoupon, $hoursLeft) {
                         if ($addon['type'] === 'simple') {
                             $original = floatval($addon['price']);
                             $discountPercent = floatval($addon['discounted_percent'] ?? 0);
@@ -182,7 +187,11 @@ class TourController extends Controller
                                 'slug' => $addon['promo_slug'],
                                 'original_price' => number_format($original, 2),
                                 'discount_percent' => $discountPercent,
+                                'original_discounted_price' => number_format($discounted, 2),
                                 'discounted_price' => number_format($discounted, 2),
+                                'promo_discounted_price' => $firstOrderCoupon
+                                ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                : null,
                                 'quantity' => 0,
                                 'hours_left' => $hoursLeft,
                             ];
@@ -197,12 +206,16 @@ class TourController extends Controller
                                 'type' => 'timeslot',
                                 'title' => $addon['title'],
                                 'slug' => $addon['promo_slug'],
-                                'discount_percent' => $firstSlotDiscount,
+                                'original_discounted_price' => $firstSlotDiscount,
+                                'discounted_price' => $firstSlotDiscount,
+                                'promo_discounted_price' => $firstOrderCoupon
+                                ? applyPromoDiscount(number_format($firstSlotDiscount, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                : null,
                                 'hours_left' => $hoursLeft,
                                 'quantity' => 0,
                                 'selected_slots' => [],
                                 'slots' => $slots
-                                    ->map(function ($slot) {
+                                    ->map(function ($slot) use ($firstOrderCoupon) {
                                         $price = floatval($slot['price']);
                                         $discountPercent = floatval($slot['discounted_percent'] ?? 0);
                                         $discounted = $price - ($price * $discountPercent) / 100;
@@ -211,7 +224,11 @@ class TourController extends Controller
                                             'time' => $slot['time'],
                                             'original_price' => number_format($price, 2),
                                             'discount_percent' => $discountPercent,
+                                            'original_discounted_price' => number_format($discounted, 2),
                                             'discounted_price' => number_format($discounted, 2),
+                                            'promo_discounted_price' => $firstOrderCoupon
+                                            ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                            : null,
                                         ];
                                     })
                                     ->values(),

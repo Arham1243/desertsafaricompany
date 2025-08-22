@@ -10,16 +10,14 @@
                     </div>
                     <div v-else class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span>
                     </div>
-                    <div v-if="promo.original_discounted_price" class="promo-price purple"><span
-                            v-html="formatPrice(promo.discounted_price)"></span></div>
-                    <span v-if="!promo.original_discounted_price" class="percent-off-tag">@{{ promo.discount_percent }}%
+                    <div v-if="isFirstOrderCouponrApplied" class="promo-price purple"><span
+                            v-html="formatPrice(promo.promo_discounted_price)"></span></div>
+                    <span v-if="!isFirstOrderCouponrApplied" class="percent-off-tag">@{{ promo.discount_percent }}%
                         Off</span>
                 </div>
                 <div class="promo-og-offer purple" v-if="!promo.promo_is_free">
-                    <span class="offer" v-if="promo.original_discounted_price"><span
-                            v-html="formatPrice(promo.original_discounted_price)"></span> with promo</span>
-                    <span class="offer" v-else><span v-html="formatPrice(promo.discounted_price)"></span> with
-                        promo</span>
+                    <span class="offer" v-if="promo.promo_discounted_price"><span
+                            v-html="formatPrice(promo.promo_discounted_price)"></span> with promo</span>
                     <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
                     </span>
@@ -67,18 +65,16 @@
                                 </div>
                                 <div v-else class="promo-price green"><span
                                         v-html="formatPrice(addOn.discounted_price)"></span></div>
-                                <div v-if="addOn.original_discounted_price" class="promo-price purple">
-                                    <span v-html="formatPrice(addOn.discounted_price)"></span>
+                                <div v-if="isFirstOrderCouponrApplied" class="promo-price purple">
+                                    <span v-html="formatPrice(addOn.promo_discounted_price)"></span>
                                 </div>
-                                <span v-if="!addOn.original_discounted_price"
-                                    class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
+                                <span v-if="!isFirstOrderCouponrApplied" class="percent-off-tag">@{{ addOn.discount_percent }}%
+                                    Off</span>
                             </div>
                             <div class="promo-og-offer purple">
-                                <span class="offer" v-if="addOn.original_discounted_price"><span
-                                        v-html="formatPrice(addOn.original_discounted_price)"></span> with
+                                <span class="offer" v-if="addOn.promo_discounted_price"><span
+                                        v-html="formatPrice(addOn.promo_discounted_price)"></span> with
                                     promo</span>
-                                <span class="offer" v-else><span v-html="formatPrice(addOn.discounted_price)"></span>
-                                    with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
@@ -121,19 +117,17 @@
                                 </div>
                                 <div v-else class="promo-price green"><span
                                         v-html="formatPrice(addOn.slots[0].discounted_price)"></span></div>
-                                <div v-if="addOn.slots[0].original_discounted_price" class="promo-price purple">
-                                    <span v-html="formatPrice(addOn.slots[0].discounted_price)"></span>
+                                <div v-if="isFirstOrderCouponrApplied" class="promo-price purple">
+                                    <span v-html="formatPrice(addOn.slots[0].promo_discounted_price)"></span>
                                 </div>
-                                <span v-if="!addOn.slots[0].original_discounted_price"
-                                    class="percent-off-tag">@{{ addOn.discount_percent }}% Off</span>
+                                <span v-if="!isFirstOrderCouponrApplied"
+                                    class="percent-off-tag">@{{ addOn.slots[0].discount_percent }}% Off</span>
                             </div>
 
                             <div class="promo-og-offer purple">
-                                <span class="offer" v-if="addOn.slots[0].original_discounted_price"><span
-                                        v-html="formatPrice(addOn.slots[0].original_discounted_price)"></span> with
+                                <span class="offer" v-if="addOn.slots[0].promo_discounted_price"><span
+                                        v-html="formatPrice(addOn.slots[0].promo_discounted_price)"></span> with
                                     promo</span>
-                                <span class="offer" v-else><span
-                                        v-html="formatPrice(addOn.slots[0].discounted_price)"></span> with promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
@@ -167,7 +161,7 @@
                                             <option v-for="slot in addOn.slots" :key="slot.time"
                                                 :value="slot.time">
                                                 @{{ formatTimeLabel(slot.time) }} —
-                                                <span v-html="formatPrice(slot.discounted_price)"></span>
+                                                <span v-html="formatPrice(slot.original_discounted_price)"></span>
                                             </option>
                                         </select>
                                     </div>

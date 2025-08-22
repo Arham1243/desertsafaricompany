@@ -167,6 +167,18 @@ if (! function_exists('getAllCategoryIds')) {
         return $ids;
     }
 }
+if (! function_exists('applyPromoDiscount')) {
+    function applyPromoDiscount($price, $discountType, $discountAmount)
+    {
+        if ($discountType === 'percentage') {
+            return $price - $price * ($discountAmount / 100);
+        } elseif ($discountType === 'fixed') {
+            return $price - $discountAmount;
+        }
+
+        return $price;
+    }
+}
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour, $withSlug = true, $withBase = true)
     {
