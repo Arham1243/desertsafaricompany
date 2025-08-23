@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                         @endif>
+                                          @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -94,7 +94,7 @@
                 </div>
             @endif
         @else
-            <a href="{{ route('cart.index') }}" class="primary-btn w-100">View Cart</a>
+            <a href="{{ route('cart.index') }}" class="primary-btn w-100">Already in Cart</a>
         @endif
     @else
         <button type="button" class="primary-btn w-100" open-vue-login-popup

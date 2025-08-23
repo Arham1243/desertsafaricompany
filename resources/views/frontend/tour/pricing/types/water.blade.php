@@ -25,7 +25,7 @@
                 </div>
             </div>
 
-            <div class="promo-og-offer purple">
+            <div class="promo-og-offer purple" v-if="!hasUsedFirstOrderCoupon">
                 <span class="offer">
                     <span
                         v-html="formatPrice(
@@ -33,7 +33,7 @@
                   waterTourData[timeSlot]?.discounted_price ||
                   waterTourData[timeSlot]?.original_price || 0
                 )"></span>
-                    with promo
+                    with promo asd
                 </span>
             </div>
 

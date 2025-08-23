@@ -22,7 +22,7 @@
                 </div>
             </div>
 
-            <div class="promo-og-offer purple">
+            <div class="promo-og-offer purple" v-if="!hasUsedFirstOrderCoupon">
                 <span class="offer">
                     <span
                         v-html="formatPrice(simpleTourData.promo_discounted_price || simpleTourData.sale_price || simpleTourData.original_price)">

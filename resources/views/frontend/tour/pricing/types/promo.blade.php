@@ -16,7 +16,7 @@
                         Off</span>
                 </div>
                 <div class="promo-og-offer purple" v-if="!promo.promo_is_free">
-                    <span class="offer" v-if="promo.promo_discounted_price"><span
+                    <span class="offer" v-if="!hasUsedFirstOrderCoupon"><span
                             v-html="formatPrice(promo.promo_discounted_price)"></span> with promo</span>
                     <span :class="['time-left', promo.hours_left <= 2 ? 'blink-red' : '']">
                         @{{ promo.hours_left }} hour@{{ promo.hours_left === 1 ? '' : 's' }} left
@@ -71,7 +71,7 @@
                                     Off</span>
                             </div>
                             <div class="promo-og-offer purple">
-                                <span class="offer" v-if="addOn.promo_discounted_price"><span
+                                <span class="offer" v-if="!hasUsedFirstOrderCoupon"><span
                                         v-html="formatPrice(addOn.promo_discounted_price)"></span> with
                                     promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">
@@ -124,7 +124,7 @@
                             </div>
 
                             <div class="promo-og-offer purple">
-                                <span class="offer" v-if="addOn.slots[0].promo_discounted_price"><span
+                                <span class="offer" v-if="!hasUsedFirstOrderCoupon"><span
                                         v-html="formatPrice(addOn.slots[0].promo_discounted_price)"></span> with
                                     promo</span>
                                 <span :class="['time-left', addOn.hours_left <= 2 ? 'blink-red' : '']">

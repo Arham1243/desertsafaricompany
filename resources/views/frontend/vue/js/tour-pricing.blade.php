@@ -223,7 +223,9 @@
 
             const hasUsedFirstOrderCoupon = computed(() => {
                 const coupons = cartData.value?.applied_coupons
-                return Array.isArray(coupons) && coupons.some(c => c?.is_first_order_coupon == 1)
+                const used = Array.isArray(coupons) && coupons.some(c => c
+                    ?.is_first_order_coupon == 1)
+                return used
             })
 
             const isTourInCart = computed(() => {

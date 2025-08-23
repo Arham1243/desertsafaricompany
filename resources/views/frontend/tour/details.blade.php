@@ -1522,9 +1522,9 @@
                     if (isPromo) {
                         const day = date.getDay();
                         const isWeekend = [0, 5, 6].includes(day);
-                        price = isWeekend ? weekendPrice : weekdayPrice;
+                        price = isWeekend ? parseInt(weekendPrice) : parseInt(weekdayPrice)
                     } else {
-                        price = lowestPrice;
+                        price = parseInt(lowestPrice);
                     }
 
                     const formattedPrice = `{{ currencySymbol() }}${price}`;

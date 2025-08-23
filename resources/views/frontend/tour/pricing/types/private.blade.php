@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <div class="promo-og-offer purple" v-if="privateTourData.promo_discounted_price">
+            <div class="promo-og-offer purple" v-if="!hasUsedFirstOrderCoupon">
                 <span class="offer">
                     <span v-html="formatPrice(privateTourData.promo_discounted_price)"></span> with promo
                 </span>

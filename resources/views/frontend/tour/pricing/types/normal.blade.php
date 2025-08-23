@@ -13,7 +13,7 @@
                 </div>
             </div>
 
-            <div class="promo-og-offer purple">
+            <div class="promo-og-offer purple" v-if="!hasUsedFirstOrderCoupon">
                 <span class="offer">
                     <span
                         v-html="formatPrice(item.promo_discounted_price || item.discounted_price || item.original_price)"></span>

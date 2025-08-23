@@ -45,7 +45,6 @@
                     </div>
                 </div>
             </template>
-            <a href="{{ route('tours.index') }}" class="primary-btn mt-4"> Continue Shopping </a>
 
         </div>
         <div class="col-md-4">
