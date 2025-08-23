@@ -158,7 +158,22 @@
         ),
     ];
 
-    $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
+    $waterTourData = $tour->waterPrices->mapWithKeys(function ($waterPrice) use ($firstOrderCoupon) {
+        return [
+            $waterPrice->time => [
+                'time' => $waterPrice->time,
+                'original_price' => (int) $waterPrice->water_price,
+                'promo_discounted_price' => applyPromoDiscount(
+                    $waterPrice->water_price,
+                    $firstOrderCoupon->discount_type,
+                    $firstOrderCoupon->amount,
+                ),
+                'quantity' => 0,
+            ],
+        ];
+    });
+
+    $waterPricesTimeSlots = $waterTourData->isNotEmpty() ? array_keys($waterTourData->toArray()) : [];
 
     $promoDiscountConfig =
         isset($tour->promo_discount_config) && $tour->promo_discount_config
@@ -177,16 +192,10 @@
             const carPrice = parseFloat("{{ $tour->privatePrices->car_price ?? 0 }}");
             const carMax = parseInt("{{ $tour->privatePrices->max_person ?? 1 }}");
 
-            const waterPrices = ref(@json($tour->waterPrices));
+            const waterTourData = ref(@json($waterTourData));
             const waterPricesTimeSlots = ref(@json($waterPricesTimeSlots));
             const timeSlot = ref("");
             const timeSlotQuantity = ref(0);
-            const waterPriceMap = computed(() => {
-                return waterPrices.value.reduce((map, price, index) => {
-                    map[waterPricesTimeSlots.value[index]] = parseFloat(price.water_price);
-                    return map;
-                }, {});
-            });
 
             const firstOrderCoupon = ref(@json($firstOrderCoupon));
             const tourId = ref(@json($tour->id))
@@ -447,9 +456,15 @@
                     )
                 }
 
-                if (priceType === "water" && timeSlot.value && timeSlotQuantity.value > 0) {
-                    const slotPrice = waterPriceMap.value[timeSlot.value] || 0;
-                    totalPrice.value += slotPrice * timeSlotQuantity.value;
+                if (priceType === "water") {
+                    Object.entries(waterTourData.value).forEach(([slot, data]) => {
+                        if (data.quantity > 0) {
+                            const price = isFirstOrderCouponApplied.value ?
+                                data.promo_discounted_price :
+                                data.original_price
+                            totalPrice.value += price * data.quantity
+                        }
+                    })
                 }
                 updateSubmitButtonState();
 
@@ -466,7 +481,7 @@
                         isSubmitEnabled.value = true
                         break
                     case "water":
-                        isSubmitEnabled.value = timeSlotQuantity.value > 0
+                        isSubmitEnabled.value = timeSlot.value
                         break
                     case "normal":
                         isSubmitEnabled.value = Object.values(normalTourData.value).some(d => d
@@ -525,9 +540,17 @@
                 updateTotalPrice();
             };
 
-            const updateWaterQuantity = (action) => {
-                if (action === "plus") timeSlotQuantity.value++;
-                if (action === "minus" && timeSlotQuantity.value > 0) timeSlotQuantity.value--;
+            const updateWaterQuantity = (action, slot) => {
+                if (!waterTourData.value[slot]) return;
+
+                if (action === "plus") {
+                    waterTourData.value[slot].quantity++;
+                }
+
+                if (action === "minus" && waterTourData.value[slot].quantity > 0) {
+                    waterTourData.value[slot].quantity--;
+                }
+
                 updateTotalPrice();
             };
 
@@ -539,7 +562,7 @@
                 } else if (priceType === "promo" && personType) {
                     updatePromoQuantity(action, personType);
                 } else if (priceType === "water") {
-                    updateWaterQuantity(action);
+                    updateWaterQuantity(action, personType);
                 }
             };
 
@@ -556,7 +579,12 @@
                 return name.toLowerCase().replace(/ /g, '_');
             };
 
-            watch(timeSlot, updateTotalPrice);
+            watch(timeSlot, () => {
+                Object.values(waterTourData.value).forEach(item => {
+                    item.quantity = 0
+                })
+                updateTotalPrice()
+            })
 
             return {
                 carQuantity,
@@ -568,7 +596,7 @@
                 simpleTourData,
                 timeSlot,
                 timeSlotQuantity,
-                waterPrices,
+                waterTourData,
                 waterPricesTimeSlots,
                 isSubmitEnabled,
                 formatNameForInput,
