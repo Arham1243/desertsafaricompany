@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                     @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                               @endif>
+                                 @endif>
                     {{ $pricingTagline['text'] ?? '' }}
                 </div>
             </div>
@@ -28,7 +28,7 @@
         </div>
         <div class="tour-content__title form-book__title position-relative">
             <input type="date" class="form-book__date" name="start_date" required id="start_date" ref="startDate"
-                @change="handleDateChange" placeholder="mm/dd/yyyy">
+                @change="handleDateChange" placeholder="mm/dd/yyyy" v-model="startDateValue">
             <div class="cal-icon"><i class='bx bxs-calendar'></i></div>
             <input type="hidden" name="price_type" value="{{ $tour->price_type }}">
         </div>
@@ -83,10 +83,12 @@
                     <button class="primary-btn w-100"
                         @if ($tour->price_type && $tour->price_type !== 'private') :disabled="!isSubmitEnabled" @elseif ($tour->price_type === 'private') :disabled="!carQuantity>0" @else @endif
                         @if (!$isDataValid) disabled @endif
-                        @if (!$isDataValid) disabled @endif
                         @if (!$tour->availability_status['available']) data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}" @endif>
                         Book Now
                     </button>
+                    <div v-if="!startDateValue" class="text-danger text-center mt-2">
+                        Please select a start date
+                    </div>
                 @endif
             @else
                 <a href="{{ route('cart.index') }}" class="primary-btn w-100">View Cart</a>

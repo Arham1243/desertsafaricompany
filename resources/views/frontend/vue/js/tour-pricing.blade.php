@@ -127,12 +127,21 @@
 
     $promoTourData = $promoData->values();
 
-    $normalTourData = $tour->normalPrices->mapWithKeys(function ($price) {
+    $normalTourData = $tour->normalPrices->mapWithKeys(function ($price) use ($firstOrderCoupon) {
+        $originalPrice = (float) $price->price;
+
+        $promoDiscountedPrice = $firstOrderCoupon
+            ? applyPromoDiscount($originalPrice, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+            : null;
+
         return [
             formatNameForInput($price->person_type) => [
-                'price' => $price->price,
-                'min' => $price->min_person,
-                'max' => $price->max_person,
+                'person_type' => $price->person_type,
+                'person_description' => $price->person_description,
+                'original_price' => $originalPrice,
+                'promo_discounted_price' => $promoDiscountedPrice,
+                'min' => (int) $price->min_person,
+                'max' => (int) $price->max_person,
                 'quantity' => 0,
             ],
         ];
@@ -176,6 +185,7 @@
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
             const startDate = ref(null)
+            const startDateValue = ref()
             const fetchingPromoPrices = ref(null)
             const isFirstOrderCouponrApplied = ref(false)
 
@@ -232,37 +242,67 @@
                 isFirstOrderCouponrApplied.value = true
                 const coupon = firstOrderCoupon.value
 
-                promoTourData.value = promoTourData.value.map(item => {
-                    if (item.source === 'addon' && item.type === 'timeslot') {
-                        item.slots = item.slots.map(slot => {
-                            if (!slot.original_discounted_price) {
-                                slot.original_discounted_price = slot.discounted_price
+
+                if (priceType === "normal") {
+                    const updated = {
+                        ...normalTourData.value
+                    }
+
+                    Object.keys(updated).forEach(key => {
+                        const item = updated[key]
+
+                        if (!item.original_price) {
+                            item.original_price = parseFloat(item.price)
+                        }
+
+                        let discounted = parseFloat(item.original_price)
+
+                        if (coupon.discount_type === 'percentage') {
+                            discounted -= discounted * (parseFloat(coupon.amount) / 100)
+                        } else {
+                            discounted -= parseFloat(coupon.amount)
+                        }
+
+                        item.promo_discounted_price = discounted > 0 ? discounted.toFixed(
+                            2) : "0.00"
+                    })
+
+                    normalTourData.value = updated
+                }
+
+                if (priceType === "promo") {
+                    promoTourData.value = promoTourData.value.map(item => {
+                        if (item.source === 'addon' && item.type === 'timeslot') {
+                            item.slots = item.slots.map(slot => {
+                                if (!slot.original_discounted_price) {
+                                    slot.original_discounted_price = slot.discounted_price
+                                }
+                                let price = parseFloat(slot.discounted_price)
+                                if (coupon.discount_type === 'percentage') {
+                                    price -= price * (parseFloat(coupon.amount) / 100)
+                                } else {
+                                    price -= parseFloat(coupon.amount)
+                                }
+                                return {
+                                    ...slot,
+                                    discounted_price: price.toFixed(2)
+                                }
+                            })
+                        } else if (item.discounted_price) {
+                            if (!item.original_discounted_price) {
+                                item.original_discounted_price = item.discounted_price
                             }
-                            let price = parseFloat(slot.discounted_price)
+                            let price = parseFloat(item.discounted_price)
                             if (coupon.discount_type === 'percentage') {
                                 price -= price * (parseFloat(coupon.amount) / 100)
                             } else {
                                 price -= parseFloat(coupon.amount)
                             }
-                            return {
-                                ...slot,
-                                discounted_price: price.toFixed(2)
-                            }
-                        })
-                    } else if (item.discounted_price) {
-                        if (!item.original_discounted_price) {
-                            item.original_discounted_price = item.discounted_price
+                            item.discounted_price = price.toFixed(2)
                         }
-                        let price = parseFloat(item.discounted_price)
-                        if (coupon.discount_type === 'percentage') {
-                            price -= price * (parseFloat(coupon.amount) / 100)
-                        } else {
-                            price -= parseFloat(coupon.amount)
-                        }
-                        item.discounted_price = price.toFixed(2)
-                    }
-                    return item
-                })
+                        return item
+                    })
+                }
 
                 updateTotalPrice()
             }
@@ -305,6 +345,8 @@
             }
 
             const handleDateChange = (e) => {
+                updateSubmitButtonState()
+                if (priceType !== "promo") return
                 startDate.value = e.target.value
                 const day = new Date(startDate.value).getDay()
                 const isWeekend = day === 5 || day === 6 || day === 0
@@ -377,11 +419,17 @@
                 if (priceType === "normal") {
                     totalPrice.value += Object.values(normalTourData.value).reduce(
                         (sum, {
-                            price,
+                            original_price,
+                            promo_discounted_price,
                             quantity
-                        }) => sum + price * quantity,
+                        }) => {
+                            const effectivePrice = isFirstOrderCouponrApplied.value ?
+                                parseFloat(promo_discounted_price ?? original_price) :
+                                parseFloat(original_price)
+                            return sum + effectivePrice * quantity
+                        },
                         0
-                    );
+                    )
                 }
 
                 if (priceType === "water" && timeSlot.value && timeSlotQuantity.value > 0) {
@@ -395,9 +443,12 @@
 
             const updateSubmitButtonState = () => {
                 isSubmitEnabled.value = (
-                    timeSlotQuantity.value > 0 ||
-                    Object.values(normalTourData.value).some(data => data.quantity > 0) ||
-                    promoTourData.value.some(promo => promo.quantity > 0)
+                    startDateValue.value &&
+                    (
+                        timeSlotQuantity.value > 0 ||
+                        Object.values(normalTourData.value).some(data => data.quantity > 0) ||
+                        promoTourData.value.some(promo => promo.quantity > 0)
+                    )
                 );
             };
 
@@ -416,11 +467,9 @@
                 const personData = normalTourData.value[personType];
                 if (!personData) return;
 
-                personData.quantity += (action === "plus" ? 1 : (action === "minus" && personData
-                    .quantity >
-                    personData.min ? -1 : 0));
-                personData.quantity = Math.max(personData.min, Math.min(personData.quantity, personData
-                    .max));
+                personData.quantity += action === "plus" ? 1 : (action === "minus" && personData.quantity >
+                    0 ? -1 : 0);
+                personData.quantity = Math.max(0, Math.min(personData.quantity, personData.max));
                 updateTotalPrice();
             };
 
@@ -485,6 +534,7 @@
                 visiblePromos,
                 toggleShowAll,
                 startDate,
+                startDateValue,
                 handleDateChange,
                 fetchingPromoPrices,
                 hasAnyPromoQuantity,

@@ -16,7 +16,8 @@
                         </div>
                     </div>
                     <p>Don't worry! Explore our exciting <strong><a class="link-primary"
-                                href="{{ route('tours.index') }}">tours</a></strong> and add some to your cart.</p>
+                                href="{{ route('locations.country', 'ae') }}">tours</a></strong> and add some to your cart.
+                    </p>
                 </div>
             @endif
         </div>

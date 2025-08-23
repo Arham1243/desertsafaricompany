@@ -41,7 +41,7 @@
                                 </div>
                             </div>
                         @endforeach
-                        <a href="{{ route('tours.index') }}" class="primary-btn mx-auto mt-4"> Explore More </a>
+                        <a href="{{ route('locations.country', 'ae') }}" class="primary-btn mx-auto mt-4"> Explore More </a>
                     </div>
                 </div>
             @else
@@ -52,7 +52,8 @@
                         </div>
                     </div>
                     <p>Don't worry! Explore our exciting <strong><a class="link-primary"
-                                href="{{ route('tours.index') }}">tours</a></strong> and add some to your wishlist.</p>
+                                href="{{ route('locations.country', 'ae') }}">tours</a></strong> and add some to your
+                        wishlist.</p>
                 </div>
             @endif
         </div>
