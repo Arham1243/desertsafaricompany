@@ -301,6 +301,66 @@ class Tour extends Model
         ];
     }
 
+    protected function getNextAvailableDay(): ?string
+    {
+        $hours = json_decode($this->availability_open_hours, true);
+        if (! is_array($hours) || empty($hours)) {
+            return null;
+        }
+
+        $now = Carbon::now();
+        for ($i = 1; $i <= 7; $i++) {
+            $nextDay = $now->copy()->addDays($i)->format('l');
+            $match = collect($hours)->first(fn ($h) => strtolower($h['day']) === strtolower($nextDay));
+            if ($match) {
+                return strtolower($nextDay);
+            }
+        }
+
+        return null;
+    }
+
+    public function getTourLowestPriceAttribute()
+    {
+        switch ($this->price_type) {
+            case 'normal':
+                return $this->calculateNormalPrice();
+            case 'private':
+                return $this->calculatePrivatePrice();
+            case 'water':
+                return $this->calculateWaterPrice();
+            case 'promo':
+                return $this->calculatePromoPrice();
+            default:
+                return $this->calculateDefaultPrice();
+        }
+    }
+
+    protected function calculateNormalPrice()
+    {
+        return (int) ($this->normalPrices->min('price') ?? 0);
+    }
+
+    protected function calculatePrivatePrice()
+    {
+        return (int) ($this->privatePrices->car_price ?? 0);
+    }
+
+    protected function calculateWaterPrice()
+    {
+        return (int) ($this->waterPrices->min('water_price') ?? 0);
+    }
+
+    protected function calculatePromoPrice()
+    {
+        return $this->getLowestPromoPriceAttribute()['discounted'];
+    }
+
+    protected function calculateDefaultPrice()
+    {
+        return (int) ($this->sale_price ?? $this->regular_price ?? 0);
+    }
+
     protected static function boot()
     {
         parent::boot();

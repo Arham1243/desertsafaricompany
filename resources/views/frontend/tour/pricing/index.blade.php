@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                     @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                              @endif>
+                               @endif>
                     {{ $pricingTagline['text'] ?? '' }}
                 </div>
             </div>
@@ -64,8 +64,7 @@
     </div>
 
     <div class="payment-widget mt-4 mb-3">
-        <tamara-widget id="tamara-widget-custom" type="tamara-summary"
-            amount="{{ $tour->lowest_promo_price['discounted'] }}"
+        <tamara-widget id="tamara-widget-custom" type="tamara-summary" amount="{{ $tour->tour_lowest_price }}"
             config='{"badgePosition":"right","showExtraContent":""}' inline-type="2">
         </tamara-widget>
     </div>

@@ -624,8 +624,6 @@
                             </div>
                         @endif
 
-
-
                         @if ($tour->location_type === 'normal_itinerary')
                             <div class=tour-content__line></div>
                             <div class="pb-2 pt-3">
@@ -1442,7 +1440,7 @@
         new TabbyPromo({
             selector: '#tabby-promo-widget',
             currency: '{{ env('APP_CURRENCY') }}',
-            price: '{{ $tour->lowest_promo_price['discounted'] }}',
+            price: '{{ $tour->tour_lowest_price }}',
             installmentsCount: 4,
             lang: 'en',
             source: 'product',
@@ -1502,6 +1500,9 @@
 
         document.addEventListener("DOMContentLoaded", function() {
             const today = new Date();
+
+            const isPromo = @json($tour->price_type === 'promp');
+            const lowestPrice = @json($tour->tour_lowest_price);
             const weekdayPrice = window.lowestPromoWeekdayDiscountPrice;
             const weekendPrice = window.lowestPromoWeekendDiscountPrice;
 
@@ -1516,17 +1517,26 @@
                     const date = dayElem.dateObj;
                     if (date < new Date().setHours(0, 0, 0, 0)) return;
 
-                    const day = date.getDay();
-                    const isWeekend = [0, 5, 6].includes(day);
-                    const price = isWeekend ? weekendPrice : weekdayPrice;
-                    const formatedPrice = `{{ currencySymbol() }}${price}`
-                    const formatedFloatPrice = `{{ currencySymbol() }}${parseFloat(price).toFixed(2)}`
+                    let price;
+
+                    if (isPromo) {
+                        const day = date.getDay();
+                        const isWeekend = [0, 5, 6].includes(day);
+                        price = isWeekend ? weekendPrice : weekdayPrice;
+                    } else {
+                        price = lowestPrice;
+                    }
+
+                    const formattedPrice = `{{ currencySymbol() }}${price}`;
+                    const formattedFloatPrice =
+                        `{{ currencySymbol() }}${parseFloat(price).toFixed(2)}`;
 
                     const priceTag = document.createElement("div");
                     const availabilityBarLowesPrice = document.querySelector(
                         "[availability-bar-lowest-price]");
-                    availabilityBarLowesPrice.innerHTML = formatedFloatPrice
-                    priceTag.innerHTML = formatedPrice;
+                    availabilityBarLowesPrice.innerHTML = formattedFloatPrice;
+
+                    priceTag.innerHTML = formattedPrice;
                     priceTag.className = "price";
 
                     dayElem.appendChild(priceTag);
