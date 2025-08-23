@@ -280,7 +280,7 @@
                                                 <label class="title">Profile Photo</label>
                                                 <div class="position-relative d-inline-block mt-2">
                                                     <img id="avatarPreview"
-                                                        src="{{ $user->avatar ? asset($user->avatar) : asset('user/assets/images/placeholder-user.png') }}"
+                                                        src="{{ $user->avatar ? $user->avatar : asset('user/assets/images/placeholder-user.png') }}"
                                                         class="rounded-circle border border-secondary"
                                                         style="width: 140px; height: 140px; object-fit: cover; cursor: pointer;"
                                                         onclick="document.getElementById('avatarInput').click()">
