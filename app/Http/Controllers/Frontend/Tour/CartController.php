@@ -22,7 +22,6 @@ class CartController extends Controller
 
     public function add(Request $request, $tourId)
     {
-        dd($request->all());
         $cardData = $request->except('_token', 'applied_coupons');
 
         $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
