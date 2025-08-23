@@ -10,9 +10,9 @@
                     </div>
                     <div v-else class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span>
                     </div>
-                    <div v-if="isFirstOrderCouponrApplied" class="promo-price purple"><span
+                    <div v-if="isFirstOrderCouponApplied" class="promo-price purple"><span
                             v-html="formatPrice(promo.promo_discounted_price)"></span></div>
-                    <span v-if="!isFirstOrderCouponrApplied" class="percent-off-tag">@{{ promo.discount_percent }}%
+                    <span v-if="!isFirstOrderCouponApplied" class="percent-off-tag">@{{ promo.discount_percent }}%
                         Off</span>
                 </div>
                 <div class="promo-og-offer purple" v-if="!promo.promo_is_free">
@@ -23,9 +23,8 @@
                     </span>
                 </div>
                 <template v-if="!promo.promo_is_free">
-                    <span v-if="isFirstOrderCouponrApplied"
-                        class="promo-applied purple  d-flex align-items-center mt-1"> <i style="font-size:1.1rem;"
-                            class="bx bxs-check-circle"></i> Promo Applied</span>
+                    <span v-if="isFirstOrderCouponApplied" class="promo-applied purple  d-flex align-items-center mt-1">
+                        <i style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                 </template>
                 <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
                     <div class="already-bought"></div>
@@ -65,10 +64,10 @@
                                 </div>
                                 <div v-else class="promo-price green"><span
                                         v-html="formatPrice(addOn.discounted_price)"></span></div>
-                                <div v-if="isFirstOrderCouponrApplied" class="promo-price purple">
+                                <div v-if="isFirstOrderCouponApplied" class="promo-price purple">
                                     <span v-html="formatPrice(addOn.promo_discounted_price)"></span>
                                 </div>
-                                <span v-if="!isFirstOrderCouponrApplied" class="percent-off-tag">@{{ addOn.discount_percent }}%
+                                <span v-if="!isFirstOrderCouponApplied" class="percent-off-tag">@{{ addOn.discount_percent }}%
                                     Off</span>
                             </div>
                             <div class="promo-og-offer purple">
@@ -79,7 +78,7 @@
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
                             </div>
-                            <span v-if="isFirstOrderCouponrApplied"
+                            <span v-if="isFirstOrderCouponApplied"
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
@@ -117,10 +116,10 @@
                                 </div>
                                 <div v-else class="promo-price green"><span
                                         v-html="formatPrice(addOn.slots[0].discounted_price)"></span></div>
-                                <div v-if="isFirstOrderCouponrApplied" class="promo-price purple">
+                                <div v-if="isFirstOrderCouponApplied" class="promo-price purple">
                                     <span v-html="formatPrice(addOn.slots[0].promo_discounted_price)"></span>
                                 </div>
-                                <span v-if="!isFirstOrderCouponrApplied"
+                                <span v-if="!isFirstOrderCouponApplied"
                                     class="percent-off-tag">@{{ addOn.slots[0].discount_percent }}% Off</span>
                             </div>
 
@@ -132,7 +131,7 @@
                                     @{{ addOn.hours_left }} hour@{{ addOn.hours_left === 1 ? '' : 's' }} left
                                 </span>
                             </div>
-                            <span v-if="isFirstOrderCouponrApplied"
+                            <span v-if="isFirstOrderCouponApplied"
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">

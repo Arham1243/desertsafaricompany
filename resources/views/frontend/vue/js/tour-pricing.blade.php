@@ -146,6 +146,18 @@
             ],
         ];
     });
+
+    $simpleTourData = [
+        'regular_price' => $tour->regular_price,
+        'sale_price' => $tour->sale_price,
+        'original_price' => $tour->sale_price ?? $tour->regular_price,
+        'promo_discounted_price' => applyPromoDiscount(
+            $tour->sale_price ?? $tour->regular_price,
+            $firstOrderCoupon->discount_type,
+            $firstOrderCoupon->amount,
+        ),
+    ];
+
     $waterPricesTimeSlots = $tour->waterPrices->isNotEmpty() ? $tour->waterPrices->pluck('time') : null;
 
     $promoDiscountConfig =
@@ -182,12 +194,12 @@
             const initialTotalPrice = parseFloat("{{ $tour->initial_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
             const promoTourData = ref(@json($promoTourData));
+            const simpleTourData = ref(@json($simpleTourData));
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
-            const startDate = ref(null)
-            const startDateValue = ref()
+            const startDateInput = ref(null)
             const fetchingPromoPrices = ref(null)
-            const isFirstOrderCouponrApplied = ref(false)
+            const isFirstOrderCouponApplied = ref(false)
 
             const hasUsedFirstOrderCoupon = computed(() => {
                 const coupons = cartData.value?.applied_coupons
@@ -239,9 +251,8 @@
             window.lowestPromoWeekendDiscountPrice = lowestPromoWeekendDiscountPrice.value
 
             const applyFirstOrderCoupon = () => {
-                isFirstOrderCouponrApplied.value = true
+                isFirstOrderCouponApplied.value = true
                 const coupon = firstOrderCoupon.value
-
 
                 if (priceType === "normal") {
                     const updated = {
@@ -307,17 +318,20 @@
                 updateTotalPrice()
             }
 
-            const getTourPromoPricesByDay = async (tourId, isWeekend) => {
+            const getTourPromoPricesByDay = async () => {
+                if (priceType !== "promo") return
                 try {
+                    const day = new Date(startDateInput.value?.value).getDay()
+                    const isWeekend = day === 5 || day === 6 || day === 0
                     fetchingPromoPrices.value = true;
                     const route = `{{ route('tours.promo-prices-by-day') }}`
                     const payload = {
-                        tour_id: tourId,
+                        tour_id: tourId.value,
                         isWeekend: isWeekend
                     }
                     const response = await axios.post(route, payload)
                     promoTourData.value = response.data
-                    isFirstOrderCouponrApplied.value = false
+                    isFirstOrderCouponApplied.value = false
                     updateTotalPrice()
                 } catch (error) {
                     showToast('error', error.response.data.message)
@@ -346,11 +360,7 @@
 
             const handleDateChange = (e) => {
                 updateSubmitButtonState()
-                if (priceType !== "promo") return
-                startDate.value = e.target.value
-                const day = new Date(startDate.value).getDay()
-                const isWeekend = day === 5 || day === 6 || day === 0
-                getTourPromoPricesByDay(tourId.value, isWeekend)
+                getTourPromoPricesByDay()
             }
 
             const visiblePromos = computed(() =>
@@ -373,6 +383,11 @@
                 @endif
                 totalPrice.value = initialTotalPrice;
 
+                if (priceType === "simple") {
+                    totalPrice.value = isFirstOrderCouponApplied.value ?
+                        simpleTourData.value.promo_discounted_price :
+                        simpleTourData.value.sale_price
+                }
                 if (priceType === "promo") {
                     const totalPromoQty = promoTourData.value
                         .filter(item => item.source === 'promo')
@@ -423,7 +438,7 @@
                             promo_discounted_price,
                             quantity
                         }) => {
-                            const effectivePrice = isFirstOrderCouponrApplied.value ?
+                            const effectivePrice = isFirstOrderCouponApplied.value ?
                                 parseFloat(promo_discounted_price ?? original_price) :
                                 parseFloat(original_price)
                             return sum + effectivePrice * quantity
@@ -440,17 +455,32 @@
 
             };
 
-
             const updateSubmitButtonState = () => {
-                isSubmitEnabled.value = (
-                    startDateValue.value &&
-                    (
-                        timeSlotQuantity.value > 0 ||
-                        Object.values(normalTourData.value).some(data => data.quantity > 0) ||
-                        promoTourData.value.some(promo => promo.quantity > 0)
-                    )
-                );
-            };
+                if (!startDateInput.value?.value) {
+                    isSubmitEnabled.value = false
+                    return
+                }
+
+                switch (priceType) {
+                    case "simple":
+                        isSubmitEnabled.value = true
+                        break
+                    case "water":
+                        isSubmitEnabled.value = timeSlotQuantity.value > 0
+                        break
+                    case "normal":
+                        isSubmitEnabled.value = Object.values(normalTourData.value).some(d => d
+                            .quantity >
+                            0)
+                        break
+                    case "promo":
+                        isSubmitEnabled.value = promoTourData.value.some(p => p.quantity > 0)
+                        break
+                    case "private":
+                        isSubmitEnabled.value = carQuantity.value > 0
+                        break
+                }
+            }
 
             const updatePrivateQuantity = (action) => {
                 const previousCars = Math.ceil(carQuantity.value / carMax);
@@ -470,6 +500,17 @@
                 personData.quantity += action === "plus" ? 1 : (action === "minus" && personData.quantity >
                     0 ? -1 : 0);
                 personData.quantity = Math.max(0, Math.min(personData.quantity, personData.max));
+                updateTotalPrice();
+            };
+
+            const updateSimpleQuantity = (action) => {
+                if (!simpleTourData.value) return;
+
+                simpleTourData.value.quantity += action === "plus" ? 1 : (action === "minus" &&
+                    simpleTourData.value.quantity >
+                    0 ? -1 : 0);
+                simpleTourData.value.quantity = Math.max(0, Math.min(simpleTourData.value.quantity,
+                    simpleTourData.value.max));
                 updateTotalPrice();
             };
 
@@ -524,6 +565,7 @@
                 formatPrice,
                 normalTourData,
                 promoTourData,
+                simpleTourData,
                 timeSlot,
                 timeSlotQuantity,
                 waterPrices,
@@ -533,8 +575,7 @@
                 showAllPromos,
                 visiblePromos,
                 toggleShowAll,
-                startDate,
-                startDateValue,
+                startDateInput,
                 handleDateChange,
                 fetchingPromoPrices,
                 hasAnyPromoQuantity,
@@ -542,7 +583,7 @@
                 formatTimeLabel,
                 handleSelectedSlotChange,
                 firstOrderCoupon,
-                isFirstOrderCouponrApplied,
+                isFirstOrderCouponApplied,
                 applyFirstOrderCoupon,
                 hasUsedFirstOrderCoupon,
                 isTourInCart,

@@ -1611,7 +1611,7 @@
                                             </div>
                                         </div>
 
-                                        <div class="col-md-12 col-12" x-show="enabled" x-transition>
+                                        <div class="col-md-6 col-12" x-show="enabled" x-transition>
                                             <div class="form-fields">
                                                 <label class="title text-dark">Sale Price :</label>
                                                 <input step="0.01" min="0" type="number"

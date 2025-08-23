@@ -34,9 +34,8 @@
         <div class="tour-content_book_app {{ $tour->price_type === 'promo' ? 'sale' : '' }}">
 
             @if (!$tour->price_type && $tour->regular_price && $tour->sale_price)
-                <input type="hidden" name="simeple_tour_price" value="{{ $tour->sale_price }}">
                 <div class="tour-content_book_pricing">
-                    <span class="tour-content__pra">From</span>
+                    <span class="p-0 tour-content__pra">From</span>
                     <div class="baseline-pricing__value baseline-pricing__value--low">
                         {{ formatPrice($tour->regular_price) }}
                     </div>

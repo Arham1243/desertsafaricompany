@@ -1,6 +1,6 @@
 @if ($firstOrderCoupon)
     <div class="promo-code applied" v-if="firstOrderCoupon && !hasUsedFirstOrderCoupon && !isTourInCart">
-        <div class="promo-code__info" v-if="!isFirstOrderCouponrApplied">
+        <div class="promo-code__info" v-if="!isFirstOrderCouponApplied">
             <div class="icon" style="rotate: 140deg;">
                 <i class="bx bx-tag"></i>
             </div>
@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <button v-if="!isFirstOrderCouponrApplied" type="button" class="promo-code__apply"
+        <button v-if="!isFirstOrderCouponApplied" type="button" class="promo-code__apply"
             @click="applyFirstOrderCoupon">
             Apply
         </button>
@@ -28,15 +28,15 @@
         </div>
 
         <input type="hidden" name="applied_coupons[0][coupon]" :value="firstOrderCoupon.id"
-            v-if="isFirstOrderCouponrApplied">
+            v-if="isFirstOrderCouponApplied">
         <input type="hidden" name="applied_coupons[0][code]" :value="firstOrderCoupon.code"
-            v-if="isFirstOrderCouponrApplied">
+            v-if="isFirstOrderCouponApplied">
         <input type="hidden" name="applied_coupons[0][type]" :value="firstOrderCoupon.discount_type"
-            v-if="isFirstOrderCouponrApplied">
+            v-if="isFirstOrderCouponApplied">
         <input type="hidden" name="applied_coupons[0][amount]" :value="firstOrderCoupon.amount"
-            v-if="isFirstOrderCouponrApplied">
+            v-if="isFirstOrderCouponApplied">
         <input type="hidden" name="applied_coupons[0][is_first_order_coupon]"
-            :value="firstOrderCoupon.is_first_order_coupon" v-if="isFirstOrderCouponrApplied">
+            :value="firstOrderCoupon.is_first_order_coupon" v-if="isFirstOrderCouponApplied">
     </div>
 @endif
 <div class="form-group form-guest-search">

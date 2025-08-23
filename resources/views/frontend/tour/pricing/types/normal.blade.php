@@ -5,11 +5,11 @@
             <div class="promo-title">@{{ item.person_description }}</div>
 
             <div class="promo-price-wrapper">
-                <div class="promo-price cut" v-if="item.original_price && item.discounted_price">
+                <div class="promo-price cut" v-if="item.original_price">
                     <span v-html="formatPrice(item.original_price)"></span>
                 </div>
-                <div class="promo-price green">
-                    <span v-html="formatPrice(item.discounted_price || item.original_price)"></span>
+                <div class="promo-price purple" v-if="isFirstOrderCouponApplied">
+                    <span v-html="formatPrice(item.promo_discounted_price)"></span>
                 </div>
             </div>
 
@@ -21,7 +21,7 @@
                 </span>
             </div>
 
-            <span v-if="isFirstOrderCouponrApplied" class="promo-applied purple d-flex align-items-center mt-1">
+            <span v-if="isFirstOrderCouponApplied" class="promo-applied purple d-flex align-items-center mt-1">
                 <i style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied
             </span>
 
