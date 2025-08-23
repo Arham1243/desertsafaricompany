@@ -32,29 +32,6 @@
     @endphp
     <div class=tour-content_book_wrap>
         <div class="tour-content_book_app {{ $tour->price_type === 'promo' ? 'sale' : '' }}">
-
-            @if (!$tour->price_type && $tour->regular_price && $tour->sale_price)
-                <div class="tour-content_book_pricing">
-                    <span class="p-0 tour-content__pra">From</span>
-                    <div class="baseline-pricing__value baseline-pricing__value--low">
-                        {{ formatPrice($tour->regular_price) }}
-                    </div>
-                    <div class="baseline-pricing__value green">
-                        {{ formatPrice($tour->sale_price) }}
-                    </div>
-                </div>
-            @endif
-            @if ($tour->price_type === 'private')
-                <div class="tour-content_book_pricing">
-                    <div class="baseline-pricing__value">
-                        Min: {{ $tour->privatePrices->min_person }}
-                    </div>
-                    <div class="baseline-pricing__value">
-                        Max: {{ $tour->privatePrices->max_person }}
-                        Persons
-                    </div>
-                </div>
-            @endif
             <div class=form-book>
                 @if ($isDataValid)
                     <form method="POST" action="{{ route('cart.add', $tour->id) }}">

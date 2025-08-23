@@ -5636,12 +5636,12 @@ a.country-card__details {
 }
 
 .promo-price {
+    color: #333;
     font-size: 19px;
     font-weight: 500;
 }
 
 .promo-price.cut {
-    color: #333;
     text-decoration: line-through !important;
 }
 
@@ -6461,7 +6461,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .green {
-    color: green;
+    color: green !important;
 }
 
 .prices-wrapper .del-price.cut {

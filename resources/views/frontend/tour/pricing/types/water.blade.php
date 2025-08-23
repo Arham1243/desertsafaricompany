@@ -16,7 +16,8 @@
             <div class="promo-title">@{{ waterTourData[timeSlot]?.description }}</div>
 
             <div class="promo-price-wrapper">
-                <div class="promo-price cut" v-if="waterTourData[timeSlot]?.original_price">
+                <div class="promo-price" :class="{ cut: isFirstOrderCouponApplied }"
+                    v-if="waterTourData[timeSlot]?.original_price">
                     <span v-html="formatPrice(waterTourData[timeSlot].original_price)"></span>
                 </div>
                 <div class="promo-price purple" v-if="isFirstOrderCouponApplied">

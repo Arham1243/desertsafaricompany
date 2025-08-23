@@ -5,7 +5,7 @@
             <div class="promo-title">@{{ item.person_description }}</div>
 
             <div class="promo-price-wrapper">
-                <div class="promo-price cut" v-if="item.original_price">
+                <div class="promo-price" :class="{ cut: isFirstOrderCouponApplied }" v-if="item.original_price">
                     <span v-html="formatPrice(item.original_price)"></span>
                 </div>
                 <div class="promo-price purple" v-if="isFirstOrderCouponApplied">

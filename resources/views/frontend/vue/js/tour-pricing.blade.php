@@ -173,6 +173,21 @@
         ];
     });
 
+    $privateTourData = $tour->privatePrices
+        ? [
+            'min_person' => (int) $tour->privatePrices->min_person,
+            'max_person' => (int) $tour->privatePrices->max_person,
+            'car_price' => (int) $tour->privatePrices->car_price,
+            'original_price' => (int) $tour->privatePrices->car_price,
+            'promo_discounted_price' => applyPromoDiscount(
+                $tour->privatePrices->car_price,
+                $firstOrderCoupon->discount_type,
+                $firstOrderCoupon->amount,
+            ),
+            'quantity' => 0,
+        ]
+        : null;
+
     $waterPricesTimeSlots = $waterTourData->isNotEmpty() ? array_keys($waterTourData->toArray()) : [];
 
     $promoDiscountConfig =
@@ -188,20 +203,16 @@
             const totalPrice = ref(parseFloat("{{ $tour->initial_price ?? 0 }}"));
             const priceType = "{{ $tour->price_type ?? 'simple' }}";
 
-            const carQuantity = ref(0);
-            const carPrice = parseFloat("{{ $tour->privatePrices->car_price ?? 0 }}");
-            const carMax = parseInt("{{ $tour->privatePrices->max_person ?? 1 }}");
-
             const waterTourData = ref(@json($waterTourData));
             const waterPricesTimeSlots = ref(@json($waterPricesTimeSlots));
             const timeSlot = ref("");
-            const timeSlotQuantity = ref(0);
 
             const firstOrderCoupon = ref(@json($firstOrderCoupon));
             const tourId = ref(@json($tour->id))
             const cartData = ref(@json($cart));
             const initialTotalPrice = parseFloat("{{ $tour->initial_price ?? 0 }}");
             const normalTourData = ref(@json($normalTourData));
+            const privateTourData = ref(@json($privateTourData));
             const promoTourData = ref(@json($promoTourData));
             const simpleTourData = ref(@json($simpleTourData));
             const isSubmitEnabled = ref(false);
@@ -397,6 +408,7 @@
                         simpleTourData.value.promo_discounted_price :
                         simpleTourData.value.sale_price
                 }
+
                 if (priceType === "promo") {
                     const totalPromoQty = promoTourData.value
                         .filter(item => item.source === 'promo')
@@ -466,6 +478,16 @@
                         }
                     })
                 }
+
+                if (priceType === "private") {
+                    const qty = privateTourData.value.quantity
+                    const maxPerCar = privateTourData.value.max_person
+                    const price = isFirstOrderCouponApplied.value ?
+                        privateTourData.value.promo_discounted_price :
+                        privateTourData.value.original_price
+                    const carsNeeded = Math.ceil(qty / maxPerCar)
+                    totalPrice.value = carsNeeded * price
+                }
                 updateSubmitButtonState();
 
             };
@@ -489,23 +511,23 @@
                             0)
                         break
                     case "promo":
-                        isSubmitEnabled.value = promoTourData.value.some(p => p.quantity > 0)
+                        isSubmitEnabled.value = promoTourData.value?.some(p => p.quantity > 0)
                         break
                     case "private":
-                        isSubmitEnabled.value = carQuantity.value > 0
+                        isSubmitEnabled.value = privateTourData.value?.quantity > 0
                         break
                 }
             }
 
             const updatePrivateQuantity = (action) => {
-                const previousCars = Math.ceil(carQuantity.value / carMax);
-                if (action === "plus") carQuantity.value++;
-                if (action === "minus" && carQuantity.value > 0) carQuantity.value--;
-
-                const currentCars = Math.ceil(carQuantity.value / carMax);
-                totalPrice.value += (currentCars > previousCars ? carPrice : (currentCars <
-                    previousCars ? -
-                    carPrice : 0));
+                if (action === 'minus' && privateTourData.value.quantity > privateTourData.value
+                    .min_person) {
+                    privateTourData.value.quantity--
+                }
+                if (action === 'plus') {
+                    privateTourData.value.quantity++
+                }
+                updateTotalPrice();
             };
 
             const updateNormalQuantity = (action, personType) => {
@@ -587,15 +609,14 @@
             })
 
             return {
-                carQuantity,
                 totalPrice,
                 updateQuantity,
                 formatPrice,
                 normalTourData,
                 promoTourData,
                 simpleTourData,
+                privateTourData,
                 timeSlot,
-                timeSlotQuantity,
                 waterTourData,
                 waterPricesTimeSlots,
                 isSubmitEnabled,

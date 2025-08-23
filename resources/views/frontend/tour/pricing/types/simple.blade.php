@@ -13,7 +13,8 @@
                 <div class="promo-price cut" v-if="simpleTourData.regular_price">
                     <span v-html="formatPrice(simpleTourData.regular_price)"></span>
                 </div>
-                <div class="promo-price green" v-if="simpleTourData.sale_price">
+                <div class="promo-price green" :class="{ cut: isFirstOrderCouponApplied }"
+                    v-if="simpleTourData.sale_price">
                     <span v-html="formatPrice(simpleTourData.sale_price)"></span>
                 </div>
                 <div class="promo-price purple" v-if="isFirstOrderCouponApplied">
