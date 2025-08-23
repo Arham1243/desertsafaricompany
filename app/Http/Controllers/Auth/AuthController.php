@@ -111,14 +111,14 @@ class AuthController extends Controller
         $user = User::where('email_verification_token', $token)->first();
 
         if (! $user) {
-            return redirect()->route('index')->with('notify_error', 'The verification link is invalid or expired.');
+            return redirect()->route('frontend.index')->with('notify_error', 'The verification link is invalid or expired.');
         }
 
         $user->email_verified = true;
         $user->email_verification_token = null;
         $user->save();
 
-        return redirect()->route('index')
+        return redirect()->route('frontend.index')
             ->with('notify_success', 'Your email has been verified successfully! You can now login');
     }
 
@@ -163,10 +163,10 @@ class AuthController extends Controller
         if ($type == 'email-verification') {
             $user = User::where('email', $email)->first();
             if (! $user) {
-                return redirect()->route('index')->with('notify_error', 'Email not found.');
+                return redirect()->route('frontend.index')->with('notify_error', 'Email not found.');
             }
             if ($user->email_verified) {
-                return redirect()->route('index')->with('notify_error', 'Email already verified.');
+                return redirect()->route('frontend.index')->with('notify_error', 'Email already verified.');
             }
 
             $title = 'Please Verify Your Email!';
@@ -174,7 +174,7 @@ class AuthController extends Controller
         } elseif ($type == 'reset-password') {
             $passwordReset = DB::table('password_resets')->where('email', $email)->first();
             if (! $passwordReset) {
-                return redirect()->route('index')->with('notify_error', 'Password reset request not found.');
+                return redirect()->route('frontend.index')->with('notify_error', 'Password reset request not found.');
             }
 
             $title = 'Reset Password';

@@ -56,7 +56,8 @@
                             <li>
                                 <form action="{{ route('admin.logout') }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="dropdown-item">Logout</button>
+                                    <button onclick="return confirm('Are you sure you want to logout?')" type="submit"
+                                        class="dropdown-item">Logout</button>
                                 </form>
                             </li>
                         </ul>

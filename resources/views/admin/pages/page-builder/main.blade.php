@@ -275,6 +275,7 @@
                 }
             };
         }
+        const baseUrl = "{{ url('/') }}";
         $(document).ready(function() {
             $('#editSection').on('hidden.bs.modal', function() {
                 $('#section-name').text('');
@@ -282,7 +283,7 @@
                 $('#pivot-id').val('');
                 $('#renderFields').html('');;
                 $('.section-preview-image').attr('href',
-                    `${$('#web_base_url').val()}/public/admin/assets/images/placeholder.png`);
+                    `${baseUrl}/public/admin/assets/images/placeholder.png`);
             });
         });
     </script>

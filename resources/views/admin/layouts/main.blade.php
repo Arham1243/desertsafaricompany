@@ -13,7 +13,6 @@
 </head>
 
 <body class="responsive">
-    <input type="hidden" id="web_base_url" value="{{ url('/') }}" />
     @if (!isset($is_login))
         <div class="dashboard" id="main-dashboard-wrapper">
             <div class="container-fluid p-0">

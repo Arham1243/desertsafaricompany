@@ -106,7 +106,7 @@
                 <div class=col-md-12>
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('index') }}">Home</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('frontend.index') }}">Home</a></li>
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
                             <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>

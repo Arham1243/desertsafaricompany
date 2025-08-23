@@ -83,14 +83,14 @@ class PasswordResetController extends Controller
         $passwordReset = DB::table('password_resets')->where('token', $token)->first();
 
         if (! $passwordReset) {
-            return redirect()->route('index')->with('notify_error', 'Invalid or expired token.');
+            return redirect()->route('frontend.index')->with('notify_error', 'Invalid or expired token.');
         }
 
         // Find the user by email
         $user = User::where('email', $passwordReset->email)->first();
 
         if (! $user) {
-            return redirect()->route('index')->with('notify_error', 'User not found.');
+            return redirect()->route('frontend.index')->with('notify_error', 'User not found.');
         }
 
         // Update the user's password using bcrypt
@@ -101,6 +101,6 @@ class PasswordResetController extends Controller
         DB::table('password_resets')->where('token', $token)->delete();
 
         // Redirect with success message
-        return redirect()->route('index')->with('notify_success', 'Password updated successfully!');
+        return redirect()->route('frontend.index')->with('notify_success', 'Password updated successfully!');
     }
 }

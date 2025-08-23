@@ -32,7 +32,7 @@ class CheckoutController extends Controller
                 ->with($data);
         }
 
-        return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
+        return redirect()->route('frontend.index')->with('notify_error', 'Your cart is empty.');
     }
 
     public function store(Request $request)
@@ -40,7 +40,7 @@ class CheckoutController extends Controller
         $cart = Session::get('cart', []);
         $totalAmount = isset($cart['total_price']) ? $cart['total_price'] : 0;
         if (! $totalAmount || $totalAmount < 0) {
-            return redirect()->route('index')->with('notify_error', 'Your cart is empty.');
+            return redirect()->route('frontend.index')->with('notify_error', 'Your cart is empty.');
         }
         $order = Order::create([
             'user_id' => Auth::id(),

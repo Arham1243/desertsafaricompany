@@ -14,7 +14,6 @@
         {!! $settings->get('header_scripts') !!}
     @endif
 </head>
-<input type="hidden" name="" id="web_base_url" value="{{ url('/') }}">
 
 <body>
 

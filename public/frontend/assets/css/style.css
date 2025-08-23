@@ -4048,7 +4048,7 @@ a h5.blogDet-card__title:hover {
     opacity: 0;
     visibility: hidden;
     z-index: 111;
-    transition: 0.5s ease-in-out;
+    transition: 0.25s ease-in-out;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
     border-radius: 12px;
 }
@@ -4060,13 +4060,14 @@ a h5.blogDet-card__title:hover {
     font-weight: 700;
     text-transform: capitalize;
     padding: 0.9rem 1rem;
-    /* border-bottom: 1px solid #1d1d1d3e; */
     position: relative;
     display: flex;
     align-items: center;
     gap: 4px;
 }
-
+.drop-down__list > li > a:hover {
+    background: #0000000d;
+}
 .drop-down__list > li > a > i {
     display: flex;
     align-items: center;

@@ -116,9 +116,4 @@
             </form>
         </div>
     </div>
-@else
-    <a href="{{ route('auth.logout') }}" onclick="return confirm('Are you sure you want to Logout?')" title="Logout"
-        class="item__become-supplier">
-        <span><b>Logout</b></span>
-    </a>
 @endif

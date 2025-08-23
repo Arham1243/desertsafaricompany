@@ -73,6 +73,10 @@
                 };
 
                 const performAuth = async () => {
+                    if (formData.value.password.length < 8) {
+                        showToast('error', 'Password must be at least 8 characters long')
+                        return
+                    }
                     try {
                         loading.value = true;
                         let route = `{{ route('auth.perform-auth') }}`;

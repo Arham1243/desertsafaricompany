@@ -14,6 +14,11 @@ class IndexController extends Controller
 {
     use Sluggable;
 
+    public function login()
+    {
+        return redirect()->route('frontend.index');
+    }
+
     public function blog_details()
     {
         return view('blog-details')->with('title', 'Blog Details');

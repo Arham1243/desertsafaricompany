@@ -49,7 +49,7 @@ class SocialiteController extends Controller
                 ]);
 
                 Auth::login($existingUser);
-                $redirectTo = $request->session()->pull('url.intended', route('index'));
+                $redirectTo = $request->session()->pull('url.intended', route('frontend.index'));
 
                 return redirect()->to($redirectTo)->with('notify_success', 'Login Successful!');
             } else {
@@ -65,12 +65,12 @@ class SocialiteController extends Controller
                 ]);
 
                 Auth::login($user);
-                $redirectTo = $request->session()->pull('url.intended', route('index'));
+                $redirectTo = $request->session()->pull('url.intended', route('frontend.index'));
 
                 return redirect()->to($redirectTo)->with('notify_success', 'Signup Successful!');
             }
         } catch (Exception $e) {
-            return redirect()->route('index')->with('notify_error', 'Failed to login using '.ucfirst($social).': '.$e->getMessage());
+            return redirect()->route('frontend.index')->with('notify_error', 'Failed to login using '.ucfirst($social).': '.$e->getMessage());
         }
     }
 }

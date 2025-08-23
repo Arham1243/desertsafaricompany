@@ -11,7 +11,7 @@
                     @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                     @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                       @endif>
+                         @endif>
                     {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                 </button>
                 <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -19,7 +19,7 @@
                     @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                     @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                       @endif>
+                         @endif>
                     {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                 </button>
             </div>
@@ -40,7 +40,7 @@
         <div class="header-main">
             <div class="header-content">
                 <div class="header-logo">
-                    <a href="{{ route('index') }}">
+                    <a href="{{ route('frontend.index') }}">
                         <img src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
                             alt="{{ $headerLogoAltText ?? 'logo' }}" class='imgFluid' width="112.03"
                             height="33.69"></a>
@@ -84,46 +84,31 @@
                             <span>Cart</span>
                         </a>
                     </li>
-                    <li class="header-btns__item">
-                        <a href="#" title="Profile" class="li__link">
-                            <div class="header-btns__icon">
-                                <i class='bx bx-user'></i>
+                    @if (Auth::check())
+                        <li class="header-btns__item">
+                            <a href="{{ route('user.dashboard') }}" title="Profile" class="li__link">
+                                <div class="header-btns__icon">
+                                    <i class='bx bx-user'></i>
+                                </div>
+                                <span>Profile</span>
+                            </a>
+                            <div class="drop-down">
+                                <ul class="drop-down__list">
+                                    @if (Auth::check())
+                                        <li>
+                                            <a href="{{ route('user.profile.changePassword') }}"><i
+                                                    class='bx bx-lock'></i>Change Password</a>
+                                        </li>
+                                        <li>
+                                            <a onclick="return confirm('Are you sure you want to Logout?')"
+                                                href="{{ route('auth.logout') }}"><i
+                                                    class='bx bx-log-out-circle'></i>Logout</a>
+                                        </li>
+                                    @endif
+                                </ul>
                             </div>
-                            <span>Profile</span>
-                        </a>
-                        <div class="drop-down">
-                            <ul class="drop-down__list">
-                                @if (!Auth::check())
-                                    <li>
-                                        <a href="javascript:void(0)" class="loginBtn"><i
-                                                class='bx bx-log-in-circle'></i>Log in or sign up</a>
-                                    </li>
-                                @endif
-                                <li>
-                                    <a href="#">Currency</a>
-                                </li>
-                                <li>
-                                    <a href="#">Language</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class='bx bx-sun'></i>Appearance</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class='bx bx-help-circle'></i>Support</a>
-                                </li>
-                                <li>
-                                    <a href="#"><i class='bx bx-mobile-alt'></i>Download the app</a>
-                                </li>
-                                @if (Auth::check())
-                                    <li>
-                                        <a onclick="return confirm('Are you sure you want to Logout?')"
-                                            href="{{ route('auth.logout') }}"><i
-                                                class='bx bx-log-out-circle'></i>Logout</a>
-                                    </li>
-                                @endif
-                            </ul>
-                        </div>
-                    </li>
+                        </li>
+                    @endif
                 </ul>
             </div>
 
@@ -141,7 +126,7 @@
 
 <div class="sideBar" id="sideBar">
     <a href="javascript:void(0)" class="sideBar__close" onclick="closeSideBar()"><i class='bx bx-x'></i></a>
-    <a href="{{ route('index') }}" class="sideBar__logo">
+    <a href="{{ route('frontend.index') }}" class="sideBar__logo">
         <img class="imgFluid" src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
             alt='{{ $headerLogoAltText ?? 'logo' }}'>
     </a>
