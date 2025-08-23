@@ -13,14 +13,14 @@ use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [IndexController::class, 'index'])->name('login');
-Route::prefix('frontend')->name('frontend.')->group(function () {
+Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
+    Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');
+    Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
 });
 
 Route::get('/blog-details', [IndexController::class, 'blog_details'])->name('blog-details');
 Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
-Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');
-Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');
 Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest'])->name('search.suggestions');
 Route::get('/reviews/fetch', [FetchReviewController::class, 'fetchReview']);

@@ -42,12 +42,10 @@
             </div>
             <div class=col-md>
                 <div class=footer-content>
-                    <div class=footer-details>SUPPORT</div>
+                    <div class=footer-details>Terms & Privacy</div>
                     <ul class=footer-link>
-                        <li><a href=#>Help Center</a></li>
-                        <li><a href={{ route('terms_conditions') }}>Term Of Use</a></li>
-                        <li><a href={{ route('privacy_policy') }}>Privacy Policy</a></li>
-                        <li><a href=#>Contact</a></li>
+                        <li><a href={{ route('frontend.terms_conditions') }}>Terms And Conditions</a></li>
+                        <li><a href={{ route('frontend.privacy_policy') }}>Privacy Policy</a></li>
                     </ul>
                 </div>
             </div>
