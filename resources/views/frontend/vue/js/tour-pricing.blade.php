@@ -200,7 +200,7 @@
             : [];
     $weekend_discount_percent = $promoDiscountConfig['weekend_discount_percent'] ?? 0;
     $weekday_discount_percent = $promoDiscountConfig['weekday_discount_percent'] ?? 0;
-    $userHasUsedFirstOrderCoupon = Auth::check() ? Auth::user()->has_used_first_order_coupon === 1 : false;
+    $userHasUsedFirstOrderCoupon = Auth::check() ? Auth::user()->has_used_first_order_coupon : false;
 @endphp
 <script>
     const PricingBox = createApp({
