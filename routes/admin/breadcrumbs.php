@@ -287,3 +287,12 @@ Breadcrumbs::for('admin.settings.index', function (BreadcrumbTrail $trail) {
     $trail->push('Settings', route('admin.settings.edit', ['resource' => 'general']));
 });
 // ---------------settings---------------
+
+Breadcrumbs::for('admin.bookings.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.tours.index');
+    $trail->push('Bookings', route('admin.bookings.index'));
+});
+Breadcrumbs::for('admin.bookings.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.bookings.index');
+    $trail->push('Booking Details', route('admin.bookings.edit', $item->id));
+});

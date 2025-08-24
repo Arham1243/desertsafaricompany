@@ -29,6 +29,7 @@ use App\Http\Controllers\Admin\Tour\AvailabilityController;
 use App\Http\Controllers\Admin\Tour\BookingController;
 use App\Http\Controllers\Admin\Tour\CategoryController as TourCategoryController;
 use App\Http\Controllers\Admin\Tour\DetailPopupController as TourDetailPopupController;
+use App\Http\Controllers\Admin\Tour\OrderController;
 use App\Http\Controllers\Admin\Tour\ReviewController;
 use App\Http\Controllers\Admin\Tour\TourController;
 use App\Http\Controllers\Admin\Tour\TourTimeController;
@@ -120,6 +121,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('popups', PopupController::class);
 
     Route::resource('coupons', CouponController::class);
+    Route::resource('bookings', OrderController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');
 

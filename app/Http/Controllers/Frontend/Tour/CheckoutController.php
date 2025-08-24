@@ -415,7 +415,7 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
-        $this->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('locations.country', 'ae'), 'admin');
+        $this->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings', $order->id), 'admin');
         $this->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('locations.country', 'ae'), 'user');
         $cart = Session::get('cart');
 
@@ -436,7 +436,7 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
-        $this->sendAdminOrderEmail('emails.admin-order-payment-cancelled', $order, 'Payment Cancelled', route('locations.country', 'ae'), 'admin');
+        $this->sendAdminOrderEmail('emails.admin-order-payment-cancelled', $order, 'Payment Cancelled', route('admin.bookings', $order->id), 'admin');
 
         return view('frontend.tour.checkout.cancel')
             ->with('title', 'Payment cancelled');

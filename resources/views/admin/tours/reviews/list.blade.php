@@ -2,9 +2,8 @@
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.tour-reviews.index') }}
-            <form id="bulkActionForm" method="POST"
-                action="{{ route('admin.bulk-actions', ['resource' => 'tour-reviews']) }}">
+            {{ Breadcrumbs::render('admin.bookings.index') }}
+            <form id="bulkActionForm" method="POST" action="{{ route('admin.bulk-actions', ['resource' => 'bookings']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
@@ -54,7 +53,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.tour-reviews.edit', $item->id) }}"
+                                                <a href="{{ route('admin.bookings.edit', $item->id) }}"
                                                     class="link">{{ $item->title }}</a>
                                             </td>
                                             <td>{{ $item->tour->title ?? 'N/A' }}</td>
@@ -67,8 +66,8 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.tour-reviews.edit', $item->id) }}"
-                                                    class="themeBtn"><i class='bx bxs-edit'></i>View Details</a>
+                                                <a href="{{ route('admin.bookings.edit', $item->id) }}" class="themeBtn"><i
+                                                        class='bx bxs-edit'></i>View Details</a>
                                             </td>
                                         </tr>
                                     @endforeach

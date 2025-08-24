@@ -188,6 +188,39 @@ if (! function_exists('getTourByID')) {
         return $tour;
     }
 }
+if (! function_exists('getToursFromCart')) {
+    function getToursFromCart($cartData)
+    {
+        $cartData = json_decode($cartData);
+        $tours = [];
+
+        foreach ($cartData->tours as $tourId => $data) {
+            $tours[] = Tour::find($tourId);
+        }
+
+        return collect($tours)->filter();
+    }
+}
+if (! function_exists('getCouponsFromCart')) {
+    function getCouponsFromCart($cartData)
+    {
+        $cartData = is_string($cartData) ? json_decode($cartData) : $cartData;
+
+        if (! isset($cartData->applied_coupons) || ! is_array($cartData->applied_coupons)) {
+            return collect();
+        }
+
+        return collect($cartData->applied_coupons)->map(function ($coupon) {
+            return (object) [
+                'id' => $coupon->coupon ?? null,
+                'code' => $coupon->code ?? null,
+                'type' => $coupon->type ?? null,
+                'amount' => $coupon->amount ?? 0,
+                'is_first_order' => $coupon->is_first_order_coupon ?? 0,
+            ];
+        });
+    }
+}
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour, $withSlug = true, $withBase = true)
     {

@@ -308,6 +308,11 @@ return [
         ],
     ],
     [
+        'title' => 'Orders',
+        'icon' => 'bx bx-dollar',
+        'route' => route('admin.bookings.index'),
+    ],
+    [
         'title' => 'Media',
         'icon' => 'bx bx-image',
         'status' => 'pending',
