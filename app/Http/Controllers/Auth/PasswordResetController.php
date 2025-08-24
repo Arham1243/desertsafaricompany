@@ -36,10 +36,12 @@ class PasswordResetController extends Controller
             ];
 
             try {
-                Mail::send('emails.reset-password', compact('data'), function ($message) use ($user) {
-                    $message->from(config('mail.from.address'), config('mail.from.name'));
-                    $message->to($user->email, $user->full_name);
-                    $message->subject('Password Reset');
+                $finalSubject = 'Password Reset - '.env('MAIL_FROM_NAME');
+                Mail::send('emails.reset-password', ['data' => $data], function ($message) use ($email, $finalSubject) {
+                    $message->from(env('MAIL_FROM_ADDRESS'));
+                    $message
+                        ->to($email)
+                        ->subject($finalSubject);
                 });
             } catch (\Throwable $e) {
                 \Log::error('Password reset email failed for user '.$user->id.': '.$e->getMessage());

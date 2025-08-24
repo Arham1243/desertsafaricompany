@@ -101,13 +101,19 @@ class AuthController extends Controller
                 'logo' => asset($headerLogo),
             ];
 
-            Mail::send('emails.verify-email', compact('data'), function ($message) use ($user) {
-                $message->from(config('mail.from.address'), config('mail.from.name'));
-                $message->to($user->email, $user->full_name);
-                $message->subject('Please Verify Your Email Address');
+            $finalSubject = 'Please Verify Your Email Address - '.env('MAIL_FROM_NAME');
+            Mail::send('emails.verify-email', ['data' => $data], function ($message) use ($user, $finalSubject) {
+                $message->from(env('MAIL_FROM_ADDRESS'));
+                $message
+                    ->to($user->email)
+                    ->subject($finalSubject);
             });
+
+            return true;
         } catch (\Throwable $e) {
             \Log::error('Verification email failed for user '.$user->id.': '.$e->getMessage());
+
+            return false;
         }
     }
 

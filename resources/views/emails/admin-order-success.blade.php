@@ -145,7 +145,7 @@
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
                             Hi Admin,<br><br>
-                            A new order has been placed and is <strong>successfully paid</strong>. Details are below:
+                            A order payment was <strong>successfully paid</strong>. Details are below:
                         </td>
                     </tr>
 

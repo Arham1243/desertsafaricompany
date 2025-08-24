@@ -144,8 +144,7 @@
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
                             Hi Admin,<br><br>
-                            A new order has been placed but the <strong>payment cancelled</strong>. The order is
-                            currently
+                            A order payment was <strong>cancelled</strong>. The order is currently
                             pending payment. Details are below:
                         </td>
                     </tr>
