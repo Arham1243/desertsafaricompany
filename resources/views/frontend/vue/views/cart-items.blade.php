@@ -10,7 +10,7 @@
         <div class="col-md-8">
             <template v-for="tour in cartTours" :key="tour.id">
                 <div class="cart__product">
-                    <a :href="'tours/' + tour.slug" class="cart__productImg">
+                    <a :href="tour.detail_url" class="cart__productImg">
                         <img :data-src="getImageUrl(tour.featured_image)" :alt="tour.featured_image_alt_text ?? 'image'"
                             class="imgFluid lazy" loading="lazy">
                     </a>
