@@ -11,11 +11,18 @@
                         Payment Canceled
                     </div>
                 </div>
-                <p>Your payment has been canceled. If you face any issues with the payment,<br> please contact our support
-                    at <strong><a href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.
+                <p>Your payment was not completed. If you encountered any issues,<br>
+                    please contact our support team at
+                    <strong><a href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.
                 </p>
-
             </div>
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        const url = new URL(window.location);
+        url.searchParams.delete('order_id');
+        window.history.replaceState({}, document.title, url);
+    </script>
+@endpush

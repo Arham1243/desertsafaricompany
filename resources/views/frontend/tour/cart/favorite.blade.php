@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         @foreach ($tours as $tour)
                             <div class="cart__product">
-                                <a href="{{ buildTourDetailUrl($tour) }}" class="cart__productImg">
+                                <a href="{{ $tour->detail_url }}" class="cart__productImg">
                                     <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                         loading="lazy">
@@ -20,9 +20,6 @@
                                 <div class="cart__productContent">
                                     <div>
                                         <div class="cart__productDescription">
-                                            <div class="tour-type mb-1">
-                                                <strong>{{ $tour->formated_price_type ?? formatPrice($tour->regular_price) . ' From' }}</strong>
-                                            </div>
                                             <h4>{{ $tour->title }}</h4>
                                             <div class="d-flex gap-3 mt-3">
                                                 <form action="{{ route('tours.favorites.remove', $tour->id) }}"
@@ -33,7 +30,7 @@
                                                             class='bx bxs-trash-alt'></i>Remove
                                                         From Wishlit</button>
                                                 </form>
-                                                <a href="{{ buildTourDetailUrl($tour) }}" class="primary-btn"><i
+                                                <a href="{{ $tour->detail_url }}" class="primary-btn"><i
                                                         class='bx bxs-cart'></i>Book Now</a>
                                             </div>
                                         </div>

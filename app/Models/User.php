@@ -15,6 +15,7 @@ class User extends Authenticatable
         'signup_method',
         'password',
         'email_verification_token',
+        'has_used_first_order_coupon',
     ];
 
     public function favoriteTours()

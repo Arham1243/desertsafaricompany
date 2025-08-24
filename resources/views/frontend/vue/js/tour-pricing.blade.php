@@ -200,6 +200,7 @@
             : [];
     $weekend_discount_percent = $promoDiscountConfig['weekend_discount_percent'] ?? 0;
     $weekday_discount_percent = $promoDiscountConfig['weekday_discount_percent'] ?? 0;
+    $userHasUsedFirstOrderCoupon = Auth::check() ? Auth::user()->has_used_first_order_coupon === 1 : false;
 @endphp
 <script>
     const PricingBox = createApp({
@@ -219,6 +220,7 @@
             const privateTourData = ref(@json($privateTourData));
             const promoTourData = ref(@json($promoTourData));
             const simpleTourData = ref(@json($simpleTourData));
+            const userHasUsedFirstOrderCoupon = @json($userHasUsedFirstOrderCoupon);
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
             const startDateInput = ref(null)
@@ -226,11 +228,10 @@
             const isFirstOrderCouponApplied = ref(false)
 
             const hasUsedFirstOrderCoupon = computed(() => {
-                console.log(cartData.value)
                 const coupons = cartData.value?.applied_coupons
                 const used = Array.isArray(coupons) && coupons.some(c => c
                     ?.is_first_order_coupon == 1)
-                return used
+                return used || userHasUsedFirstOrderCoupon
             })
 
             const isTourInCart = computed(() => {

@@ -238,7 +238,7 @@
                             3
                         </div>
                         <div class="checkout__order-list__infoTitle">
-                            Complete Payment
+                            Secure Payment
                         </div>
                     </div>
                 </div>
@@ -247,7 +247,7 @@
 
             <div class="row">
                 <div class="col-lg-7">
-                    <form action="{{ route('checkout.store') }}" method="POST">
+                    <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form">
                         @csrf
                         <div class="details-box">
                             <div class="details-box__header">
@@ -275,11 +275,15 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <div class="field">
-                                            <input type="text" name="order[phone]" placeholder="Phone *"
-                                                inputmode="numeric" pattern="[0-9]*"
-                                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="15"
-                                                required>
+                                        <div class="field" data-flag-input-wrapper>
+                                            <input type="hidden" name="order[phone_dial_code]" data-flag-input-dial-code
+                                                value="971">
+                                            <input type="hidden" name="order[phone_country_code]"
+                                                data-flag-input-country-code value="ae">
+                                            <input type="text" name="order[phone_number]" class="field flag-input"
+                                                data-flag-input value="" placeholder="Phone" inputmode="numeric"
+                                                pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                maxlength="15">
                                         </div>
                                     </div>
 
@@ -450,8 +454,6 @@
                                     </li>
 
                                 </ul>
-
-                                <button type="submit" class="primary-btn w-100 mt-4">Pay now</button>
                             </div>
                         </div>
                     </form>
@@ -583,14 +585,15 @@
 
                                         </div>
                                         @error('code')
-                                            <span class="text-danger">{{ $message }}</span>
+                                            <span class="text-danger" style="font-size: 0.85rem;">{{ $message }}</span>
                                         @enderror
-                                        <hr>
-                                        <div class="sub-total total all-total">
+                                        <div class="sub-total total all-total mt-4">
                                             <div class="title">Total Payable</div>
                                             <div class="price">{{ formatPrice($cart['total_price']) }}</div>
                                         </div>
 
+                                        <button id="checkout-btn" type="button" class="primary-btn w-100 mt-4">Pay
+                                            now</button>
                                     </div>
                                 </div>
                             </div>
@@ -601,7 +604,11 @@
         </div>
     </div>
 @endsection
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
+@endpush
 @push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
     <script>
         if (document.querySelectorAll('.checkout-details').length > 0 && document.querySelectorAll(
                 '.checkout-details__header').length > 0) {
@@ -614,5 +621,56 @@
                 });
             });
         }
+
+        function initializeFlagInputs() {
+            $("[data-flag-input-wrapper]").each(function() {
+                var $wrapper = $(this);
+                var input = $wrapper.find("[data-flag-input]");
+
+                if (input.length > 0) {
+                    input.intlTelInput({
+                        initialCountry: "ae",
+                        separateDialCode: true,
+                    });
+
+                    function updateCountryCode() {
+                        var countryData = input.intlTelInput("getSelectedCountryData");
+                        if (countryData && countryData.dialCode) {
+                            $wrapper
+                                .find("[data-flag-input-country-code]")
+                                .val(countryData.iso2);
+                            $wrapper
+                                .find("[data-flag-input-dial-code]")
+                                .val(countryData.dialCode);
+                        }
+                    }
+
+                    input.on("countrychange", function(e) {
+                        updateCountryCode();
+                    });
+
+                    var countryCode = $wrapper
+                        .find("[data-flag-input-country-code]")
+                        .val();
+                    if (countryCode) {
+                        input.intlTelInput("setCountry", countryCode);
+                    }
+                }
+            });
+        }
+        $(document).ready(function() {
+            initializeFlagInputs();
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.getElementById('checkout-btn');
+            const form = document.getElementById('checkout-form');
+
+            if (btn && form) {
+                btn.addEventListener('click', (e) => {
+                    form.submit();
+                });
+            }
+        });
     </script>
 @endpush

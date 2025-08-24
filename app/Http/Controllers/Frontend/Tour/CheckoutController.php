@@ -4,10 +4,9 @@ namespace App\Http\Controllers\Frontend\Tour;
 
 use App\Http\Controllers\Controller;
 use App\Models\Coupon;
+use App\Models\CouponUser;
 use App\Models\Order;
 use App\Models\Tour;
-use DateTime;
-use DateTimeZone;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -56,54 +55,60 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $cart = Session::get('cart', []);
-        $totalAmount = isset($cart['total_price']) ? $cart['total_price'] : 0;
-        if (! $totalAmount || $totalAmount < 0) {
-            return redirect()->route('frontend.index')->with('notify_error', 'Your cart is empty.');
+        $totalAmount = $cart['total_price'] ?? 0;
+
+        if ($totalAmount <= 0) {
+            return redirect()
+                ->route('frontend.index')
+                ->with('notify_error', 'Your cart is empty.');
         }
-        $order = Order::create([
-            'user_id' => Auth::id(),
+
+        $order = $this->createOrder($request, $cart, $totalAmount);
+
+        return $this->processPayment($request, $order);
+    }
+
+    protected function createOrder(Request $request, array $cart, float $totalAmount): Order
+    {
+        return Order::create([
+            'user_id' => auth()->id(),
             'request_data' => json_encode($request->order),
             'cart_data' => json_encode($cart),
             'payment_type' => $request->payment_type,
             'payment_status' => 'pending',
             'total_amount' => $totalAmount,
         ]);
+    }
 
-        if ($request->payment_type === 'stripe') {
-            $response = $this->createStripeSession($request, $order, $totalAmount);
-            $payment_error = 'Failed to create Stripe session. Please try again.';
-            if (! $response || ! isset($response->id)) {
-                return redirect()
-                    ->route('checkout.error', ['order_id' => $order->id])
-                    ->with('notify_error', $payment_error)
-                    ->with('error_message', $payment_error);
-            }
-            Order::where('id', $order->id)->update([
-                'stripe_session_id' => $response->id,
-            ]);
+    protected function processPayment(Request $request, Order $order)
+    {
+        return match ($request->payment_type) {
+            'stripe' => $this->handleStripe($request, $order),
+            'paypal' => $this->handlePaypal($request, $order),
+            'tabby' => $this->handleTabby($request, $order),
+            'postpay' => $this->handlePostpay($request, $order),
+            'tamara' => $this->handleTamara($request, $order),
+            'cod' => $this->handleCOD($order),
+            default => redirect()->back()->with('notify_error', 'Invalid payment type'),
+        };
+    }
 
-            return redirect($response->url);
-        } elseif ($request->payment_type === 'tabby') {
-            $response = $this->createTabbySession($request, $order, $totalAmount);
+    /**
+     * ---------------- STRIPE ----------------
+     */
+    private function handleStripe(Request $request, Order $order)
+    {
+        $session = $this->createStripeSession($request, $order);
 
-            if (isset($response['error'])) {
-                return redirect()
-                    ->route('checkout.error', ['order_id' => $order->id])
-                    ->with('notify_error', $response['error'])
-                    ->with('error_message', $response['error']);
-            }
-
-            return redirect($response);
-        } elseif ($request->payment_type === 'cod') {
-            Order::where('id', $order->id)->update([
-                'payment_status' => 'pending',
-            ]);
-
-            Session::forget('cart');
-
-            return view('frontend.tour.checkout.confirmed')
-                ->with('title', 'Order Confirmed!');
+        if (! isset($session->id)) {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order->id])
+                ->with('notify_error', 'Failed to create Stripe session');
         }
+
+        $order->update(['stripe_session_id' => $session->id]);
+
+        return redirect($session->url);
     }
 
     private function createStripeSession(Request $request, Order $order)
@@ -111,79 +116,56 @@ class CheckoutController extends Controller
         try {
             \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $cart = Session::get('cart', []);
-            $tourTitles = [];
-            $tourPrices = [];
 
-            foreach ($cart['tours'] as $tourId => $tourData) {
-                $tourTitles[$tourId] = Tour::where('id', $tourId)->first()->title;
-                $tourPrices[$tourId] = $tourData['total_price'] ?? 0;
+            if (empty($cart['total_price'])) {
+                return response()->json(['error' => 'Cart total missing']);
             }
 
-            if (empty($tourTitles) || empty($tourPrices)) {
-                return response()->json(['error' => 'Tour details are missing. Please provide valid tour titles and prices.']);
-            }
+            $totalAmount = round($cart['total_price'], 2) * 100;
 
-            $lineItems = [];
-            foreach ($tourTitles as $index => $title) {
-                if (! isset($tourPrices[$index]) || ! is_numeric($tourPrices[$index])) {
-                    return response()->json(['error' => 'Invalid price provided for one or more tours.']);
-                }
-
-                $lineItems[] = [
+            return \Stripe\Checkout\Session::create([
+                'payment_method_types' => ['card'],
+                'line_items' => [[
                     'price_data' => [
                         'currency' => env('APP_CURRENCY'),
-                        'product_data' => [
-                            'name' => $title,
-                        ],
-                        'unit_amount' => $tourPrices[$index] * 100,
+                        'product_data' => ['name' => 'Order #'.$order->id],
+                        'unit_amount' => $totalAmount,
                     ],
                     'quantity' => 1,
-                ];
-            }
-
-            $session = \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => $lineItems,
+                ]],
                 'mode' => 'payment',
-                'success_url' => route('checkout.success', [
-                    'order_id' => $order->id,
-                ]),
+                'success_url' => route('checkout.success', ['order_id' => $order->id]),
                 'cancel_url' => route('checkout.cancel', ['order_id' => $order->id]),
                 'client_reference_id' => $order->id,
             ]);
-
-            return $session;
-        } catch (\Stripe\Exception\ApiErrorException $e) {
-            return response()->json(['error' => 'Stripe API error: '.$e->getMessage()]);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'An error occurred: '.$e->getMessage()]);
+            return response()->json(['error' => $e->getMessage()]);
         }
     }
 
-    private function createTabbySession(Request $request, Order $order, $totalAmount)
+    /**
+     * ---------------- TABBY ----------------
+     */
+    private function handleTabby(Request $request, Order $order)
     {
-        $tourTitles = $request->input('tour.title');
-        $tourPrices = $request->input('tour.total_price');
-        if (empty($tourTitles) || empty($tourPrices)) {
-            return response()->json(['error' => 'Tour titles and prices are required.']);
-        }
+        $cart = Session::get('cart', []);
+        $totalAmount = $cart['total_price'] ?? 0;
 
+        return $this->createTabbySession($request, $order, $totalAmount);
+    }
+
+    private function createTabbySession(Request $request, Order $order, float $totalAmount)
+    {
         $tabbyData = [];
-        foreach ($tourTitles as $i => $title) {
-            if (! isset($tourPrices[$i])) {
-                return response()->json(['error' => 'Each tour must have a corresponding price.']);
-            }
+        $cart = Session::get('cart', []);
+
+        foreach ($cart['tours'] as $tourId => $tour) {
             $tabbyData[] = [
-                'title' => $title,
-                'unit_price' => $tourPrices[$i],
+                'title' => $tour['data']['title'] ?? 'Tour #'.$tourId,
+                'unit_price' => $tour['data']['total_price'] ?? 0,
                 'quantity' => 1,
             ];
         }
-
-        $dt = new DateTime;
-        $dt->setTimeZone(new DateTimeZone('UTC'));
-
-        $curl = curl_init();
 
         $postData = [
             'payment' => [
@@ -194,24 +176,9 @@ class CheckoutController extends Controller
                     'name' => Auth::user()->full_name,
                     'email' => Auth::user()->email,
                 ],
-                'shipping_address' => [
-                    'country' => $request['order']['country'],
-                    'address' => $request['order']['address'],
-                ],
                 'order' => [
-                    'tax_amount' => $totalAmount,
-                    'shipping_amount' => '0.00',
-                    'discount_amount' => '0.00',
-                    'updated_at' => $order->created_at->toIso8601String(),
                     'reference_id' => $order->id,
                     'items' => $tabbyData,
-                ],
-                'buyer_history' => [
-                    'registered_since' => Auth::user()->created_at->toIso8601String(),
-                ],
-                'meta' => [
-                    'order_id' => $order->id,
-                    'customer' => $order->id,
                 ],
             ],
             'lang' => 'en',
@@ -223,15 +190,11 @@ class CheckoutController extends Controller
             ],
         ];
 
+        $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => 'https://api.tabby.ai/api/v2/checkout',
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POST => true,
             CURLOPT_POSTFIELDS => json_encode($postData),
             CURLOPT_HTTPHEADER => [
                 'Authorization: Bearer '.env('TABBY_KEY'),
@@ -240,84 +203,80 @@ class CheckoutController extends Controller
         ]);
 
         $response = curl_exec($curl);
+        $error = curl_error($curl);
         curl_close($curl);
 
-        if ($response === false) {
-            $error_message = curl_error($curl);
-
-            return response()->json(['error' => 'Curl error: '.$error_message]);
+        if ($error) {
+            return response()->json(['error' => $error]);
         }
 
         $result = json_decode($response, true);
 
-        if (isset($result['id'])) {
-            $redirectUrl = $result['configuration']['available_products']['installments'][0]['web_url'] ?? null;
-
-            if ($redirectUrl) {
-                return $redirectUrl;
-            } else {
-                return response()->json(['error' => 'Installments not available.']);
-            }
-        } else {
-            $error_message = $result['error']['message'] ?? 'Unknown error';
-
-            return response()->json(['error' => $error_message]);
-        }
+        return $result['configuration']['available_products']['installments'][0]['web_url']
+            ?? response()->json(['error' => $result['error']['message'] ?? 'Unknown error']);
     }
 
-    public function success(Request $request)
+    /**
+     * ---------------- PAYPAL ----------------
+     */
+    private function handlePaypal(Request $request, Order $order)
     {
-        $order = Order::findOrFail($request->order_id);
+        // TODO: implement Paypal checkout
+    }
 
-        $order->update([
-            'payment_status' => 'paid',
-            'payment_date' => now(),
-        ]);
+    /**
+     * ---------------- POSTPAY ----------------
+     */
+    private function handlePostpay(Request $request, Order $order)
+    {
+        // TODO: implement Postpay checkout
+    }
 
-        $cart = Session::get('cart');
+    /**
+     * ---------------- TAMARA ----------------
+     */
+    private function handleTamara(Request $request, Order $order)
+    {
+        // TODO: implement Tamara checkout
+    }
 
-        if (! empty($cart['applied_coupons'])) {
-            foreach ($cart['applied_coupons'] as $coupon) {
-                CouponUser::updateOrCreate([
+    /**
+     * ---------------- COD ----------------
+     */
+    private function handleCOD(Order $order)
+    {
+        $order->update(['payment_status' => 'pending']);
+        $this->saveAppliedUserCoupons($cart, $order);
+        Session::forget('cart');
+
+        return view('frontend.tour.checkout.confirmed')
+            ->with('title', 'Order Confirmed!');
+    }
+
+    protected function saveAppliedUserCoupons(array $cart, Order $order): void
+    {
+        if (empty($cart['applied_coupons'])) {
+            return;
+        }
+
+        foreach ($cart['applied_coupons'] as $coupon) {
+            CouponUser::updateOrCreate(
+                [
                     'coupon_id' => $coupon['coupon'],
                     'user_id' => auth()->id(),
                     'order_id' => $order->id,
-                ], [
-                    'discount_applied_amount' => $coupon['amount'],
-                ]);
-            }
+                ],
+                ['discount_applied_amount' => $coupon['amount']]
+            );
         }
 
-        Session::forget('cart');
-
-        return view('frontend.tour.checkout.success')
-            ->with('title', 'Payment successful!');
-    }
-
-    public function cancel(Request $request)
-    {
-        $order = Order::findOrFail($request->order_id);
-
-        $order->update([
-            'payment_status' => 'failed',
-            'payment_date' => now(),
-        ]);
-
-        return view('frontend.tour.checkout.cancel')
-            ->with('title', 'Payment failed');
-    }
-
-    public function error(Request $request)
-    {
-        $order = Order::findOrFail($request->order_id);
-
-        $order->update([
-            'payment_status' => 'error',
-            'payment_date' => now(),
-        ]);
-
-        return view('frontend.tour.checkout.error')
-            ->with('title', 'Something went wrong during the process');
+        if (! empty($cart['applied_coupons'])) {
+            foreach ($cart['applied_coupons'] as $coupon) {
+                if (! empty($coupon['is_first_order_coupon'])) {
+                    auth()->user()->update(['has_used_first_order_coupon' => true]);
+                }
+            }
+        }
     }
 
     public function applyCode(Request $request)
@@ -362,9 +321,8 @@ class CheckoutController extends Controller
         }
 
         $totalAmount = $cart['total_price'];
-        $totalSubtotalAmount = $cart['subtotal'];
 
-        if ($coupon->minimum_order_amount && $totalSubtotalAmount < $coupon->minimum_order_amount) {
+        if ($coupon->minimum_order_amount && $totalAmount < $coupon->minimum_order_amount) {
             return redirect()
                 ->back()
                 ->with(
@@ -388,7 +346,6 @@ class CheckoutController extends Controller
         $discountAmount = min($discountAmount, $totalAmount);
 
         $cart['total_price'] = $totalAmount - $discountAmount;
-        $cart['subtotal'] = $totalSubtotalAmount - $discountAmount;
 
         $cart['applied_coupons'][] = [
             'coupon' => $coupon->id,
@@ -402,5 +359,50 @@ class CheckoutController extends Controller
         return redirect()
             ->back()
             ->with('notify_success', 'Coupon applied successfully!');
+    }
+
+    public function success(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_status' => 'paid',
+            'payment_date' => now(),
+        ]);
+
+        $cart = Session::get('cart');
+
+        $this->saveAppliedUserCoupons($cart, $order);
+
+        Session::forget('cart');
+
+        return view('frontend.tour.checkout.success')
+            ->with('title', 'Payment successful!');
+    }
+
+    public function cancel(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_status' => 'failed',
+            'payment_date' => now(),
+        ]);
+
+        return view('frontend.tour.checkout.cancel')
+            ->with('title', 'Payment failed');
+    }
+
+    public function error(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_status' => 'error',
+            'payment_date' => now(),
+        ]);
+
+        return view('frontend.tour.checkout.error')
+            ->with('title', 'Something went wrong during the process');
     }
 }

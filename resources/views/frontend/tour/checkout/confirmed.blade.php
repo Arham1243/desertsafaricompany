@@ -10,12 +10,18 @@
                         Order Confirmed!
                     </div>
                 </div>
-                <p>Thank you for your purchase! Your order was processed successfully. <br> You can now explore our
-                    exciting tours and plan your next
-                    adventure.</p>
-                <a href="{{ route('tours.index') }}" class="primary-btn mx-auto">Browse Tours</a>
+                <p>Thank you for your purchase! Your order was processed successfully. <br>
+                    Your booking is confirmed — get ready for an amazing adventure!</p>
+                <a href="" class="primary-btn mx-auto">View My Bookings</a>
 
             </div>
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        const url = new URL(window.location);
+        url.searchParams.delete('order_id');
+        window.history.replaceState({}, document.title, url);
+    </script>
+@endpush
