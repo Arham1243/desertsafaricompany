@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Coupon;
 use App\Models\CouponUser;
 use App\Models\Order;
+use App\Models\Setting;
 use App\Models\Tour;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -62,8 +64,9 @@ class CheckoutController extends Controller
                 ->route('frontend.index')
                 ->with('notify_error', 'Your cart is empty.');
         }
-
         $order = $this->createOrder($request, $cart, $totalAmount);
+
+        $this->sendAdminOrderEmail('emails.admin-pending-order', $order, 'New Pending Order', route('locations.country', 'ae'));
 
         return $this->processPayment($request, $order);
     }
@@ -216,6 +219,46 @@ class CheckoutController extends Controller
             ?? response()->json(['error' => $result['error']['message'] ?? 'Unknown error']);
     }
 
+    protected function sendAdminOrderEmail(string $template, Order $order, ?string $subject = null, ?string $orderLink = null, string $recipientType = 'admin'): void
+    {
+        try {
+            $settings = Setting::pluck('value', 'key');
+            $adminEmail = $settings->get('admin_email') ?? 'admin@desertsafaricompany.com';
+            $user = auth()->user();
+            $email = $recipientType === 'admin'
+                ? ($settings->get('admin_email') ?? 'admin@desertsafaricompany.com')
+                : $user->email;
+            $cart = Session::get('cart', []);
+
+            $order = Order::findOrFail($order->id);
+            $orderRequestData = json_decode($order->request_data);
+            $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
+
+            $data = [
+                'order_id' => $order->id,
+                'customer_name' => $user->full_name ?? '',
+                'customer_email' => $user->email ?? '',
+                'customer_phone' => $orderRequestData->phone_dial_code.$orderRequestData->phone_number,
+                'payment_type' => $order->payment_type,
+                'cart' => $cart ?? [],
+                'total' => $cart['total_price'] ?? 0,
+                'tours' => $cart['tours'] ?? [],
+                'logo' => asset($headerLogo),
+                'order_link' => $orderLink ?? '',
+            ];
+
+            $finalSubject = $subject.' - '.env('MAIL_FROM_NAME');
+            Mail::send($template, ['data' => $data], function ($message) use ($email, $finalSubject) {
+                $message->from(env('MAIL_FROM_ADDRESS'));
+                $message
+                    ->to($email)
+                    ->subject($finalSubject);
+            });
+        } catch (\Throwable $e) {
+            \Log::error('Failed to send admin order email: '.$e->getMessage());
+        }
+    }
+
     /**
      * ---------------- PAYPAL ----------------
      */
@@ -248,6 +291,7 @@ class CheckoutController extends Controller
         $order->update(['payment_status' => 'pending']);
         $cart = Session::get('cart');
         $this->saveAppliedUserCoupons($cart, $order);
+        $this->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('locations.country', 'ae'), 'user');
         Session::forget('cart');
 
         return view('frontend.tour.checkout.confirmed')
@@ -371,6 +415,8 @@ class CheckoutController extends Controller
             'payment_date' => now(),
         ]);
 
+        $this->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('locations.country', 'ae'), 'admin');
+        $this->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('locations.country', 'ae'), 'user');
         $cart = Session::get('cart');
 
         $this->saveAppliedUserCoupons($cart, $order);
@@ -386,12 +432,14 @@ class CheckoutController extends Controller
         $order = Order::findOrFail($request->order_id);
 
         $order->update([
-            'payment_status' => 'failed',
+            'payment_status' => 'cancelled',
             'payment_date' => now(),
         ]);
 
+        $this->sendAdminOrderEmail('emails.admin-order-payment-cancelled', $order, 'Payment Cancelled', route('locations.country', 'ae'), 'admin');
+
         return view('frontend.tour.checkout.cancel')
-            ->with('title', 'Payment failed');
+            ->with('title', 'Payment cancelled');
     }
 
     public function error(Request $request)
@@ -399,11 +447,19 @@ class CheckoutController extends Controller
         $order = Order::findOrFail($request->order_id);
 
         $order->update([
-            'payment_status' => 'error',
+            'payment_status' => 'failed',
             'payment_date' => now(),
         ]);
 
+        $this->sendAdminOrderEmail(
+            'emails.admin-order-payment-failed',
+            $order,
+            'Payment Failed',
+            route('locations.country', 'ae'),
+            'admin'
+        );
+
         return view('frontend.tour.checkout.error')
-            ->with('title', 'Something went wrong during the process');
+            ->with('title', 'Payment failed due to an error');
     }
 }

@@ -17,7 +17,8 @@
                     </p>
                 @endif
                 <p> please contact our support at <strong><a
-                            href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.</p>
+                            href="mailto:{{ $settings->get('support_email') ?? 'support@desertsafaricompany.com' }}">{{ $settings->get('support_email') ?? 'support@desertsafaricompany.com' }}</a></strong>.
+                </p>
             </div>
         </div>
     </div>

@@ -13,7 +13,8 @@
                 </div>
                 <p>Your payment was not completed. If you encountered any issues,<br>
                     please contact our support team at
-                    <strong><a href="mailto:support@desertsafaricompany.com">support@desertsafaricompany.com</a></strong>.
+                    <strong><a
+                            href="mailto:{{ $settings->get('support_email') ?? 'support@desertsafaricompany.com' }}">{{ $settings->get('support_email') ?? 'support@desertsafaricompany.com' }}</a></strong>.
                 </p>
             </div>
         </div>

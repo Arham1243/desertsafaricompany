@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\SeoHelper;
+use App\Models\Tour;
 use App\Models\TourCategory;
 use Carbon\Carbon;
 use Illuminate\Support\HtmlString;
@@ -177,6 +178,14 @@ if (! function_exists('applyPromoDiscount')) {
         }
 
         return $price;
+    }
+}
+if (! function_exists('getTourByID')) {
+    function getTourByID($tourId)
+    {
+        $tour = Tour::findOrFail($tourId);
+
+        return $tour;
     }
 }
 if (! function_exists('buildTourDetailUrl')) {
