@@ -1,4 +1,5 @@
 @if ($tour->is_person_type_enabled && $tour->promoPrices->isNotEmpty())
+    <input type="hidden" name="tourData" :value="JSON.stringify(promoTourData)">
     <template v-if="!fetchingPromoPrices">
         <div v-for="(promo, index) in visiblePromos" :key="index" class="form-group form-guest-search">
             <div class="form-guest-search__details promo" v-if="promo.source === 'promo'">
@@ -34,8 +35,7 @@
                             <i class="bx bx-chevron-down"></i>
                         </button>
                         <input readonly type="number" class="quantity-counter__btn quantity-counter__btn--quantity"
-                            min="0" v-model="promo.quantity"
-                            :name="`price[${formatNameForInput(promo.slug)}][quantity]`">
+                            min="0" v-model="promo.quantity">
 
                         <button class="quantity-counter__btn" type="button"
                             @click="updateQuantity('plus', formatNameForInput(promo.slug))">
@@ -90,9 +90,7 @@
                                     </button>
                                     <input readonly type="number"
                                         class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
-                                        v-model="addOn.quantity"
-                                        :name="`price[${formatNameForInput(addOn.slug)}][quantity]`">
-
+                                        v-model="addOn.quantity">
                                     <button class="quantity-counter__btn" type="button"
                                         @click="updateQuantity('plus', formatNameForInput(addOn.slug))">
                                         <i class="bx bx-chevron-up"></i>
@@ -143,7 +141,7 @@
                                     </button>
                                     <input readonly type="number"
                                         class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
-                                        v-model="addOn.quantity" :name="`price[${(addOn.slug)}][quantity]`">
+                                        v-model="addOn.quantity">
 
                                     <button class="quantity-counter__btn" type="button"
                                         @click="updateQuantity('plus', (addOn.slug))">

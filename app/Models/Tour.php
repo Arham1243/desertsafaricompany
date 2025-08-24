@@ -320,6 +320,11 @@ class Tour extends Model
         return null;
     }
 
+    public function getDetailUrlAttribute()
+    {
+        return buildTourDetailUrl($this);
+    }
+
     public function getTourLowestPriceAttribute()
     {
         switch ($this->price_type) {

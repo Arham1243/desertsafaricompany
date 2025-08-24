@@ -22,49 +22,85 @@ class CartController extends Controller
 
     public function add(Request $request, $tourId)
     {
-        $cardData = $request->except('_token', 'applied_coupons');
+        // Decode tourData if sent as JSON
+        $tourItems = $request->has('tourData')
+            ? json_decode($request->input('tourData'), true)
+            : [];
 
-        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
+        // Cart-level fields
+        $subtotal = round((float) ($request->input('subtotal', 0)), 2);
+        $serviceFee = round((float) ($request->input('service_fee', 0)), 2);
+        $startDate = $request->input('start_date');
+
+        // Extra prices
+        $extraPrices = $request->input('extra_prices', []);
+        $formattedExtras = [];
+        $totalExtra = 0;
+        foreach ($extraPrices as $extra) {
+            $price = round((float) ($extra['price'] ?? 0), 2);
+            $formattedExtras[] = [
+                'name' => $extra['name'] ?? '',
+                'price' => $price,
+            ];
+            $totalExtra += $price;
+        }
+
+        $totalPrice = round($subtotal + $serviceFee + $totalExtra, 2);
+
+        // Prepare card data
+        $cardData = [
+            'tourData' => $tourItems,  // array of items
+            'subtotal' => $subtotal,
+            'service_fee' => $serviceFee,
+            'start_date' => $startDate,
+            'extra_prices' => $formattedExtras,
+            'total_price' => $totalPrice,
+        ];
+
+        // Retrieve current cart
+        $cart = Session::get('cart', [
+            'tours' => [],
+            'subtotal' => 0,
+            'total_price' => 0,
+        ]);
+
         if ($request->has('applied_coupons')) {
             $cart['applied_coupons'] = $request->input('applied_coupons');
         }
-        if (! isset($cart['tours'][$tourId])) {
-            $cardData['subtotal'] = $cardData['subtotal'] ?? 0;
-            $cardData['service_fee'] = $cardData['service_fee'] ?? 0;
-            $cardData['total_price'] = $cardData['total_price'] ?? ($cardData['subtotal'] + $cardData['service_fee']);
 
-            $cart['tours'][$tourId] = [
-                'data' => $cardData,
-            ];
+        // Add or update tour in cart
+        $cart['tours'][$tourId] = $cardData;
 
-            Session::put('cart', $this->updateCombinedTotals($cart, $request, 'add'));
+        Session::put('cart', $this->recalculateCartTotals($cart));
 
-            return redirect()->route('cart.index')->with('notify_success', 'Tour added to cart successfully.');
-        }
-
-        return redirect()->route('cart.index')->with('notify_error', 'Tour already in cart.');
+        return redirect()
+            ->route('cart.index')
+            ->with('notify_success', 'Tour added to cart successfully.');
     }
 
     public function update(Request $request)
     {
         $cartData = json_decode($request->cart, true);
-        Session::put('cart', $cartData);
+        Session::put('cart', $this->recalculateCartTotals($cartData));
 
         return redirect()->route('checkout.index');
     }
 
     public function remove($tourId)
     {
-        $cart = Session::get('cart', ['tours' => [], 'subtotal' => 0, 'service_fee' => 0, 'total_price' => 0]);
+        $cart = Session::get('cart', [
+            'tours' => [],
+            'subtotal' => 0,
+            'total_price' => 0,
+        ]);
 
         if (isset($cart['tours'][$tourId])) {
-            $cart = $this->updateCombinedTotals($cart, $tourId, 'remove');
-
             unset($cart['tours'][$tourId]);
 
-            if ($cart['subtotal'] <= 0 || $cart['total_price'] <= 0) {
+            if (empty($cart['tours'])) {
                 Session::forget('cart');
             } else {
+                $cart = $this->recalculateCartTotals($cart);
                 Session::put('cart', $cart);
             }
 
@@ -74,27 +110,18 @@ class CartController extends Controller
         return redirect()->back()->with('notify_error', 'Item not found in cart.');
     }
 
-    private function updateCombinedTotals($cart, $request, $action)
+    private function recalculateCartTotals(array $cart): array
     {
-        if ($action === 'add') {
-            $combined = [
-                'subtotal' => $cart['subtotal'],
-                'service_fee' => $cart['service_fee'],
-                'total_price' => $cart['total_price'],
-            ];
+        $subtotal = 0;
+        $totalPrice = 0;
 
-            $combined['subtotal'] += $request->subtotal;
-            $combined['service_fee'] += $request->service_fee;
-            $combined['total_price'] += $request->total_price;
-
-            $cart['subtotal'] = $combined['subtotal'];
-            $cart['service_fee'] = $combined['service_fee'];
-            $cart['total_price'] = $combined['total_price'];
-        } elseif ($action === 'remove') {
-            $cart['subtotal'] -= $cart['tours'][$request]['data']['subtotal'];
-            $cart['service_fee'] -= $cart['tours'][$request]['data']['service_fee'];
-            $cart['total_price'] -= $cart['tours'][$request]['data']['total_price'];
+        foreach ($cart['tours'] as $tour) {
+            $subtotal += $tour['subtotal'] ?? 0;
+            $totalPrice += $tour['total_price'] ?? 0;
         }
+
+        $cart['subtotal'] = round($subtotal, 2);
+        $cart['total_price'] = round($totalPrice, 2);
 
         return $cart;
     }

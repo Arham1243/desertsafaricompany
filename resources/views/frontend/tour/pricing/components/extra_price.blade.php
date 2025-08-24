@@ -2,11 +2,13 @@
     <div class="form-group form-guest-search extra-price-block">
         <div class="tour-content__title form-book__title form-guest-search__title">
             Extra prices:
-            @foreach (json_decode($tour->extra_prices) as $extra_price)
+            @foreach (json_decode($tour->extra_prices) as $index => $extra_price)
                 <div class="form-guest-search__items form-guest-search__details">
                     <div class="form-book__title form-guest-search__title">
-                        <label class=form-guest-search__item-clean>
-                            <input type=hidden name="extra_prices[{{ formatNameForInput($extra_price->name) }}][]"
+                        <label class="form-guest-search__item-clean">
+                            <input type="hidden" name="extra_prices[{{ $index }}][name]"
+                                value="{{ $extra_price->name }}">
+                            <input type="hidden" name="extra_prices[{{ $index }}][price]"
                                 value="{{ $extra_price->price }}">
                             {{ $extra_price->name }}
                         </label>
