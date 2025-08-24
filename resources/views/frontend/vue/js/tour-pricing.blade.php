@@ -220,7 +220,8 @@
             const privateTourData = ref(@json($privateTourData));
             const promoTourData = ref(@json($promoTourData));
             const simpleTourData = ref(@json($simpleTourData));
-            const userHasUsedFirstOrderCoupon = @json($userHasUsedFirstOrderCoupon);
+            const userHasUsedFirstOrderCoupon = @json($userHasUsedFirstOrderCoupon) === 1 ||
+                @json($userHasUsedFirstOrderCoupon) === "1";
             const isSubmitEnabled = ref(false);
             const showAllPromos = ref(false)
             const startDateInput = ref(null)
