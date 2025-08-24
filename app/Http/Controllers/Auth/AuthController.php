@@ -14,7 +14,6 @@ class AuthController extends Controller
 {
     public function performAuth(Request $request)
     {
-
         if ($request->auth_type === 'sign_up') {
             $request->validate([
                 'email' => 'required|email|max:255|unique:users',
@@ -23,16 +22,18 @@ class AuthController extends Controller
                 'full_name' => 'sometimes|required|string|max:255',
             ]);
 
+            $emailVerificationToken = bin2hex(random_bytes(32));
+
             $user = User::create([
                 'full_name' => $request->full_name,
                 'email' => $request->email,
                 'password' => bcrypt($request->password),
                 'signup_method' => 'email',
-                'email_verification_token' => null,
+                'email_verification_token' => $emailVerificationToken,
                 'email_verified' => true,
             ]);
 
-            // $this->sendVerificationEmail($user);
+            $this->sendVerificationEmail($user);
 
             return response()->json([
                 'status' => 'success',
@@ -90,7 +91,7 @@ class AuthController extends Controller
 
     public function sendVerificationEmail($user)
     {
-        $settings = Setting::where('group', 'general')->pluck('value', 'key');
+        $settings = Setting::pluck('value', 'key');
         $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
 
         $data = [
@@ -111,15 +112,20 @@ class AuthController extends Controller
         $user = User::where('email_verification_token', $token)->first();
 
         if (! $user) {
-            return redirect()->route('frontend.index')->with('notify_error', 'The verification link is invalid or expired.');
+            return redirect()
+                ->route('frontend.index')
+                ->with('notify_error', 'The verification link is invalid or expired.');
         }
 
         $user->email_verified = true;
         $user->email_verification_token = null;
         $user->save();
 
-        return redirect()->route('frontend.index')
-            ->with('notify_success', 'Your email has been verified successfully! You can now login');
+        Auth::login($user);
+
+        return redirect()
+            ->route('frontend.index')
+            ->with('notify_success', 'Your email has been verified successfully! You are now logged in.');
     }
 
     public function checkEmail(Request $request)
@@ -128,9 +134,7 @@ class AuthController extends Controller
         $user = User::where('email', $email)->first();
 
         if ($user) {
-
             if ($user->signup_method != 'email') {
-
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Please log in using '.ucfirst($user->signup_method).'.',

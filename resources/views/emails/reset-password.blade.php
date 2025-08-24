@@ -142,9 +142,8 @@
 			font-family: sans-serif;"
                             class="paragraph">
                             Hi {{ $data['full_name'] }},<br>
-                            Looks like you've forgotten your password. No problem – we'll help!To reset
-                            your password, just click below.
-
+                            Looks like you forgot your password. No worries! We'll help you reset it just click the
+                            button below.
                         </td>
                     </tr>
                     <tr>
