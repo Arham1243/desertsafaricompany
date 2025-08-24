@@ -25,7 +25,25 @@ class CheckoutController extends Controller
 
         if (! empty($cart)) {
             $tours = Tour::where('status', 'publish')->get();
-            $data = compact('tours', 'cart');
+
+            // Initialize required data arrays for checkout view
+            $cartTours = [];
+            $promoToursData = [];
+            $toursNormalPrices = [];
+            $privateTourData = [];
+            $waterTourTimeSlots = [];
+
+            // Build cartTours array from cart data
+            if (isset($cart['tours'])) {
+                foreach ($cart['tours'] as $tourId => $tourData) {
+                    $tour = $tours->where('id', $tourId)->first();
+                    if ($tour) {
+                        $cartTours[] = $tour;
+                    }
+                }
+            }
+
+            $data = compact('tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
 
             return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')
@@ -98,7 +116,7 @@ class CheckoutController extends Controller
 
             foreach ($cart['tours'] as $tourId => $tourData) {
                 $tourTitles[$tourId] = Tour::where('id', $tourId)->first()->title;
-                $tourPrices[$tourId] = $tourData['data']['total_price'] ?? 0;
+                $tourPrices[$tourId] = $tourData['total_price'] ?? 0;
             }
 
             if (empty($tourTitles) || empty($tourPrices)) {

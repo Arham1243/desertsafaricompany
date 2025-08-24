@@ -80,63 +80,11 @@
             ];
         });
 
-    $promoToursData = $tours
-        ->whereIn('id', $cartToursIds)
-        ->map(function ($tour) use ($cart) {
-            return $tour->promoPrices->map(function ($promoPrice) use ($tour, $cart) {
-                $now = Carbon::now();
-                $hourOfDay = $now->hour;
-                $today = strtolower(Carbon::now()->englishDayOfWeek);
-                $hourOfDay = $now->hour;
-                $originalPrice = (float) $promoPrice->original_price;
-                $promoDiscountConfig =
-                    isset($tour->promo_discount_config) && $tour->promo_discount_config
-                        ? json_decode($tour->promo_discount_config, true)
-                        : null;
-
-                $isWeekend = in_array($today, ['friday', 'saturday', 'sunday']);
-                $discountPercent = 0;
-                if ($promoDiscountConfig) {
-                    $discountPercent = $isWeekend
-                        ? $promoDiscountConfig->weekend_discount_percent ?? 0
-                        : $promoDiscountConfig->weekday_discount_percent ?? 0;
-                }
-
-                $discountedPrice = $originalPrice - $originalPrice * ($discountPercent / 100);
-
-                $discountPercent = $isWeekend
-                    ? $promoDiscountConfig['weekend_discount_percent'] ?? 0
-                    : $promoDiscountConfig['weekday_discount_percent'] ?? 0;
-
-                $timerHours = (int) ($isWeekend
-                    ? $promoDiscountConfig['weekend_timer_hours'] ?? 0
-                    : $promoDiscountConfig['weekday_timer_hours'] ?? 0);
-
-                $hoursLeft =
-                    $timerHours > 0
-                        ? ($hourOfDay % $timerHours === 0
-                            ? $timerHours
-                            : $timerHours - ($hourOfDay % $timerHours))
-                        : 0;
-
-                $promoTitle = formatNameForInput($promoPrice->promo_title);
-
-                $quantity = $cart['tours'][$tour->id]['data']['price'][$promoTitle]['quantity'] ?? 0;
-
-                return [
-                    'tour_id' => $tour->id,
-                    'promo_title' => $promoPrice->promo_title,
-                    'promo_slug' => $promoPrice->promo_slug,
-                    'original_price' => number_format($originalPrice, 2),
-                    'discount_percent' => $discountPercent,
-                    'discounted_price' => number_format($discountedPrice, 2),
-                    'quantity' => (int) $quantity,
-                    'hours_left' => $hoursLeft,
-                ];
-            });
-        })
-        ->flatten(1)
-        ->groupBy('tour_id');
+    // Use tourData from cart instead of generating from database
+    $promoToursData = collect($cart['tours'] ?? [])->mapWithKeys(function ($tourCart, $tourId) {
+        $tourData = $tourCart['tourData'] ?? [];
+        return [$tourId => collect($tourData)];
+    });
 @endphp
 <script>
     const Cart = createApp({
@@ -147,10 +95,35 @@
             const cartToursData = ref(@json($cartTours));
             const promoToursData = ref(@json($promoToursData));
             const toursNormalPrices = ref(@json($toursNormalPrices));
-            const toursPrivatePrices = ref(@json($toursPrivatePrices));
-            const toursWaterPrices = ref(@json($toursWaterPrices));
+            const privateTourData = ref(@json($privateTourData));
             const waterTourTimeSlots = ref(@json($waterTourTimeSlots));
             const totalPrice = ref(cart.value.total_price);
+
+            // Check if first order coupon is applied
+            const hasUsedFirstOrderCoupon = computed(() => {
+                const coupons = cart.value?.applied_coupons || [];
+                return Array.isArray(coupons) && coupons.some(c => c?.is_first_order_coupon == 1);
+            });
+
+            // Get correct price based on coupon status
+            const getCorrectPrice = (pkg) => {
+                if (pkg.promo_is_free === 1) return 0;
+
+                if (pkg.is_first_order_coupon_applied && pkg.promo_discounted_price) {
+                    return parseFloat(pkg.promo_discounted_price);
+                }
+
+                return parseFloat(pkg.original_discounted_price || pkg.discounted_price || 0);
+            };
+
+            // Get correct slot price based on coupon status
+            const getCorrectSlotPrice = (slot) => {
+                if (slot.is_first_order_coupon_applied && slot.promo_discounted_price) {
+                    return parseFloat(slot.promo_discounted_price);
+                }
+
+                return parseFloat(slot.original_discounted_price || slot.discounted_price || 0);
+            };
 
             watch(totalPrice, async (newValue) => {
                 const roundedValue = Math.round(newValue * 100) / 100;
@@ -158,6 +131,42 @@
                     submitButton.value.disabled = true;
                 }
             });
+
+            // Initialize cart sync on mount
+            onMounted(() => {
+                // Initial calculation
+                recalculateCartTotals();
+            });
+
+            const ensureCartDataStructure = (tourId) => {
+                if (!cart.value.tours) cart.value.tours = {};
+                if (!cart.value.tours[tourId]) {
+                    cart.value.tours[tourId] = {
+                        data: {
+                            price: {},
+                            subtotal: 0,
+                            total_price: 0,
+                            service_fee: 0
+                        }
+                    };
+                }
+                if (!cart.value.tours[tourId].data) {
+                    cart.value.tours[tourId].data = {
+                        price: {},
+                        subtotal: 0,
+                        total_price: 0,
+                        service_fee: 0
+                    };
+                }
+                if (!cart.value.tours[tourId].data.price) {
+                    cart.value.tours[tourId].data.price = {};
+                }
+
+                // Ensure cart-level totals exist
+                if (!cart.value.subtotal) cart.value.subtotal = 0;
+                if (!cart.value.total_price) cart.value.total_price = 0;
+                if (!cart.value.service_fee) cart.value.service_fee = 0;
+            };
 
 
 
@@ -167,8 +176,100 @@
             });
 
             const getPromoTourPricing = (tourId) => {
-                return promoToursData.value[tourId] || null;
+                return promoToursData.value[tourId] || [];
             }
+
+            const getTourPackages = (tourId) => {
+                const tourData = promoToursData.value[tourId] || [];
+                return tourData;
+            };
+
+            const hasAnyPromoQuantity = computed(() => {
+                return Object.values(promoToursData.value).some(tourPromos =>
+                    tourPromos.some(item => item.quantity > 0 && item.source === 'promo')
+                );
+            });
+
+            const formatTimeLabel = (time) => {
+                const [hours, minutes] = time.split(':').map(Number);
+                if (hours && minutes) return `${hours} hr ${minutes} mins`;
+                if (hours) return `${hours} hour`;
+                return `${minutes} mins`;
+            };
+
+            const handleSelectedSlotChange = (addOn) => {
+                if (!Array.isArray(addOn.selected_slots)) {
+                    addOn.selected_slots = [];
+                }
+
+                // Limit selection to quantity
+                if (addOn.selected_slots.length > addOn.quantity) {
+                    addOn.selected_slots = addOn.selected_slots.slice(0, addOn.quantity);
+                }
+
+                // Recalculate totals
+                recalculateCartTotals();
+
+                // Sync with backend
+                syncCartWithBackend();
+            };
+
+            const recalculateCartTotals = () => {
+                let cartSubtotal = 0;
+                let cartTotalPrice = 0;
+
+                Object.keys(cart.value.tours).forEach(tourId => {
+                    const tourCart = cart.value.tours[tourId];
+                    const tourPackages = getTourPackages(tourId);
+                    let tourSubtotal = 0;
+
+                    // Calculate tour subtotal from packages
+                    tourPackages.forEach(pkg => {
+                        if (pkg.quantity > 0) {
+                            if (pkg.promo_is_free === 1) {
+                                // Free packages don't add to price
+                                return;
+                            }
+
+                            if (pkg.type === 'timeslot' && pkg.selected_slots) {
+                                // Calculate timeslot addon prices
+                                pkg.selected_slots.slice(0, pkg.quantity).forEach(
+                                    slotTime => {
+                                        const slot = pkg.slots.find(s => s.time ===
+                                            slotTime);
+                                        if (slot) {
+                                            tourSubtotal += getCorrectSlotPrice(slot);
+                                        }
+                                    });
+                            } else {
+                                const price = getCorrectPrice(pkg);
+                                tourSubtotal += price * pkg.quantity;
+                            }
+                        }
+                    });
+
+                    // Add extra prices
+                    const extraPrices = tourCart.extra_prices || [];
+                    extraPrices.forEach(extra => {
+                        tourSubtotal += parseFloat(extra.price || 0);
+                    });
+
+                    const serviceFee = parseFloat(tourCart.service_fee || 0);
+                    const tourTotalPrice = tourSubtotal + serviceFee;
+
+                    // Update tour cart data
+                    tourCart.subtotal = tourSubtotal;
+                    tourCart.total_price = tourTotalPrice;
+
+                    cartSubtotal += tourSubtotal;
+                    cartTotalPrice += tourTotalPrice;
+                });
+
+                // Update cart totals
+                cart.value.subtotal = cartSubtotal;
+                cart.value.total_price = cartTotalPrice;
+                totalPrice.value = cartTotalPrice;
+            };
             const getNormalTourPricing = (tourId) => {
                 return toursNormalPrices.value[tourId] || null;
             }
@@ -246,25 +347,15 @@
                         [tourId]['data'][
                             'time_slot_quantity'
                         ];
-                    cart.value['tours'][tourId]['data']['subtotal'] += cart.value['tours'][
+                    cart.value['tours'][tourId]['data']['subtotal'] =
+                        cart.value['tours'][tourId]['data']['subtotal'] + selectedPrice *
+                        cart.value['tours'][
                             tourId
-                        ]['data'][
-                            'time_slot_price'
-                        ] * cart
-                        .value['tours']
-                        [tourId]['data'][
-                            'time_slot_quantity'
-                        ];
-                    cart.value['tours'][tourId]['data']['total_price'] += cart.value[
-                            'tours'][tourId][
-                            'data'
-                        ][
-                            'time_slot_price'
-                        ] * cart
-                        .value['tours']
-                        [tourId]['data'][
-                            'time_slot_quantity'
-                        ];
+                        ]['data']['time_slot_quantity'];
+                    cart.value['tours'][tourId]['data']['total_price'] =
+                        cart.value['tours'][tourId]['data']['total_price'] + selectedPrice *
+                        cart.value['tours']
+                        [tourId]['data']['time_slot_quantity'];
                 }
             }
 
@@ -280,18 +371,44 @@
                 const tour = cart.value.tours[id];
                 if (tour) {
                     if (confirm('Are you sure you want to remove this tour?')) {
-
-                        minusCartPrices(tour);
+                        // Remove tour from cart
                         delete cart.value.tours[id];
+
+                        // Remove from tour data
                         cartToursData.value = Object.fromEntries(
                             Object.entries(cartToursData.value).filter(([key, tour]) =>
-                                tour
-                                .id !== id)
+                                tour.id !== id)
                         );
 
-                        setTimeout(() => {
-                            cartUpdateForm.value.submit();
-                        }, 1000);
+                        // Remove from promo data
+                        if (promoToursData.value[id]) {
+                            delete promoToursData.value[id];
+                        }
+
+                        // Check if cart is empty and flush if needed
+                        const remainingTours = Object.keys(cart.value.tours || {});
+                        if (remainingTours.length === 0) {
+                            // Flush entire cart
+                            cart.value = {
+                                tours: {},
+                                subtotal: 0,
+                                total_price: 0,
+                                service_fee: 0,
+                                applied_coupons: []
+                            };
+                            cartToursData.value = {};
+                            promoToursData.value = {};
+                            totalPrice.value = 0;
+
+                            // Flush cart session on backend
+                            flushCartSession();
+                        } else {
+                            // Recalculate totals for remaining tours
+                            recalculateCartTotals();
+
+                            // Sync with backend
+                            syncCartWithBackend();
+                        }
                     }
                 } else {
                     showToast('error', 'Tour not found!');
@@ -319,6 +436,97 @@
                 return `${currencySymbolHtml}${formattedPrice}`;
             };
 
+            const formatDate = (dateString) => {
+                if (!dateString) return '';
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            };
+
+            // Debounce utility function
+            function debounce(func, wait) {
+                let timeout;
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            }
+
+            const syncCartWithBackend = debounce(async () => {
+                try {
+                    // Update cart data with current tourData quantities
+                    Object.keys(cart.value.tours).forEach(tourId => {
+                        const tourPackages = getTourPackages(tourId);
+                        const tourCart = cart.value.tours[tourId];
+
+                        // Update tourData in cart
+                        tourCart.tourData = tourPackages;
+
+                        // Sync quantities to price structure for backend compatibility
+                        if (!tourCart.data) tourCart.data = {};
+                        if (!tourCart.data.price) tourCart.data.price = {};
+
+                        tourPackages.forEach(pkg => {
+                            const key = formatNameForInput(pkg.promo_title || pkg
+                                .title);
+                            tourCart.data.price[key] = {
+                                quantity: pkg.quantity || 0,
+                                price: getCorrectPrice(pkg),
+                                selected_slots: pkg.selected_slots || []
+                            };
+                        });
+                    });
+
+                    const response = await fetch('/cart/sync', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector(
+                                'meta[name="csrf-token"]').getAttribute('content')
+                        },
+                        body: JSON.stringify({
+                            cart: cart.value
+                        })
+                    });
+
+                    if (!response.ok) {
+                        console.error('Cart sync failed:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Cart sync error:', error);
+                }
+            }, 1000);
+
+            const flushCartSession = async () => {
+                try {
+                    const response = await fetch('/cart/flush', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
+                                .getAttribute('content')
+                        }
+                    });
+
+                    if (response.ok) {
+                        console.log('Cart session flushed successfully');
+                        // Optionally redirect to home or show empty cart message
+                        window.location.href = '/cart';
+                    } else {
+                        console.error('Failed to flush cart session:', response.statusText);
+                    }
+                } catch (error) {
+                    console.error('Cart flush error:', error);
+                }
+            };
+
             const updateNormalQuantity = (action, personType, tour, nomalIndex) => {
                 const toursNormalPrice = getNormalTourPricing(tour.id);
                 const personData = toursNormalPrice[formatNameForInput(personType)];
@@ -328,13 +536,22 @@
             };
 
             const updatePromoQuantity = (action, personType, tour, promoIndex) => {
-                const promoTourData = getPromoTourPricing(tour.id);
-                const promoData = promoTourData.find(promo => formatNameForInput(promo
-                        .promo_slug) ===
-                    formatNameForInput(personType));
-                if (!promoData) return;
+                const tourPackages = getTourPackages(tour.id);
+                if (!tourPackages || !tourPackages[promoIndex]) return;
 
-                updateTotalPrice(tour, action, promoIndex);
+                const packageItem = tourPackages[promoIndex];
+
+                if (action === 'plus') {
+                    packageItem.quantity = (packageItem.quantity || 0) + 1;
+                } else if (action === 'minus' && packageItem.quantity > 0) {
+                    packageItem.quantity--;
+                }
+
+                // Recalculate cart totals
+                recalculateCartTotals();
+
+                // Sync with backend
+                syncCartWithBackend();
             };
 
             const updatePrivateQuantity = (action, tour) => {
@@ -433,6 +650,8 @@
 
 
             const updateQuantity = (action, personType = null, tour, index = null) => {
+                ensureCartDataStructure(tour.id);
+
                 if (tour.price_type === "private") {
                     updatePrivateQuantity(action, tour);
                 } else if (tour.price_type === "normal" && personType) {
@@ -491,33 +710,13 @@
                                 cart.value['tours'][tour.id]['data']['price'][
                                     formatNameForInput(
                                         toursNormalPrice[index].person_type)
-                                ].quantity--
+                                ].quantity--;
                             }
                         }
                         break;
                     case 'promo':
-                        const promoTourData = getPromoTourPricing(tour.id);
-                        const promo = promoTourData[index]
-                        const applicablePrice = parseFloat(promo.discounted_price);
-                        if (action === 'plus') {
-                            promo.quantity++;
-                            totalPrice.value += applicablePrice;
-                            cart.value['tours'][tour.id]['data']['subtotal'] +=
-                                applicablePrice;
-                            cart.value['tours'][tour.id]['data']['total_price'] +=
-                                applicablePrice;
-                            cart.value['subtotal'] += applicablePrice;
-                            cart.value['total_price'] += applicablePrice;
-                        } else if (action === 'minus' && promo.quantity > 0) {
-                            promo.quantity--;
-                            totalPrice.value -= applicablePrice;
-                            cart.value['tours'][tour.id]['data']['subtotal'] -=
-                                applicablePrice;
-                            cart.value['tours'][tour.id]['data']['total_price'] -=
-                                applicablePrice;
-                            cart.value['subtotal'] -= applicablePrice;
-                            cart.value['total_price'] -= applicablePrice;
-                        }
+                        // Use the new updatePromoQuantity function
+                        updatePromoQuantity(action, null, tour, index);
                         break;
                 }
             };
@@ -533,8 +732,10 @@
                 getImageUrl,
                 removeTour,
                 formatPrice,
+                formatDate,
                 totalPrice,
                 updateQuantity,
+                updatePromoQuantity,
                 formatNameForInput,
                 getPromoTourPricing,
                 getNormalTourPricing,
@@ -545,6 +746,15 @@
                 handleTimeSlotChange,
                 cartUpdateForm,
                 submitButton,
+                hasAnyPromoQuantity,
+                getTourPackages,
+                formatTimeLabel,
+                handleSelectedSlotChange,
+                ensureCartDataStructure,
+                recalculateCartTotals,
+                syncCartWithBackend,
+                getCorrectPrice,
+                getCorrectSlotPrice,
             };
         },
     });

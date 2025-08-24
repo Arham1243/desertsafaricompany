@@ -1,5 +1,215 @@
 @extends('frontend.layouts.main')
 @section('content')
+    @php
+        $seo = (object) [
+            'seo_title' => 'Checkout',
+            'is_seo_index' => true,
+            'seo_description' => null,
+            'canonical' => null,
+            'fb_title' => null,
+            'fb_description' => null,
+            'fb_featured_image' => null,
+            'tw_title' => null,
+            'tw_description' => null,
+            'tw_featured_image' => null,
+            'schema' => null,
+        ];
+    @endphp
+    @php
+        $countries = [
+            'afghanistan',
+            'albania',
+            'algeria',
+            'american samoa',
+            'andorra',
+            'angola',
+            'anguilla',
+            'antigua and barbuda',
+            'argentina',
+            'armenia',
+            'aruba',
+            'australia',
+            'austria',
+            'azerbaijan',
+            'bahamas',
+            'bahrain',
+            'bangladesh',
+            'barbados',
+            'belarus',
+            'belgium',
+            'belize',
+            'benin',
+            'bermuda',
+            'bhutan',
+            'bolivia',
+            'bosnia and herzegovina',
+            'botswana',
+            'brazil',
+            'british indian ocean territory',
+            'brunei',
+            'bulgaria',
+            'burkina faso',
+            'burundi',
+            'cambodia',
+            'cameroon',
+            'canada',
+            'cape verde',
+            'cayman islands',
+            'central african republic',
+            'chad',
+            'chile',
+            'china',
+            'colombia',
+            'comoros',
+            'congo',
+            'costa rica',
+            'croatia',
+            'cuba',
+            'cyprus',
+            'czech republic',
+            'denmark',
+            'djibouti',
+            'dominica',
+            'dominican republic',
+            'ecuador',
+            'egypt',
+            'el salvador',
+            'equatorial guinea',
+            'eritrea',
+            'estonia',
+            'eswatini',
+            'ethiopia',
+            'fiji',
+            'finland',
+            'france',
+            'gabon',
+            'gambia',
+            'georgia',
+            'germany',
+            'ghana',
+            'greece',
+            'grenada',
+            'guatemala',
+            'guinea',
+            'guinea bissau',
+            'guyana',
+            'haiti',
+            'honduras',
+            'hungary',
+            'iceland',
+            'india',
+            'indonesia',
+            'iran',
+            'iraq',
+            'ireland',
+            'israel',
+            'italy',
+            'jamaica',
+            'japan',
+            'jordan',
+            'kazakhstan',
+            'kenya',
+            'kiribati',
+            'kuwait',
+            'kyrgyzstan',
+            'laos',
+            'latvia',
+            'lebanon',
+            'lesotho',
+            'liberia',
+            'libya',
+            'liechtenstein',
+            'lithuania',
+            'luxembourg',
+            'madagascar',
+            'malawi',
+            'malaysia',
+            'maldives',
+            'mali',
+            'malta',
+            'marshall islands',
+            'mauritania',
+            'mauritius',
+            'mexico',
+            'micronesia',
+            'moldova',
+            'monaco',
+            'mongolia',
+            'montenegro',
+            'morocco',
+            'mozambique',
+            'myanmar',
+            'namibia',
+            'nauru',
+            'nepal',
+            'netherlands',
+            'new zealand',
+            'nicaragua',
+            'niger',
+            'nigeria',
+            'north macedonia',
+            'norway',
+            'oman',
+            'pakistan',
+            'palau',
+            'palestine',
+            'panama',
+            'papua new guinea',
+            'paraguay',
+            'peru',
+            'philippines',
+            'poland',
+            'portugal',
+            'qatar',
+            'romania',
+            'russia',
+            'rwanda',
+            'saudi arabia',
+            'senegal',
+            'serbia',
+            'seychelles',
+            'sierra leone',
+            'singapore',
+            'slovakia',
+            'slovenia',
+            'solomon islands',
+            'somalia',
+            'south africa',
+            'spain',
+            'sri lanka',
+            'sudan',
+            'suriname',
+            'sweden',
+            'switzerland',
+            'syria',
+            'taiwan',
+            'tajikistan',
+            'tanzania',
+            'thailand',
+            'timor leste',
+            'togo',
+            'tonga',
+            'trinidad and tobago',
+            'tunisia',
+            'turkey',
+            'turkmenistan',
+            'tuvalu',
+            'uganda',
+            'ukraine',
+            'united arab emirates',
+            'united kingdom',
+            'united states',
+            'uruguay',
+            'uzbekistan',
+            'vanuatu',
+            'venezuela',
+            'vietnam',
+            'yemen',
+            'zambia',
+            'zimbabwe',
+        ];
+        sort($countries);
+    @endphp
     <div class="checkout section-padding">
         <div class="container">
             <div class="checkout-Mainheading">
@@ -72,14 +282,28 @@
                                                 required>
                                         </div>
                                     </div>
+
+
                                     <div class="col-md-6">
                                         <div class="field">
-                                            <select name="order[country]" required id="country-select">
-                                                <option value="" disabled selected>Select Country *</option>
+                                            <select name="order[country]" required>
+                                                <option value="" selected disabled>Select</option>
+                                                @foreach ($countries as $country)
+                                                    <option value="{{ $country }}"
+                                                        {{ strtolower('united arab emirates') == strtolower($country) ? 'selected' : '' }}>
+                                                        {{ ucwords($country) }}
+                                                    </option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
+
                                     <div class="col-md-6">
+                                        <div class="field">
+                                            <input type="text" placeholder="City *" required name="order[city]">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
                                         <div class="field">
                                             <input type="text" placeholder="Address *" required name="order[address]">
                                         </div>
@@ -177,7 +401,7 @@
                             <div class="checkout-details {{ $loop->first ? 'open' : '' }}">
                                 <div class="checkout-details__header">
                                     <div class="title-content">
-                                        <i class='bx bxs-map'></i>
+                                        <i class='bx bx-calendar-check'></i>
                                         <div class="heading">{{ $tour->title }}</div>
                                     </div>
                                     <div class="up-arrow">
@@ -187,37 +411,82 @@
                                 <div class="checkout-details__optional">
                                     <div class="optional-wrapper">
                                         <div class="optional-wrapper-padding">
+                                            <!-- Tour Image -->
+                                            @if ($tour->featured_image)
+                                                <div class="tour-image mb-3">
+                                                    <img src="{{ getImageUrl($tour->featured_image) }}"
+                                                        alt="{{ $tour->featured_image_alt_text ?? $tour->title }}"
+                                                        class="img-fluid rounded"
+                                                        style="width: 100%; height: 120px; object-fit: cover;">
+                                                </div>
+                                            @endif
+
+                                            <!-- Tour Details -->
                                             <div class="sub-total">
                                                 <div class="title">Type</div>
-                                                <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}
-                                                </div>
+                                                <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}</div>
                                             </div>
+
+                                            @if ($tour->duration)
+                                                <div class="sub-total">
+                                                    <div class="title">Duration</div>
+                                                    <div class="price">{{ $tour->duration }}</div>
+                                                </div>
+                                            @endif
+
                                             <div class="sub-total">
                                                 <div class="title">Date</div>
                                                 <div class="price">
-                                                    {{ formatDate($cart['tours'][$tour->id]['data']['start_date']) }}
+                                                    {{ formatDate($cart['tours'][$tour->id]['start_date']) }}
                                                 </div>
                                             </div>
+
+                                            @if (isset($cart['tours'][$tour->id]['tourData']) && is_array($cart['tours'][$tour->id]['tourData']))
+                                                @foreach ($cart['tours'][$tour->id]['tourData'] as $tourItem)
+                                                    @if (isset($tourItem['quantity']) && $tourItem['quantity'] > 0)
+                                                        <div class="sub-total">
+                                                            <div class="title">{!! $tourItem['title'] ?? 'Package' !!}</div>
+                                                            <div class="price">{{ $tourItem['quantity'] }} x
+                                                                {{ formatPrice($tourItem['is_first_order_coupon_applied'] ? $tourItem['promo_discounted_price'] : $tourItem['discounted_price']) }}
+                                                            </div>
+                                                        </div>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+
+                                            <!-- Extra Services -->
+                                            @if (isset($cart['tours'][$tour->id]['extra_prices']) && is_array($cart['tours'][$tour->id]['extra_prices']))
+                                                @foreach ($cart['tours'][$tour->id]['extra_prices'] as $extra)
+                                                    <div class="sub-total">
+                                                        <div class="title">{{ $extra['name'] }}</div>
+                                                        <div class="price">{{ formatPrice($extra['price']) }}</div>
+                                                    </div>
+                                                @endforeach
+                                            @endif
+
+                                            <hr class="my-3">
+
+                                            <!-- Pricing Breakdown -->
                                             <div class="sub-total">
                                                 <div class="title">Subtotal</div>
                                                 <div class="price">
-                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['subtotal']) }}
+                                                    {{ formatPrice($cart['tours'][$tour->id]['subtotal']) }}
                                                 </div>
                                             </div>
                                             <div class="sub-total">
                                                 <div class="title">Service Fee</div>
                                                 <div class="price">
-                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['service_fee']) }}
+                                                    {{ formatPrice($cart['tours'][$tour->id]['service_fee'] ?? 0) }}
                                                 </div>
                                             </div>
                                             <div class="sub-total">
                                                 <input type="hidden" name="tour[title][]" value="{{ $tour->title }}">
                                                 <input type="hidden" name="tour[total_price][]"
-                                                    value="{{ $cart['tours'][$tour->id]['data']['total_price'] }}">
-                                                <div class="title">Total</div>
-                                                <div class="price">
-                                                    {{ formatPrice($cart['tours'][$tour->id]['data']['total_price']) }}
-                                                </div>
+                                                    value="{{ $cart['tours'][$tour->id]['total_price'] }}">
+                                                <div class="title"><strong>Total</strong></div>
+                                                <div class="price"><strong>
+                                                        {{ formatPrice($cart['tours'][$tour->id]['total_price']) }}
+                                                    </strong></div>
                                             </div>
                                         </div>
                                     </div>
@@ -238,11 +507,7 @@
                                     <div class="optional-wrapper-padding">
                                         <div class="sub-total">
                                             <div class="title">Subtotal</div>
-                                            <div class="price">{{ formatPrice($cart['subtotal']) }}</div>
-                                        </div>
-                                        <div class="sub-total">
-                                            <div class="title">Service Fee</div>
-                                            <div class="price">{{ formatPrice($cart['service_fee']) }}</div>
+                                            <div class="price">{{ formatPrice($cart['total_price']) }}</div>
                                         </div>
                                         <div class="cart-coupon">
                                             <form action="{{ route('checkout.applyCode') }}" method="POST">
@@ -285,18 +550,5 @@
                 });
             });
         }
-
-        axios.get('https://restcountries.com/v3.1/all')
-            .then(response => {
-                const countries = response.data;
-                const select = document.getElementById('country-select');
-                countries.forEach(country => {
-                    const option = document.createElement('option');
-                    option.value = country.name.common;
-                    option.textContent = country.name.common;
-                    select.appendChild(option);
-                });
-            })
-            .catch(error => console.error('Error fetching countries:', error));
     </script>
 @endpush

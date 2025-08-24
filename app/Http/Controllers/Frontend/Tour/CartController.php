@@ -13,7 +13,15 @@ class CartController extends Controller
     {
         $cart = Session::get('cart', []);
         $tours = Tour::where('status', 'publish')->get();
-        $data = compact('tours', 'cart');
+
+        // Initialize required data arrays for cart view
+        $cartTours = [];
+        $promoToursData = [];
+        $toursNormalPrices = [];
+        $privateTourData = [];
+        $waterTourTimeSlots = [];
+
+        $data = compact('tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
 
         return view('frontend.tour.cart.index')
             ->with('title', 'Cart')
@@ -110,6 +118,27 @@ class CartController extends Controller
         return redirect()->back()->with('notify_error', 'Item not found in cart.');
     }
 
+    public function sync(Request $request)
+    {
+        $cartData = $request->input('cart');
+
+        if ($cartData) {
+            $cart = $this->recalculateCartTotals($cartData);
+            Session::put('cart', $cart);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Cart synced successfully',
+                'cart' => $cart,
+            ]);
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => 'Invalid cart data',
+        ], 400);
+    }
+
     private function recalculateCartTotals(array $cart): array
     {
         $subtotal = 0;
@@ -124,5 +153,16 @@ class CartController extends Controller
         $cart['total_price'] = round($totalPrice, 2);
 
         return $cart;
+    }
+
+    public function flush(Request $request)
+    {
+        // Clear the entire cart session
+        Session::forget('cart');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Cart session flushed successfully',
+        ]);
     }
 }

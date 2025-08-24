@@ -38,6 +38,7 @@
                     : null,
                 'quantity' => 0,
                 'hours_left' => $hoursLeft,
+                'is_first_order_coupon_applied' => false,
             ];
         }),
     );
@@ -70,6 +71,7 @@
                                 : null,
                             'quantity' => 0,
                             'hours_left' => $hoursLeft,
+                            'is_first_order_coupon_applied' => false,
                         ];
                     }
 
@@ -94,6 +96,7 @@
                             'hours_left' => $hoursLeft,
                             'quantity' => 0,
                             'selected_slots' => [],
+                            'is_first_order_coupon_applied' => false,
                             'slots' => $slots
                                 ->map(function ($slot) use ($firstOrderCoupon) {
                                     $price = floatval($slot['price']);
@@ -113,6 +116,7 @@
                                                 $firstOrderCoupon->amount,
                                             )
                                             : null,
+                                        'is_first_order_coupon_applied' => false,
                                     ];
                                 })
                                 ->values(),
@@ -222,6 +226,7 @@
             const isFirstOrderCouponApplied = ref(false)
 
             const hasUsedFirstOrderCoupon = computed(() => {
+                console.log(cartData.value)
                 const coupons = cartData.value?.applied_coupons
                 const used = Array.isArray(coupons) && coupons.some(c => c
                     ?.is_first_order_coupon == 1)
@@ -275,6 +280,13 @@
             const applyFirstOrderCoupon = () => {
                 isFirstOrderCouponApplied.value = true
                 const coupon = firstOrderCoupon.value
+
+                // Update all promo tour data items
+                if (priceType === "promo") {
+                    promoTourData.value.forEach(item => {
+                        item.is_first_order_coupon_applied = true
+                    })
+                }
 
                 if (priceType === "normal") {
                     const updated = {
@@ -353,6 +365,10 @@
                     }
                     const response = await axios.post(route, payload)
                     promoTourData.value = response.data
+                    // Reset coupon application flag for all items
+                    promoTourData.value.forEach(item => {
+                        item.is_first_order_coupon_applied = false
+                    })
                     isFirstOrderCouponApplied.value = false
                     updateTotalPrice()
                 } catch (error) {

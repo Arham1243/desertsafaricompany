@@ -1,5 +1,20 @@
 @extends('frontend.layouts.main')
 @section('content')
+    @php
+        $seo = (object) [
+            'seo_title' => 'Cart',
+            'is_seo_index' => true,
+            'seo_description' => null,
+            'canonical' => null,
+            'fb_title' => null,
+            'fb_description' => null,
+            'fb_featured_image' => null,
+            'tw_title' => null,
+            'tw_description' => null,
+            'tw_featured_image' => null,
+            'schema' => null,
+        ];
+    @endphp
     <div class="cart section-padding">
         <div class="container">
             @if (isset($cart['tours']) && count($cart['tours']) > 0)

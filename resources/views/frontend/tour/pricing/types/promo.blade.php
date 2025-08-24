@@ -6,7 +6,8 @@
                 <div class="promo-title" v-html="promo.title"></div>
                 <div class="promo-price-wrapper" v-if="!promo.promo_is_free">
                     <div class="promo-price cut"><span v-html="formatPrice(promo.original_price)"></span></div>
-                    <div v-if="promo.original_discounted_price" class="promo-price green price-cut"><span
+                    <div v-if="promo.original_discounted_price" class="promo-price green"
+                        :class="{ cut: isFirstOrderCouponApplied }"><span
                             v-html="formatPrice(promo.original_discounted_price)"></span>
                     </div>
                     <div v-else class="promo-price green"><span v-html="formatPrice(promo.discounted_price)"></span>
@@ -59,7 +60,8 @@
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut"><span v-html="formatPrice(addOn.original_price)"></span>
                                 </div>
-                                <div v-if="addOn.original_discounted_price" class="promo-price green price-cut">
+                                <div v-if="addOn.original_discounted_price" class="promo-price green"
+                                    :class="{ cut: isFirstOrderCouponApplied }">
                                     <span v-html="formatPrice(addOn.original_discounted_price)"></span>
                                 </div>
                                 <div v-else class="promo-price green"><span
@@ -108,8 +110,8 @@
                             <div class="promo-price-wrapper">
                                 <div class="promo-price cut"><span
                                         v-html="formatPrice(addOn.slots[0].original_price)"></span></div>
-                                <div v-if="addOn.slots[0].original_discounted_price"
-                                    class="promo-price green price-cut">
+                                <div v-if="addOn.slots[0].original_discounted_price" class="promo-price green"
+                                    :class="{ cut: isFirstOrderCouponApplied }">
                                     <span v-html="formatPrice(addOn.slots[0].original_discounted_price)"></span>
                                 </div>
                                 <div v-else class="promo-price green"><span
