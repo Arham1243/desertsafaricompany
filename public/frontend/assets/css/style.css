@@ -6531,6 +6531,13 @@ span.select2-dropdown.select2-dropdown--below {
     justify-content: center;
     gap: 6px;
 }
+.checkout-details .checkout-details__optional .sub-total .title {
+    width: 60%;
+}
+
+.checkout-details .checkout-details__optional .sub-total .price {
+    text-align: right;
+}
 
 .optional-wrapper-padding {
     padding: 24px 19px 19px 19px;
