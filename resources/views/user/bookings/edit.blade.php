@@ -1,8 +1,8 @@
-@extends('admin.layouts.main')
+@extends('user.layouts.main')
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.bookings.edit', $booking) }}
+            {{ Breadcrumbs::render('user.bookings.edit', $booking) }}
             <div class="custom-sec custom-sec--form">
                 <div class="custom-sec__header">
                     <div class="section-content">
@@ -14,13 +14,16 @@
                             class="badge rounded-pill bg-{{ $booking->payment_status === 'paid' ? 'success' : ($booking->payment_status === 'pending' ? 'warning' : 'danger') }}">
                             {{ ucfirst($booking->payment_status ?? 'N/A') }}
                         </span>
+
+                        @if ($booking->payment_status !== 'paid')
+                            <a href="{{ route('user.bookings.pay', $booking->id) }}" class="themeBtn">Pay Now</a>
+                        @endif
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="form-wrapper">
-
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="title">Payment Details</div>
@@ -72,86 +75,13 @@
                                         </div>
                                     </div>
 
+
                                 </div>
                             </div>
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
-                                <div class="title">Registered User Details</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Name:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->full_name ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Email:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->email ?? '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Phone:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->phone ?? '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Country:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->country ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">City:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->city ?? '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Signup Method:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->signup_method ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Registration Date:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->created_at->format('d M Y') ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-12 mt-4">
-                                        <div class="placeholder-user">
-                                            <a href="{{ asset($booking->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
-                                                data-fancybox="gallery" class="placeholder-user__img">
-                                                <img src="{{ asset($booking->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
-                                                    alt="{{ $booking->user->full_name ?? '' }}" class="imgFluid">
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Booking Details Entered by User</div>
+                                <div class="title">Checkout Details</div>
                             </div>
                             <div class="form-box__body">
                                 @php
@@ -263,10 +193,6 @@
                                         <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
                                             <strong>Tour {{ $index + 1 }}</strong>
                                             <div class="d-flex gap-2">
-                                                <a href="{{ route('admin.tours.edit', $tour->id) }}" target="_blank"
-                                                    class="themeBtn">
-                                                    View Tour in Portal
-                                                </a>
                                                 <a href="{{ $tour->detail_url }}" target="_blank" class="themeBtn">
                                                     View on Website
                                                 </a>
@@ -340,16 +266,16 @@
                             </div>
                         </div>
 
-                        <div class="form-box">
-                            <div class="form-box__header d-flex justify-content-between align-items-center">
-                                <div class="title">Applied Coupons</div>
-                            </div>
-                            <div class="form-box__body">
-                                @php
-                                    $appliedCoupons = getCouponsFromCart($booking->cart_data);
-                                @endphp
+                        @php
+                            $appliedCoupons = getCouponsFromCart($booking->cart_data);
+                        @endphp
+                        @if ($appliedCoupons->count())
+                            <div class="form-box">
+                                <div class="form-box__header d-flex justify-content-between align-items-center">
+                                    <div class="title">Applied Coupons</div>
+                                </div>
+                                <div class="form-box__body">
 
-                                @if ($appliedCoupons->count())
                                     <div class="row">
                                         @foreach ($appliedCoupons as $index => $coupon)
                                             <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
@@ -359,10 +285,6 @@
                                                         <span class="badge bg-success ms-2">First Order Coupon</span>
                                                     @endif
                                                 </div>
-                                                <a href="{{ route('admin.coupons.edit', $coupon->id) }}" target="_blank"
-                                                    class="themeBtn">
-                                                    View in Portal
-                                                </a>
                                             </div>
 
                                             <div class="col-md-4 col-12 mb-4">
@@ -396,11 +318,10 @@
                                             @endif
                                         @endforeach
                                     </div>
-                                @else
-                                    <p class="text-muted">No coupons applied to this booking.</p>
-                                @endif
+                                </div>
                             </div>
-                        </div>
+                        @endif
+
                     </div>
                 </div>
             </div>

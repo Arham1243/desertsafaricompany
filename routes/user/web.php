@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BulkActionController;
+use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfileSettingsController;
 use App\Http\Controllers\User\RecoveryController;
 use App\Http\Controllers\User\UserDashController;
@@ -14,6 +15,9 @@ Route::middleware(['auth', 'check_user_status'])->prefix('user')->name('user.')-
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
 
     Route::resource('profile', ProfileSettingsController::class);
+    Route::resource('bookings', OrderController::class);
+    Route::get('bookings/pay/{id}', [OrderController::class, 'pay'])->name('bookings.pay');
+    Route::post('bookings/pay/process/{id}', [OrderController::class, 'paymentProcess'])->name('bookings.paymentProcess');
     Route::get('profile/change/password', [ProfileSettingsController::class, 'changePassword'])->name('profile.changePassword');
     Route::post('profile/change/password/update', [ProfileSettingsController::class, 'updatePassword'])->name('profile.updatePassword');
 });

@@ -21,3 +21,18 @@ Breadcrumbs::for('user.profile.changePassword', function (BreadcrumbTrail $trail
     $trail->parent('user.dashboard');
     $trail->push('Change Password', route('user.profile.changePassword'));
 });
+
+Breadcrumbs::for('user.bookings.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('user.dashboard');
+    $trail->push('Bookings', route('user.bookings.index'));
+});
+
+Breadcrumbs::for('user.bookings.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('user.bookings.index');
+    $trail->push('Booking Details', route('user.bookings.edit', $item->id));
+});
+
+Breadcrumbs::for('user.bookings.pay', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('user.bookings.edit', $item); // pass the model, not $item->id
+    $trail->push('Booking Payment', route('user.bookings.pay', $item->id));
+});

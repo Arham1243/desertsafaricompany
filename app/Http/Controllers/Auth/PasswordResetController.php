@@ -27,7 +27,7 @@ class PasswordResetController extends Controller
             );
 
             $settings = Setting::where('group', 'general')->pluck('value', 'key');
-            $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
+            $headerLogo = $settings->get('header_logo') ?? 'admin/assets/images/placeholder-logo.png';
 
             $data = [
                 'full_name' => $user->full_name,
@@ -35,11 +35,15 @@ class PasswordResetController extends Controller
                 'logo' => asset($headerLogo),
             ];
 
-            Mail::send('emails.reset-password', ['data' => $data], function ($message) use ($user) {
-                $message->from(env('MAIL_FROM_ADDRESS'));
-                $message->to($user->email)
-                    ->subject('Password Reset - '.env('MAIL_FROM_NAME'));
-            });
+            try {
+                Mail::send('emails.reset-password', compact('data'), function ($message) use ($user) {
+                    $message->from(config('mail.from.address'), config('mail.from.name'));
+                    $message->to($user->email, $user->full_name);
+                    $message->subject('Password Reset');
+                });
+            } catch (\Throwable $e) {
+                \Log::error('Password reset email failed for user '.$user->id.': '.$e->getMessage());
+            }
 
             return response()->json([
                 'status' => 'success',
@@ -68,7 +72,7 @@ class PasswordResetController extends Controller
         // Validate the request
         $validator = Validator::make($request->all(), [
             'token' => 'required|string',
-            'password' => 'required|string|min:8|confirmed', // Ensure password confirmation
+            'password' => 'required|string|min:8|confirmed',  // Ensure password confirmation
         ]);
 
         if ($validator->fails()) {

@@ -144,7 +144,7 @@
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
                             Hi Admin,<br><br>
-                            A new order has been placed but the <strong>payment failed</strong>. The order is currently
+                            A order payment was <strong>payment failed</strong>. The order is currently
                             pending payment. Details are below:
                         </td>
                     </tr>

@@ -12,7 +12,7 @@ use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', [IndexController::class, 'index'])->name('login');
+Route::get('/#', [IndexController::class, 'index'])->name('login');
 Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');

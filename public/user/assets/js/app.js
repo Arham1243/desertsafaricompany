@@ -126,11 +126,11 @@ function showImage(input, previewImgId, filenamePreviewId) {
     }
 }
 
-// DataTable
 let table = new DataTable(".data-table", {
     columnDefs: [
-        { orderable: false, targets: 0 }, // Disable sorting for the first column (index 0)
+        { orderable: false, targets: 0 }, // first column unsortable
     ],
+    ordering: false, // disable all sorting
 });
 
 // SideBar Dropdown

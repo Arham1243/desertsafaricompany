@@ -7,6 +7,11 @@ return [
         'route' => route('user.dashboard'),
     ],
     [
+        'title' => 'My Bookings',
+        'icon' => 'bx bxs-calendar-check',
+        'route' => route('user.bookings.index'),
+    ],
+    [
         'title' => 'Profile Settings',
         'icon' => 'bx bxs-cog',
         'submenu' => [

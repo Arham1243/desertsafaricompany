@@ -7830,3 +7830,6 @@ ul.show-in-desktop {
 .iti.iti--allow-dropdown.iti--separate-dial-code {
     width: 100%;
 }
+table th {
+    white-space: nowrap;
+}

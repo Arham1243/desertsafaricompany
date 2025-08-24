@@ -12,7 +12,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <a href="" class="revenue-card">
+                        <a href="{{ route('user.bookings.index') }}" class="revenue-card">
                             <div class="revenue-card__icon"><i class='bx bx-lg bxs-calendar-check'></i></div>
                             <div class="revenue-card__content">
                                 <div class="title">View all your booked tours</div>

@@ -46,6 +46,7 @@ class SocialiteController extends Controller
                     'signup_method' => $social,
                     'social_token' => $socialUser->token,
                     'avatar' => $socialUser->avatar,
+                    'email_verified' => true,
                 ]);
 
                 Auth::login($existingUser);
@@ -62,6 +63,7 @@ class SocialiteController extends Controller
                     'email' => $socialUser->email ?? $socialUser->nickname.'@'.$social.'.com', // Handle missing email
                     'social_token' => $socialUser->token,
                     'avatar' => $socialUser->avatar,
+                    'email_verified' => true,
                 ]);
 
                 Auth::login($user);

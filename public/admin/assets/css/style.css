@@ -2734,3 +2734,7 @@ a.delete-btn:hover {
     border: 1px solid #ccced1;
     border-inline: none;
 }
+
+table th {
+    white-space: nowrap;
+}

@@ -1,8 +1,8 @@
-@extends('admin.layouts.main')
+@extends('user.layouts.main')
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.bookings.index') }}
+            {{ Breadcrumbs::render('user.bookings.index') }}
             <div class="table-container universal-table">
                 <div class="custom-sec">
                     <div class="custom-sec__header">
@@ -16,11 +16,11 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Tour</th>
-                                    <th>User Name</th>
+                                    <th>User</th>
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
-                                    <th>Status</th>
+                                    <th>Order Created at</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -28,12 +28,12 @@
                                 @foreach ($bookings as $item)
                                     <tr>
                                         <td class="text-center">
-                                            <a href="{{ route('admin.bookings.edit', $item->id) }}"
+                                            <a href="{{ route('user.bookings.edit', $item->id) }}"
                                                 class="link">#{{ $item->id }}</a>
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                <a target="_blank" href="{{ route('admin.tours.edit', $tour->id) }}"
+                                                <a target="_blank" href="{{ route('user.bookings.edit', $tour->id) }}"
                                                     class="link">{{ $tour->title }}</a> <br>
                                             @endforeach
                                         </td>
@@ -51,8 +51,28 @@
                                         <td>{{ formatDateTime($item->payment_date) }}</td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
-                                            <a href="{{ route('admin.bookings.edit', $item->id) }}" class="themeBtn"><i
-                                                    class='bx bxs-edit'></i>View</a>
+                                            <div class="dropstart bootsrap-dropdown">
+                                                <button type="button" class="recent-act__icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-dots-horizontal-rounded'></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('user.bookings.edit', $item->id) }}">
+                                                            <i class='bx bxs-show'></i>
+                                                            View
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('user.bookings.pay', $item->id) }}">
+                                                            <i class='bx bxs-credit-card'></i>
+                                                            Pay Now
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

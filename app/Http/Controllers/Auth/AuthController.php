@@ -30,7 +30,7 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'signup_method' => 'email',
                 'email_verification_token' => $emailVerificationToken,
-                'email_verified' => true,
+                'email_verified' => false,
             ]);
 
             $this->sendVerificationEmail($user);
@@ -91,20 +91,24 @@ class AuthController extends Controller
 
     public function sendVerificationEmail($user)
     {
-        $settings = Setting::pluck('value', 'key');
-        $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
+        try {
+            $settings = Setting::pluck('value', 'key');
+            $headerLogo = $settings->get('header_logo') ?? 'admin/assets/images/placeholder-logo.png';
 
-        $data = [
-            'full_name' => $user->full_name,
-            'verify_link' => route('auth.verify-email', ['token' => $user->email_verification_token]),
-            'logo' => asset($headerLogo),
-        ];
+            $data = [
+                'full_name' => $user->full_name,
+                'verify_link' => route('auth.verify-email', ['token' => $user->email_verification_token]),
+                'logo' => asset($headerLogo),
+            ];
 
-        Mail::send('emails.verify-email', ['data' => $data], function ($message) use ($user) {
-            $message->from(env('MAIL_FROM_ADDRESS'));
-            $message->to($user->email);
-            $message->subject('Please Verify Your Email Address - '.env('MAIL_FROM_NAME'));
-        });
+            Mail::send('emails.verify-email', compact('data'), function ($message) use ($user) {
+                $message->from(config('mail.from.address'), config('mail.from.name'));
+                $message->to($user->email, $user->full_name);
+                $message->subject('Please Verify Your Email Address');
+            });
+        } catch (\Throwable $e) {
+            \Log::error('Verification email failed for user '.$user->id.': '.$e->getMessage());
+        }
     }
 
     public function verifyEmail($token)

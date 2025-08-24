@@ -23,7 +23,7 @@
 @push('js')
     <script>
         const url = new URL(window.location);
-        url.searchParams.delete('order_id');
+        url.search = '';
         window.history.replaceState({}, document.title, url);
     </script>
 @endpush

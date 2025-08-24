@@ -330,7 +330,6 @@
                             </div>
                             <div class="details-box__body details-box__body--pay">
                                 <ul class="payment-options">
-
                                     @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
                                         <!-- Cash on Pickup -->
                                         <li class="payment-option">

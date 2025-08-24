@@ -12,7 +12,7 @@
                 </div>
                 <p>Thank you for your purchase! Your order was processed successfully. <br>
                     Your booking is confirmed — get ready for an amazing adventure!</p>
-                <a href="" class="primary-btn mx-auto">View My Bookings</a>
+                <a href="{{ url('user/bookings') }}" class="primary-btn mx-auto">View My Bookings</a>
 
             </div>
         </div>
@@ -21,7 +21,7 @@
 @push('js')
     <script>
         const url = new URL(window.location);
-        url.searchParams.delete('order_id');
+        url.search = '';
         window.history.replaceState({}, document.title, url);
     </script>
 @endpush
