@@ -139,9 +139,9 @@
 
                                     <div class="col-md-12 mt-4">
                                         <div class="placeholder-user">
-                                            <a href="{{ asset($booking->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
+                                            <a href="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
                                                 data-fancybox="gallery" class="placeholder-user__img">
-                                                <img src="{{ asset($booking->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
+                                                <img src="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
                                                     alt="{{ $booking->user->full_name ?? '' }}" class="imgFluid">
                                             </a>
                                         </div>
