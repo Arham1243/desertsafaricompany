@@ -157,7 +157,7 @@
                                 <tr>
                                     <td align="center" valign="middle"
                                         style="padding: 12px 24px; margin: 0; text-decoration: none; border-collapse: collapse; border-spacing: 0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; -khtml-border-radius: 4px;"
-                                        bgcolor="#3969d5"><a target="_blank"
+                                        bgcolor="#1c4d99"><a target="_blank"
                                             style="text-decoration: none;
 					color: #FFFFFF; font-family: sans-serif; font-size: 17px; font-weight: 400; line-height: 120%;"
                                             href="{{ $data['verify_link'] }}">
