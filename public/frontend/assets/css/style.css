@@ -6597,7 +6597,7 @@ span.select2-dropdown.select2-dropdown--below {
     outline: none;
     border-radius: 0.35rem;
     color: #000;
-    font-size: 0.75rem;
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -6665,6 +6665,7 @@ span.select2-dropdown.select2-dropdown--below {
 .payment-option__box .title {
     font-size: 1rem;
     font-weight: 600;
+    text-transform: capitalize;
 }
 
 .payment-option__box .content {
