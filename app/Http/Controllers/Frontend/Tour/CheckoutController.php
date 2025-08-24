@@ -246,6 +246,7 @@ class CheckoutController extends Controller
     private function handleCOD(Order $order)
     {
         $order->update(['payment_status' => 'pending']);
+        $cart = Session::get('cart');
         $this->saveAppliedUserCoupons($cart, $order);
         Session::forget('cart');
 

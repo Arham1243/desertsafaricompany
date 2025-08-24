@@ -258,7 +258,7 @@
                                 <div class="row g-0">
                                     <div class="col-md-6">
                                         <div class="field">
-                                            <input type="text" placeholder="First Name *" required
+                                            <input id="first_name" type="text" placeholder="First Name *" required
                                                 name="order[first_name]">
                                         </div>
                                     </div>
@@ -270,7 +270,8 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="field">
-                                            <input type="email" placeholder="Email *" required name="order[email]">
+                                            <input id="email" type="email" placeholder="Email *" required
+                                                name="order[email]">
                                         </div>
                                     </div>
 
@@ -280,17 +281,17 @@
                                                 value="971">
                                             <input type="hidden" name="order[phone_country_code]"
                                                 data-flag-input-country-code value="ae">
-                                            <input type="text" name="order[phone_number]" class="field flag-input"
-                                                data-flag-input value="" placeholder="Phone" inputmode="numeric"
-                                                pattern="[0-9]*" oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                                maxlength="15">
+                                            <input id="phone_number" type="text" name="order[phone_number]"
+                                                class="field flag-input" data-flag-input value="" placeholder="Phone"
+                                                inputmode="numeric" pattern="[0-9]*"
+                                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="15">
                                         </div>
                                     </div>
 
 
                                     <div class="col-md-6">
                                         <div class="field">
-                                            <select name="order[country]" required>
+                                            <select id="country" name="order[country]" required>
                                                 <option value="" selected disabled>Select</option>
                                                 @foreach ($countries as $country)
                                                     <option value="{{ $country }}"
@@ -304,12 +305,14 @@
 
                                     <div class="col-md-6">
                                         <div class="field">
-                                            <input type="text" placeholder="City *" required name="order[city]">
+                                            <input id="city" type="text" placeholder="City *" required
+                                                name="order[city]">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
                                         <div class="field">
-                                            <input type="text" placeholder="Address *" required name="order[address]">
+                                            <input id="address" type="text" placeholder="Address *" required
+                                                name="order[address]">
                                         </div>
                                     </div>
                                     <div class="col-md-12">
@@ -327,131 +330,148 @@
                             </div>
                             <div class="details-box__body details-box__body--pay">
                                 <ul class="payment-options">
-                                    <!-- Cash on Pickup -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="cod" checked id="cod" />
-                                        <label for="cod" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
-                                                        alt="cod" class="imgFluid">
-                                                </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Cash on Pickup</div>
-                                                <div class="note">
-                                                    Pay the driver when you pick up your order.
-                                                </div>
-                                            </div>
-                                        </label>
-                                    </li>
 
-                                    <!-- Buy Now Pay Later - Tabby -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="tabby" id="tabby" />
-                                        <label for="tabby" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/3.png') }}"
-                                                        alt="tabby" class="imgFluid">
+                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
+                                        <!-- Cash on Pickup -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="cod" checked id="cod" />
+                                            <label for="cod" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
+                                                            alt="cod" class="imgFluid">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Tabby - Buy Now, Pay Later (4 instalments)</div>
-                                                <div class="note">
-                                                    No credit card required. Valid for orders AED 100 or more.
+                                                <div class="content">
+                                                    <div class="title">Cash on Pickup</div>
+                                                    <div class="note">
+                                                        Pay the driver when you pick up your order.
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </li>
+                                            </label>
+                                        </li>
+                                    @endif
 
-                                    <!-- Buy Now Pay Later - Tamara -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="tamara" id="tamara" />
-                                        <label for="tamara" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/6.png') }}"
-                                                        alt="tamara" class="imgFluid">
+                                    @if (isset($settings['tabby_enabled']) && (int) $settings['tabby_enabled'] === 1)
+                                        <!-- Buy Now Pay Later - Tabby -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="tabby" id="tabby" />
+                                            <label for="tabby" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/3.png') }}"
+                                                            alt="tabby" class="imgFluid">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Tamara - Pay Later</div>
-                                                <div class="note">
-                                                    Split your payment into 2–3 instalments. No interest. Simple & secure.
+                                                <div class="content">
+                                                    <div class="title">Tabby - Buy Now, Pay Later (4 instalments)</div>
+                                                    <div class="note">
+                                                        No credit card required. Valid for orders AED 100 or more.
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </li>
+                                            </label>
+                                        </li>
+                                    @endif
 
-                                    <!-- Card Payments - Stripe -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="stripe" id="stripe" />
-                                        <label for="stripe" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/1.png') }}"
-                                                        alt="stripe" class="imgFluid">
+                                    @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
+                                        <!-- Buy Now Pay Later - Tamara -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="tamara" id="tamara" />
+                                            <label for="tamara" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/6.png') }}"
+                                                            alt="tamara" class="imgFluid">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Credit/Debit Card (Stripe)</div>
-                                                <div class="note">
-                                                    Visa, Mastercard, American Express, Discover, Diners Club, JCB
+                                                <div class="content">
+                                                    <div class="title">Tamara - Pay Later</div>
+                                                    <div class="note">
+                                                        Split your payment into 2–3 instalments. No interest. Simple &
+                                                        secure.
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </li>
+                                            </label>
+                                        </li>
+                                    @endif
 
-                                    <!-- Card Payments - PayPal -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="paypal" id="paypal" />
-                                        <label for="paypal" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/5.png') }}"
-                                                        alt="paypal" class="imgFluid">
+                                    @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
+                                        <!-- Card Payments - Stripe -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="stripe" id="stripe" />
+                                            <label for="stripe" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/1.png') }}"
+                                                            alt="stripe" class="imgFluid">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">PayPal</div>
-                                                <div class="note">
-                                                    Secure payments via PayPal wallet or linked cards.
+                                                <div class="content">
+                                                    <div class="title">Credit/Debit Card (Stripe)</div>
+                                                    <div class="note">
+                                                        Visa, Mastercard, American Express, Discover, Diners Club, JCB
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </li>
+                                            </label>
+                                        </li>
+                                    @endif
 
-                                    <!-- Postpay (optional BNPL) -->
-                                    <li class="payment-option">
-                                        <input class="payment-option__input" type="radio" name="payment_type"
-                                            value="postpay" id="postpay" />
-                                        <label for="postpay" class="payment-option__box">
-                                            <div class="title-wrapper">
-                                                <div class="radio"></div>
-                                                <div class="icon">
-                                                    <img src="{{ asset('frontend/assets/images/methods/2.png') }}"
-                                                        alt="postpay" class="imgFluid">
+                                    @if (isset($settings['paypal_enabled']) && (int) $settings['paypal_enabled'] === 1)
+                                        <!-- Card Payments - PayPal -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="paypal" id="paypal" />
+                                            <label for="paypal" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/5.png') }}"
+                                                            alt="paypal" class="imgFluid">
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="content">
-                                                <div class="title">Postpay</div>
-                                                <div class="note">
-                                                    Pay later at checkout. Available for eligible orders.
+                                                <div class="content">
+                                                    <div class="title">PayPal</div>
+                                                    <div class="note">
+                                                        Secure payments via PayPal wallet or linked cards.
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </label>
-                                    </li>
+                                            </label>
+                                        </li>
+                                    @endif
+
+                                    @if (isset($settings['postpay_enabled']) && (int) $settings['postpay_enabled'] === 1)
+                                        <!-- Postpay (optional BNPL) -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="postpay" id="postpay" />
+                                            <label for="postpay" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/2.png') }}"
+                                                            alt="postpay" class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">Postpay</div>
+                                                    <div class="note">
+                                                        Pay later at checkout. Available for eligible orders.
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
+
+
+
 
                                 </ul>
                             </div>
@@ -668,6 +688,40 @@
 
             if (btn && form) {
                 btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const firstName = document.getElementById('first_name').value;
+                    const phone = document.getElementById('phone_number').value;
+                    const country = document.getElementById('country').value;
+                    const city = document.getElementById('city').value;
+
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (!email) {
+                        showToast('error', 'Email is required');
+                        return;
+                    }
+                    if (!emailPattern.test(email)) {
+                        showToast('error', 'Please enter a valid email');
+                        return;
+                    }
+                    if (!firstName) {
+                        showToast('error', 'First name is required');
+                        return;
+                    }
+                    if (!phone) {
+                        showToast('error', 'Phone number is required');
+                        return;
+                    }
+                    if (!country) {
+                        showToast('error', 'Country is required');
+                        return;
+                    }
+                    if (!city) {
+                        showToast('error', 'City is required');
+                        return;
+                    }
+
                     form.submit();
                 });
             }
