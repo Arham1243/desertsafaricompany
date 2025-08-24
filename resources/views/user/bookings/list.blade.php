@@ -33,7 +33,7 @@
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                <a target="_blank" href="{{ route('user.bookings.edit', $tour->id) }}"
+                                                <a target="_blank" href="{{ $tour->detail_url }}"
                                                     class="link">{{ $tour->title }}</a> <br>
                                             @endforeach
                                         </td>
@@ -64,13 +64,15 @@
                                                             View
                                                         </a>
                                                     </li>
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('user.bookings.pay', $item->id) }}">
-                                                            <i class='bx bxs-credit-card'></i>
-                                                            Pay Now
-                                                        </a>
-                                                    </li>
+                                                    @if ($item->payment_status !== 'paid')
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('user.bookings.pay', $item->id) }}">
+                                                                <i class='bx bxs-credit-card'></i>
+                                                                Pay Now
+                                                            </a>
+                                                        </li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </td>
