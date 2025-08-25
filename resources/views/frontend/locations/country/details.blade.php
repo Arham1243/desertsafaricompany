@@ -32,7 +32,7 @@
                         <div class="location1-content__section--heading">
                             <h1 class="heading">
                                 @if ($headingTitle || $headingSubtitle)
-                                    {{ $headingTitle }}
+                                    <div class="mainHeading">{{ $headingTitle }}</div>
                                     @if ($headingSubtitle)
                                         <div class="subHeading">{{ $headingSubtitle }}</div>
                                     @endif

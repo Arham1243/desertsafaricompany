@@ -36,7 +36,7 @@
     li.header-btns__item:not(.login-li) {
         display: none;
     }
-    li.header-btns__item.login-li a.login-anchor{
+    li.header-btns__item.login-li a.login-anchor {
         display: none;
     }
 
@@ -640,11 +640,11 @@
     .refund-policy-item__time {
         font-size: 13px;
     }
-    .global-popup__content{
+    .global-popup__content {
         height: 70vh;
         overflow-y: auto;
-    }    
-    .tour-content_book_app{
+    }
+    .tour-content_book_app {
         padding: 1rem 1.25rem 1.5rem;
     }
     .detail-popups {
@@ -660,27 +660,30 @@
         margin-top: 0.5rem;
     }
     .availability-bar {
-    padding: 0.45rem 0.35rem 1rem;
-}
+        padding: 0.45rem 0.35rem 1rem;
+    }
     .details-btn-wrapper .wishlist-btn {
-    width: 40px;
-}
-    .details-btn-wrapper .wishlist-btn i{
-    font-size: 1.4rem;
-}
-    .details-btn-wrapper .primary-btn{
+        width: 40px;
+    }
+    .details-btn-wrapper .wishlist-btn i {
+        font-size: 1.4rem;
+    }
+    .details-btn-wrapper .primary-btn {
         flex: 1;
         font-size: 0.85rem;
         padding: 0.7rem 0;
     }
-    .availability-bar-padding{
+    .availability-bar-padding {
         padding-inline: 0;
     }
-    .availability-bar .details-wrapper{
+    .availability-bar .details-wrapper {
         display: none;
     }
-    .faqs-single__header
- {
-    gap: 1rem;
-}
+    .faqs-single__header {
+        gap: 1rem;
+    }
+    .location1-content__section--heading h2,
+    .location1-content__section--heading .heading {
+        font-size: 20px;
+    }
 }
