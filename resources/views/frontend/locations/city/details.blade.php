@@ -198,10 +198,12 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
             <div class="container">
                 <div class="row mb-3">
                     <div class="col-md-12">
-                        <div class="section-content">
-                            <h2 class="subHeading">
-                                {{ $first_tour_block['heading'] ?? '' }}
-                            </h2>
+                        <div class="latest-stories__details">
+                            <div class="section-content">
+                                <h2 class="subHeading">
+                                    {{ $first_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
                         </div>
                     </div>
                 </div>
