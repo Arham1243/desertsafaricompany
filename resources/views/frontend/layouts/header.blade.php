@@ -1,27 +1,29 @@
 @if ((int) $settings->get('is_enabled_cookie_bar') === 1)
     <div class="cookie-consent hidden" id="cookie-consent">
-        <div class="cookie-consent__container">
-            <p class="cookie-consent__text"
-                @if ($settings->get('cookie_bar_text_color')) style="color: {{ $settings->get('cookie_bar_text_color') }};" @endif>
-                {{ $settings->get('cookie_bar_text') ?? 'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' }}
-            </p>
-            <div class="cookie-consent__buttons">
-                <button type="button" class="cookie-consent__button cookie-consent__button--accept"
-                    onclick="handleCookieConsent(true)"
-                    @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
+        <div class="container">
+            <div class="cookie-consent__container">
+                <p class="cookie-consent__text"
+                    @if ($settings->get('cookie_bar_text_color')) style="color: {{ $settings->get('cookie_bar_text_color') }};" @endif>
+                    {{ $settings->get('cookie_bar_text') ?? 'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' }}
+                </p>
+                <div class="cookie-consent__buttons">
+                    <button type="button" class="cookie-consent__button cookie-consent__button--accept"
+                        onclick="handleCookieConsent(true)"
+                        @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
-                    @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                         @endif>
-                    {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
-                </button>
-                <button type="button" class="cookie-consent__button cookie-consent__button--reject"
-                    onclick="handleCookieConsent(false)"
-                    @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
+                        @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
+                            @endif>
+                        {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
+                    </button>
+                    <button type="button" class="cookie-consent__button cookie-consent__button--reject"
+                        onclick="handleCookieConsent(false)"
+                        @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
-                    @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                         @endif>
-                    {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
-                </button>
+                        @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
+                            @endif>
+                        {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
+                    </button>
+                </div>
             </div>
         </div>
     </div>

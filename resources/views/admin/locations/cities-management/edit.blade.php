@@ -321,7 +321,7 @@
                                                             <input id="last-line-color-picker" type="hidden"
                                                                 name="section_content[guide][last_line_color]"
                                                                 data-color-picker-input
-                                                                value="{{ $guideContent->last_line_color ?? '#333333' }}"
+                                                                value="{{ $guideContent->last_line_color ?? '#151217' }}"
                                                                 data-error="Last Line Color" inputmode="text">
                                                             <input type="text" name="section_content[guide][last_line]"
                                                                 value="{{ $guideContent->last_line ?? '' }}">

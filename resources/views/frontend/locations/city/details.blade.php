@@ -83,7 +83,7 @@
                                     @if (!empty($guideContent->description_color)) style="color: {{ $guideContent->description_color }};" @endif>
                                     {{ $guideContent->description ?? '' }}
                                 </div>
-                                <div class="loaction-guide-pra mt-1 "
+                                <div class="loaction-guide-pra fw-bold mt-1 "
                                     @if (!empty($guideContent->last_line_color)) style="color: {{ $guideContent->last_line_color }};" @endif>
                                     {{ $guideContent->last_line ?? '' }}
                                 </div>
