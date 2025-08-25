@@ -5212,7 +5212,7 @@ span.booking-assistant__icon {
 .location1-content__section--heading h2,
 .location1-content__section--heading .heading {
     line-height: 1.2;
-    font-size: 35px;
+    font-size: 33px;
     font-weight: 700;
     color: var(--color-primary);
     margin-bottom: 1.25rem;
@@ -5251,7 +5251,7 @@ a.location1-content__section--btn {
     text-align: center;
     background-color: rgb(240 246 255);
     border-radius: 8px;
-    padding: 2.5rem;
+    padding: 2.5rem 0.5rem;
     margin: 0 2rem;
 }
 
@@ -5275,11 +5275,11 @@ a.location1-content__section--btn {
 }
 
 .loaction-guide-btn .themeBtn-round {
-    padding: 0.4rem 0;
+    padding: 0.5rem 0;
     background-color: var(--color-primary);
     color: #fff;
     font-size: 14px;
-    width: 100%;
+    width: 80%;
 }
 
 .article-filters {
