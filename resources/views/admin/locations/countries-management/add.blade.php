@@ -62,6 +62,20 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Title:</label>
+                                                <input name="json_content[h1_title_text][title]" type="text"
+                                                    class="field">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Subtitle:</label>
+                                                <input name="json_content[h1_title_text][subtitle]" type="text"
+                                                    class="field">
+                                            </div>
+                                        </div>
                                         <div class="col-12 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Content:</label>

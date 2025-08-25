@@ -5201,19 +5201,21 @@ span.booking-assistant__icon {
     height: 450px;
 }
 
-.location1-content__section {
-}
-
 .location1-content__section--heading {
     align-items: end;
 }
 
-.location1-content__section--heading h2 {
-    line-height: 1.1;
+.location1-content__section--heading h2,
+.location1-content__section--heading .heading {
+    line-height: 1;
     font-size: 63px;
-    display: inline;
     font-weight: 700;
     color: var(--color-primary);
+    margin-bottom: 1.25rem;
+}
+.location1-content__section--heading .subHeading {
+    color: #333;
+    font-size: 2.93rem;
 }
 
 a.location1-content__section--btn {

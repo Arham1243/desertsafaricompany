@@ -24,42 +24,75 @@
                                     <div class="title">City Content</div>
                                 </div>
                                 <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Name <span class="text-danger">*</span> :</label>
-                                        <input type="text" name="name" class="field" value="{{ old('name') }}"
-                                            placeholder="Name" data-error="Name" data-required>
-                                        @error('name')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Country <span class="text-danger">*</span> :</label>
-                                        <select name="country_id" class="select2-select" data-error="Country" data-required>
-                                            <option value="" selected disabled>Select Country</option>
-                                            @foreach ($countries as $country)
-                                                <option value="{{ $country->id }}"
-                                                    {{ old('country_id') == $country->id ? 'selected' : '' }}>
-                                                    {{ $country->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('country_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Content:</label>
-                                        <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
-                                            {{ old('content') }}
+                                    <div class="row">
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Name <span class="text-danger">*</span> :</label>
+                                                <input type="text" name="name" class="field"
+                                                    value="{{ old('name') }}" placeholder="Name" data-error="Name"
+                                                    data-required>
+                                                @error('name')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Country <span class="text-danger">*</span> :</label>
+                                                <select name="country_id" class="select2-select" data-error="Country"
+                                                    data-required>
+                                                    <option value="" selected>Select Country</option>
+                                                    @foreach ($countries as $country)
+                                                        <option value="{{ $country->id }}">
+                                                            {{ $country->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('country_id')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Title:</label>
+                                                <input name="json_content[h1_title_text][title]" type="text"
+                                                    class="field">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Subtitle:</label>
+                                                <input name="json_content[h1_title_text][subtitle]" type="text"
+                                                    class="field">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Content:</label>
+                                                <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
+                                            {!! old('content') !!}
                                         </textarea>
-                                        @error('content')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Lines to Display Before "Read More" </label>
-                                        <input oninput="this.value = Math.abs(this.value)" type="number" min="0"
-                                            name="content_line_limit" class="field" data-error="content_line_limit">
+                                                @error('content')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-fields">
+                                                <label class="title">Lines to Display Before "Read More" </label>
+                                                <input oninput="this.value = Math.abs(this.value)" type="number"
+                                                    min="0" name="content_line_limit" class="field"
+                                                    value="{{ old('content_line_limit') }}" data-error="content_line_limit">
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

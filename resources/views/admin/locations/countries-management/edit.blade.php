@@ -78,6 +78,22 @@
                                                 @enderror
                                             </div>
                                         </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Title:</label>
+                                                <input name="json_content[h1_title_text][title]" type="text"
+                                                    class="field"
+                                                    value="{{ $jsonContent['h1_title_text']['title'] ?? '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Subtitle:</label>
+                                                <input name="json_content[h1_title_text][subtitle]" type="text"
+                                                    class="field"
+                                                    value="{{ $jsonContent['h1_title_text']['subtitle'] ?? '' }}">
+                                            </div>
+                                        </div>
                                         <div class="col-md-12 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Content:</label>
@@ -120,7 +136,8 @@
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
                                         <label class="title">Heading:</label>
-                                        <input name="json_content[first_tour_block][heading]" type="text" class="field"
+                                        <input name="json_content[first_tour_block][heading]" type="text"
+                                            class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">

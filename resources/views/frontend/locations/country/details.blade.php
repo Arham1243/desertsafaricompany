@@ -2,7 +2,17 @@
 
 @php
     $seo = $item->seo ?? null;
+    $jsonContent = json_decode($item->json_content, true) ?? null;
+    $headingTitle =
+        isset($jsonContent['h1_title_text']['title']) && $jsonContent['h1_title_text']['title']
+            ? $jsonContent['h1_title_text']['title']
+            : null;
+    $headingSubtitle =
+        isset($jsonContent['h1_title_text']['subtitle']) && $jsonContent['h1_title_text']['subtitle']
+            ? $jsonContent['h1_title_text']['subtitle']
+            : null;
 @endphp
+
 
 @section('content')
     <div class="location-banner1">
@@ -20,9 +30,14 @@
                 <div class="col-md-7">
                     <div class="location1-content__section--details">
                         <div class="location1-content__section--heading">
-                            <h2>
-                                {{ $item->name }}
-                            </h2>
+                            <h1 class="heading">
+                                @if ($headingTitle || $headingSubtitle)
+                                    {{ $headingTitle }}
+                                    @if ($headingSubtitle)
+                                        <div class="subHeading">{{ $headingSubtitle }}</div>
+                                    @endif
+                                @endif
+                            </h1>
                         </div>
                         <div class="my-3">
                             <div class="tour-content__details " data-show-more>
@@ -110,7 +125,6 @@ $btnStyles = [];
     </div>
 
     @php
-        $jsonContent = json_decode($item->json_content, true) ?? null;
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
         $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
