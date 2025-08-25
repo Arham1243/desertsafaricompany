@@ -156,6 +156,9 @@
     .section-content .subHeading {
         font-size: 1.75rem;
     }
+    .latest-stories__details .subHeading {
+    font-size: 1.4rem;
+}
 
     .section-content p {
         font-size: 1.65rem;
@@ -579,8 +582,8 @@
         padding-right: 0;
     }
     .loaction-guide {
-        padding: 2.5rem;
-        margin: 2rem 2rem 0;
+        padding: 2.5rem 0;
+        margin: 2rem 0.25rem;
     }
     .loaction-guide-btn a .themeBtn-round {
         padding: 0.35rem 4rem;
