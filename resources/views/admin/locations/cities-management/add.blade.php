@@ -60,7 +60,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Title:</label>
                                                 <input name="json_content[h1_title_text][title]" type="text"
-                                                    class="field">
+                                                    maxlength="18" class="field">
                                             </div>
                                         </div>
 
@@ -68,7 +68,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Subtitle:</label>
                                                 <input name="json_content[h1_title_text][subtitle]" type="text"
-                                                    class="field">
+                                                    maxlength="24" class="field">
                                             </div>
                                         </div>
 
