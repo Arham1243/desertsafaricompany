@@ -7,7 +7,7 @@
 <script defer src="{{ asset('user/assets/js/alpine.min.js') }}"></script>
 <link href="{{ asset('user/assets/css/dataTables.min.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('user/assets/css/select2.min.css?v=' . time()) }}" rel="stylesheet" />
-<script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+<script src="{{ asset('user/assets/js/ckeditor.js?v=' . time()) }}"></script>
 <link href="{{ asset('toast/css/jquery.toast.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('user/assets/css/bootstrap.min.css?v=' . time()) }}" rel="stylesheet">
 <link href="{{ asset('user/assets/css/fancybox.min.css?v=' . time()) }}" rel="stylesheet">
