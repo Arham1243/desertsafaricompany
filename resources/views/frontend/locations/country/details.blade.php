@@ -66,19 +66,19 @@
                             <div class="loaction-guide-content">
                                 <div class="loaction-guide-heading"
                                     @if (!empty($guideContent->title_color)) style="color: {{ $guideContent->title_color }};" @endif>
-                                    {{ $guideContent->title }}
+                                    {{ $guideContent->title ?? '' }}
                                 </div>
                                 <div class="loaction-guide-title"
                                     @if (!empty($guideContent->subtitle_color)) style="color: {{ $guideContent->subtitle_color }};" @endif>
-                                    {{ $guideContent->subtitle }}
+                                    {{ $guideContent->subtitle ?? '' }}
                                 </div>
                                 <div class="loaction-guide-pra mb-0"
                                     @if (!empty($guideContent->description_color)) style="color: {{ $guideContent->description_color }};" @endif>
-                                    {{ $guideContent->description }}
+                                    {{ $guideContent->description ?? '' }}
                                 </div>
                                 <div class="loaction-guide-pra mt-1 "
                                     @if (!empty($guideContent->last_line_color)) style="color: {{ $guideContent->last_line_color }};" @endif>
-                                    {{ $guideContent->last_line }}
+                                    {{ $guideContent->last_line ?? '' }}
                                 </div>
                                 @if (isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled === '1')
                                     <div class="loaction-guide-btn">
