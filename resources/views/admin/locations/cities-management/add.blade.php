@@ -265,7 +265,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-lg-12">
+                                                <div class="col-lg-12 mb-4">
                                                     <div class="form-fields">
                                                         <label class="title">Description & Text Color <span
                                                                 class="text-danger">*</span>:</label>
@@ -280,6 +280,22 @@
                                                             <input type="text"
                                                                 name="section_content[guide][description]"
                                                                 value="{{ $guideContent->description ?? '' }}">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <div class="form-fields">
+                                                        <label class="title">Last Line & Text Color <span
+                                                                class="text-danger">*</span>:</label>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="last-line-color-picker" data-color-picker></label>
+                                                            <input id="last-line-color-picker" type="hidden"
+                                                                name="section_content[guide][last_line_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $guideContent->last_line_color ?? '#333333' }}"
+                                                                data-error="Last Line Color" inputmode="text">
+                                                            <input type="text" name="section_content[guide][last_line]"
+                                                                value="{{ $guideContent->last_line ?? '' }}">
                                                         </div>
                                                     </div>
                                                 </div>

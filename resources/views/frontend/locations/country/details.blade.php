@@ -72,9 +72,13 @@
                                     @if (!empty($guideContent->subtitle_color)) style="color: {{ $guideContent->subtitle_color }};" @endif>
                                     {{ $guideContent->subtitle }}
                                 </div>
-                                <div class="loaction-guide-pra"
+                                <div class="loaction-guide-pra mb-0"
                                     @if (!empty($guideContent->description_color)) style="color: {{ $guideContent->description_color }};" @endif>
                                     {{ $guideContent->description }}
+                                </div>
+                                <div class="loaction-guide-pra mt-1 "
+                                    @if (!empty($guideContent->last_line_color)) style="color: {{ $guideContent->last_line_color }};" @endif>
+                                    {{ $guideContent->last_line }}
                                 </div>
                                 @if (isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled === '1')
                                     <div class="loaction-guide-btn">
@@ -91,7 +95,7 @@
                                                 );
 
                                                 if ($btnCategory) {
-                                                    $routeParams = [$btnCategory->country->iso_alpha2];
+                                                    $routeParams = [$btnCategory->country->iso_alpha2 ?? 'no-country'];
 
                                                     if ($btnCategory->city) {
                                                         $routeParams[] = $btnCategory->city->slug;

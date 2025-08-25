@@ -37,13 +37,14 @@
                                         <div class="subHeading">{{ $headingSubtitle }}</div>
                                     @endif
                                 @endif
-
-                                <ul class="location1-Breadcrumb">
-                                    <li><a
-                                            href="{{ route('locations.country', $item->country->iso_alpha2) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
-                                    </li>
-                                    <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
-                                </ul>
+                                @if ($item->country && $item->country->iso_alpha2)
+                                    <ul class="location1-Breadcrumb">
+                                        <li><a
+                                                href="{{ route('locations.country', $item->country->iso_alpha2) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
+                                        </li>
+                                        <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
+                                    </ul>
+                                @endif
                             </h1>
                         </div>
                         <div class="my-3">
@@ -78,9 +79,13 @@
                                     @if (!empty($guideContent->subtitle_color)) style="color: {{ $guideContent->subtitle_color }};" @endif>
                                     {{ $guideContent->subtitle }}
                                 </div>
-                                <div class="loaction-guide-pra"
+                                <div class="loaction-guide-pra mb-0"
                                     @if (!empty($guideContent->description_color)) style="color: {{ $guideContent->description_color }};" @endif>
                                     {{ $guideContent->description }}
+                                </div>
+                                <div class="loaction-guide-pra mt-1 "
+                                    @if (!empty($guideContent->last_line_color)) style="color: {{ $guideContent->last_line_color }};" @endif>
+                                    {{ $guideContent->last_line }}
                                 </div>
                                 @if (isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled === '1')
                                     <div class="loaction-guide-btn">
@@ -97,7 +102,7 @@
                                                 );
 
                                                 if ($btnCategory) {
-                                                    $routeParams = [$btnCategory->country->iso_alpha2];
+                                                    $routeParams = [$btnCategory->country->iso_alpha2 ?? 'no-country'];
 
                                                     if ($btnCategory->city) {
                                                         $routeParams[] = $btnCategory->city->slug;
@@ -114,8 +119,7 @@
                                         <a href="{{ $finalLink ?? 'javascript:void(0)' }}" target="_blank"
                                             class="themeBtn-round"
                                             @php
-$btnStyles = [];
-                                        if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$guideContent->btn_background_color};";
+if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$guideContent->btn_background_color};";
                                         if (!empty($guideContent->btn_text_color)) $btnStyles[] = "color: {$guideContent->btn_text_color};"; @endphp
                                             @if (count($btnStyles) > 0) style="{{ implode(' ', $btnStyles) }}" @endif>
                                             {{ $guideContent->btn_text }}
