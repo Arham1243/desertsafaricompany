@@ -116,11 +116,38 @@
                                     </a>
                                 </div>
                                 <div class="form-box__body" x-show="enabled" x-transition>
-                                    <div class="form-fields">
-                                        <label class="title">Heading:</label>
-                                        <input name="json_content[enity_based_tour_block][heading]" type="text"
-                                            class="field"
-                                            value="{{ isset($jsonContent['enity_based_tour_block']) ? $jsonContent['enity_based_tour_block']['heading'] : '' }}">
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Heading:</label>
+                                                <input name="json_content[enity_based_tour_block][heading]" type="text"
+                                                    class="field"
+                                                    value="{{ isset($jsonContent['enity_based_tour_block']) ? $jsonContent['enity_based_tour_block']['heading'] : '' }}">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-4">
+                                            @php
+                                                $sortOptions = [
+                                                    'a_to_z' => 'A to Z',
+                                                    'z_to_a' => 'Z to A',
+                                                    'low_to_high' => 'Low to High',
+                                                    'high_to_low' => 'High to Low',
+                                                ];
+                                                $selectedSort = $jsonContent['enity_based_tour_block']['orderBy'] ?? '';
+                                            @endphp
+                                            <div class="form-fields">
+                                                <label class="title">Sort Order:</label>
+                                                <select name="json_content[enity_based_tour_block][orderBy]"
+                                                    class="select2-select">
+                                                    <option value="">Select Sort</option>
+                                                    @foreach ($sortOptions as $value => $label)
+                                                        <option value="{{ $value }}"
+                                                            {{ $selectedSort === $value ? 'selected' : '' }}>
+                                                            {{ $label }}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

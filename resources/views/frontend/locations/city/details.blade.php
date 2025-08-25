@@ -135,10 +135,25 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
     </div>
 
     @php
-        $enity_based_tour_block = isset($jsonContent['enity_based_tour_block'])
-            ? $jsonContent['enity_based_tour_block']
-            : null;
+        $enity_based_tour_block = $jsonContent['enity_based_tour_block'] ?? null;
         $enity_based_tour_block_tours = $item->tours;
+
+        if ($enity_based_tour_block && isset($enity_based_tour_block['orderBy'])) {
+            switch ($enity_based_tour_block['orderBy']) {
+                case 'a_to_z':
+                    $enity_based_tour_block_tours = $enity_based_tour_block_tours->sortBy('title');
+                    break;
+                case 'z_to_a':
+                    $enity_based_tour_block_tours = $enity_based_tour_block_tours->sortByDesc('title');
+                    break;
+                case 'low_to_high':
+                    $enity_based_tour_block_tours = $enity_based_tour_block_tours->sortBy('tour_lowest_price');
+                    break;
+                case 'high_to_low':
+                    $enity_based_tour_block_tours = $enity_based_tour_block_tours->sortByDesc('tour_lowest_price');
+                    break;
+            }
+        }
 
         $first_tour_block = isset($jsonContent['first_tour_block']) ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];

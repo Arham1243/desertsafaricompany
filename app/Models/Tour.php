@@ -19,7 +19,7 @@ class Tour extends Model
         'availability_open_hours' => 'array',
     ];
 
-    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url'];
+    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price'];
 
     public function categories()
     {
