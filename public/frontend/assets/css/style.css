@@ -5242,8 +5242,11 @@ a.location1-content__section--btn {
 .location1-Breadcrumb {
     display: flex;
     gap: 12px;
+    margin-top: 0.5rem;
 }
-
+.location1-Breadcrumb li {
+    line-height: 0.75;
+}
 .loaction-guide {
     text-align: center;
     background-color: rgb(240 246 255);

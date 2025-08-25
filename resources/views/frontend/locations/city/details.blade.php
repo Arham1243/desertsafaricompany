@@ -37,6 +37,13 @@
                                         <div class="subHeading">{{ $headingSubtitle }}</div>
                                     @endif
                                 @endif
+
+                                <ul class="location1-Breadcrumb">
+                                    <li><a
+                                            href="{{ route('locations.country', $item->country->iso_alpha2) }}">{{ $item->country ? $item->country->name . ',' : '' }}</a>
+                                    </li>
+                                    <li><a href="javascript:void(0)">{{ $item->name }}</a></li>
+                                </ul>
                             </h1>
                         </div>
                         <div class="my-3">
