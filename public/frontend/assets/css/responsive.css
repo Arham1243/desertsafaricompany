@@ -157,8 +157,8 @@
         font-size: 1.75rem;
     }
     .latest-stories__details .subHeading {
-    font-size: 1.2rem;
-}
+        font-size: 18px;
+    }
 
     .section-content p {
         font-size: 1.65rem;
@@ -216,10 +216,6 @@
         font-size: 12px;
         width: 101px;
         justify-content: end;
-    }
-
-    .latest-stories__details {
-        flex-direction: column;
     }
 
     .latest-stories__btns {
@@ -687,6 +683,6 @@
     }
     .location1-content__section--heading h2,
     .location1-content__section--heading .heading {
-        font-size: 20px;
+        font-size: 16px;
     }
 }
