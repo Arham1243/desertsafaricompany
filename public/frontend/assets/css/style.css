@@ -5242,7 +5242,7 @@ a.location1-content__section--btn {
 .location1-Breadcrumb {
     display: flex;
     gap: 12px;
-    margin-top: 0.5rem;
+    margin-top: 0.65rem;
 }
 .location1-Breadcrumb li {
     line-height: 0.75;
