@@ -5262,16 +5262,15 @@ a.location1-content__section--btn {
 }
 
 .loaction-guide-title {
-    font-size: 16px;
+    font-size: 13px;
     font-weight: 700;
-    margin: 15px 0 8px;
+    margin: 15px 0 5px;
 }
 
 .loaction-guide-pra {
     color: rgb(55 69 89);
     font-size: 14px;
     font-weight: 600;
-    margin: 12px 0;
 }
 
 .loaction-guide-btn .themeBtn-round {
@@ -5280,6 +5279,7 @@ a.location1-content__section--btn {
     color: #fff;
     font-size: 14px;
     width: 80%;
+    margin-top: 0.65rem;
 }
 
 .article-filters {
