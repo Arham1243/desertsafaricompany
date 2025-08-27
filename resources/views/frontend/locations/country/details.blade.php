@@ -27,7 +27,7 @@
     <div class="location1-content__section my-5">
         <div class="container">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-8">
                     <div class="location1-content__section--details">
                         <div class="location1-content__section--heading">
                             <h1 class="heading">
@@ -60,7 +60,7 @@
                     $guideContent = $sectionContent->guide ?? null;
                 @endphp
                 @if (isset($guideContent->is_enabled) && $guideContent->is_enabled === '1')
-                    <div class="col-md-5">
+                    <div class="col-md-4">
                         <div class="loaction-guide"
                             @if (!empty($guideContent->background_color)) style="background: {{ $guideContent->background_color }};" @endif>
                             <div class="loaction-guide-content">
