@@ -683,6 +683,9 @@
     }
     .location1-content__section--heading h2,
     .location1-content__section--heading .heading {
-        font-size: 16px;
+        font-size: 12px;
+    }
+    .loaction-guide-title {
+        font-size: 11px;
     }
 }

@@ -5264,7 +5264,7 @@ a.location1-content__section--btn {
 .loaction-guide-title {
     font-size: 13px;
     font-weight: 700;
-    margin: 15px 0 5px;
+    margin: 11px 0 5px;
 }
 
 .loaction-guide-pra {
@@ -5274,12 +5274,12 @@ a.location1-content__section--btn {
 }
 
 .loaction-guide-btn .themeBtn-round {
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
     background-color: var(--color-primary);
     color: #fff;
     font-size: 14px;
     width: 80%;
-    margin-top: 0.65rem;
+    margin-top: 0.7rem;
 }
 
 .article-filters {
