@@ -355,12 +355,6 @@ return [
                 'status' => 'pending',
             ],
             [
-                'title' => 'Review',
-                'icon' => 'bx bx-star',
-                'route' => route('admin.settings.edit', ['resource' => 'review']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Booking',
                 'icon' => 'bx bx-book',
                 'route' => route('admin.settings.edit', ['resource' => 'booking']),
