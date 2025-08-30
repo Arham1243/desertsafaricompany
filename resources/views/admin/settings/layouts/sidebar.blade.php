@@ -47,12 +47,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'media',
-            'icon' => 'bx-image',
-            'label' => 'Media',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'style',
             'icon' => 'bx-palette',
             'label' => 'Style',

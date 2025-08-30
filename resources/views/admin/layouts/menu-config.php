@@ -313,45 +313,6 @@ return [
         'route' => route('admin.bookings.index'),
     ],
     [
-        'title' => 'Media',
-        'icon' => 'bx bx-image',
-        'status' => 'pending',
-        'submenu' => [
-            [
-                'title' => 'Video',
-                'icon' => 'bx bxs-videos',
-                'submenu' => [
-                    [
-                        'title' => 'Used',
-                        'icon' => 'bx bx-video',
-                        'route' => 'javascript:void(0)',
-                    ],
-                    [
-                        'title' => 'Un-Used',
-                        'icon' => 'bx bx-video-off',
-                        'route' => 'javascript:void(0)',
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Pictures',
-                'icon' => 'bx bx-photo-album',
-                'submenu' => [
-                    [
-                        'title' => 'Used',
-                        'icon' => 'bx bxs-image',
-                        'route' => 'javascript:void(0)',
-                    ],
-                    [
-                        'title' => 'Un-Used',
-                        'icon' => 'bx bx-image',
-                        'route' => 'javascript:void(0)',
-                    ],
-                ],
-            ],
-        ],
-    ],
-    [
         'title' => 'Payout',
         'icon' => 'bx bx-dollar',
         'status' => 'pending',
