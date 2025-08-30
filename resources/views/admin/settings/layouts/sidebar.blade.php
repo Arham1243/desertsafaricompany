@@ -53,12 +53,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'review',
-            'icon' => 'bx-star',
-            'label' => 'Review',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'booking',
             'icon' => 'bx-book',
             'label' => 'Booking',
