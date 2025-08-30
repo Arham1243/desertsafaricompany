@@ -65,12 +65,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'enquiry',
-            'icon' => 'bx-message-square-dots',
-            'label' => 'Enquiry',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',

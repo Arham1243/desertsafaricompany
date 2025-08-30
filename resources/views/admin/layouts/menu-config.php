@@ -373,12 +373,6 @@ return [
                 'status' => 'pending',
             ],
             [
-                'title' => 'Enquiry',
-                'icon' => 'bx bx-message-square-dots',
-                'route' => route('admin.settings.edit', ['resource' => 'enquiry']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Email',
                 'icon' => 'bx bx-envelope',
                 'route' => route('admin.settings.edit', ['resource' => 'email']),
