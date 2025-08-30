@@ -95,18 +95,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'mobile_app',
-            'icon' => 'bx-mobile-alt',
-            'label' => 'Mobile App',
-            'status' => 'pending',
-        ],
-        [
-            'route' => 'invoice',
-            'icon' => 'bx-file',
-            'label' => 'Invoice',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'quotations',
             'icon' => 'bx-file',
             'label' => 'Quotations',

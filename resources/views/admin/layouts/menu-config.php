@@ -322,11 +322,6 @@ return [
                 'icon' => 'bx bx-credit-card-alt',
                 'submenu' => [
                     [
-                        'title' => 'Invoice',
-                        'icon' => 'bx bx-receipt',
-                        'route' => 'javascript:void(0)',
-                    ],
-                    [
                         'title' => 'Commissions',
                         'icon' => 'bx bx-credit-card',
                         'route' => 'javascript:void(0)',
@@ -451,12 +446,6 @@ return [
                 'title' => 'Advanced',
                 'icon' => 'bx bx-wrench',
                 'route' => route('admin.settings.edit', ['resource' => 'advanced']),
-                'status' => 'pending',
-            ],
-            [
-                'title' => 'Mobile App',
-                'icon' => 'bx bx-mobile-alt',
-                'route' => route('admin.settings.edit', ['resource' => 'mobile_app']),
                 'status' => 'pending',
             ],
             [
