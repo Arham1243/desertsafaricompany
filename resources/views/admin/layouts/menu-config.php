@@ -396,12 +396,6 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'advanced']),
                 'status' => 'pending',
             ],
-            [
-                'title' => 'Invoice',
-                'icon' => 'bx bx-file',
-                'route' => route('admin.settings.edit', ['resource' => 'invoice']),
-                'status' => 'pending',
-            ],
         ],
     ],
 ];
