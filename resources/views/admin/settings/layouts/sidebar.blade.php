@@ -71,12 +71,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'sms',
-            'icon' => 'bx-message',
-            'label' => 'SMS',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',

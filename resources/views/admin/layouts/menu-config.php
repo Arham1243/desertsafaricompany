@@ -424,12 +424,6 @@ return [
                 'status' => 'pending',
             ],
             [
-                'title' => 'SMS',
-                'icon' => 'bx bx-message',
-                'route' => route('admin.settings.edit', ['resource' => 'sms']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Email',
                 'icon' => 'bx bx-envelope',
                 'route' => route('admin.settings.edit', ['resource' => 'email']),
