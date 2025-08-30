@@ -391,12 +391,6 @@ return [
                 'status' => 'pending',
             ],
             [
-                'title' => 'Vendor',
-                'icon' => 'bx bx-store',
-                'route' => route('admin.settings.edit', ['resource' => 'vendor']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Advanced',
                 'icon' => 'bx bx-wrench',
                 'route' => route('admin.settings.edit', ['resource' => 'advanced']),
