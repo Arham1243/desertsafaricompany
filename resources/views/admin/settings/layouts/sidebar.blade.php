@@ -65,12 +65,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'voucher',
-            'icon' => 'bx-gift',
-            'label' => 'Voucher',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'enquiry',
             'icon' => 'bx-message-square-dots',
             'label' => 'Enquiry',

@@ -347,11 +347,6 @@ return [
                         'icon' => 'bx bxs-quote-alt-left',
                         'route' => 'javascript:void(0)',
                     ],
-                    [
-                        'title' => 'Voucher',
-                        'icon' => 'bx bx-money-withdraw',
-                        'route' => 'javascript:void(0)',
-                    ],
                 ],
             ],
         ],
@@ -420,12 +415,6 @@ return [
                 'title' => 'Booking',
                 'icon' => 'bx bx-book',
                 'route' => route('admin.settings.edit', ['resource' => 'booking']),
-                'status' => 'pending',
-            ],
-            [
-                'title' => 'Voucher',
-                'icon' => 'bx bx-gift',
-                'route' => route('admin.settings.edit', ['resource' => 'voucher']),
                 'status' => 'pending',
             ],
             [
