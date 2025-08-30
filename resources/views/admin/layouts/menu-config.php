@@ -349,12 +349,6 @@ return [
                 'status' => 'pending',
             ],
             [
-                'title' => 'Media',
-                'icon' => 'bx bx-image',
-                'route' => route('admin.settings.edit', ['resource' => 'media']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Style',
                 'icon' => 'bx bx-palette',
                 'route' => route('admin.settings.edit', ['resource' => 'style']),
