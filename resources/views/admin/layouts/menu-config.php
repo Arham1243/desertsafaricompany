@@ -454,12 +454,6 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'invoice']),
                 'status' => 'pending',
             ],
-            [
-                'title' => 'Quotations',
-                'icon' => 'bx bx-file',
-                'route' => route('admin.settings.edit', ['resource' => 'quotations']),
-                'status' => 'pending',
-            ],
         ],
     ],
 ];

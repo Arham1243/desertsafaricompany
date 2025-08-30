@@ -94,12 +94,6 @@
             'label' => 'Advanced',
             'status' => 'pending',
         ],
-        [
-            'route' => 'quotations',
-            'icon' => 'bx-file',
-            'label' => 'Quotations',
-            'status' => 'pending',
-        ],
     ];
 
 @endphp
