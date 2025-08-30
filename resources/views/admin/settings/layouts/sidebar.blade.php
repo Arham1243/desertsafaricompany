@@ -101,12 +101,6 @@
             'status' => 'pending',
         ],
         [
-            'route' => 'vendor',
-            'icon' => 'bx-store',
-            'label' => 'Vendor',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'advanced',
             'icon' => 'bx-wrench',
             'label' => 'Advanced',
