@@ -313,46 +313,6 @@ return [
         'route' => route('admin.bookings.index'),
     ],
     [
-        'title' => 'Payout',
-        'icon' => 'bx bx-dollar',
-        'status' => 'pending',
-        'submenu' => [
-            [
-                'title' => 'Vendor Payment',
-                'icon' => 'bx bx-credit-card-alt',
-                'submenu' => [
-                    [
-                        'title' => 'Commissions',
-                        'icon' => 'bx bx-credit-card',
-                        'route' => 'javascript:void(0)',
-                    ],
-                ],
-            ],
-            [
-                'title' => 'Generator',
-                'icon' => 'bx bxs-store-alt',
-                'submenu' => [
-                    [
-                        'title' => 'Invoice',
-                        'icon' => 'bx bx-receipt',
-                        'route' => 'javascript:void(0)',
-                    ],
-                    [
-                        'title' => 'Quotation',
-                        'icon' => 'bx bxs-quote-alt-left',
-                        'route' => 'javascript:void(0)',
-                    ],
-                ],
-            ],
-        ],
-    ],
-    [
-        'title' => 'Themes',
-        'icon' => 'bx bx-paint',
-        'route' => 'javascript:void(0)',
-        'status' => 'pending',
-    ],
-    [
         'title' => 'Settings',
         'icon' => 'bx bx-cog',
         'submenu' => [
