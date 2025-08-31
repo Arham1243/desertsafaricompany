@@ -76,7 +76,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Banner Title:</label>
                                                 <input name="json_content[h1_banner_text][title]" type="text"
-                                                    class="field"
+                                                    class="field" maxlength="29"
                                                     value="{{ $jsonContent['h1_banner_text']['title'] ?? '' }}">
                                             </div>
                                         </div>
@@ -84,7 +84,7 @@
                                             <div class="form-fields">
                                                 <label class="title">Banner Subtitle:</label>
                                                 <input name="json_content[h1_banner_text][subtitle]" type="text"
-                                                    class="field"
+                                                    class="field" maxlength="31"
                                                     value="{{ $jsonContent['h1_banner_text']['subtitle'] ?? '' }}">
                                             </div>
                                         </div>
