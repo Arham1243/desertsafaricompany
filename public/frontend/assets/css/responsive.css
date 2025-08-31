@@ -370,7 +370,7 @@
     }
 
     .highlights-item__container {
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
     .highlight__image {
@@ -696,5 +696,11 @@
 
     .faqs.faqs-category .tour-content__pra {
         font-size: 12px;
+    }
+    .banner-alt-heading {
+        font-size: 16px;
+    }
+    .highlights-item__pra {
+        font-size: 13px;
     }
 }
