@@ -222,11 +222,12 @@ const initializeSelect2 = () => {
             : -1;
 
         // Disable sorting for categories dropdown (you can adjust this condition as needed)
-        const shouldSort = select.classList.contains("category-select")
-            ? false // Disable sorting for category select
-            : select.hasAttribute("should-sort")
-              ? select.getAttribute("should-sort") === "true"
-              : true;
+        // const shouldSort = select.classList.contains("category-select")
+        //     ? false // Disable sorting for category select
+        //     : select.hasAttribute("should-sort")
+        //       ? select.getAttribute("should-sort") === "true"
+        //       : true;
+        const shouldSort = false;
 
         const config = getSelect2Config(select, maxItems, shouldSort);
         // Initialize Select2
