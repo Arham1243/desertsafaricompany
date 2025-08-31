@@ -18,7 +18,7 @@ class CityController extends Controller
 
     public function index()
     {
-        $items = City::latest()->get();
+        $items = City::get();
 
         return view('admin.locations.cities-management.list', compact('items'))->with('title', 'Cities');
     }

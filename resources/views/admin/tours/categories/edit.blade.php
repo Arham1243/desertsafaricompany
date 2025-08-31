@@ -242,7 +242,6 @@
                                             class="field mt-3"
                                             value="{{ $jsonContent['category_block']['heading'] ?? '' }}">
                                     </div>
-
                                     <div class="form-fields mb-4">
                                         @php
                                             $tourBlockCategoryIds = isset(
@@ -254,7 +253,8 @@
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block][category_ids][]" class="select2-select"
                                             data-error="Category" should-sort="true" multiple>
-                                            {!! renderCategoriesMulti($dropdownCategories, $tourBlockCategoryIds) !!}
+                                            <option value="">Select categories</option>
+                                            {!! renderCategoriesMulti($dropdownCategories, $tourBlockCategoryIds, 0) !!}
                                         </select>
                                     </div>
                                 </div>

@@ -17,7 +17,7 @@ class CountryController extends Controller
 
     public function index()
     {
-        $items = Country::latest()->get();
+        $items = Country::get();
 
         return view('admin.locations.countries-management.list', compact('items'))->with('title', 'Countries');
     }

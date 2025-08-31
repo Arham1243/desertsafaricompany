@@ -73,11 +73,12 @@ if (! function_exists('renderCategories')) {
     function renderCategories($categories, $selectedCategory = null, $parent_id = null, $level = 0)
     {
         foreach ($categories as $category) {
-            if ($category->parent_category_id == $parent_id) {
+            if ($level === 0 || $category->parent_category_id == $parent_id) {
                 $selected = (old('category_id', $selectedCategory) == $category->id) ? 'selected' : '';
 
                 echo '<option value="'.$category->id.'" '.$selected.'>';
-                echo str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' '.$category->name;
+                echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+                echo $category->name;
                 echo '</option>';
 
                 renderCategories($categories, $selectedCategory, $category->id, $level + 1);
@@ -89,11 +90,13 @@ if (! function_exists('renderCategoriesMulti')) {
     function renderCategoriesMulti($categories, $selectedCategories = [], $parent_id = null, $level = 0)
     {
         foreach ($categories as $category) {
-            if ($category->parent_category_id == $parent_id) {
+            // Treat top-level categories separately
+            if ($level === 0 || $category->parent_category_id == $parent_id) {
                 $selected = in_array($category->id, (array) $selectedCategories) ? 'selected' : '';
 
                 echo '<option value="'.$category->id.'" '.$selected.'>';
-                echo str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' '.$category->name;
+                echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+                echo $category->name;
                 echo '</option>';
 
                 renderCategoriesMulti($categories, $selectedCategories, $category->id, $level + 1);
