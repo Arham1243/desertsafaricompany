@@ -252,8 +252,7 @@
                 <div class="card-rating">
                     <x-star-rating :rating="$tour->average_rating" />
                     @if ($tour->reviews->count() > 0)
-                        {{ $tour->reviews->count() }}
-                        Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                        <span>{{ $tour->reviews->count() }} Review{{ $tour->reviews->count() > 1 ? 's' : '' }}</span>
                     @else
                         <span>No reviews yet</span>
                     @endif
