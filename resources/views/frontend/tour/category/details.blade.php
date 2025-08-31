@@ -74,10 +74,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                     
-                                                                                                                                                                                          
-                                                                                                                              
-                                                           @endif>
+                                                                                                                                                                                                                                                         
+                                                                                                                                                                                              
+                                                                                                                                  
+                                                                @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -417,7 +417,7 @@
     @endphp
 
     @if (!empty($faqs) && (int) $faqContent->is_enabled === 1)
-        <div class="faqs faqs-category my-5 py-2">
+        <div class="faqs faqs-category my-5">
             <div class="container">
                 <div class="row mb-4">
                     <div class="col-md-12">
@@ -525,7 +525,7 @@
     @endif
 
     @if (isset($newsletterContent->is_enabled) && (int) $newsletterContent->is_enabled === 1)
-        <div class="newsletter py-5 mb-3">
+        <div class="newsletter my-5">
             <div class="container">
                 <div class="row g-0">
                     <div class="col-md-6">

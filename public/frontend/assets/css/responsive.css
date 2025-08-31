@@ -252,10 +252,6 @@
         top: 12px;
     }
 
-    .latest-stories {
-        padding: 2rem 0 5rem;
-    }
-
     .comment {
         padding: 2rem 0 2rem;
         position: relative;
@@ -701,7 +697,7 @@
         font-size: 16px;
     }
     .highlights-item__pra {
-        font-size: 13px;
+        font-size: 12px;
     }
     .newsletter__content {
         padding: 1rem;
@@ -728,5 +724,10 @@
     }
     .activities-details {
         flex-direction: column;
+    }
+    .Desti-Pract__img {
+        filter: brightness(0.7);
+        width: 100%;
+        height: 280px;
     }
 }
