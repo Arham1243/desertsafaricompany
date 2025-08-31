@@ -74,10 +74,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                 
-                                                                                                                                                                      
-                                                                                                          
-                                  @endif>
+                                                                                                                                                                                                                                         
+                                                                                                                                                                              
+                                                                                                                  
+                                            @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -466,7 +466,7 @@
                     <div class=col-md-7>
                         @if ($featured_news)
                             <div class=Desti-Pract__details>
-                                <a href="{{ $featured_news->slug }}" class=Desti-Pract__img>
+                                <a href="javascript:void(0)" class=Desti-Pract__img>
                                     <img data-src="{{ asset($featured_news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                         alt="{{ $featured_news->feature_image_alt_text }}" class="imgFluid lazy"
                                         loading="lazy">
@@ -475,8 +475,10 @@
                                     <div class="sub-title">
                                         {{ $featured_news->category->name ?? '' }}
                                     </div>
-                                    <a href="{{ $featured_news->slug }}"
-                                        class="Desti-Pract__title">{{ $featured_news->title ?? '' }}</a>
+                                    <a href="javascript:void(0)"
+                                        @if (strlen($featured_news->title ?? '') > 19) data-tooltip="tooltip" @endif
+                                        title="{{ $featured_news->title ?? '' }}"
+                                        class="Desti-Pract__title line-clamp-1">{{ $featured_news->title ?? '' }}</a>
                                     <div class="date">{{ formatDate($featured_news->created_at) }}</div>
                                     <div class="editor-content">
                                         {!! $featured_news->content ?? '' !!}
