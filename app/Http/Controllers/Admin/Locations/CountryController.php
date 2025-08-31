@@ -96,6 +96,7 @@ class CountryController extends Controller
             'name' => 'required|min:3|max:255',
             'iso_alpha2' => 'nullable|min:2|max:2',
             'content' => 'nullable',
+            'json_content' => 'nullable',
             'content_line_limit' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'featured_image' => 'nullable|image',
@@ -103,8 +104,7 @@ class CountryController extends Controller
             'banner_image' => 'nullable|image',
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
-
-        $validatedData['json_content'] = json_encode($request->input('json_content', null));
+        $validatedData['json_content'] = json_encode($validatedData['json_content']);
         $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
 
         $item = Country::find($id);

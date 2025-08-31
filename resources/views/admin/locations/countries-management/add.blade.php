@@ -3,6 +3,18 @@
     @php
         $jsonContent = null;
         $guideContent = null;
+        $faqContent = $sectionContent->faq_section ?? null;
+        $faqData = [
+            'enabled' => $faqContent->is_enabled ?? 0,
+            'faqs' => collect($faqContent->question ?? [])
+                ->map(function ($q, $i) use ($faqContent) {
+                    return [
+                        'question' => $q,
+                        'answer' => $faqContent->answer[$i] ?? '',
+                    ];
+                })
+                ->values(),
+        ];
     @endphp
     <div class="col-md-12">
         <div class="dashboard-content">
@@ -98,6 +110,67 @@
                                     </div>
                                 </div>
                             </div>
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_block']['is_enabled']) && $jsonContent['category_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block']['heading_enabled']) && $jsonContent['category_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category Block Design 1</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_block" value="1"
+                                                name="json_content[category_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/category-block-design-1.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_block][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_block_heading" value="1"
+                                                    name="json_content[category_block][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_block][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_block']['heading'] ?? '' }}">
+                                    </div>
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds = isset(
+                                                $jsonContent['category_block']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block][category_ids][]" class="select2-select"
+                                            data-error="Category" should-sort="true" multiple>
+                                            <option value="">Select categories</option>
+                                            {!! renderCategoriesMulti($categories, $tourBlockCategoryIds, 0) !!}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
@@ -121,7 +194,8 @@
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
                                         <label class="title">Heading:</label>
-                                        <input name="json_content[first_tour_block][heading]" type="text" class="field"
+                                        <input name="json_content[first_tour_block][heading]" type="text"
+                                            class="field"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
@@ -176,6 +250,150 @@
                                                 </option>
                                             @endforeach
                                         </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_block_2']['is_enabled']) && $jsonContent['category_block_2']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block_2']['heading_enabled']) && $jsonContent['category_block_2']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category Block Design 2</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_block_2][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_block_2" value="1"
+                                                name="json_content[category_block_2][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block_2">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/category-block-design-2.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_block_2][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_block_2_heading" value="1"
+                                                    name="json_content[category_block_2][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_block_2_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_block_2][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_block_2']['heading'] ?? '' }}">
+                                    </div>
+
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds = isset(
+                                                $jsonContent['category_block_2']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block_2']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block_2][category_ids][]"
+                                            class="select2-select" data-error="Category" should-sort="true" multiple>
+                                            {!! renderCategoriesMulti($categories, $tourBlockCategoryIds) !!}
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="faqRepeater({{ json_encode($faqData) }})" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">FAQ Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[faq_section][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="faq_section_enabled" value="1"
+                                                name="json_content[faq_section][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="faq_section_enabled">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/faq-section.png') }}" data-fancybox="gallery"
+                                        class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm">FAQs:</label>
+                                            <div class="repeater-table">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                FAQ Content
+                                                                <span
+                                                                    class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                    <span>To add a link:</span>
+                                                                    <code class="text-nowrap text-lowercase">
+                                                                        &lt;a href="//google.com"
+                                                                        target="_blank"&gt;Text&lt;/a&gt;
+                                                                    </code>
+                                                                    <button class="themeBtn copy-btn py-1 px-2"
+                                                                        type="button"
+                                                                        text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                        Copy
+                                                                    </button>
+                                                                </span>
+                                                            </th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(faq, index) in faqs" :key="index">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <label class="title">Question <span
+                                                                                class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field mb-1" rows="4" x-model="faq.question"
+                                                                            :name="`json_content[faq_section][question][${index}]`"></textarea>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="title">Answer <span class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field" rows="4" x-model="faq.answer" :name="`json_content[faq_section][answer][${index}]`"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        @click="removeFaq(index)">
+                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" @click="addFaq">
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -534,6 +752,28 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
+        function faqRepeater(initial = {
+            enabled: 0,
+            faqs: []
+        }) {
+            return {
+                enabled: Boolean(Number(initial.enabled)),
+                faqs: initial.faqs.length ? initial.faqs : [{
+                    question: '',
+                    answer: ''
+                }],
+                addFaq() {
+                    this.faqs.push({
+                        question: '',
+                        answer: ''
+                    })
+                },
+                removeFaq(index) {
+                    this.faqs.splice(index, 1)
+                }
+            }
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             document
                 .querySelectorAll("[data-color-picker-container]")

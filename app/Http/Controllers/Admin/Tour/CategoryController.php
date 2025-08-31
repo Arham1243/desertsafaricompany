@@ -27,7 +27,7 @@ class CategoryController extends Controller
             ->orderBy('name', 'asc')
             ->get();
 
-        $dropdownCategories = TourCategory::get();
+        $dropdownCategories = TourCategory::where('status', 'publish')->get();
 
         $data = compact('categories', 'dropdownCategories');
 

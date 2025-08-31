@@ -129,6 +129,18 @@ $btnStyles = [];
     </div>
 
     @php
+        $category_block = $jsonContent['category_block'] ?? null;
+        $category_block_category_ids = isset($category_block['category_ids'])
+            ? $category_block['category_ids']
+            : [null];
+        $category_block_categories = $categories->whereIn('id', $category_block_category_ids);
+
+        $category_block_2 = $jsonContent['category_block_2'] ?? null;
+        $category_block_category_ids_2 = isset($category_block_2['category_ids'])
+            ? $category_block_2['category_ids']
+            : [null];
+        $category_block_2_categories = $categories->whereIn('id', $category_block_category_ids_2);
+
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
         $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
         $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
@@ -138,6 +150,34 @@ $btnStyles = [];
         $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
     @endphp
 
+
+    @if (isset($category_block['is_enabled']) &&
+            (int) $category_block['is_enabled'] === 1 &&
+            $category_block_categories->isNotEmpty())
+        <div class="my-5">
+            <div class="container">
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        @if (isset($category_block['heading_enabled']) && $category_block['heading_enabled'] === '1')
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $category_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($category_block_categories as $category_block_category)
+                        <div class="col-md-4">
+                            <x-category-card :category="$category_block_category" style="style1" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if (isset($first_tour_block['is_enabled']) &&
             $first_tour_block['is_enabled'] === '1' &&
             $first_tour_block_tours->isNotEmpty())
@@ -146,13 +186,13 @@ $btnStyles = [];
                 <div class="row mb-3">
                     <div class="col-md-12">
                         <div class="section-content">
-                            <h2 class="subHeading">
+                            <h2 class="subHeading block-heading">
                                 {{ $first_tour_block['heading'] ?? '' }}
                             </h2>
                         </div>
                     </div>
                 </div>
-                <div class="row four-items-slider">
+                <div class="row">
                     @foreach ($first_tour_block_tours as $first_tour_block_tour)
                         <div class="col-md-3">
                             <x-tour-card :tour="$first_tour_block_tour" style="style3" />
@@ -168,22 +208,97 @@ $btnStyles = [];
             $second_tour_block_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
-                <div class="row  mb-3">
+                <div class="row mb-3">
                     <div class="col-md-12">
                         <div class="section-content">
-                            <h2 class="subHeading">
+                            <h2 class="subHeading block-heading">
                                 {{ $second_tour_block['heading'] ?? '' }}
                             </h2>
                         </div>
                     </div>
                 </div>
-                <div class="row three-items-slider">
+                <div class="row">
                     @foreach ($second_tour_block_tours as $second_tour_block_tour)
-                        <div class="col-md-3">
-                            <x-tour-card :tour="$second_tour_block_tour" style="style3" />
+                        <div class="col-md-4">
+                            <x-tour-card :tour="$second_tour_block_tour" style="style2" />
                         </div>
                     @endforeach
                 </div>
+            </div>
+        </div>
+    @endif
+
+
+
+    @if (isset($category_block_2['is_enabled']) &&
+            (int) $category_block_2['is_enabled'] === 1 &&
+            $category_block_2_categories->isNotEmpty())
+        <div class="my-5">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        @if (isset($category_block_2['heading_enabled']) && $category_block_2['heading_enabled'] === '1')
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $category_block_2['heading'] ?? '' }}
+                                </h2>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <div class="row">
+                    @foreach ($category_block_2_categories as $category_block_2_category)
+                        <div class="col-md-6">
+                            <x-category-card :category="$category_block_2_category" style="style2" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
+    @php
+        $faqContent = $jsonContent['faq_section'] ?? null;
+        $faqs = [];
+
+        if ($faqContent && isset($faqContent['is_enabled'])) {
+            $questions = $faqContent['question'] ?? [];
+            $answers = $faqContent['answer'] ?? [];
+
+            foreach ($questions as $index => $question) {
+                $faqs[] = (object) [
+                    'question' => $question,
+                    'answer' => $answers[$index] ?? '',
+                ];
+            }
+        }
+    @endphp
+    @if (!empty($faqs) && (int) $faqContent['is_enabled'] === 1)
+        <div class="faqs faqs-category my-5">
+            <div class="container">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <div class="section-content">
+                            <h2 class="subHeading block-heading">
+                                FAQS
+                            </h2>
+                        </div>
+                    </div>
+                </div>
+
+                @foreach ($faqs as $faq)
+                    <div class="faqs-single accordian">
+                        <div class="faqs-single__header accordian-header">
+                            <div class="faq-icon"><i class="bx bx-plus"></i></div>
+                            <div class="tour-content__title">{{ $faq->question }}</div>
+                        </div>
+                        <div class="faqs-single__content accordian-content">
+                            <div class="hidden-wrapper tour-content__pra">
+                                {!! $faq->answer !!}
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     @endif
