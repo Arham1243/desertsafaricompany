@@ -2074,7 +2074,7 @@ img.ocizgi.imgFluid {
 }
 
 .header-form {
-    padding: 2rem 0 0;
+    padding: 2rem 0;
 }
 
 form.input-details.generic-form i {
@@ -4763,7 +4763,7 @@ body.fancybox-active.compensate-for-scrollbar {
 
 /* /.header-main__menu */
 .header-main__menu {
-    font-size: 2.5rem;
+    font-size: 2rem;
     display: none;
     color: #000 !important;
 }
