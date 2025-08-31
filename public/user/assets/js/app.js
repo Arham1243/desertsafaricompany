@@ -374,7 +374,7 @@ function initializeEditors(form) {
     const editorElements = form.querySelectorAll(".editor");
 
     editorElements.forEach((editorElement) => {
-        ClassicEditor?.create(editorElement, {
+        ClassicEditor.create(editorElement, {
             toolbar: [
                 "undo",
                 "redo",
@@ -413,6 +413,51 @@ function initializeEditors(form) {
                 "|",
                 "preview",
             ],
+            heading: {
+                options: [
+                    {
+                        model: "paragraph",
+                        title: "Paragraph",
+                        class: "ck-heading_paragraph",
+                    },
+                    {
+                        model: "heading1",
+                        view: { name: "h1", classes: "" },
+                        title: "Heading 1",
+                        class: "ck-heading_heading1",
+                    },
+                    {
+                        model: "heading2",
+                        view: { name: "h2", classes: "" },
+                        title: "Heading 2",
+                        class: "ck-heading_heading2",
+                    },
+                    {
+                        model: "heading3",
+                        view: { name: "h3", classes: "" },
+                        title: "Heading 3",
+                        class: "ck-heading_heading3",
+                    },
+                    {
+                        model: "heading4",
+                        view: { name: "h4", classes: "" },
+                        title: "Heading 4",
+                        class: "ck-heading_heading4",
+                    },
+                    {
+                        model: "heading5",
+                        view: { name: "h5", classes: "" },
+                        title: "Heading 5",
+                        class: "ck-heading_heading5",
+                    },
+                    {
+                        model: "heading6",
+                        view: { name: "h6", classes: "" },
+                        title: "Heading 6",
+                        class: "ck-heading_heading6",
+                    },
+                ],
+            },
             // You can set additional configurations here
             height: "300px",
             // Add custom styles here if needed

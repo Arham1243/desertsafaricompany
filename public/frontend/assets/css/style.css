@@ -6973,12 +6973,18 @@ span.select2-dropdown.select2-dropdown--below {
     font-size: 17px;
 }
 
-.editor-content ul {
+.editor-content :is(ul, ol) {
     margin: 0.5rem 0 0.5rem 1.5rem;
 }
 
-.editor-content li {
+.editor-content ul li {
     list-style-type: disc !important;
+}
+.editor-content ol li {
+    list-style-type: decimal !important;
+}
+
+.editor-content li {
     padding: 0.15rem 0;
 }
 
@@ -6988,7 +6994,7 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .editor-content h1 {
-    font-size: 2.75em;
+    font-size: 2.25em;
 }
 
 .editor-content h2 {
@@ -7843,4 +7849,8 @@ ul.show-in-desktop {
 }
 .iti.iti--allow-dropdown.iti--separate-dial-code {
     width: 100%;
+}
+
+.editor-content a {
+    color: var(--color-primary);
 }
