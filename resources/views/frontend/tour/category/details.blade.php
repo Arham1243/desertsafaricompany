@@ -74,10 +74,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                 
-                                                                                                                                                                                      
-                                                                                                                          
-                                                      @endif>
+                                                                                                                                                                                                                                                     
+                                                                                                                                                                                          
+                                                                                                                              
+                                                           @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -351,7 +351,6 @@
                     <h2 class="subHeading block-heading">
                         Comment
                     </h2>
-                    <p>What are our customers saying?</p>
                 </div>
 
                 <div class="row pt-3">
@@ -453,7 +452,7 @@
                 <div class="section-content mb-4 pb-1">
                     <div class=latest-stories__title style="color:{{ $newsContent->title_text_color ?? '' }};">
                         {{ $newsContent->title ?? '' }}</div>
-                    <h2 class=subHeading block-heading style="color:{{ $newsContent->subTitle_text_color ?? '' }};">
+                    <h2 class="subHeading block-heading" style="color:{{ $newsContent->subTitle_text_color ?? '' }};">
                         {{ $newsContent->subTitle ?? '' }}
                     </h2>
                 </div>
@@ -540,7 +539,7 @@
                         <div class="newsletter__content"
                             @if ($newsletterContent->right_background_color) style="background-color: {{ $newsletterContent->right_background_color }}" @endif>
                             <div class="section-content">
-                                <h2 class="subHeading block-heading"
+                                <h2 class="subHeading"
                                     @if ($newsletterContent->title_text_color) style="color: {{ $newsletterContent->title_text_color }}" @endif>
                                     {{ $newsletterContent->title ?? '' }}
                                 </h2>

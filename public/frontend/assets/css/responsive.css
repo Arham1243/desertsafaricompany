@@ -716,4 +716,17 @@
     .newsletter__content .section-content .subHeading {
         font-size: 1.15rem;
     }
+    .highlight__text {
+        padding: 1rem 0;
+    }
+    .newsletter__img {
+        width: 100%;
+        height: 200px;
+    }
+    .activities-content {
+        width: 100%;
+    }
+    .activities-details {
+        flex-direction: column;
+    }
 }
