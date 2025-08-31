@@ -50,7 +50,7 @@
 
     .banner-heading h1 .bannerMain-title {
         color: #000;
-        font-size: 40px;
+        font-size: 23px;
     }
 
     .banner {
@@ -107,7 +107,9 @@
     }
 
     .app-btn {
-        padding: 0.65rem 0.75rem;
+        padding: 0.65rem 1rem;
+        flex: initial;
+        font-size: 13px;
     }
 
     /*     
@@ -607,8 +609,8 @@
         display: none;
     }
     .faq-icon {
-        padding: 0.45rem;
-        font-size: 1.35rem;
+        padding: 0.25rem;
+        font-size: 1.1rem;
     }
     ul.header-listGroup {
         gap: 0.65rem;
@@ -687,5 +689,12 @@
     }
     .loaction-guide-title {
         font-size: 11px;
+    }
+    .faqs.faqs-category .tour-content__title {
+        font-size: 12px;
+    }
+
+    .faqs.faqs-category .tour-content__pra {
+        font-size: 12px;
     }
 }
