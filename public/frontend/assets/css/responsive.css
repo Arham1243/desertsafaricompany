@@ -703,4 +703,14 @@
     .highlights-item__pra {
         font-size: 13px;
     }
+    .newsletter__content {
+        padding: 1rem;
+    }
+    .newsletter__content p,
+    .privacy-content {
+        font-size: 12px;
+    }
+    .newsletter__content .section-content .subHeading {
+        font-size: 1.15rem;
+    }
 }
