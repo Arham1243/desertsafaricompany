@@ -74,9 +74,9 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                             
-                                                                                                                                                  
-                                                                                    @endif>
+                                                                                                                                                                                                                 
+                                                                                                                                                      
+                                                                                         @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -126,17 +126,6 @@
                                 </h2>
                             </div>
                         @endif
-                        <div class="activity-sorting-block mt-2">
-                            <div class="search-header__activity">
-                                <div class="activities-found">
-                                    {{ $category_block_categories->count() }}
-                                    {{ Str::plural('activity', $category_block_categories->count()) }} found
-                                    <div class="activities-found__icon">
-                                        <i class='bx bxs-error-circle'></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row">
