@@ -204,7 +204,7 @@
                             }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
-                                        <div class="title">Category Block</div>
+                                        <div class="title">Category Block Design 1</div>
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input type="hidden" value="0"
@@ -337,6 +337,67 @@
                                                     {{ $secondTourBlockT->title }}
                                                 </option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_block_2']['is_enabled']) && $jsonContent['category_block_2']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block_2']['heading_enabled']) && $jsonContent['category_block_2']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category Block Design 2</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_block_2][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_block_2" value="1"
+                                                name="json_content[category_block_2][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block_2">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_block_2][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_block_heading" value="1"
+                                                    name="json_content[category_block][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_block_2][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_block_2']['heading'] ?? '' }}">
+                                    </div>
+
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds = isset(
+                                                $jsonContent['category_block_2']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block_2']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block_2][category_ids][]"
+                                            class="select2-select" data-error="Category" should-sort="true" multiple>
+                                            {!! renderCategoriesMulti($dropdownCategories, $tourBlockCategoryIds) !!}
                                         </select>
                                     </div>
                                 </div>
