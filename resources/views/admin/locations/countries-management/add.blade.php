@@ -165,9 +165,13 @@
                                         @endphp
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block][category_ids][]" class="select2-select"
-                                            data-error="Category" should-sort="true" multiple>
-                                            <option value="">Select categories</option>
-                                            {!! renderCategoriesMulti($categories, $tourBlockCategoryIds, 0) !!}
+                                            data-error="Category" should-sort="false" multiple>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -309,8 +313,13 @@
                                         @endphp
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block_2][category_ids][]"
-                                            class="select2-select" data-error="Category" should-sort="true" multiple>
-                                            {!! renderCategoriesMulti($categories, $tourBlockCategoryIds) !!}
+                                            class="select2-select" data-error="Category" should-sort="false" multiple>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
