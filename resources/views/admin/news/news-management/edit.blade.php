@@ -112,7 +112,8 @@
                                 <div class="form-box__body">
                                     <div class="form-fields">
                                         <label class="title">Categories <span class="text-danger">*</span> :</label>
-                                        <select name="category_id" class="select2-select" data-error="Category">
+                                        <select data-required name="category_id" class="select2-select"
+                                            data-error="Category">
                                             <option value="" selected>Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
