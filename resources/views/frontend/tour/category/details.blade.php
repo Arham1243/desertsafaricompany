@@ -74,9 +74,9 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                 
-                                                                                                                                                      
-                                                                                         @endif>
+                                                                                                                                                                                                                     
+                                                                                                                                                          
+                                                                                              @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -446,7 +446,7 @@
     @endif
 
     @if (isset($newsletterContent->is_enabled) && (int) $newsletterContent->is_enabled === 1)
-        <div class="newsletter my-5">
+        <div class="newsletter my-5 pb-4">
             <div class="container">
                 <div class="row g-0">
                     <div class="col-md-6">
