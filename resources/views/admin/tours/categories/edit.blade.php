@@ -1147,7 +1147,6 @@
                                 </div>
                             </div>
 
-
                             <div x-data="{ enabled: {{ isset($newsletterContent->is_enabled) && $newsletterContent->is_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">

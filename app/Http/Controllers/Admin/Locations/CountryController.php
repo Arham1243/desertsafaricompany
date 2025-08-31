@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin\Locations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\News;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Traits\Sluggable;
@@ -25,9 +26,11 @@ class CountryController extends Controller
     public function create()
     {
         $tours = Tour::where('status', 'publish')->get();
+        $news = News::where('status', 'publish')
+            ->get();
         $categories = TourCategory::where('status', 'publish')->get();
 
-        return view('admin.locations.countries-management.add', compact('tours', 'categories'))->with('title', 'Add New Country');
+        return view('admin.locations.countries-management.add', compact('tours', 'categories', 'news'))->with('title', 'Add New Country');
     }
 
     public function store(Request $request)
@@ -84,10 +87,12 @@ class CountryController extends Controller
     {
         $item = Country::find($id);
         $categories = TourCategory::where('status', 'publish')->get();
+        $news = News::where('status', 'publish')
+            ->get();
         $tours = Tour::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours', 'categories'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours', 'categories', 'news'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)
@@ -147,6 +152,8 @@ class CountryController extends Controller
     {
         switch ($sectionKey) {
             case 'guide':
+                return $newData;
+            case 'news_section':
                 return $newData;
         }
     }

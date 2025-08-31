@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Locations;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\News;
 use App\Models\Tour;
 use App\Models\TourCategory;
 
@@ -19,6 +20,7 @@ class CityController extends Controller
             ->firstOrFail();
 
         $tours = Tour::where('status', 'publish')->latest()->get();
+        $news = News::where('status', 'publish')->latest()->get();
         $relatedCities = $countryModel
             ->cities()
             ->where('status', 'publish')
@@ -27,6 +29,6 @@ class CityController extends Controller
 
         return view('frontend.locations.city.details')
             ->with('title', ucfirst(strtolower($item->name)))
-            ->with(compact('item', 'relatedCities', 'tours', 'countryModel', 'categories'));
+            ->with(compact('item', 'relatedCities', 'tours', 'countryModel', 'categories', 'news'));
     }
 }

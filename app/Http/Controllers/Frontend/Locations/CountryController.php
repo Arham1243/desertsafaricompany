@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend\Locations;
 
 use App\Http\Controllers\Controller;
 use App\Models\Country;
+use App\Models\News;
 use App\Models\Tour;
 use App\Models\TourCategory;
 
@@ -15,9 +16,10 @@ class CountryController extends Controller
         $categories = TourCategory::where('status', 'publish')->get();
         $tours = Tour::where('status', 'publish')->latest()->get();
         $relatedCities = $item->cities()->where('status', 'publish')->get();
+        $news = News::where('status', 'publish')->latest()->get();
 
         return view('frontend.locations.country.details')
             ->with('title', ucfirst(strtolower($item->name)))
-            ->with(compact('item', 'relatedCities', 'tours', 'categories'));
+            ->with(compact('item', 'relatedCities', 'tours', 'categories', 'news'));
     }
 }

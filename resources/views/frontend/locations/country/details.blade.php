@@ -3,6 +3,7 @@
 @php
     $seo = $item->seo ?? null;
     $jsonContent = json_decode($item->json_content, true) ?? null;
+    $newsContent = $jsonContent['news_section'] ?? null;
     $headingTitle =
         isset($jsonContent['h1_title_text']['title']) && $jsonContent['h1_title_text']['title']
             ? $jsonContent['h1_title_text']['title']
@@ -11,6 +12,7 @@
         isset($jsonContent['h1_title_text']['subtitle']) && $jsonContent['h1_title_text']['subtitle']
             ? $jsonContent['h1_title_text']['subtitle']
             : null;
+    $newsContent = $jsonContent['news_section'] ?? null;
 @endphp
 
 
@@ -299,6 +301,84 @@ $btnStyles = [];
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (isset($newsContent['is_enabled']) && (int) $newsContent['is_enabled'] === 1)
+        <div class="latest-stories my-5">
+            <div class=container>
+                <div class="section-content mb-4 pb-1">
+                    <div class=latest-stories__title style="color:{{ $newsContent['title_text_color'] ?? '' }};">
+                        {{ $newsContent['title'] ?? '' }}</div>
+                    <h2 class="subHeading block-heading" style="color:{{ $newsContent['subTitle_text_color'] ?? '' }};">
+                        {{ $newsContent['subTitle'] ?? '' }}
+                    </h2>
+                </div>
+                @php
+                    $featured_news = $news->find($newsContent['featured_news_id'])->first();
+                    $news_list = $news->whereIn('id', $newsContent['news_list_ids'] ?? []);
+                @endphp
+
+                <div class="row">
+                    <div class=col-md-7>
+                        @if ($featured_news)
+                            <div class=Desti-Pract__details>
+                                <a href="javascript:void(0)" class=Desti-Pract__img>
+                                    <img data-src="{{ asset($featured_news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                        alt="{{ $featured_news->feature_image_alt_text }}" class="imgFluid lazy"
+                                        loading="lazy">
+                                </a>
+                                <div class=Desti-Pract__content>
+                                    <div class="sub-title">
+                                        {{ $featured_news->category->name ?? '' }}
+                                    </div>
+                                    <a href="javascript:void(0)"
+                                        @if (strlen($featured_news->title ?? '') > 19) data-tooltip="tooltip" @endif
+                                        title="{{ $featured_news->title ?? '' }}"
+                                        class="Desti-Pract__title line-clamp-1">{{ $featured_news->title ?? '' }}</a>
+                                    <div class="date">{{ formatDate($featured_news->created_at) }}</div>
+                                    <div class="editor-content">
+                                        {!! $featured_news->content ?? '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="section-content">
+                                <div class="heading">No featured news available.</div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class=col-md-5>
+                        @if ($news_list->isNotEmpty())
+                            @foreach ($news_list as $news)
+                                <div class=Desti-Pract__activities>
+                                    <div class=activities-details>
+                                        <a href="javascript:void(0)" class=activities-img>
+                                            <img data-src="{{ asset($news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                alt="{{ $news->feature_image_alt_text }}" class="imgFluid lazy"
+                                                loading="lazy">
+                                        </a>
+                                        <div class=activities-content>
+                                            <p><b>{{ $news->category->name ?? '' }}</b></p>
+                                            <a href="{{ $news->slug }}">{{ $news->title ?? '' }}</a>
+                                            <p>{{ formatDate($news->created_at) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="section-content">
+                                <div class="heading">No news available.</div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                @if (isset($newsContent['is_button_enabled']) && (int) $newsContent['is_button_enabled'] === 1)
+                    <button
+                        style="background: {{ $newsContent['btn_background_color'] ?? '' }};color:{{ $newsContent['btn_text_color'] ?? '' }};"
+                        class="primary-btn primary-btn--center mt-4">{{ $newsContent['btn_text'] ?? '' }}</button>
+                @endif
             </div>
         </div>
     @endif

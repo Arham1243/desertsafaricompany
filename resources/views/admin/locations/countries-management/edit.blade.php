@@ -4,6 +4,7 @@
         $sectionContent = json_decode($item->section_content);
         $jsonContent = json_decode($item->json_content, true) ?? null;
         $guideContent = $sectionContent->guide ?? null;
+        $newsContent = $jsonContent['news_section'] ?? null;
         $faqContent = $jsonContent['faq_section'] ?? null;
         $faqData = [
             'enabled' => $faqContent['is_enabled'] ?? 0,
@@ -403,6 +404,183 @@
                                                 <button type="button" class="themeBtn ms-auto" @click="addFaq">
                                                     Add <i class="bx bx-plus"></i>
                                                 </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="{ enabled: {{ isset($newsContent['is_enabled']) && $newsContent['is_enabled'] == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($newsContent['is_button_enabled']) && $newsContent['is_button_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">News Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[news_section][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="news_section" value="1"
+                                                name="json_content[news_section][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="news_section">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/updated-news-section.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2"><i class="bx bxs-show"></i></a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4 pt-3">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Title & Text Color:</label>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="title-color-picker" data-color-picker></label>
+                                                            <input id="title-color-picker" type="hidden"
+                                                                name="json_content[news_section][title_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsContent['title_text_color'] ?? '#000000' }}"
+                                                                inputmode="text" />
+
+                                                            <input type="text" name="json_content[news_section][title]"
+                                                                placeholder=""
+                                                                value="{{ $newsContent['title'] ?? '' }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Sub Title & Text Color:</label>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="sub-title-color-picker" data-color-picker></label>
+                                                            <input id="sub-title-color-picker" type="hidden"
+                                                                name="json_content[news_section][subTitle_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsContent['subTitle_text_color'] ?? '#243064' }}"
+                                                                inputmode="text" />
+
+                                                            <input type="text"
+                                                                name="json_content[news_section][subTitle]" placeholder=""
+                                                                value="{{ $newsContent['subTitle'] ?? '' }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-lg-12 col-12 mb-4 pt-3">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <label class="title title--sm mb-0">Read More Button:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input type="hidden" value="0"
+                                                            name="json_content[news_section][is_button_enabled]">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="is_button_enabled_news" value="1"
+                                                            name="json_content[news_section][is_button_enabled]"
+                                                            x-model="btnEnabled">
+                                                        <label class="form-check-label"
+                                                            for="is_button_enabled_news">Enabled</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" x-show="btnEnabled" x-transition>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title text-dark">
+                                                                <div class="d-flex align-items-center gap-2 lh-1">
+                                                                    <div class="mt-1">Button Link & Background:</div>
+                                                                </div>
+                                                            </label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="cta-btn-bg-color" data-color-picker></label>
+                                                                <input id="cta-btn-bg-color" type="hidden"
+                                                                    name="json_content[news_section][btn_background_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $newsContent['btn_background_color'] ?? '#1c4d99' }}"
+                                                                    data-error="Background Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="json_content[news_section][btn_link]"
+                                                                    value="{{ $newsContent['btn_link'] ?? '' }}"
+                                                                    placeholder="" data-error="Button Link" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title text-dark">Button Text & Text
+                                                                Color:</label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="cta-btn-text-color" data-color-picker></label>
+                                                                <input id="cta-btn-text-color" type="hidden"
+                                                                    name="json_content[news_section][btn_text_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $newsContent['btn_text_color'] ?? '#ffffff' }}"
+                                                                    data-error="Text Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="json_content[news_section][btn_text]"
+                                                                    value="{{ $newsContent['btn_text'] ?? '' }}"
+                                                                    placeholder="" data-error="Button Text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-lg-12 mb-4 pt-3">
+                                            <div class="form-fields">
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title">Select featured News <span
+                                                                    class="text-danger">*</span> :</label>
+                                                            <select data-max-items="1"
+                                                                name="json_content[news_section][featured_news_id]"
+                                                                multiple class="field select2-select"
+                                                                placeholder="Select">
+                                                                @foreach ($news as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ $newsContent && isset($newsContent['featured_news_id']) && $item->id == $newsContent['featured_news_id'] ? 'selected' : '' }}>
+                                                                        {{ $item->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @php
+                                                        $newsListIdsCheck = $newsContent
+                                                            ? isset($newsContent['news_list_ids'])
+                                                            : [];
+                                                        $newsListIds = $newsListIdsCheck
+                                                            ? $newsContent['news_list_ids']
+                                                            : [];
+                                                    @endphp
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title">Select 3 News <span
+                                                                    class="text-danger">*</span> :</label>
+                                                            <select data-max-items="3"
+                                                                name="json_content[news_section][news_list_ids][]" multiple
+                                                                class="field select2-select" placeholder="Select">
+                                                                @foreach ($news as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ in_array($item->id, $newsListIds) ? 'selected' : '' }}>
+                                                                        {{ $item->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
