@@ -74,10 +74,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                             
-                                                                                                                                                                  
-                                                                                                      
-                             @endif>
+                                                                                                                                                                                                                                 
+                                                                                                                                                                      
+                                                                                                          
+                                  @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -514,9 +514,11 @@
                         @endif
                     </div>
                 </div>
-                <button
-                    style="background: {{ $newsContent->btn_background_color ?? '' }};color:{{ $newsContent->btn_text_color ?? '' }};"
-                    class="primary-btn primary-btn--center mt-4">{{ $newsContent->btn_text ?? '' }}</button>
+                @if (isset($newsContent->is_button_enabled) && (int) $newsContent->is_button_enabled === 1)
+                    <button
+                        style="background: {{ $newsContent->btn_background_color ?? '' }};color:{{ $newsContent->btn_text_color ?? '' }};"
+                        class="primary-btn primary-btn--center mt-4">{{ $newsContent->btn_text ?? '' }}</button>
+                @endif
             </div>
         </div>
     @endif

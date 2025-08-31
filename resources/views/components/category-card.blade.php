@@ -9,7 +9,7 @@
             </div>
             <div class="category-card__content">
                 <a href="{{ $detailUrl }}" class="title line-clamp-1"
-                    @if (strlen($category->name) > 20) data-tooltip="tooltip" @endif
+                    @if (strlen($category->name) > 30) data-tooltip="tooltip" @endif
                     title="{{ $category->name }}">{{ $category->name }}</a>
                 <div class="description">
                     <div class="line-clamp-3">

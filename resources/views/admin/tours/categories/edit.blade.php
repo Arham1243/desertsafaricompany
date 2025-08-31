@@ -1099,7 +1099,6 @@
                                         </div>
                                         <div class="col-lg-12 mb-4 pt-3">
                                             <div class="form-fields">
-                                                <label class="title title--sm">News:</label>
                                                 <div class="row mt-2">
                                                     <div class="col-lg-6">
                                                         <div class="form-fields">
