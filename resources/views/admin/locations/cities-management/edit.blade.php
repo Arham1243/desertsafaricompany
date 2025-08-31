@@ -490,7 +490,7 @@
                                 </div>
                             </div>
 
-                            <div x-data="{ enabled: {{ isset($newsContent->is_enabled) && $newsContent->is_enabled == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($newsContent->is_button_enabled) && $newsContent->is_button_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
+                            <div x-data="{ enabled: {{ isset($newsContent['is_enabled']) && $newsContent['is_enabled'] == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($newsContent['is_button_enabled']) && $newsContent['is_button_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">News Section</div>
@@ -520,11 +520,12 @@
                                                             <input id="title-color-picker" type="hidden"
                                                                 name="json_content[news_section][title_text_color]"
                                                                 data-color-picker-input
-                                                                value="{{ $newsContent->title_text_color ?? '#000000' }}"
+                                                                value="{{ $newsContent['title_text_color'] ?? '#000000' }}"
                                                                 inputmode="text" />
 
                                                             <input type="text" name="json_content[news_section][title]"
-                                                                placeholder="" value="{{ $newsContent->title ?? '' }}" />
+                                                                placeholder=""
+                                                                value="{{ $newsContent['title'] ?? '' }}" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -536,12 +537,12 @@
                                                             <input id="sub-title-color-picker" type="hidden"
                                                                 name="json_content[news_section][subTitle_text_color]"
                                                                 data-color-picker-input
-                                                                value="{{ $newsContent->subTitle_text_color ?? '#243064' }}"
+                                                                value="{{ $newsContent['subTitle_text_color'] ?? '#243064' }}"
                                                                 inputmode="text" />
 
                                                             <input type="text"
                                                                 name="json_content[news_section][subTitle]" placeholder=""
-                                                                value="{{ $newsContent->subTitle ?? '' }}" />
+                                                                value="{{ $newsContent['subTitle'] ?? '' }}" />
                                                         </div>
                                                     </div>
                                                 </div>
@@ -580,12 +581,12 @@
                                                                 <input id="cta-btn-bg-color" type="hidden"
                                                                     name="json_content[news_section][btn_background_color]"
                                                                     data-color-picker-input
-                                                                    value="{{ $newsContent->btn_background_color ?? '#1c4d99' }}"
+                                                                    value="{{ $newsContent['btn_background_color'] ?? '#1c4d99' }}"
                                                                     data-error="Background Color" inputmode="text" />
 
                                                                 <input type="text"
                                                                     name="json_content[news_section][btn_link]"
-                                                                    value="{{ $newsContent->btn_link ?? '' }}"
+                                                                    value="{{ $newsContent['btn_link'] ?? '' }}"
                                                                     placeholder="" data-error="Button Link" />
                                                             </div>
                                                         </div>
@@ -599,12 +600,12 @@
                                                                 <input id="cta-btn-text-color" type="hidden"
                                                                     name="json_content[news_section][btn_text_color]"
                                                                     data-color-picker-input
-                                                                    value="{{ $newsContent->btn_text_color ?? '#ffffff' }}"
+                                                                    value="{{ $newsContent['btn_text_color'] ?? '#ffffff' }}"
                                                                     data-error="Text Color" inputmode="text" />
 
                                                                 <input type="text"
                                                                     name="json_content[news_section][btn_text]"
-                                                                    value="{{ $newsContent->btn_text ?? '' }}"
+                                                                    value="{{ $newsContent['btn_text'] ?? '' }}"
                                                                     placeholder="" data-error="Button Text" />
                                                             </div>
                                                         </div>
@@ -629,7 +630,7 @@
                                                                 placeholder="Select">
                                                                 @foreach ($news as $item)
                                                                     <option value="{{ $item->id }}"
-                                                                        {{ $newsContent && isset($newsContent->featured_news_id) && $item->id == $newsContent->featured_news_id ? 'selected' : '' }}>
+                                                                        {{ $newsContent && isset($newsContent['featured_news_id']) && $item->id == $newsContent['featured_news_id'] ? 'selected' : '' }}>
                                                                         {{ $item->title }}
                                                                     </option>
                                                                 @endforeach
@@ -638,10 +639,10 @@
                                                     </div>
                                                     @php
                                                         $newsListIdsCheck = $newsContent
-                                                            ? isset($newsContent->news_list_ids)
+                                                            ? isset($newsContent['news_list_ids'])
                                                             : [];
                                                         $newsListIds = $newsListIdsCheck
-                                                            ? $newsContent->news_list_ids
+                                                            ? $newsContent['news_list_ids']
                                                             : [];
                                                     @endphp
                                                     <div class="col-lg-6">
