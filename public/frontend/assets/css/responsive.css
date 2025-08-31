@@ -253,7 +253,7 @@
     }
 
     .comment {
-        padding: 2rem 0 2rem;
+        padding: 2rem 0 0;
         position: relative;
     }
 
@@ -732,5 +732,15 @@
     }
     body .subHeading.block-heading {
         font-size: 1.25rem !important;
+    }
+    .category-card__content .title {
+        font-size: 0.9rem;
+    }
+    .category-card__content .description {
+        color: #707070;
+        font-size: 12px;
+    }
+    .faqs.faqs-category .faqs-single__content {
+        margin-left: 2.25rem;
     }
 }
