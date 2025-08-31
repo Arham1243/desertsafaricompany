@@ -93,7 +93,7 @@ class PageController extends Controller
         $page = Page::where('id', $id)->firstOrFail();
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];
         $slug = $this->createSlug($slugText, 'pages', $page->slug);
-        $show_page_builder_sections = isset($request->show_page_builder_sections) ? $request->show_page_builder_sections : 0;
+        $show_page_builder_sections = isset($request->show_page_builder_sections) ? (int) $request->show_page_builder_sections : 0;
 
         $data = array_merge($validatedData, [
             'slug' => $slug,
@@ -105,7 +105,7 @@ class PageController extends Controller
 
         handleSeoData($request, $page, 'Page/'.$page->title);
 
-        return redirect()->route('admin.pages.index')->with('notify_success', 'Page updated successfully.');
+        return redirect()->route('admin.pages.edit', $page->id)->with('notify_success', 'Page updated successfully.');
     }
 
     public function editTemplate(Page $page)

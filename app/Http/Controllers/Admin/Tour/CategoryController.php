@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Tour;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\News;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourReview;
@@ -79,9 +80,11 @@ class CategoryController extends Controller
             ->get();
         $allCategories = TourCategory::where('status', 'publish')->latest()->get();
         $toursReviews = TourReview::where('status', 'active')->get();
+        $news = News::where('status', 'publish')
+            ->get();
         $seo = $category->seo()->first();
         $cities = City::where('status', 'publish')->latest()->get();
-        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories', 'cities', 'countries');
+        $data = compact('category', 'seo', 'tours', 'toursReviews', 'dropdownCategories', 'allCategories', 'cities', 'countries', 'news');
 
         return view('admin.tours.categories.edit')->with('title', ucfirst(strtolower($category->name)))->with($data);
     }
@@ -152,6 +155,9 @@ class CategoryController extends Controller
             case 'newsletter':
                 $newData['left_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'left_image');
 
+                return $newData;
+
+            case 'news_section':
                 return $newData;
         }
     }

@@ -43,7 +43,6 @@ class NewsController extends Controller
 
     public function store(Request $request)
     {
-
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
             'content' => 'nullable',
@@ -74,7 +73,7 @@ class NewsController extends Controller
         }
         handleSeoData($request, $news, 'News');
 
-        return redirect()->route('admin.news.index')->with('notify_success', 'News Added successfully!');
+        return redirect()->route('admin.news.edit', $news->id)->with('notify_success', 'News Added successfully!');
     }
 
     public function edit(News $news)
@@ -91,7 +90,6 @@ class NewsController extends Controller
 
     public function update(Request $request, News $news)
     {
-
         $validatedData = $request->validate([
             'title' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255',
@@ -108,6 +106,7 @@ class NewsController extends Controller
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];
         $slug = $this->createSlug($slugText, 'blogs', $news->slug);
 
+        $featuredImage = $news->featured_image;
         if ($request->hasFile('featured_image')) {
             $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'News/Featured-images', $news->featured_image);
         }
@@ -128,6 +127,6 @@ class NewsController extends Controller
         }
         handleSeoData($request, $news, 'Blog');
 
-        return redirect()->route('admin.news.index')->with('notify_success', 'News updated successfully!');
+        return redirect()->route('admin.news.edit', $news->id)->with('notify_success', 'News updated successfully!');
     }
 }

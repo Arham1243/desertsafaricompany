@@ -74,9 +74,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                     
-                                                                                                                                                          
-                                                                                              @endif>
+                                                                                                                                                                                                                             
+                                                                                                                                                                  
+                                                                                                      
+                             @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -144,6 +145,7 @@
         $tourCountContent = $sectionContent->tour_count ?? null;
         $callToActionContent = $sectionContent->call_to_action ?? null;
         $newsletterContent = $sectionContent->newsletter ?? null;
+        $newsContent = $sectionContent->news_section ?? null;
     @endphp
 
     @if (isset($callToActionContent->is_enabled) && (int) $callToActionContent->is_enabled === 1)
@@ -337,7 +339,7 @@
     @endif
 
     @if ($featuredReviews->isNotEmpty())
-        <div class="comment">
+        <div class="comment mb-4">
             <img src="{{ asset('frontend/assets/images/comment.webp') }}" alt="image" class="peoples-img imgFluid"
                 loading="lazy">
             <div class="ocizgi_imgs">
@@ -441,6 +443,80 @@
                         </div>
                     </div>
                 @endforeach
+            </div>
+        </div>
+    @endif
+
+    @if (isset($newsContent->is_enabled) && (int) $newsContent->is_enabled === 1)
+        <div class="latest-stories my-5">
+            <div class=container>
+                <div class="section-content mb-4 pb-1">
+                    <div class=latest-stories__title style="color:{{ $newsContent->title_text_color ?? '' }};">
+                        {{ $newsContent->title ?? '' }}</div>
+                    <h2 class=subHeading style="color:{{ $newsContent->subTitle_text_color ?? '' }};">
+                        {{ $newsContent->subTitle ?? '' }}
+                    </h2>
+                </div>
+                @php
+                    $featured_news = $news->find($newsContent->featured_news_id)->first();
+                    $news_list = $news->whereIn('id', $newsContent->news_list_ids ?? []);
+                @endphp
+
+                <div class="row">
+                    <div class=col-md-7>
+                        @if ($featured_news)
+                            <div class=Desti-Pract__details>
+                                <a href="{{ $featured_news->slug }}" class=Desti-Pract__img>
+                                    <img data-src="{{ asset($featured_news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                        alt="{{ $featured_news->feature_image_alt_text }}" class="imgFluid lazy"
+                                        loading="lazy">
+                                </a>
+                                <div class=Desti-Pract__content>
+                                    <div class="sub-title">
+                                        {{ $featured_news->category->name ?? '' }}
+                                    </div>
+                                    <a href="{{ $featured_news->slug }}"
+                                        class="Desti-Pract__title">{{ $featured_news->title ?? '' }}</a>
+                                    <div class="date">{{ formatDate($featured_news->created_at) }}</div>
+                                    <div class="editor-content">
+                                        {!! $featured_news->content ?? '' !!}
+                                    </div>
+                                </div>
+                            </div>
+                        @else
+                            <div class="section-content">
+                                <div class="heading">No featured news available.</div>
+                            </div>
+                        @endif
+                    </div>
+                    <div class=col-md-5>
+                        @if ($news_list->isNotEmpty())
+                            @foreach ($news_list as $news)
+                                <div class=Desti-Pract__activities>
+                                    <div class=activities-details>
+                                        <a href="{{ $news->slug }}" class=activities-img>
+                                            <img data-src="{{ asset($news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                alt="{{ $news->feature_image_alt_text }}" class="imgFluid lazy"
+                                                loading="lazy">
+                                        </a>
+                                        <div class=activities-content>
+                                            <p><b>{{ $news->category->name ?? '' }}</b></p>
+                                            <a href="{{ $news->slug }}">{{ $news->title ?? '' }}</a>
+                                            <p>{{ formatDate($news->created_at) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @else
+                            <div class="section-content">
+                                <div class="heading">No news available.</div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+                <button
+                    style="background: {{ $newsContent->btn_background_color ?? '' }};color:{{ $newsContent->btn_text_color ?? '' }};"
+                    class="primary-btn primary-btn--center mt-4">{{ $newsContent->btn_text ?? '' }}</button>
             </div>
         </div>
     @endif

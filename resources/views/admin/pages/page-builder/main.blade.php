@@ -8,8 +8,16 @@
                 <div class="custom-sec__header">
                     <div class="section-content">
                         <h3 class="heading">Edit Template: {{ isset($title) ? $title : '' }}</h3>
+                        @if ((int) $page->show_page_builder_sections === 1)
+                            <div class="text-danger mt-2">
+                                ⚠ To use the Page Builder sections, please disable "Show Page Content switch".
+                                You can edit the page <a class="custom-link"
+                                    href="{{ route('admin.pages.edit', $page->id) }}">here</a>.
+                            </div>
+                        @endif
                     </div>
-                    <a href="{{ route('frontend.page.show', $page->slug) }}?viewer=admin" target="_blank" class="themeBtn">View
+                    <a href="{{ route('frontend.page.show', $page->slug) }}?viewer=admin" target="_blank"
+                        class="themeBtn">View
                         Page</a>
                 </div>
 

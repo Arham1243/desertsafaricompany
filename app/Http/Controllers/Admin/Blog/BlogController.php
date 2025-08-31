@@ -98,7 +98,7 @@ class BlogController extends Controller
 
         handleSeoData($request, $blog, 'Blog');
 
-        return redirect()->route('admin.blogs.index')->with('notify_success', 'Blog Added successfully!');
+        return redirect()->route('admin.blogs.edit', $blog->id)->with('notify_success', 'Blog Added successfully!');
     }
 
     /**
@@ -166,6 +166,7 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
 
+        $featuredImage = $blog->featured_image;
         if ($request->hasFile('featured_image')) {
             $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Blogs/Featured-images', $blog->featured_image);
         }
@@ -202,6 +203,6 @@ class BlogController extends Controller
 
         handleSeoData($request, $blog, 'Blog');
 
-        return redirect()->route('admin.blogs.index')->with('notify_success', 'Blog updated successfully!');
+        return redirect()->route('admin.blogs.edit', $blog->id)->with('notify_success', 'Blog updated successfully!');
     }
 }

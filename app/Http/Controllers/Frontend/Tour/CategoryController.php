@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Frontend\Tour;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\News;
 use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourCategoryView;
@@ -51,6 +52,8 @@ class CategoryController extends Controller
             ->where('status', 'active')
             ->get();
 
+        $news = News::where('status', 'publish')->latest()->get();
+
         $this->trackCategoryView($request, $item->id);
         $thisWeekViews = $item
             ->views()
@@ -64,7 +67,8 @@ class CategoryController extends Controller
                 'featuredReviews',
                 'tours',
                 'tourCategories',
-                'thisWeekViews'
+                'thisWeekViews',
+                'news'
             ));
     }
 
