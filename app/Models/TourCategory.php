@@ -14,6 +14,8 @@ class TourCategory extends Model
 
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
+    protected $appends = ['featured_image', 'featured_image_alt_text'];
+
     public function seo()
     {
         return $this->morphOne(Seo::class, 'seoable');
@@ -52,6 +54,16 @@ class TourCategory extends Model
     public function children()
     {
         return $this->hasMany(TourCategory::class, 'parent_category_id');
+    }
+
+    public function getFeaturedImageAttribute()
+    {
+        return $this->media()->first()?->file_path;
+    }
+
+    public function getFeaturedImageAltTextAttribute()
+    {
+        return $this->media()->first()?->alt_text;
     }
 
     protected static function boot()

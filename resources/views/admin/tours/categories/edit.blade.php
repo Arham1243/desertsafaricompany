@@ -215,7 +215,7 @@
                                             <label class="form-check-label" for="category_block">Enabled</label>
                                         </div>
                                     </div>
-                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                    <a href="{{ asset('admin/assets/images/category-block-design-1.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-2">
                                         <i class='bx bxs-show'></i>
                                     </a>
@@ -358,7 +358,7 @@
                                             <label class="form-check-label" for="category_block_2">Enabled</label>
                                         </div>
                                     </div>
-                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
+                                    <a href="{{ asset('admin/assets/images/category-block-design-2.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-2">
                                         <i class='bx bxs-show'></i>
                                     </a>
@@ -373,11 +373,11 @@
                                                 <input type="hidden" value="0"
                                                     name="json_content[category_block_2][heading_enabled]">
                                                 <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                    id="category_block_heading" value="1"
-                                                    name="json_content[category_block][heading_enabled]"
+                                                    id="category_block_2_heading" value="1"
+                                                    name="json_content[category_block_2][heading_enabled]"
                                                     x-model="headingEnabled">
                                                 <label class="form-check-label"
-                                                    for="category_block_heading">Enabled</label>
+                                                    for="category_block_2_heading">Enabled</label>
                                             </div>
                                         </div>
                                         <input x-show="headingEnabled" x-transition

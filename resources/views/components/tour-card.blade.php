@@ -33,12 +33,10 @@
             <div class=card-details>
                 <a href={{ $detailUrl }} data-tooltip="tooltip" class=card-title
                     title="{{ $tour->title }}">{{ $tour->title }}</a>
-                @if ($tour->cities->isNotEmpty())
-                    <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
-                        class=location-details><i class="bx bx-location-plus"></i>
-                        @if ($tour->cities->isNotEmpty())
-                            {{ $tour->cities[0]->name }}
-                        @endif
+                @if ($tour->city)
+                    <div class="location-details" data-tooltip="tooltip" title="{{ $tour->city->name }}">
+                        <i class="bx bx-location-plus"></i>
+                        {{ $tour->city->name }}
                     </div>
                 @endif
                 <div class=card-rating>
@@ -56,40 +54,45 @@
 
     @case('style2')
         <div class=card-content>
-            <a href={{ $detailUrl }} class=card_img>
-                <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
-                    alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
-                <div class=price-details>
-                    @if (Auth::check())
-                        <div class="heart-icon">
-                            @php
-                                $isFavorited = Auth::user()->favoriteTours->contains($tour->id);
-                            @endphp
-                            @if ($isFavorited)
-                                <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
-                                    <button type="submit"> <i class="bx bxs-heart"></i></button>
-                                </form>
-                            @else
-                                <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
-                                    method="post">
-                                    @csrf
-                                    <button type="submit"> <i class="bx bx-heart"></i></button>
-                                </form>
-                            @endif
-                        </div>
-                    @endif
-                </div>
-            </a>
-            <div class=tour-activity-card__details>
-                <div class=vertical-activity-card__header>
-                    <div>
-                        @if ($tour->formated_price_type)
-                            <span>{{ $tour->formated_price_type }}</span>
+            <div class="card_img_wrapper">
+                <div class="price-details justify-content-end">
+                    <div class="heart-icon">
+                        @php
+                            $isFavorited = Auth::check() && Auth::user()->favoriteTours->contains($tour->id);
+                        @endphp
+
+                        @if (!Auth::check())
+                            <button type="button" open-vue-login-popup
+                                onclick="showMessage('Please log in to add this tour to favorites.', 'error','top-right')">
+                                <i class="bx bx-heart"></i>
+                            </button>
+                        @elseif ($isFavorited)
+                            <form class="service-wishlist" action="{{ route('tours.favorites.index') }}" method="get">
+                                <button type="submit"><i class="bx bxs-heart"></i></button>
+                            </form>
                         @else
-                            <span>From<div class="flex">{!! formatPrice($tour->sale_price) !!}</div></span>
+                            <form class="service-wishlist" action="{{ route('tours.favorites.add', $tour->id) }}"
+                                method="post">
+                                @csrf
+                                <button type="submit"><i class="bx bx-heart"></i></button>
+                            </form>
                         @endif
                     </div>
-                    <a href="{{ $detailUrl }}" class="tour-activity-card__details--title">
+                </div>
+                <a href={{ $detailUrl }} class=card_img>
+                    <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
+                        alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
+                </a>
+            </div>
+            <div class=tour-activity-card__details>
+                <div class=vertical-activity-card__header>
+                    <div class="lowest-price">
+                        @if ($tour->tour_lowest_price)
+                            <span>From<div class="flex">{!! formatPrice($tour->tour_lowest_price) !!}</div></span>
+                        @endif
+                    </div>
+                    <a title="{{ $tour->title }}" @if (strlen($tour->title) > 20) data-tooltip="tooltip" @endif
+                        href="{{ $detailUrl }}" class="tour-activity-card__details--title line-clamp-1">
                         {{ $tour->title }}
                     </a>
                 </div>
@@ -97,19 +100,17 @@
                     <div class=card-rating>
                         <x-star-rating :rating="$tour->average_rating" />
                         @if ($tour->reviews->count() > 0)
-                            {{ $tour->reviews->count() }}
-                            Review{{ $tour->reviews->count() > 1 ? 's' : '' }}
+                            <span>{{ $tour->reviews->count() }} Review{{ $tour->reviews->count() > 1 ? 's' : '' }}</span>
                         @else
                             <span>No reviews yet</span>
                         @endif
                     </div>
-                    <div @if ($tour->cities->isNotEmpty()) data-tooltip="tooltip" title="{{ $tour->cities->pluck('name')->implode(', ') }}" @endif
-                        class=card-location>
-                        <i class="bx bx-location-plus"></i>
-                        @if ($tour->cities->isNotEmpty())
-                            {{ $tour->cities[0]->name }}
-                        @endif
-                    </div>
+                    @if ($tour->city)
+                        <div class="card-location">
+                            <i class="bx bx-location-plus"></i>
+                            {{ $tour->city->name }}
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -280,11 +281,10 @@
                     TOP 1
                 </div>
                 <div class="price-details">
-                    @if ($tour->cities->isNotEmpty())
-                        <div class="price-location" data-tooltip="tooltip"
-                            title="{{ $tour->cities->pluck('name')->implode(', ') }}">
+                    @if ($tour->city)
+                        <div class="price-location" data-tooltip="tooltip" title="{{ $tour->city->name }}">
                             <i class="bx bxs-location-plus"></i>
-                            {{ $tour->cities[0]->name }}
+                            {{ $tour->city->name }}
                         </div>
                     @endif
                     @if (Auth::check())
@@ -369,10 +369,9 @@
             </a>
             <div class="tour-activity-card__details normal-card__details">
                 <div class="vertical-activity-card__header">
-                    @if ($tour->cities->isNotEmpty())
-                        <div class="normal-card__location" data-tooltip="tooltip"
-                            title="{{ $tour->cities->pluck('name')->implode(', ') }}">
-                            <i class="bx bxs-paper-plane"></i>{{ $tour->cities[0]->name }}
+                    @if ($tour->city)
+                        <div class="normal-card__location" data-tooltip="tooltip" title="{{ $tour->city->name }}">
+                            <i class="bx bxs-paper-plane"></i>{{ $tour->city->name }}
                         </div>
                     @endif
                     <a href="{{ $detailUrl }}" class="tour-activity-card__details--title">

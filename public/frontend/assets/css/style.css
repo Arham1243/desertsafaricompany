@@ -829,9 +829,6 @@ a#loginBtn {
     font-weight: 600;
 }
 
-.local-guide .price-details {
-}
-
 .card-location {
     margin-top: 20px;
     text-transform: capitalize;
@@ -2255,21 +2252,17 @@ form.input-details.generic-form i {
 }
 
 .highlight__text a {
-    font-size: 1.25rem;
-    line-height: 1.5rem;
+    font-size: 16px;
     font-weight: 900;
     color: #1a2b49;
-    margin-bottom: 4px;
+    height: 55px;
 }
 
 .highlight__description {
-    font-size: 14px;
-    font-weight: 700;
-    display: -webkit-box;
-    -webkit-line-clamp: 6;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    margin-bottom: 2rem;
+    font-size: 13px;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #707070;
 }
 
 .highlight__description * {
@@ -2279,10 +2272,10 @@ form.input-details.generic-form i {
 }
 
 .highlight__button-wrapper a {
-    font-size: 1rem;
+    font-size: 14px;
     line-height: 1.375rem;
     font-weight: 700;
-    color: #0071eb;
+    color: var(--color-primary);
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -2432,6 +2425,7 @@ input.form-book__date {
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 0.25rem;
 }
 
 .tour-activity__cards2 h3 {
@@ -2441,7 +2435,6 @@ input.form-book__date {
 .tour-activity__RL .card-rating {
     display: flex;
     align-items: center;
-    gap: 5px;
     letter-spacing: 1px;
 }
 
@@ -2585,9 +2578,6 @@ a.card_img.trending-products__img {
     display: flex;
     align-items: center;
     margin: 0;
-}
-
-.card-rating {
 }
 
 .card-rating span {
@@ -6794,13 +6784,13 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 /* checkout */
-.heart-icon .service-wishlist button {
+.heart-icon button {
     background: none;
     border: none;
     outline: none;
 }
 
-.service-wishlist i {
+.heart-icon i {
     color: red;
 }
 
@@ -7561,12 +7551,12 @@ ul.show-in-desktop {
     font-weight: 700;
     border-radius: 0.3rem;
 }
-.tour-card .tour-actions .heart-icon {
+.heart-icon {
     background: none;
     border: none;
     outline: none;
 }
-.tour-card .tour-actions .heart-icon i {
+.heart-icon i {
     font-size: 1.1rem;
     background: #fff;
     color: #000;
@@ -7667,6 +7657,18 @@ ul.show-in-desktop {
 }
 .line-clamp-3 {
     -webkit-line-clamp: 3;
+}
+.line-clamp-4 {
+    -webkit-line-clamp: 4;
+}
+.line-clamp-5 {
+    -webkit-line-clamp: 5;
+}
+.line-clamp-6 {
+    -webkit-line-clamp: 6;
+}
+.line-clamp-7 {
+    -webkit-line-clamp: 7;
 }
 /* card-hover */
 .img-zoom {
@@ -7857,4 +7859,64 @@ ul.show-in-desktop {
 
 .editor-content a {
     color: var(--color-primary);
+}
+/* category-card */
+.category-card {
+    margin: 1rem 0;
+    background: #fff;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.1);
+}
+.category-card:hover {
+    box-shadow: 0 0.25rem 1.25rem rgba(0, 0, 0, 0.2);
+}
+.category-card__img,
+.category-card__img .img-wrapper {
+    width: 100%;
+    height: 240px;
+}
+.category-card__img .img-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.category-card__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1rem 1rem;
+}
+.category-card__content .title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+.category-card__content .description {
+    color: #707070;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.5;
+    position: relative;
+    height: 61px;
+}
+.category-card__content .description * {
+    color: inherit;
+    font: inherit;
+}
+.category-card__content .description .more {
+    position: absolute;
+    bottom: 0;
+    right: 14px;
+    background-color: #fff;
+    color: var(--color-primary);
+    font-size: 12px;
+    padding-left: 4px;
+}
+/* category-card */
+
+.card_img_wrapper {
+    position: relative;
+}
+.vertical-activity-card__header .lowest-price {
+    height: 20px;
 }
