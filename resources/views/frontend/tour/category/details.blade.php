@@ -68,15 +68,15 @@
             $tour_category_content_color = $settings->get('tour_category_content_color');
             $tour_category_content_read_more_color = $settings->get('tour_category_content_read_more_color');
         @endphp
-        <div class="mt-3 mb-5">
+        <div class="mb-5">
             <div class=container>
                 <div class="tour-content__details " data-show-more>
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                 
-                                                                                                                                      
-                                                                     @endif>
+                                                                                                                                                                                                     
+                                                                                                                                          
+                                                                          @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
