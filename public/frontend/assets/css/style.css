@@ -7896,21 +7896,18 @@ ul.show-in-desktop {
     font-size: 0.85rem;
     font-weight: 500;
     line-height: 1.5;
-    position: relative;
     height: 61px;
 }
 .category-card__content .description * {
     color: inherit;
     font: inherit;
 }
-.category-card__content .description .more {
-    position: absolute;
-    bottom: 0;
-    right: 14px;
-    background-color: #fff;
+.category-card__content .more {
     color: var(--color-primary);
-    font-size: 12px;
-    padding-left: 4px;
+    font-size: 13px;
+    text-align: center;
+    font-weight: 700;
+    padding-top: 0.65rem;
 }
 /* category-card */
 

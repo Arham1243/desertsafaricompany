@@ -15,10 +15,8 @@
                     <div class="line-clamp-3">
                         {{ $category->short_description }}
                     </div>
-                    @if (strlen($category->short_description) > 180)
-                        <a href="{{ $detailUrl }}" class="more">...More</a>
-                    @endif
                 </div>
+                <a href="{{ $detailUrl }}" class="more">See ways to experience ({{ $category->tours->count() }})</a>
             </div>
         </div>
     @break
