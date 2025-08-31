@@ -630,7 +630,7 @@
         font-size: 1.1rem;
     }
     .editor-content :is(p, li, strong) {
-        font-size: 15px;
+        font-size: 13px;
     }
     .refund-policy {
         margin: 1.25rem 0 2rem;
