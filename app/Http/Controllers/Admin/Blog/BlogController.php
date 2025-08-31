@@ -67,6 +67,7 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
 
+        $featuredImage = null;
         if ($request->hasFile('featured_image')) {
             $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Blogs/Featured-images');
         }

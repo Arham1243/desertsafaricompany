@@ -57,6 +57,7 @@ class NewsController extends Controller
 
         $slug = $this->createSlug($validatedData['title'], 'blogs');
 
+        $featuredImage = null;
         if ($request->hasFile('featured_image')) {
             $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'News/Featured-images');
         }
