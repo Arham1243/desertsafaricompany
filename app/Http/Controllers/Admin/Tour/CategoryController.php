@@ -74,9 +74,7 @@ class CategoryController extends Controller
         $category = TourCategory::findOrFail($id);
         $tours = Tour::where('status', 'publish')->get();
         $countries = Country::where('status', 'publish')->latest()->get();
-        $dropdownCategories = TourCategory::where('status', 'publish')
-            ->where('id', '!=', $id)
-            ->get();
+        $dropdownCategories = TourCategory::where('id', '!=', $id)->get();
         $allCategories = TourCategory::where('status', 'publish')->latest()->get();
         $toursReviews = TourReview::where('status', 'active')->get();
         $seo = $category->seo()->first();
