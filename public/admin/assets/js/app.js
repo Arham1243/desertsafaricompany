@@ -370,7 +370,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //     return editors;
 // }
 
-// Ck Editor
+// Ck Editor test
 function initializeEditors(form) {
     const editors = [];
     const editorElements = form.querySelectorAll(".editor");
