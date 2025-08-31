@@ -4,6 +4,7 @@ use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
 use App\Http\Controllers\Frontend\Locations\LocationController;
+use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchSuggestionController;
 use App\Http\Controllers\Frontend\Tour\CartController;
 use App\Http\Controllers\Frontend\Tour\CategoryController;
@@ -17,6 +18,7 @@ Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');
     Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
+    Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
 });
 
 Route::get('/blog-details', [IndexController::class, 'blog_details'])->name('blog-details');
