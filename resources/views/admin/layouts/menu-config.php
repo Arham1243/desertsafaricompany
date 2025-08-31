@@ -185,22 +185,6 @@ return [
                 ],
             ],
             [
-                'title' => 'Time Categories',
-                'icon' => 'bx bx-time',
-                'submenu' => [
-                    [
-                        'title' => 'Time Categories',
-                        'icon' => 'bx bx-list-ul',
-                        'route' => route('admin.tour-times.index'),
-                    ],
-                    [
-                        'title' => 'Recovery',
-                        'icon' => 'bx bx-refresh',
-                        'route' => route('admin.recovery.index', ['resource' => 'tour-times']),
-                    ],
-                ],
-            ],
-            [
                 'title' => 'Authors',
                 'icon' => 'bx bxs-group',
                 'submenu' => [

@@ -54,11 +54,6 @@ class TourCategory extends Model
         return $this->hasMany(TourCategory::class, 'parent_category_id');
     }
 
-    public function tourTimes()
-    {
-        return $this->belongsToMany(TourTime::class);
-    }
-
     protected static function boot()
     {
         parent::boot();

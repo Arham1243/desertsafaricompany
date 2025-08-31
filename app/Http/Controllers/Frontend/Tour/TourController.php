@@ -11,7 +11,6 @@ use App\Models\Tour;
 use App\Models\TourAttribute;
 use App\Models\TourCategory;
 use App\Models\TourDetailPopup;
-use App\Models\TourTime;
 use App\Models\TourView;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
@@ -34,11 +33,6 @@ class TourController extends Controller
 
         if (Tour::where('slug', $slug)->exists()) {
             return app(TourController::class)->details($request, $country, $city, $category, $slug);
-        }
-        if (TourTime::where('slug', $slug)->exists()) {
-            $request = Request::create(request()->fullUrl(), 'GET');
-
-            return app(TourTimeController::class)->details($request, $country, $city, $category, $slug);
         }
         abort(404);
     }

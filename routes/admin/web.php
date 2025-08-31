@@ -32,7 +32,6 @@ use App\Http\Controllers\Admin\Tour\DetailPopupController as TourDetailPopupCont
 use App\Http\Controllers\Admin\Tour\OrderController;
 use App\Http\Controllers\Admin\Tour\ReviewController;
 use App\Http\Controllers\Admin\Tour\TourController;
-use App\Http\Controllers\Admin\Tour\TourTimeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admins', function () {
@@ -80,8 +79,6 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('tour-categories', TourCategoryController::class);
     Route::get('tour-categories/duplicate/{id}', [TourCategoryController::class, 'duplicate'])->name('tour-categories.duplicate');
     Route::post('/tour-categories/city/{city?}', [TourCategoryController::class, 'getByCity']);
-
-    Route::resource('tour-times', TourTimeController::class);
 
     Route::resource('tour-authors', TourAuthorController::class);
 
