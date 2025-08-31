@@ -985,7 +985,7 @@
                                             <label class="form-check-label" for="news_section">Enabled</label>
                                         </div>
                                     </div>
-                                    <a href="{{ asset('admin/assets/images/sections/news.png') }}"
+                                    <a href="{{ asset('admin/assets/images/updated-news-section.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-2"><i class="bx bxs-show"></i></a>
                                 </div>
 
