@@ -710,6 +710,9 @@
     .privacy-content {
         font-size: 12px;
     }
+    .loginBtn {
+        font-size: 13px;
+    }
     .newsletter__content .section-content .subHeading {
         font-size: 1.15rem;
     }
