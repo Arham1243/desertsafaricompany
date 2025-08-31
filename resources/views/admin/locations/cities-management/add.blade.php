@@ -3,6 +3,19 @@
     @php
         $jsonContent = null;
         $guideContent = null;
+        $faqContent = $sectionContent->faq_section ?? null;
+        $newsContent = $sectionContent['news_section'] ?? null;
+        $faqData = [
+            'enabled' => $faqContent->is_enabled ?? 0,
+            'faqs' => collect($faqContent->question ?? [])
+                ->map(function ($q, $i) use ($faqContent) {
+                    return [
+                        'question' => $q,
+                        'answer' => $faqContent->answer[$i] ?? '',
+                    ];
+                })
+                ->values(),
+        ];
     @endphp
     <div class="col-md-12">
         <div class="dashboard-content">
@@ -151,6 +164,71 @@
                                     </div>
                                 </div>
                             </div>
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_block']['is_enabled']) && $jsonContent['category_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block']['heading_enabled']) && $jsonContent['category_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category Block Design 1</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_block][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_block" value="1"
+                                                name="json_content[category_block][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/category-block-design-1.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_block][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_block_heading" value="1"
+                                                    name="json_content[category_block][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_block][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_block']['heading'] ?? '' }}">
+                                    </div>
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds = isset(
+                                                $jsonContent['category_block']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block][category_ids][]" class="select2-select"
+                                            data-error="Category" should-sort="false" multiple>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                             <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
@@ -233,6 +311,333 @@
                                     </div>
                                 </div>
                             </div>
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['category_block_2']['is_enabled']) && $jsonContent['category_block_2']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['category_block_2']['heading_enabled']) && $jsonContent['category_block_2']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">Category Block Design 2</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[category_block_2][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="category_block_2" value="1"
+                                                name="json_content[category_block_2][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="category_block_2">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/category-block-design-2.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields mb-4">
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[category_block_2][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="category_block_2_heading" value="1"
+                                                    name="json_content[category_block_2][heading_enabled]"
+                                                    x-model="headingEnabled">
+                                                <label class="form-check-label"
+                                                    for="category_block_2_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition
+                                            name="json_content[category_block_2][heading]" type="text"
+                                            class="field mt-3"
+                                            value="{{ $jsonContent['category_block_2']['heading'] ?? '' }}">
+                                    </div>
+
+                                    <div class="form-fields mb-4">
+                                        @php
+                                            $tourBlockCategoryIds2 = isset(
+                                                $jsonContent['category_block_2']['category_ids'],
+                                            )
+                                                ? $jsonContent['category_block_2']['category_ids']
+                                                : [];
+                                        @endphp
+                                        <label class="title">Select categories</label>
+                                        <select name="json_content[category_block_2][category_ids][]"
+                                            class="select2-select" data-error="Category" should-sort="false" multiple>
+                                            @foreach ($categories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds2 ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-data="faqRepeater({{ json_encode($faqData) }})" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">FAQ Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[faq_section][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="faq_section_enabled" value="1"
+                                                name="json_content[faq_section][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="faq_section_enabled">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/faq-section.png') }}" data-fancybox="gallery"
+                                        class="themeBtn p-2">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm">FAQs:</label>
+                                            <div class="repeater-table">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                FAQ Content
+                                                                <span
+                                                                    class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
+                                                                    <span>To add a link:</span>
+                                                                    <code class="text-nowrap text-lowercase">
+                                                                        &lt;a href="//google.com"
+                                                                        target="_blank"&gt;Text&lt;/a&gt;
+                                                                    </code>
+                                                                    <button class="themeBtn copy-btn py-1 px-2"
+                                                                        type="button"
+                                                                        text-to-copy='&lt;a href="//google.com" target="_blank"&gt;Text&lt;/a&gt;'>
+                                                                        Copy
+                                                                    </button>
+                                                                </span>
+                                                            </th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(faq, index) in faqs" :key="index">
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="mb-3">
+                                                                        <label class="title">Question <span
+                                                                                class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field mb-1" rows="4" x-model="faq.question"
+                                                                            :name="`json_content[faq_section][question][${index}]`"></textarea>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label class="title">Answer <span class="ps-1"
+                                                                                x-text="index + 1"></span>:</label>
+                                                                        <textarea class="field" rows="4" x-model="faq.answer" :name="`json_content[faq_section][answer][${index}]`"></textarea>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        @click="removeFaq(index)">
+                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" @click="addFaq">
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-data="{ enabled: {{ isset($newsContent->is_enabled) && $newsContent->is_enabled == '1' ? 'true' : 'false' }}, btnEnabled: {{ isset($newsContent->is_button_enabled) && $newsContent->is_button_enabled == '1' ? 'true' : 'false' }} }" class="form-box">
+                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">News Section</div>
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" value="0"
+                                                name="json_content[news_section][is_enabled]">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="news_section" value="1"
+                                                name="json_content[news_section][is_enabled]" x-model="enabled">
+                                            <label class="form-check-label" for="news_section">Enabled</label>
+                                        </div>
+                                    </div>
+                                    <a href="{{ asset('admin/assets/images/updated-news-section.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-2"><i class="bx bxs-show"></i></a>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-4 pt-3">
+                                            <div class="row">
+                                                <div class="col-lg-6 col-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Title & Text Color:</label>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="title-color-picker" data-color-picker></label>
+                                                            <input id="title-color-picker" type="hidden"
+                                                                name="json_content[news_section][title_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsContent->title_text_color ?? '#000000' }}"
+                                                                inputmode="text" />
+
+                                                            <input type="text" name="json_content[news_section][title]"
+                                                                placeholder="" value="{{ $newsContent->title ?? '' }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-12 mb-4">
+                                                    <div class="form-fields">
+                                                        <label class="title">Sub Title & Text Color:</label>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="sub-title-color-picker" data-color-picker></label>
+                                                            <input id="sub-title-color-picker" type="hidden"
+                                                                name="json_content[news_section][subTitle_text_color]"
+                                                                data-color-picker-input
+                                                                value="{{ $newsContent->subTitle_text_color ?? '#243064' }}"
+                                                                inputmode="text" />
+
+                                                            <input type="text"
+                                                                name="json_content[news_section][subTitle]" placeholder=""
+                                                                value="{{ $newsContent->subTitle ?? '' }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-lg-12 col-12 mb-4 pt-3">
+                                            <div class="form-fields">
+                                                <div class="d-flex align-items-center gap-3 mb-3">
+                                                    <label class="title title--sm mb-0">Read More Button:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input type="hidden" value="0"
+                                                            name="json_content[news_section][is_button_enabled]">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="is_button_enabled_news" value="1"
+                                                            name="json_content[news_section][is_button_enabled]"
+                                                            x-model="btnEnabled">
+                                                        <label class="form-check-label"
+                                                            for="is_button_enabled_news">Enabled</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row" x-show="btnEnabled" x-transition>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title text-dark">
+                                                                <div class="d-flex align-items-center gap-2 lh-1">
+                                                                    <div class="mt-1">Button Link & Background:</div>
+                                                                </div>
+                                                            </label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="cta-btn-bg-color" data-color-picker></label>
+                                                                <input id="cta-btn-bg-color" type="hidden"
+                                                                    name="json_content[news_section][btn_background_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $newsContent->btn_background_color ?? '#1c4d99' }}"
+                                                                    data-error="Background Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="json_content[news_section][btn_link]"
+                                                                    value="{{ $newsContent->btn_link ?? '' }}"
+                                                                    placeholder="" data-error="Button Link" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title text-dark">Button Text & Text
+                                                                Color:</label>
+                                                            <div class="field color-picker" data-color-picker-container>
+                                                                <label for="cta-btn-text-color" data-color-picker></label>
+                                                                <input id="cta-btn-text-color" type="hidden"
+                                                                    name="json_content[news_section][btn_text_color]"
+                                                                    data-color-picker-input
+                                                                    value="{{ $newsContent->btn_text_color ?? '#ffffff' }}"
+                                                                    data-error="Text Color" inputmode="text" />
+
+                                                                <input type="text"
+                                                                    name="json_content[news_section][btn_text]"
+                                                                    value="{{ $newsContent->btn_text ?? '' }}"
+                                                                    placeholder="" data-error="Button Text" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12">
+                                            <hr />
+                                        </div>
+                                        <div class="col-lg-12 mb-4 pt-3">
+                                            <div class="form-fields">
+                                                <div class="row mt-2">
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title">Select featured News <span
+                                                                    class="text-danger">*</span> :</label>
+                                                            <select data-max-items="1"
+                                                                name="json_content[news_section][featured_news_id]"
+                                                                multiple class="field select2-select"
+                                                                placeholder="Select">
+                                                                @foreach ($news as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ $newsContent && isset($newsContent->featured_news_id) && $item->id == $newsContent->featured_news_id ? 'selected' : '' }}>
+                                                                        {{ $item->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    @php
+                                                        $newsListIdsCheck = $newsContent
+                                                            ? isset($newsContent->news_list_ids)
+                                                            : [];
+                                                        $newsListIds = $newsListIdsCheck
+                                                            ? $newsContent->news_list_ids
+                                                            : [];
+                                                    @endphp
+                                                    <div class="col-lg-6">
+                                                        <div class="form-fields">
+                                                            <label class="title">Select 3 News <span
+                                                                    class="text-danger">*</span> :</label>
+                                                            <select data-max-items="3"
+                                                                name="json_content[news_section][news_list_ids][]" multiple
+                                                                class="field select2-select" placeholder="Select">
+                                                                @foreach ($news as $item)
+                                                                    <option value="{{ $item->id }}"
+                                                                        {{ in_array($item->id, $newsListIds) ? 'selected' : '' }}>
+                                                                        {{ $item->title }}
+                                                                    </option>
+                                                                @endforeach
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div x-data="{
                                 enabled: {{ isset($guideContent->is_enabled) && $guideContent->is_enabled == '1' ? 'true' : 'false' }},
                                 btnEnabled: {{ isset($guideContent->is_button_enabled) && $guideContent->is_button_enabled == '1' ? 'true' : 'false' }},
@@ -588,6 +993,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
+        function faqRepeater(initial = {
+            enabled: 0,
+            faqs: []
+        }) {
+            return {
+                enabled: Boolean(Number(initial.enabled)),
+                faqs: initial.faqs.length ? initial.faqs : [{
+                    question: '',
+                    answer: ''
+                }],
+                addFaq() {
+                    this.faqs.push({
+                        question: '',
+                        answer: ''
+                    })
+                },
+                removeFaq(index) {
+                    this.faqs.splice(index, 1)
+                }
+            }
+        }
         document.addEventListener('DOMContentLoaded', () => {
             document
                 .querySelectorAll("[data-color-picker-container]")
