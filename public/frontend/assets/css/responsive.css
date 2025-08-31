@@ -730,4 +730,7 @@
         width: 100%;
         height: 280px;
     }
+    body .subHeading.block-heading {
+        font-size: 1.25rem !important;
+    }
 }
