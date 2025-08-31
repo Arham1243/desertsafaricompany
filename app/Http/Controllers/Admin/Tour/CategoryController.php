@@ -103,7 +103,7 @@ class CategoryController extends Controller
         $data['slug'] = $slug;
 
         $data['json_content'] = json_encode($request->input('json_content', null));
-        $fieldsToNullify = ['parent_category_id', 'city_id'];
+        $fieldsToNullify = ['parent_category_id', 'city_id', 'tour_reviews_ids'];
 
         foreach ($fieldsToNullify as $field) {
             if (! $request->has($field)) {
