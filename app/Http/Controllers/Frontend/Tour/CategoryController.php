@@ -92,7 +92,7 @@ class CategoryController extends Controller
                 ->whereBetween('created_at', [$weekStart, $weekEnd])
                 ->sum('start_count');
 
-            if ($weeklyTotal >= 300) {
+            if ($weeklyTotal >= 5000) {
                 TourCategoryView::where('category_id', $categoryId)->delete();
                 $startCount = rand(252, 500);
             } else {
