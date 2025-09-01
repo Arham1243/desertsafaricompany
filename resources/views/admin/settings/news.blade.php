@@ -42,29 +42,3 @@
         </div>
     </div>
 @endsection
-@push('css')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/css/css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/htmlmixed/htmlmixed.min.js"></script>
-@endpush
-
-@push('js')
-    <script>
-        document.querySelectorAll('[code-editor]').forEach(el => {
-            const mode = el.getAttribute('data-mode') || 'css';
-            CodeMirror.fromTextArea(el, {
-                mode: mode,
-                theme: 'material',
-                lineNumbers: true,
-                tabSize: 100,
-                indentWithTabs: true,
-                lineWrapping: true,
-                styleActiveLine: true,
-                matchBrackets: true
-            });
-        });
-    </script>
-@endpush

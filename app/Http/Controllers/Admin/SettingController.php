@@ -56,6 +56,10 @@ class SettingController extends Controller
             'postpay_secret_key' => 'POSTPAY_SECRET_KEY',
             'email_from_name' => 'MAIL_FROM_NAME',
             'email_from_address' => 'MAIL_FROM_ADDRESS',
+            'facebook_client_id' => 'FACEBOOK_CLIENT_ID',
+            'facebook_client_secret' => 'FACEBOOK_CLIENT_SECRET',
+            'google_client_id' => 'GOOGLE_CLIENT_ID',
+            'google_client_secret' => 'GOOGLE_CLIENT_SECRET',
         ];
 
         foreach ($envKeys as $inputKey => $envKey) {

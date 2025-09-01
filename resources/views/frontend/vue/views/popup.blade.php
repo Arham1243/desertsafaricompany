@@ -10,18 +10,24 @@
                 <h3>Log in or sign up</h3>
                 <p>Check out faster and access your tickets anytime on any device with your account.</p>
                 <div class="loginSignup-popup__buttons">
-                    <a href="{{ route('auth.socialite', ['social' => 'google']) }}" class="loginSignup-popup__icons">
-                        <div class="loginSignup-popup__img">
-                            <img src="{{ asset('frontend/assets/images/google-removebg-preview.webp') }}" alt='image'
-                                class='imgFluid' loading='lazy' width="27" height="27">
-                        </div>
-                    </a>
-                    <a href="{{ route('auth.socialite', ['social' => 'facebook']) }}" class="loginSignup-popup__icons">
-                        <div class="loginSignup-popup__img">
-                            <img src="{{ asset('frontend/assets/images/scale_1200-removebg-preview.webp') }}"
-                                alt='image' class='imgFluid' loading='lazy' width="27" height="27">
-                        </div>
-                    </a>
+                    @if ($settings->get('is_google_login_enabled') && (int) $settings->get('is_google_login_enabled') === 1)
+                        <a href="{{ route('auth.socialite', ['social' => 'google']) }}"
+                            class="loginSignup-popup__icons">
+                            <div class="loginSignup-popup__img">
+                                <img src="{{ asset('frontend/assets/images/google-removebg-preview.webp') }}"
+                                    alt='image' class='imgFluid' loading='lazy' width="27" height="27">
+                            </div>
+                        </a>
+                    @endif
+                    @if ($settings->get('is_facebook_login_enabled') && (int) $settings->get('is_facebook_login_enabled') === 1)
+                        <a href="{{ route('auth.socialite', ['social' => 'facebook']) }}"
+                            class="loginSignup-popup__icons">
+                            <div class="loginSignup-popup__img">
+                                <img src="{{ asset('frontend/assets/images/scale_1200-removebg-preview.webp') }}"
+                                    alt='image' class='imgFluid' loading='lazy' width="27" height="27">
+                            </div>
+                        </a>
+                    @endif
                 </div>
                 <form @submit.prevent="checkEmail">
                     <div class="loginSignup-popup__email">

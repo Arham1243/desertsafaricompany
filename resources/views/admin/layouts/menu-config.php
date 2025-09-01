@@ -361,7 +361,6 @@ return [
                 'title' => 'Advanced',
                 'icon' => 'bx bx-wrench',
                 'route' => route('admin.settings.edit', ['resource' => 'advanced']),
-                'status' => 'pending',
             ],
         ],
     ],

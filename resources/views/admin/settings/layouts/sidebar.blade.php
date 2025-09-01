@@ -75,7 +75,6 @@
             'route' => 'advanced',
             'icon' => 'bx-wrench',
             'label' => 'Advanced',
-            'status' => 'pending',
         ],
     ];
 
