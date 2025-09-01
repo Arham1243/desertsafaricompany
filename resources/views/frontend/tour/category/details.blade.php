@@ -70,10 +70,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                         
-                                                                                                                                                                                                              
-                                                                                                                                                  
-                                                                                    @endif>
+                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                      
+                                                                                                                                                          
+                                                                                              @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -239,10 +239,12 @@
                             </h1>
                         </div>
                         @php
-                            $tourCountCategory = $tourCategories->firstWhere(
-                                'id',
-                                (int) $tourCountContent->btn_link_category ?? null,
-                            );
+                            $btnLinkCategoryId = property_exists($tourCountContent, 'btn_link_category')
+                                ? (int) $tourCountContent->btn_link_category
+                                : null;
+
+                            $tourCountCategory = $tourCategories->firstWhere('id', $btnLinkCategoryId);
+
                             if ($tourCountCategory && $item->city) {
                                 $tourCountBtnLink = buildCategoryDetailUrl($tourCountCategory);
                             } else {
