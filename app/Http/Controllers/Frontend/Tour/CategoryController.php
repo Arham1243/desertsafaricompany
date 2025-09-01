@@ -83,7 +83,7 @@ class CategoryController extends Controller
 
         if (! $hasAnyViews) {
             TourCategoryView::where('category_id', $categoryId)->delete();
-            $startCount = rand(25, 500);
+            $startCount = rand(252, 500);
         } elseif ($newWeek) {
             TourCategoryView::where('category_id', $categoryId)->delete();
             $startCount = rand(252, 500);
