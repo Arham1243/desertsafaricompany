@@ -50,12 +50,6 @@
             'label' => 'Style',
         ],
         [
-            'route' => 'booking',
-            'icon' => 'bx-book',
-            'label' => 'Booking',
-            'status' => 'pending',
-        ],
-        [
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',

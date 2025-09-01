@@ -336,12 +336,6 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'style']),
             ],
             [
-                'title' => 'Booking',
-                'icon' => 'bx bx-book',
-                'route' => route('admin.settings.edit', ['resource' => 'booking']),
-                'status' => 'pending',
-            ],
-            [
                 'title' => 'Email',
                 'icon' => 'bx bx-envelope',
                 'route' => route('admin.settings.edit', ['resource' => 'email']),
