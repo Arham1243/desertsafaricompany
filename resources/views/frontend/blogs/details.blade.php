@@ -4,42 +4,41 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-8">
-                    <div class="post-content">
-                        <div class="post-content__img">
-                            <img src="{{ asset($blog->featured_image ?? 'assets/images/placeholder.png') }}"
-                                alt='{{ $blog->feature_image_alt_text }}' class='imgFluid' loading='lazy'>
+                    <div class="stories-content">
+                        <div class="stories-content__img">
+                            <img src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                alt="{{ $blog->featured_image_alt_text ?? 'Image' }}" class="imgFluid" loading="lazy">
                         </div>
-                        <div class="main-content pt-3">
-                            <p class="mb-1">{{ formatDate($blog->created_at) }}<i class='bx bxs-circle mx-2'
-                                    style="font-size: 8px"></i> <span>{{ $blog->category->name ?? '' }}</span></p>
-                            <h1 class="blog-details__mainHeading">
-                                {{ $blog->title }}
-                            </h1>
-                            <p>{{ $blog->short_description }}</p>
-                        </div>
+
+                        <ul class="stories-content__details">
+                            <li>
+                                <span><i class='bx bxs-calendar'></i></span>
+                                <span>{{ $blog->created_at ? $blog->created_at->format('d-M-Y') : 'Date not available' }}</span>
+                            </li>
+                            <li>
+                                <span><i class='bx bxs-folder'></i></span>
+                                <span>{{ $blog->category->name ?? 'Uncategorized' }}</span>
+                            </li>
+                        </ul>
+
+                        <div class="stories-content__title">{{ $blog->title ?? 'Title not available' }}</div>
+
+                        <div class="stories-content__desc">
+                            {{ $blog->short_description ?? 'Short description not available' }}</div>
+
+                        @if ($blog->content)
+                            <div class="editor-content">{!! $blog->content !!}</div>
+                        @endif
                     </div>
-                    @if ($blog->content)
-                        <div class="my-3">
-                            <div class="tour-content__details" data-show-more>
-                                <div class="editor-content line-clamp" data-show-more-content
-                                    @if ($blog->content_line_limit > 0) style="-webkit-line-clamp: {{ $blog->content_line_limit }};" @endif>
-                                    {!! $blog->content !!}
-                                </div>
-                                @if ($blog->content_line_limit > 0)
-                                    <a href="javascript:void(0)" class="loginBtn mt-1" data-show-more-btn
-                                        more-text="Read more" less-text='Read less'>
-                                        Read more</a>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
                 </div>
 
                 <div class="col-md-4">
                     <div class="you-may-also-like">
-                        <h2>
-                            You may also like
-                        </h2>
+                        <div class="section-content">
+                            <h2 class="subHeading block-heading">
+                                You may also like
+                            </h2>
+                        </div>
                         @foreach ($relatedBlogs as $blog)
                             <div class="Desti-Pract__activities">
                                 <div class="activities-details">

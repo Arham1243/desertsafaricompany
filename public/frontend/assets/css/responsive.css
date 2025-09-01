@@ -743,4 +743,7 @@
     .faqs.faqs-category .faqs-single__content {
         margin-left: 2.25rem;
     }
+    .stories-content__img {
+        height: 320px;
+    }
 }
