@@ -80,7 +80,7 @@
                                             <input type="text" name="re_captcha_site_key"
                                                 value="{{ $settings->get('re_captcha_site_key') ?? env('RE_CAPTCHA_SITE_KEY') }}"
                                                 class="field">
-                                            <a class="custom-link" href="https://www.google.com/recaptcha/admin">Learn
+                                            <a class="custom-link mt-2" href="https://www.google.com/recaptcha/admin">Learn
                                                 how to get Site key</a>
                                         </div>
                                     </div>
