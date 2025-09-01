@@ -10,7 +10,6 @@ use App\Models\Tour;
 use App\Models\TourCategory;
 use App\Models\TourCategoryView;
 use App\Models\TourReview;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -55,10 +54,8 @@ class CategoryController extends Controller
         $news = News::where('status', 'publish')->latest()->get();
 
         $this->trackCategoryView($request, $item->id);
-        $thisWeekViews = $item
-            ->views()
-            ->whereBetween('view_date', [Carbon::now()->startOfWeek(), Carbon::now()])
-            ->count();
+        $baseline = $item->views()->where('start_count', '>', 0)->value('start_count');
+        $thisWeekViews = $item->views()->count() + ($baseline ?? 0);
 
         return view('frontend.tour.category.details')
             ->with('title', ucfirst(strtolower($item->name)))
@@ -76,11 +73,38 @@ class CategoryController extends Controller
     {
         $ip = $request->ip();
         $today = now()->toDateString();
+        $weekStart = now()->startOfWeek();
+        $weekEnd = now()->endOfWeek();
 
-        TourCategoryView::firstOrCreate([
+        $hasAnyViews = TourCategoryView::where('category_id', $categoryId)->exists();
+        $latestView = TourCategoryView::where('category_id', $categoryId)->latest()->first();
+
+        $newWeek = $latestView && ! $latestView->created_at->between($weekStart, $weekEnd);
+
+        if (! $hasAnyViews) {
+            TourCategoryView::where('category_id', $categoryId)->delete();
+            $startCount = rand(25, 500);
+        } elseif ($newWeek) {
+            TourCategoryView::where('category_id', $categoryId)->delete();
+            $startCount = rand(252, 500);
+        } else {
+            $weeklyTotal = TourCategoryView::where('category_id', $categoryId)
+                ->whereBetween('created_at', [$weekStart, $weekEnd])
+                ->sum('start_count');
+
+            if ($weeklyTotal >= 300) {
+                TourCategoryView::where('category_id', $categoryId)->delete();
+                $startCount = rand(252, 500);
+            } else {
+                $startCount = 0;
+            }
+        }
+
+        TourCategoryView::create([
             'category_id' => $categoryId,
             'ip_address' => $ip,
             'view_date' => $today,
+            'start_count' => $startCount,
         ]);
     }
 }
