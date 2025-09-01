@@ -18,10 +18,6 @@
                     'route' => 'tour-category',
                     'label' => 'Category Page',
                 ],
-                [
-                    'route' => 'tour-search',
-                    'label' => 'Search Page',
-                ],
             ],
         ],
         [
