@@ -336,7 +336,6 @@ return [
                 'title' => 'Style',
                 'icon' => 'bx bx-palette',
                 'route' => route('admin.settings.edit', ['resource' => 'style']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'Booking',

@@ -50,7 +50,6 @@
             'route' => 'style',
             'icon' => 'bx-palette',
             'label' => 'Style',
-            'status' => 'pending',
         ],
         [
             'route' => 'booking',
