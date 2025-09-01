@@ -19,11 +19,6 @@ class IndexController extends Controller
         return redirect()->route('frontend.index');
     }
 
-    public function blog_details()
-    {
-        return view('blog-details')->with('title', 'Blog Details');
-    }
-
     public function privacy_policy()
     {
         return view('privacy-policy')->with('title', 'Privacy Policy');

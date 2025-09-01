@@ -45,7 +45,8 @@ class BlogController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'short_description' => 'nullable|string|max:255',
             'content' => 'nullable',
             'top_highlighted_tour_id' => 'nullable|integer|exists:tours,id',
             'featured_tours_ids' => 'array|max:4',
@@ -141,7 +142,8 @@ class BlogController extends Controller
     {
 
         $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'short_description' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
             'top_highlighted_tour_id' => 'nullable|integer|exists:tours,id',

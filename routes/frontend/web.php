@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
@@ -19,9 +20,10 @@ Route::name('frontend.')->group(function () {
     Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');
     Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+    Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.details');
 });
 
-Route::get('/blog-details', [IndexController::class, 'blog_details'])->name('blog-details');
 Route::get('/blog', [IndexController::class, 'blog'])->name('blog');
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');
 Route::get('/search/suggestions', [SearchSuggestionController::class, 'suggest'])->name('search.suggestions');

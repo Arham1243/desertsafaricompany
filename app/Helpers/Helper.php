@@ -268,3 +268,17 @@ if (! function_exists('buildCategoryDetailUrl')) {
         return $withBase ? url($path) : $path;
     }
 }
+if (! function_exists('buildBlogDetailUrl')) {
+    function buildBlogDetailUrl($blog, $withSlug = true, $withBase = true)
+    {
+        $segments = ['blogs'];
+
+        if ($withSlug && ! empty($blog->slug)) {
+            $segments[] = $blog->slug;
+        }
+
+        $path = implode('/', $segments);
+
+        return $withBase ? url($path) : $path;
+    }
+}

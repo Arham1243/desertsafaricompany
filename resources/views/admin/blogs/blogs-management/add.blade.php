@@ -29,6 +29,19 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields">
+                                        <label class="title d-flex align-items-center gap-2 lh-1">
+                                            Short Description Content
+                                            <button data-bs-placement="top" title="Used for category card description"
+                                                type="button" data-tooltip="tooltip" class="tooltip-lg">
+                                                <i class='bx bxs-info-circle'></i>
+                                            </button>
+                                        </label>
+                                        <textarea class="field" name="short_description" data-placeholder="content" data-error="Content" rows="6"> {{ old('short_description') }} </textarea>
+                                        @error('short_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-fields">
                                         <label class="title">Content <span class="text-danger">*</span> :</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
                                             {{ old('content') }}
@@ -37,7 +50,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-fields">
+                                    {{-- <div class="form-fields">
                                         <label class="title">Gallery <span class="text-danger">*</span> :</label>
 
                                         <div class="multiple-upload" data-upload-multiple>
@@ -56,7 +69,7 @@
                                         </div>
 
 
-                                    </div>
+                                    </div> --}}
                                     <div class="form-fields mt-3">
                                         <label class="title">right side top highlighted tour card <span
                                                 class="text-danger">*</span>
@@ -75,26 +88,6 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-fields">
-                                        <label class="title">Below Blog Slider Tour Card <span class="text-danger">*</span>
-                                            :</label>
-                                        <select name="featured_tours_ids[]" multiple class="select2-select"
-                                            data-max-items="4" placeholder="Select Tours"
-                                            data-error="Below Blog Slider Tour Card">
-                                            @foreach ($tours as $tour)
-                                                <option value="{{ $tour->id }}"
-                                                    {{ old('featured_tours_ids') == $tour->id ? 'selected' : '' }}>
-                                                    {{ $tour->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('featured_tours_ids')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-
-
-
                                 </div>
                             </div>
                             <x-seo-options :resource="'blogs'" />
@@ -124,7 +117,7 @@
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
                             </div>
-                            <div class="form-box">
+                            {{-- <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Author Settings</div>
                                 </div>
@@ -145,7 +138,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Options</div>

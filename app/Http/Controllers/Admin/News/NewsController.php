@@ -44,7 +44,8 @@ class NewsController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'short_description' => 'nullable|string|max:255',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'user_id' => 'nullable|integer|exists:users,id',
@@ -92,7 +93,8 @@ class NewsController extends Controller
     public function update(Request $request, News $news)
     {
         $validatedData = $request->validate([
-            'title' => 'nullable|string|max:255',
+            'title' => 'required|string|max:255',
+            'short_description' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
