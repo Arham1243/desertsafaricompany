@@ -307,3 +307,21 @@ if (! function_exists('replaceTemplateVariables')) {
         return $template;
     }
 }
+if (! function_exists('getSortedHeaderMenu')) {
+    function getSortedHeaderMenu($menuJson)
+    {
+        if (! $menuJson) {
+            return [];
+        }
+
+        $menuArray = json_decode($menuJson, true);
+
+        if (! $menuArray || ! is_array($menuArray)) {
+            return [];
+        }
+
+        usort($menuArray, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
+
+        return $menuArray;
+    }
+}

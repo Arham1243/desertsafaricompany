@@ -50,6 +50,16 @@
             'label' => 'Style',
         ],
         [
+            'route' => 'header-menu',
+            'icon' => 'bx bx-menu',
+            'label' => 'Header Menu Items',
+        ],
+        [
+            'route' => 'footer-quick-links',
+            'icon' => 'bx bx-link',
+            'label' => 'Footer Quick Links',
+        ],
+        [
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',

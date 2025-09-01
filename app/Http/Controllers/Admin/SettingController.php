@@ -14,7 +14,7 @@ class SettingController extends Controller
     public function edit($resource)
     {
         $detailPopups = TourDetailPopup::where('status', 'active')->get();
-        $settings = Setting::where('group', $resource)->pluck('value', 'key');
+        $settings = Setting::pluck('value', 'key');
         $pages = Page::where('status', 'publish')->get();
         $viewPath = "admin.settings.$resource";
 
@@ -33,7 +33,7 @@ class SettingController extends Controller
         foreach ($input as $key => $value) {
             if ($request->hasFile($key)) {
                 Setting::setFile($key, $request->file($key), $resource);
-            } elseif (in_array($key, ['perks', 'detail_popup_ids']) && is_array($value)) {
+            } elseif (in_array($key, ['perks', 'detail_popup_ids', 'header_menu']) && is_array($value)) {
                 Setting::set($key, json_encode($value), $resource);
             } elseif (! is_array($value)) {
                 Setting::set($key, $value, $resource);

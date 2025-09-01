@@ -12,7 +12,7 @@
                         @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                              @endif>
+                                   @endif>
                         {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                     </button>
                     <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -20,7 +20,7 @@
                         @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                              @endif>
+                                   @endif>
                         {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                     </button>
                 </div>
@@ -48,11 +48,16 @@
                             height="33.69"></a>
                 </div>
                 <div class="header-nav">
-                    <ul>
-                        <li><a href="{{ route('tours.index') }}">Tours</a></li>
-                        <li><a href="#">Local Guide</a></li>
-                        <li><a href="#">Help</a></li>
-                    </ul>
+                    @php
+                        $header_menu = getSortedHeaderMenu($settings->get('header_menu'));
+                    @endphp
+                    @if (!empty($header_menu))
+                        <ul>
+                            @foreach ($header_menu as $menu)
+                                <li><a href="{{ sanitizedLink($menu['url']) }}">{{ $menu['name'] }}</a></li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
             </div>
             <div class="header-btns">
@@ -114,7 +119,6 @@
                 </ul>
             </div>
 
-
             <a href="javascript:void(0)" class="header-main__menu" onclick="openSideBar()">
                 <i class="bx bx-menu"></i>
             </a>
@@ -132,14 +136,30 @@
         <img class="imgFluid" src="{{ asset($headerLogo ?? 'admin/assets/images/placeholder-logo.png') }}"
             alt='{{ $headerLogoAltText ?? 'logo' }}'>
     </a>
-    <ul class="sideBar__nav">
-        <li><a href="{{ route('tours.index') }}">Tours</a></li>
-        <li><a href="#">Local Guide</a></li>
-        <li><a href="#">Help</a></li>
-    </ul>
+    @if (!empty($header_menu))
+        <ul class="sideBar__nav">
+            @foreach ($header_menu as $menu)
+                <li><a href="{{ sanitizedLink($menu['url']) }}">{{ $menu['name'] }}</a></li>
+            @endforeach
+        </ul>
+    @endif
     @if ($settings->get('is_registration_enabled') && (int) $settings->get('is_registration_enabled') === 1)
-        <a href="javascript:void(0)" class="primary-btn w-75 mx-auto mt-4" open-vue-login-popup>
-            <span><b>Login</b> or <b> SignUp </b></span>
-        </a>
+        @php
+            $is_enabled_login_button =
+                $settings->get('is_enabled_login_button') && (int) $settings->get('is_enabled_login_button') === 1;
+            $login_button_text_color = $settings->get('login_button_text_color')
+                ? $settings->get('login_button_text_color')
+                : null;
+            $login_button_text = $settings->get('login_button_text') ? $settings->get('login_button_text') : null;
+            $login_button_bg_color = $settings->get('login_button_bg_color')
+                ? $settings->get('login_button_bg_color')
+                : null;
+        @endphp
+        @if ($is_enabled_login_button)
+            <a href="javascript:void(0)" open-vue-login-popup class="primary-btn w-75 mx-auto mt-4"
+                @if ($login_button_text_color || $login_button_bg_color) style="{{ $login_button_text_color ? "color: {$login_button_text_color};" : '' }} {{ $login_button_bg_color ? "background-color: {$login_button_bg_color};" : '' }}" @endif>
+                <span><b>{{ $login_button_text }}</b></span>
+            </a>
+        @endif
     @endif
 </div>

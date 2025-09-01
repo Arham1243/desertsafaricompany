@@ -336,6 +336,16 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'style']),
             ],
             [
+                'title' => 'Header Menu Items',
+                'icon' => 'bx bx-menu',
+                'route' => route('admin.settings.edit', ['resource' => 'header-menu']),
+            ],
+            [
+                'title' => 'Footer Quick Links',
+                'icon' => 'bx bx-link',
+                'route' => route('admin.settings.edit', ['resource' => 'footer-quick-links']),
+            ],
+            [
                 'title' => 'Email',
                 'icon' => 'bx bx-envelope',
                 'route' => route('admin.settings.edit', ['resource' => 'email']),

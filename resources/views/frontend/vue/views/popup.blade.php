@@ -1,8 +1,22 @@
 @if ($settings->get('is_registration_enabled') && (int) $settings->get('is_registration_enabled') === 1)
     @if (!Auth::check())
-        <a href="javascript:void(0)" @click="openLoginPopup" class="item__become-supplier loginBtn login-anchor">
-            <span><b>Login</b> or <b> SignUp </b></span>
-        </a>
+        @php
+            $is_enabled_login_button =
+                $settings->get('is_enabled_login_button') && (int) $settings->get('is_enabled_login_button') === 1;
+            $login_button_text_color = $settings->get('login_button_text_color')
+                ? $settings->get('login_button_text_color')
+                : null;
+            $login_button_text = $settings->get('login_button_text') ? $settings->get('login_button_text') : null;
+            $login_button_bg_color = $settings->get('login_button_bg_color')
+                ? $settings->get('login_button_bg_color')
+                : null;
+        @endphp
+        @if ($is_enabled_login_button)
+            <a href="javascript:void(0)" @click="openLoginPopup" class="item__become-supplier loginBtn login-anchor"
+                @if ($login_button_text_color || $login_button_bg_color) style="{{ $login_button_text_color ? "color: {$login_button_text_color};" : '' }} {{ $login_button_bg_color ? "background-color: {$login_button_bg_color};" : '' }}" @endif>
+                <span><b>{{ $login_button_text }}</b></span>
+            </a>
+        @endif
         <div class="login-wrapper" ref="loginPopup">
             <div class="loginSignup-popup">
                 <a href="javascript:void(0)" @click="closeLoginPopup" class="loginSignup-popup__close popup-close-icon"

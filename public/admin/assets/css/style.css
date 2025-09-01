@@ -2738,3 +2738,6 @@ a.delete-btn:hover {
 table th {
     white-space: nowrap;
 }
+.middle-align {
+    vertical-align: middle;
+}

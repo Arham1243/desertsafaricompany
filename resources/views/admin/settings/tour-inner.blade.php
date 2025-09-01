@@ -731,6 +731,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    <input type="hidden" value="[]" name="perks">
                                                     <template x-for="(feature, index) in features" :key="index">
                                                         <tr>
                                                             <td>
