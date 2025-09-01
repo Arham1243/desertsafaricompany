@@ -312,6 +312,8 @@
 @endpush
 
 @push('js')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
         document.querySelectorAll('[code-editor]').forEach(el => {
             const mode = el.getAttribute('data-mode') || 'javascript';
