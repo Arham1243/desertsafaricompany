@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use App\Models\Page;
 use App\Models\Setting;
 use App\Models\TourDetailPopup;
+use App\Traits\UploadImageTrait;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 
 class SettingController extends Controller
 {
+    use UploadImageTrait;
+
     public function edit($resource)
     {
         $detailPopups = TourDetailPopup::where('status', 'active')->get();
@@ -27,10 +30,12 @@ class SettingController extends Controller
 
     public function update(Request $request, $resource)
     {
-
         $input = $request->except('_token');
 
         foreach ($input as $key => $value) {
+            if ($key === 'footer_config') {
+                continue;
+            }
             if ($request->hasFile($key)) {
                 Setting::setFile($key, $request->file($key), $resource);
             } elseif (in_array($key, ['perks', 'detail_popup_ids', 'header_menu']) && is_array($value)) {
@@ -38,6 +43,26 @@ class SettingController extends Controller
             } elseif (! is_array($value)) {
                 Setting::set($key, $value, $resource);
             }
+        }
+
+        if ($request->has('footer_config')) {
+            $footer_config = $request->footer_config ?? [];
+            if (is_string($footer_config)) {
+                $footer_config = json_decode($footer_config, true) ?? [];
+            }
+
+            $blocks = $footer_config['blocks'] ?? [];
+
+            foreach ($blocks as $index => &$block) {
+                if ($block['type'] === 'image' && $request->hasFile("footer_config.blocks.$index.image")) {
+                    $file = $request->file("footer_config.blocks.$index.image");
+                    $block['image'] = asset($this->simpleUploadImg($file, 'Footer/Quick-links'));
+                }
+            }
+            unset($block);
+
+            $footer_config['blocks'] = $blocks;
+            Setting::set('footer_config', json_encode($footer_config), $resource);
         }
 
         $envKeys = [

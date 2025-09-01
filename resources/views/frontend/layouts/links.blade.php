@@ -1,6 +1,6 @@
 @php
-    $favicon = App\Models\Setting::where('key', 'favicon')->first()->value ?? null;
-    $globalStyles = App\Models\Setting::where('key', 'global_styles')->first()->value ?? null;
+    $favicon = $settings->get('favicon') ?? null;
+    $globalStyles = $settings->get('global_styles') ?? null;
 @endphp
 @if ($favicon)
     <link rel="shortcut icon" href="{{ asset($favicon) }}" type="image/x-icon">
