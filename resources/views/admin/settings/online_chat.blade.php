@@ -15,19 +15,22 @@
                     @include('admin.settings.layouts.sidebar')
                 </div>
                 <div class="col-md-9">
-                    <form action="{{ route('admin.settings.update', ['resource' => 'style']) }}" method="POST"
+                    <form action="{{ route('admin.settings.update', ['resource' => 'online_chat']) }}" method="POST"
                         enctype="multipart/form-data">
                         @csrf
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="d-flex align-items-center gap-3">
-                                    <label class="title">Global CSS Rules</label>
+                                    <label class="title">Live Chat Integration</label>
                                 </div>
                             </div>
                             <div class="form-box__body">
                                 <div class="form-fields mb-4">
-                                    <label class="title">Paste only CSS, without &lt;style&gt; tags</label>
-                                    <textarea name="global_styles" code-editor class="field" rows="12">{{ $settings->get('global_styles') }}</textarea>
+                                    <label class="title mb-0">Paste your chat widget script below</label>
+                                    <small class="text-muted d-block mb-3">
+                                        This code will be injected right before the closing <code>&lt;/body&gt;</code> tag.
+                                    </small>
+                                    <textarea code-editor name="online_chat" class="field code-editor" rows="12">{{ $settings->get('online_chat') }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +54,7 @@
 @push('js')
     <script>
         document.querySelectorAll('[code-editor]').forEach(el => {
-            const mode = el.getAttribute('data-mode') || 'css';
+            const mode = el.getAttribute('data-mode') || 'javascript';
             CodeMirror.fromTextArea(el, {
                 mode: mode,
                 theme: 'material',

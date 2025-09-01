@@ -79,6 +79,10 @@
     @if ($settings->get('footer_scripts'))
         {!! $settings->get('footer_scripts') !!}
     @endif
+
+    @if ($settings->get('online_chat'))
+        {!! $settings->get('online_chat') !!}
+    @endif
 </body>
 
 </html>

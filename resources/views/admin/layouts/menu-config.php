@@ -353,7 +353,6 @@ return [
                 'title' => 'Online Chat',
                 'icon' => 'bx bx-chat',
                 'route' => route('admin.settings.edit', ['resource' => 'online_chat']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'User',

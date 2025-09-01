@@ -498,20 +498,25 @@
 
                             <div class="form-box__body">
                                 <div class="form-fields mb-4">
-                                    <label class="title mb-2">
+                                    <label class="title mb-0">
                                         Header Scripts
                                     </label>
-                                    <textarea name="header_scripts" class="field" rows="12"
-                                        placeholder="Add your header scripts here (e.g., GTM, schema, analytics)">{{ $settings->get('header_scripts') }}</textarea>
+                                    <small class="text-muted d-block mb-3">
+                                        Scripts added here will appear inside the <code>&lt;head&gt;</code>
+                                    </small>
+                                    <textarea code-editor name="header_scripts" class="field" rows="12">{{ $settings->get('header_scripts') }}</textarea>
                                 </div>
 
                                 <div class="form-fields">
-                                    <label class="title mb-2">
+                                    <label class="title mb-0">
                                         Footer Scripts
                                     </label>
-                                    <textarea name="footer_scripts" class="field" rows="12"
-                                        placeholder="Add your footer scripts here (e.g., GTM, schema, analytics)">{{ $settings->get('footer_scripts') }}</textarea>
+                                    <small class="text-muted d-block mb-3">
+                                        Scripts added here will appear before the closing <code>&lt;/body&gt;</code> tag
+                                    </small>
+                                    <textarea code-editor name="footer_scripts" class="field" rows="12">{{ $settings->get('footer_scripts') }}</textarea>
                                 </div>
+
                             </div>
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i
@@ -529,4 +534,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
+@endpush
+
+@push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/theme/material.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.15/mode/htmlmixed/htmlmixed.min.js"></script>
+@endpush
+
+@push('js')
+    <script>
+        document.querySelectorAll('[code-editor]').forEach(el => {
+            const mode = el.getAttribute('data-mode') || 'javascript';
+            CodeMirror.fromTextArea(el, {
+                mode: mode,
+                theme: 'material',
+                lineNumbers: true,
+                tabSize: 100,
+                indentWithTabs: true,
+                lineWrapping: true,
+                styleActiveLine: true,
+                matchBrackets: true
+            });
+        });
+    </script>
 @endpush

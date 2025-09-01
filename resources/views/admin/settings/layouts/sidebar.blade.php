@@ -67,7 +67,6 @@
             'route' => 'online_chat',
             'icon' => 'bx-chat',
             'label' => 'Online Chat',
-            'status' => 'pending',
         ],
         [
             'route' => 'user',
