@@ -15,6 +15,6 @@ class BlogController extends Controller
         $tours = Tour::where('status', 'publish')->get();
         $data = compact('blog', 'relatedBlogs', 'tours');
 
-        return view('frontend.blogs.details')->with('title', 'Blog Details')->with($data);
+        return view('frontend.blogs.details')->with('title', ucfirst($blog->title))->with($data);
     }
 }

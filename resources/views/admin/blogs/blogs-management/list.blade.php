@@ -40,7 +40,6 @@
                                         </th>
                                         <th>Name</th>
                                         <th>Category</th>
-                                        {{-- <th>Author</th> --}}
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -59,7 +58,6 @@
                                                     class="link">{{ $blog->title }}</a>
                                             </td>
                                             <td>{{ $blog->category->name ?? 'N/A' }}</td>
-                                            {{-- <td>{{ $blog->user->full_name ?? 'N/A' }}</td> --}}
                                             <td>
                                                 {{ formatDateTime($blog->created_at) }}
                                             </td>

@@ -282,3 +282,17 @@ if (! function_exists('buildBlogDetailUrl')) {
         return $withBase ? url($path) : $path;
     }
 }
+if (! function_exists('buildNewsDetailUrl')) {
+    function buildNewsDetailUrl($news, $withSlug = true, $withBase = true)
+    {
+        $segments = ['news'];
+
+        if ($withSlug && ! empty($news->slug)) {
+            $segments[] = $news->slug;
+        }
+
+        $path = implode('/', $segments);
+
+        return $withBase ? url($path) : $path;
+    }
+}

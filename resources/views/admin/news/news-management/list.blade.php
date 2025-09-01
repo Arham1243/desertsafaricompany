@@ -40,7 +40,6 @@
                                         </th>
                                         <th>Name</th>
                                         <th>Category</th>
-                                        <th>Author</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -59,7 +58,6 @@
                                                     class="link">{{ $item->title }}</a>
                                             </td>
                                             <td>{{ $item->category->name ?? 'N/A' }}</td>
-                                            <td>{{ $item->user->full_name ?? 'N/A' }}</td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span

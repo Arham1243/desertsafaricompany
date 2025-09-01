@@ -14,14 +14,14 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildUrl(url('/'), 'news/') }}</div>
+                                    <div class="full-url">{{ buildNewsDetailUrl($news, false) }}/</div>
                                     <input value="{{ $news->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
                                     <input type="hidden" id="slug" value="{{ $news->slug ?? '#' }}" name="slug">
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ buildUrl(url('/'), 'news', $news->slug) }}" target="_blank" class="themeBtn">View
+                        <a href="{{ buildNewsDetailUrl($news) }}" target="_blank" class="themeBtn">View
                             News</a>
                     </div>
                 </div>
@@ -42,7 +42,19 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
+                                    <div class="form-fields">
+                                        <label class="title d-flex align-items-center gap-2 lh-1">
+                                            Short Description Content
+                                            <button data-bs-placement="top" title="Used for card description" type="button"
+                                                data-tooltip="tooltip" class="tooltip-lg">
+                                                <i class='bx bxs-info-circle'></i>
+                                            </button>
+                                        </label>
+                                        <textarea class="field" name="short_description" data-placeholder="content" data-error="Content" rows="6"> {{ old('short_description', $news->short_description) }} </textarea>
+                                        @error('short_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                     <div class="form-fields">
                                         <label class="title">Content <span class="text-danger">*</span> :</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
@@ -54,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'news'" :slug="$news->slug" />
+                            <x-seo-options :seo="$seo ?? null" :resource="buildNewsDetailUrl($news, true, false)" :slug="''" />
                         </div>
                     </div>
                     <div class="col-md-3">
@@ -83,7 +95,7 @@
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
                             </div>
-                            <div class="form-box">
+                            {{-- <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Author Settings</div>
                                 </div>
@@ -104,7 +116,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Options</div>

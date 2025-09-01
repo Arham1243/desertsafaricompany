@@ -31,8 +31,8 @@
                                     <div class="form-fields">
                                         <label class="title d-flex align-items-center gap-2 lh-1">
                                             Short Description Content
-                                            <button data-bs-placement="top" title="Used for category card description"
-                                                type="button" data-tooltip="tooltip" class="tooltip-lg">
+                                            <button data-bs-placement="top" title="Used for card description" type="button"
+                                                data-tooltip="tooltip" class="tooltip-lg">
                                                 <i class='bx bxs-info-circle'></i>
                                             </button>
                                         </label>
@@ -47,44 +47,6 @@
                                             {{ old('content') }}
                                         </textarea>
                                         @error('content')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    {{-- <div class="form-fields">
-                                        <label class="title">Gallery <span class="text-danger">*</span> :</label>
-
-                                        <div class="multiple-upload" data-upload-multiple>
-                                            <input type="file" class="gallery-input d-none" multiple
-                                                data-upload-multiple-input accept="image/*" id="gallery" name="gallery[]">
-                                            <label class="multiple-upload__btn themeBtn" for="gallery">
-                                                <i class='bx bx-plus'></i>
-                                                Select Images
-                                            </label>
-                                            <div class="dimensions mt-3">
-                                                <strong>Dimensions:</strong> 730 &times; 400
-                                            </div>
-                                            <ul class="multiple-upload__imgs" data-upload-multiple-images>
-                                            </ul>
-                                            <div class="text-danger error-message d-none" data-upload-multiple-error></div>
-                                        </div>
-
-
-                                    </div> --}}
-                                    <div class="form-fields mt-3">
-                                        <label class="title">right side top highlighted tour card <span
-                                                class="text-danger">*</span>
-                                            :</label>
-                                        <select name="top_highlighted_tour_id" placeholder="Select Tour"
-                                            class="select2-select" data-error="Right Side Top Highlighted Tour Card">
-                                            <option value="" selected disabled>Select</option>
-                                            @foreach ($tours as $tour)
-                                                <option value="{{ $tour->id }}"
-                                                    {{ old('top_highlighted_tour_id') === $tour->id ? 'selected' : '' }}>
-                                                    {{ $tour->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('top_highlighted_tour_id')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -117,28 +79,6 @@
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
                             </div>
-                            {{-- <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Author Settings</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Author <span class="text-danger">*</span> :</label>
-                                        <select class="select2-select" name="user_id" data-error="Author">
-                                            <option value="" selected disabled>Select</option>
-                                            @foreach ($users as $users)
-                                                <option value="{{ $users->id }}"
-                                                    {{ old('user_id') == $users->id ? 'selected' : '' }}>
-                                                    {{ $users->full_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        @error('user_id')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div> --}}
                             <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Options</div>
@@ -163,8 +103,7 @@
                                     <div class="form-fields">
                                         <label class="title">Tags <span class="text-danger">*</span> :</label>
 
-                                        <select name="tags_ids[]" class="select2-select" multiple
-                                            placeholder="Select tags">
+                                        <select name="tags_ids[]" class="select2-select" multiple placeholder="Select tags">
                                             @foreach ($tags as $tag)
                                                 <option value="{{ $tag->id }}"
                                                     {{ old('tags_ids') == $tag->id ? 'selected' : '' }}>

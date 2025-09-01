@@ -5,6 +5,7 @@ use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
 use App\Http\Controllers\Frontend\Locations\LocationController;
+use App\Http\Controllers\Frontend\NewsController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchSuggestionController;
 use App\Http\Controllers\Frontend\Tour\CartController;
@@ -22,6 +23,7 @@ Route::name('frontend.')->group(function () {
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
     Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.details');
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
 });
 
 Route::get('/blog', [IndexController::class, 'blog'])->name('blog');

@@ -70,10 +70,10 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                          
-                                                                                                                                              
-                                                                               @endif>
+                                                                                                                                                                                                                                                                         
+                                                                                                                                                                                                              
+                                                                                                                                                  
+                                                                                    @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -456,7 +456,7 @@
                     <div class=col-md-7>
                         @if ($featured_news)
                             <div class=Desti-Pract__details>
-                                <a href="javascript:void(0)" class=Desti-Pract__img>
+                                <a href="{{ buildNewsDetailUrl($featured_news) }}" class=Desti-Pract__img>
                                     <img data-src="{{ asset($featured_news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                         alt="{{ $featured_news->feature_image_alt_text }}" class="imgFluid lazy"
                                         loading="lazy">
@@ -465,7 +465,7 @@
                                     <div class="sub-title">
                                         {{ $featured_news->category->name ?? '' }}
                                     </div>
-                                    <a href="javascript:void(0)"
+                                    <a href="{{ buildNewsDetailUrl($featured_news) }}"
                                         @if (strlen($featured_news->title ?? '') > 19) data-tooltip="tooltip" @endif
                                         title="{{ $featured_news->title ?? '' }}"
                                         class="Desti-Pract__title line-clamp-1">{{ $featured_news->title ?? '' }}</a>
@@ -486,14 +486,14 @@
                             @foreach ($news_list as $news)
                                 <div class=Desti-Pract__activities>
                                     <div class=activities-details>
-                                        <a href="javascript:void(0)" class=activities-img>
+                                        <a href="{{ buildNewsDetailUrl($news) }}" class=activities-img>
                                             <img data-src="{{ asset($news->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                                                 alt="{{ $news->feature_image_alt_text }}" class="imgFluid lazy"
                                                 loading="lazy">
                                         </a>
                                         <div class=activities-content>
                                             <p><b>{{ $news->category->name ?? '' }}</b></p>
-                                            <a href="{{ $news->slug }}">{{ $news->title ?? '' }}</a>
+                                            <a href="{{ buildNewsDetailUrl($news) }}">{{ $news->title ?? '' }}</a>
                                             <p>{{ formatDate($news->created_at) }}</p>
                                         </div>
                                     </div>

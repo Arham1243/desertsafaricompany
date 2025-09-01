@@ -31,6 +31,11 @@ class NewsCategory extends Model
         return $this->hasMany(NewsCategory::class, 'parent_category_id');
     }
 
+    public function news()
+    {
+        return $this->hasMany(News::class, 'category_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

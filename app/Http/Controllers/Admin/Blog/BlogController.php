@@ -47,21 +47,14 @@ class BlogController extends Controller
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string|max:255',
+            'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
-            'top_highlighted_tour_id' => 'nullable|integer|exists:tours,id',
-            'featured_tours_ids' => 'array|max:4',
-            'featured_tours_ids.*' => 'nullable|integer|exists:tours,id',
             'status' => 'nullable|in:publish,draft',
-            'user_id' => 'nullable|integer|exists:users,id',
             'category_id' => 'nullable|integer|exists:blog_categories,id',
             'tags_ids' => 'array',
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
-            'gallery' => 'nullable|array',
-            'gallery.*' => 'image|max:2048',
-            'gallery_alt_texts' => 'array',
-            'gallery_alt_texts.*' => 'string|max:255',
         ]);
 
         $slug = $this->createSlug($validatedData['title'], 'blogs');
@@ -87,14 +80,14 @@ class BlogController extends Controller
 
         if (! empty($validatedData['gallery'])) {
             $this->uploadMultipleImages(
-                'gallery', // Input name for the images
-                'Blog/Gallery', // Folder to store images
-                new BlogMedia, // Pass the model class name here
-                'image_path', // Column name for image path
-                'alt_text', // Column name for alt text
-                $validatedData['gallery_alt_texts'] ?? null, // Pass alt texts if provided
-                'blog_id', // Pass the foreign key column name
-                $blog->id // Pass the blog_id as the foreign key value
+                'gallery',  // Input name for the images
+                'Blog/Gallery',  // Folder to store images
+                new BlogMedia,  // Pass the model class name here
+                'image_path',  // Column name for image path
+                'alt_text',  // Column name for alt text
+                $validatedData['gallery_alt_texts'] ?? null,  // Pass alt texts if provided
+                'blog_id',  // Pass the foreign key column name
+                $blog->id  // Pass the blog_id as the foreign key value
             );
         }
 
@@ -140,28 +133,17 @@ class BlogController extends Controller
 
     public function update(Request $request, Blog $blog)
     {
-
         $validatedData = $request->validate([
             'title' => 'required|string|max:255',
             'short_description' => 'nullable|string|max:255',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
-            'top_highlighted_tour_id' => 'nullable|integer|exists:tours,id',
-            'featured_tours_ids' => 'array|max:4',
-            'featured_tours_ids.*' => 'nullable|integer|exists:tours,id',
             'status' => 'nullable|in:publish,draft',
-            'user_id' => 'nullable|integer|exists:users,id',
             'category_id' => 'nullable|integer|exists:blog_categories,id',
             'tags_ids' => 'array',
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
-            'gallery' => 'nullable|array',
-            'gallery.*' => 'image|max:2048',
-            'gallery_alt_texts' => 'array',
-            'gallery_alt_texts.*' => 'string|max:255',
-            'deleted_gallery_ids' => 'array',
-            'deleted_gallery_ids.*' => 'integer|exists:blog_media,id',
         ]);
 
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];

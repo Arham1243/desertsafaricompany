@@ -3871,7 +3871,8 @@ ul.header-listGroup form {
 /* blog-details-page */
 .blog-details__mainHeading {
     font-size: 38px;
-    font-weight: 400;
+    font-weight: 600;
+    color: #243064;
 }
 
 .post-content {

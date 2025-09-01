@@ -29,6 +29,19 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields">
+                                        <label class="title d-flex align-items-center gap-2 lh-1">
+                                            Short Description Content
+                                            <button data-bs-placement="top" title="Used for card description" type="button"
+                                                data-tooltip="tooltip" class="tooltip-lg">
+                                                <i class='bx bxs-info-circle'></i>
+                                            </button>
+                                        </label>
+                                        <textarea class="field" name="short_description" data-placeholder="content" data-error="Content" rows="6"> {{ old('short_description', $news->short_description) }} </textarea>
+                                        @error('short_description')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-fields">
                                         <label class="title">Content <span class="text-danger">*</span> :</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
                                             {{ old('content') }}
@@ -66,7 +79,7 @@
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                 </div>
                             </div>
-                            <div class="form-box">
+                            {{-- <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Author Settings</div>
                                 </div>
@@ -87,7 +100,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Options</div>
