@@ -146,7 +146,7 @@
                                                 <label for="header-color-picker" data-color-picker></label>
                                                 <input id="header-color-picker" type="hidden"
                                                     name="login_button_text_color" data-color-picker-input
-                                                    value="{{ $settings->get('login_button_text_color') ?? '#f5f5ff' }}"
+                                                    value="{{ $settings->get('login_button_text_color') ?? '#1c4d99' }}"
                                                     data-error="Heading Color" inputmode="text">
 
                                                 <input type="text" name="login_button_text"
@@ -167,7 +167,7 @@
                                                 <label for="login-button-bg-color-picker" data-color-picker></label>
                                                 <input id="login-button-bg-color-picker" type="text"
                                                     data-color-picker-input name="login_button_bg_color"
-                                                    value="{{ $settings->get('login_button_bg_color') ?? '#1c4d99' }}"
+                                                    value="{{ $settings->get('login_button_bg_color') ?? '#f5f5ff' }}"
                                                     inputmode="text">
                                             </div>
                                         </div>
