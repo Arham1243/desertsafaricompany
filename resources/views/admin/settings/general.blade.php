@@ -262,13 +262,6 @@
                                                 value="{{ $settings->get('facebook_username') }}" class="field">
                                         </div>
                                     </div>
-                                    <div class="col-md-6 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Admin Email:</label>
-                                            <input type="email" name="admin_email"
-                                                value="{{ $settings->get('admin_email') }}" class="field">
-                                        </div>
-                                    </div>
 
                                     <div class="col-md-6 mb-4">
                                         <div class="form-fields">

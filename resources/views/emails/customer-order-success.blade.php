@@ -144,8 +144,10 @@
                     <tr>
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
-                            Hi {{ $data['customer_name'] }},<br><br>
-                            Thank you for your order! Your order has been confirmed.
+                            {!! replaceTemplateVariables($settings->get('customer_order_confirmed_greeting'), [
+                                'name' => $data['customer_name'] ?? 'User',
+                            ]) !!},<br>
+                            {{ $settings->get('customer_order_confirmed_body') }}
                         </td>
                     </tr>
 
@@ -214,7 +216,9 @@
                     <tr>
                         <td align="center"
                             style="padding-left:6.25%; padding-right:6.25%; padding-bottom:25px; font-size:14px; color:#000;">
-                            © {{ env('APP_NAME') }} {{ date('Y') }}. All rights reserved.
+                            {!! replaceTemplateVariables($settings->get('customer_order_confirmed_footer'), [
+                                'year' => now()->year,
+                            ]) !!}
                         </td>
                     </tr>
 

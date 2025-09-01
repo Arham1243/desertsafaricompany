@@ -296,3 +296,14 @@ if (! function_exists('buildNewsDetailUrl')) {
         return $withBase ? url($path) : $path;
     }
 }
+
+if (! function_exists('replaceTemplateVariables')) {
+    function replaceTemplateVariables(string $template, array $data = []): string
+    {
+        foreach ($data as $key => $value) {
+            $template = str_replace('{'.$key.'}', $value, $template);
+        }
+
+        return $template;
+    }
+}

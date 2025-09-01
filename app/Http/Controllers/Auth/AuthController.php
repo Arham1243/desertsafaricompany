@@ -96,6 +96,7 @@ class AuthController extends Controller
             $headerLogo = $settings->get('header_logo') ?? 'admin/assets/images/placeholder-logo.png';
 
             $data = [
+                'settings' => $settings,
                 'full_name' => $user->full_name,
                 'verify_link' => route('auth.verify-email', ['token' => $user->email_verification_token]),
                 'logo' => asset($headerLogo),

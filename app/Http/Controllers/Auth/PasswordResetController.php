@@ -26,10 +26,11 @@ class PasswordResetController extends Controller
                 ['token' => $token, 'created_at' => now()]
             );
 
-            $settings = Setting::where('group', 'general')->pluck('value', 'key');
+            $settings = Setting::pluck('value', 'key');
             $headerLogo = $settings->get('header_logo') ?? 'admin/assets/images/placeholder-logo.png';
 
             $data = [
+                'settings' => $settings,
                 'full_name' => $user->full_name,
                 'verify_link' => route('password.reset', ['token' => $token]),
                 'logo' => asset($headerLogo),

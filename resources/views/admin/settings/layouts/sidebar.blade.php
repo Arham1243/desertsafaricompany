@@ -61,7 +61,6 @@
             'route' => 'email',
             'icon' => 'bx-envelope',
             'label' => 'Email',
-            'status' => 'pending',
         ],
         [
             'route' => 'online_chat',

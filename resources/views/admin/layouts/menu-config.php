@@ -347,7 +347,6 @@ return [
                 'title' => 'Email',
                 'icon' => 'bx bx-envelope',
                 'route' => route('admin.settings.edit', ['resource' => 'email']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'Online Chat',

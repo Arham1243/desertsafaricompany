@@ -145,11 +145,10 @@
 			color: #000000;
 			font-family: sans-serif;"
                             class="paragraph">
-                            Hi {{ $data['full_name'] }},<br>
-                            We're excited to have you join our community of travel enthusiasts! To start exploring and
-                            booking amazing tours, please confirm your email address.
-
-
+                            {!! replaceTemplateVariables($settings->get('email_verification_greeting'), [
+                                'name' => $data['full_name'] ?? 'User',
+                            ]) !!},<br>
+                            {{ $settings->get('email_verification_body') }}
                         </td>
                     </tr>
                     <tr>
@@ -193,7 +192,9 @@
 			color: #000000;
 			font-family: sans-serif;"
                             class="paragraph">
-                            © {{ env('APP_NAME') }} {{ date('Y') }}. All rights reserved.
+                            {!! replaceTemplateVariables($settings->get('email_verification_footer'), [
+                                'year' => now()->year,
+                            ]) !!}
                         </td>
                     </tr>
                 </table>

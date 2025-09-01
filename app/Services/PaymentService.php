@@ -170,6 +170,7 @@ class PaymentService
             $headerLogo = $settings->get('header_logo') ?? asset('admin/assets/images/placeholder-logo.png');
 
             $data = [
+                'settings' => $settings,
                 'order_id' => $order->id,
                 'customer_name' => $user->full_name ?? '',
                 'customer_email' => $user->email ?? '',

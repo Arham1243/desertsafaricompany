@@ -54,6 +54,8 @@ class SettingController extends Controller
             'tamara_secret_key' => 'TAMARA_SECRET_KEY',
             'postpay_public_key' => 'POSTPAY_PUBLIC_KEY',
             'postpay_secret_key' => 'POSTPAY_SECRET_KEY',
+            'email_from_name' => 'MAIL_FROM_NAME',
+            'email_from_address' => 'MAIL_FROM_ADDRESS',
         ];
 
         foreach ($envKeys as $inputKey => $envKey) {

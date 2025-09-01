@@ -141,9 +141,10 @@
 			color: #000000;
 			font-family: sans-serif;"
                             class="paragraph">
-                            Hi {{ $data['full_name'] }},<br>
-                            Looks like you forgot your password. No worries! We'll help you reset it just click the
-                            button below.
+                            {!! replaceTemplateVariables($settings->get('password_reset_greeting'), [
+                                'name' => $data['full_name'] ?? 'User',
+                            ]) !!},<br>
+                            {{ $settings->get('password_reset_body') }}
                         </td>
                     </tr>
                     <tr>
@@ -187,7 +188,9 @@
 			color: #000000;
 			font-family: sans-serif;"
                             class="paragraph">
-                            © {{ env('APP_NAME') }} {{ date('Y') }}. All rights reserved.
+                            {!! replaceTemplateVariables($settings->get('password_reset_footer'), [
+                                'year' => now()->year,
+                            ]) !!}
                         </td>
                     </tr>
                 </table>
