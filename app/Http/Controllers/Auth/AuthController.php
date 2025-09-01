@@ -14,7 +14,9 @@ class AuthController extends Controller
 {
     public function performAuth(Request $request)
     {
+        $settings = Setting::pluck('value', 'key');
         if ($request->auth_type === 'sign_up') {
+            $is_email_verification_enabled = $settings->get('is_email_verification_enabled') && (int) $settings->get('is_email_verification_enabled') === 1;
             $request->validate([
                 'email' => 'required|email|max:255|unique:users',
                 'password' => 'required|min:8',
@@ -22,7 +24,11 @@ class AuthController extends Controller
                 'full_name' => 'sometimes|required|string|max:255',
             ]);
 
-            $emailVerificationToken = bin2hex(random_bytes(32));
+            if ($is_email_verification_enabled) {
+                $emailVerificationToken = bin2hex(random_bytes(32));
+            } else {
+                $emailVerificationToken = null;
+            }
 
             $user = User::create([
                 'full_name' => $request->full_name,
@@ -30,16 +36,28 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password),
                 'signup_method' => 'email',
                 'email_verification_token' => $emailVerificationToken,
-                'email_verified' => false,
+                'email_verified' => $is_email_verification_enabled ? 0 : 1,
             ]);
 
-            $this->sendVerificationEmail($user);
+            if ($is_email_verification_enabled) {
+                $this->sendVerificationEmail($user);
+            }
 
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Signup Successful! Please verify your email address.',
-                'redirect_url' => route('notify', ['email' => $user->email, 'type' => 'email-verification']),
-            ], 201);
+            if ($is_email_verification_enabled) {
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Signup Successful! Please verify your email address.',
+                    'redirect_url' => route('notify', ['email' => $user->email, 'type' => 'email-verification']),
+                ], 201);
+            } else {
+                Auth::login($user);
+
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Logged In!',
+                    'redirect_url' => redirect()->intended(url()->previous())->getTargetUrl() ?? url()->previous(),
+                ]);
+            }
         }
 
         if ($request->auth_type === 'login') {

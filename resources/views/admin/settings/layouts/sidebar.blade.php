@@ -69,7 +69,6 @@
             'route' => 'user',
             'icon' => 'bx-user',
             'label' => 'User',
-            'status' => 'pending',
         ],
         [
             'route' => 'advanced',

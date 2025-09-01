@@ -25,6 +25,7 @@
     @endif
 
     @include('frontend.layouts.scripts')
+
     @yield('js')
     @yield('vue-js')
     @stack('js')
@@ -82,6 +83,13 @@
 
     @if ($settings->get('online_chat'))
         {!! $settings->get('online_chat') !!}
+    @endif
+
+    @if ($settings->get('is_google_recaptcha_enabled') && (int) $settings->get('is_google_recaptcha_enabled') === 1)
+        <script>
+            window.isGoogleRecaptchaEnabled = true;
+        </script>
+        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @endif
 </body>
 

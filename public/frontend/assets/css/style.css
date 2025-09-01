@@ -7909,3 +7909,8 @@ ul.show-in-desktop {
 .vertical-activity-card__header .lowest-price {
     height: 20px;
 }
+.g-recaptcha {
+    margin: 1.15rem auto 0;
+    display: block;
+    width: fit-content;
+}

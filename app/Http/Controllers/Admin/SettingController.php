@@ -60,6 +60,7 @@ class SettingController extends Controller
             'facebook_client_secret' => 'FACEBOOK_CLIENT_SECRET',
             'google_client_id' => 'GOOGLE_CLIENT_ID',
             'google_client_secret' => 'GOOGLE_CLIENT_SECRET',
+            're_captcha_site_key' => 'RE_CAPTCHA_SITE_KEY',
         ];
 
         foreach ($envKeys as $inputKey => $envKey) {

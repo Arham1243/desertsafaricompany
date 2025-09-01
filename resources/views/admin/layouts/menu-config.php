@@ -355,7 +355,6 @@ return [
                 'title' => 'User',
                 'icon' => 'bx bx-user',
                 'route' => route('admin.settings.edit', ['resource' => 'user']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'Advanced',

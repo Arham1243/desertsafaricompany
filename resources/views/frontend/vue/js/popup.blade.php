@@ -5,6 +5,7 @@
                 const loginPopup = ref(null);
                 const showPassword = ref(null);
                 const email = ref('');
+                const recaptchaToken = ref(null)
                 const formData = ref({
                     full_name: '',
                     password: '',
@@ -35,6 +36,10 @@
                     formData.value.password = ''
                     formData.value.remember = false
                     challenge.value = 'check_email'
+                    if (window.isGoogleRecaptchaEnabled) {
+                        grecaptcha.reset();
+                        recaptchaToken.value = null;
+                    }
                 }
 
                 const isEmailValid = computed(() => {
@@ -54,10 +59,20 @@
                 });
 
                 const checkEmail = async () => {
+                    if (window.isGoogleRecaptchaEnabled) {
+                        const token = grecaptcha.getResponse();
+                        if (!token) {
+                            showToast('error', 'Please verify you are human!');
+                            return;
+                        }
+                        recaptchaToken.value = token;
+                    }
+
                     try {
                         loading.value = true;
-                        let route = `{{ route('auth.check-email') }}?email=${email.value}`
-                        const response = await axios.post(route)
+                        let route =
+                            `{{ route('auth.check-email') }}?email=${email.value}&recaptcha=${recaptchaToken.value}`;
+                        const response = await axios.post(route);
                         if (response.data.challenge == 'sign_up') {
                             challenge.value = 'sign_up';
                         } else if (response.data.challenge == 'login') {
@@ -66,7 +81,7 @@
                             challenge.value = 'forgot_password';
                         }
                     } catch (error) {
-                        showToast('error', error.response.data.message)
+                        showToast('error', error.response?.data?.message || 'Something went wrong');
                     } finally {
                         loading.value = false;
                     }
