@@ -324,13 +324,11 @@ return [
                 'title' => 'News',
                 'icon' => 'bx bx-news',
                 'route' => route('admin.settings.edit', ['resource' => 'news']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'Blogs',
                 'icon' => 'bx bx-pencil',
                 'route' => route('admin.settings.edit', ['resource' => 'blogs']),
-                'status' => 'pending',
             ],
             [
                 'title' => 'Style',

@@ -38,13 +38,11 @@
             'route' => 'news',
             'icon' => 'bx-news',
             'label' => 'News',
-            'status' => 'pending',
         ],
         [
-            'route' => 'blog',
+            'route' => 'blogs',
             'icon' => 'bx-pencil',
-            'label' => 'Blog',
-            'status' => 'pending',
+            'label' => 'Blogs',
         ],
         [
             'route' => 'style',
