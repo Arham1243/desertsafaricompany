@@ -228,8 +228,10 @@
                             </div>
                         </div>
                         <div class="form-box">
-                            <div class="form-box__header">
+                            <div class="form-box__header d-flex align-items-center gap-4">
                                 <div class="title">Booked Tours</div>
+                                <div class="title">{{ getTotalNoOfPeopleFromCart($booking->cart_data) }}</div>
+                                <div class="title">{{ formatPrice($booking->total_amount) }}</div>
                             </div>
                             <div class="form-box__body">
                                 <div class="row">

@@ -224,6 +224,14 @@ if (! function_exists('getCouponsFromCart')) {
         });
     }
 }
+if (! function_exists('getTotalNoOfPeopleFromCart')) {
+    function getTotalNoOfPeopleFromCart($cartData)
+    {
+        $cartData = is_string($cartData) ? json_decode($cartData, true) : $cartData;
+
+        return isset($cartData['total_no_of_people']) ? $cartData['total_no_of_people'].' people' : 'N/A';
+    }
+}
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour, $withSlug = true, $withBase = true)
     {

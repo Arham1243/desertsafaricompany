@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Stripe\Checkout\Session as StripeSession;
+use Stripe\Stripe;
 
 class PaymentService
 {
@@ -45,8 +47,9 @@ class PaymentService
 
     private function createStripeSession(Request $request, Order $order)
     {
+
         try {
-            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $cart = json_decode($order->cart_data, true);
 
             if (empty($cart['total_price'])) {
@@ -54,17 +57,25 @@ class PaymentService
             }
 
             $totalAmount = round($cart['total_price'], 2) * 100;
+            $lineItems = [];
 
-            return \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => [[
+            foreach ($cart['tours'] as $tourId => $tour) {
+                $lineItems[] = [
                     'price_data' => [
                         'currency' => env('APP_CURRENCY'),
-                        'product_data' => ['name' => 'Order #'.$order->id],
-                        'unit_amount' => $totalAmount,
+                        'product_data' => [
+                            'name' => $tour['tour_title'],
+                            'description' => "Start Date: {$tour['start_date']} | Total: {$tour['total_no_of_people']}",
+                        ],
+                        'unit_amount' => round($tour['total_price'], 2) * 100,
                     ],
                     'quantity' => 1,
-                ]],
+                ];
+            }
+
+            return StripeSession::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
                 'mode' => 'payment',
                 'success_url' => route('checkout.success', [
                     'order_id' => $order->id,
