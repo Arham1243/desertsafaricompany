@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\CouponUser;
 use App\Models\Order;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -56,16 +57,16 @@ class PaymentService
                 return response()->json(['error' => 'Cart total missing']);
             }
 
-            $totalAmount = round($cart['total_price'], 2) * 100;
             $lineItems = [];
 
-            foreach ($cart['tours'] as $tourId => $tour) {
+            foreach ($cart['tours'] as $tour) {
                 $lineItems[] = [
                     'price_data' => [
                         'currency' => env('APP_CURRENCY'),
                         'product_data' => [
                             'name' => $tour['tour_title'],
-                            'description' => "Start Date: {$tour['start_date']} | Total: {$tour['total_no_of_people']}",
+                            'description' => 'Start Date: '.Carbon::parse($tour['start_date'])->format('d M Y').
+                                " | Total: {$tour['total_no_of_people']}",
                         ],
                         'unit_amount' => round($tour['total_price'], 2) * 100,
                     ],
