@@ -30,17 +30,17 @@ class CartController extends Controller
 
     public function add(Request $request, $tourId)
     {
-        // Decode tourData if sent as JSON
         $tourItems = $request->has('tourData')
             ? json_decode($request->input('tourData'), true)
             : [];
 
-        // Cart-level fields
+        $tour = Tour::findOrFail($tourId);
+        $totalNoOfPeople = array_sum(array_column($tourItems, 'quantity'));
+
         $subtotal = round((float) ($request->input('subtotal', 0)), 2);
         $serviceFee = round((float) ($request->input('service_fee', 0)), 2);
         $startDate = $request->input('start_date');
 
-        // Extra prices
         $extraPrices = $request->input('extra_prices', []);
         $formattedExtras = [];
         $totalExtra = 0;
@@ -55,31 +55,37 @@ class CartController extends Controller
 
         $totalPrice = round($subtotal + $serviceFee + $totalExtra, 2);
 
-        // Prepare card data
         $cardData = [
-            'tourData' => $tourItems,  // array of items
+            'tourData' => $tourItems,
             'subtotal' => $subtotal,
             'service_fee' => $serviceFee,
             'start_date' => $startDate,
             'extra_prices' => $formattedExtras,
+            'total_no_of_people' => $totalNoOfPeople,
+            'tour_title' => $tour->title,
+            'total_no_of_people' => $totalNoOfPeople,
             'total_price' => $totalPrice,
         ];
 
-        // Retrieve current cart
         $cart = Session::get('cart', [
             'tours' => [],
             'subtotal' => 0,
             'total_price' => 0,
+            'total_no_of_people' => 0,
         ]);
 
         if ($request->has('applied_coupons')) {
             $cart['applied_coupons'] = $request->input('applied_coupons');
         }
 
-        // Add or update tour in cart
         $cart['tours'][$tourId] = $cardData;
 
-        Session::put('cart', $this->recalculateCartTotals($cart));
+        // Recalculate root-level totals
+        $cart['subtotal'] = array_sum(array_column($cart['tours'], 'subtotal'));
+        $cart['total_price'] = array_sum(array_column($cart['tours'], 'total_price'));
+        $cart['total_no_of_people'] = array_sum(array_column($cart['tours'], 'total_no_of_people'));
+
+        Session::put('cart', $cart);
 
         return redirect()
             ->route('cart.index')

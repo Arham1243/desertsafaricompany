@@ -5,10 +5,13 @@ namespace App\Services;
 use App\Models\CouponUser;
 use App\Models\Order;
 use App\Models\Setting;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Stripe\Checkout\Session as StripeSession;
+use Stripe\Stripe;
 
 class PaymentService
 {
@@ -45,26 +48,35 @@ class PaymentService
 
     private function createStripeSession(Request $request, Order $order)
     {
+
         try {
-            \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
+            Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $cart = json_decode($order->cart_data, true);
 
             if (empty($cart['total_price'])) {
                 return response()->json(['error' => 'Cart total missing']);
             }
 
-            $totalAmount = round($cart['total_price'], 2) * 100;
+            $lineItems = [];
 
-            return \Stripe\Checkout\Session::create([
-                'payment_method_types' => ['card'],
-                'line_items' => [[
+            foreach ($cart['tours'] as $tour) {
+                $lineItems[] = [
                     'price_data' => [
                         'currency' => env('APP_CURRENCY'),
-                        'product_data' => ['name' => 'Order #'.$order->id],
-                        'unit_amount' => $totalAmount,
+                        'product_data' => [
+                            'name' => $tour['tour_title'],
+                            'description' => 'Start Date: '.Carbon::parse($tour['start_date'])->format('d M Y').
+                                " | Total: {$tour['total_no_of_people']}",
+                        ],
+                        'unit_amount' => round($tour['total_price'], 2) * 100,
                     ],
                     'quantity' => 1,
-                ]],
+                ];
+            }
+
+            return StripeSession::create([
+                'payment_method_types' => ['card'],
+                'line_items' => $lineItems,
                 'mode' => 'payment',
                 'success_url' => route('checkout.success', [
                     'order_id' => $order->id,
