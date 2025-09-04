@@ -586,8 +586,11 @@
                                                                                 data-upload-img>
                                                                                 <button type="button" class="delete-btn"
                                                                                     data-delete-btn="">
-                                                                                    <i class="bx bxs-edit-alt"></i>
+                                                                                    <i class="bx bxs-trash"></i>
                                                                                 </button>
+                                                                                <input type="hidden"
+                                                                                    name="content[tour_count][background_image_delete]"
+                                                                                    value="0" data-delete-flag>
                                                                                 <a href="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
@@ -831,8 +834,11 @@
                                                                                 data-upload-img>
                                                                                 <button type="button" class="delete-btn"
                                                                                     data-delete-btn="">
-                                                                                    <i class="bx bxs-edit-alt"></i>
+                                                                                    <i class="bx bxs-trash"></i>
                                                                                 </button>
+                                                                                <input type="hidden"
+                                                                                    name="content[call_to_action][background_image_delete]"
+                                                                                    value="0" data-delete-flag>
                                                                                 <a href="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
@@ -1345,8 +1351,12 @@
                                                                 <div class="upload-box__img {{ !empty($newsletterContent->left_image) ? 'show' : '' }}"
                                                                     data-upload-img>
                                                                     <button type="button" class="delete-btn"
-                                                                        data-delete-btn=""><i
-                                                                            class='bx bxs-edit-alt'></i></button>
+                                                                        data-delete-btn="">
+                                                                        <i class="bx bxs-trash"></i>
+                                                                    </button>
+                                                                    <input type="hidden"
+                                                                        name="content[newsletter][left_image_delete]"
+                                                                        value="0" data-delete-flag>
                                                                     <a href="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
                                                                         class="mask" data-fancybox="gallery">
                                                                         <img src="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
@@ -1464,6 +1474,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
+        document.addEventListener('click', e => {
+            if (e.target.closest('.delete-btn')) {
+                const wrapper = e.target.closest('[data-upload]');
+                wrapper.querySelector('[data-upload-img]').classList.remove('show');
+                wrapper.querySelector('[data-upload-box]').classList.add('show');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 1;
+            }
+        });
+
+        document.addEventListener('change', e => {
+            if (e.target.matches('[data-file-input]')) {
+                const wrapper = e.target.closest('[data-upload]');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 0;
+            }
+        });
+
         function faqRepeater(initial = {
             enabled: 0,
             faqs: []
