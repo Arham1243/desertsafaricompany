@@ -70,11 +70,11 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                          
-                                                                                                                                                              
-                                                                                                  
-                        @endif>
+                                                                                                                                                                                                                                                                                                 
+                                                                                                                                                                                                                                      
+                                                                                                                                                                          
+                                                                                                              
+                                       @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -151,7 +151,7 @@
                 ? $callToActionContent->call_to_action_background_type === 'background_color'
                 : null;
             $isCtaBackgroundImage = isset($callToActionContent->call_to_action_background_type)
-                ? $callToActionContent->call_to_action_background_type === 'background_image'
+                ? in_array($callToActionContent->call_to_action_background_type, ['background_image', 'background_url'])
                 : null;
         @endphp
         <div class="offers-section my-5">
@@ -217,7 +217,7 @@
                 ? $tourCountContent->tour_count_background_type === 'background_color'
                 : null;
             $isCountBackgroundImage = isset($tourCountContent->tour_count_background_type)
-                ? $tourCountContent->tour_count_background_type === 'background_image'
+                ? in_array($tourCountContent->tour_count_background_type, ['background_image', 'background_url'])
                 : null;
         @endphp
         <div class="location-banner my-5 img-zoom-wrapper">

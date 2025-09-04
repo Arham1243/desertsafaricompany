@@ -559,6 +559,15 @@
                                                                 for="background_color_2_color_count">Background
                                                                 Color</label>
                                                         </div>
+                                                        <div class="form-check p-0">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="background_url_count"
+                                                                x-model="tour_count_background_type"
+                                                                name="content[tour_count][tour_count_background_type]"
+                                                                value="background_url" />
+                                                            <label class="form-check-label"
+                                                                for="background_url_count">Image URL</label>
+                                                        </div>
                                                     </div>
                                                     <div x-show="tour_count_background_type === 'background_image'">
                                                         <div class="row pt-4">
@@ -591,10 +600,10 @@
                                                                                 <input type="hidden"
                                                                                     name="content[tour_count][background_image_delete]"
                                                                                     value="0" data-delete-flag>
-                                                                                <a href="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                <a href="{{ $tourCountContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
-                                                                                    <img src="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                    <img src="{{ $tourCountContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                         alt="Uploaded Image"
                                                                                         class="imgFluid"
                                                                                         data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
@@ -644,6 +653,28 @@
                                                                             data-error="background Color"
                                                                             inputmode="text" />
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div x-show="tour_count_background_type === 'background_url'">
+                                                        <div class="row pt-4">
+                                                            <div class="col-md-12">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Background Image URL:</label>
+                                                                    <input type="text"
+                                                                        name="content[tour_count][background_image]"
+                                                                        class="field" placeholder="Enter image URL"
+                                                                        value="{{ $tourCountContent->background_image ?? '' }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt-4">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Alt Text:</label>
+                                                                    <input type="text"
+                                                                        name="content[tour_count][background_image_alt_text]"
+                                                                        class="field" placeholder="Enter alt text"
+                                                                        value="{{ $tourCountContent->background_image_alt_text ?? 'Alt Text' }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -807,6 +838,15 @@
                                                                 for="background_color_2_color">Background
                                                                 Color</label>
                                                         </div>
+                                                        <div class="form-check p-0">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="background_url_cta"
+                                                                x-model="call_to_action_background_type"
+                                                                name="content[call_to_action][call_to_action_background_type]"
+                                                                value="background_url" />
+                                                            <label class="form-check-label" for="background_url_cta">Image
+                                                                URL</label>
+                                                        </div>
                                                     </div>
                                                     <div x-show="call_to_action_background_type === 'background_image'">
                                                         <div class="row pt-4">
@@ -839,10 +879,10 @@
                                                                                 <input type="hidden"
                                                                                     name="content[call_to_action][background_image_delete]"
                                                                                     value="0" data-delete-flag>
-                                                                                <a href="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                <a href="{{ $callToActionContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
-                                                                                    <img src="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                    <img src="{{ $callToActionContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                         alt="Uploaded Image"
                                                                                         class="imgFluid"
                                                                                         data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
@@ -893,6 +933,28 @@
                                                                             data-error="background Color"
                                                                             inputmode="text" />
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div x-show="call_to_action_background_type === 'background_url'">
+                                                        <div class="row pt-4">
+                                                            <div class="col-md-12">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Background Image URL:</label>
+                                                                    <input type="text"
+                                                                        name="content[call_to_action][background_image]"
+                                                                        class="field" placeholder="Enter image URL"
+                                                                        value="{{ $callToActionContent->background_image ?? '' }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt-4">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Alt Text:</label>
+                                                                    <input type="text"
+                                                                        name="content[call_to_action][background_image_alt_text]"
+                                                                        class="field" placeholder="Enter alt text"
+                                                                        value="{{ $callToActionContent->background_image_alt_text ?? 'Alt Text' }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1357,9 +1419,9 @@
                                                                     <input type="hidden"
                                                                         name="content[newsletter][left_image_delete]"
                                                                         value="0" data-delete-flag>
-                                                                    <a href="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                    <a href="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                         class="mask" data-fancybox="gallery">
-                                                                        <img src="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                        <img src="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                             alt="Uploaded Image" class="imgFluid"
                                                                             data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
                                                                             data-upload-preview="">
