@@ -70,10 +70,11 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                 
-                                                                                                                                                                                                                      
-                                                                                                                                                          
-                                                                                              @endif>
+                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                          
+                                                                                                                                                              
+                                                                                                  
+                        @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -158,7 +159,7 @@
                 <div class=offers-section__details
                     style="{{ $isCtaBackgroundColor && $callToActionContent->background_color ? 'background-color: ' . $callToActionContent->background_color : '' }}">
                     @if ($isCtaBackgroundImage)
-                        <img data-src="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/placeholder.png') }}"
+                        <img data-src="{{ $callToActionContent->background_image ?? asset('admin/assets/images/placeholder.png') }}"
                             alt="{{ $callToActionContent->background_image_alt_text ?? 'Cta Background Image' }}"
                             class="imgFluid lazy offers-section__img" loading="lazy" height="200">
                     @endif
@@ -225,7 +226,7 @@
                     style="{{ $isCountBackgroundColor && $tourCountContent->background_color ? 'background-color: ' . $tourCountContent->background_color : '' }}">
                     @if ($isCountBackgroundImage)
                         <div class="location-banner__img img-zoom">
-                            <img data-src="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/placeholder.png') }}"
+                            <img data-src="{{ $tourCountContent->background_image ?? asset('admin/assets/images/placeholder.png') }}"
                                 alt="{{ $tourCountContent->background_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                 loading="lazy">
                         </div>
@@ -523,7 +524,7 @@
                 <div class="row g-0">
                     <div class="col-md-6">
                         <div class="newsletter__img">
-                            <img data-src="{{ asset($newsletterContent->left_image ?? 'admin/assets/images/placeholder.png') }}"
+                            <img data-src="{{ $newsletterContent->left_image ?? asset('admin/assets/images/placeholder.png') }}"
                                 alt="{{ $newsletterContent->left_image_alt_text ?? 'image' }}" class="imgFluid lazy"
                                 loading="lazy">
                         </div>

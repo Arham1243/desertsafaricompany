@@ -143,7 +143,7 @@ class CategoryController extends Controller
                 if ((int) $newData['background_image_delete'] === 1) {
                     $newData['background_image'] = null;
                 } else {
-                    $newData['background_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'background_image');
+                    $newData['background_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'background_image'));
                 }
 
                 return $newData;
@@ -152,7 +152,7 @@ class CategoryController extends Controller
                 if ((int) $newData['background_image_delete'] === 1) {
                     $newData['background_image'] = null;
                 } else {
-                    $newData['background_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'background_image');
+                    $newData['background_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'background_image'));
                 }
 
                 return $newData;
@@ -164,7 +164,7 @@ class CategoryController extends Controller
                 if ((int) $newData['left_image_delete'] === 1) {
                     $newData['left_image'] = null;
                 } else {
-                    $newData['left_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'left_image');
+                    $newData['left_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'left_image'));
                 }
 
                 return $newData;
