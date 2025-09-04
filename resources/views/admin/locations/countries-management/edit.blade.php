@@ -556,10 +556,10 @@
                                                                 name="json_content[news_section][featured_news_id]"
                                                                 multiple class="field select2-select"
                                                                 placeholder="Select">
-                                                                @foreach ($news as $item)
-                                                                    <option value="{{ $item->id }}"
-                                                                        {{ $newsContent && isset($newsContent['featured_news_id']) && $item->id == $newsContent['featured_news_id'] ? 'selected' : '' }}>
-                                                                        {{ $item->title }}
+                                                                @foreach ($news as $newsItem)
+                                                                    <option value="{{ $newsItem->id }}"
+                                                                        {{ $newsContent && isset($newsContent['featured_news_id']) && $newsItem->id == $newsContent['featured_news_id'] ? 'selected' : '' }}>
+                                                                        {{ $newsItem->title }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -580,10 +580,10 @@
                                                             <select data-max-items="3"
                                                                 name="json_content[news_section][news_list_ids][]" multiple
                                                                 class="field select2-select" placeholder="Select">
-                                                                @foreach ($news as $item)
-                                                                    <option value="{{ $item->id }}"
-                                                                        {{ in_array($item->id, $newsListIds) ? 'selected' : '' }}>
-                                                                        {{ $item->title }}
+                                                                @foreach ($news as $newsItemList)
+                                                                    <option value="{{ $newsItemList->id }}"
+                                                                        {{ in_array($newsItemList->id, $newsListIds) ? 'selected' : '' }}>
+                                                                        {{ $newsItemList->title }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
@@ -881,6 +881,8 @@
                                                     data-upload-img>
                                                     <button type="button" class="delete-btn" data-delete-btn><i
                                                             class='bx bxs-trash-alt'></i></button>
+                                                    <input type="hidden" name="featured_image_delete" value="0"
+                                                        data-delete-flag>
                                                     <a href="{{ asset($item->featured_image) }}" class="mask"
                                                         data-fancybox="gallery">
                                                         <img src="{{ asset($item->featured_image) }}"
@@ -931,6 +933,8 @@
                                                     data-upload-img>
                                                     <button type="button" class="delete-btn" data-delete-btn><i
                                                             class='bx bxs-trash-alt'></i></button>
+                                                    <input type="hidden" name="banner_image_delete" value="0"
+                                                        data-delete-flag>
                                                     <a href="{{ asset($item->banner_image) }}" class="mask"
                                                         data-fancybox="gallery">
                                                         <img src="{{ asset($item->banner_image) }}"
@@ -997,5 +1001,23 @@
                     InitializeColorPickers(element);
                 });
         })
+
+        document.addEventListener('click', e => {
+            if (e.target.closest('.delete-btn')) {
+                const wrapper = e.target.closest('[data-upload]');
+                wrapper.querySelector('[data-upload-img]').classList.remove('show');
+                wrapper.querySelector('[data-upload-box]').classList.add('show');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 1;
+            }
+        });
+
+        document.addEventListener('change', e => {
+            if (e.target.matches('[data-file-input]')) {
+                const wrapper = e.target.closest('[data-upload]');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 0;
+            }
+        });
     </script>
 @endpush

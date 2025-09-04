@@ -612,7 +612,7 @@
                                                                             Please upload a valid image file
                                                                         </div>
                                                                         <div class="dimensions text-center mt-3">
-                                                                            <strong>Dimensions:</strong> 270 &times; 260
+                                                                            <strong>Dimensions:</strong> 1116 &times; 250
                                                                         </div>
                                                                     </div>
                                                                 </div>
