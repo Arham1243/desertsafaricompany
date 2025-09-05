@@ -118,12 +118,31 @@ class CountryController extends Controller
         $featuredImage = $item->featured_image;
         $bannerImage = $item->banner_image;
 
+        $featuredImageDelete = (int) $request->input('featured_image_delete', 0);
+        $bannerImageDelete = (int) $request->input('banner_image_delete', 0);
+
+        if ($featuredImageDelete === 1 && ! $request->hasFile('featured_image')) {
+            $featuredImage = null;
+        }
+
+        if ($bannerImageDelete === 1 && ! $request->hasFile('banner_image')) {
+            $bannerImage = null;
+        }
+
         if ($request->hasFile('featured_image')) {
-            $featuredImage = $this->simpleUploadImg($request->file('featured_image'), 'Location/Country/Featured-images', $item->featured_image);
+            $featuredImage = $this->simpleUploadImg(
+                $request->file('featured_image'),
+                'Location/Country/Featured-images',
+                $item->featured_image
+            );
         }
 
         if ($request->hasFile('banner_image')) {
-            $bannerImage = $this->simpleUploadImg($request->file('banner_image'), 'Location/Country/Banner-images', $item->banner_image);
+            $bannerImage = $this->simpleUploadImg(
+                $request->file('banner_image'),
+                'Location/Country/Banner-images',
+                $item->banner_image
+            );
         }
 
         $sectionData = $request->all()['section_content'];

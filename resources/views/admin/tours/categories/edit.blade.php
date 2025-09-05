@@ -559,6 +559,15 @@
                                                                 for="background_color_2_color_count">Background
                                                                 Color</label>
                                                         </div>
+                                                        <div class="form-check p-0">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="background_url_count"
+                                                                x-model="tour_count_background_type"
+                                                                name="content[tour_count][tour_count_background_type]"
+                                                                value="background_url" />
+                                                            <label class="form-check-label"
+                                                                for="background_url_count">Image URL</label>
+                                                        </div>
                                                     </div>
                                                     <div x-show="tour_count_background_type === 'background_image'">
                                                         <div class="row pt-4">
@@ -586,12 +595,15 @@
                                                                                 data-upload-img>
                                                                                 <button type="button" class="delete-btn"
                                                                                     data-delete-btn="">
-                                                                                    <i class="bx bxs-edit-alt"></i>
+                                                                                    <i class="bx bxs-trash"></i>
                                                                                 </button>
-                                                                                <a href="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                <input type="hidden"
+                                                                                    name="content[tour_count][background_image_delete]"
+                                                                                    value="0" data-delete-flag>
+                                                                                <a href="{{ $tourCountContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
-                                                                                    <img src="{{ asset($tourCountContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                    <img src="{{ $tourCountContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                         alt="Uploaded Image"
                                                                                         class="imgFluid"
                                                                                         data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
@@ -609,7 +621,7 @@
                                                                             Please upload a valid image file
                                                                         </div>
                                                                         <div class="dimensions text-center mt-3">
-                                                                            <strong>Dimensions:</strong> 270 &times; 260
+                                                                            <strong>Dimensions:</strong> 1116 &times; 250
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -641,6 +653,28 @@
                                                                             data-error="background Color"
                                                                             inputmode="text" />
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div x-show="tour_count_background_type === 'background_url'">
+                                                        <div class="row pt-4">
+                                                            <div class="col-md-12">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Background Image URL:</label>
+                                                                    <input type="text"
+                                                                        name="content[tour_count][background_image]"
+                                                                        class="field" placeholder="Enter image URL"
+                                                                        value="{{ $tourCountContent->background_image ?? '' }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt-4">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Alt Text:</label>
+                                                                    <input type="text"
+                                                                        name="content[tour_count][background_image_alt_text]"
+                                                                        class="field" placeholder="Enter alt text"
+                                                                        value="{{ $tourCountContent->background_image_alt_text ?? 'Alt Text' }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -804,6 +838,15 @@
                                                                 for="background_color_2_color">Background
                                                                 Color</label>
                                                         </div>
+                                                        <div class="form-check p-0">
+                                                            <input class="form-check-input" type="radio"
+                                                                id="background_url_cta"
+                                                                x-model="call_to_action_background_type"
+                                                                name="content[call_to_action][call_to_action_background_type]"
+                                                                value="background_url" />
+                                                            <label class="form-check-label" for="background_url_cta">Image
+                                                                URL</label>
+                                                        </div>
                                                     </div>
                                                     <div x-show="call_to_action_background_type === 'background_image'">
                                                         <div class="row pt-4">
@@ -831,12 +874,15 @@
                                                                                 data-upload-img>
                                                                                 <button type="button" class="delete-btn"
                                                                                     data-delete-btn="">
-                                                                                    <i class="bx bxs-edit-alt"></i>
+                                                                                    <i class="bx bxs-trash"></i>
                                                                                 </button>
-                                                                                <a href="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                <input type="hidden"
+                                                                                    name="content[call_to_action][background_image_delete]"
+                                                                                    value="0" data-delete-flag>
+                                                                                <a href="{{ $callToActionContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                     class="mask"
                                                                                     data-fancybox="gallery">
-                                                                                    <img src="{{ asset($callToActionContent->background_image ?? 'admin/assets/images/loading.webp') }}"
+                                                                                    <img src="{{ $callToActionContent->background_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                                         alt="Uploaded Image"
                                                                                         class="imgFluid"
                                                                                         data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
@@ -887,6 +933,28 @@
                                                                             data-error="background Color"
                                                                             inputmode="text" />
                                                                     </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div x-show="call_to_action_background_type === 'background_url'">
+                                                        <div class="row pt-4">
+                                                            <div class="col-md-12">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Background Image URL:</label>
+                                                                    <input type="text"
+                                                                        name="content[call_to_action][background_image]"
+                                                                        class="field" placeholder="Enter image URL"
+                                                                        value="{{ $callToActionContent->background_image ?? '' }}">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-12 mt-4">
+                                                                <div class="form-fields">
+                                                                    <label class="title">Alt Text:</label>
+                                                                    <input type="text"
+                                                                        name="content[call_to_action][background_image_alt_text]"
+                                                                        class="field" placeholder="Enter alt text"
+                                                                        value="{{ $callToActionContent->background_image_alt_text ?? 'Alt Text' }}">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1345,11 +1413,15 @@
                                                                 <div class="upload-box__img {{ !empty($newsletterContent->left_image) ? 'show' : '' }}"
                                                                     data-upload-img>
                                                                     <button type="button" class="delete-btn"
-                                                                        data-delete-btn=""><i
-                                                                            class='bx bxs-edit-alt'></i></button>
-                                                                    <a href="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                        data-delete-btn="">
+                                                                        <i class="bx bxs-trash"></i>
+                                                                    </button>
+                                                                    <input type="hidden"
+                                                                        name="content[newsletter][left_image_delete]"
+                                                                        value="0" data-delete-flag>
+                                                                    <a href="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                         class="mask" data-fancybox="gallery">
-                                                                        <img src="{{ asset(!empty($newsletterContent->left_image) ? $newsletterContent->left_image : 'admin/assets/images/loading.webp') }}"
+                                                                        <img src="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
                                                                             alt="Uploaded Image" class="imgFluid"
                                                                             data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
                                                                             data-upload-preview="">
@@ -1464,6 +1536,24 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script>
+        document.addEventListener('click', e => {
+            if (e.target.closest('.delete-btn')) {
+                const wrapper = e.target.closest('[data-upload]');
+                wrapper.querySelector('[data-upload-img]').classList.remove('show');
+                wrapper.querySelector('[data-upload-box]').classList.add('show');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 1;
+            }
+        });
+
+        document.addEventListener('change', e => {
+            if (e.target.matches('[data-file-input]')) {
+                const wrapper = e.target.closest('[data-upload]');
+                const deleteFlag = wrapper.querySelector('[data-delete-flag]');
+                if (deleteFlag) deleteFlag.value = 0;
+            }
+        });
+
         function faqRepeater(initial = {
             enabled: 0,
             faqs: []

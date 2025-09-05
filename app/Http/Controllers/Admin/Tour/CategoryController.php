@@ -140,12 +140,29 @@ class CategoryController extends Controller
     {
         switch ($sectionKey) {
             case 'tour_count':
-                $newData['background_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'background_image');
+                if (($newData['tour_count_background_type'] ?? 'background_image') === 'background_image') {
+                    if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
+                        $newData['background_image'] = null;
+                    } elseif (! empty($newData['background_image'])) {
+                        $newData['background_image'] = asset(
+                            $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
+                        );
+                    }
+                }
 
                 return $newData;
 
             case 'call_to_action':
-                $newData['background_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'background_image');
+
+                if (($newData['call_to_action_background_type'] ?? 'background_image') === 'background_image') {
+                    if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
+                        $newData['background_image'] = null;
+                    } elseif (! empty($newData['background_image'])) {
+                        $newData['background_image'] = asset(
+                            $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
+                        );
+                    }
+                }
 
                 return $newData;
 
@@ -153,7 +170,11 @@ class CategoryController extends Controller
                 return $newData;
 
             case 'newsletter':
-                $newData['left_image'] = $this->handleImageField($newData, $existingData, $sectionKey, 'left_image');
+                if ((int) $newData['left_image_delete'] === 1) {
+                    $newData['left_image'] = null;
+                } else {
+                    $newData['left_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'left_image'));
+                }
 
                 return $newData;
 
