@@ -144,9 +144,13 @@ class CategoryController extends Controller
                     if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
                         $newData['background_image'] = null;
                     } elseif (! empty($newData['background_image'])) {
-                        $newData['background_image'] = asset(
-                            $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
-                        );
+                        if (isset($newData['background_image']) && $newData['background_image'] instanceof \Illuminate\Http\UploadedFile) {
+                            $newData['background_image'] = asset(
+                                $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
+                            );
+                        } else {
+                            $newData['background_image'] = $existingData['background_image'];
+                        }
                     }
                 }
 
@@ -158,9 +162,13 @@ class CategoryController extends Controller
                     if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
                         $newData['background_image'] = null;
                     } elseif (! empty($newData['background_image'])) {
-                        $newData['background_image'] = asset(
-                            $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
-                        );
+                        if (isset($newData['background_image']) && $newData['background_image'] instanceof \Illuminate\Http\UploadedFile) {
+                            $newData['background_image'] = asset(
+                                $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
+                            );
+                        } else {
+                            $newData['background_image'] = $existingData['background_image'];
+                        }
                     }
                 }
 
@@ -173,7 +181,11 @@ class CategoryController extends Controller
                 if ((int) $newData['left_image_delete'] === 1) {
                     $newData['left_image'] = null;
                 } else {
-                    $newData['left_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'left_image'));
+                    if (isset($newData['left_image']) && $newData['left_image'] instanceof \Illuminate\Http\UploadedFile) {
+                        $newData['left_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'left_image'));
+                    } else {
+                        $newData['left_image'] = $existingData['left_image'];
+                    }
                 }
 
                 return $newData;
