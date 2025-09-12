@@ -254,10 +254,10 @@
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block][category_ids][]" class="select2-select"
                                             data-error="Category" should-sort="false" multiple>
-                                            @foreach ($dropdownCategories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
-                                                    {{ $category->name }}
+                                            @foreach ($dropdownCategories as $dropdownCategory)
+                                                <option value="{{ $dropdownCategory->id }}"
+                                                    {{ in_array($dropdownCategory->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $dropdownCategory->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -402,10 +402,10 @@
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block_2][category_ids][]"
                                             class="select2-select" data-error="Category" should-sort="true" multiple>
-                                            @foreach ($dropdownCategories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
-                                                    {{ $category->name }}
+                                            @foreach ($dropdownCategories as $dropdownCategory2)
+                                                <option value="{{ $dropdownCategory2->id }}"
+                                                    {{ in_array($dropdownCategory2->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $dropdownCategory2->name }}
                                                 </option>
                                             @endforeach
                                         </select>
