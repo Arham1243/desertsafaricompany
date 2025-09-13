@@ -337,6 +337,7 @@ if (! function_exists('url_to_path')) {
     function url_to_path($url)
     {
         $path = parse_url($url, PHP_URL_PATH);
+        $path = str_replace('/public/', '', $path);
 
         return ltrim($path, '/');
     }
