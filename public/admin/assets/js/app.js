@@ -921,7 +921,12 @@ document.addEventListener("DOMContentLoaded", function () {
                     if (data.exists) {
                         errorMessage.innerHTML = `File already exists: <a class="text-danger" href="${data.path}" target="_blank">${data.path}</a>`;
                         errorMessage.classList.remove("d-none");
-                        fileInput.value = "";
+                        fileInput.value = ""; // reset input
+                        uploadBox.classList.add("show"); // show the upload box again
+                        uploadImgBox.classList.remove("show"); // hide preview box
+                        filenameDiv.textContent = ""; // clear filename
+                        uploadPreview.src = ""; // remove preview image
+                        uploadImgBox.querySelector(".mask").href = "#"; // reset link
                         return;
                     }
                 } catch (err) {
