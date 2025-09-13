@@ -883,3 +883,64 @@ document.getElementById("sidebarToggle")?.addEventListener("click", () => {
         .getElementById("main-dashboard-wrapper")
         ?.classList.toggle("close-sidebar");
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const uploads = document.querySelectorAll(".check-upload-filename");
+
+    if (uploads.length) {
+        uploads.forEach((upload) => {
+            const fileInput = upload.querySelector("[data-file-input]");
+            console.log(fileInput);
+            const uploadBox = upload.querySelector("[data-upload-box]");
+            const uploadImgBox = upload.querySelector("[data-upload-img]");
+            const uploadPreview = upload.querySelector("[data-upload-preview]");
+            const errorMessage = upload.querySelector("[data-error-message]");
+
+            const filenameDiv =
+                uploadImgBox.querySelector(".filename") ||
+                document.createElement("div");
+            filenameDiv.className = "filename";
+            uploadImgBox.appendChild(filenameDiv);
+
+            fileInput.addEventListener("change", async function (event) {
+                const file = event.target.files[0];
+
+                if (!file || !file.type.startsWith("image/")) {
+                    errorMessage.textContent =
+                        "Please upload a valid image file";
+                    errorMessage.classList.remove("d-none");
+                    fileInput.value = "";
+                    return;
+                }
+
+                try {
+                    const response = await fetch(
+                        `/admin/check-upload-filename?filename=${encodeURIComponent(file.name)}`,
+                    );
+                    const data = await response.json();
+
+                    if (data.exists) {
+                        errorMessage.innerHTML = `File already exists: <a class="text-danger" href="${data.path}" target="_blank">${data.path}</a>`;
+                        errorMessage.classList.remove("d-none");
+                        fileInput.value = "";
+                        return;
+                    }
+                } catch (err) {
+                    console.error("Filename check failed", err);
+                }
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    uploadPreview.src = e.target.result;
+                    uploadImgBox.querySelector(".mask").href = e.target.result;
+                    filenameDiv.textContent = file.name;
+                };
+                reader.readAsDataURL(file);
+
+                uploadBox.classList.remove("show");
+                uploadImgBox.classList.add("show");
+                errorMessage.classList.add("d-none");
+            });
+        });
+    }
+});

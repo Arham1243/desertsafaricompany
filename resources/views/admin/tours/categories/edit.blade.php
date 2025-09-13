@@ -574,7 +574,8 @@
                                                             <div class="col-md-4 mb-4">
                                                                 <div class="form-fields">
                                                                     <label class="title">Background Image:</label>
-                                                                    <div class="upload upload--sm mx-0" data-upload>
+                                                                    <div class="upload upload--sm check-upload-filename mx-0"
+                                                                        data-upload>
                                                                         <div class="upload-box-wrapper">
                                                                             <div class="upload-box {{ empty($tourCountContent->background_image) ? 'show' : '' }}"
                                                                                 data-upload-box>
@@ -853,7 +854,8 @@
                                                             <div class="col-md-4 mb-4">
                                                                 <div class="form-fields">
                                                                     <label class="title">Background Image:</label>
-                                                                    <div class="upload upload--sm mx-0" data-upload>
+                                                                    <div class="upload upload--sm check-upload-filename mx-0"
+                                                                        data-upload>
                                                                         <div class="upload-box-wrapper">
                                                                             <div class="upload-box {{ empty($callToActionContent->background_image) ? 'show' : '' }}"
                                                                                 data-upload-box>
@@ -1391,7 +1393,7 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-12 mb-4">
                                                     <div class="form-fields">
                                                         <label class="title text-dark">Left Side Image:</label>
                                                         <div x-data="{ left_image_type: '{{ $newsletterContent->left_image_type ?? 'upload' }}' }">
@@ -1416,7 +1418,8 @@
 
                                                             <!-- Upload -->
                                                             <div x-show="left_image_type === 'upload'">
-                                                                <div class="upload upload--sm mx-0" data-upload>
+                                                                <div class="upload upload--sm mx-0 check-upload-filename"
+                                                                    data-upload>
                                                                     <div class="upload-box-wrapper">
                                                                         <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
                                                                             data-upload-box>
@@ -1503,7 +1506,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-6">
+                                                <div class="col-md-12">
                                                     <div class="form-fields">
                                                         <div class=" text-dark title d-flex align-items-center gap-2">
                                                             <div>Right Background Color:

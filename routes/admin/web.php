@@ -124,4 +124,6 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('settings/{resource}/edit', [SettingController::class, 'edit'])->name('settings.edit');
     Route::post('settings/{resource}/update', [SettingController::class, 'update'])->name('settings.update');
+
+    Route::get('/check-upload-filename', [AdminDashController::class, 'checkFilename']);
 });

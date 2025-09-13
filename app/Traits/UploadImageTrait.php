@@ -34,14 +34,17 @@ trait UploadImageTrait
         }
     }
 
-    public function simpleUploadImg($file, string $folder, $previousImage = null)
+    public function simpleUploadImg($file, string $folder, $previousImage = null, bool $useOriginalName = true)
     {
         if ($previousImage && Storage::disk('public')->exists($previousImage)) {
             Storage::disk('public')->delete($previousImage);
         }
 
         if ($file instanceof UploadedFile) {
-            $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
+            $filename = $useOriginalName
+                ? $file->getClientOriginalName()
+                : Str::uuid().'.'.$file->getClientOriginalExtension();
+
             $folderPath = 'uploads/'.$folder;
 
             return $file->storeAs($folderPath, $filename, 'public');
@@ -57,16 +60,16 @@ trait UploadImageTrait
         string $columnName,
         string $altTextColumn,
         ?array $altTexts = null,
-        ?string $foreignKeyColumn = null, // Foreign key column name
-        ?int $foreignKeyValue = null // Foreign key value
+        ?string $foreignKeyColumn = null,  // Foreign key column name
+        ?int $foreignKeyValue = null  // Foreign key value
     ): void {
         if (request()->hasFile($inputName)) {
             foreach (request()->file($inputName) as $index => $uploadedFile) {
                 if ($uploadedFile instanceof UploadedFile) {
                     // Use a unique identifier for the filename
                     $filename = Str::uuid().'.'.$uploadedFile->getClientOriginalExtension();
-                    $folderPath = 'uploads/'.$folder; // No need for a unique sub-folder here
-                    $filePath = $uploadedFile->storeAs($folderPath, $filename, 'public'); // Use storeAs to set the filename
+                    $folderPath = 'uploads/'.$folder;  // No need for a unique sub-folder here
+                    $filePath = $uploadedFile->storeAs($folderPath, $filename, 'public');  // Use storeAs to set the filename
 
                     // Prepare data for creating a new entry
                     $data = [$columnName => $filePath];
