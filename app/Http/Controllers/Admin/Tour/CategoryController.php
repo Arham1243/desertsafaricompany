@@ -142,6 +142,8 @@ class CategoryController extends Controller
             case 'tour_count':
                 if (($newData['tour_count_background_type'] ?? 'background_image') === 'background_image') {
                     if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
+                        info($existingData['background_image']);
+                        info(url_to_path($existingData['background_image']));
                         $this->deletePreviousImage(url_to_path($existingData['background_image']));
                         $newData['background_image'] = null;
                     } elseif (! empty($newData['background_image'])) {

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\EnvEditorController;
 use App\Http\Controllers\Admin\IcalController;
 use App\Http\Controllers\Admin\Locations\CityController;
 use App\Http\Controllers\Admin\Locations\CountryController;
+use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\MediaController;
 use App\Http\Controllers\Admin\News\CategoriesController as NewsCategoriesController;
 use App\Http\Controllers\Admin\News\NewsController;
@@ -55,6 +56,9 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/env-editor', [EnvEditorController::class, 'index'])->name('env');
     Route::post('/env-editor', [EnvEditorController::class, 'save'])->name('env.save');
+
+    Route::get('logs', [LogController::class, 'read']);
+    Route::get('logs/delete', [LogController::class, 'delete']);
 
     Route::post('bulk-actions/{resource}', [BulkActionController::class, 'handle'])->name('bulk-actions');
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
