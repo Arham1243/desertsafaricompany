@@ -142,6 +142,7 @@ class CategoryController extends Controller
             case 'tour_count':
                 if (($newData['tour_count_background_type'] ?? 'background_image') === 'background_image') {
                     if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
+                        $this->deletePreviousImage(url_to_path($existingData['background_image']));
                         $newData['background_image'] = null;
                     } elseif (! empty($newData['background_image'])) {
                         if (isset($newData['background_image']) && $newData['background_image'] instanceof \Illuminate\Http\UploadedFile) {
@@ -159,6 +160,7 @@ class CategoryController extends Controller
             case 'call_to_action':
                 if (($newData['call_to_action_background_type'] ?? 'background_image') === 'background_image') {
                     if (! empty($newData['background_image_delete']) && (int) $newData['background_image_delete'] === 1) {
+                        $this->deletePreviousImage(url_to_path($existingData['background_image']));
                         $newData['background_image'] = null;
                     } elseif (! empty($newData['background_image'])) {
                         if (isset($newData['background_image']) && $newData['background_image'] instanceof \Illuminate\Http\UploadedFile) {
@@ -179,6 +181,7 @@ class CategoryController extends Controller
             case 'newsletter':
                 if (($newData['left_image_type'] ?? 'upload') === 'upload') {
                     if (! empty($newData['left_image_delete']) && (int) $newData['left_image_delete'] === 1) {
+                        $this->deletePreviousImage(url_to_path($existingData['left_image']));
                         $newData['left_image'] = null;
                     } else {
                         if (isset($newData['left_image']) && $newData['left_image'] instanceof \Illuminate\Http\UploadedFile) {

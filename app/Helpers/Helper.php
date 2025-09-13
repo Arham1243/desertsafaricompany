@@ -333,3 +333,9 @@ if (! function_exists('getSortedHeaderMenu')) {
         return $menuArray;
     }
 }
+if (! function_exists('url_to_path')) {
+    function url_to_path($url)
+    {
+        return parse_url($url, PHP_URL_PATH);
+    }
+}
