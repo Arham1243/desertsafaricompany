@@ -161,7 +161,7 @@
                                                         Choose
                                                     </label>
                                                     <div class="dimensions mt-3">
-                                                        <strong>Dimensions:</strong> 1116 &times; 250
+                                                        <strong>Dimensions:</strong> 420 &times; 220
                                                     </div>
                                                     <ul class="multiple-upload__imgs" data-upload-multiple-images>
                                                     </ul>
