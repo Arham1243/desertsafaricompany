@@ -890,7 +890,6 @@ document.addEventListener("DOMContentLoaded", function () {
     if (uploads.length) {
         uploads.forEach((upload) => {
             const fileInput = upload.querySelector("[data-file-input]");
-            console.log(fileInput);
             const uploadBox = upload.querySelector("[data-upload-box]");
             const uploadImgBox = upload.querySelector("[data-upload-img]");
             const uploadPreview = upload.querySelector("[data-upload-preview]");
