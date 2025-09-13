@@ -902,8 +902,8 @@
                                                                             Please upload a valid image file
                                                                         </div>
                                                                         <div class="dimensions text-center mt-3">
-                                                                            <strong>Dimensions:</strong> 1116 &times;
-                                                                            210
+                                                                            <strong>Dimensions:</strong> 420 &times;
+                                                                            220
                                                                         </div>
                                                                     </div>
                                                                 </div>
