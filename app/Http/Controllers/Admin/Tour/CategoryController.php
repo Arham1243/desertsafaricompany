@@ -149,7 +149,7 @@ class CategoryController extends Controller
                                 $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
                             );
                         } else {
-                            $newData['background_image'] = $existingData['background_image'];
+                            $newData['background_image'] = $existingData['background_image'] ?? '';
                         }
                     }
                 }
@@ -166,7 +166,7 @@ class CategoryController extends Controller
                                 $this->handleImageField($newData, $existingData, $sectionKey, 'background_image')
                             );
                         } else {
-                            $newData['background_image'] = $existingData['background_image'];
+                            $newData['background_image'] = $existingData['background_image'] ?? '';
                         }
                     }
                 }
@@ -184,7 +184,7 @@ class CategoryController extends Controller
                         if (isset($newData['left_image']) && $newData['left_image'] instanceof \Illuminate\Http\UploadedFile) {
                             $newData['left_image'] = asset($this->handleImageField($newData, $existingData, $sectionKey, 'left_image'));
                         } else {
-                            $newData['left_image'] = $existingData['left_image'];
+                            $newData['left_image'] = $existingData['left_image'] ?? '';
                         }
                     }
                 }
