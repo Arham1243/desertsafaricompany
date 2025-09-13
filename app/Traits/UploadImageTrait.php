@@ -98,7 +98,7 @@ trait UploadImageTrait
      */
     protected function deletePreviousImage(?string $filePath): void
     {
-        if ($filePath && Storage::disk('public')->exists($filePath)) {
+        if ($filePath) {
             Storage::disk('public')->delete($filePath);
         }
     }
