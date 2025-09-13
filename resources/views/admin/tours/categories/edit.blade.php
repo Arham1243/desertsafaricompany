@@ -161,7 +161,7 @@
                                                         Choose
                                                     </label>
                                                     <div class="dimensions mt-3">
-                                                        <strong>Dimensions:</strong> 420 &times; 220
+                                                        <strong>Dimensions:</strong> 1116 &times; 250
                                                     </div>
                                                     <ul class="multiple-upload__imgs" data-upload-multiple-images>
                                                     </ul>
@@ -254,10 +254,10 @@
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block][category_ids][]" class="select2-select"
                                             data-error="Category" should-sort="false" multiple>
-                                            @foreach ($dropdownCategories as $dropdownCategory)
-                                                <option value="{{ $dropdownCategory->id }}"
-                                                    {{ in_array($dropdownCategory->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
-                                                    {{ $dropdownCategory->name }}
+                                            @foreach ($dropdownCategories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -402,10 +402,10 @@
                                         <label class="title">Select categories</label>
                                         <select name="json_content[category_block_2][category_ids][]"
                                             class="select2-select" data-error="Category" should-sort="true" multiple>
-                                            @foreach ($dropdownCategories as $dropdownCategory2)
-                                                <option value="{{ $dropdownCategory2->id }}"
-                                                    {{ in_array($dropdownCategory2->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
-                                                    {{ $dropdownCategory2->name }}
+                                            @foreach ($dropdownCategories as $category)
+                                                <option value="{{ $category->id }}"
+                                                    {{ in_array($category->id, $tourBlockCategoryIds ?? []) ? 'selected' : '' }}>
+                                                    {{ $category->name }}
                                                 </option>
                                             @endforeach
                                         </select>
@@ -1391,59 +1391,119 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col-md-4">
+                                                <div class="col-md-6">
                                                     <div class="form-fields">
                                                         <label class="title text-dark">Left Side Image:</label>
-                                                        <div class="upload upload--sm mx-0" data-upload>
-                                                            <div class="upload-box-wrapper">
-                                                                <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
-                                                                    data-upload-box>
-                                                                    <input type="file"
-                                                                        name="content[newsletter][left_image]"
-                                                                        data-error="Feature Image" id="left_image"
-                                                                        class="upload-box__file d-none" accept="image/*"
-                                                                        data-file-input>
-                                                                    <div class="upload-box__placeholder"><i
-                                                                            class='bx bxs-image'></i>
+                                                        <div x-data="{ left_image_type: '{{ $newsletterContent->left_image_type ?? 'upload' }}' }">
+                                                            <div class="d-flex align-items-center gap-5 px-4 mb-4">
+                                                                <div class="form-check p-0">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        id="left_image_upload" x-model="left_image_type"
+                                                                        name="content[newsletter][left_image_type]"
+                                                                        value="upload" checked>
+                                                                    <label class="form-check-label"
+                                                                        for="left_image_upload">Background Image</label>
+                                                                </div>
+                                                                <div class="form-check p-0">
+                                                                    <input class="form-check-input" type="radio"
+                                                                        id="left_image_url" x-model="left_image_type"
+                                                                        name="content[newsletter][left_image_type]"
+                                                                        value="url">
+                                                                    <label class="form-check-label"
+                                                                        for="left_image_url">Image URL</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Upload -->
+                                                            <div x-show="left_image_type === 'upload'">
+                                                                <div class="upload upload--sm mx-0" data-upload>
+                                                                    <div class="upload-box-wrapper">
+                                                                        <div class="upload-box {{ empty($newsletterContent->left_image) ? 'show' : '' }}"
+                                                                            data-upload-box>
+                                                                            <input type="file"
+                                                                                :name="left_image_type === 'upload' ?
+                                                                                    'content[newsletter][left_image]' :
+                                                                                    ''"
+                                                                                id="left_image_file"
+                                                                                class="upload-box__file d-none"
+                                                                                accept="image/*" data-file-input>
+                                                                            <div class="upload-box__placeholder">
+                                                                                <i class="bx bxs-image"></i>
+                                                                            </div>
+                                                                            <label for="left_image_file"
+                                                                                class="upload-box__btn themeBtn">Upload
+                                                                                Image</label>
+                                                                        </div>
+
+                                                                        <div class="upload-box__img {{ !empty($newsletterContent->left_image) ? 'show' : '' }}"
+                                                                            data-upload-img>
+                                                                            <button type="button" class="delete-btn"
+                                                                                data-delete-btn>
+                                                                                <i class="bx bxs-trash"></i>
+                                                                            </button>
+                                                                            <input type="hidden"
+                                                                                name="content[newsletter][left_image_delete]"
+                                                                                value="0" data-delete-flag>
+                                                                            <a href="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
+                                                                                class="mask" data-fancybox="gallery">
+                                                                                <img src="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
+                                                                                    alt="Uploaded Image"
+                                                                                    class="imgFluid"
+                                                                                    data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
+                                                                                    data-upload-preview>
+                                                                            </a>
+                                                                            <input type="text"
+                                                                                :name="left_image_type === 'upload' ?
+                                                                                    'content[newsletter][left_image_alt_text]' :
+                                                                                    ''"
+                                                                                class="field"
+                                                                                placeholder="Enter alt text"
+                                                                                value="{{ $newsletterContent->left_image_alt_text ?? 'Alt Text' }}">
+                                                                        </div>
                                                                     </div>
-                                                                    <label for="left_image"
-                                                                        class="upload-box__btn themeBtn">Upload
-                                                                        Image</label>
-                                                                </div>
-                                                                <div class="upload-box__img {{ !empty($newsletterContent->left_image) ? 'show' : '' }}"
-                                                                    data-upload-img>
-                                                                    <button type="button" class="delete-btn"
-                                                                        data-delete-btn="">
-                                                                        <i class="bx bxs-trash"></i>
-                                                                    </button>
-                                                                    <input type="hidden"
-                                                                        name="content[newsletter][left_image_delete]"
-                                                                        value="0" data-delete-flag>
-                                                                    <a href="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
-                                                                        class="mask" data-fancybox="gallery">
-                                                                        <img src="{{ $newsletterContent->left_image ?? asset('admin/assets/images/loading.webp') }}"
-                                                                            alt="Uploaded Image" class="imgFluid"
-                                                                            data-placeholder="{{ asset('admin/assets/images/loading.webp') }}"
-                                                                            data-upload-preview="">
-                                                                    </a>
-                                                                    <input type="text"
-                                                                        name="content[newsletter][left_image_alt_text]"
-                                                                        class="field" placeholder="Enter alt text"
-                                                                        value="{{ $newsletterContent->left_image_alt_text ?? 'Alt Text' }}">
+                                                                    <div data-error-message
+                                                                        class="text-danger mt-2 d-none text-center">
+                                                                        Please upload a valid image file
+                                                                    </div>
+                                                                    <div class="dimensions text-center mt-3">
+                                                                        <strong>Dimensions:</strong> 560 × 325
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div data-error-message
-                                                                class="text-danger mt-2 d-none text-center">Please
-                                                                upload a
-                                                                valid image file
-                                                            </div>
-                                                            <div class="dimensions text-center mt-3">
-                                                                <strong>Dimensions:</strong> 560 &times; 325
+
+                                                            <!-- URL -->
+                                                            <div x-show="left_image_type === 'url'">
+                                                                <div class="row pt-4">
+                                                                    <div class="col-md-12">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Image URL:</label>
+                                                                            <input type="text"
+                                                                                :name="left_image_type === 'url' ?
+                                                                                    'content[newsletter][left_image]' :
+                                                                                    ''"
+                                                                                class="field"
+                                                                                placeholder="Enter image URL"
+                                                                                value="{{ $newsletterContent->left_image ?? '' }}">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-12 mt-4">
+                                                                        <div class="form-fields">
+                                                                            <label class="title">Alt Text:</label>
+                                                                            <input type="text"
+                                                                                :name="left_image_type === 'url' ?
+                                                                                    'content[newsletter][left_image_alt_text]' :
+                                                                                    ''"
+                                                                                class="field"
+                                                                                placeholder="Enter alt text"
+                                                                                value="{{ $newsletterContent->left_image_alt_text ?? 'Alt Text' }}">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-md-8">
+                                                <div class="col-md-6">
                                                     <div class="form-fields">
                                                         <div class=" text-dark title d-flex align-items-center gap-2">
                                                             <div>Right Background Color:
