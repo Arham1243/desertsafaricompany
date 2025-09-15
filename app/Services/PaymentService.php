@@ -98,42 +98,46 @@ class PaymentService
      */
     private function handleTabby(Request $request, Order $order)
     {
-        $cart = Session::get('cart', []);
-        $totalAmount = $cart['total_price'] ?? 0;
+        $session = $this->createTabbySession($request, $order);
 
-        return $this->createTabbySession($request, $order, $totalAmount);
+        if (! isset($session['id']) || empty($session['url'])) {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order->id])
+                ->with('notify_error', 'Failed to create Tabby session');
+        }
+
+        $order->update([
+            'tabby_session_id' => $session['id'],
+            'payment_type' => 'tabby',
+        ]);
+
+        return redirect()->away($session['url']);
     }
 
     private function createTabbySession(Request $request, Order $order)
     {
-        $custom_order_id = 'ORDER'.$order->id;
-        $total_with_taxes = number_format($order->total_amount, 2, '.', '');
-        $tax = number_format($order->total_amount * 0.05, 2, '.', ''); // adjust tax logic
-        $final_total = number_format($order->total_amount - $tax, 2, '.', '');
+        $customOrderId = 'ORDER'.$order->id;
+        $totalWithTaxes = number_format($order->total_amount, 2, '.', '');
+        $tax = number_format($order->total_amount * 0.05, 2, '.', '');
+        $finalTotal = number_format($order->total_amount - $tax, 2, '.', '');
 
-        $name = $order->first_name.' '.$order->last_name;
-        $email = $order->email;
-        $phone = '+'.$order->phone_dial_code.$order->phone_number;
-
-        $items = [
-            [
-                'title' => 'Tour Booking',
-                'description' => 'Booking ID '.$custom_order_id,
-                'quantity' => 1,
-                'unit_price' => (float) $final_total,
-                'category' => 'tour',
-            ],
-        ];
+        $items = [[
+            'title' => 'Tour Booking',
+            'description' => 'Booking ID '.$customOrderId,
+            'quantity' => 1,
+            'unit_price' => (float) $finalTotal,
+            'category' => 'tour',
+        ]];
 
         $payload = [
             'payment' => [
-                'amount' => $total_with_taxes,
+                'amount' => $totalWithTaxes,
                 'currency' => 'AED',
                 'description' => env('APP_NAME'),
                 'buyer' => [
-                    'phone' => $phone,
-                    'email' => $email,
-                    'name' => $name,
+                    'phone' => '+'.$order->phone_dial_code.$order->phone_number,
+                    'email' => $order->email,
+                    'name' => $order->first_name.' '.$order->last_name,
                 ],
                 'shipping_address' => [
                     'city' => $order->city ?? 'Dubai',
@@ -145,7 +149,7 @@ class PaymentService
                     'shipping_amount' => '0.00',
                     'discount_amount' => '0.00',
                     'updated_at' => now()->toIso8601String(),
-                    'reference_id' => $custom_order_id,
+                    'reference_id' => $customOrderId,
                     'items' => $items,
                 ],
                 'buyer_history' => [
@@ -157,7 +161,7 @@ class PaymentService
                     'is_email_verified' => true,
                 ],
                 'meta' => [
-                    'order_id' => $custom_order_id,
+                    'order_id' => $customOrderId,
                     'customer' => $order->user_id,
                 ],
             ],
@@ -170,32 +174,34 @@ class PaymentService
             ],
         ];
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://api.tabby.ai/api/v2/checkout');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer '.env('TABBY_SECRET_KEY'),
-            'Content-Type: application/json',
-        ]);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
-
-        $response = curl_exec($ch);
-        curl_close($ch);
-
-        $result = json_decode($response, true);
-
-        if (! empty($result['configuration']['available_products']['installments'][0]['web_url'])) {
-            // store payment session id or key
-            $order->update([
-                'tabby_session_id' => $result['id'] ?? null,
-                'payment_type' => 'tabby',
+        try {
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://api.tabby.ai/api/v2/checkout');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, [
+                'Authorization: Bearer '.env('TABBY_SECRET_KEY'),
+                'Content-Type: application/json',
             ]);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
-            return redirect()->away($result['configuration']['available_products']['installments'][0]['web_url']);
+            $response = curl_exec($ch);
+            if ($response === false) {
+                throw new \Exception(curl_error($ch));
+            }
+            curl_close($ch);
+
+            $result = json_decode($response, true);
+
+            $url = $result['configuration']['available_products']['installments'][0]['web_url'] ?? null;
+
+            return [
+                'id' => $result['id'] ?? null,
+                'url' => $url,
+            ];
+        } catch (\Exception $e) {
+            throw new \Exception('Tabby checkout failed: '.$e->getMessage());
         }
-
-        throw new \Exception('Tabby checkout failed: '.$response);
     }
 
     /**
