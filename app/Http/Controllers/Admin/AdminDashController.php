@@ -13,7 +13,7 @@ class AdminDashController extends Controller
 {
     public function dashboard()
     {
-        $users = User::where('is_active', 1)->get();
+        $users = User::where('is_active', 1)->where('email_verified', '!=', null)->get();
         $tours = Tour::where('status', 'publish')->get();
         $totalPayments = Order::where('payment_status', 'paid')->sum('total_amount');
         $data = compact('users', 'tours', 'totalPayments');

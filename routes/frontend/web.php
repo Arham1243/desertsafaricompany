@@ -56,6 +56,8 @@ Route::prefix('cart')->name('cart.')->group(function () {
 Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::get('/', [CheckoutController::class, 'index'])->name('index');
     Route::post('/', [CheckoutController::class, 'store'])->name('store');
+    Route::get('/pointcheckout/response', [CheckoutController::class, 'pointCheckoutResponse'])
+        ->name('pointcheckout.response');
     Route::get('/success', [CheckoutController::class, 'success'])->name('success');
     Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('cancel');
     Route::get('/error', [CheckoutController::class, 'error'])->name('error');

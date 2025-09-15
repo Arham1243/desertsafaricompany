@@ -86,6 +86,8 @@ class SettingController extends Controller
             'google_client_id' => 'GOOGLE_CLIENT_ID',
             'google_client_secret' => 'GOOGLE_CLIENT_SECRET',
             're_captcha_site_key' => 'RE_CAPTCHA_SITE_KEY',
+            'pointcheckout_api_key' => 'POINTCHECKOUT_API_KEY',
+            'pointcheckout_api_secret' => 'POINTCHECKOUT_API_SECRET',
         ];
 
         foreach ($envKeys as $inputKey => $envKey) {

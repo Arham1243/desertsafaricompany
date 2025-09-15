@@ -145,6 +145,30 @@
                                                         </label>
                                                     </li>
                                                 @endif
+
+                                                @if (isset($settings['pointcheckout_enabled']) && (int) $settings['pointcheckout_enabled'] === 1)
+                                                    <!-- Card Payments - pointCheckout -->
+                                                    <li class="payment-option">
+                                                        <input class="payment-option__input" type="radio"
+                                                            name="payment_type" value="pointCheckout"
+                                                            id="pointCheckout" />
+                                                        <label for="pointCheckout" class="payment-option__box">
+                                                            <div class="title-wrapper">
+                                                                <div class="radio"></div>
+                                                                <div class="icon">
+                                                                    <img src="{{ asset('frontend/assets/images/methods/7.svg') }}"
+                                                                        alt="pointCheckout" class="imgFluid">
+                                                                </div>
+                                                            </div>
+                                                            <div class="content">
+                                                                <div class="title">Loyalty Points or Card</div>
+                                                                <div class="note">
+                                                                    Use reward points or pay by card
+                                                                </div>
+                                                            </div>
+                                                        </label>
+                                                    </li>
+                                                @endif
                                             </ul>
                                         </div>
                                     </div>

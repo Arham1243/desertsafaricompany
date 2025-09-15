@@ -184,6 +184,56 @@ class CheckoutController extends Controller
             ->with('title', 'Payment successful!');
     }
 
+    public function pointCheckoutResponse(Request $request, PaymentService $paymentService)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        // PointCheckout sends back transactionId and status
+        $transactionId = $request->get('transactionId');
+        $status = strtolower($request->get('status', ''));
+
+        if ($status === 'paid' || $status === 'captured') {
+            $order->update([
+                'payment_type' => 'pointCheckout',
+                'payment_status' => 'paid',
+                'payment_date' => now(),
+            ]);
+
+            $paymentService->sendAdminOrderEmail(
+                'emails.admin-order-success',
+                $order,
+                'New Order Paid',
+                route('admin.bookings.edit', $order->id),
+                'admin'
+            );
+
+            $paymentService->sendAdminOrderEmail(
+                'emails.customer-order-success',
+                $order,
+                'Your Order is Confirmed',
+                route('user.bookings.edit', $order->id),
+                'user'
+            );
+
+            $cart = json_decode($order->cart_data, true);
+            $paymentService->saveAppliedUserCoupons($cart, $order);
+
+            Session::forget('cart');
+
+            return view('frontend.tour.checkout.success')->with('title', 'Payment successful!');
+        }
+
+        // if failed or canceled
+        $order->update([
+            'payment_type' => 'pointCheckout',
+            'payment_status' => 'failed',
+        ]);
+
+        return redirect()
+            ->route('checkout.error', ['order_id' => $order->id])
+            ->with('notify_error', 'Payment failed or was cancelled');
+    }
+
     public function cancel(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);

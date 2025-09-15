@@ -8,7 +8,7 @@
                         <div class="revenue-card">
                             <div class="revenue-card__icon"><i class='bx bxs-group'></i></div>
                             <div class="revenue-card__content">
-                                <div class="title">Verified vendors</div>
+                                <div class="title">Verified Users</div>
                                 <div class="num">{{ count($users) }}</div>
                             </div>
                         </div>
