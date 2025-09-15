@@ -162,7 +162,7 @@ class CheckoutController extends Controller
             ->with('notify_success', 'Coupon applied successfully!');
     }
 
-    public function success(Request $request, PaymentService $paymentService)
+    public function stripeSuccess(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
 

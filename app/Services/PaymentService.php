@@ -78,7 +78,7 @@ class PaymentService
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => route('checkout.success', [
+                'success_url' => route('checkout.stripe.success', [
                     'order_id' => $order->id,
                     'payment_type' => $request->payment_type,
                 ]),
