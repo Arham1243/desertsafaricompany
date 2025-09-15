@@ -70,11 +70,11 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                          
-                                                                                                                                                                                              
-                                                                                                                                  
-                                                                @endif>
+                                                                                                                                                                                                                                                                                                                         
+                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                  
+                                                                                                                                      
+                                                                     @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -270,7 +270,7 @@
 
                         @if (isset($tourCountContent->is_button_enabled) && $tourCountContent->is_button_enabled === '1')
                             <a @if ($tourCountBtnLink !== 'javascript:void(0)') target="_blank" @endif
-                                href="{{ sanitizedLink($tourCountBtnLink) }}"
+                                href="{{ $tourCountBtnLink !== 'javascript:void(0)' ? sanitizedLink($tourCountBtnLink) : $tourCountBtnLink }}"
                                 style="
                                 {{ $tourCountContent->btn_background_color ? 'background-color: ' . $tourCountContent->btn_background_color . ';' : '' }}
                                 {{ $tourCountContent->btn_text_color ? 'color: ' . $tourCountContent->btn_text_color . ';' : '' }}"
