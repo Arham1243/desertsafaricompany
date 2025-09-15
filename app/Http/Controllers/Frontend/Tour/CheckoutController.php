@@ -234,6 +234,64 @@ class CheckoutController extends Controller
             ->with('notify_error', 'Payment failed or was cancelled');
     }
 
+    public function tabbySuccess(Request $request, PaymentService $paymentService)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_type' => 'tabby',
+            'payment_status' => 'paid',
+            'payment_date' => now(),
+        ]);
+
+        $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
+        $paymentService->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
+
+        $cart = json_decode($order->cart_data, true);
+        $paymentService->saveAppliedUserCoupons($cart, $order);
+
+        Session::forget('cart');
+
+        return view('frontend.tour.checkout.success')
+            ->with('title', 'Payment successful!');
+    }
+
+    public function tabbyCancel(Request $request, PaymentService $paymentService)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_type' => 'tabby',
+            'payment_status' => 'cancelled',
+        ]);
+
+        $paymentService->sendAdminOrderEmail('emails.admin-order-payment-cancelled', $order, 'Payment Cancelled', route('admin.bookings.edit', $order->id), 'admin');
+
+        return view('frontend.tour.checkout.cancel')
+            ->with('title', 'Payment cancelled!');
+    }
+
+    public function tabbyFailure(Request $request, PaymentService $paymentService)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        $order->update([
+            'payment_type' => 'tabby',
+            'payment_status' => 'failed',
+        ]);
+
+        $paymentService->sendAdminOrderEmail(
+            'emails.admin-order-payment-failed',
+            $order,
+            'Payment Failed',
+            route('admin.bookings.edit', $order->id),
+            'admin'
+        );
+
+        return view('frontend.tour.checkout.failure')
+            ->with('title', 'Payment failed!');
+    }
+
     public function cancel(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
