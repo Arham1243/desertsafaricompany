@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                          @endif>
+                                             @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -67,13 +67,17 @@
     </div>
 </div>
 
-<div class="payment-widget mt-4 mb-3">
-    <tamara-widget id="tamara-widget-custom" type="tamara-summary" amount="{{ $tour->tour_lowest_price }}"
-        config='{"badgePosition":"right","showExtraContent":""}' inline-type="2">
-    </tamara-widget>
-</div>
+@if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
+    <div class="payment-widget mt-4 mb-3">
+        <tamara-widget id="tamara-widget-custom" type="tamara-summary" amount="{{ $tour->tour_lowest_price }}"
+            config='{"badgePosition":"right","showExtraContent":""}' inline-type="2">
+        </tamara-widget>
+    </div>
+@endif
 
-<div class="payment-widget" id="tabby-promo-widget" class="my-3"></div>
+@if (isset($settings['tabby_enabled']) && (int) $settings['tabby_enabled'] === 1)
+    <div class="payment-widget" id="tabby-promo-widget" class="my-3"></div>
+@endif
 
 <div class="form-guest__btn mt-4">
     @if (Auth::check())
