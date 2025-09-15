@@ -238,22 +238,39 @@ class CheckoutController extends Controller
     {
         $order = Order::findOrFail($request->order_id);
 
-        $order->update([
-            'payment_type' => 'tabby',
-            'payment_status' => 'paid',
-            'payment_date' => now(),
+        $paymentId = $request->get('payment_id'); // Tabby sends this back
+        if (! $paymentId) {
+            return redirect()->route('checkout.tabby.failure', ['order_id' => $order->id]);
+        }
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.tabby.ai/api/v2/payments/$paymentId");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Bearer '.env('TABBY_SECRET_KEY'),
+            'Content-Type: application/json',
         ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
 
-        $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
-        $paymentService->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
+        $result = json_decode($response, true);
 
-        $cart = json_decode($order->cart_data, true);
-        $paymentService->saveAppliedUserCoupons($cart, $order);
+        if (! empty($result['status']) && $result['status'] === 'CLOSED') {
+            $order->update([
+                'payment_type' => 'tabby',
+                'payment_status' => 'paid',
+                'payment_date' => now(),
+            ]);
 
-        Session::forget('cart');
+            $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
+            $paymentService->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
 
-        return view('frontend.tour.checkout.success')
-            ->with('title', 'Payment successful!');
+            Session::forget('cart');
+
+            return view('frontend.tour.checkout.success')->with('title', 'Payment successful!');
+        }
+
+        return redirect()->route('checkout.tabby.failure', ['order_id' => $order->id]);
     }
 
     public function tabbyCancel(Request $request, PaymentService $paymentService)
@@ -288,7 +305,7 @@ class CheckoutController extends Controller
             'admin'
         );
 
-        return view('frontend.tour.checkout.failure')
+        return view('frontend.tour.checkout.error')
             ->with('title', 'Payment failed!');
     }
 
