@@ -130,7 +130,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <hr class="my-5">
+                                {{-- <hr class="my-5">
                                 <div class="row" x-data="{ tamaraEnabled: {{ $settings->get('tamara_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -164,7 +164,7 @@
                                                 value="{{ $settings->get('tamara_secret_key') }}" class="field">
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <hr class="my-5">
                                 <div class="row" x-data="{ postpayEnabled: {{ $settings->get('postpay_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
