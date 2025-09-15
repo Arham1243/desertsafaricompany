@@ -302,8 +302,19 @@ class PaymentService
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
 
-        $result = curl_exec($ch);
+        $response = curl_exec($ch);
+
+        if ($response === false) {
+            dd(['curl_error' => curl_error($ch)]);
+        }
+
         curl_close($ch);
+
+        $result = json_decode($response, true);
+
+        if ($result['success'] == false) {
+            dd($result['error']);
+        }
 
         $result_p = json_decode($result, true);
 
@@ -323,7 +334,94 @@ class PaymentService
      */
     private function handlePostpay(Request $request, Order $order)
     {
-        // TODO: implement Postpay checkout
+        $session = $this->createPostpaySession($request, $order);
+
+        if (! isset($session['id']) || empty($session['checkout_url'])) {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order->id])
+                ->with('notify_error', 'Failed to create Postpay session');
+        }
+
+        $order->update([
+            'postpay_session_id' => $session['id'],
+            'payment_type' => 'postpay',
+        ]);
+
+        return redirect()->away($session['checkout_url']);
+    }
+
+    private function createPostpaySession(Request $request, Order $order)
+    {
+        $custom_order_id = $order->id;
+        $cart = json_decode($order->cart_data, true);
+
+        $total_with_taxes = number_format($cart['total_price'], 2, '.', '');
+        $tax = number_format($cart['total_price'] * 0.05, 2, '.', '');
+
+        $name = $order->first_name;
+        $email = $order->email;
+        $dt = now()->timezone('UTC');
+
+        $items = [];
+        foreach ($cart['tours'] as $tour) {
+            $items[] = [
+                'name' => $tour['tour_title'],
+                'reference' => $tour['tour_id'] ?? $custom_order_id,
+                'unit_price' => (int) round($tour['total_price']),
+                'qty' => (int) $tour['total_no_of_people'],
+            ];
+        }
+
+        $payload = [
+            'order_id' => $custom_order_id,
+            'total_amount' => (float) $total_with_taxes,
+            'tax_amount' => (float) $tax,
+            'currency' => 'AED',
+            'customer' => [
+                'id' => $custom_order_id,
+                'email' => $email,
+                'first_name' => $name,
+                'last_name' => '',
+                'gender' => 'male',
+                'account' => 'guest',
+                'date_of_birth' => '1999-09-14',
+                'date_joined' => $dt->format('Y-m-d\TH:i:s.u'),
+            ],
+            'items' => $items,
+            'merchant' => [
+                'confirmation_url' => route('checkout.postpay.success', [
+                    'order_id' => $order->id,
+                    'payment_type' => $request->payment_type,
+                ]),
+                'cancel_url' => route('checkout.cancel', [
+                    'order_id' => $order->id,
+                    'payment_type' => $request->payment_type,
+                ]),
+            ],
+        ];
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://api.postpay.io/checkouts');
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Basic '.env('POSTPAY_SECRET_KEY'),
+            'Content-Type: application/json',
+        ]);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
+
+        $response = curl_exec($ch);
+        if ($response === false) {
+            dd(curl_error($ch));
+        }
+        curl_close($ch);
+
+        $result = json_decode($response, true);
+
+        return [
+            'id' => $result['id'] ?? null,
+            'checkout_url' => $result['checkout_url'] ?? null,
+        ];
     }
 
     /**

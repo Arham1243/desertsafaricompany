@@ -61,6 +61,11 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::get('/tabby/success', [CheckoutController::class, 'tabbySuccess'])->name('tabby.success');
     Route::get('/tabby/cancel', [CheckoutController::class, 'tabbyCancel'])->name('tabby.cancel');
     Route::get('/tabby/failure', [CheckoutController::class, 'tabbyFailure'])->name('tabby.failure');
+
+    Route::get('/postpay/success/{order_id}', [CheckoutController::class, 'postpaySuccess'])->name('postpay.success');
+    Route::get('/postpay/cancel/{order_id}', [CheckoutController::class, 'postpayCancel'])->name('postpay.cancel');
+    Route::get('/postpay/failure/{order_id}', [CheckoutController::class, 'postpayFailure'])->name('postpay.failure');
+
     Route::get('/stripe/success', [CheckoutController::class, 'stripeSuccess'])->name('stripe.success');
     Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('cancel');
     Route::get('/error', [CheckoutController::class, 'error'])->name('error');

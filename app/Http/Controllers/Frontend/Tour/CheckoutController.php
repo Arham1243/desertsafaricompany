@@ -309,6 +309,73 @@ class CheckoutController extends Controller
             ->with('title', 'Payment failed!');
     }
 
+    public function postpaySuccess(Request $request, $order_id, PaymentService $paymentService)
+    {
+        $status = $request->get('status');
+        $postpayOrderId = $request->get('order_id');
+
+        if ($status !== 'APPROVED') {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order_id])
+                ->with('notify_error', 'Postpay payment not approved');
+        }
+
+        $order = Order::findOrFail($order_id);
+        $ch = curl_init();
+        curl_setopt_array($ch, [
+            CURLOPT_URL => 'https://api.postpay.io/orders/'.$postpayOrderId.'/capture',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Basic '.env('POSTPAY_SECRET_KEY'),
+            ],
+        ]);
+
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        $result = json_decode($response, true);
+
+        if (! empty($result['error'])) {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order_id])
+                ->with('notify_error', 'Postpay capture failed');
+        }
+
+        if (($result['status'] ?? null) === 'captured') {
+            Order::findOrFail($order_id)->update([
+                'payment_type' => 'postpay',
+                'payment_status' => 'paid',
+                'payment_date' => now(),
+
+            ]);
+
+            $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
+            $paymentService->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
+
+            Session::forget('cart');
+
+            return view('frontend.tour.checkout.success', ['order_id' => $order_id, 'payment_type' => 'postpay']);
+        }
+
+        return redirect()
+            ->route('checkout.error', ['order_id' => $order_id])
+            ->with('notify_error', 'Unexpected Postpay response');
+    }
+
+    public function postpayCancel($order_id)
+    {
+        return redirect()
+            ->route('checkout.cancel', ['order_id' => $order_id, 'payment_type' => 'postpay']);
+    }
+
+    public function postpayFailure($order_id)
+    {
+        return redirect()
+            ->route('checkout.error', ['order_id' => $order_id])
+            ->with('notify_error', 'Postpay payment failed');
+    }
+
     public function cancel(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
