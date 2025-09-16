@@ -23,7 +23,8 @@ Route::name('frontend.')->group(function () {
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-    Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.details');
+    Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])
+        ->name('blogs.details');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
 });
 

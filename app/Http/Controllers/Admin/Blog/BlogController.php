@@ -7,6 +7,8 @@ use App\Models\Blog;
 use App\Models\BlogCategory;
 use App\Models\BlogMedia;
 use App\Models\BlogTag;
+use App\Models\City;
+use App\Models\Country;
 use App\Models\Tour;
 use App\Models\User;
 use App\Traits\Sluggable;
@@ -34,10 +36,12 @@ class BlogController extends Controller
     public function create()
     {
         $tours = Tour::where('status', 'publish')->get();
+        $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
+        $cities = City::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
-        $data = compact('tours', 'categories', 'users', 'tags');
+        $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags');
 
         return view('admin.blogs.blogs-management.add')->with('title', 'Add New Blog')->with($data);
     }
@@ -51,6 +55,8 @@ class BlogController extends Controller
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'category_id' => 'nullable|integer|exists:blog_categories,id',
+            'country_id' => 'nullable|integer|exists:countries,id',
+            'city_id' => 'nullable|integer|exists:cities,id',
             'tags_ids' => 'array',
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
@@ -112,10 +118,12 @@ class BlogController extends Controller
     {
         $tours = Tour::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
+        $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
+        $cities = City::where('status', 'publish')->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
         $seo = $blog->seo()->first();
-        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo');
+        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities');
 
         return view('admin.blogs.blogs-management.edit')->with('title', ucfirst(strtolower($blog->title)))->with($data);
     }
@@ -140,6 +148,8 @@ class BlogController extends Controller
             'content' => 'nullable',
             'status' => 'nullable|in:publish,draft',
             'category_id' => 'nullable|integer|exists:blog_categories,id',
+            'country_id' => 'nullable|integer|exists:countries,id',
+            'city_id' => 'nullable|integer|exists:cities,id',
             'tags_ids' => 'array',
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',

@@ -37,6 +37,7 @@ class CountryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|min:3|max:255',
+            'available_for_blogs' => 'nullable|boolean',
             'iso_alpha2' => 'nullable|min:2|max:2',
             'slug' => 'nullable|string|max:255',
             'content' => 'nullable',
@@ -99,6 +100,7 @@ class CountryController extends Controller
     {
         $validatedData = $request->validate([
             'name' => 'required|min:3|max:255',
+            'available_for_blogs' => 'nullable|boolean',
             'iso_alpha2' => 'nullable|min:2|max:2',
             'content' => 'nullable',
             'json_content' => 'nullable',
@@ -110,6 +112,7 @@ class CountryController extends Controller
             'banner_image_alt_text' => 'nullable|string|max:255',
         ]);
         $validatedData['json_content'] = json_encode($validatedData['json_content']);
+        $validatedData['available_for_blogs'] = $validatedData['available_for_blogs'] ?? 0;
         $validatedData['iso_alpha2'] = strtolower($validatedData['iso_alpha2'] ?? '');
 
         $item = Country::find($id);

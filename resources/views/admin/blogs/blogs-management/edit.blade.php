@@ -14,7 +14,7 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildBlogDetailUrl($blog, false) }}/</div>
+                                    <div class="full-url">{{ buildBlogDetailUrl($blog, false, true) }}/</div>
                                     <input value="{{ $blog->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
                                     <input type="hidden" id="slug" value="{{ $blog->slug ?? '#' }}" name="slug">
@@ -42,6 +42,12 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <x-admin.city-filter-by-country :isCountryRequired="true" :isCityRequired="true" :countries="$countries"
+                                        :cities="$cities" wrapperClass="col-md-12 row pe-0"
+                                        selectedCountryId="{{ old('country_id', $blog->country_id) }}"
+                                        selectedCityId="{{ old('city_id', $blog->city_id) }}"
+                                        countryColClass="col-md-6 mb-4 pe-0" cityColClass="col-md-6 mb-4"
+                                        countryName="country_id" cityName="city_id" />
                                     <div class="form-fields">
                                         <label class="title d-flex align-items-center gap-2 lh-1">
                                             Short Description Content

@@ -568,8 +568,9 @@
     .location1-content__section--heading h2 {
         font-size: 53px;
     }
-    .location1-Breadcrumb a {
-        font-size: 12px;
+    .breadcrumb li,
+    .location1-Breadcrumb li a {
+        font-size: 13px;
     }
     p.location1-content__section--pra {
         font-size: 16px;

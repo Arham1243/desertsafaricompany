@@ -22,8 +22,6 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="{{ buildUrl(url('/'), 'blogs/category', $category->slug) }}" target="_blank"
-                            class="themeBtn">View</a>
                     </div>
                 </div>
                 <div class="row">

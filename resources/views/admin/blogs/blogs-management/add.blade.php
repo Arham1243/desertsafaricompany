@@ -23,11 +23,17 @@
                                     <div class="form-fields">
                                         <label class="title">Title <span class="text-danger">*</span> :</label>
                                         <input type="text" name="title" class="field" value="{{ old('title') }}"
-                                            placeholder="New Blog" data-error="Title">
+                                            data-error="Title" data-required>
                                         @error('title')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+
+                                    <x-admin.city-filter-by-country :isCountryRequired="true" :isCityRequired="true" :countries="$countries"
+                                        :cities="$cities" wrapperClass="col-md-12 row pe-0"
+                                        selectedCountryId="{{ old('country_id') }}" selectedCityId="{{ old('city_id') }}"
+                                        countryColClass="col-md-6 mb-4 pe-0" cityColClass="col-md-6 mb-4"
+                                        countryName="country_id" cityName="city_id" />
                                     <div class="form-fields">
                                         <label class="title d-flex align-items-center gap-2 lh-1">
                                             Short Description Content
@@ -42,7 +48,7 @@
                                         @enderror
                                     </div>
                                     <div class="form-fields">
-                                        <label class="title">Content <span class="text-danger">*</span> :</label>
+                                        <label class="title">Content :</label>
                                         <textarea class="editor" name="content" data-placeholder="content" data-error="Content">
                                             {{ old('content') }}
                                         </textarea>

@@ -5,30 +5,69 @@
             ? (int) $settings->get('is_enabled_blogs_you_may_also_like') === 1
             : false;
     @endphp
-    <div class="blog-details section-padding">
+
+    <div class="mt-3">
+        <div class="container">
+            <nav aria-label="breadcrumb" class="mt-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ route('frontend.index') }}">Home</a></li>
+                    <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                    <li class="breadcrumb-item"><a href="javascript:void(0);">Blogs</a></li>
+                    <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                    @if ($blog->country)
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('locations.country', $blog->country->iso_alpha2) }}">
+                                {{ $blog->country->name ?? '' }}
+                            </a>
+                        </li>
+                        <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                    @endif
+                    @if ($blog->city)
+                        <li class="breadcrumb-item">
+                            <a href="{{ route('locations.city', [$blog->city->country->iso_alpha2, $blog->city->slug]) }}">
+                                {{ $blog->city->name ?? '' }}
+                            </a>
+                        </li>
+                        <li style="color: #6c757d;" class="breadcrumb-item">/</li>
+                    @endif
+                    <li class="breadcrumb-item active" aria-current="page">{{ $blog->slug }}</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="container">
+            <div class="tour-content__header section-content">
+                <h1 class="heading heading--lg mb-0">
+                    {{ $blog->title }}
+                </h1>
+            </div>
+        </div>
+
+        <div class=tour-details_banner>
+            <div class=tour-details_img>
+                <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                    alt='{{ $blog->featured_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
+            </div>
+        </div>
+    </div>
+
+    <div class="blog-details mt-4 pt-1 mb-5">
         <div class="container">
             <div class="row">
                 <div class="col-md-{{ $is_enabled_blogs_you_may_also_like ? 8 : 12 }}">
                     <div class="stories-content">
-                        <div class="stories-content__img">
-                            <img src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
-                                alt="{{ $blog->featured_image_alt_text ?? 'Image' }}" class="imgFluid" loading="lazy">
-                        </div>
-
                         <ul class="stories-content__details">
                             <li>
                                 <span><i class='bx bxs-calendar'></i></span>
                                 <span>{{ $blog->created_at ? $blog->created_at->format('d-M-Y') : 'Date not available' }}</span>
                             </li>
                             <li>
-                                <span><i class='bx bxs-folder'></i></span>
+                                <span><i class='bx bxs-purchase-tag'></i></span>
                                 <span>{{ $blog->category->name ?? 'Uncategorized' }}</span>
                             </li>
                         </ul>
 
-                        <div class="stories-content__title">{{ $blog->title ?? 'Title not available' }}</div>
-
-                        <div class="stories-content__desc">
+                        <div class="stories-content__desc mt-4">
                             {{ $blog->short_description ?? 'Short description not available' }}</div>
 
                         @if ($blog->content)
@@ -69,3 +108,10 @@
         </div>
     </div>
 @endsection
+@push('css')
+    <style>
+        ol.breadcrumb {
+            font-weight: 600;
+        }
+    </style>
+@endpush

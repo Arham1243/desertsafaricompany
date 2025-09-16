@@ -241,7 +241,7 @@ if (! function_exists('buildTourDetailUrl')) {
 
         $categorySlug = $topCategory->slug ?? 'no-category';
         $city = $tour->city->slug ?? 'no-city';
-        $country = $tour->city->country->iso_alpha2 ?? 'no-citycountry';
+        $country = $tour->city->country->iso_alpha2 ?? 'no-country';
         $slug = $tour->slug ?? 'no-slug';
 
         $path = "$country/$city/$categorySlug";
@@ -279,13 +279,15 @@ if (! function_exists('buildCategoryDetailUrl')) {
 if (! function_exists('buildBlogDetailUrl')) {
     function buildBlogDetailUrl($blog, $withSlug = true, $withBase = true)
     {
-        $segments = ['blogs'];
+        $country = $blog->city->country->iso_alpha2 ?? 'no-country';
+        $city = $blog->city->slug ?? 'no-city';
+        $slug = $blog->slug ?? 'no-slug';
 
-        if ($withSlug && ! empty($blog->slug)) {
-            $segments[] = $blog->slug;
+        $path = "$country/$city";
+
+        if ($withSlug) {
+            $path .= "/blog/$slug";
         }
-
-        $path = implode('/', $segments);
 
         return $withBase ? url($path) : $path;
     }

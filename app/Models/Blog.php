@@ -22,6 +22,16 @@ class Blog extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function country()
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function city()
+    {
+        return $this->belongsTo(City::class);
+    }
+
     public function category()
     {
         return $this->belongsTo(BlogCategory::class);

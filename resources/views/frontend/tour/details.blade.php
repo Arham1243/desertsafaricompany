@@ -108,7 +108,7 @@
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('frontend.index') }}">Home</a></li>
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
-                            <li class="breadcrumb-item"><a href="{{ route('tours.index') }}">Tours</a></li>
+                            <li class="breadcrumb-item"><a href="javascript:void(0);">Tours</a></li>
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
                             @if ($currentCategory && $tour->city)
                                 <li class="breadcrumb-item">
@@ -133,9 +133,9 @@
                         <div class=tour-content__header>
                             <div>
                                 <div class=section-content>
-                                    <h2 class="heading">
+                                    <h1 class="heading">
                                         {{ $tour->title }}
-                                    </h2>
+                                    </h1>
                                 </div>
                                 <div class=tour-content__headerLocation>
                                     <div class=tour-content__headerReviews>

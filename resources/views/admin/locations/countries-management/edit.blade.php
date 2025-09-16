@@ -118,13 +118,23 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-12">
+                                        <div class="col-12 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Lines to Display Before "Read More" </label>
                                                 <input oninput="this.value = Math.abs(this.value)" type="number"
                                                     min="0" name="content_line_limit" class="field"
                                                     value="{{ old('content_line_limit', $item->content_line_limit) }}"
                                                     data-error="content_line_limit">
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" name="available_for_blogs"
+                                                    id="available_for_blogs" value="1"
+                                                    {{ $item->available_for_blogs ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="available_for_blogs">
+                                                    Available for Blogs
+                                                </label>
                                             </div>
                                         </div>
                                     </div>
