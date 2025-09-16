@@ -5,7 +5,6 @@
             <div class="text-center">
                 <div class="section-content">
                     <div class="check-icon green"><i class='bx bxs-check-circle'></i></div>
-
                     <div class="heading">
                         Payment Successful!
                     </div>

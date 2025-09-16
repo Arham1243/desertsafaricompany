@@ -328,17 +328,13 @@ class PaymentService
      */
     private function handlePayPal(Request $request, Order $order)
     {
-        $approveUrl = $this->createPayPalOrder($request, $order);
+        // Store the order ID so your custom PayPal page can load it
+        $order->update(['paypal_order_id' => $order->id, 'payment_type' => 'paypal']);
 
-        if (! $approveUrl) {
-            return redirect()
-                ->route('checkout.error', ['order_id' => $order->id])
-                ->with('notify_error', 'Failed to create PayPal order');
-        }
-
-        $order->update(['paypal_order_id' => $approveUrl['order_id']]);
-
-        return redirect($approveUrl['approve_link']);
+        // Redirect to your custom PayPal page where buttons will be rendered
+        return redirect()->route('checkout.paypal.custom', [
+            'order_id' => $order->id,
+        ]);
     }
 
     private function createPayPalOrder(Request $request, Order $order)

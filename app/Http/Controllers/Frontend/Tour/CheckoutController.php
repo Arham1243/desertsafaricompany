@@ -9,9 +9,6 @@ use App\Models\Tour;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
-use PayPalCheckoutSdk\Core\PayPalHttpClient;
-use PayPalCheckoutSdk\Core\SandboxEnvironment;
-use PayPalCheckoutSdk\Orders\OrdersCaptureRequest;
 
 class CheckoutController extends Controller
 {
@@ -399,30 +396,32 @@ class CheckoutController extends Controller
         $order = Order::findOrFail($request->order_id);
 
         try {
-            $environment = new SandboxEnvironment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET_KEY'));
-            $client = new PayPalHttpClient($environment);
-
-            $captureRequest = new OrdersCaptureRequest($order->paypal_order_id);
-            $captureRequest->prefer('return=representation');
-
-            $captureResponse = $client->execute($captureRequest);
-
-            if ($captureResponse->statusCode !== 201) {
-                return redirect()
-                    ->route('checkout.error', ['order_id' => $order->id])
-                    ->with('notify_error', 'Payment capture failed.');
-            }
-
+            // Since buttons capture payment client-side, we just mark it as paid
             $order->update([
-                'payment_type' => $request->payment_type,
+                'payment_type' => $request->payment_type ?? 'paypal',
                 'payment_status' => 'paid',
                 'payment_date' => now(),
             ]);
 
             $cart = json_decode($order->cart_data, true);
 
-            $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
-            $paymentService->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
+            // Send emails and apply coupons
+            $paymentService->sendAdminOrderEmail(
+                'emails.admin-order-success',
+                $order,
+                'New Order Paid',
+                route('admin.bookings.edit', $order->id),
+                'admin'
+            );
+
+            $paymentService->sendAdminOrderEmail(
+                'emails.customer-order-success',
+                $order,
+                'Your Order is Confirmed',
+                route('user.bookings.edit', $order->id),
+                'user'
+            );
+
             $paymentService->saveAppliedUserCoupons($cart, $order);
 
             Session::forget('cart');
@@ -432,7 +431,7 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             return redirect()
                 ->route('checkout.error', ['order_id' => $order->id])
-                ->with('notify_error', 'Payment capture exception: '.$e->getMessage());
+                ->with('notify_error', 'Payment processing exception: '.$e->getMessage());
         }
     }
 
@@ -456,5 +455,12 @@ class CheckoutController extends Controller
 
         return view('frontend.tour.checkout.error')
             ->with('title', 'Payment failed due to an error');
+    }
+
+    public function showPayPalPage(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        return view('frontend.tour.checkout.paypal', compact('order'));
     }
 }
