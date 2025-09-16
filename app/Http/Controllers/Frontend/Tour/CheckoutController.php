@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Tour;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -460,7 +461,25 @@ class CheckoutController extends Controller
     public function showPayPalPage(Request $request)
     {
         $order = Order::findOrFail($request->order_id);
+        $amountAED = $order->total_amount;
 
-        return view('frontend.tour.checkout.paypal', compact('order'));
+        try {
+            $response = Http::get('https://api.exchangerate-api.com/v4/latest/AED');
+
+            if ($response->successful()) {
+                $exchangeRates = $response->json();
+                $usdRate = $exchangeRates['rates']['USD'];
+                $usdAmount = $amountAED * $usdRate;
+            } else {
+                // Fallback to a fixed rate if API fails
+                $usdAmount = $amountAED * 0.27;  // Approximate rate as fallback
+            }
+        } catch (\Exception $e) {
+            // Handle API errors gracefully
+            \Log::error('Currency conversion failed: '.$e->getMessage());
+            $usdAmount = $amountAED * 0.27;  // Fallback rate
+        }
+
+        return view('frontend.tour.checkout.paypal', compact('order', 'usdAmount'));
     }
 }

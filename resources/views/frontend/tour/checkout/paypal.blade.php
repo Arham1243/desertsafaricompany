@@ -25,7 +25,7 @@
                     return actions.order.create({
                         purchase_units: [{
                             amount: {
-                                value: '{{ number_format($order->total_amount, 2, '.', '') }}'
+                                value: '{{ number_format($usdAmount, 2, '.', '') }}'
                             }
                         }]
                     });
