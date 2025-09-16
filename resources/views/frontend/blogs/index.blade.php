@@ -138,18 +138,19 @@
                         <div class="col-md-3">
                             <div class="main-blog__card">
                                 <a href="{{ buildBlogDetailUrl($blog) }}" class="blog__card-img">
-                                    <img data-src="{{ asset($blog->featured_image) }}"
-                                        alt="{{ $blog->feature_image_alt_text }}" class='imgFluid lazy' loading='lazy'>
+                                    <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $blog->feature_image_alt_text ?? '' }}" class='imgFluid lazy'
+                                        loading='lazy'>
                                 </a>
                                 <div class="main-blog__content">
                                     <div class="main-blog__heading">
-                                        {{ $blog->title }}
+                                        {{ $blog->title ?? '' }}
                                     </div>
                                     <div class="main-blog__title">
-                                        {{ $blog->city->name }}
+                                        {{ $blog->city->name ?? '' }}
                                     </div>
                                     <p class="main-blog__pra">
-                                        {{ $blog->short_description }}
+                                        {{ $blog->short_description ?? '' }}
                                     </p>
                                 </div>
                             </div>

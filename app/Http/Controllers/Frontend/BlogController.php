@@ -52,7 +52,6 @@ class BlogController extends Controller
 
         return $country ?: Country::where('status', 'publish')
             ->where('available_for_blogs', 1)
-            ->where('iso_alpha2', 'ae')
             ->first();
     }
 
