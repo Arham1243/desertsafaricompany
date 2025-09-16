@@ -120,7 +120,7 @@
                             </a>
                         </li>
                         @if ($defaultCountry->cities->isNotEmpty())
-                            @foreach ($defaultCountry->cities as $city)
+                            @foreach ($defaultCountry->cities->filter(fn($city) => $city->blogs()->exists()) as $city)
                                 @php
                                     $query = request()->all();
                                     $query['city'] = $city->id;

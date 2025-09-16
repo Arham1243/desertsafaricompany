@@ -27,6 +27,11 @@ class City extends Model
         return $this->morphOne(Seo::class, 'seoable');
     }
 
+    public function blogs()
+    {
+        return $this->hasMany(Blog::class, 'city_id');
+    }
+
     protected static function boot()
     {
         parent::boot();
