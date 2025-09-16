@@ -1,6 +1,6 @@
 @extends('frontend.layouts.main')
 @section('content')
-    <div class="mt-3 mb-5">
+    <div class="mt-3 mb-4">
         <div class="container">
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb">
