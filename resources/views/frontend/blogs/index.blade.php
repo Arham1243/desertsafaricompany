@@ -25,7 +25,7 @@
             </div>
         @endif
         @if ($settings->get('listing_banner_enabled') && (int) $settings->get('listing_banner_enabled') === 1)
-            <div class=tour-details_banner>
+            <div class="tour-details_banner blogs-banner">
                 <div class=tour-details_img>
                     <img data-src="{{ asset($settings->get('listing_banner_image') ?? 'frontend/assets/images/placeholder.png') }}"
                         alt='{{ $settings->get('listing_banner_image_alt_text') }}' class='imgFluid lazy' loading='lazy'>
@@ -108,9 +108,12 @@
                     </template>
                 </div>
 
-                <div class="blog-banner__btns py-4 mb-2">
-                    <ul>
-                        <li>
+                <div class="blog-banner__btns py-4 mb-2 position-relative">
+                    <button id="arrowLeft" class="arrow-btn start-0" onclick="scrollList(-200)">
+                        <i class='bx bx-chevron-left'></i>
+                    </button>
+                    <ul id="blogsScroller" class="d-flex overflow-auto flex-nowrap scroll-smooth no-scrollbar">
+                        <li class="flex-shrink-0">
                             <a href="{{ route('frontend.blogs.index') }}"
                                 class="themeBtn-round {{ request('city') ? '' : 'active' }}">
                                 All
@@ -122,16 +125,18 @@
                                     $query = request()->all();
                                     $query['city'] = $city->id;
                                 @endphp
-
-                                <li>
+                                <li class="flex-shrink-0">
                                     <a href="{{ route('frontend.blogs.index', $query) }}"
-                                        class="themeBtn-round {{ request('city') === $city->id ? 'active' : '' }}">
+                                        class="themeBtn-round {{ request('city') == $city->id ? 'active' : '' }}">
                                         {{ $city->name }}
                                     </a>
                                 </li>
                             @endforeach
                         @endif
                     </ul>
+                    <button id="arrowRight" class="arrow-btn end-0" onclick="scrollList(200)">
+                        <i class='bx bx-chevron-right'></i>
+                    </button>
                 </div>
                 <div class="row">
                     @foreach ($blogs as $blog)
@@ -171,5 +176,76 @@
         ol.breadcrumb {
             font-weight: 600;
         }
+
+        /* scrollbar */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+
+        .scroll-smooth {
+            scroll-behavior: smooth;
+        }
+
+        .arrow-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            background: #fff;
+            color: #000;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+            transition: box-shadow .2s;
+        }
+
+        .arrow-btn:hover {
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35);
+        }
+
+        .arrow-btn i {
+            font-size: 20px;
+            color: #000;
+        }
+
+        /* scrollbar */
     </style>
+@endpush
+@push('js')
+    <script>
+        const scroller = document.getElementById('blogsScroller');
+        const arrowLeft = document.getElementById('arrowLeft');
+        const arrowRight = document.getElementById('arrowRight');
+
+        function updateArrows() {
+            const maxScrollLeft = scroller.scrollWidth - scroller.clientWidth;
+
+            arrowLeft.style.display = scroller.scrollLeft > 0 ? 'flex' : 'none';
+            arrowRight.style.display = scroller.scrollLeft >= maxScrollLeft - 1 ? 'none' : 'flex';
+        }
+
+        function scrollList(offset) {
+            scroller.scrollBy({
+                left: offset,
+                behavior: 'smooth'
+            });
+            setTimeout(updateArrows, 300);
+        }
+
+        scroller.addEventListener('scroll', updateArrows);
+        window.addEventListener('resize', updateArrows);
+        document.addEventListener('DOMContentLoaded', updateArrows);
+    </script>
 @endpush

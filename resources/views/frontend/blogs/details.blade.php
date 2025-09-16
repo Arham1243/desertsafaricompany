@@ -43,7 +43,7 @@
             </div>
         </div>
 
-        <div class=tour-details_banner>
+        <div class="tour-details_banner blogs-banner">
             <div class=tour-details_img>
                 <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
                     alt='{{ $blog->featured_image_alt_text }}' class='imgFluid lazy' loading='lazy'>

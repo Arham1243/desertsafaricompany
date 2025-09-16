@@ -747,4 +747,18 @@
     .stories-content__img {
         height: 320px;
     }
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-sort-container {
+        padding: 20px 5px;
+    }
+
+    .custom-select-wrapper select {
+        width: 100%;
+    }
+    .tour-details_banner.blogs-banner {
+        padding: 1rem 0 0;
+    }
 }

@@ -3713,14 +3713,6 @@ ul.header-listGroup form {
     gap: 0.875rem;
 }
 
-.blog-banner__btns i {
-    margin-right: 0.355rem;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-}
-
 .blog-banner__btns .active {
     background-color: #000;
     color: #fff;
@@ -7917,10 +7909,10 @@ ul.show-in-desktop {
     display: block;
     width: fit-content;
 }
-
 /* filter selects */
 .filter-sort-container {
     display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
 }
@@ -7991,4 +7983,5 @@ ul.show-in-desktop {
     color: #333;
     background-color: #fff;
 }
+
 /* filter selects */
