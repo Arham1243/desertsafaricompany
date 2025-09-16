@@ -461,6 +461,9 @@ class CheckoutController extends Controller
     public function showPayPalPage(Request $request)
     {
         $order = Order::findOrFail($request->order_id);
+        if ($order->payment_status === 'paid') {
+            abort(404);
+        }
         $amountAED = $order->total_amount;
 
         try {
