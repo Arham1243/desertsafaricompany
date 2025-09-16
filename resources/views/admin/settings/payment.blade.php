@@ -184,7 +184,7 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-md-6 col-12 mb-3" x-show="postpayEnabled" x-transition>
+                                     <div class="col-md-6 col-12 mb-3" x-show="postpayEnabled" x-transition>
                                         <div class="form-fields">
                                             <label class="title text-dark">PostPay Public Key</label>
                                             <input type="text" name="postpay_public_key"
