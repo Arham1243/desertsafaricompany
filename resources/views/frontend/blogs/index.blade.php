@@ -24,7 +24,6 @@
                 </div>
             </div>
         @endif
-        @dd($settings->get('listing_banner_enabled'))
         @if ($settings->get('listing_banner_enabled') && (int) $settings->get('listing_banner_enabled') === 1)
             <div class="tour-details_banner blogs-banner">
                 <div class=tour-details_img>
