@@ -20,7 +20,10 @@ class BlogController extends Controller
         $cities = City::where('status', 'publish')->get();
         $categories = BlogCategory::get();
 
-        $blogs = $this->filterBlogs()->paginate(30)->appends(request()->query());
+        $blogs = $this
+            ->filterBlogs($defaultCountry)
+            ->paginate(30)
+            ->appends(request()->query());
 
         $data = compact('countries', 'cities', 'categories', 'defaultCountry', 'blogs');
 
@@ -55,7 +58,7 @@ class BlogController extends Controller
             ->first();
     }
 
-    protected function filterBlogs()
+    protected function filterBlogs($defaultCountry)
     {
         $query = Blog::where('status', 'publish');
 
@@ -65,6 +68,11 @@ class BlogController extends Controller
 
         if ($category = request('category')) {
             $query->where('category_id', $category);
+        }
+
+        if (! request()->has('city') && ! request()->has('category')) {
+            $cityIds = $defaultCountry->cities()->pluck('id');
+            $query->whereIn('city_id', $cityIds);
         }
 
         if ($sort = request('sort')) {
