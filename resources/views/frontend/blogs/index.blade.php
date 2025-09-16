@@ -2,19 +2,10 @@
 @section('content')
     <div class="blog-banner__heading">
         <div class="container">
-            <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">Blog </a></li>
-                    <li class="breadcrumb-item"><a href="#">United Arab Emirates</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">Dubai</li>
-
-                </ol>
-            </nav>
-            <div class="banner-heading">
-                <h1>
-                    <div class="bannerMain-title">Must-see attractions in Dubai
-                    </div>
-                </h1>
+            <div class="section-content">
+                <h2 class="subHeading block-heading">
+                    Must-see attractions in Dubai
+                </h2>
             </div>
             <div class="blog-banner__btns">
                 <ul>
