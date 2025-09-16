@@ -8,6 +8,11 @@ use App\Models\Tour;
 
 class BlogController extends Controller
 {
+    public function index()
+    {
+        return view('frontend.blogs.index')->with('title', 'Blogs');
+    }
+
     public function show($slug)
     {
         $blog = Blog::where('slug', $slug)->firstOrFail();

@@ -29,11 +29,6 @@ class IndexController extends Controller
         return view('terms-conditions')->with('title', 'Terms & Conditions');
     }
 
-    public function blog()
-    {
-        return view('blog')->with('title', 'Blog');
-    }
-
     public function index()
     {
 

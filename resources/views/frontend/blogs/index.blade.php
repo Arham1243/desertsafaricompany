@@ -32,7 +32,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -57,7 +57,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -82,7 +82,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -137,7 +137,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -162,7 +162,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -187,7 +187,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -212,7 +212,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -242,7 +242,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -267,7 +267,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -292,7 +292,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -317,7 +317,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -347,7 +347,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -372,7 +372,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -397,7 +397,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -422,7 +422,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -452,7 +452,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -477,7 +477,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -502,7 +502,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -527,7 +527,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -557,7 +557,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -582,7 +582,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -607,7 +607,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -632,7 +632,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -662,7 +662,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -687,7 +687,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -712,7 +712,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -737,7 +737,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -767,7 +767,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -792,7 +792,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -817,7 +817,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -842,7 +842,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -872,7 +872,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -897,7 +897,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -922,7 +922,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -947,7 +947,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -977,7 +977,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -1002,7 +1002,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -1027,7 +1027,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -1052,7 +1052,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -1082,7 +1082,7 @@
             <div class="row pt-3">
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/burj-al-arab.webp') }}" alt='image'
                                 class='imgFluid' loading='lazy'>
                         </a>
@@ -1107,7 +1107,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -1132,7 +1132,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images//9b26bcd772a85afdbc9d6a3f4cd4180d-madinat-jumeirah.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
@@ -1157,7 +1157,7 @@
                 </div>
                 <div class="col-md-3">
                     <div class="main-blog__card">
-                        <a href="{{ route('blog-details') }}" class="blog__card-img">
+                        <a href="javascript:void(0);" class="blog__card-img">
                             <img src="{{ asset('frontend/assets/images/e52a77e594ec4305d911409cb9acbca98b39e56fb8ee04077565e8ecdb57492b.webp') }}"
                                 alt='image' class='imgFluid' loading='lazy'>
                         </a>
