@@ -69,6 +69,11 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::get('/stripe/success', [CheckoutController::class, 'stripeSuccess'])->name('stripe.success');
     Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('cancel');
     Route::get('/error', [CheckoutController::class, 'error'])->name('error');
+
+    Route::get('/paypal', [CheckoutController::class, 'showPayPalPage'])
+        ->name('paypal.custom');
+    Route::get('/paypal/success', [CheckoutController::class, 'paypalSuccess'])->name('paypal.success');
+
     Route::post('/apply-code', [CheckoutController::class, 'applyCode'])->name('applyCode');
 });
 

@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Tour;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
 
 class CheckoutController extends Controller
@@ -238,7 +239,7 @@ class CheckoutController extends Controller
     {
         $order = Order::findOrFail($request->order_id);
 
-        $paymentId = $request->get('payment_id'); // Tabby sends this back
+        $paymentId = $request->get('payment_id');  // Tabby sends this back
         if (! $paymentId) {
             return redirect()->route('checkout.tabby.failure', ['order_id' => $order->id]);
         }
@@ -347,7 +348,6 @@ class CheckoutController extends Controller
                 'payment_type' => 'postpay',
                 'payment_status' => 'paid',
                 'payment_date' => now(),
-
             ]);
 
             $paymentService->sendAdminOrderEmail('emails.admin-order-success', $order, 'New Order Paid', route('admin.bookings.edit', $order->id), 'admin');
@@ -392,6 +392,50 @@ class CheckoutController extends Controller
             ->with('title', 'Payment cancelled');
     }
 
+    public function paypalSuccess(Request $request, PaymentService $paymentService)
+    {
+        $order = Order::findOrFail($request->order_id);
+
+        try {
+            // Since buttons capture payment client-side, we just mark it as paid
+            $order->update([
+                'payment_type' => $request->payment_type ?? 'paypal',
+                'payment_status' => 'paid',
+                'payment_date' => now(),
+            ]);
+
+            $cart = json_decode($order->cart_data, true);
+
+            // Send emails and apply coupons
+            $paymentService->sendAdminOrderEmail(
+                'emails.admin-order-success',
+                $order,
+                'New Order Paid',
+                route('admin.bookings.edit', $order->id),
+                'admin'
+            );
+
+            $paymentService->sendAdminOrderEmail(
+                'emails.customer-order-success',
+                $order,
+                'Your Order is Confirmed',
+                route('user.bookings.edit', $order->id),
+                'user'
+            );
+
+            $paymentService->saveAppliedUserCoupons($cart, $order);
+
+            Session::forget('cart');
+
+            return view('frontend.tour.checkout.success')
+                ->with('title', 'Payment successful!');
+        } catch (\Exception $e) {
+            return redirect()
+                ->route('checkout.error', ['order_id' => $order->id])
+                ->with('notify_error', 'Payment processing exception: '.$e->getMessage());
+        }
+    }
+
     public function error(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
@@ -412,5 +456,33 @@ class CheckoutController extends Controller
 
         return view('frontend.tour.checkout.error')
             ->with('title', 'Payment failed due to an error');
+    }
+
+    public function showPayPalPage(Request $request)
+    {
+        $order = Order::findOrFail($request->order_id);
+        if ($order->payment_status === 'paid') {
+            abort(404);
+        }
+        $amountAED = $order->total_amount;
+
+        try {
+            $response = Http::get('https://api.exchangerate-api.com/v4/latest/AED');
+
+            if ($response->successful()) {
+                $exchangeRates = $response->json();
+                $usdRate = $exchangeRates['rates']['USD'];
+                $usdAmount = $amountAED * $usdRate;
+            } else {
+                // Fallback to a fixed rate if API fails
+                $usdAmount = $amountAED * 0.27;  // Approximate rate as fallback
+            }
+        } catch (\Exception $e) {
+            // Handle API errors gracefully
+            \Log::error('Currency conversion failed: '.$e->getMessage());
+            $usdAmount = $amountAED * 0.27;  // Fallback rate
+        }
+
+        return view('frontend.tour.checkout.paypal', compact('order', 'usdAmount'));
     }
 }

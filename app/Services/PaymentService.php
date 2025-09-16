@@ -9,6 +9,9 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use PayPalCheckoutSdk\Core\PayPalHttpClient;
+use PayPalCheckoutSdk\Core\SandboxEnvironment;
+use PayPalCheckoutSdk\Orders\OrdersCreateRequest;
 use Stripe\Checkout\Session as StripeSession;
 use Stripe\Stripe;
 
@@ -48,7 +51,6 @@ class PaymentService
 
     private function createStripeSession(Request $request, Order $order)
     {
-
         try {
             Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $cart = json_decode($order->cart_data, true);
@@ -65,8 +67,8 @@ class PaymentService
                         'currency' => env('APP_CURRENCY'),
                         'product_data' => [
                             'name' => $tour['tour_title'],
-                            'description' => 'Start Date: '.Carbon::parse($tour['start_date'])->format('d M Y').
-                                " | Total: {$tour['total_no_of_people']}",
+                            'description' => 'Start Date: '.Carbon::parse($tour['start_date'])->format('d M Y')
+                                ." | Total: {$tour['total_no_of_people']}",
                         ],
                         'unit_amount' => round($tour['total_price'], 2) * 100,
                     ],
@@ -239,8 +241,8 @@ class PaymentService
         $country = $orderData['country'] ?? '';
 
         $total_with_taxes = number_format($order->total_amount, 2, '.', '');
-        $final_total = number_format($order->total_amount, 2, '.', ''); // adjust if you track discount vs subtotal
-        $tax = '0.00'; // pull from order if available
+        $final_total = number_format($order->total_amount, 2, '.', '');  // adjust if you track discount vs subtotal
+        $tax = '0.00';  // pull from order if available
 
         $cart = json_decode($order->cart_data, true);
         $lineItems = [];
@@ -324,9 +326,75 @@ class PaymentService
     /**
      * ---------------- PAYPAL ----------------
      */
-    private function handlePaypal(Request $request, Order $order)
+    private function handlePayPal(Request $request, Order $order)
     {
-        // TODO: implement Paypal checkout
+        // Store the order ID so your custom PayPal page can load it
+        $order->update(['paypal_order_id' => $order->id, 'payment_type' => 'paypal']);
+
+        // Redirect to your custom PayPal page where buttons will be rendered
+        return redirect()->route('checkout.paypal.custom', [
+            'order_id' => $order->id,
+        ]);
+    }
+
+    private function createPayPalOrder(Request $request, Order $order)
+    {
+        try {
+            $environment = new SandboxEnvironment(env('PAYPAL_CLIENT_ID'), env('PAYPAL_SECRET_KEY'));
+            $client = new PayPalHttpClient($environment);
+
+            $cart = json_decode($order->cart_data, true);
+            $items = [];
+
+            foreach ($cart['tours'] as $tour) {
+                $items[] = [
+                    'name' => $tour['tour_title'],
+                    'description' => 'Start Date: '.\Carbon\Carbon::parse($tour['start_date'])->format('d M Y')
+                        ." | Total: {$tour['total_no_of_people']}",
+                    'unit_amount' => [
+                        'currency_code' => env('APP_CURRENCY'),
+                        'value' => number_format($tour['total_price'], 2, '.', ''),
+                    ],
+                    'quantity' => '1',
+                ];
+            }
+
+            $orderRequest = new OrdersCreateRequest;
+            $orderRequest->prefer('return=representation');
+            $orderRequest->body = [
+                'intent' => 'CAPTURE',
+                'purchase_units' => [
+                    [
+                        'reference_id' => $order->id,
+                        'amount' => [
+                            'currency_code' => env('APP_CURRENCY'),
+                            'value' => number_format($cart['total_price'], 2, '.', ''),
+                            'breakdown' => [
+                                'item_total' => [
+                                    'currency_code' => env('APP_CURRENCY'),
+                                    'value' => number_format($cart['total_price'], 2, '.', ''),
+                                ],
+                            ],
+                        ],
+                        'items' => $items,
+                    ],
+                ],
+                'application_context' => [
+                    'cancel_url' => route('checkout.cancel', ['order_id' => $order->id, 'payment_type' => $request->payment_type]),
+                    'return_url' => route('checkout.paypal.success', ['order_id' => $order->id, 'payment_type' => $request->payment_type]),
+                ],
+            ];
+
+            $response = $client->execute($orderRequest);
+
+            $approveLink = collect($response->result->links)
+                ->firstWhere('rel', 'approve')
+                ->href ?? null;
+
+            return $approveLink ? ['approve_link' => $approveLink, 'order_id' => $response->result->id] : null;
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**

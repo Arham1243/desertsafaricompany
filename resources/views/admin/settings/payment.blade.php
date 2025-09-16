@@ -165,7 +165,7 @@
                                         </div>
                                     </div>
                                 </div> --}}
-                                <hr class="my-5">
+                                {{-- <hr class="my-5">
                                 <div class="row" x-data="{ postpayEnabled: {{ $settings->get('postpay_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -184,22 +184,21 @@
                                         </div>
                                     </div>
 
-                                    {{-- <div class="col-md-6 col-12 mb-3" x-show="postpayEnabled" x-transition>
+                                     <div class="col-md-6 col-12 mb-3" x-show="postpayEnabled" x-transition>
                                         <div class="form-fields">
                                             <label class="title text-dark">PostPay Public Key</label>
                                             <input type="text" name="postpay_public_key"
                                                 value="{{ $settings->get('postpay_public_key') }}" class="field">
                                         </div>
-                                    </div> --}}
-
-                                    <div class="col-md-12 col-12 mb-3" x-show="postpayEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">PostPay Auth Key</label>
-                                            <input type="text" name="postpay_secret_key"
-                                                value="{{ $settings->get('postpay_secret_key') }}" class="field">
-                                        </div>
+                                    </div> 
+                                <div class="col-md-12 col-12 mb-3" x-show="postpayEnabled" x-transition>
+                                    <div class="form-fields">
+                                        <label class="title text-dark">PostPay Auth Key</label>
+                                        <input type="text" name="postpay_secret_key"
+                                            value="{{ $settings->get('postpay_secret_key') }}" class="field">
                                     </div>
                                 </div>
+                            </div> --}}
                                 <hr class="my-5">
                                 <div class="row" x-data="{ pointCheckoutEnabled: {{ $settings->get('pointcheckout_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
