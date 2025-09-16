@@ -22,7 +22,7 @@ Route::name('frontend.')->group(function () {
     Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
-    Route::get('/blogs', [BlogControllerfix::class, 'index'])->name('blogs.index');
+    Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.details');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
 });
@@ -69,11 +69,6 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::get('/stripe/success', [CheckoutController::class, 'stripeSuccess'])->name('stripe.success');
     Route::get('/cancel', [CheckoutController::class, 'cancel'])->name('cancel');
     Route::get('/error', [CheckoutController::class, 'error'])->name('error');
-
-    Route::get('/paypal', [CheckoutController::class, 'showPayPalPage'])
-        ->name('paypal.custom');
-    Route::get('/paypal/success', [CheckoutController::class, 'paypalSuccess'])->name('paypal.success');
-
     Route::post('/apply-code', [CheckoutController::class, 'applyCode'])->name('applyCode');
 });
 
