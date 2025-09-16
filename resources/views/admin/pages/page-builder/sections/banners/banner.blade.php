@@ -687,12 +687,13 @@
                         @for ($i = 0; $i < 4; $i++)
                             @php
                                 $background_image =
-                                    $sectionContent && $sectionContent->carousel_background_images
-                                        ? $sectionContent->carousel_background_images[$i]
+                                    $sectionContent && property_exists($sectionContent, 'carousel_background_images')
+                                        ? $sectionContent->carousel_background_images[$i] ?? null
                                         : null;
+
                                 $alt_text =
-                                    $sectionContent && $sectionContent->carousel_alt_text
-                                        ? $sectionContent->carousel_alt_text[$i]
+                                    $sectionContent && property_exists($sectionContent, 'carousel_alt_text')
+                                        ? $sectionContent->carousel_alt_text[$i] ?? null
                                         : null;
                             @endphp
                             <div class="col-md-3">

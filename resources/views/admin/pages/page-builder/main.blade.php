@@ -125,8 +125,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <button :disabled="selectedItems.length === 0" class="themeBtn mt-4 ms-auto"
-                                    type="submit">Save
+                                <button class="themeBtn mt-4 ms-auto" type="submit">Save
                                     Template</button>
                             </form>
                         </div>

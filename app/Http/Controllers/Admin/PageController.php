@@ -122,17 +122,20 @@ class PageController extends Controller
         $sectionsGroups = collect($categoryOrder)->mapWithKeys(function ($category) use ($sectionsByGroup) {
             return [$category => $sectionsByGroup->get($category, collect())];
         });
-        $selectedSections = $page->sections->map(function ($section) {
-            return [
-                'pivot_id' => $section->pivot->id,
-                'section_id' => $section->id,
-                'name' => $section->name,
-                'section_key' => $section->section_key,
-                'preview_image' => asset($section->preview_image),
-                'template_path' => $section->template_path,
-                'order' => $section->pivot->order,
-            ];
-        })->sortBy('order')
+        $selectedSections = $page
+            ->sections
+            ->map(function ($section) {
+                return [
+                    'pivot_id' => $section->pivot->id,
+                    'section_id' => $section->id,
+                    'name' => $section->name,
+                    'section_key' => $section->section_key,
+                    'preview_image' => asset($section->preview_image),
+                    'template_path' => $section->template_path,
+                    'order' => $section->pivot->order,
+                ];
+            })
+            ->sortBy('order')
             ->values()
             ->toJson();
 
@@ -150,6 +153,13 @@ class PageController extends Controller
         $sectionIds = $request->input('sections.section_id');
         $orders = $request->input('sections.order');
         $ids = $request->input('sections.id', []);
+        if ($sectionIds === null) {
+            DB::table('page_section')
+                ->where('page_id', $pageId)
+                ->delete();
+
+            return redirect()->back()->with('notify_success', 'Layout Saved Successfully!');
+        }
 
         if (count($sectionIds) !== count($orders)) {
             return redirect()->route('admin.pages.index')->with('notify_error', 'Section IDs and order values do not match.');
@@ -259,7 +269,6 @@ class PageController extends Controller
 
     public function handleSectionData(array $newData, ?array $existingData, string $pageSlug, string $sectionKey)
     {
-
         switch ($sectionKey) {
             case 'water_activities_3_box_layout':
                 return $this->handlePromotions($newData, $existingData, $pageSlug, $sectionKey);
@@ -296,7 +305,6 @@ class PageController extends Controller
 
     private function handlePromotions(array $newData, ?array $existingData, string $pageSlug, string $sectionKey)
     {
-
         $updatedActivities = [];
         foreach ($newData['activities'] as $i => $section) {
             $newSection = $section;
@@ -317,7 +325,6 @@ class PageController extends Controller
 
     private function handleBanner(array $newData, ?array $existingData, string $pageSlug, string $sectionKey)
     {
-
         $newData['right_image'] = $this->handleImageField($newData, $existingData, $pageSlug, $sectionKey, 'right_image');
         $newData['background_image'] = $this->handleImageField($newData, $existingData, $pageSlug, $sectionKey, 'background_image');
         $newData['custom_review_logo_image'] = $this->handleImageField($newData, $existingData, $pageSlug, $sectionKey, 'custom_review_logo_image');
