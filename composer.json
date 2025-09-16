@@ -15,6 +15,7 @@
         "laravel/nightwatch": "^1.11",
         "laravel/socialite": "^5.15",
         "laravel/tinker": "^2.9",
+        "paypal/paypal-checkout-sdk": "^1.0",
         "stripe/stripe-php": "^16.4"
     },
     "require-dev": {
