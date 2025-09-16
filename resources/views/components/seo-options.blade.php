@@ -36,28 +36,26 @@
         <div class="form-box__body">
             <div class="row">
                 <div class="col-md-7">
-                    <div class="form-fields">
-                        <label class="title">Allow search engines to show this service in
-                            search
-                            results?
-                            :</label>
-                        <select name="seo[is_seo_index]" class="field"
-                            onchange="toggleElement(this, '0', 'seo_options')">
+                    <div class="form-fields" x-data="{ seoIndex: '{{ old('is_seo_index', $seo->is_seo_index ?? '') }}' }">
+                        <label class="title">Allow search engines to show this service in search results?</label>
+                        <select name="seo[is_seo_index]" class="field" x-model="seoIndex">
                             <option value="" disabled selected>Select</option>
-                            <option {{ old('is_seo_index', $seo->is_seo_index ?? '') == '1' ? 'selected' : '' }}
-                                value="1">Yes
-                            </option>
-                            <option {{ old('is_seo_index', $seo->is_seo_index ?? '') == '0' ? 'selected' : '' }}
-                                value="0">No
-                            </option>
+                            <option value="1" :selected="seoIndex == '1'">Yes</option>
+                            <option value="0" :selected="seoIndex == '0'">No</option>
                         </select>
+
+                        <template x-if="seoIndex == '0'">
+                            <small class="mt-2" style="color: red">
+                                Bots will be blocked from indexing this page (meta: noindex, nofollow).
+                            </small>
+                        </template>
 
                         @error('seo[is_seo_index]')
                             <div class="text-danger">{{ $message }}</div>
                         @enderror
                     </div>
                 </div>
-                <div class="col-12 mt-4 {{ !$seo || $seo->is_seo_index == 0 ? 'd-none' : '' }}" id="seo_options">
+                <div class="col-12 mt-4" id="seo_options">
                     <div class="tabs-wrapper">
                         <ul class="nav nav-tabs" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
@@ -347,15 +345,6 @@
         function updateText(currentInput, ElementId) {
             let textPreview = document.getElementById(ElementId)
             textPreview.textContent = currentInput.value
-        }
-
-        function toggleElement(select, toggleOffValue, elementId) {
-            const element = document.getElementById(elementId);
-            if (select.value === toggleOffValue) {
-                element.classList.add('d-none');
-            } else {
-                element.classList.remove('d-none');
-            }
         }
     </script>
 @endsection
