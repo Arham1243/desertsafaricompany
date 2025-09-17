@@ -90,6 +90,11 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="form-fields">
+                                        <label class="title">Lines to Display Before "Read More" </label>
+                                        <input oninput="this.value = Math.abs(this.value)" type="number" min="0"
+                                            name="content_line_limit" class="field" data-error="content_line_limit">
+                                    </div>
                                 </div>
                             </div>
                             <div class="form-box" x-data="{ enabled: true }">

@@ -46,9 +46,19 @@
                                 <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
                                     alt='{{ $blog->featured_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
                             </div>
-                            @if ($blog->content)
-                                <div class="editor-content">{!! $blog->content !!}</div>
-                            @endif
+                            <div class="my-3">
+                                <div class="tour-content__details " data-show-more>
+                                    <div class="editor-content line-clamp" data-show-more-content
+                                        @if ($blog->content_line_limit > 0) style="-webkit-line-clamp: {{ $blog->content_line_limit }};" @endif>
+                                        {!! $blog->content !!}
+                                    </div>
+                                    @if ($blog->content_line_limit > 0)
+                                        <a href="javascript:void(0)" class="loginBtn mt-1" data-show-more-btn
+                                            more-text="Read more" less-text='Read less'>
+                                            Read more</a>
+                                    @endif
+                                </div>
+                            </div>
                             <div class="separator"></div>
                         </div>
                     </div>
