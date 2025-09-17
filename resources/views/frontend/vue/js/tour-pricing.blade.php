@@ -610,7 +610,7 @@
 
             const formatPrice = (price) => {
                 const currencySymbolHtml = @json(currencySymbol()->toHtml());
-                const numericPrice = Number(price);
+                const numericPrice = Number(String(price).replace(/,/g, ''));
                 const formattedPrice = numericPrice.toLocaleString(undefined, {
                     minimumFractionDigits: 2,
                     maximumFractionDigits: 2
