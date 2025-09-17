@@ -34,79 +34,164 @@
                 </ol>
             </nav>
         </div>
-
-        <div class="container">
-            <div class="tour-content__header section-content">
-                <h1 class="heading heading--lg mb-0">
-                    {{ $blog->title }}
-                </h1>
-            </div>
-        </div>
-
-        <div class="tour-details_banner blogs-banner">
-            <div class=tour-details_img>
-                <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
-                    alt='{{ $blog->featured_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
-            </div>
-        </div>
-    </div>
-
-    <div class="blog-details mt-4 pt-1 mb-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-{{ $is_enabled_blogs_you_may_also_like ? 8 : 12 }}">
-                    <div class="stories-content">
-                        <ul class="stories-content__details">
-                            <li>
-                                <span><i class='bx bxs-calendar'></i></span>
-                                <span>{{ $blog->created_at ? $blog->created_at->format('d-M-Y') : 'Date not available' }}</span>
-                            </li>
-                            <li>
-                                <span><i class='bx bxs-purchase-tag'></i></span>
-                                <span>{{ $blog->category->name ?? 'Uncategorized' }}</span>
-                            </li>
-                        </ul>
-
-                        <div class="stories-content__desc mt-4">
-                            {{ $blog->short_description ?? 'Short description not available' }}</div>
-
-                        @if ($blog->content)
-                            <div class="editor-content">{!! $blog->content !!}</div>
-                        @endif
-                    </div>
-                </div>
-                @if ($is_enabled_blogs_you_may_also_like)
-                    <div class="col-md-4">
-                        <div class="you-may-also-like">
-                            <div class="section-content">
-                                <h2 class="subHeading block-heading">
-                                    You may also like
-                                </h2>
+        <div class="blog-details mt-4 pt-1 mb-5">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h1 class="blog-details__mainHeading">
+                            {{ $blog->title }}
+                        </h1>
+                        <div class="post-content">
+                            <div class="post-content__img mb-4">
+                                <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                    alt='{{ $blog->featured_image_alt_text }}' class='imgFluid lazy' loading='lazy'>
                             </div>
-                            @foreach ($relatedBlogs as $blog)
-                                <div class="Desti-Pract__activities">
-                                    <div class="activities-details">
-                                        <a href="{{ buildBlogDetailUrl($blog) }}" class="activities-img"
-                                            style="    flex: 0.4;">
-                                            <img data-src="{{ asset($blog->featured_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                alt="{{ $blog->feature_image_alt_text }}" class="imgFluid lazy"
-                                                loading="lazy">
-                                        </a>
-                                        <div class="activities-content">
-                                            <p><b>{{ $blog->category->name ?? '' }}</b></p>
-                                            <a class="line-clamp-1"
-                                                href="{{ buildBlogDetailUrl($blog) }}">{{ $blog->title ?? '' }}</a>
-                                            <p>{{ formatDate($blog->created_at) }}</p>
+                            @if ($blog->content)
+                                <div class="editor-content">{!! $blog->content !!}</div>
+                            @endif
+                            <div class="separator"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        @php
+                            $topFeaturedTour = $tours->find($blog->top_featured_tour_id);
+                        @endphp
+                        @if ($topFeaturedTour)
+                            <div class="availability-frame">
+                                <div class="availability-frame__deatils">
+                                    <div class="availability-frame__img">
+                                        <img data-src="{{ asset($topFeaturedTour->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                            alt="{{ $topFeaturedTour->featured_image_alt_text }}" class="imgFluid lazy"
+                                            loading="lazy">
+                                    </div>
+                                    <div class="availability-frame__content w-100">
+                                        <div class="availability-title">
+                                            {{ $topFeaturedTour->title }}
+                                        </div>
+                                        <div class="card-rating">
+                                            <x-star-rating :rating="$topFeaturedTour->average_rating" />
+                                            @if ($topFeaturedTour->reviews->count() > 0)
+                                                <span>{{ $topFeaturedTour->reviews->count() }}
+                                                    Review{{ $topFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
+                                            @else
+                                                <span>No reviews yet</span>
+                                            @endif
+                                        </div>
+
+                                        @if ($topFeaturedTour->tour_lowest_price)
+                                            <div class="priceLabel__no-deal">
+                                                From {!! formatPrice($topFeaturedTour->tour_lowest_price) !!} per person
+                                            </div>
+                                        @endif
+
+                                        <input id="date" type="date" class="booking-assistant-dropdown">
+
+
+                                        <div class="availability-frame__btn">
+                                            <a href="{{ buildTourDetailUrl($topFeaturedTour) }}"
+                                                class="w-100 app-btn themeBtn">Book
+                                                Now</a>
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
+                            </div>
+                        @endif
+
+                        @php
+                            $mayAlsoLike = json_decode($blog->may_also_like, true) ?? [];
+                            $enabled = isset($mayAlsoLike['enabled']) ? (int) $mayAlsoLike['enabled'] : 0;
+                            $type = $mayAlsoLike['type'] ?? 'category_based';
+                            $customIds = $mayAlsoLike['custom_ids'] ?? [];
+                        @endphp
+
+                        @if ($mayAlsoLike && (int) $mayAlsoLike['enabled'] === 1)
+                            @php
+                                if ($type === 'custom') {
+                                    $blogsToShow = $allBlogs->whereIn('id', $customIds);
+                                } elseif ($type === 'latest') {
+                                    $blogsToShow = $allBlogs->sortByDesc('created_at');
+                                } else {
+                                    $blogsToShow = $allBlogs->where('category_id', $blog->category_id);
+                                }
+                            @endphp
+                            <div class="you-may-also-like mt-4">
+                                <div class="section-content">
+                                    <h2 class="subHeading block-heading">
+                                        You may also like
+                                    </h2>
+                                </div>
+                                @foreach ($blogsToShow as $itemBlog)
+                                    <div class="blogDet-card blogDet-card-like mt-4 mt-4">
+                                        <a href="{{ buildBlogDetailUrl($itemBlog) }}" class="blogDet-card__img">
+                                            <img data-src="{{ asset($itemBlog->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                alt="{{ $itemBlog->feature_image_alt_text }}" class="imgFluid lazy"
+                                                loading="lazy">
+                                        </a>
+
+                                        <div class="blogDet-card__content">
+                                            <a href="{{ buildBlogDetailUrl($itemBlog) }}"
+                                                class="blogDet-card__title line-clamp-4">
+                                                {{ $itemBlog->title }}
+                                            </a>
+                                            <div class="blogDet-card__pra line-clamp-7">
+                                                {{ $itemBlog->description }}
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
                     </div>
-                @endif
+                </div>
             </div>
         </div>
     </div>
+
+    @php
+        $bottomFeaturedTour = $tours->find($blog->bottom_featured_tour_id);
+    @endphp
+
+    @if ($bottomFeaturedTour)
+        <div class="availability-frame my-5 pt-3 pb-4">
+            <div class="row justify-content-center align-items-center">
+                <div class="col-md-3">
+                    <div class="availability-frame__img availability-frame__img-ver">
+                        <img data-src="{{ asset($bottomFeaturedTour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                            alt="{{ $bottomFeaturedTour->featured_image_alt_text }}" class="imgFluid lazy" loading="lazy">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="availability-frame__content w-100">
+                        <div class="availability-title">
+                            {{ $bottomFeaturedTour->title }}
+                        </div>
+
+                        <div class="card-rating">
+                            <x-star-rating :rating="$bottomFeaturedTour->average_rating" />
+                            @if ($bottomFeaturedTour->reviews->count() > 0)
+                                <span>{{ $bottomFeaturedTour->reviews->count() }}
+                                    Review{{ $bottomFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
+                            @else
+                                <span>No reviews yet</span>
+                            @endif
+                        </div>
+                        @if ($bottomFeaturedTour->tour_lowest_price)
+                            <div class="priceLabel__no-deal">
+                                From {!! formatPrice($bottomFeaturedTour->tour_lowest_price) !!} per person
+                            </div>
+                        @endif
+                        <input id="date" type="date" class="booking-assistant-dropdown">
+                        <div class="availability-frame__btn">
+                            <a href="{{ buildTourDetailUrl($bottomFeaturedTour) }}" class="w-100 app-btn themeBtn">Book
+                                Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
 @endsection
 @push('css')
     <style>

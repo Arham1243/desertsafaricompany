@@ -101,14 +101,12 @@ class BlogController extends Controller
             ->whereHas('city', fn ($q) => $q->where('slug', $city)->whereHas('country', fn ($q2) => $q2->where('iso_alpha2', $country)))
             ->firstOrFail();
 
-        $relatedBlogs = $blog->category
-            ? $blog->category->blogs()->where('status', 'publish')->where('id', '!=', $blog->id)->take(5)->get()
-            : collect();
+        $allBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
 
         $tours = Tour::where('status', 'publish')->get();
 
         return view('frontend.blogs.details')
             ->with('title', ucfirst($blog->title))
-            ->with(compact('blog', 'relatedBlogs', 'tours'));
+            ->with(compact('blog', 'allBlogs', 'tours'));
     }
 }

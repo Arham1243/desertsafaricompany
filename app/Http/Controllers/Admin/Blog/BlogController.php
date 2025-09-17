@@ -36,12 +36,13 @@ class BlogController extends Controller
     public function create()
     {
         $tours = Tour::where('status', 'publish')->get();
+        $dropdownBlogs = Blog::where('status', 'publish')->get();
         $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
         $cities = City::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
-        $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags');
+        $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags', 'dropdownBlogs');
 
         return view('admin.blogs.blogs-management.add')->with('title', 'Add New Blog')->with($data);
     }
@@ -61,11 +62,15 @@ class BlogController extends Controller
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
+            'top_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'bottom_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'may_also_like' => 'nullable',
         ]);
 
         $slug = $this->createSlug($validatedData['title'], 'blogs');
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
+        $mayAlsoLikeIds = json_encode($validatedData['may_also_like'] ?? null);
 
         $featuredImage = null;
         if ($request->hasFile('featured_image')) {
@@ -76,6 +81,7 @@ class BlogController extends Controller
             'slug' => $slug,
             'featured_tours_ids' => $featuredToursIds,
             'featured_image' => $featuredImage,
+            'may_also_like' => $mayAlsoLikeIds,
         ]);
 
         $blog = Blog::create($data);
@@ -122,8 +128,9 @@ class BlogController extends Controller
         $cities = City::where('status', 'publish')->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
+        $dropdownBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
         $seo = $blog->seo()->first();
-        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities');
+        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities', 'dropdownBlogs');
 
         return view('admin.blogs.blogs-management.edit')->with('title', ucfirst(strtolower($blog->title)))->with($data);
     }
@@ -154,12 +161,16 @@ class BlogController extends Controller
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
+            'top_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'bottom_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'may_also_like' => 'nullable',
         ]);
 
         $slugText = $validatedData['slug'] != '' ? $validatedData['slug'] : $validatedData['title'];
         $slug = $this->createSlug($slugText, 'blogs', $blog->slug);
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
+        $mayAlsoLikeIds = json_encode($validatedData['may_also_like'] ?? null);
 
         $featuredImage = $blog->featured_image;
         if ($request->hasFile('featured_image')) {
@@ -170,6 +181,7 @@ class BlogController extends Controller
             'slug' => $slug,
             'featured_tours_ids' => $featuredToursIds,
             'featured_image' => $featuredImage,
+            'may_also_like' => $mayAlsoLikeIds,
         ]);
 
         // Update the blog entry

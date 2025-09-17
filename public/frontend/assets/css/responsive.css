@@ -761,4 +761,7 @@
     .tour-details_banner.blogs-banner {
         padding: 1rem 0 0;
     }
+    .availability-frame__img-ver {
+        height: 260px;
+    }
 }

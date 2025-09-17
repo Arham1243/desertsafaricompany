@@ -48,6 +48,39 @@
                                         selectedCityId="{{ old('city_id', $blog->city_id) }}"
                                         countryColClass="col-md-6 mb-4 pe-0" cityColClass="col-md-6 mb-4"
                                         countryName="country_id" cityName="city_id" />
+
+                                    <div class="row mb-4">
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <label class="title">Select Top Featured Tour:</label>
+                                                <select name="top_featured_tour_id" class="select2-select">
+                                                    <option value="" selected>Select</option>
+                                                    @foreach ($tours as $topTour)
+                                                        <option value="{{ $topTour->id }}"
+                                                            {{ $topTour->id == old('top_featured_tour_id', $blog->top_featured_tour_id) ? 'selected' : '' }}>
+                                                            {{ $topTour->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <label class="title">Select Bottom Featured Tour:</label>
+                                                <select name="bottom_featured_tour_id" class="select2-select">
+                                                    <option value="" selected>Select</option>
+                                                    @foreach ($tours as $bottomTour)
+                                                        <option value="{{ $bottomTour->id }}"
+                                                            {{ $bottomTour->id == old('bottom_featured_tour_id', $blog->bottom_featured_tour_id) ? 'selected' : '' }}>
+                                                            {{ $bottomTour->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-fields">
                                         <label class="title d-flex align-items-center gap-2 lh-1">
                                             Short Description Content
@@ -72,6 +105,69 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @php
+                                $mayAlsoLike = json_decode($blog->may_also_like, true) ?? [];
+                                $enabled = isset($mayAlsoLike['enabled']) ? (int) $mayAlsoLike['enabled'] : 1;
+                            @endphp
+                            <div class="form-box" x-data="{ enabled: {{ $enabled === 1 ? 'true' : 'false' }} }">
+                                <div class="form-box__header">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="title">You may also like</div>
+                                        <div class="form-check form-switch">
+                                            <input type="hidden" name="may_also_like[enabled]" :value="enabled ? 1 : 0">
+                                            <input class="form-check-input" type="checkbox" x-model="enabled"
+                                                id="may_also_like_enabled">
+                                            <label class="form-check-label" for="may_also_like_enabled"
+                                                x-text="enabled ? 'Enabled' : 'Disabled'"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-box__body" x-show="enabled" x-transition>
+                                    <div class="form-fields">
+                                        <div x-data="{ type: '{{ $mayAlsoLike['type'] ?? 'category_based' }}' }">
+                                            <div class="d-flex align-items-center gap-5 px-2">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        id="may_also_like_category" x-model="type"
+                                                        name="may_also_like[type]" value="category_based">
+                                                    <label class="form-check-label" for="may_also_like_category">Category
+                                                        Based</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        id="may_also_like_latest" x-model="type"
+                                                        name="may_also_like[type]" value="latest">
+                                                    <label class="form-check-label"
+                                                        for="may_also_like_latest">Latest</label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio"
+                                                        id="may_also_like_custom" x-model="type"
+                                                        name="may_also_like[type]" value="custom">
+                                                    <label class="form-check-label"
+                                                        for="may_also_like_custom">Custom</label>
+                                                </div>
+                                            </div>
+
+                                            <div x-show="type === 'custom'" class="mt-3" x-transition>
+                                                <label class="title">Select Blogs:</label>
+                                                <select name="may_also_like[custom_ids][]" class="select2-select"
+                                                    multiple>
+                                                    @foreach ($dropdownBlogs as $dropdownBlog)
+                                                        <option value="{{ $dropdownBlog->id }}"
+                                                            {{ in_array($dropdownBlog->id, $mayAlsoLike['custom_ids'] ?? []) ? 'selected' : '' }}>
+                                                            {{ $dropdownBlog->title }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <x-seo-options :seo="$seo ?? null" :resource="buildBlogDetailUrl($blog, true, false)" :slug="''" />
                         </div>
                     </div>

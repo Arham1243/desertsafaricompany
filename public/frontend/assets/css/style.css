@@ -3866,7 +3866,7 @@ ul.header-listGroup form {
 /* blog-details-page */
 .blog-details__mainHeading {
     font-size: 38px;
-    font-weight: 600;
+    font-weight: 700;
     color: #243064;
 }
 
@@ -3916,7 +3916,7 @@ ul.header-listGroup form {
 .blogDet-card__img img {
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .blogDet-card__img {
@@ -5064,9 +5064,8 @@ body.fancybox-active.compensate-for-scrollbar {
 }
 
 /* availability-frame */
-
 .availability-frame {
-    padding: 2rem 0;
+    padding-inline: 1rem;
 }
 
 .availability-frame__img img {
@@ -5082,16 +5081,15 @@ body.fancybox-active.compensate-for-scrollbar {
 
 .booking-assistant-dropdown {
     margin: 3px 0;
-    /* display: flex; */
     align-items: center;
     background-color: #fff;
     border: 1px solid #ccc;
     border-radius: 5px;
-    padding: 10px 1px 10px 9px;
+    padding: 10px 20px 10px 10px;
     width: 100%;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    gap: 28px;
-    font-size: 16px;
+    font-size: 14px;
+    margin: 0.75rem 0;
 }
 
 button.booking-assistant__btn {
@@ -7985,3 +7983,17 @@ ul.show-in-desktop {
 }
 
 /* filter selects */
+.blogDet-card-like {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1px;
+}
+.blogDet-card-like .blogDet-card__img {
+    width: 715px;
+    height: 100%;
+}
+.blogDet-card-like .blogDet-card__content {
+    width: 100%;
+    padding: 1rem;
+}
