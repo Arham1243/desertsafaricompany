@@ -181,7 +181,7 @@
                                     <div class="form-fields">
                                         <label class="title">Categories <span class="text-danger">*</span> :</label>
                                         <select name="category_id" class="select2-select" data-error="Category"
-                                            placeholder="Select Category">
+                                            placeholder="Select Category" data-required>
                                             <option value="" selected disabled>Select</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"

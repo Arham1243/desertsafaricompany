@@ -204,7 +204,8 @@
                                 <div class="form-box__body">
                                     <div class="form-fields">
                                         <label class="title">Categories <span class="text-danger">*</span> :</label>
-                                        <select name="category_id" class="select2-select" data-error="Category">
+                                        <select name="category_id" class="select2-select" data-error="Category"
+                                            data-required>
                                             <option value="" selected disabled>Select</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}"
