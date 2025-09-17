@@ -7997,3 +7997,6 @@ ul.show-in-desktop {
     width: 100%;
     padding: 1rem;
 }
+.blue-heading {
+    color: var(--color-primary);
+}
