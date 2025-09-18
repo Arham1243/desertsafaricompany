@@ -66,6 +66,45 @@
                                         </div>
                                     </div>
 
+                                    <div class="row mb-4">
+                                        <div class="col-md-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Select Author:</label>
+                                                <select name="json_content[author_id]" class="select2-select">
+                                                    <option value="">Select</option>
+                                                    @foreach ($authors as $user)
+                                                        <option value="{{ $user->id }}">
+                                                            {{ $user->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <label class="title">Select Publish Date
+                                                    :</label>
+                                                <input readonly type="text" class="field date-picker"
+                                                    placeholder="Select" name="json_content[publish_date]"
+                                                    autocomplete="off">
+                                                @error('json_content[publish_date]')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <label class="title gap-2">Reading Time <span class="text-lowercase">(e.g.
+                                                        16 min read)</span> :</label>
+                                                <input type="text" name="json_content[reading_time]" class="field"
+                                                    value="{{ old('reading_time') }}" data-error="Reading Time">
+                                                @error('reading_time')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+
                                     <div class="form-fields">
                                         <label class="title d-flex align-items-center gap-2 lh-1">
                                             Short Description Content
@@ -266,3 +305,10 @@
         </div>
     </div>
 @endsection
+@push('css')
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+@endpush
+@push('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+@endpush

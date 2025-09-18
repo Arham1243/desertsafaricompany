@@ -8,6 +8,7 @@ use App\Models\BlogCategory;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Tour;
+use App\Models\TourAuthor;
 use Stevebauman\Location\Facades\Location;
 
 class BlogController extends Controller
@@ -101,12 +102,13 @@ class BlogController extends Controller
             ->whereHas('city', fn ($q) => $q->where('slug', $city)->whereHas('country', fn ($q2) => $q2->where('iso_alpha2', $country)))
             ->firstOrFail();
 
+        $authors = TourAuthor::where('status', 'active')->get();
         $allBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
 
         $tours = Tour::where('status', 'publish')->get();
 
         return view('frontend.blogs.details')
             ->with('title', ucfirst($blog->title))
-            ->with(compact('blog', 'allBlogs', 'tours'));
+            ->with(compact('blog', 'allBlogs', 'tours', 'authors'));
     }
 }

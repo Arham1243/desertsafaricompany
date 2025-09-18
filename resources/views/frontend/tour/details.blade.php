@@ -2,11 +2,9 @@
 @section('content')
     @php
         $isFavorited = Auth::check() ? Auth::user()->favoriteTours->contains($tour->id) : null;
-        $whatsappNumberDialCode = trim($settings->get('whatsapp_number_dial_code'));
-        $whatsappNumberRaw = trim($settings->get('whatsapp_number'));
-        $whatsappNumber = ltrim(preg_replace('/\D/', '', $whatsappNumberRaw), '0');
-        $fullWhatsappNumber = $whatsappNumberDialCode . $whatsappNumber;
-        $text = rawurlencode("Hi, I'm interested in this tour:\n{$tour->title}\n" . url()->current());
+        $entityTitle = $tour->title;
+        $shareUrl = urlencode(url()->current());
+        $shareText = urlencode($entityTitle . ' - ' . url()->current());
     @endphp
     <div class="gt-eesti">
         <div class="share-popup-wrapper" data-send-popup>
@@ -20,57 +18,51 @@
                 <div class="share-popup__body">
                     <ul class="platforms">
                         <li class="platform">
-                            <a href="https://wa.me/{{ $fullWhatsappNumber }}?text={{ $text }}" target="_blank">
+                            <a href="https://wa.me/?text={{ $shareText }}" target="_blank">
                                 <div class="icon" style="background: #27D469;">
                                     <i class='bx bxl-whatsapp'></i>
                                 </div>
                                 <div class="title">WhatsApp</div>
                             </a>
                         </li>
-                        <li class="platform">
-                            @php
-                                $instagramUsername = $settings->get('instagram_username');
-                            @endphp
-                            <a href="https://instagram.com/{{ $instagramUsername }}" target="_blank">
-                                <div class="icon"
-                                    style="background: #d6249f; background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%);  ">
-                                    <i class="bx bxl-instagram"></i>
-                                </div>
-                                <div class="title">Instagram</div>
-                            </a>
-                        <li class="platform">
-                            @php
-                                $fbPageIdOrUsername = $settings->get('facebook_username');
-                            @endphp
 
-                            <a href="https://m.me/{{ $fbPageIdOrUsername }}" target="_blank">
+                        <li class="platform">
+                            <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}&quote={{ urlencode($entityTitle) }}"
+                                target="_blank">
                                 <div class="icon" style="background: #3D5A98;">
                                     <i class='bx bxl-facebook'></i>
                                 </div>
                                 <div class="title">Facebook</div>
                             </a>
                         </li>
+
                         <li class="platform">
-                            <a href="https://twitter.com/intent/tweet?text={{ $tour->title }}&url={{ url()->current() }}"
+                            <a href="https://twitter.com/intent/tweet?text={{ urlencode($entityTitle) }}&url={{ $shareUrl }}"
                                 target="_blank">
                                 <div class="icon" style="background: #000;">
-                                    <img src="https://imagecme.com/public/frontend/assets/images/x.png" alt="">
+                                    <img src="https://imagecme.com/public/frontend/assets/images/x.png" alt="X">
                                 </div>
                                 <div class="title">X</div>
                             </a>
                         </li>
+
+                        <li class="platform">
+                            <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ $shareUrl }}&title={{ urlencode($entityTitle) }}"
+                                target="_blank">
+                                <div class="icon" style="background: #0A66C2;">
+                                    <i class='bx bxl-linkedin'></i>
+                                </div>
+                                <div class="title">LinkedIn</div>
+                            </a>
+                        </li>
+
                         <li class="platform">
                             @php
                                 $companyEmail = $settings->get('company_email');
-                                $subject = rawurlencode("Inquiry: {$tour->title}");
-                                $body = rawurlencode(
-                                    "Hi,\nI'm interested in the following tour:\n\nTitle: {$tour->title}\nLink: " .
-                                        url()->current(),
-                                );
+                                $subject = rawurlencode("Check this out: {$entityTitle}");
+                                $body = rawurlencode("Hey,\nI thought you’d like this:\n\n{$entityTitle}\n{$shareUrl}");
                             @endphp
-
-                            <a href="mailto:{{ $companyEmail }}?subject={{ $subject }}&body={{ $body }}"
-                                target="_blank">
+                            <a href="mailto:?subject={{ $subject }}&body={{ $body }}">
                                 <div class="icon" style="background: grey;">
                                     <i class='bx bxs-envelope'></i>
                                 </div>

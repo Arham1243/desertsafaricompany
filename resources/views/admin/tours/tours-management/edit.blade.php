@@ -2675,7 +2675,7 @@
                                                         <div class="form-fields">
                                                             <label class="title">Start Date :</label>
                                                             <input readonly type="text" class="field date-picker"
-                                                                placeholder="Select a date"
+                                                                placeholder="Select"
                                                                 name="tour[availability][start_date]" autocomplete="off"
                                                                 value="{{ optional($tour->start_date)->format('Y-m-d') }}">
                                                             @error('tour[availability][start_date]')
@@ -2687,8 +2687,8 @@
                                                         <div class="form-fields">
                                                             <label class="title">End Date :</label>
                                                             <input readonly type="text" class="field date-picker"
-                                                                placeholder="Select a date"
-                                                                name="tour[availability][end_date]" autocomplete="off"
+                                                                placeholder="Select" name="tour[availability][end_date]"
+                                                                autocomplete="off"
                                                                 value="{{ optional($tour->end_date)->format('Y-m-d') }}">
                                                             @error('tour[availability][end_date]')
                                                                 <div class="text-danger">{{ $message }}</div>

@@ -10,6 +10,7 @@ use App\Models\BlogTag;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Tour;
+use App\Models\TourAuthor;
 use App\Models\User;
 use App\Traits\Sluggable;
 use App\Traits\UploadImageTrait;
@@ -37,12 +38,13 @@ class BlogController extends Controller
     {
         $tours = Tour::where('status', 'publish')->get();
         $dropdownBlogs = Blog::where('status', 'publish')->get();
+        $authors = TourAuthor::where('status', 'active')->get();
         $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
         $cities = City::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
-        $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags', 'dropdownBlogs');
+        $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags', 'dropdownBlogs', 'authors');
 
         return view('admin.blogs.blogs-management.add')->with('title', 'Add New Blog')->with($data);
     }
@@ -126,13 +128,14 @@ class BlogController extends Controller
     {
         $tours = Tour::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
+        $authors = TourAuthor::where('status', 'active')->get();
         $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
         $cities = City::where('status', 'publish')->get();
         $tags = BlogTag::where('is_active', 1)->get();
         $users = User::where('is_active', 1)->get();
         $dropdownBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
         $seo = $blog->seo()->first();
-        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities', 'dropdownBlogs');
+        $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities', 'dropdownBlogs', 'authors');
 
         return view('admin.blogs.blogs-management.edit')->with('title', ucfirst(strtolower($blog->title)))->with($data);
     }

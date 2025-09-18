@@ -42,6 +42,36 @@
                         <h1 class="blog-details__mainHeading">
                             {{ $blog->title }}
                         </h1>
+
+                        <div class="author-section-wrapper">
+                            @php
+                                $authorId = $jsonContent['author_id'];
+                                $author = $authors->where('id', $authorId)->first();
+                            @endphp
+
+                            <div class="author-section">
+                                <div class="author-avatar">
+                                    <img data-src="{{ asset($author->profile_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                        alt="{{ $author->profile_image_alt_text }}" class="imgFluid lazy" loading="lazy">
+                                </div>
+
+                                <div class="author-info">
+                                    <div class="author-name">{{ $author->name ?? '' }}</div>
+                                    <div class="post-meta"><span>{{ formatDate($jsonContent['publish_date']) }}</span>
+                                        <span>
+                                            ·</span> <span>{{ $jsonContent['reading_time'] }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="header-listGroup">
+                                <li>
+                                    <a href="javascript:void(0)" data-send-button="">
+                                        <span class="header-listGroup faq-icon"> <i class="bx bx-share-alt"></i></span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
                         <div class="post-content">
                             <div class="post-content__img mb-4">
                                 <img data-src="{{ asset($blog->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
@@ -62,6 +92,21 @@
                             </div>
                             <div class="separator"></div>
                         </div>
+
+                        <div class="helpful-section">
+                            <p>Was this page helpful?</p>
+                            <div class="feedback-buttons">
+                                <div class="feedback-button" id="like-button">
+                                    <i class='bx bx-like'></i>
+                                    <i class='bx bxs-like'></i>
+                                </div>
+                                <div class="feedback-button" id="dislike-button">
+                                    <i class='bx bx-dislike'></i>
+                                    <i class='bx bxs-dislike'></i>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="col-md-4">
@@ -131,7 +176,7 @@
                                     $blogsToShow = $allBlogs->where('category_id', $blog->category_id);
                                 }
                             @endphp
-                            <div class="you-may-also-like mt-4">
+                            <div class="you-may-also-like mt-5">
                                 <div class="section-content">
                                     <h2 class="subHeading block-heading">
                                         You may also like
@@ -168,6 +213,91 @@
                             </div>
                         @endif
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @php
+        $whatsappNumberDialCode = trim($settings->get('whatsapp_number_dial_code'));
+        $whatsappNumberRaw = trim($settings->get('whatsapp_number'));
+        $whatsappNumber = ltrim(preg_replace('/\D/', '', $whatsappNumberRaw), '0');
+        $fullWhatsappNumber = $whatsappNumberDialCode . $whatsappNumber;
+        $text = rawurlencode("Hi, I'm interested in this blog:\n{$blog->title}\n" . url()->current());
+    @endphp
+    @php
+        $entityTitle = $blog->title;
+        $shareUrl = urlencode(url()->current());
+        $shareText = urlencode($entityTitle . ' - ' . url()->current());
+    @endphp
+
+    <div class="share-popup-wrapper" data-send-popup>
+        <div class="share-popup light">
+            <div class="share-popup__header">
+                <div class="title">Share</div>
+                <div class="popup-close-icon close-btn">
+                    <i class='bx bx-x'></i>
+                </div>
+            </div>
+            <div class="share-popup__body">
+                <ul class="platforms">
+                    <li class="platform">
+                        <a href="https://wa.me/?text={{ $shareText }}" target="_blank">
+                            <div class="icon" style="background: #27D469;">
+                                <i class='bx bxl-whatsapp'></i>
+                            </div>
+                            <div class="title">WhatsApp</div>
+                        </a>
+                    </li>
+
+                    <li class="platform">
+                        <a href="https://www.facebook.com/sharer/sharer.php?u={{ $shareUrl }}&quote={{ urlencode($entityTitle) }}"
+                            target="_blank">
+                            <div class="icon" style="background: #3D5A98;">
+                                <i class='bx bxl-facebook'></i>
+                            </div>
+                            <div class="title">Facebook</div>
+                        </a>
+                    </li>
+
+                    <li class="platform">
+                        <a href="https://twitter.com/intent/tweet?text={{ urlencode($entityTitle) }}&url={{ $shareUrl }}"
+                            target="_blank">
+                            <div class="icon" style="background: #000;">
+                                <img src="https://imagecme.com/public/frontend/assets/images/x.png" alt="X">
+                            </div>
+                            <div class="title">X</div>
+                        </a>
+                    </li>
+
+                    <li class="platform">
+                        <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ $shareUrl }}&title={{ urlencode($entityTitle) }}"
+                            target="_blank">
+                            <div class="icon" style="background: #0A66C2;">
+                                <i class='bx bxl-linkedin'></i>
+                            </div>
+                            <div class="title">LinkedIn</div>
+                        </a>
+                    </li>
+
+                    <li class="platform">
+                        @php
+                            $companyEmail = $settings->get('company_email');
+                            $subject = rawurlencode("Check this out: {$entityTitle}");
+                            $body = rawurlencode("Hey,\nI thought you’d like this:\n\n{$entityTitle}\n{$shareUrl}");
+                        @endphp
+                        <a href="mailto:?subject={{ $subject }}&body={{ $body }}">
+                            <div class="icon" style="background: grey;">
+                                <i class='bx bxs-envelope'></i>
+                            </div>
+                            <div class="title">Email</div>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="copy-link">
+                    <input type="text" readonly class="copy-link__input" value="{{ url()->current() }}">
+                    <button type="button" class="copy-link__btn primary-btn" onclick="copyLink()">Copy</button>
                 </div>
             </div>
         </div>
@@ -230,4 +360,65 @@
             font-weight: 600;
         }
     </style>
+@endpush
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const likeButton = document.getElementById('like-button');
+            const dislikeButton = document.getElementById('dislike-button');
+
+            likeButton.addEventListener('click', () => {
+                // If like is already active, deactivate it
+                if (likeButton.classList.contains('active')) {
+                    likeButton.classList.remove('active');
+                } else {
+                    // Activate like, deactivate dislike
+                    likeButton.classList.add('active');
+                    dislikeButton.classList.remove('active');
+                }
+                // Here you would typically send data to a server
+                console.log('Like clicked. Active:', likeButton.classList.contains('active'));
+            });
+
+            dislikeButton.addEventListener('click', () => {
+                // If dislike is already active, deactivate it
+                if (dislikeButton.classList.contains('active')) {
+                    dislikeButton.classList.remove('active');
+                } else {
+                    // Activate dislike, deactivate like
+                    dislikeButton.classList.add('active');
+                    likeButton.classList.remove('active');
+                }
+                // Here you would typically send data to a server
+                console.log('Dislike clicked. Active:', dislikeButton.classList.contains('active'));
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const sendPopupBtn = document.querySelectorAll('[data-send-button]');
+            const popupWrapper = document.querySelector('[data-send-popup]');
+            const copyLinkInput = popupWrapper.querySelector('.copy-link__input');
+            const closeIcon = popupWrapper.querySelector('.close-btn');
+
+            sendPopupBtn.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    popupWrapper.classList.add('open');
+                });
+            });
+
+            closeIcon.addEventListener('click', function(e) {
+                popupWrapper.classList.remove('open');
+            });
+        });
+        const copyLink = () => {
+            var copyText = document.querySelector('.copy-link__input');
+
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+
+            document.execCommand('copy');
+
+            showMessage('Link copied to clipboard!', 'success', 'top-right');
+        }
+    </script>
 @endpush

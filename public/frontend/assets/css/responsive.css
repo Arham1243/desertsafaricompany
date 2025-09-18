@@ -764,4 +764,13 @@
     .availability-frame__img-ver {
         height: 260px;
     }
+    .author-section {
+        gap: 0.7rem;
+    }
+    .author-avatar {
+        width: 48px;
+    }
+    .author-info {
+        font-size: 14px;
+    }
 }
