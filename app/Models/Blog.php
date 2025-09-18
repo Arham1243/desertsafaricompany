@@ -42,6 +42,21 @@ class Blog extends Model
         return $this->hasMany(BlogMedia::class, 'blog_id');
     }
 
+    public function reactions()
+    {
+        return $this->hasMany(BlogReaction::class);
+    }
+
+    public function likes()
+    {
+        return $this->reactions()->where('reaction', 'like');
+    }
+
+    public function dislikes()
+    {
+        return $this->reactions()->where('reaction', 'dislike');
+    }
+
     public function seo()
     {
         return $this->morphOne(Seo::class, 'seoable');

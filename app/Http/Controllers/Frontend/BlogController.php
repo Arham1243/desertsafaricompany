@@ -5,10 +5,12 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\BlogCategory;
+use App\Models\BlogReaction;
 use App\Models\City;
 use App\Models\Country;
 use App\Models\Tour;
 use App\Models\TourAuthor;
+use Illuminate\Http\Request;
 use Stevebauman\Location\Facades\Location;
 
 class BlogController extends Controller
@@ -101,6 +103,11 @@ class BlogController extends Controller
         $blog = Blog::where('slug', $slug)
             ->whereHas('city', fn ($q) => $q->where('slug', $city)->whereHas('country', fn ($q2) => $q2->where('iso_alpha2', $country)))
             ->firstOrFail();
+        $userIp = request()->ip();
+
+        $reaction = BlogReaction::where('blog_id', $blog->id)
+            ->where('ip_address', $userIp)
+            ->first()?->reaction;
 
         $authors = TourAuthor::where('status', 'active')->get();
         $allBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
@@ -109,6 +116,22 @@ class BlogController extends Controller
 
         return view('frontend.blogs.details')
             ->with('title', ucfirst($blog->title))
-            ->with(compact('blog', 'allBlogs', 'tours', 'authors'));
+            ->with(compact('blog', 'allBlogs', 'tours', 'authors', 'reaction'));
+    }
+
+    public function saveReaction(Request $request, Blog $blog)
+    {
+        $request->validate([
+            'reaction' => 'required|in:like,dislike',
+        ]);
+
+        $ip = $request->ip();
+
+        BlogReaction::updateOrCreate(
+            ['blog_id' => $blog->id, 'ip_address' => $ip],
+            ['reaction' => $request->reaction]
+        );
+
+        return response()->json(['success' => true]);
     }
 }

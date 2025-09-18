@@ -26,6 +26,7 @@ Route::name('frontend.')->group(function () {
     Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])
         ->name('blogs.details');
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
+    Route::post('/blogs/{blog}/reaction', [BlogController::class, 'saveReaction'])->name('blogs.reaction');
 });
 
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');

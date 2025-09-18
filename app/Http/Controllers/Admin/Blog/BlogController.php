@@ -28,7 +28,10 @@ class BlogController extends Controller
      */
     public function index()
     {
-        $blogs = Blog::latest()->get();
+        $blogs = Blog::withCount([
+            'likes as likes_count',
+            'dislikes as dislikes_count',
+        ])->latest()->get();
         $data = compact('blogs');
 
         return view('admin.blogs.blogs-management.list')->with('title', 'All Blogs')->with($data);

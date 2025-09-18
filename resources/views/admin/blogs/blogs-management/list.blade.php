@@ -39,6 +39,8 @@
                                             </div>
                                         </th>
                                         <th>Name</th>
+                                        <th>Likes</th>
+                                        <th>Dislikes</th>
                                         <th>Category</th>
                                         <th>Date</th>
                                         <th>Status</th>
@@ -57,6 +59,8 @@
                                                 <a href="{{ route('admin.blogs.edit', $blog->id) }}"
                                                     class="link">{{ $blog->title }}</a>
                                             </td>
+                                            <td>{{ $blog->likes_count }}</td>
+                                            <td>{{ $blog->dislikes_count }}</td>
                                             <td>{{ $blog->category->name ?? 'N/A' }}</td>
                                             <td>
                                                 {{ formatDateTime($blog->created_at) }}

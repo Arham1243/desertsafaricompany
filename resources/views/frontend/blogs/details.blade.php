@@ -45,21 +45,23 @@
 
                         <div class="author-section-wrapper">
                             @php
-                                $authorId = $jsonContent['author_id'];
+                                $authorId = $jsonContent['author_id'] ?? null;
                                 $author = $authors->where('id', $authorId)->first();
                             @endphp
 
                             <div class="author-section">
                                 <div class="author-avatar">
                                     <img data-src="{{ asset($author->profile_image ?? 'frontend/assets/images/placeholder.png') }}"
-                                        alt="{{ $author->profile_image_alt_text }}" class="imgFluid lazy" loading="lazy">
+                                        alt="{{ $author->profile_image_alt_text ?? '' }}" class="imgFluid lazy"
+                                        loading="lazy">
                                 </div>
 
                                 <div class="author-info">
                                     <div class="author-name">{{ $author->name ?? '' }}</div>
-                                    <div class="post-meta"><span>{{ formatDate($jsonContent['publish_date']) }}</span>
+                                    <div class="post-meta">
+                                        <span>{{ formatDate($jsonContent['publish_date'] ?? '') }}</span>
                                         <span>
-                                            ·</span> <span>{{ $jsonContent['reading_time'] }}</span>
+                                            ·</span> <span>{{ $jsonContent['reading_time'] ?? '' }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -92,20 +94,21 @@
                             </div>
                             <div class="separator"></div>
                         </div>
-
                         <div class="helpful-section">
                             <p>Was this page helpful?</p>
                             <div class="feedback-buttons">
-                                <div class="feedback-button" id="like-button">
+                                <div class="feedback-button {{ $reaction === 'like' ? 'active' : '' }}" id="like-button">
                                     <i class='bx bx-like'></i>
                                     <i class='bx bxs-like'></i>
                                 </div>
-                                <div class="feedback-button" id="dislike-button">
+                                <div class="feedback-button {{ $reaction === 'dislike' ? 'active' : '' }}"
+                                    id="dislike-button">
                                     <i class='bx bx-dislike'></i>
                                     <i class='bx bxs-dislike'></i>
                                 </div>
                             </div>
                         </div>
+
 
                     </div>
 
@@ -366,34 +369,36 @@
         document.addEventListener('DOMContentLoaded', () => {
             const likeButton = document.getElementById('like-button');
             const dislikeButton = document.getElementById('dislike-button');
+            const blogId = "{{ $blog->id }}";
+
+            function sendReaction(reaction) {
+                fetch(`/blogs/${blogId}/reaction`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            reaction
+                        })
+                    }).then(res => res.json())
+                    .then(data => console.log(data));
+            }
 
             likeButton.addEventListener('click', () => {
-                // If like is already active, deactivate it
-                if (likeButton.classList.contains('active')) {
-                    likeButton.classList.remove('active');
-                } else {
-                    // Activate like, deactivate dislike
-                    likeButton.classList.add('active');
-                    dislikeButton.classList.remove('active');
-                }
-                // Here you would typically send data to a server
-                console.log('Like clicked. Active:', likeButton.classList.contains('active'));
+                const active = likeButton.classList.contains('active');
+                likeButton.classList.toggle('active', !active);
+                dislikeButton.classList.remove('active');
+                sendReaction(!active ? 'like' : null);
             });
 
             dislikeButton.addEventListener('click', () => {
-                // If dislike is already active, deactivate it
-                if (dislikeButton.classList.contains('active')) {
-                    dislikeButton.classList.remove('active');
-                } else {
-                    // Activate dislike, deactivate like
-                    dislikeButton.classList.add('active');
-                    likeButton.classList.remove('active');
-                }
-                // Here you would typically send data to a server
-                console.log('Dislike clicked. Active:', dislikeButton.classList.contains('active'));
+                const active = dislikeButton.classList.contains('active');
+                dislikeButton.classList.toggle('active', !active);
+                likeButton.classList.remove('active');
+                sendReaction(!active ? 'dislike' : null);
             });
         });
-
         document.addEventListener('DOMContentLoaded', function() {
             const sendPopupBtn = document.querySelectorAll('[data-send-button]');
             const popupWrapper = document.querySelector('[data-send-popup]');
