@@ -102,25 +102,25 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-fields">
-                                                <label class="title">Select Publish Date
-                                                    :</label>
+                                                <label class="title">Select Publish Date :</label>
                                                 <input readonly type="text" class="field date-picker"
                                                     placeholder="Select" name="json_content[publish_date]"
-                                                    value="{{ old('publish_date', $jsonContent['publish_date']) }}"
+                                                    value="{{ old('json_content.publish_date', $jsonContent['publish_date'] ?? null) }}"
                                                     autocomplete="off">
-                                                @error('json_content[publish_date]')
+                                                @error('json_content.publish_date')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-md-6">
                                             <div class="form-fields">
                                                 <label class="title gap-2">Reading Time <span class="text-lowercase">(e.g.
                                                         16 min read)</span> :</label>
                                                 <input type="text" name="json_content[reading_time]" class="field"
-                                                    value="{{ old('reading_time', $jsonContent['reading_time']) }}"
+                                                    value="{{ old('json_content.reading_time', $jsonContent['reading_time'] ?? null) }}"
                                                     data-error="Reading Time">
-                                                @error('reading_time')
+                                                @error('json_content.reading_time')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
