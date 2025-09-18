@@ -161,7 +161,7 @@
                                 @else
                                     <div class="you-may-also-like mt-4">
                                         <div class="text-document ">
-                                            <h3 class="subHeading text-start">No blogs found</h3>
+                                            <p>No blogs found</p>
                                         </div>
                                     </div>
                                 @endif
