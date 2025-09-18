@@ -1,5 +1,14 @@
 @extends('frontend.layouts.main')
 @section('content')
+    @php
+        $blogSeoSettings = collect($settings ?? [])
+            ->filter(fn($value, $key) => str_starts_with($key, 'blog_seo'))
+            ->mapWithKeys(fn($value, $key) => [str_replace('blog_seo_', '', $key) => $value])
+            ->toArray();
+
+        $seo = (object) $blogSeoSettings;
+    @endphp
+
     <div class="mt-3 mb-4">
         <div class="container">
             <nav aria-label="breadcrumb">

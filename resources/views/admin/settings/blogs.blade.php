@@ -69,7 +69,6 @@
                                     </div>
                                 </div>
                                 <hr class="my-5">
-
                                 <div class="row" x-data="{ listingBannerEnabled: {{ $settings->get('listing_banner_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -137,6 +136,13 @@
                                 </div>
                             </div>
                         </div>
+
+                        @php
+                            $blogSeoSettings = (object) collect($settings ?? [])
+                                ->filter(fn($value, $key) => str_starts_with($key, 'blog_seo'))
+                                ->toArray();
+                        @endphp
+                        <x-seo-options-entity-based :seo="$blogSeoSettings" resource="blogs" entity="blog_seo" />
                         <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i
                                 class="bx bx-check"></i></button>
                     </form>
