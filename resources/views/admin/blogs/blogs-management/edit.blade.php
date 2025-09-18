@@ -98,6 +98,8 @@
                                                         </option>
                                                     @endforeach
                                                 </select>
+                                                <a target="_blank" class="custom-link mt-2"
+                                                    href="{{ route('admin.tour-authors.index') }}">Setup Authors here</a>
                                             </div>
                                         </div>
                                         <div class="col-md-6">
