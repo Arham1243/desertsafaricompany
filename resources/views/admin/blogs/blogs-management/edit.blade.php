@@ -93,7 +93,7 @@
                                                     <option value="">Select</option>
                                                     @foreach ($authors as $user)
                                                         <option value="{{ $user->id }}"
-                                                            {{ $user->id == $jsonContent['author_id'] ? 'selected' : '' }}>
+                                                            {{ ($jsonContent['author_id'] ?? null) == $user->id ? 'selected' : '' }}>
                                                             {{ $user->name }}
                                                         </option>
                                                     @endforeach
