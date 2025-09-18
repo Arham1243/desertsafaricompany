@@ -137,26 +137,34 @@
                                         You may also like
                                     </h2>
                                 </div>
-                                @foreach ($blogsToShow as $itemBlog)
-                                    <div class="blogDet-card blogDet-card-like mt-4 mt-4">
-                                        <a href="{{ buildBlogDetailUrl($itemBlog) }}" class="blogDet-card__img">
-                                            <img data-src="{{ asset($itemBlog->featured_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                alt="{{ $itemBlog->feature_image_alt_text }}" class="imgFluid lazy"
-                                                loading="lazy">
-                                        </a>
-
-                                        <div class="blogDet-card__content">
-                                            <a href="{{ buildBlogDetailUrl($itemBlog) }}"
-                                                class="blogDet-card__title line-clamp-4">
-                                                {{ $itemBlog->title }}
+                                @if ($blogsToShow->isNotEmpty())
+                                    @foreach ($blogsToShow as $itemBlog)
+                                        <div class="blogDet-card blogDet-card-like mt-4 mt-4">
+                                            <a href="{{ buildBlogDetailUrl($itemBlog) }}" class="blogDet-card__img">
+                                                <img data-src="{{ asset($itemBlog->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                    alt="{{ $itemBlog->feature_image_alt_text }}" class="imgFluid lazy"
+                                                    loading="lazy">
                                             </a>
-                                            <div class="blogDet-card__pra line-clamp-7">
-                                                {{ $itemBlog->description }}
-                                            </div>
-                                        </div>
 
+                                            <div class="blogDet-card__content">
+                                                <a href="{{ buildBlogDetailUrl($itemBlog) }}"
+                                                    class="blogDet-card__title line-clamp-4">
+                                                    {{ $itemBlog->title }}
+                                                </a>
+                                                <div class="blogDet-card__pra line-clamp-7">
+                                                    {{ $itemBlog->description }}
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    @endforeach
+                                @else
+                                    <div class="you-may-also-like mt-4">
+                                        <div class="text-document ">
+                                            <h3 class="subHeading text-start">No blogs found</h3>
+                                        </div>
                                     </div>
-                                @endforeach
+                                @endif
                             </div>
                         @endif
                     </div>
