@@ -63,8 +63,7 @@ class BlogController extends Controller
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
-            'top_featured_tour_id' => 'nullable|integer|exists:tours,id',
-            'bottom_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'json_content' => 'nullable',
             'may_also_like' => 'nullable',
         ]);
 
@@ -72,6 +71,7 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
         $mayAlsoLikeIds = json_encode($validatedData['may_also_like'] ?? null);
+        $jsonContent = json_encode($validatedData['json_content'] ?? null);
 
         $featuredImage = null;
         if ($request->hasFile('featured_image')) {
@@ -83,6 +83,7 @@ class BlogController extends Controller
             'featured_tours_ids' => $featuredToursIds,
             'featured_image' => $featuredImage,
             'may_also_like' => $mayAlsoLikeIds,
+            'json_content' => $jsonContent,
         ]);
 
         $blog = Blog::create($data);
@@ -163,8 +164,7 @@ class BlogController extends Controller
             'tags_ids.*' => 'integer|exists:blog_tags,id',
             'featured_image' => 'nullable|image',
             'feature_image_alt_text' => 'nullable|string|max:255',
-            'top_featured_tour_id' => 'nullable|integer|exists:tours,id',
-            'bottom_featured_tour_id' => 'nullable|integer|exists:tours,id',
+            'json_content' => 'nullable',
             'may_also_like' => 'nullable',
         ]);
 
@@ -173,6 +173,7 @@ class BlogController extends Controller
 
         $featuredToursIds = json_encode($validatedData['featured_tours_ids'] ?? null);
         $mayAlsoLikeIds = json_encode($validatedData['may_also_like'] ?? null);
+        $jsonContent = json_encode($validatedData['json_content'] ?? null);
 
         $featuredImage = $blog->featured_image;
         if ($request->hasFile('featured_image')) {
@@ -184,6 +185,7 @@ class BlogController extends Controller
             'featured_tours_ids' => $featuredToursIds,
             'featured_image' => $featuredImage,
             'may_also_like' => $mayAlsoLikeIds,
+            'json_content' => $jsonContent,
         ]);
 
         // Update the blog entry

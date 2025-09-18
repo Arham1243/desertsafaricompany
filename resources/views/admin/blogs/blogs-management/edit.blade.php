@@ -49,15 +49,19 @@
                                         countryColClass="col-md-6 mb-4 pe-0" cityColClass="col-md-6 mb-4"
                                         countryName="country_id" cityName="city_id" />
 
+                                    @php
+                                        $jsonContent = json_decode($blog->json_content, true) ?? [];
+                                    @endphp
+
                                     <div class="row mb-4">
                                         <div class="col-md-6">
                                             <div class="form-fields">
-                                                <label class="title">Select Top Featured Tour:</label>
-                                                <select name="top_featured_tour_id" class="select2-select">
-                                                    <option value="" selected>Select</option>
+                                                <label class="title">Select Top Featured Tours:</label>
+                                                <select name="json_content[top_featured_tour_ids][]" class="select2-select"
+                                                    multiple placeholder="Select">
                                                     @foreach ($tours as $topTour)
                                                         <option value="{{ $topTour->id }}"
-                                                            {{ $topTour->id == old('top_featured_tour_id', $blog->top_featured_tour_id) ? 'selected' : '' }}>
+                                                            {{ in_array($topTour->id, $jsonContent['top_featured_tour_ids'] ?? []) ? 'selected' : '' }}>
                                                             {{ $topTour->title }}
                                                         </option>
                                                     @endforeach
@@ -67,12 +71,12 @@
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-fields">
-                                                <label class="title">Select Bottom Featured Tour:</label>
-                                                <select name="bottom_featured_tour_id" class="select2-select">
-                                                    <option value="" selected>Select</option>
+                                                <label class="title">Select Bottom Featured Tours:</label>
+                                                <select name="json_content[bottom_featured_tour_ids][]"
+                                                    class="select2-select" multiple placeholder="Select">
                                                     @foreach ($tours as $bottomTour)
                                                         <option value="{{ $bottomTour->id }}"
-                                                            {{ $bottomTour->id == old('bottom_featured_tour_id', $blog->bottom_featured_tour_id) ? 'selected' : '' }}>
+                                                            {{ in_array($bottomTour->id, $jsonContent['bottom_featured_tour_ids'] ?? []) ? 'selected' : '' }}>
                                                             {{ $bottomTour->title }}
                                                         </option>
                                                     @endforeach

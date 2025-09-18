@@ -1,6 +1,7 @@
 @extends('frontend.layouts.main')
 @section('content')
     @php
+        $jsonContent = json_decode($blog->json_content, true) ?? [];
         $is_enabled_blogs_you_may_also_like = $settings->get('is_enabled_blogs_you_may_also_like')
             ? (int) $settings->get('is_enabled_blogs_you_may_also_like') === 1
             : false;
@@ -65,46 +66,51 @@
 
                     <div class="col-md-4">
                         @php
-                            $topFeaturedTour = $tours->find($blog->top_featured_tour_id);
+                            $topFeaturedTourIds = $jsonContent['top_featured_tour_ids'] ?? [];
+                            $topFeaturedTours = $tours->whereIn('id', $topFeaturedTourIds);
                         @endphp
-                        @if ($topFeaturedTour)
-                            <div class="availability-frame">
-                                <div class="availability-frame__deatils">
-                                    <div class="availability-frame__img">
-                                        <img data-src="{{ asset($topFeaturedTour->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
-                                            alt="{{ $topFeaturedTour->featured_image_alt_text }}" class="imgFluid lazy"
-                                            loading="lazy">
-                                    </div>
-                                    <div class="availability-frame__content w-100">
-                                        <div class="availability-title">
-                                            {{ $topFeaturedTour->title }}
-                                        </div>
-                                        <div class="card-rating">
-                                            <x-star-rating :rating="$topFeaturedTour->average_rating" />
-                                            @if ($topFeaturedTour->reviews->count() > 0)
-                                                <span>{{ $topFeaturedTour->reviews->count() }}
-                                                    Review{{ $topFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
-                                            @else
-                                                <span>No reviews yet</span>
-                                            @endif
-                                        </div>
-
-                                        @if ($topFeaturedTour->tour_lowest_price)
-                                            <div class="priceLabel__no-deal">
-                                                From {!! formatPrice($topFeaturedTour->tour_lowest_price) !!} per person
+                        @if ($topFeaturedTours->isNotEmpty())
+                            <div class="one-tour-card-slider">
+                                @foreach ($topFeaturedTours as $topFeaturedTour)
+                                    <div class="availability-frame">
+                                        <div class="availability-frame__deatils">
+                                            <div class="availability-frame__img">
+                                                <img data-src="{{ asset($topFeaturedTour->featured_image ?? 'frontend/assets/images/placeholder.png') }}"
+                                                    alt="{{ $topFeaturedTour->featured_image_alt_text }}"
+                                                    class="imgFluid lazy" loading="lazy">
                                             </div>
-                                        @endif
+                                            <div class="availability-frame__content w-100">
+                                                <div class="availability-title">
+                                                    {{ $topFeaturedTour->title }}
+                                                </div>
+                                                <div class="card-rating">
+                                                    <x-star-rating :rating="$topFeaturedTour->average_rating" />
+                                                    @if ($topFeaturedTour->reviews->count() > 0)
+                                                        <span>{{ $topFeaturedTour->reviews->count() }}
+                                                            Review{{ $topFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
+                                                    @else
+                                                        <span>No reviews yet</span>
+                                                    @endif
+                                                </div>
 
-                                        <input id="date" type="date" class="booking-assistant-dropdown">
+                                                @if ($topFeaturedTour->tour_lowest_price)
+                                                    <div class="priceLabel__no-deal">
+                                                        From {!! formatPrice($topFeaturedTour->tour_lowest_price) !!} per person
+                                                    </div>
+                                                @endif
+
+                                                <input id="date" type="date" class="booking-assistant-dropdown">
 
 
-                                        <div class="availability-frame__btn">
-                                            <a href="{{ buildTourDetailUrl($topFeaturedTour) }}"
-                                                class="w-100 app-btn themeBtn">Book
-                                                Now</a>
+                                                <div class="availability-frame__btn">
+                                                    <a href="{{ buildTourDetailUrl($topFeaturedTour) }}"
+                                                        class="w-100 app-btn themeBtn">Book
+                                                        Now</a>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                @endforeach
                             </div>
                         @endif
 
@@ -160,46 +166,53 @@
     </div>
 
     @php
-        $bottomFeaturedTour = $tours->find($blog->bottom_featured_tour_id);
+        $bottomFeaturedTourIds = $jsonContent['bottom_featured_tour_ids'] ?? [];
+        $bottomFeaturedTours = $tours->whereIn('id', $bottomFeaturedTourIds);
     @endphp
 
-    @if ($bottomFeaturedTour)
-        <div class="availability-frame my-5 pt-3 pb-4">
-            <div class="row justify-content-center align-items-center">
-                <div class="col-md-3">
-                    <div class="availability-frame__img availability-frame__img-ver">
-                        <img data-src="{{ asset($bottomFeaturedTour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
-                            alt="{{ $bottomFeaturedTour->featured_image_alt_text }}" class="imgFluid lazy" loading="lazy">
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="availability-frame__content w-100">
-                        <div class="availability-title">
-                            {{ $bottomFeaturedTour->title }}
-                        </div>
-
-                        <div class="card-rating">
-                            <x-star-rating :rating="$bottomFeaturedTour->average_rating" />
-                            @if ($bottomFeaturedTour->reviews->count() > 0)
-                                <span>{{ $bottomFeaturedTour->reviews->count() }}
-                                    Review{{ $bottomFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
-                            @else
-                                <span>No reviews yet</span>
-                            @endif
-                        </div>
-                        @if ($bottomFeaturedTour->tour_lowest_price)
-                            <div class="priceLabel__no-deal">
-                                From {!! formatPrice($bottomFeaturedTour->tour_lowest_price) !!} per person
+    @if ($bottomFeaturedTours->isNotEmpty())
+        <div class="one-tour-card-slider">
+            @foreach ($bottomFeaturedTours as $bottomFeaturedTour)
+                <div class="availability-frame my-5 pt-3 pb-4">
+                    <div class="row justify-content-center align-items-center">
+                        <div class="col-md-3">
+                            <div class="availability-frame__img availability-frame__img-ver">
+                                <img data-src="{{ asset($bottomFeaturedTour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                    alt="{{ $bottomFeaturedTour->featured_image_alt_text }}" class="imgFluid lazy"
+                                    loading="lazy">
                             </div>
-                        @endif
-                        <input id="date" type="date" class="booking-assistant-dropdown">
-                        <div class="availability-frame__btn">
-                            <a href="{{ buildTourDetailUrl($bottomFeaturedTour) }}" class="w-100 app-btn themeBtn">Book
-                                Now</a>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="availability-frame__content w-100">
+                                <div class="availability-title">
+                                    {{ $bottomFeaturedTour->title }}
+                                </div>
+
+                                <div class="card-rating">
+                                    <x-star-rating :rating="$bottomFeaturedTour->average_rating" />
+                                    @if ($bottomFeaturedTour->reviews->count() > 0)
+                                        <span>{{ $bottomFeaturedTour->reviews->count() }}
+                                            Review{{ $bottomFeaturedTour->reviews->count() > 1 ? 's' : '' }}</span>
+                                    @else
+                                        <span>No reviews yet</span>
+                                    @endif
+                                </div>
+                                @if ($bottomFeaturedTour->tour_lowest_price)
+                                    <div class="priceLabel__no-deal">
+                                        From {!! formatPrice($bottomFeaturedTour->tour_lowest_price) !!} per person
+                                    </div>
+                                @endif
+                                <input id="date" type="date" class="booking-assistant-dropdown">
+                                <div class="availability-frame__btn">
+                                    <a href="{{ buildTourDetailUrl($bottomFeaturedTour) }}"
+                                        class="w-100 app-btn themeBtn">Book
+                                        Now</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
     @endif
 @endsection

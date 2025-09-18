@@ -9,6 +9,16 @@ $(".one-item-fade-slider").slick({
     autoplaySpeed: 2000,
 });
 
+$(".one-tour-card-slider").slick({
+    dots: false,
+    arrows: false,
+    infinite: false,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 2000,
+});
+
 function setupRepeaterSlickSlider(selector, slidesToShow, responsiveSettings) {
     $(selector).slick({
         dots: false,
