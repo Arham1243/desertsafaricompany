@@ -86,7 +86,8 @@
                                                     :</label>
                                                 <input readonly type="text" class="field date-picker"
                                                     placeholder="Select" name="json_content[publish_date]"
-                                                    autocomplete="off">
+                                                    autocomplete="off"
+                                                    value="{{ old('json_content.publish_date', now()->format('Y-m-d')) }}">
                                                 @error('json_content[publish_date]')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror
@@ -97,7 +98,8 @@
                                                 <label class="title gap-2">Reading Time <span class="text-lowercase">(e.g.
                                                         16 min read)</span> :</label>
                                                 <input type="text" name="json_content[reading_time]" class="field"
-                                                    value="{{ old('reading_time') }}" data-error="Reading Time">
+                                                    value="{{ old('reading_time', '16 min read') }}"
+                                                    data-error="Reading Time">
                                                 @error('reading_time')
                                                     <div class="text-danger">{{ $message }}</div>
                                                 @enderror

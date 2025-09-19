@@ -8,6 +8,7 @@ use App\Models\BlogCategory;
 use App\Models\BlogReaction;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\Setting;
 use App\Models\Tour;
 use App\Models\TourAuthor;
 use Illuminate\Http\Request;
@@ -17,6 +18,11 @@ class BlogController extends Controller
 {
     public function index()
     {
+        $settings = Setting::pluck('value', 'key');
+        if (! ($settings->get('is_blogs_listing_enabled') && (int) $settings->get('is_blogs_listing_enabled') === 1)) {
+            abort(404);
+        }
+
         $defaultCountry = $this->resolveCountry();
 
         $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
@@ -107,7 +113,8 @@ class BlogController extends Controller
 
         $reaction = BlogReaction::where('blog_id', $blog->id)
             ->where('ip_address', $userIp)
-            ->first()?->reaction;
+            ->first()
+            ?->reaction;
 
         $authors = TourAuthor::where('status', 'active')->get();
         $allBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();

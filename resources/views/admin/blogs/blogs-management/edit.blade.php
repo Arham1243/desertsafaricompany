@@ -107,7 +107,7 @@
                                                 <label class="title">Select Publish Date :</label>
                                                 <input readonly type="text" class="field date-picker"
                                                     placeholder="Select" name="json_content[publish_date]"
-                                                    value="{{ old('json_content.publish_date', $jsonContent['publish_date'] ?? null) }}"
+                                                    value="{{ old('json_content.publish_date', $jsonContent['publish_date'] ?? now()->format('Y-m-d')) }}"
                                                     autocomplete="off">
                                                 @error('json_content.publish_date')
                                                     <div class="text-danger">{{ $message }}</div>
