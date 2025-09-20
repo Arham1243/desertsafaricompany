@@ -245,7 +245,7 @@
                                 <div class="title">Global Numbers</div>
                             </div>
                             <div class="form-box__body">
-                                <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('global_whatsapp_number') ? 'true' : 'false' }} }">
+                                <div class="row" x-data="{ whatsappEnabled: {{ (int) $settings->get('global_whatsapp_number') === 1 ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-3 mb-2">

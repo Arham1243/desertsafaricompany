@@ -1389,10 +1389,6 @@
             font-family: inherit
         }
 
-        .whatsapp-contact {
-            display: none;
-        }
-
         .loader-mask {
             position: fixed;
             inset: 0;

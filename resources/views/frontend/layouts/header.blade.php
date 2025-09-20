@@ -12,7 +12,7 @@
                         @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                                      @endif>
+                                       @endif>
                         {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                     </button>
                     <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -20,7 +20,7 @@
                         @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                                      @endif>
+                                       @endif>
                         {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                     </button>
                 </div>
@@ -36,20 +36,15 @@
         $number = $settings->get('global_whatsapp_number');
         $globalWhatsappNumber = $dialCode . $number;
     @endphp
-    <a href="tel:{{ $globalWhatsappNumber }}" class="whatsapp-contact d-flex">
+    <a href="tel:{{ $globalWhatsappNumber }}" class="whatsapp-contact" style="display: flex !important;">
         <i class='bx bxl-whatsapp'></i>
     </a>
 @endif
 
-
 @php
     $headerLogo = App\Models\Setting::where('key', 'header_logo')->first()->value ?? null;
     $headerLogoAltText = App\Models\Setting::where('key', 'header_logo_alt_text')->first()->value ?? null;
-    $globalWhatsappNumber = App\Models\Setting::where('key', 'whatsapp_number')->first()->value ?? null;
 @endphp
-@if ($globalWhatsappNumber && preg_match('/^\+?\d{10,15}$/', $globalWhatsappNumber))
-    <a href="tel:{{ $globalWhatsappNumber }}" class="whatsapp-contact"><i class='bx bxl-whatsapp'></i></a>
-@endif
 <header class="header" id="header">
     <div class="container">
         <div class="header-main">
