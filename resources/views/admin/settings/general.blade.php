@@ -259,8 +259,7 @@
                                                 <div class="form-check form-switch" data-enabled-text="Enabled"
                                                     data-disabled-text="Disabled">
                                                     <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="global_whatsapp_enabled_switch" value="1"
-                                                        x-model="whatsappEnabled">
+                                                        id="global_whatsapp_enabled_switch" x-model="whatsappEnabled">
                                                     <label class="form-check-label"
                                                         for="global_whatsapp_enabled_switch">Enabled</label>
                                                 </div>
