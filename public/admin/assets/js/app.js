@@ -480,7 +480,7 @@ function initializeEditors(form) {
     return editors;
 }
 
-function initializeEditorsSingle(editorElement) {
+function initializeEditorsSingle(editorElement, options = {}) {
     ClassicEditor.create(editorElement, {
         toolbar: [
             "undo",
@@ -520,13 +520,76 @@ function initializeEditorsSingle(editorElement) {
             "|",
             "preview",
         ],
+        heading: {
+            options: [
+                {
+                    model: "paragraph",
+                    title: "Paragraph",
+                    class: "ck-heading_paragraph",
+                },
+                {
+                    model: "heading1",
+                    view: { name: "h1", classes: "" },
+                    title: "Heading 1",
+                    class: "ck-heading_heading1",
+                },
+                {
+                    model: "heading2",
+                    view: { name: "h2", classes: "" },
+                    title: "Heading 2",
+                    class: "ck-heading_heading2",
+                },
+                {
+                    model: "heading3",
+                    view: { name: "h3", classes: "" },
+                    title: "Heading 3",
+                    class: "ck-heading_heading3",
+                },
+                {
+                    model: "heading4",
+                    view: { name: "h4", classes: "" },
+                    title: "Heading 4",
+                    class: "ck-heading_heading4",
+                },
+                {
+                    model: "heading5",
+                    view: { name: "h5", classes: "" },
+                    title: "Heading 5",
+                    class: "ck-heading_heading5",
+                },
+                {
+                    model: "heading6",
+                    view: { name: "h6", classes: "" },
+                    title: "Heading 6",
+                    class: "ck-heading_heading6",
+                },
+            ],
+        },
         // You can set additional configurations here
         height: "300px",
         // Add custom styles here if needed
         // Note: CKEditor 5 does not support `content_style` like TinyMCE
-    }).catch((error) => {
-        console.error("There was a problem initializing the editor:", error);
-    });
+    })
+        .then((editor) => {
+            // preload from Alpine-provided option
+            if (options.initialValue) {
+                editor.setData(options.initialValue);
+            } else if (editorElement.value) {
+                editor.setData(editorElement.value);
+            }
+
+            editor.model.document.on("change:data", () => {
+                const content = editor.getData();
+                editorElement.value = content;
+                if (options.onChange) options.onChange(content);
+            });
+        })
+        .catch((error) => {
+            console.error(
+                "There was a problem initializing the editor:",
+                error,
+            );
+        });
 }
 
 // Function to validate the form

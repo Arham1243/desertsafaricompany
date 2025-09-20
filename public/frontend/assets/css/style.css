@@ -8146,3 +8146,14 @@ ul.show-in-desktop {
     font-weight: 600;
 }
 /* global-cta */
+.faqs ul li {
+    list-style: disc !important;
+}
+
+.faqs :is(ol, ul) {
+    padding-left: 1rem !important;
+    margin: 0.5rem 0;
+}
+.faqs ol li {
+    list-style: decimal;
+}

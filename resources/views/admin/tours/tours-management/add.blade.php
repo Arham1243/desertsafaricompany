@@ -505,7 +505,6 @@
                                                         data-repeater-create>Add
                                                         <i class="bx bx-plus"></i></button>
                                                 </div>
-
                                             </div>
                                         </div>
                                         <div class="col-md-12 mt-5">
