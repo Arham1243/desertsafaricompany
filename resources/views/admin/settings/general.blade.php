@@ -272,10 +272,10 @@
                                             <div data-flag-input-wrapper>
                                                 <input type="hidden" name="global_whatsapp_number_dial_code"
                                                     data-flag-input-dial-code
-                                                    value="{{ $settings->get('global_whatsapp_number_dial_code') }}">
+                                                    value="{{ $settings->get('global_whatsapp_number_dial_code') ?? '971' }}">
                                                 <input type="hidden" name="global_whatsapp_number_country_code"
                                                     data-flag-input-country-code
-                                                    value="{{ $settings->get('global_whatsapp_number_country_code') }}">
+                                                    value="{{ $settings->get('global_whatsapp_number_country_code') ?? 'ae' }}">
                                                 <input type="text" name="global_whatsapp_number"
                                                     class="field flag-input" data-flag-input
                                                     value="{{ $settings->get('global_whatsapp_number') }}"
