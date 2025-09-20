@@ -7791,21 +7791,18 @@ ul.show-in-desktop {
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--color-primary-dark);
-    text-align: center;
 }
 .text-document h2 {
     font-size: 2em;
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--color-primary-dark);
-    text-align: center;
 }
 .text-document h3 {
     font-size: 1.75em;
     font-weight: 700;
     margin-bottom: 20px;
     color: var(--color-primary-dark);
-    text-align: center;
 }
 
 .text-document h4 {
