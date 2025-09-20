@@ -7792,11 +7792,15 @@ ul.show-in-desktop {
     color: var(--color-primary-dark);
 }
 .text-document h2 {
-    font-size: 2em;
+    font-size: 2.5em;
+    font-weight: 700;
+}
+.text-document h2 {
+    font-size: 2.25em;
     font-weight: 700;
 }
 .text-document h3 {
-    font-size: 1.75em;
+    font-size: 2em;
     font-weight: 700;
 }
 .text-document h4 {
@@ -7820,7 +7824,7 @@ ul.show-in-desktop {
 
 .text-document p {
     margin-bottom: 15px;
-    font-size: 1.1em;
+    font-size: 1.25em;
 }
 
 .text-document ul {
