@@ -246,6 +246,7 @@
                             </div>
                             <div class="form-box__body">
                                 <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('global_whatsapp_number') ? 'true' : 'false' }} }">
+                                    @dd($settings->get('global_whatsapp_number'))
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-3 mb-2">
