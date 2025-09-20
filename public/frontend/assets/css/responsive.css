@@ -778,4 +778,7 @@
         padding: 12px 11px;
         gap: 5px;
     }
+    .text-document {
+        font-size: 12px;
+    }
 }
