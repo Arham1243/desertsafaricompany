@@ -344,3 +344,11 @@ if (! function_exists('url_to_path')) {
         return ltrim($path, '/');
     }
 }
+if (! function_exists('sanitizePhoneNumber')) {
+    function sanitizePhoneNumber(string $number, bool $keepPlus = false): string
+    {
+        return $keepPlus
+            ? preg_replace('/[^\d+]/', '', $number)
+            : preg_replace('/\D/', '', $number);
+    }
+}

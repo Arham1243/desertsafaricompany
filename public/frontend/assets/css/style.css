@@ -8106,3 +8106,33 @@ ul.show-in-desktop {
 .feedback-button:not(.active) i.bxs-dislike {
     display: none;
 }
+
+/* global-cta */
+.global-cta {
+    writing-mode: vertical-rl;
+    position: fixed;
+    top: 50%;
+    transform: translateY(-40%) rotate(-180deg);
+    left: 0;
+    color: #fff;
+    background: var(--color-primary);
+    z-index: 100000;
+    padding: 17px 11px;
+    text-align: center;
+    white-space: nowrap;
+    border-radius: 16px 0 0 16px;
+    font-size: 17px;
+    line-height: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.global-cta__number {
+    font-size: 1.4em;
+    font-weight: 700;
+}
+.global-cta__text {
+    font-size: 1.05em;
+    font-weight: 600;
+}
+/* global-cta */

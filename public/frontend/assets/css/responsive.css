@@ -773,4 +773,9 @@
     .author-info {
         font-size: 14px;
     }
+    .global-cta {
+        font-size: 12px;
+        padding: 12px 11px;
+        gap: 5px;
+    }
 }

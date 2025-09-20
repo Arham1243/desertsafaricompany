@@ -246,7 +246,7 @@
                             </div>
                             <div class="form-box__body">
                                 <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('is_global_whatsapp_number_enabled') ? 'true' : 'false' }} }">
-                                    <div class="col-12 mb-2">
+                                    <div class="col-12">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-3 mb-2">
                                                 <input type="hidden" name="is_global_whatsapp_number_enabled"
@@ -287,6 +287,80 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="my-5">
+                                <div class="row" x-data="{ globalCtaEnabled: {{ $settings->get('is_global_cta_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="is_global_cta_enabled"
+                                                    :value="globalCtaEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">Global Left CTA:</div>
+                                                <a href="{{ asset('admin/assets/images/global-cta.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm">
+                                                    <i class="bx bxs-show"></i>
+                                                </a>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="global_cta_enabled_switch" x-model="globalCtaEnabled">
+                                                    <label class="form-check-label"
+                                                        for="global_cta_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" x-show="globalCtaEnabled" x-transition>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="text-dark title">CTA Number:</label>
+                                                <input type="text" name="global_cta_number"
+                                                    value="{{ $settings->get('global_cta_number') }}" class="field">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="text-dark title">CTA Text:</label>
+                                                <input type="text" name="global_cta_text"
+                                                    value="{{ $settings->get('global_cta_text') }}" class="field">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <div class="text-dark title d-flex align-items-center gap-2">
+                                                    <div>Background Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="global_cta_background_color" data-color-picker></label>
+                                                    <input id="global_cta_background_color" type="text"
+                                                        data-color-picker-input name="global_cta_background_color"
+                                                        value="{{ $settings->get('global_cta_background_color') ?? '#1c4d99' }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <div class="text-dark title d-flex align-items-center gap-2">
+                                                    <div>Text Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="global_cta_text_color" data-color-picker></label>
+                                                    <input id="global_cta_text_color" type="text"
+                                                        data-color-picker-input name="global_cta_text_color"
+                                                        value="{{ $settings->get('global_cta_text_color') ?? '#ffffff' }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
 
