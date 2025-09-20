@@ -84,7 +84,7 @@
         @endphp
 
         @php
-            $fullPhone = $tour->phone_dial_code . $tour->phone_number;
+            $fullPhone = '+' . $tour->phone_dial_code . $tour->phone_number;
         @endphp
 
         @if ((int) $settings->get('global_whatsapp_number') !== 1)
