@@ -242,6 +242,57 @@
 
                         <div class="form-box">
                             <div class="form-box__header">
+                                <div class="title">Global Numbers</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('global_whatsapp_number') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="global_whatsapp_enabled"
+                                                    :value="whatsappEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">WhatsApp:</div>
+                                                <a href="{{ asset('admin/assets/images/global-whatsapp.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="global_whatsapp_enabled_switch" value="1"
+                                                        x-model="whatsappEnabled">
+                                                    <label class="form-check-label"
+                                                        for="global_whatsapp_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" x-show="whatsappEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <div data-flag-input-wrapper>
+                                                <input type="hidden" name="global_whatsapp_number_dial_code"
+                                                    data-flag-input-dial-code
+                                                    value="{{ $settings->get('global_whatsapp_number_dial_code') }}">
+                                                <input type="hidden" name="global_whatsapp_number_country_code"
+                                                    data-flag-input-country-code
+                                                    value="{{ $settings->get('global_whatsapp_number_country_code') }}">
+                                                <input type="text" name="global_whatsapp_number"
+                                                    class="field flag-input" data-flag-input
+                                                    value="{{ $settings->get('global_whatsapp_number') }}"
+                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
+                                                    pattern="[0-9]*"
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                    maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-box">
+                            <div class="form-box__header">
                                 <div class="title">Contacts</div>
                             </div>
                             <div class="form-box__body">
@@ -286,27 +337,6 @@
                                                 value="{{ $settings->get('marketing_email') }}" class="field">
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-fields">
-                                            <label class="title">WhatsApp Number:</label>
-                                            <div data-flag-input-wrapper>
-                                                <input type="hidden" name="whatsapp_number_dial_code"
-                                                    data-flag-input-dial-code
-                                                    value="{{ $settings->get('whatsapp_number_dial_code') }}">
-                                                <input type="hidden" name="whatsapp_number_country_code"
-                                                    data-flag-input-country-code
-                                                    value="{{ $settings->get('whatsapp_number_country_code') }}">
-                                                <input type="text" name="whatsapp_number" class="field flag-input"
-                                                    data-flag-input value="{{ $settings->get('whatsapp_number') }}"
-                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
-                                                    pattern="[0-9]*"
-                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                                    maxlength="15">
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
