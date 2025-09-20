@@ -7785,8 +7785,6 @@ ul.show-in-desktop {
     font-size: 1rem;
     line-height: 1.6;
     color: #333;
-    background-color: #fff;
-    border-radius: 8px;
 }
 
 .text-document h3.subHeading {
@@ -7836,7 +7834,7 @@ ul.show-in-desktop {
 }
 
 .text-document .container {
-    max-width: 800px;
+    max-width: 970px;
 }
 .iti.iti--allow-dropdown.iti--separate-dial-code {
     width: 100%;
