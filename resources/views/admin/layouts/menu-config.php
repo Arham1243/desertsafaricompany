@@ -29,11 +29,11 @@ return [
                         'icon' => 'bx bx-box',
                         'route' => route('admin.blogs-categories.index'),
                     ],
-                    [
-                        'title' => 'Tags',
-                        'icon' => 'bx bx-tag',
-                        'route' => route('admin.blogs-tags.index'),
-                    ],
+                    // [
+                    //     'title' => 'Tags',
+                    //     'icon' => 'bx bx-tag',
+                    //     'route' => route('admin.blogs-tags.index'),
+                    // ],
                     [
                         'title' => 'Recovery',
                         'icon' => 'bx bx-refresh',
@@ -60,11 +60,11 @@ return [
                         'icon' => 'bx bx-box',
                         'route' => route('admin.news-categories.index'),
                     ],
-                    [
-                        'title' => 'Tags',
-                        'icon' => 'bx bx-tag',
-                        'route' => route('admin.news-tags.index'),
-                    ],
+                    // [
+                    //     'title' => 'Tags',
+                    //     'icon' => 'bx bx-tag',
+                    //     'route' => route('admin.news-tags.index'),
+                    // ],
                     [
                         'title' => 'Recovery',
                         'icon' => 'bx bx-refresh',

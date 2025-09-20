@@ -238,7 +238,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-fields">
+                                    {{-- <div class="form-fields">
                                         <label class="title">Tags <span class="text-danger">*</span> :</label>
 
                                         <select name="tags_ids[]" class="select2-select" multiple
@@ -253,7 +253,7 @@
                                         @error('tags_ids')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="form-box">
