@@ -245,12 +245,11 @@
                                 <div class="title">Global Numbers</div>
                             </div>
                             <div class="form-box__body">
-                                <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('global_whatsapp_number') ? 'true' : 'false' }} }">
-                                    @dd($settings->get('global_whatsapp_number'))
+                                <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('is_global_whatsapp_number_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                <input type="hidden" name="global_whatsapp_enabled"
+                                                <input type="hidden" name="is_global_whatsapp_number_enabled"
                                                     :value="whatsappEnabled ? 1 : 0">
                                                 <div class="title title--sm mb-0">WhatsApp:</div>
                                                 <a href="{{ asset('admin/assets/images/global-whatsapp.png') }}"
