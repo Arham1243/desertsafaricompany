@@ -89,7 +89,8 @@
 
         @if ((int) $settings->get('is_global_whatsapp_number_enabled') !== 1)
             @if (isset($tour->show_phone) && (int) $tour->show_phone === 1)
-                <a href="https://api.whatsapp.com/send?phone={{ $fullPhone }}" class="whatsapp-contact d-flex">
+                <a href="https://api.whatsapp.com/send?phone={{ $fullPhone }}" target="_blank"
+                    class="whatsapp-contact d-flex">
                     <i class='bx bxl-whatsapp'></i>
                 </a>
             @endif

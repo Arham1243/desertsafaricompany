@@ -12,7 +12,7 @@
                         @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                                              @endif>
+                                               @endif>
                         {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                     </button>
                     <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -20,7 +20,7 @@
                         @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                                              @endif>
+                                               @endif>
                         {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                     </button>
                 </div>
@@ -47,7 +47,8 @@
         $globalWhatsappNumber = '+' . $dialCode . $number;
     @endphp
 
-    <a href="https://api.whatsapp.com/send?phone={{ $globalWhatsappNumber }}&text=I%27m%20interested%20in%20your%20services"
+    <a target="_blank"
+        href="https://api.whatsapp.com/send?phone={{ $globalWhatsappNumber }}&text=I%27m%20interested%20in%20your%20services"
         class="whatsapp-contact" style="display: flex !important;">
         <i class='bx bxl-whatsapp'></i>
     </a>
