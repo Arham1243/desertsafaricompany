@@ -87,7 +87,7 @@
             $fullPhone = $tour->phone_dial_code . $tour->phone_number;
         @endphp
 
-        @if (isset($tour->show_phone) && $tour->show_phone === 1)
+        @if (isset($tour->show_phone) && (int) $tour->show_phone === 1)
             <a href="tel:{{ $fullPhone }}" class="whatsapp-contact d-flex">
                 <i class='bx bxl-whatsapp'></i>
             </a>
