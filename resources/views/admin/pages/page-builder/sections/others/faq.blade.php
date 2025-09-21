@@ -64,15 +64,6 @@
                         <tr>
                             <th scope="col">
                                 Faq content
-                                <span class="small text-muted ms-2 d-inline-flex align-items-center gap-2">
-                                    <span>To add a link:</span>
-                                    <code class="text-nowrap text-lowercase">&lt;a href=&quot;//google.com&quot;
-                                        target=&quot;_blank&quot;&gt;Text&lt;/a&gt;</code>
-                                    <button class="themeBtn copy-btn py-1 px-2" type="button"
-                                        @click="copy('<a href=&quot;//google.com&quot; target=&quot;_blank&quot;>Text</a>')">
-                                        Copy
-                                    </button>
-                                </span>
                             </th>
                             <th class="text-end" scope="col">Remove</th>
                         </tr>
