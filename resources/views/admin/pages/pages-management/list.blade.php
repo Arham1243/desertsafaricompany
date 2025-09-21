@@ -83,7 +83,7 @@
                                                     <ul class="dropdown-menu">
                                                         <li>
                                                             <a class="dropdown-item" target="_blank"
-                                                                href="{{ route('frontend.page.show', $item->slug) }}{{ $item->status === 'draft' ? '?viewer=admin' : '' }}"
+                                                                href="{{ buildUrl(url('/'), $item->slug) }}{{ $item->status === 'draft' ? '?viewer=admin' : '' }}"
                                                                 title="View Page">
                                                                 <i class='bx bxs-show'></i>
                                                                 View page

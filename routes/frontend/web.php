@@ -7,7 +7,6 @@ use App\Http\Controllers\Frontend\InquiryController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
 use App\Http\Controllers\Frontend\Locations\LocationController;
 use App\Http\Controllers\Frontend\NewsController;
-use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Frontend\SearchSuggestionController;
 use App\Http\Controllers\Frontend\Tour\CartController;
 use App\Http\Controllers\Frontend\Tour\CategoryController;
@@ -27,7 +26,6 @@ Route::name('frontend.')->group(function () {
         Route::get('/', [InquiryController::class, 'index'])->name('index');
         Route::post('/', [InquiryController::class, 'store'])->name('store');
     });
-    Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
 });
 
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');
