@@ -19,16 +19,6 @@ class IndexController extends Controller
         return redirect()->route('frontend.index');
     }
 
-    public function privacy_policy()
-    {
-        return view('privacy-policy')->with('title', 'Privacy Policy');
-    }
-
-    public function terms_conditions()
-    {
-        return view('terms-conditions')->with('title', 'Terms & Conditions');
-    }
-
     public function index()
     {
 

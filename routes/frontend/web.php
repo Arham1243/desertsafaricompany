@@ -3,6 +3,7 @@
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\FetchReviewController;
 use App\Http\Controllers\Frontend\IndexController;
+use App\Http\Controllers\Frontend\InquiryController;
 use App\Http\Controllers\Frontend\Locations\CountryController;
 use App\Http\Controllers\Frontend\Locations\LocationController;
 use App\Http\Controllers\Frontend\NewsController;
@@ -18,15 +19,18 @@ use Illuminate\Support\Facades\Route;
 Route::get('/#', [IndexController::class, 'index'])->name('login');
 Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
-    Route::get('/terms-conditions', [IndexController::class, 'terms_conditions'])->name('terms_conditions');
-    Route::get('/privacy-policy', [IndexController::class, 'privacy_policy'])->name('privacy_policy');
     Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
-    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.show');
+
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
-    Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])
-        ->name('blogs.details');
-    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
+    Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])->name('blogs.details');
     Route::post('/blogs/{blog}/reaction', [BlogController::class, 'saveReaction'])->name('blogs.reaction');
+
+    Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
+
+    Route::prefix('contact-us')->name('contact-us.')->group(function () {
+        Route::get('/', [InquiryController::class, 'index'])->name('index');
+        Route::post('/', [InquiryController::class, 'store'])->name('store');
+    });
 });
 
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');

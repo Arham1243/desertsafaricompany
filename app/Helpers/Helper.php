@@ -352,3 +352,14 @@ if (! function_exists('sanitizePhoneNumber')) {
             : preg_replace('/\D/', '', $number);
     }
 }
+
+if (! function_exists('makePhoneNumber')) {
+    function makePhoneNumber($dial, $number)
+    {
+        if ($dial && $number) {
+            return '+'.$dial.' '.$number;
+        }
+
+        return 'N/A';
+    }
+}

@@ -36,6 +36,11 @@
             'label' => 'News',
         ],
         [
+            'route' => 'contact-us',
+            'icon' => 'bx-phone',
+            'label' => 'Contact Page',
+        ],
+        [
             'route' => 'blogs',
             'icon' => 'bx-pencil',
             'label' => 'Blogs',

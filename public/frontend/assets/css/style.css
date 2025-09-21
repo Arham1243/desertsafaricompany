@@ -7001,6 +7001,10 @@ span.select2-dropdown.select2-dropdown--below {
     color: var(--global-heading-color);
     margin-bottom: 0.85rem;
 }
+.editor-content :is(h1, h2, h3, h4, h5, h6) * {
+    font: inherit;
+    color: inherit;
+}
 
 .breadcrumb {
     margin: 1.1rem 0;
@@ -8157,3 +8161,49 @@ ul.show-in-desktop {
 .faqs ol li {
     list-style: decimal;
 }
+
+/* contact us
+ */
+.form-fields {
+    margin-bottom: 0.85rem;
+}
+
+.form-fields .title {
+    font-weight: 600;
+    margin-bottom: 0.6rem;
+    opacity: 0.75;
+    text-transform: capitalize;
+    font-size: 0.95rem;
+}
+
+.form-fields .field {
+    width: 100% !important;
+    padding: 0.7rem 1rem;
+    border-radius: 0.25rem;
+    border: 1px solid #ccc;
+    outline: none;
+    color: #000;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 300ms;
+    box-shadow: none !important;
+    background: #fff;
+    height: auto !important;
+}
+
+.form-fields .field:hover {
+    border-color: var(--color-primary);
+}
+
+.contact-us__form .heading {
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--color-primary-dark);
+}
+
+.contact-us__form p {
+    font-weight: 600;
+    margin-bottom: 2rem;
+    font-size: 0.89rem;
+}
+/* contact us */

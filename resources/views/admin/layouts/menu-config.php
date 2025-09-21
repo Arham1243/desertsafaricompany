@@ -292,6 +292,11 @@ return [
         ],
     ],
     [
+        'title' => 'Inquiries',
+        'icon' => 'bx bx-help-circle',
+        'route' => route('admin.inquiries.index'),
+    ],
+    [
         'title' => 'Orders',
         'icon' => 'bx bx-dollar',
         'route' => route('admin.bookings.index'),
@@ -324,6 +329,11 @@ return [
                 'title' => 'News',
                 'icon' => 'bx bx-news',
                 'route' => route('admin.settings.edit', ['resource' => 'news']),
+            ],
+            [
+                'title' => 'Contact Page',
+                'icon' => 'bx-phone',
+                'route' => route('admin.settings.edit', ['resource' => 'contact-us']),
             ],
             [
                 'title' => 'Blogs',

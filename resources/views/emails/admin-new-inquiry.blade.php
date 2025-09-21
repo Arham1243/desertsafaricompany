@@ -115,7 +115,7 @@
             display: inline-block;
         }
     </style>
-    <title>New Order</title>
+    <title>New Inquiry</title>
 </head>
 
 <body style="background-color:#F0F0F0; color:#000;">
@@ -144,58 +144,32 @@
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
                             Hi Admin,<br><br>
-                            A new order has been placed and is <strong>pending payment</strong>. Details are below:
+                            A new <strong>inquiry</strong> has been submitted. Details are below:
                         </td>
                     </tr>
 
-                    <!-- Customer Info Table -->
+                    <!-- Info Table -->
                     <tr>
                         <td style="padding-top:20px; padding-left:6.25%; padding-right:6.25%;">
                             <table class="info-table">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
-                                        <th>Customer Name</th>
-                                        <th>Customer Email</th>
-                                        <th>Customer Phone</th>
-                                        <th>Payment Type</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Package</th>
+                                        <th>Persons</th>
+                                        <th>Start Date</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ $data['order_id'] }}</td>
-                                        <td>{{ $data['customer_name'] }}</td>
-                                        <td>{{ $data['customer_email'] }}</td>
-                                        <td>{{ $data['customer_phone'] }}</td>
-                                        <td>{{ ucfirst($data['payment_type']) }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-
-                    <!-- Tours Table -->
-                    <tr>
-                        <td style="padding-top:25px; padding-left:6.25%; padding-right:6.25%;">
-                            <table class="info-table">
-                                <thead>
-                                    <tr>
-                                        <th>Tour</th>
-                                        <th>Subtotal</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($data['tours'] as $tourId => $tour)
-                                        <tr>
-                                            <td>{{ getTourByID($tourId)->title ?? '' }}</td>
-                                            <td>{{ $tour['total_price'] ? formatPrice($tour['total_price']) : '' }}
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    <tr>
-                                        <td style="font-weight:bold;">Grand Total</td>
-                                        <td style="font-weight:bold;">
-                                            {{ $data['total'] ? formatPrice($data['total']) : '' }}</td>
+                                        <td>{{ $data['name'] }}</td>
+                                        <td>{{ $data['email'] }}</td>
+                                        <td>{{ makePhoneNumber($data['phone_dial_code'], $data['phone_number']) }}</td>
+                                        <td>{{ $data['package'] }}</td>
+                                        <td>{{ $data['persons'] }}</td>
+                                        <td>{{ formatDate($data['start_date']) }}</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -205,7 +179,7 @@
                     <!-- CTA Button -->
                     <tr>
                         <td align="center" style="padding-top:25px; padding-bottom:25px;">
-                            <a href="{{ $data['order_link'] }}" target="_blank" class="btn">View Order</a>
+                            <a href="{{ $data['details_link'] }}" target="_blank" class="btn">View Details</a>
                         </td>
                     </tr>
 

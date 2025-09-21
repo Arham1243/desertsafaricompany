@@ -775,4 +775,7 @@
     .text-document {
         font-size: 12px;
     }
+    .text-document h1 {
+        font-size: 2em;
+    }
 }
