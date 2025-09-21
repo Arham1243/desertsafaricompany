@@ -1,8 +1,16 @@
 @extends('frontend.layouts.main')
 @section('content')
+    @php
+        $contactUsSeoSettings = collect($settings ?? [])
+            ->filter(fn($value, $key) => str_starts_with($key, 'contact_us_seo'))
+            ->mapWithKeys(fn($value, $key) => [str_replace('contact_us_seo_', '', $key) => $value])
+            ->toArray();
+
+        $seo = (object) $contactUsSeoSettings;
+    @endphp
     <div class="contact-us my-5">
         <div class="container">
-            <div class="text-document text-center mb-5">
+            <div class="text-document text-center mb-5 pb-1">
                 <h1
                     @if ($settings->get('contact_us_h1_heading_color')) style="color: {{ $settings->get('contact_us_h1_heading_color') }}" @endif>
                     {{ $settings->get('contact_us_h1_heading_text') ?? '' }}</h1>
