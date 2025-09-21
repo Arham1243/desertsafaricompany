@@ -19,14 +19,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/#', [IndexController::class, 'index'])->name('login');
 Route::name('frontend.')->group(function () {
     Route::get('/', [IndexController::class, 'index'])->name('index');
-    Route::get('/page/{slug}', [PageController::class, 'show'])->name('page.show');
+    Route::get('/{slug}', [PageController::class, 'show'])->name('page.show');
 
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])->name('blogs.details');
     Route::post('/blogs/{blog}/reaction', [BlogController::class, 'saveReaction'])->name('blogs.reaction');
-
     Route::get('/news/{slug}', [NewsController::class, 'show'])->name('news.details');
-
     Route::prefix('contact-us')->name('contact-us.')->group(function () {
         Route::get('/', [InquiryController::class, 'index'])->name('index');
         Route::post('/', [InquiryController::class, 'store'])->name('store');
@@ -79,7 +77,7 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
 });
 
 Route::name('locations.')->group(function () {
-    Route::get('/{country}', [CountryController::class, 'show'])
+    Route::get('/{country}', [CountryController::class, 'resolveSlug'])
         ->name('country');
 
     Route::get('/{country}/{slug}', [LocationController::class, 'resolveSlug'])

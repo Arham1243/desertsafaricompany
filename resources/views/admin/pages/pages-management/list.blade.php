@@ -63,8 +63,8 @@
                                                         class="badge rounded-pill bg-success d-inline-block ms-5">Home</span>
                                                 @else
                                                     <a target="_blank" style="font-size: 0.76rem;"
-                                                        href="{{ buildUrl(url('/'), 'page/' . $item->slug) }}"
-                                                        class="link">{{ buildUrl(url('/'), 'page/' . $item->slug) }}</a>
+                                                        href="{{ buildUrl(url('/'), $item->slug) }}"
+                                                        class="link">{{ buildUrl(url('/'), $item->slug) }}</a>
                                                 @endif
                                             </td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
