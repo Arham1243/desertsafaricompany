@@ -7791,7 +7791,7 @@ ul.show-in-desktop {
     margin-bottom: 10px;
     color: var(--color-primary-dark);
 }
-.text-document h2 {
+.text-document h1 {
     font-size: 2.5em;
     font-weight: 700;
 }
