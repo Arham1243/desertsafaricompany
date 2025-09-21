@@ -332,7 +332,7 @@ return [
             ],
             [
                 'title' => 'Contact Page',
-                'icon' => 'bx-phone',
+                'icon' => 'bx bx-phone',
                 'route' => route('admin.settings.edit', ['resource' => 'contact-us']),
             ],
             [
