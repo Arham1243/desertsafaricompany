@@ -102,8 +102,7 @@ class PageController extends Controller
 
         $page->update($data);
         $this->uploadImg('banner_image', 'Pages/banner-images', $page, 'banner_image');
-
-        handleSeoData($request, $page, 'Page/'.$page->title);
+        handleSeoData($request, $page, 'Page/'.$page->slug);
 
         return redirect()->route('admin.pages.edit', $page->id)->with('notify_success', 'Page updated successfully.');
     }
