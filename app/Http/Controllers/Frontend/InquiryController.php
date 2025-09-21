@@ -52,7 +52,6 @@ class InquiryController extends Controller
             $subject = 'New Inquiry';
 
             $data = [
-                'settings' => $settings,
                 'logo' => asset($headerLogo),
                 'details_link' => route('admin.inquiries.edit', $inquiry->id),
                 'name' => $inquiry->name,
