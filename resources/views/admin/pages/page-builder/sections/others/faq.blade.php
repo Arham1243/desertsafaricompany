@@ -40,7 +40,7 @@
                     <div class="field color-picker" data-color-picker-container>
                         <label for="color-picker" data-color-picker></label>
                         <input id="color-picker" type="text" name="content[heading_text_color]"
-                            data-color-picker-input value="{{ $sectionContent->heading_text_color ?? '#1c4d99' }}"
+                            data-color-picker-input value="{{ $sectionContent->heading_text_color ?? '#053070' }}"
                             inputmode="text" />
                     </div>
 
