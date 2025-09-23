@@ -174,6 +174,8 @@ if (! function_exists('getAllCategoryIds')) {
 if (! function_exists('applyPromoDiscount')) {
     function applyPromoDiscount($price, $discountType, $discountAmount)
     {
+        $price = (float) str_replace(',', '', $price);
+
         if ($discountType === 'percentage') {
             return $price - $price * ($discountAmount / 100);
         } elseif ($discountType === 'fixed') {
