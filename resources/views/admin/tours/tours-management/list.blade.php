@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="row align-items-end">
-                                    <div class="col-md-5">
+                                    <div class="col-md-7">
                                         @php
                                             $filteredCategory = isset($_GET['category']) ? $_GET['category'] : null;
                                         @endphp
