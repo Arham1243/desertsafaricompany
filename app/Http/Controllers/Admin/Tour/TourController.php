@@ -312,6 +312,13 @@ class TourController extends Controller
         return redirect()->route('admin.tours.edit', $tour->id)->with('notify_success', 'Tour Added successfully.')->with('activeTab', $request->activeTab);
     }
 
+    public function show($id)
+    {
+        $tour = Tour::findOrFail($id);
+
+        return redirect()->route('admin.tours.edit', $tour->id);
+    }
+
     public function edit($id)
     {
         $tour = Tour::with(['attributes', 'attributes.attributeItems'])->findOrFail($id);
