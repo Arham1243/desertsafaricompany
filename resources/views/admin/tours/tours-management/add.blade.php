@@ -118,6 +118,19 @@
                                                 @enderror
                                             </div>
                                         </div>
+
+                                        <div class="col-12  mt-4">
+                                            <div class="form-fields mb-4">
+                                                <label class="title">Select Category<span
+                                                        class="text-danger">*</span></label>
+                                                <select name="tour[general][category_id]" class="select2-select"
+                                                    data-error="General > Category" data-required should-sort="false">
+                                                    <option value="">Select</option>
+                                                    {!! renderCategories($categories, null) !!}
+                                                </select>
+                                            </div>
+                                        </div>
+
                                         @php
                                             $tourCategoryIds = [];
                                         @endphp

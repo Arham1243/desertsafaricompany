@@ -72,35 +72,30 @@ if (! function_exists('formatDate')) {
 if (! function_exists('renderCategories')) {
     function renderCategories($categories, $selectedCategory = null, $parent_id = null, $level = 0)
     {
-        foreach ($categories as $category) {
-            if ($level === 0 || $category->parent_category_id == $parent_id) {
-                $selected = (old('category_id', $selectedCategory) == $category->id) ? 'selected' : '';
+        foreach ($categories->where('parent_category_id', $parent_id) as $category) {
+            $selected = (old('category_id', $selectedCategory) == $category->id) ? 'selected' : '';
 
-                echo '<option value="'.$category->id.'" '.$selected.'>';
-                echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
-                echo $category->name;
-                echo '</option>';
+            echo '<option value="'.$category->id.'" '.$selected.'>';
+            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+            echo $category->name;
+            echo '</option>';
 
-                renderCategories($categories, $selectedCategory, $category->id, $level + 1);
-            }
+            renderCategories($categories, $selectedCategory, $category->id, $level + 1);
         }
     }
 }
 if (! function_exists('renderCategoriesMulti')) {
     function renderCategoriesMulti($categories, $selectedCategories = [], $parent_id = null, $level = 0)
     {
-        foreach ($categories as $category) {
-            // Treat top-level categories separately
-            if ($level === 0 || $category->parent_category_id == $parent_id) {
-                $selected = in_array($category->id, (array) $selectedCategories) ? 'selected' : '';
+        foreach ($categories->where('parent_category_id', $parent_id) as $category) {
+            $selected = in_array($category->id, (array) $selectedCategories) ? 'selected' : '';
 
-                echo '<option value="'.$category->id.'" '.$selected.'>';
-                echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
-                echo $category->name;
-                echo '</option>';
+            echo '<option value="'.$category->id.'" '.$selected.'>';
+            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+            echo $category->name;
+            echo '</option>';
 
-                renderCategoriesMulti($categories, $selectedCategories, $category->id, $level + 1);
-            }
+            renderCategoriesMulti($categories, $selectedCategories, $category->id, $level + 1);
         }
     }
 }
@@ -237,11 +232,7 @@ if (! function_exists('getTotalNoOfPeopleFromCart')) {
 if (! function_exists('buildTourDetailUrl')) {
     function buildTourDetailUrl($tour, $withSlug = true, $withBase = true)
     {
-        $attachedCategories = $tour->categories;
-
-        $topCategory = $attachedCategories->sortBy('parent_category_id')->first();
-
-        $categorySlug = $topCategory->slug ?? 'no-category';
+        $categorySlug = $tour->category->slug ?? 'no-category';
         $city = $tour->city->slug ?? 'no-city';
         $country = $tour->city->country->iso_alpha2 ?? 'no-country';
         $slug = $tour->slug ?? 'no-slug';
