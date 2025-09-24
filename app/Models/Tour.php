@@ -21,6 +21,11 @@ class Tour extends Model
 
     protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price'];
 
+    public function category()
+    {
+        return $this->belongsTo(TourCategory::class, 'category_id');
+    }
+
     public function categories()
     {
         return $this->belongsToMany(TourCategory::class, 'category_tour');

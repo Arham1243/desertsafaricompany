@@ -122,7 +122,7 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-                                    <div class="form-fields">
+                                    {{-- <div class="form-fields">
                                         <label class="title">Tags <span class="text-danger">*</span> :</label>
 
                                         <select name="tags_ids[]" class="select2-select" multiple placeholder="Select tags">
@@ -136,7 +136,7 @@
                                         @error('tags_ids')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="form-box">
@@ -149,9 +149,9 @@
                                         <div class="upload" data-upload>
                                             <div class="upload-box-wrapper">
                                                 <div class="upload-box show" data-upload-box>
-                                                    <input type="file" name="featured_image"
-                                                        data-error="Feature Image" id="featured_image"
-                                                        class="upload-box__file d-none" accept="image/*" data-file-input>
+                                                    <input type="file" name="featured_image" data-error="Feature Image"
+                                                        id="featured_image" class="upload-box__file d-none" accept="image/*"
+                                                        data-file-input>
                                                     <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
                                                     </div>
                                                     <label for="featured_image" class="upload-box__btn themeBtn">Upload

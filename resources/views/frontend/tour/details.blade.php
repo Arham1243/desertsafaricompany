@@ -84,13 +84,16 @@
         @endphp
 
         @php
-            $fullPhone = $tour->phone_dial_code . $tour->phone_number;
+            $fullPhone = '+' . $tour->phone_dial_code . $tour->phone_number;
         @endphp
 
-        @if (isset($tour->show_phone) && $tour->show_phone === 1 && preg_match('/^\+?\d{10,15}$/', $fullPhone))
-            <a href="tel:{{ $fullPhone }}" class="whatsapp-contact d-flex">
-                <i class='bx bxl-whatsapp'></i>
-            </a>
+        @if ((int) $settings->get('is_global_whatsapp_number_enabled') !== 1)
+            @if (isset($tour->show_phone) && (int) $tour->show_phone === 1)
+                <a href="https://api.whatsapp.com/send?phone={{ $fullPhone }}" target="_blank"
+                    class="whatsapp-contact d-flex">
+                    <i class='bx bxl-whatsapp'></i>
+                </a>
+            @endif
         @endif
 
         <div class=container>
@@ -1385,10 +1388,6 @@
 
         .gt-eesti * {
             font-family: inherit
-        }
-
-        .whatsapp-contact {
-            display: none;
         }
 
         .loader-mask {

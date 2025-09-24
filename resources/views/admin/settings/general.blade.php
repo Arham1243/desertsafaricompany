@@ -242,6 +242,130 @@
 
                         <div class="form-box">
                             <div class="form-box__header">
+                                <div class="title">Global Numbers</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row" x-data="{ whatsappEnabled: {{ $settings->get('is_global_whatsapp_number_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="is_global_whatsapp_number_enabled"
+                                                    :value="whatsappEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">WhatsApp:</div>
+                                                <a href="{{ asset('admin/assets/images/global-whatsapp.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="global_whatsapp_enabled_switch" x-model="whatsappEnabled">
+                                                    <label class="form-check-label"
+                                                        for="global_whatsapp_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12" x-show="whatsappEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <div data-flag-input-wrapper>
+                                                <input type="hidden" name="global_whatsapp_number_dial_code"
+                                                    data-flag-input-dial-code
+                                                    value="{{ $settings->get('global_whatsapp_number_dial_code') ?? '971' }}">
+                                                <input type="hidden" name="global_whatsapp_number_country_code"
+                                                    data-flag-input-country-code
+                                                    value="{{ $settings->get('global_whatsapp_number_country_code') ?? 'ae' }}">
+                                                <input type="text" name="global_whatsapp_number"
+                                                    class="field flag-input" data-flag-input
+                                                    value="{{ $settings->get('global_whatsapp_number') }}"
+                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
+                                                    pattern="[0-9]*"
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                    maxlength="15">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-5">
+                                <div class="row" x-data="{ globalCtaEnabled: {{ $settings->get('is_global_cta_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="is_global_cta_enabled"
+                                                    :value="globalCtaEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">Global Left CTA:</div>
+                                                <a href="{{ asset('admin/assets/images/global-cta.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm">
+                                                    <i class="bx bxs-show"></i>
+                                                </a>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="global_cta_enabled_switch" x-model="globalCtaEnabled">
+                                                    <label class="form-check-label"
+                                                        for="global_cta_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" x-show="globalCtaEnabled" x-transition>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="text-dark title">CTA Number:</label>
+                                                <input type="text" name="global_cta_number"
+                                                    value="{{ $settings->get('global_cta_number') }}" class="field">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="text-dark title">CTA Text:</label>
+                                                <input type="text" name="global_cta_text"
+                                                    value="{{ $settings->get('global_cta_text') }}" class="field">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <div class="text-dark title d-flex align-items-center gap-2">
+                                                    <div>Background Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="global_cta_background_color" data-color-picker></label>
+                                                    <input id="global_cta_background_color" type="text"
+                                                        data-color-picker-input name="global_cta_background_color"
+                                                        value="{{ $settings->get('global_cta_background_color') ?? '#1c4d99' }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-fields">
+                                                <div class="text-dark title d-flex align-items-center gap-2">
+                                                    <div>Text Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="global_cta_text_color" data-color-picker></label>
+                                                    <input id="global_cta_text_color" type="text"
+                                                        data-color-picker-input name="global_cta_text_color"
+                                                        value="{{ $settings->get('global_cta_text_color') ?? '#ffffff' }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="form-box">
+                            <div class="form-box__header">
                                 <div class="title">Contacts</div>
                             </div>
                             <div class="form-box__body">
@@ -286,27 +410,6 @@
                                                 value="{{ $settings->get('marketing_email') }}" class="field">
                                         </div>
                                     </div>
-
-                                    <div class="col-md-12">
-                                        <div class="form-fields">
-                                            <label class="title">WhatsApp Number:</label>
-                                            <div data-flag-input-wrapper>
-                                                <input type="hidden" name="whatsapp_number_dial_code"
-                                                    data-flag-input-dial-code
-                                                    value="{{ $settings->get('whatsapp_number_dial_code') }}">
-                                                <input type="hidden" name="whatsapp_number_country_code"
-                                                    data-flag-input-country-code
-                                                    value="{{ $settings->get('whatsapp_number_country_code') }}">
-                                                <input type="text" name="whatsapp_number" class="field flag-input"
-                                                    data-flag-input value="{{ $settings->get('whatsapp_number') }}"
-                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
-                                                    pattern="[0-9]*"
-                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                                    maxlength="15">
-                                            </div>
-                                        </div>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>

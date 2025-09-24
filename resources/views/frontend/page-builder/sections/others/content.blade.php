@@ -25,9 +25,9 @@
         </div>
     </div>
 @else
-    <div class="editor-section mar-y">
+    <div class="editor-section my-5">
         <div class="container">
-            <div class="editor-content">
+            <div class="text-document">
                 {!! $content->content ?? '' !!}
             </div>
         </div>

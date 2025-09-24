@@ -16,9 +16,9 @@
                     class="imgFluid page-title__bg">
             </div>
         @endif
-        <div class="editor-section mar-y">
+        <div class="text-document editor-section my-5">
             <div class="container">
-                <div class="editor-content">
+                <div class="">
                     {!! $page->content ?? '' !!}
                 </div>
             </div>

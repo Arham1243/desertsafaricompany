@@ -87,10 +87,9 @@
                         <div class="spinner-border spinner-border-sm" v-if="loading"></div>
                         <span v-else>Create an account</span>
                     </button>
-                    <div class="info">By creating an account, you agree to our <a
-                            href="{{ route('frontend.privacy_policy') }}">Privacy
-                            Policy</a>.
-                        See our <a href="{{ route('frontend.terms_conditions') }}">Terms and Conditions</a>.</div>
+                    <div class="info">By creating an account, you agree to our Privacy
+                        Policy.
+                        See our Terms and Conditions.</div>
                 </form>
 
                 <form @submit.prevent="performAuth" v-if="challenge === 'login'">

@@ -107,7 +107,7 @@
                                                 <label class="title">Select Publish Date :</label>
                                                 <input readonly type="text" class="field date-picker"
                                                     placeholder="Select" name="json_content[publish_date]"
-                                                    value="{{ old('json_content.publish_date', $jsonContent['publish_date'] ?? null) }}"
+                                                    value="{{ old('json_content.publish_date', $jsonContent['publish_date'] ?? now()->format('Y-m-d')) }}"
                                                     autocomplete="off">
                                                 @error('json_content.publish_date')
                                                     <div class="text-danger">{{ $message }}</div>
@@ -274,7 +274,7 @@
                                         @enderror
                                     </div>
 
-                                    <div class="form-fields">
+                                    {{-- <div class="form-fields">
                                         <label class="title">Tags <span class="text-danger">*</span> :</label>
 
                                         <select name="tags_ids[]" class="select2-select" multiple
@@ -290,7 +290,7 @@
                                         @error('tags_ids')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
-                                    </div>
+                                    </div> --}}
 
                                 </div>
                             </div>

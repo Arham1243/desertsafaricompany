@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DBConsoleController;
 use App\Http\Controllers\Admin\EnvEditorController;
 use App\Http\Controllers\Admin\IcalController;
+use App\Http\Controllers\Admin\InquiryController;
 use App\Http\Controllers\Admin\Locations\CityController;
 use App\Http\Controllers\Admin\Locations\CountryController;
 use App\Http\Controllers\Admin\LogController;
@@ -87,6 +88,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('tour-authors', TourAuthorController::class);
 
     Route::resource('tour-popups', TourDetailPopupController::class);
+    Route::resource('inquiries', InquiryController::class);
 
     Route::prefix('tour-reviews')->name('tour-reviews.')->group(function () {
         Route::controller(ReviewController::class)->group(function () {

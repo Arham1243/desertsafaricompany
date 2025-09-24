@@ -192,7 +192,6 @@ body :is(.dirham.dirham) {
 
 .sidebar-header__icon {
     width: 150px;
-    height: 35px;
 }
 
 a.sidebar-header {
@@ -365,6 +364,7 @@ ul.sidebar-nav li .active {
     align-items: center;
     justify-content: space-between;
     margin: 0 0 1rem;
+    flex-wrap: wrap;
 }
 
 .custom-sec__header .heading {
@@ -1958,9 +1958,10 @@ input[readonly]:not(.date-picker, .date-picker-time) {
 .permalink {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.1rem 0.5rem;
     margin: 0.25rem 0 0.35rem;
     width: 100%;
+    flex-wrap: wrap;
 }
 
 .permalink .title {

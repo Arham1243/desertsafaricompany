@@ -16,8 +16,7 @@
                             </div>
                         @endif
                     </div>
-                    <a href="{{ route('frontend.page.show', $page->slug) }}?viewer=admin" target="_blank"
-                        class="themeBtn">View
+                    <a href="{{ buildUrl(url('/'), $page->slug) }}?viewer=admin" target="_blank" class="themeBtn">View
                         Page</a>
                 </div>
 

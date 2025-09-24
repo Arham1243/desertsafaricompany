@@ -30,7 +30,7 @@
                             </div>
                             <div class="col-md-7">
                                 <div class="row align-items-end">
-                                    <div class="col-md-5">
+                                    <div class="col-md-7">
                                         @php
                                             $filteredCategory = isset($_GET['category']) ? $_GET['category'] : null;
                                         @endphp
@@ -61,7 +61,7 @@
                                             </div>
                                         </th>
                                         <th>Title</th>
-                                        <th>Categories</th>
+                                        <th>Category</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th></th>
@@ -82,13 +82,7 @@
                                                     href="{{ buildTourDetailUrl($item) }}"
                                                     class="link">{{ buildTourDetailUrl($item) }}</a>
                                             </td>
-                                            @php
-                                                $chunks = $item->categories->chunk(1);
-                                                $lines = $chunks->map(
-                                                    fn($chunk) => $chunk->pluck('name')->implode(', '),
-                                                );
-                                            @endphp
-                                            <td>{!! $lines->implode('<br>') ?: 'N/A' !!}</td>
+                                            <td>{{ $item->category->name ?? 'N/A' }}</td>
                                             <td>{{ formatDateTime($item->created_at) }}</td>
                                             <td>
                                                 <span

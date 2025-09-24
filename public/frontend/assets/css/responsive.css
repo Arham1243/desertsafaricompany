@@ -341,14 +341,8 @@
         height: 100%;
     }
 
-    .whatsapp-contact {
-        font-size: 0.85rem;
-        padding: 0.5rem 0.75rem;
-        gap: 6px;
-    }
-
     .whatsapp-contact i {
-        font-size: 16px;
+        font-size: 30px;
     }
 
     .comment-card {
@@ -772,5 +766,16 @@
     }
     .author-info {
         font-size: 14px;
+    }
+    .global-cta {
+        font-size: 12px;
+        padding: 12px 11px;
+        gap: 5px;
+    }
+    .text-document {
+        font-size: 12px;
+    }
+    .text-document h1 {
+        font-size: 2em;
     }
 }

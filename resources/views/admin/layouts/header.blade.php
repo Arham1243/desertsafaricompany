@@ -31,10 +31,10 @@
                                 </div>
 
                                 <!-- Notification Icon -->
-                                <div class="notifi-icon">
+                                {{-- <div class="notifi-icon">
                                     <i class='bx bxs-bell'></i>
                                     <div class="notification-count">0</div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
