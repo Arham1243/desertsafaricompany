@@ -157,6 +157,26 @@
                                                 </select>
                                             </div>
                                         </div>
+                                        <div class="col-12">
+                                            <div class="form-fields">
+                                                <label class="title">Select City <span class="text-danger">*</span>:</label>
+                                                <select name="tour[location][normal_location][city_id]" class="select2-select"
+                                                    data-error="Location > City" placeholder="Select City"
+                                                    autocomplete="new-password" data-required>
+                                                    <option value="" selected disabled>Select City</option>
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->id }}"
+                                                            {{ old('city_id', $tour->city_id) == $city->id ? 'selected' : '' }}>
+                                                            {{ $city->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+
+                                                @error('city_ids')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
                                         <div class="col-md-6 col-12 mt-4">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-2">
@@ -729,24 +749,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
-                                        <div class="form-fields">
-                                            <label class="title">Select City <span class="text-danger">*</span>:</label>
-                                            <select name="tour[location][normal_location][city_id]" class="select2-select"
-                                                data-error="Location > City" placeholder="Select City"
-                                                autocomplete="new-password" data-required>
-                                                <option value="" selected disabled>Select City</option>
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"
-                                                        {{ old('city_id', $tour->city_id) == $city->id ? 'selected' : '' }}>
-                                                        {{ $city->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
 
-                                            @error('city_ids')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
                                         <div class="form-fields">
                                             <label class="title">Real Tour address
                                                 :</label>

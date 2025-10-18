@@ -107,6 +107,7 @@
                                                 @enderror
                                             </div>
                                         </div>
+
                                         <div class="col-12 mt-4">
                                             <div class="form-fields">
                                                 <label class="title">Lines to Display Before "See More" </label>
@@ -143,6 +144,25 @@
                                                     data-error="Category" data-required should-sort="false" multiple>
                                                     {!! renderCategoriesMulti($categories, $tourCategoryIds) !!}
                                                 </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-12">
+                                            <div class="form-fields">
+                                                <label class="title">Select City <span class="text-danger">*</span>:</label>
+                                                <select name="tour[location][normal_location][city_id]" class="select2-select"
+                                                    data-error="Location > City" placeholder="Select City"
+                                                    autocomplete="new-password" data-required>
+                                                    <option value="" selected disabled>Select City</option>
+                                                    @foreach ($cities as $city)
+                                                        <option value="{{ $city->id }}"
+                                                            {{ old('city_id') == $city->id ? 'selected' : '' }}>
+                                                            {{ $city->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                @error('city_ids')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 mt-4">
@@ -234,7 +254,7 @@
                                                                         <td>
                                                                             <textarea :name="`tour[general][features][${index}][title]`" x-model="feature.title" class="field" rows="5"
                                                                                 placeholder="Enter title">
-</textarea>
+                                                                            </textarea>
                                                                         </td>
                                                                         <td>
                                                                             <textarea :name="`tour[general][features][${index}][content]`" x-model="feature.content" class="field"
@@ -427,7 +447,7 @@
                                                                                             <textarea x-model="section.category.items[itemIndex]"
                                                                                                 :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`" rows="5" placeholder="Content"
                                                                                                 class="field">
-</textarea>
+                                                                        </textarea>
                                                                                             <button type="button"
                                                                                                 @click="section.category.items.splice(itemIndex, 1)"
                                                                                                 class="delete-btn delete-btn--static align-self-center">
@@ -644,23 +664,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
-                                        <div class="form-fields">
-                                            <label class="title">Select City <span class="text-danger">*</span>:</label>
-                                            <select name="tour[location][normal_location][city_id]" class="select2-select"
-                                                data-error="Location > City" placeholder="Select City"
-                                                autocomplete="new-password" data-required>
-                                                <option value="" selected disabled>Select City</option>
-                                                @foreach ($cities as $city)
-                                                    <option value="{{ $city->id }}"
-                                                        {{ old('city_id') == $city->id ? 'selected' : '' }}>
-                                                        {{ $city->name }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
-                                            @error('city_ids')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
+
                                         <div class="form-fields">
                                             <label class="title">Real Tour address
                                                 :</label>
