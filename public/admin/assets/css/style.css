@@ -2742,3 +2742,19 @@ table th {
 .middle-align {
     vertical-align: middle;
 }
+.add-btn.add-btn--static {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 25px;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-primary);
+    color: #fff !important;
+    font-size: 0.75rem;
+    border-radius: 5px;
+    border: none;
+}
+
+

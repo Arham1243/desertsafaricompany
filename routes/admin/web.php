@@ -65,6 +65,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('recovery/{resource}', [RecoveryController::class, 'index'])->name('recovery.index');
 
     Route::resource('blogs', BlogController::class);
+    Route::get('blogs/duplicate/{id}', [BlogController::class, 'duplicate'])->name('blogs.duplicate');
     Route::get('media/{media}', [BlogController::class, 'deleteMedia'])->name('media.delete');
     Route::resource('blogs-categories', BlogCategoriesController::class);
     Route::resource('blogs-tags', BlogTagsController::class);

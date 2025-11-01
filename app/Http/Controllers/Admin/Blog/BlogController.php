@@ -222,4 +222,33 @@ class BlogController extends Controller
 
         return redirect()->route('admin.blogs.edit', $blog->id)->with('notify_success', 'Blog updated successfully!');
     }
+    public function duplicate($id)
+    {
+        $blog = Blog::findOrFail($id);
+
+        $newBlog =  $blog->replicate();
+
+        $newBlog->title = $blog->title.' - Copy';
+        $newBlog->status = 'draft';
+        $newBlog->slug = $this->createSlug($newBlog->title, 'countries');
+
+        $newBlog->save();
+        $this->duplicateSeoData($blog, $newBlog);
+
+        return redirect()->route('admin.blogs.index')->with('notify_success', 'Blog duplicated successfully.');
+    }
+
+    public function duplicateSeoData($blog, $newBlog)
+    {
+        $blog->load('seo');
+
+        if ($blog->seo) {
+            $newSeoData = $blog->seo->replicate();
+
+            $newSeoData->seoable_id = $newBlog->id;
+            $newSeoData->seoable_type = get_class($newBlog);
+
+            $newSeoData->save();
+        }
+    }
 }

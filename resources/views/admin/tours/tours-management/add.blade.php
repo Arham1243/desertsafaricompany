@@ -261,11 +261,17 @@
                                                                                 placeholder="Enter content" rows="5"></textarea>
                                                                         </td>
                                                                         <td>
-                                                                            <button type="button"
-                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                @click="removeFeature(index)">
-                                                                                <i class='bx bxs-trash-alt'></i>
-                                                                            </button>
+                                                                            <div class="d-flex gap-2">
+                                                                                <button type="button"
+                                                                                    class="delete-btn ms-auto delete-btn--static"
+                                                                                    @click="removeFeature(index)">
+                                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                                </button>
+                                                                                <button type="button" class="add-btn  ms-auto add-btn--static"
+                                                                                    @click="addFeature(index)">
+                                                                                    <i class='bx bx-plus'></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </template>
@@ -2877,13 +2883,22 @@
                     title: '',
                     content: ''
                 }],
-                addFeature() {
-                    this.features.push({
+                addFeature(index = null) {
+                    const newFeature = {
                         icon: '',
                         icon_color: '',
                         title: '',
                         content: ''
-                    });
+                    };
+
+                    // If index is given, insert after that index
+                    if (index !== null) {
+                        this.features.splice(index + 1, 0, newFeature);
+                    } else {
+                        // Otherwise, push to the end
+                        this.features.push(newFeature);
+                    }
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
