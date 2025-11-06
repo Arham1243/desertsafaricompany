@@ -759,6 +759,18 @@ th.no-sort span.dt-column-order::before {
     font-weight: 600;
 }
 
+.universal-table .dt-layout-cell.dt-layout-end {
+    width: 40%;
+}
+
+.universal-table .dt-layout-cell.dt-layout-end .dt-search {
+    width: 100%;
+}
+
+.universal-table .dt-layout-cell.dt-layout-end .dt-search > input {
+    width: 99%;
+}
+
 .universal-table tbody tr td {
     font-size: 15px;
     font-weight: 500;
@@ -2756,5 +2768,3 @@ table th {
     border-radius: 5px;
     border: none;
 }
-
-

@@ -25,7 +25,9 @@ class TourController extends Controller
     public function index()
     {
         $tourCategories = TourCategory::get();
+        $tourCities = City::get();
         $filteredCategory = request()->query('category');
+        $filteredCity = request()->query('city');
 
         $tours = Tour::with('categories')
             ->when($filteredCategory, function ($query) use ($filteredCategory) {
@@ -33,10 +35,13 @@ class TourController extends Controller
                     $q->where('tour_category_id', $filteredCategory);
                 });
             })
+            ->when($filteredCity, function ($query) use ($filteredCity) {
+                $query->where('city_id', $filteredCity);
+            })
             ->latest()
             ->get();
 
-        return view('admin.tours.tours-management.list', compact('tours', 'tourCategories'))->with('title', 'All Tours');
+        return view('admin.tours.tours-management.list', compact('tours', 'tourCategories', 'tourCities'))->with('title', 'All Tours');
     }
 
     public function create()
@@ -75,15 +80,15 @@ class TourController extends Controller
         $slug = $this->createSlug($slugText, 'tours');
 
         $inclusions = ! empty($general['inclusions']) && ! in_array(null, $general['inclusions'], true)
-            ? json_encode(array_filter($general['inclusions'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['inclusions'], fn($value) => $value !== null))
             : null;
 
         $exclusions = ! empty($general['exclusions']) && ! in_array(null, $general['exclusions'], true)
-            ? json_encode(array_filter($general['exclusions'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['exclusions'], fn($value) => $value !== null))
             : null;
 
         $features = ! empty($general['features']) && ! in_array(null, $general['features'], true)
-            ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['features'], fn($value) => $value !== null))
             : null;
         $addOns = $request->input('addOns', []);
         $extraPrices = ! empty($pricing['extra_price']) ? json_encode($pricing['extra_price']) : null;
@@ -230,7 +235,7 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
-                    $promoSlug = Str::slug(strip_tags($promoTitle)).'-'.uniqid();
+                    $promoSlug = Str::slug(strip_tags($promoTitle)) . '-' . uniqid();
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
@@ -242,7 +247,7 @@ class TourController extends Controller
                 }
                 if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
                     $promoAddOns = collect($promoAddOns)->map(function ($addon) {
-                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])).'-'.uniqid();
+                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])) . '-' . uniqid();
 
                         return $addon;
                     })->all();
@@ -356,15 +361,15 @@ class TourController extends Controller
         $slug = $this->createSlug($slugText, 'tours', $tour->slug);
 
         $inclusions = ! empty($general['inclusions']) && ! in_array(null, $general['inclusions'], true)
-            ? json_encode(array_filter($general['inclusions'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['inclusions'], fn($value) => $value !== null))
             : null;
 
         $exclusions = ! empty($general['exclusions']) && ! in_array(null, $general['exclusions'], true)
-            ? json_encode(array_filter($general['exclusions'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['exclusions'], fn($value) => $value !== null))
             : null;
 
         $features = ! empty($general['features']) && ! in_array(null, $general['features'], true)
-            ? json_encode(array_filter($general['features'], fn ($value) => $value !== null))
+            ? json_encode(array_filter($general['features'], fn($value) => $value !== null))
             : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
         $addOns = $request->input('addOns', []);
@@ -516,7 +521,7 @@ class TourController extends Controller
 
             if ($pricing['price_type'] === 'promo' && isset($pricing['promo'])) {
                 foreach ($pricing['promo']['promo_title'] as $index => $promoTitle) {
-                    $promoSlug = Str::slug(strip_tags($promoTitle)).'-'.uniqid();
+                    $promoSlug = Str::slug(strip_tags($promoTitle)) . '-' . uniqid();
                     TourPricing::create([
                         'tour_id' => $tour->id,
                         'price_type' => $pricing['price_type'],
@@ -528,7 +533,7 @@ class TourController extends Controller
                 }
                 if (isset($pricing['enable_promo_addOns']) && $pricing['enable_promo_addOns'] === '1' && ! empty($promoAddOns)) {
                     $promoAddOns = collect($promoAddOns)->map(function ($addon) {
-                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])).'-'.uniqid();
+                        $addon['promo_slug'] = Str::slug(strip_tags($addon['title'])) . '-' . uniqid();
 
                         return $addon;
                     })->all();
@@ -639,7 +644,7 @@ class TourController extends Controller
 
         $newTour = $tour->replicate();
 
-        $newTour->title = $tour->title.' - Copy';
+        $newTour->title = $tour->title . ' - Copy';
         $newTour->status = 'draft';
         $newTour->slug = $this->createSlug($newTour->title, 'tours');
 
