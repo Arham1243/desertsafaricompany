@@ -285,15 +285,30 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mt-3">
+
+
+                                        <div class="col-md-12 mt-3"  x-data="{ includes: 1 }">
                                             <div class="form-fields">
-                                                <label class="title title--sm mb-3">Include:</label>
-                                                <div class="mb-4">
+                                                <div class="d-flex align-items-center gap-3  mb-3">
+                                                        <label class="title title--sm mb-0">Include:</label>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_includes_switch"
+                                                            x-model="includes"
+                                                            @change="includes = includes ? 1 : 0" value="1"
+                                                            checked
+                                                            name="enable_includes">
+                                                            <label class="form-check-label"
+                                                            for="enable_includes_switch">Enabled</label>
+                                                        </div>
+                                                </div>
+                                                <div class="mb-4"  x-show="includes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field">
                                                 </div>
-                                                <div class="repeater-table" data-repeater>
+                                                <div class="repeater-table"  x-show="includes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -322,11 +337,16 @@
                                                                         type="text" class="field">
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class='bx bxs-trash-alt'></i>
-                                                                    </button>
+                                                                    <div class="d-flex gap-2">
+                                                                        <button type="button"
+                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                            data-repeater-remove disabled>
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </button>
+                                                                        <button type="button" class="add-btn  ms-auto add-btn--static" data-repeater-insert>
+                                                                            <i class='bx bx-plus'></i>
+                                                                        </button>
+                                                                </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -338,15 +358,29 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mt-3">
+                                        <div class="col-md-12 mt-3"  x-data="{ excludes: 1 }">
                                             <div class="form-fields">
-                                                <label class="title title--sm mb-3">Exclude:</label>
-                                                <div class="mb-4">
+                                                 <div class="d-flex align-items-center gap-3  mb-3">
+                                                    <label class="title title--sm mb-0">Exclude:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="enable_excludes_switch"
+                                                        x-model="excludes"
+                                                        @change="excludes = excludes ? 1 : 0" value="1"
+                                                        checked
+                                                        name="enable_excludes">
+                                                        <label class="form-check-label"
+                                                        for="enable_excludes_switch">Enabled</label>
+                                                    </div>
+                                                 </div>
+
+                                                <div class="mb-4"  x-show="excludes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
                                                         class="field">
                                                 </div>
-                                                <div class="repeater-table" data-repeater>
+                                                <div class="repeater-table"  x-show="excludes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -374,11 +408,16 @@
                                                                         type="text" class="field">
                                                                 </td>
                                                                 <td>
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class='bx bxs-trash-alt'></i>
-                                                                    </button>
+                                                                    <div class="d-flex gap-2">
+                                                                        <button type="button"
+                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                            data-repeater-remove disabled>
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </button>
+                                                                        <button type="button" class="add-btn  ms-auto add-btn--static" data-repeater-insert>
+                                                                            <i class='bx bx-plus'></i>
+                                                                        </button>
+                                                                </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -411,6 +450,26 @@
                                                 <div x-data="{
                                                     formData: {
                                                         sections: []
+                                                    },
+                                                    addSection(afterIndex = null) {
+                                                        const newSection = { title: '', category: { title: '', items: [] } };
+                                                        if (afterIndex === null || afterIndex === this.formData.sections.length - 1) {
+                                                            // Append at end
+                                                            this.formData.sections.push(newSection);
+                                                        } else {
+                                                            // Insert in between
+                                                            this.formData.sections.splice(afterIndex + 1, 0, newSection);
+                                                        }
+                                                    },
+                                                    addItem(sectionIndex, afterItemIndex = null) {
+                                                        if (!this.formData.sections[sectionIndex].category.items) {
+                                                            this.formData.sections[sectionIndex].category.items = [];
+                                                        }
+                                                        if (afterItemIndex === null || afterItemIndex === this.formData.sections[sectionIndex].category.items.length - 1) {
+                                                            this.formData.sections[sectionIndex].category.items.push('');
+                                                        } else {
+                                                            this.formData.sections[sectionIndex].category.items.splice(afterItemIndex + 1, 0, '');
+                                                        }
                                                     }
                                                 }">
                                                     <div class="repeater-table">
@@ -453,13 +512,20 @@
                                                                                             <textarea x-model="section.category.items[itemIndex]"
                                                                                                 :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`" rows="5" placeholder="Content"
                                                                                                 class="field">
-                                                                        </textarea>
-                                                                                            <button type="button"
-                                                                                                @click="section.category.items.splice(itemIndex, 1)"
-                                                                                                class="delete-btn delete-btn--static align-self-center">
-                                                                                                <i
-                                                                                                    class="bx bxs-trash-alt"></i>
-                                                                                            </button>
+                                                                                            </textarea>
+                                                                                            <div class="d-flex gap-2">
+                                                                                                <button type="button"
+                                                                                                    @click="section.category.items.splice(itemIndex, 1)"
+                                                                                                    class="delete-btn delete-btn--static align-self-center">
+                                                                                                    <i
+                                                                                                        class="bx bxs-trash-alt"></i>
+                                                                                                </button>
+                                                                                                <button type="button"
+                                                                                                    @click="addItem(sectionIndex, itemIndex)"
+                                                                                                    class="add-btn  add-btn--static align-self-center">
+                                                                                                    <i class="bx bx-plus"></i>
+                                                                                                </button>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </template>
                                                                                     <button type="button"
@@ -473,11 +539,20 @@
 
                                                                         <!-- Delete Section -->
                                                                         <td>
-                                                                            <button type="button"
-                                                                                @click="formData.sections.splice(sectionIndex, 1)"
-                                                                                class="delete-btn delete-btn--static">
-                                                                                <i class="bx bxs-trash-alt"></i>
-                                                                            </button>
+                                                                            <div class="d-flex gap-2">
+                                                                                <button type="button"
+                                                                                    @click="formData.sections.splice(sectionIndex, 1)"
+                                                                                    class="delete-btn delete-btn--static">
+                                                                                    <i class="bx bxs-trash-alt"></i>
+                                                                                </button>
+
+                                                                                <!-- ✅ Add section below -->
+                                                                                <button type="button"
+                                                                                    @click="addSection(sectionIndex)"
+                                                                                    class="add-btn  add-btn--static">
+                                                                                    <i class="bx bx-plus"></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </template>
@@ -531,11 +606,17 @@
                                                                     </div>
                                                                 </td>
                                                                 <td>
+                                                                    <div class="d-flex gap-2">
                                                                     <button type="button"
                                                                         class="delete-btn ms-auto delete-btn--static"
                                                                         data-repeater-remove disabled>
                                                                         <i class='bx bxs-trash-alt'></i>
                                                                     </button>
+                                                                    <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                            <i class='bx bx-plus'></i>
+                                                                        </button>
+                                                                    </div>
+
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -684,9 +765,23 @@
                                         </div>
                                     </div>
                                     <div x-show="locationType === 'normal_itinerary'">
-                                        <div class="form-fields">
-                                            <label class=" d-flex align-items-center justify-content-between"><span
-                                                    class="title title--sm mb-0">Itinerary:</span>
+                                        <div class="form-fields"  x-data="{ itinerary: 1 }">
+                                            <label class=" d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center gap-3  mb-0">
+                                                       <span class="title title--sm mb-0">Itinerary:</span>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_itinerary_switch"
+                                                            x-model="itinerary"
+                                                            @change="itinerary = itinerary ? 1 : 0" value="1"
+                                                            checked
+                                                            name="enable_itinerary">
+                                                            <label class="form-check-label"
+                                                            for="enable_itinerary_switch">Enabled</label>
+                                                        </div>
+                                                </div>
+
                                                 <span class="title text-dark d-flex align-items-center gap-1">Section
                                                     Preview:
                                                     <a href="{{ asset('admin/assets/images/itinerary.png') }}"
@@ -704,7 +799,7 @@
                                                     Copy
                                                 </button>
                                             </span>
-                                            <div class="repeater-table" data-repeater>
+                                            <div class="repeater-table"  x-show="itinerary == 1" data-repeater>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -790,11 +885,24 @@
                                         </div>
                                     </div>
                                     <div x-show="locationType === 'itinerary_experience'">
-                                        <div class="plan-itenirary">
+                                        <div class="plan-itenirary"   x-data="{ planItineraryExperience: 1 }">
                                             <div class="form-fields">
                                                 <label class="d-flex align-items-center mb-3 justify-content-between">
-                                                    <span class="title title--sm mb-0">Plan Itinerary
+                                                    <div class="d-flex align-items-center gap-3  mb-0">
+                                                       <span class="title title--sm mb-0">Plan Itinerary
                                                         Experience:</span>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_plan_itinerary_experience_switch"
+                                                            x-model="planItineraryExperience"
+                                                            @change="planItineraryExperience = planItineraryExperience ? 1 : 0" value="1"
+                                                            checked
+                                                            name="enable_plan_itinerary_experience">
+                                                            <label class="form-check-label"
+                                                            for="enable_plan_itinerary_experience_switch">Enabled</label>
+                                                        </div>
+                                                </div>
                                                     <span class="title text-dark d-flex align-items-center gap-1">
                                                         Section Preview:
                                                         <a href="{{ asset('admin/assets/images/itinerary-exp.png') }}"
@@ -804,7 +912,7 @@
                                                 </label>
 
                                             </div>
-                                            <div class="form-fields">
+                                            <div class="form-fields" x-show="planItineraryExperience == 1">
                                                 <div class="title text-dark d-flex align-items-center gap-2">
                                                     <div>Map Iframe Link:</div>
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
@@ -818,7 +926,7 @@
                                             </div>
 
 
-                                            <div x-data="handlePickupDropoff()">
+                                            <div x-data="handlePickupDropoff()"  x-show="planItineraryExperience == 1" >
                                                 <template x-if="inheritFromPickup">
                                                     <div class="d-none">
                                                         <template x-for="(entry, index) in formData.dropoff"
@@ -1060,7 +1168,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-4 repeater-table">
+                                            <div class="form-fields mt-4 repeater-table"  x-show="planItineraryExperience == 1" >
                                                 <div class="form-fields">
                                                     <div class="d-flex">
                                                         <label class="title title--sm mb-0">Itinerary:</label>
@@ -1110,7 +1218,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-check d-none" id="add-stop-btn">
+                                            <div class="form-check d-none" id="add-stop-btn" >
                                                 <input class="form-check-input" type="checkbox"
                                                     name="itinerary_experience[enable_sub_stops]"
                                                     id="itinerary_experience_enabled_sub_stops" value="1">

@@ -132,10 +132,10 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
     function populateMainStopDropdown() {
         const stopNames = document.querySelectorAll("textarea[name^='itinerary_experience[stops]'][name$='[title]']");
         const mainStopDropdowns = document.querySelectorAll(".main-stop-dropdown");
-    
+
         // Store currently selected values for each dropdown
         const selectedValues = Array.from(mainStopDropdowns).map(dropdown => dropdown.value);
-    
+
         // Add options from stop title inputs
         stopNames.forEach(stopInput => {
             const stopTitle = stopInput.value.trim();
@@ -151,7 +151,7 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 });
             }
         });
-    
+
         // Restore previously selected values in the dropdowns
         mainStopDropdowns.forEach(dropdown => {
             const currentValue = selectedValues.find(value => value === dropdown.value);
@@ -159,8 +159,8 @@ if (itineraryTableBody && subStopsSection && subStopsCheckbox) {
                 dropdown.value = currentValue;
             }
         });
-    }    
-    
+    }
+
 
     updateOrderFields();
 }
@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (deleteBtn) {
                 deleteBtn.disabled = index === 0;
             }
-        });        
+        });
     }
 
     function updateUploadBox(newItem) {
@@ -273,32 +273,40 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    function addItem(container) {
+    function addItem(container, afterElement = null) {
         const list = container.querySelector("[data-repeater-list]");
         const firstItem = list.querySelector("[data-repeater-item]");
         const newItem = firstItem.cloneNode(true);
 
+        // Reset inputs
         const inputs = newItem.querySelectorAll("input, textarea");
         inputs.forEach((input) => {
             if (input.type !== "checkbox") {
                 input.value = "";
-            } else if (input.type == "checkbox") {
+            } else {
                 input.checked = false;
             }
         });
         const selects = newItem.querySelectorAll("select");
-        selects.forEach((select) => {
-            select.selectedIndex = 0;
-        });
+        selects.forEach((select) => (select.selectedIndex = 0));
 
         updateUploadBox(newItem);
         updateCheckboxes(newItem);
-        list.appendChild(newItem);
+
+        // ✅ If afterElement is provided → insert after it
+        if (afterElement) {
+            afterElement.insertAdjacentElement("afterend", newItem);
+        } else {
+            // Otherwise → append at the end
+            list.appendChild(newItem);
+        }
+
         updateDeleteButtonState(container);
         updateIndices(container);
         initializeSubRepeater(newItem);
-        calculatePromoPrice()
+        calculatePromoPrice();
     }
+
 
     function removeItem(button) {
         const container = button.closest("[data-repeater]");
@@ -318,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 addBtn?.addEventListener("click", function () {
                     addSubItem(subContainer);
                 });
-    
+
                 subContainer.addEventListener("click", function (e) {
                     if (e.target.closest("[data-sub-repeater-remove]")) {
                         removeSubItem(
@@ -326,10 +334,10 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                     }
                 });
-    
+
                 updateSubDeleteButtonState(subContainer);
             }
-            
+
         }
     }
 
@@ -350,6 +358,11 @@ document.addEventListener("DOMContentLoaded", function () {
             container.addEventListener("click", function (e) {
                 if (e.target.closest("[data-repeater-remove]")) {
                     removeItem(e.target.closest("[data-repeater-remove]"));
+                }
+
+                 if (e.target.closest("[data-repeater-insert]")) {
+                    const currentItem = e.target.closest("[data-repeater-item]");
+                    addItem(container, currentItem); // insert after current item
                 }
             });
 

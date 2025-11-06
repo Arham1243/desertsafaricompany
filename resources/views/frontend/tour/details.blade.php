@@ -530,7 +530,7 @@
                                             </div>
                                         @endif
                                         <div class="row pt-2">
-                                            @if (json_decode($tour->inclusions))
+                                            @if ($tour->enable_includes && json_decode($tour->inclusions))
                                                 @php
                                                     $inclusion_icon_color = $settings->get('inclusion_icon_color');
                                                 @endphp
@@ -557,7 +557,7 @@
                                                     @endforeach
                                                 </div>
                                             @endif
-                                            @if (json_decode($tour->exclusions))
+                                            @if ($tour->enable_excludes && json_decode($tour->exclusions))
                                                 @php
                                                     $exclusion_icon_color = $settings->get('exclusion_icon_color');
                                                 @endphp
@@ -619,11 +619,11 @@
                             </div>
                         @endif
 
-                        @if ($tour->location_type === 'normal_itinerary')
+                        @if ($tour->location_type === 'normal_itinerary' )
                             <div class=tour-content__line></div>
                             <div class="pb-2 pt-3">
                                 <div class=itinerary>
-                                    @if ($tour->normalItineraries->isNotEmpty())
+                                    @if ($tour->enable_itinerary && $tour->normalItineraries->isNotEmpty())
                                         <div class=tour-content__SubTitle>
                                             Itinerary
                                         </div>
@@ -668,7 +668,7 @@
                             </div>
                         @endif
 
-                        @if ($tour->location_type === 'itinerary_experience')
+                        @if ($tour->location_type === 'itinerary_experience' && $tour->enable_plan_itinerary_experience )
                             @php
                                 $itinerary_section_background_line_color = $settings->get(
                                     'itinerary_section_background_line_color',
@@ -910,6 +910,9 @@
 
                         @if ($insideStopsWrapper)
                     </div> {{-- close destinations-wrapper if still open --}}
+
+
+
                     @endif
 
                     @if (isset($itineraryExperience['dropoff_locations']))

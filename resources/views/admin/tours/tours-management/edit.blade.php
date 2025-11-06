@@ -281,11 +281,22 @@
                                                                                 placeholder="Enter content" rows="5"></textarea>
                                                                         </td>
                                                                         <td>
-                                                                            <button type="button"
+                                                                            {{-- <button type="button"
                                                                                 class="delete-btn ms-auto delete-btn--static"
                                                                                 @click="removeFeature(index)">
                                                                                 <i class='bx bxs-trash-alt'></i>
-                                                                            </button>
+                                                                            </button> --}}
+                                                                             <div class="d-flex gap-2">
+                                                                                <button type="button"
+                                                                                    class="delete-btn ms-auto delete-btn--static"
+                                                                                    @click="removeFeature(index)">
+                                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                                </button>
+                                                                                <button type="button" class="add-btn  ms-auto add-btn--static"
+                                                                                    @click="addFeature(index)">
+                                                                                    <i class='bx bx-plus'></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </template>
@@ -305,17 +316,31 @@
                                             $inclusions = empty($inclusions) ? [''] : $inclusions;
                                         @endphp
 
-                                        <div class="col-md-12 mt-3">
+                                        <div class="col-md-12 mt-3"  x-data="{ includes: {{$tour->enable_includes}} }">
                                             <div class="form-fields">
-                                                <label class="title title--sm mb-3">Include:</label>
-                                                <div class="mb-4">
+                                                <div class="d-flex align-items-center gap-3  mb-3">
+                                                        <label class="title title--sm mb-0">Include:</label>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_includes_switch"
+                                                            x-model="includes"
+                                                            @change="includes = includes ? 1 : 0"
+                                                            value="{{$tour->enable_includes}}"
+                                                            {{($tour->enable_includes == 1) ? 'checked' : ''}}
+                                                            name="enable_includes">
+                                                            <label class="form-check-label"
+                                                            for="enable_includes_switch">Enabled</label>
+                                                        </div>
+                                                </div>
+                                                <div class="mb-4"  x-show="includes == 1">
                                                     <label class="title text-dark">Title </label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field"
                                                         value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->inclusions : '' }}">
                                                 </div>
 
-                                                <div class="repeater-table" data-repeater>
+                                                <div class="repeater-table"  x-show="includes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -343,11 +368,16 @@
                                                                             value="{{ $inclusion }}">
                                                                     </td>
                                                                     <td>
+                                                                        <div class="d-flex gap-2">
                                                                         <button type="button"
                                                                             class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove>
+                                                                            data-repeater-remove disabled>
                                                                             <i class='bx bxs-trash-alt'></i>
                                                                         </button>
+                                                                        <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                                <i class='bx bx-plus'></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -366,16 +396,30 @@
                                             $exclusions = empty($exclusions) ? [''] : $exclusions;
                                         @endphp
 
-                                        <div class="col-md-12 mt-3">
+                                        <div class="col-md-12 mt-3"  x-data="{ excludes: {{$tour->enable_excludes}} }">
                                             <div class="form-fields">
-                                                <label class="title title--sm mb-3 ">Exclude:</label>
-                                                <div class="mb-4">
+                                                <div class="d-flex align-items-center gap-3  mb-3">
+                                                    <label class="title title--sm mb-0">Exclude:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="enable_excludes_switch"
+                                                        x-model="excludes"
+                                                        @change="excludes = excludes ? 1 : 0"
+                                                        value="{{$tour->enable_excludes}}"
+                                                        {{($tour->enable_excludes == 1) ? 'checked' : ''}}
+                                                        name="enable_excludes">
+                                                        <label class="form-check-label"
+                                                        for="enable_excludes_switch">Enabled</label>
+                                                    </div>
+                                                 </div>
+                                                <div class="mb-4" x-show="excludes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
                                                         class="field"
                                                         value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->exclusions : '' }}">
                                                 </div>
-                                                <div class="repeater-table" data-repeater>
+                                                <div class="repeater-table" x-show="excludes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -403,11 +447,16 @@
                                                                             value="{{ $exclusion }}">
                                                                     </td>
                                                                     <td>
-                                                                        <button type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove disabled>
-                                                                            <i class='bx bxs-trash-alt'></i>
-                                                                        </button>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class='bx bxs-trash-alt'></i>
+                                                                            </button>
+                                                                            <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                                    <i class='bx bx-plus'></i>
+                                                                                </button>
+                                                                            </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -446,6 +495,26 @@
                                                 <div x-data="{
                                                     formData: {
                                                         sections: @js($tourDetails['sections'] ?? [])
+                                                    },
+                                                    addSection(afterIndex = null) {
+                                                        const newSection = { title: '', category: { title: '', items: [] } };
+                                                        if (afterIndex === null || afterIndex === this.formData.sections.length - 1) {
+                                                            // Append at end
+                                                            this.formData.sections.push(newSection);
+                                                        } else {
+                                                            // Insert in between
+                                                            this.formData.sections.splice(afterIndex + 1, 0, newSection);
+                                                        }
+                                                    },
+                                                    addItem(sectionIndex, afterItemIndex = null) {
+                                                        if (!this.formData.sections[sectionIndex].category.items) {
+                                                            this.formData.sections[sectionIndex].category.items = [];
+                                                        }
+                                                        if (afterItemIndex === null || afterItemIndex === this.formData.sections[sectionIndex].category.items.length - 1) {
+                                                            this.formData.sections[sectionIndex].category.items.push('');
+                                                        } else {
+                                                            this.formData.sections[sectionIndex].category.items.splice(afterItemIndex + 1, 0, '');
+                                                        }
                                                     }
                                                 }">
                                                     <div class="repeater-table">
@@ -489,12 +558,19 @@
                                                                                                 :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`" rows="5" placeholder="Content"
                                                                                                 class="field">
 </textarea>
-                                                                                            <button type="button"
-                                                                                                @click="section.category.items.splice(itemIndex, 1)"
-                                                                                                class="delete-btn delete-btn--static align-self-center">
-                                                                                                <i
-                                                                                                    class="bx bxs-trash-alt"></i>
-                                                                                            </button>
+                                                                                           <div class="d-flex gap-2">
+                                                                                                <button type="button"
+                                                                                                    @click="section.category.items.splice(itemIndex, 1)"
+                                                                                                    class="delete-btn delete-btn--static align-self-center">
+                                                                                                    <i
+                                                                                                        class="bx bxs-trash-alt"></i>
+                                                                                                </button>
+                                                                                                <button type="button"
+                                                                                                    @click="addItem(sectionIndex, itemIndex)"
+                                                                                                    class="add-btn  add-btn--static align-self-center">
+                                                                                                    <i class="bx bx-plus"></i>
+                                                                                                </button>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </template>
                                                                                     <button type="button"
@@ -508,11 +584,20 @@
 
                                                                         <!-- Delete Section -->
                                                                         <td>
-                                                                            <button type="button"
-                                                                                @click="formData.sections.splice(sectionIndex, 1)"
-                                                                                class="delete-btn delete-btn--static">
-                                                                                <i class="bx bxs-trash-alt"></i>
-                                                                            </button>
+                                                                            <div class="d-flex gap-2">
+                                                                                <button type="button"
+                                                                                    @click="formData.sections.splice(sectionIndex, 1)"
+                                                                                    class="delete-btn delete-btn--static">
+                                                                                    <i class="bx bxs-trash-alt"></i>
+                                                                                </button>
+
+                                                                                <!-- ✅ Add section below -->
+                                                                                <button type="button"
+                                                                                    @click="addSection(sectionIndex)"
+                                                                                    class="add-btn  add-btn--static">
+                                                                                    <i class="bx bx-plus"></i>
+                                                                                </button>
+                                                                            </div>
                                                                         </td>
                                                                     </tr>
                                                                 </template>
@@ -574,11 +659,16 @@
                                                                         </div>
                                                                     </td>
                                                                     <td>
-                                                                        <button type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove>
-                                                                            <i class='bx bxs-trash-alt'></i>
-                                                                        </button>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class='bx bxs-trash-alt'></i>
+                                                                            </button>
+                                                                            <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                                    <i class='bx bx-plus'></i>
+                                                                                </button>
+                                                                            </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -762,9 +852,25 @@
                                         </div>
                                     </div>
                                     <div x-show="locationType === 'normal_itinerary'">
-                                        <div class="form-fields">
-                                            <label class=" d-flex align-items-center justify-content-between"><span
-                                                    class="title title--sm mb-0">Itinerary:</span>
+                                        <div class="form-fields" x-data="{ itinerary: {{$tour->enable_itinerary}} }">
+                                            <label class=" d-flex align-items-center justify-content-between">
+                                                <div class="d-flex align-items-center gap-3  mb-0">
+                                                       <span class="title title--sm mb-0">Itinerary:</span>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_itinerary_switch"
+                                                            x-model="itinerary"
+                                                            @change="itinerary = itinerary ? 1 : 0"
+
+                                                            value="{{$tour->enable_itinerary}}"
+
+                                                            {{($tour->enable_itinerary == 1) ? 'checked' : ''}}
+                                                            name="enable_itinerary">
+                                                            <label class="form-check-label"
+                                                            for="enable_itinerary_switch">Enabled</label>
+                                                        </div>
+                                                </div>
                                                 <span class="title text-dark d-flex align-items-center gap-1">Section
                                                     Preview:
                                                     <a href="{{ asset('admin/assets/images/itinerary.png') }}"
@@ -782,7 +888,7 @@
                                                     Copy
                                                 </button>
                                             </span>
-                                            <div class="repeater-table" data-repeater>
+                                            <div class="repeater-table"  x-show="itinerary == 1"  data-repeater>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -962,11 +1068,25 @@
 
 
 
-                                        <div class="plan-itenirary">
+                                        <div class="plan-itenirary"   x-data="{ planItineraryExperience: {{$tour->enable_plan_itinerary_experience}} }">
                                             <div class="form-fields">
                                                 <label class="d-flex align-items-center mb-3 justify-content-between">
-                                                    <span class="title title--sm mb-0">Plan Itinerary
+                                                    <div class="d-flex align-items-center gap-3  mb-0">
+                                                       <span class="title title--sm mb-0">Plan Itinerary
                                                         Experience:</span>
+                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                            data-disabled-text="Disabled">
+                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_plan_itinerary_experience_switch"
+                                                            x-model="planItineraryExperience"
+                                                            @change="planItineraryExperience = planItineraryExperience ? 1 : 0"
+                                                            value="{{$tour->enable_plan_itinerary_experience}}"
+                                                            {{($tour->enable_plan_itinerary_experience == 1) ? 'checked' : ''}}
+                                                            name="enable_plan_itinerary_experience">
+                                                            <label class="form-check-label"
+                                                            for="enable_plan_itinerary_experience_switch">Enabled</label>
+                                                        </div>
+                                                </div>
                                                     <span class="title text-dark d-flex align-items-center gap-1">
                                                         Section Preview:
                                                         <a href="{{ asset('admin/assets/images/itinerary-exp.png') }}"
@@ -976,7 +1096,7 @@
                                                 </label>
 
                                             </div>
-                                            <div class="form-fields">
+                                            <div class="form-fields"  x-show="planItineraryExperience == 1">
                                                 <div class="title text-dark d-flex align-items-center gap-2">
                                                     <div>Map Iframe Link:</div>
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
@@ -990,7 +1110,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div x-data="handlePickupDropoff()">
+                                            <div x-data="handlePickupDropoff()"  x-show="planItineraryExperience == 1">
                                                 <template x-if="inheritFromPickup">
                                                     <div class="d-none">
                                                         <template x-for="(entry, index) in formData.dropoff"
@@ -1238,7 +1358,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-4 repeater-table">
+                                            <div class="form-fields mt-4 repeater-table"  x-show="planItineraryExperience == 1">
                                                 <div class="form-fields">
                                                     <div class="d-flex">
                                                         <label class="title title--sm mb-0">Itinerary:</label>
@@ -3509,13 +3629,35 @@
                         content: ''
                     }]
                 @endif ,
-                addFeature() {
-                    this.features.push({
+                // addFeature() {
+                //     this.features.push({
+                //         icon: '',
+                //         icon_color: '',
+                //         title: '',
+                //         content: ''
+                //     });
+                //     this.$nextTick(() => {
+                //         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
+                //             InitializeColorPickers(el);
+                //         });
+                //     });
+                // },
+                addFeature(index = null) {
+                    const newFeature = {
                         icon: '',
                         icon_color: '',
                         title: '',
                         content: ''
-                    });
+                    };
+
+                    // If index is given, insert after that index
+                    if (index !== null) {
+                        this.features.splice(index + 1, 0, newFeature);
+                    } else {
+                        // Otherwise, push to the end
+                        this.features.push(newFeature);
+                    }
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
