@@ -620,8 +620,21 @@
     .global-popup-wrapper.detail-popup .global-popup__header .title {
         font-size: 1.1rem;
     }
-    .editor-content :is(p, li, strong) {
-        font-size: 13px;
+    .section-content h1.heading,
+    .section-content h1.subHeading {
+        font-size: 32px;
+    }
+    .section-content h2.heading,
+    .section-content h2.subHeading {
+        font-size: 24px;
+    }
+    .section-content h3.heading,
+    .section-content h3.subHeading {
+        font-size: 18px;
+    }
+    .editor-content :is(p, li, strong),
+    .features-item p {
+        font-size: 16px;
     }
     .refund-policy {
         margin: 1.25rem 0 2rem;
