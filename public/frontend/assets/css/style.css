@@ -8218,3 +8218,33 @@ ul.show-in-desktop {
     width: 40px;
     object-fit: contain;
 }
+
+.whatsapp-help {
+    margin-top: 1.25rem ;
+}
+
+.whatsapp-help__title {
+    color: #000;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+.whatsapp-help__btn {
+    width: 100%;
+    color: #fff;
+    background: #2E9E73;
+    font-size: 0.85rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    padding: 0.6rem;
+    border-radius: 100px;
+}
+.whatsapp-help__btn:hover{
+    color: inherit;
+}
+.whatsapp-help__btn i {
+    font-size: 1.12rem;
+}

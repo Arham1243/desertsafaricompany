@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                               @endif>
+                                                 @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -65,7 +65,6 @@
     <img src="{{ asset('frontend/assets/images/methods/6.png') }}" alt="tamara" class="img-fluid">
     <img src="{{ asset('frontend/assets/images/methods/1.png') }}" alt="stripe" class="img-fluid">
     <img src="{{ asset('frontend/assets/images/methods/5.png') }}" alt="paypal" class="img-fluid">
-    <img src="{{ asset('frontend/assets/images/methods/2.png') }}" alt="postpay" class="img-fluid">
     <img src="{{ asset('frontend/assets/images/methods/7.svg') }}" alt="pointCheckout" class="img-fluid">
 </div>
 
@@ -143,7 +142,6 @@
                 </div>
             @endforeach
         </div>
-
         @foreach ($selectedDetailPopups as $selectedDetailPopupsModal)
             <div class="global-popup-wrapper detail-popup" id="popup-{{ $selectedDetailPopupsModal->id }}">
                 <div class="global-popup">
@@ -224,4 +222,33 @@
             </script>
         @endpush
     @endif
+    @php
+        $isEnabled = (int) $settings->get('help_whatsapp_is_enabled') === 1;
+        $heading = $settings->get('help_whatsapp_heading') ?? 'Need Help in booking?';
+        $headingColor = $settings->get('help_whatsapp_heading_text_color') ?? null;
+        $buttonLink = $settings->get('help_whatsapp_button_link') ?? '#';
+        $buttonBg = $settings->get('help_whatsapp_button_background_color') ?? null;
+        $buttonTextColor = $settings->get('help_whatsapp_button_text_color') ?? null;
+        $buttonText = $settings->get('help_whatsapp_button_text');
+    @endphp
+
+    @if ($isEnabled)
+        <div class="whatsapp-help">
+            <div class="whatsapp-help__title"
+                @if ($headingColor) style="color: {{ $headingColor }};" @endif>
+                {{ $heading }}
+            </div>
+
+            <a class="whatsapp-help__btn" href="{{ $buttonLink }}" target="_blank"
+                @if ($buttonBg || $buttonTextColor) style="
+                   @if ($buttonBg) background-color: {{ $buttonBg }}; @endif
+                @if ($buttonTextColor) color: {{ $buttonTextColor }}; @endif "
+            @endif
+                >
+                <i class="bx bxl-whatsapp"></i>
+                {{ $buttonText }}
+            </a>
+        </div>
+    @endif
+
 @endif

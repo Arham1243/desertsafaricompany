@@ -674,6 +674,131 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-box" x-data="{ enabled: {{ (int) $settings->get('help_whatsapp_is_enabled') === 1 ? 'true' : 'false' }} }">
+                            <div class="form-box__header">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">WhatsApp Settings</div>
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input type="hidden" name="help_whatsapp_is_enabled" :value="enabled ? 1 : 0">
+                                        <input class="form-check-input" type="checkbox" id="help_whatsapp_is_enabled"
+                                            x-model="enabled">
+                                        <label class="form-check-label" for="help_whatsapp_is_enabled"
+                                            x-text="enabled ? 'Enabled' : 'Disabled'"></label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-box__body" x-show="enabled" x-transition>
+                                <div class="form-fields">
+                                    <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                        WhatsApp Settings
+                                        <a href="{{ asset('admin/assets/images/whatsapp-help.png') }}"
+                                            data-fancybox="gallery" title="section preview"
+                                            class="themeBtn section-preview-image section-preview-image--sm">
+                                            <i class="bx bxs-show"></i>
+                                        </a>
+                                    </label>
+                                </div>
+
+                                <div class="row">
+                                    <!-- Heading -->
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
+                                            <label class="text-dark title" for="help_whatsapp_heading">Heading:</label>
+                                            <input type="text" id="help_whatsapp_heading" name="help_whatsapp_heading"
+                                                value="{{ $settings->get('help_whatsapp_heading') ?? 'Need Help in booking?' }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- Heading Text Color -->
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Heading Text Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="help_whatsapp_heading_text_color" data-color-picker></label>
+                                                <input id="help_whatsapp_heading_text_color" type="text"
+                                                    data-color-picker-input name="help_whatsapp_heading_text_color"
+                                                    value="{{ $settings->get('help_whatsapp_heading_text_color') ?? '#000000' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button Text Color -->
+                                    <div class="col-md-6 col-12 mb-4">
+                                         <div class="form-fields">
+                                            <label class="text-dark title" for="help_whatsapp_button_text">Button Text:</label>
+                                            <input type="text" id="help_whatsapp_button_text" name="help_whatsapp_button_text"
+                                                value="{{ $settings->get('help_whatsapp_button_text') ?? 'Chat on WhatsApp' }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Button Text Color:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="help_whatsapp_button_text_color" data-color-picker></label>
+                                                <input id="help_whatsapp_button_text_color" type="text"
+                                                    data-color-picker-input name="help_whatsapp_button_text_color"
+                                                    value="{{ $settings->get('help_whatsapp_button_text_color') ?? '#ffffff' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Button Link -->
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="d-flex align-items-center gap-2 lh-1">
+                                                <div class="mt-1 text-dark title">Button Link & Background:</div>
+                                                <button data-bs-placement="top"
+                                                    title="<div class='d-flex flex-column'>
+                                    <div class='d-flex gap-1'><strong>Link:</strong> https://abc.com</div>
+                                    <div class='d-flex gap-1'><strong>Phone:</strong> tel:+971xxxxxxxxx</div>
+                                    <div class='d-flex gap-1'><strong>WhatsApp:</strong> https://wa.me/971xxxxxxxxx</div>
+                                </div>"
+                                                    type="button" data-tooltip="tooltip" class="tooltip-lg">
+                                                    <i class='bx bxs-info-circle'></i>
+                                                </button>
+                                            </div>
+                                            <input type="text" id="help_whatsapp_button_link"
+                                                name="help_whatsapp_button_link"
+                                                value="{{ $settings->get('help_whatsapp_button_link') ?? 'https://wa.me/12345678900' }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- Button Background -->
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="text-dark title d-flex align-items-center gap-2">
+                                                <div>Button Background:</div>
+                                                <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                    target="_blank">Get Color Codes</a>
+                                            </div>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="help_whatsapp_button_background_color"
+                                                    data-color-picker></label>
+                                                <input id="help_whatsapp_button_background_color" type="text"
+                                                    data-color-picker-input name="help_whatsapp_button_background_color"
+                                                    value="{{ $settings->get('help_whatsapp_button_background_color') ?? '#2E9E73' }}"
+                                                    inputmode="text">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-box" x-data="{ enabled: {{ (int) $settings->get('is_enabled_why_book_with_us') === 1 ? 'true' : 'false' }} }">
                             <div class="form-box__header">
                                 <div class="d-flex align-items-center gap-3">
