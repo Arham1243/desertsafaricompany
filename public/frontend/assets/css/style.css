@@ -8248,3 +8248,6 @@ ul.show-in-desktop {
 .whatsapp-help__btn i {
     font-size: 1.12rem;
 }
+.Price-Includes__content:has(.no-icon) .tour-content__pra-icon{
+    display:none;
+}
