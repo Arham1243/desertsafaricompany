@@ -811,10 +811,26 @@
                             </div>
                         </div>
                         <div x-show="optionTab === 'location'" class="location-options">
-                            <div class="form-box" x-data="{ locationType: '{{ $tour->location_type != null ? $tour->location_type : 'normal_location' }}' }">
-                                <div class="form-box__header d-flex align-items-center justify-content-between">
+                            <div class="form-box" x-data="{ locationType: '{{ $tour->location_type != null ? $tour->location_type : 'normal_location' }}', enableItinerary: {{$tour->enable_location ?? 1}} }">
+                                <div class="form-box__header d-flex align-items-center gap-3">
                                     <div class="title">Tour Locations</div>
-                                    <div class="d-flex align-items-center gap-5">
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="enable_location_switch"
+                                                x-model="enableItinerary"
+                                                @change="enableItinerary = enableItinerary ? 1 : 0"
+                                                value="{{$tour->enable_location ?? 1}}"
+                                                {{($tour->enable_location == 1) ? 'checked' : ''}}
+                                                name="enable_location">
+                                            <label class="form-check-label"
+                                                for="enable_location_switch">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-box__body" x-show="enableItinerary == 1">
+                                    <div class="d-flex align-items-center gap-5 mb-3 px-4">
                                         <div class="form-check p-0">
                                             <input class="form-check-input" type="radio"
                                                 name="tour[location][location_type]" id="normal_location"
@@ -836,8 +852,6 @@
                                                 Experience</label>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="form-box__body">
                                     <div x-show="locationType === 'normal_location'">
 
                                         <div class="form-fields">
@@ -852,25 +866,9 @@
                                         </div>
                                     </div>
                                     <div x-show="locationType === 'normal_itinerary'">
-                                        <div class="form-fields" x-data="{ itinerary: {{$tour->enable_itinerary}} }">
+                                        <div class="form-fields">
                                             <label class=" d-flex align-items-center justify-content-between">
-                                                <div class="d-flex align-items-center gap-3  mb-0">
-                                                       <span class="title title--sm mb-0">Itinerary:</span>
-                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                            data-disabled-text="Disabled">
-                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="enable_itinerary_switch"
-                                                            x-model="itinerary"
-                                                            @change="itinerary = itinerary ? 1 : 0"
-
-                                                            value="{{$tour->enable_itinerary}}"
-
-                                                            {{($tour->enable_itinerary == 1) ? 'checked' : ''}}
-                                                            name="enable_itinerary">
-                                                            <label class="form-check-label"
-                                                            for="enable_itinerary_switch">Enabled</label>
-                                                        </div>
-                                                </div>
+                                                <span class="title title--sm mb-0">Normal Itinerary</span>
                                                 <span class="title text-dark d-flex align-items-center gap-1">Section
                                                     Preview:
                                                     <a href="{{ asset('admin/assets/images/itinerary.png') }}"
@@ -888,7 +886,7 @@
                                                     Copy
                                                 </button>
                                             </span>
-                                            <div class="repeater-table"  x-show="itinerary == 1"  data-repeater>
+                                            <div class="repeater-table" data-repeater>
                                                 <table class="table table-bordered">
                                                     <thead>
                                                         <tr>
@@ -1068,25 +1066,10 @@
 
 
 
-                                        <div class="plan-itenirary"   x-data="{ planItineraryExperience: {{$tour->enable_plan_itinerary_experience}} }">
+                                        <div class="plan-itenirary">
                                             <div class="form-fields">
                                                 <label class="d-flex align-items-center mb-3 justify-content-between">
-                                                    <div class="d-flex align-items-center gap-3  mb-0">
-                                                       <span class="title title--sm mb-0">Plan Itinerary
-                                                        Experience:</span>
-                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                            data-disabled-text="Disabled">
-                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="enable_plan_itinerary_experience_switch"
-                                                            x-model="planItineraryExperience"
-                                                            @change="planItineraryExperience = planItineraryExperience ? 1 : 0"
-                                                            value="{{$tour->enable_plan_itinerary_experience}}"
-                                                            {{($tour->enable_plan_itinerary_experience == 1) ? 'checked' : ''}}
-                                                            name="enable_plan_itinerary_experience">
-                                                            <label class="form-check-label"
-                                                            for="enable_plan_itinerary_experience_switch">Enabled</label>
-                                                        </div>
-                                                </div>
+                                                    <span class="title title--sm mb-0">Plan Itinerary Experience</span>
                                                     <span class="title text-dark d-flex align-items-center gap-1">
                                                         Section Preview:
                                                         <a href="{{ asset('admin/assets/images/itinerary-exp.png') }}"
@@ -1094,9 +1077,8 @@
                                                                 class='bx  bxs-show'></i></a>
                                                     </span>
                                                 </label>
-
                                             </div>
-                                            <div class="form-fields"  x-show="planItineraryExperience == 1">
+                                            <div class="form-fields">
                                                 <div class="title text-dark d-flex align-items-center gap-2">
                                                     <div>Map Iframe Link:</div>
                                                     <a class="p-0 nav-link" href="https://www.google.com/maps/d/"
@@ -1110,7 +1092,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div x-data="handlePickupDropoff()"  x-show="planItineraryExperience == 1">
+                                            <div x-data="handlePickupDropoff()">
                                                 <template x-if="inheritFromPickup">
                                                     <div class="d-none">
                                                         <template x-for="(entry, index) in formData.dropoff"

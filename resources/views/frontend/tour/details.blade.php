@@ -619,11 +619,11 @@
                             </div>
                         @endif
 
-                        @if ($tour->location_type === 'normal_itinerary' )
+                        @if ($tour->location_type === 'normal_itinerary' && $tour->enable_location)
                             <div class=tour-content__line></div>
                             <div class="pb-2 pt-3">
                                 <div class=itinerary>
-                                    @if ($tour->enable_itinerary && $tour->normalItineraries->isNotEmpty())
+                                    @if ($tour->normalItineraries->isNotEmpty())
                                         <div class=tour-content__SubTitle>
                                             Itinerary
                                         </div>
@@ -668,7 +668,7 @@
                             </div>
                         @endif
 
-                        @if ($tour->location_type === 'itinerary_experience' && $tour->enable_plan_itinerary_experience )
+                        @if ($tour->location_type === 'itinerary_experience' && $tour->enable_location)
                             @php
                                 $itinerary_section_background_line_color = $settings->get(
                                     'itinerary_section_background_line_color',
