@@ -1428,44 +1428,6 @@
     </style>
 @endpush
 @push('js')
-    @if (isset($settings['tabby_enabled']) && (int) $settings['tabby_enabled'] === 1)
-        <script src="https://checkout.tabby.ai/tabby-promo.js"></script>
-        <script>
-            new TabbyPromo({
-                selector: '#tabby-promo-widget',
-                currency: '{{ env('APP_CURRENCY') }}',
-                price: '{{ $tour->tour_lowest_price }}',
-                installmentsCount: 4,
-                lang: 'en',
-                source: 'product',
-                publicKey: '{{ env('TABBY_PUBLIC_KEY') }}',
-                merchantCode: '{{ env('APP_CODE') ?? 'HDS' }}'
-            });
-        </script>
-    @endif
-
-    @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
-        <script src="https://cdn.tamara.co/widget-v2/tamara-widget.js"></script>
-        <script>
-            window.tamaraWidgetConfig = {
-                lang: "en",
-                country: "AE",
-                publicKey: "{{ env('TAMARA_PUBLIC_KEY') }}",
-                css: `:host {
-      --font-primary: inherit !important;
-      --font-secondary: inherit !important;
-		}
-    .tamara-summary-widget__amount {
-      font-weight: 700 !important;
-    }
-    `,
-                style: {
-                    fontSize: '15px',
-                    badgeRatio: 1.2,
-                }
-            }
-        </script>
-    @endif
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const sendPopupBtn = document.querySelectorAll('[data-send-button]');

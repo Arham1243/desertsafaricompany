@@ -67,18 +67,6 @@
     </div>
 </div>
 
-@if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
-    <div class="payment-widget my-3">
-        <tamara-widget id="tamara-widget-custom" type="tamara-summary" amount="{{ $tour->tour_lowest_price }}"
-            config='{"badgePosition":"right","showExtraContent":""}' inline-type="2">
-        </tamara-widget>
-    </div>
-@endif
-
-@if (isset($settings['tabby_enabled']) && (int) $settings['tabby_enabled'] === 1)
-    <div class="payment-widget my-3" id="tabby-promo-widget"></div>
-@endif
-
 <div class="form-guest__btn mt-4">
     @if (Auth::check())
         @if (isset($isTourInCart) && !$isTourInCart)

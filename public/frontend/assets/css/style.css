@@ -7781,9 +7781,6 @@ ul.show-in-desktop {
     width: auto;
     margin-left: 60px;
 }
-.payment-widget * {
-    color: #000 !important;
-}
 
 .text-document {
     font-size: 12px;
