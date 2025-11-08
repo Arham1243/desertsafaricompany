@@ -257,7 +257,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <template x-for="(feature, index) in features"
-                                                                    :key="index">
+                                                                    :key="feature.id || index">
                                                                     <tr>
                                                                         <td>
                                                                             <div class="d-flex align-items-center gap-3">
@@ -3602,9 +3602,13 @@
         function featuresManager() {
             return {
                 features: @if ($tour->features)
-                    @js(json_decode($tour->features))
+                    @js(array_map(function($feature) {
+                        $feature['id'] = uniqid('', true);
+                        return $feature;
+                    }, json_decode($tour->features, true)))
                 @else
                     [{
+                        id: Date.now(),
                         icon: '',
                         icon_color: '',
                         title: '',
@@ -3626,17 +3630,18 @@
                 // },
                 addFeature(index = null) {
                     const newFeature = {
+                        id: Date.now() + Math.random(),
                         icon: '',
                         icon_color: '',
                         title: '',
                         content: ''
                     };
 
-                    // If index is given, insert after that index
-                    if (index !== null) {
+                    // If a valid numeric index is passed, insert after it
+                    if (typeof index === 'number') {
                         this.features.splice(index + 1, 0, newFeature);
                     } else {
-                        // Otherwise, push to the end
+                        // Otherwise, add at the end
                         this.features.push(newFeature);
                     }
 

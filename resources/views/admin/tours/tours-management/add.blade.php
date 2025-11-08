@@ -148,10 +148,11 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="form-fields">
-                                                <label class="title">Select City <span class="text-danger">*</span>:</label>
-                                                <select name="tour[location][normal_location][city_id]" class="select2-select"
-                                                    data-error="Location > City" placeholder="Select City"
-                                                    autocomplete="new-password" data-required>
+                                                <label class="title">Select City <span
+                                                        class="text-danger">*</span>:</label>
+                                                <select name="tour[location][normal_location][city_id]"
+                                                    class="select2-select" data-error="Location > City"
+                                                    placeholder="Select City" autocomplete="new-password" data-required>
                                                     <option value="" selected disabled>Select City</option>
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}"
@@ -237,7 +238,7 @@
                                                             </thead>
                                                             <tbody>
                                                                 <template x-for="(feature, index) in features"
-                                                                    :key="index">
+                                                                    :key="feature.id">
                                                                     <tr>
                                                                         <td>
                                                                             <div class="d-flex align-items-center gap-3">
@@ -267,7 +268,8 @@
                                                                                     @click="removeFeature(index)">
                                                                                     <i class='bx bxs-trash-alt'></i>
                                                                                 </button>
-                                                                                <button type="button" class="add-btn  ms-auto add-btn--static"
+                                                                                <button type="button"
+                                                                                    class="add-btn  ms-auto add-btn--static"
                                                                                     @click="addFeature(index)">
                                                                                     <i class='bx bx-plus'></i>
                                                                                 </button>
@@ -278,7 +280,7 @@
                                                             </tbody>
                                                         </table>
                                                         <button type="button" class="themeBtn ms-auto"
-                                                            @click="addFeature">
+                                                            @click="addFeature(null)">
                                                             Add <i class="bx bx-plus"></i>
                                                         </button>
                                                     </div>
@@ -287,28 +289,26 @@
                                         </div>
 
 
-                                        <div class="col-md-12 mt-3"  x-data="{ includes: 1 }">
+                                        <div class="col-md-12 mt-3" x-data="{ includes: 1 }">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3  mb-3">
-                                                        <label class="title title--sm mb-0">Include:</label>
-                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                            data-disabled-text="Disabled">
-                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="enable_includes_switch"
-                                                            x-model="includes"
-                                                            @change="includes = includes ? 1 : 0" value="1"
-                                                            checked
+                                                    <label class="title title--sm mb-0">Include:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_includes_switch" x-model="includes"
+                                                            @change="includes = includes ? 1 : 0" value="1" checked
                                                             name="enable_includes">
-                                                            <label class="form-check-label"
+                                                        <label class="form-check-label"
                                                             for="enable_includes_switch">Enabled</label>
-                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="mb-4"  x-show="includes == 1">
+                                                <div class="mb-4" x-show="includes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field">
                                                 </div>
-                                                <div class="repeater-table"  x-show="includes == 1" data-repeater>
+                                                <div class="repeater-table" x-show="includes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -343,10 +343,12 @@
                                                                             data-repeater-remove disabled>
                                                                             <i class='bx bxs-trash-alt'></i>
                                                                         </button>
-                                                                        <button type="button" class="add-btn  ms-auto add-btn--static" data-repeater-insert>
+                                                                        <button type="button"
+                                                                            class="add-btn  ms-auto add-btn--static"
+                                                                            data-repeater-insert>
                                                                             <i class='bx bx-plus'></i>
                                                                         </button>
-                                                                </div>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -358,29 +360,27 @@
 
                                             </div>
                                         </div>
-                                        <div class="col-md-12 mt-3"  x-data="{ excludes: 1 }">
+                                        <div class="col-md-12 mt-3" x-data="{ excludes: 1 }">
                                             <div class="form-fields">
-                                                 <div class="d-flex align-items-center gap-3  mb-3">
+                                                <div class="d-flex align-items-center gap-3  mb-3">
                                                     <label class="title title--sm mb-0">Exclude:</label>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
                                                         <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="enable_excludes_switch"
-                                                        x-model="excludes"
-                                                        @change="excludes = excludes ? 1 : 0" value="1"
-                                                        checked
-                                                        name="enable_excludes">
+                                                            id="enable_excludes_switch" x-model="excludes"
+                                                            @change="excludes = excludes ? 1 : 0" value="1" checked
+                                                            name="enable_excludes">
                                                         <label class="form-check-label"
-                                                        for="enable_excludes_switch">Enabled</label>
+                                                            for="enable_excludes_switch">Enabled</label>
                                                     </div>
-                                                 </div>
+                                                </div>
 
-                                                <div class="mb-4"  x-show="excludes == 1">
+                                                <div class="mb-4" x-show="excludes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
                                                         class="field">
                                                 </div>
-                                                <div class="repeater-table"  x-show="excludes == 1" data-repeater>
+                                                <div class="repeater-table" x-show="excludes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -414,10 +414,12 @@
                                                                             data-repeater-remove disabled>
                                                                             <i class='bx bxs-trash-alt'></i>
                                                                         </button>
-                                                                        <button type="button" class="add-btn  ms-auto add-btn--static" data-repeater-insert>
+                                                                        <button type="button"
+                                                                            class="add-btn  ms-auto add-btn--static"
+                                                                            data-repeater-insert>
                                                                             <i class='bx bx-plus'></i>
                                                                         </button>
-                                                                </div>
+                                                                    </div>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
@@ -523,7 +525,8 @@
                                                                                                 <button type="button"
                                                                                                     @click="addItem(sectionIndex, itemIndex)"
                                                                                                     class="add-btn  add-btn--static align-self-center">
-                                                                                                    <i class="bx bx-plus"></i>
+                                                                                                    <i
+                                                                                                        class="bx bx-plus"></i>
                                                                                                 </button>
                                                                                             </div>
                                                                                         </div>
@@ -607,12 +610,14 @@
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex gap-2">
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class='bx bxs-trash-alt'></i>
-                                                                    </button>
-                                                                    <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                        <button type="button"
+                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                            data-repeater-remove disabled>
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </button>
+                                                                        <button type="button"
+                                                                            class="add-btn  add-btn--static"
+                                                                            data-repeater-insert>
                                                                             <i class='bx bx-plus'></i>
                                                                         </button>
                                                                     </div>
@@ -730,13 +735,10 @@
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="enable_location_switch"
-                                                x-model="enableItinerary"
-                                                @change="enableItinerary = enableItinerary ? 1 : 0" value="1"
-                                                checked
+                                                id="enable_location_switch" x-model="enableItinerary"
+                                                @change="enableItinerary = enableItinerary ? 1 : 0" value="1" checked
                                                 name="enable_location">
-                                            <label class="form-check-label"
-                                                for="enable_location_switch">Enabled</label>
+                                            <label class="form-check-label" for="enable_location_switch">Enabled</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1152,7 +1154,8 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-4 repeater-table"  x-show="planItineraryExperience == 1" >
+                                            <div class="form-fields mt-4 repeater-table"
+                                                x-show="planItineraryExperience == 1">
                                                 <div class="form-fields">
                                                     <div class="d-flex">
                                                         <label class="title title--sm mb-0">Itinerary:</label>
@@ -1202,7 +1205,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-check d-none" id="add-stop-btn" >
+                                            <div class="form-check d-none" id="add-stop-btn">
                                                 <input class="form-check-input" type="checkbox"
                                                     name="itinerary_experience[enable_sub_stops]"
                                                     id="itinerary_experience_enabled_sub_stops" value="1">
@@ -1430,7 +1433,8 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     name="tour[pricing][price_type]" x-model="tourType"
                                                                     value="private" id="privatePrice">
-                                                                <label class="form-check-label" for="privatePrice">Private
+                                                                <label class="form-check-label"
+                                                                    for="privatePrice">Private
                                                                     Tour Price</label>
                                                             </div>
                                                             <div class="form-check p-0">
@@ -2970,6 +2974,7 @@
         function featuresManager() {
             return {
                 features: [{
+                    id: Date.now(),
                     icon: '',
                     icon_color: '',
                     title: '',
@@ -2977,17 +2982,18 @@
                 }],
                 addFeature(index = null) {
                     const newFeature = {
+                        id: Date.now() + Math.random(),
                         icon: '',
                         icon_color: '',
                         title: '',
                         content: ''
                     };
 
-                    // If index is given, insert after that index
-                    if (index !== null) {
+                    // If a valid numeric index is passed, insert after it
+                    if (typeof index === 'number') {
                         this.features.splice(index + 1, 0, newFeature);
                     } else {
-                        // Otherwise, push to the end
+                        // Otherwise, add at the end
                         this.features.push(newFeature);
                     }
 
@@ -2997,6 +3003,7 @@
                         });
                     });
                 },
+
                 removeFeature(index) {
                     this.features.splice(index, 1);
                 }
