@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                              @endif>
+                                               @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -60,11 +60,13 @@
 @include('frontend.tour.pricing.components.service_fee')
 @include('frontend.tour.pricing.components.total_price')
 
-<div class="tour-views">
-    <div class="tour-views__icon"><i class="bx bx-show"></i></div>
-    <div class="tour-views__count">
-        {{ $todayViews }} {{ Str::plural('view', $todayViews) }} today, so act now!
-    </div>
+<div class="payment-methods-collage">
+    <img src="{{ asset('frontend/assets/images/methods/3.png') }}" alt="tabby" class="img-fluid">
+    <img src="{{ asset('frontend/assets/images/methods/6.png') }}" alt="tamara" class="img-fluid">
+    <img src="{{ asset('frontend/assets/images/methods/1.png') }}" alt="stripe" class="img-fluid">
+    <img src="{{ asset('frontend/assets/images/methods/5.png') }}" alt="paypal" class="img-fluid">
+    <img src="{{ asset('frontend/assets/images/methods/2.png') }}" alt="postpay" class="img-fluid">
+    <img src="{{ asset('frontend/assets/images/methods/7.svg') }}" alt="pointCheckout" class="img-fluid">
 </div>
 
 <div class="form-guest__btn mt-4">

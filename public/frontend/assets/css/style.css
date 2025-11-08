@@ -8204,3 +8204,17 @@ ul.show-in-desktop {
     font-size: 0.89rem;
 }
 /* contact us */
+
+.payment-methods-collage {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0 20px;
+}
+
+.payment-methods-collage img {
+    width: 40px;
+    object-fit: contain;
+}
