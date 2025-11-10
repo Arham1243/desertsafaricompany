@@ -1,10 +1,10 @@
 @if ((int) $settings->get('is_enabled_cookie_bar') === 1)
-    <div class="cookie-consent hidden" id="cookie-consent">
+    <div class="cookie-consent hidden" id="cookie-consent" @if ($settings->get('cookie_bar_bg_color')) style="background-color: {{ $settings->get('cookie_bar_bg_color') }};" @endif>
         <div class="container">
             <div class="cookie-consent__container">
                 <p class="cookie-consent__text"
                     @if ($settings->get('cookie_bar_text_color')) style="color: {{ $settings->get('cookie_bar_text_color') }};" @endif>
-                    {{ $settings->get('cookie_bar_text') ?? 'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' }}
+                    {!! $settings->get('cookie_bar_text') ?? 'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' !!}
                 </p>
                 <div class="cookie-consent__buttons">
                     <button type="button" class="cookie-consent__button cookie-consent__button--accept"

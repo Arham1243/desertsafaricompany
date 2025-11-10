@@ -7710,7 +7710,9 @@ ul.show-in-desktop {
     margin: 0;
     color: #333;
 }
-
+.cookie-consent__text a {
+    color: var(--color-primary);
+}
 .cookie-consent__buttons {
     display: flex;
     gap: 14px;
@@ -8220,7 +8222,7 @@ ul.show-in-desktop {
 }
 
 .whatsapp-help {
-    margin-top: 1.25rem ;
+    margin-top: 1.25rem;
 }
 
 .whatsapp-help__title {
@@ -8232,7 +8234,7 @@ ul.show-in-desktop {
 .whatsapp-help__btn {
     width: 100%;
     color: #fff;
-    background: #2E9E73;
+    background: #2e9e73;
     font-size: 0.85rem;
     text-align: center;
     display: flex;
@@ -8242,12 +8244,12 @@ ul.show-in-desktop {
     padding: 0.6rem;
     border-radius: 100px;
 }
-.whatsapp-help__btn:hover{
+.whatsapp-help__btn:hover {
     color: inherit;
 }
 .whatsapp-help__btn i {
     font-size: 1.12rem;
 }
-.Price-Includes__content:has(.no-icon) .tour-content__pra-icon{
-    display:none;
+.Price-Includes__content:has(.no-icon) .tour-content__pra-icon {
+    display: none;
 }
