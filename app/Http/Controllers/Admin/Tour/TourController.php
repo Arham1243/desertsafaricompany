@@ -48,7 +48,7 @@ class TourController extends Controller
     {
         $categories = TourCategory::where('status', 'publish')->get();
 
-        $tours = Tour::with('categories:id,name')->get();
+        $tours = Tour::with('categories:id,name')->where('status', 'publish')->get();
         $authors = TourAuthor::where('status', 'active')->get();
         $attributes = TourAttribute::where('status', 'active')
             ->latest()
@@ -335,7 +335,7 @@ class TourController extends Controller
             ->latest()
             ->get();
         $categories = TourCategory::where('status', 'publish')->get();
-        $tours = Tour::where('id', '!=', $id)->with('categories:id,name')->get();
+        $tours = Tour::where('id', '!=', $id)->with('categories:id,name')->where('status', 'publish')->get();
         $authors = TourAuthor::where('status', 'active')->get();
 
         $cities = City::where('status', 'publish')->get();
