@@ -1316,7 +1316,6 @@
     </div>
     </div>
     </div>
-
     @if ($tour->addOns->isNotEmpty())
         @foreach ($tour->addOns as $index => $addOn)
             <div class="{{ !$loop->last ? 'my-5' : '' }} pb-2">
@@ -1334,7 +1333,6 @@
                                 $relatedTours = App\Models\Tour::whereIn('id', $addOn->tour_ids ?? [])
                                     ->where('status', 'publish')
                                     ->get();
-
                             @endphp
                             @foreach ($relatedTours as $relatedTour)
                                 <div class=col-md-3>

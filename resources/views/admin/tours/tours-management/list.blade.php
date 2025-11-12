@@ -35,7 +35,7 @@
                                 @endphp
                                 <form id="filter-form" class="w-full">
                                     <div class="row w-full">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-fields">
                                                 <label class="title">Search by Category:</label>
                                                 <select onchange="document.getElementById('filter-form').submit()"
@@ -49,7 +49,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-fields">
                                                 <label class="title">Search by City:</label>
                                                 <select onchange="document.getElementById('filter-form').submit()"

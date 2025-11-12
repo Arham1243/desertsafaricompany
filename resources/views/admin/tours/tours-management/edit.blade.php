@@ -159,10 +159,11 @@
                                         </div>
                                         <div class="col-12">
                                             <div class="form-fields">
-                                                <label class="title">Select City <span class="text-danger">*</span>:</label>
-                                                <select name="tour[location][normal_location][city_id]" class="select2-select"
-                                                    data-error="Location > City" placeholder="Select City"
-                                                    autocomplete="new-password" data-required>
+                                                <label class="title">Select City <span
+                                                        class="text-danger">*</span>:</label>
+                                                <select name="tour[location][normal_location][city_id]"
+                                                    class="select2-select" data-error="Location > City"
+                                                    placeholder="Select City" autocomplete="new-password" data-required>
                                                     <option value="" selected disabled>Select City</option>
                                                     @foreach ($cities as $city)
                                                         <option value="{{ $city->id }}"
@@ -286,13 +287,14 @@
                                                                                 @click="removeFeature(index)">
                                                                                 <i class='bx bxs-trash-alt'></i>
                                                                             </button> --}}
-                                                                             <div class="d-flex gap-2">
+                                                                            <div class="d-flex gap-2">
                                                                                 <button type="button"
                                                                                     class="delete-btn ms-auto delete-btn--static"
                                                                                     @click="removeFeature(index)">
                                                                                     <i class='bx bxs-trash-alt'></i>
                                                                                 </button>
-                                                                                <button type="button" class="add-btn  ms-auto add-btn--static"
+                                                                                <button type="button"
+                                                                                    class="add-btn  ms-auto add-btn--static"
                                                                                     @click="addFeature(index)">
                                                                                     <i class='bx bx-plus'></i>
                                                                                 </button>
@@ -316,31 +318,30 @@
                                             $inclusions = empty($inclusions) ? [''] : $inclusions;
                                         @endphp
 
-                                        <div class="col-md-12 mt-3"  x-data="{ includes: {{$tour->enable_includes}} }">
+                                        <div class="col-md-12 mt-3" x-data="{ includes: {{ $tour->enable_includes }} }">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3  mb-3">
-                                                        <label class="title title--sm mb-0">Include:</label>
-                                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                            data-disabled-text="Disabled">
-                                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="enable_includes_switch"
-                                                            x-model="includes"
+                                                    <label class="title title--sm mb-0">Include:</label>
+                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                        data-disabled-text="Disabled">
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="enable_includes_switch" x-model="includes"
                                                             @change="includes = includes ? 1 : 0"
-                                                            value="{{$tour->enable_includes}}"
-                                                            {{($tour->enable_includes == 1) ? 'checked' : ''}}
+                                                            value="{{ $tour->enable_includes }}"
+                                                            {{ $tour->enable_includes == 1 ? 'checked' : '' }}
                                                             name="enable_includes">
-                                                            <label class="form-check-label"
+                                                        <label class="form-check-label"
                                                             for="enable_includes_switch">Enabled</label>
-                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="mb-4"  x-show="includes == 1">
+                                                <div class="mb-4" x-show="includes == 1">
                                                     <label class="title text-dark">Title </label>
                                                     <input type="text" name="exclusions_inclusions_heading[inclusions]"
                                                         class="field"
                                                         value="{{ json_decode($tour->exclusions_inclusions_heading) ? json_decode($tour->exclusions_inclusions_heading)->inclusions : '' }}">
                                                 </div>
 
-                                                <div class="repeater-table"  x-show="includes == 1" data-repeater>
+                                                <div class="repeater-table" x-show="includes == 1" data-repeater>
                                                     <table class="table table-bordered">
                                                         <thead>
                                                             <tr>
@@ -369,12 +370,14 @@
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex gap-2">
-                                                                        <button type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove disabled>
-                                                                            <i class='bx bxs-trash-alt'></i>
-                                                                        </button>
-                                                                        <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class='bx bxs-trash-alt'></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn  add-btn--static"
+                                                                                data-repeater-insert>
                                                                                 <i class='bx bx-plus'></i>
                                                                             </button>
                                                                         </div>
@@ -396,23 +399,22 @@
                                             $exclusions = empty($exclusions) ? [''] : $exclusions;
                                         @endphp
 
-                                        <div class="col-md-12 mt-3"  x-data="{ excludes: {{$tour->enable_excludes}} }">
+                                        <div class="col-md-12 mt-3" x-data="{ excludes: {{ $tour->enable_excludes }} }">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3  mb-3">
                                                     <label class="title title--sm mb-0">Exclude:</label>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
                                                         <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="enable_excludes_switch"
-                                                        x-model="excludes"
-                                                        @change="excludes = excludes ? 1 : 0"
-                                                        value="{{$tour->enable_excludes}}"
-                                                        {{($tour->enable_excludes == 1) ? 'checked' : ''}}
-                                                        name="enable_excludes">
+                                                            id="enable_excludes_switch" x-model="excludes"
+                                                            @change="excludes = excludes ? 1 : 0"
+                                                            value="{{ $tour->enable_excludes }}"
+                                                            {{ $tour->enable_excludes == 1 ? 'checked' : '' }}
+                                                            name="enable_excludes">
                                                         <label class="form-check-label"
-                                                        for="enable_excludes_switch">Enabled</label>
+                                                            for="enable_excludes_switch">Enabled</label>
                                                     </div>
-                                                 </div>
+                                                </div>
                                                 <div class="mb-4" x-show="excludes == 1">
                                                     <label class="title text-dark">Title</label>
                                                     <input type="text" name="exclusions_inclusions_heading[exclusions]"
@@ -453,10 +455,12 @@
                                                                                 data-repeater-remove disabled>
                                                                                 <i class='bx bxs-trash-alt'></i>
                                                                             </button>
-                                                                            <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
-                                                                                    <i class='bx bx-plus'></i>
-                                                                                </button>
-                                                                            </div>
+                                                                            <button type="button"
+                                                                                class="add-btn  add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class='bx bx-plus'></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -558,7 +562,7 @@
                                                                                                 :name="`details[sections][${sectionIndex}][category][items][${itemIndex}]`" rows="5" placeholder="Content"
                                                                                                 class="field">
 </textarea>
-                                                                                           <div class="d-flex gap-2">
+                                                                                            <div class="d-flex gap-2">
                                                                                                 <button type="button"
                                                                                                     @click="section.category.items.splice(itemIndex, 1)"
                                                                                                     class="delete-btn delete-btn--static align-self-center">
@@ -568,7 +572,8 @@
                                                                                                 <button type="button"
                                                                                                     @click="addItem(sectionIndex, itemIndex)"
                                                                                                     class="add-btn  add-btn--static align-self-center">
-                                                                                                    <i class="bx bx-plus"></i>
+                                                                                                    <i
+                                                                                                        class="bx bx-plus"></i>
                                                                                                 </button>
                                                                                             </div>
                                                                                         </div>
@@ -665,10 +670,12 @@
                                                                                 data-repeater-remove disabled>
                                                                                 <i class='bx bxs-trash-alt'></i>
                                                                             </button>
-                                                                            <button type="button" class="add-btn  add-btn--static" data-repeater-insert>
-                                                                                    <i class='bx bx-plus'></i>
-                                                                                </button>
-                                                                            </div>
+                                                                            <button type="button"
+                                                                                class="add-btn  add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class='bx bx-plus'></i>
+                                                                            </button>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             @endforeach
@@ -811,21 +818,19 @@
                             </div>
                         </div>
                         <div x-show="optionTab === 'location'" class="location-options">
-                            <div class="form-box" x-data="{ locationType: '{{ $tour->location_type != null ? $tour->location_type : 'normal_location' }}', enableItinerary: {{$tour->enable_location ?? 1}} }">
+                            <div class="form-box" x-data="{ locationType: '{{ $tour->location_type != null ? $tour->location_type : 'normal_location' }}', enableItinerary: {{ $tour->enable_location ?? 1 }} }">
                                 <div class="form-box__header d-flex align-items-center gap-3">
                                     <div class="title">Tour Locations</div>
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="form-check form-switch" data-enabled-text="Enabled"
                                             data-disabled-text="Disabled">
                                             <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="enable_location_switch"
-                                                x-model="enableItinerary"
+                                                id="enable_location_switch" x-model="enableItinerary"
                                                 @change="enableItinerary = enableItinerary ? 1 : 0"
-                                                value="{{$tour->enable_location ?? 1}}"
-                                                {{($tour->enable_location == 1) ? 'checked' : ''}}
+                                                value="{{ $tour->enable_location ?? 1 }}"
+                                                {{ $tour->enable_location == 1 ? 'checked' : '' }}
                                                 name="enable_location">
-                                            <label class="form-check-label"
-                                                for="enable_location_switch">Enabled</label>
+                                            <label class="form-check-label" for="enable_location_switch">Enabled</label>
                                         </div>
                                     </div>
                                 </div>
@@ -1340,7 +1345,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-4 repeater-table"  x-show="planItineraryExperience == 1">
+                                            <div class="form-fields mt-4 repeater-table">
                                                 <div class="form-fields">
                                                     <div class="d-flex">
                                                         <label class="title title--sm mb-0">Itinerary:</label>
@@ -1634,8 +1639,9 @@
                                                     <div class="title title--sm mb-0">Pricing Tagline:</div>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
-                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="pricing_tagline_enabled" value="1"
+                                                        <input data-toggle-switch class="form-check-input"
+                                                            type="checkbox" id="pricing_tagline_enabled"
+                                                            value="1"
                                                             name="tour[pricing][pricing_tagline][enabled]"
                                                             x-model="taglineEnabled">
                                                         <label class="form-check-label"
@@ -1687,8 +1693,8 @@
                                                     <div class="title title--sm mb-0">Tour Price:</div>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
-                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                            id="simple_pricing_enabled" value="1"
+                                                        <input data-toggle-switch class="form-check-input"
+                                                            type="checkbox" id="simple_pricing_enabled" value="1"
                                                             name="tour[pricing][simple_pricing_enabled]"
                                                             x-model="enabled">
                                                         <label class="form-check-label"
@@ -2981,22 +2987,39 @@
                                                                             type="text" class="field"
                                                                             x-model="addOn.heading">
                                                                     </div>
+
                                                                     <div class="form-fields">
-                                                                        <label class="title">Select
-                                                                            tours</label>
-                                                                        <select :name="`addOns[${index}][tour_ids][]`"
-                                                                            class="choices-select" multiple
-                                                                            x-ref="select${index}">
-                                                                            @foreach ($tours as $tourAddOn)
-                                                                                <option :value="'{{ $tourAddOn->id }}'"
-                                                                                    :selected="addOn.tour_ids.includes(
-                                                                                        '{{ $tourAddOn->id }}')">
-                                                                                    {{ $tourAddOn->title }}
-                                                                                </option>
+                                                                        <label class="title">Filter Tours by Category</label>
+                                                                        <select :name="`addOns[${index}][category_id]`"
+                                                                            class="choices-category field"
+                                                                            x-model="addOn.category_id"
+                                                                            @change="filterTours(index)">
+                                                                            <option value="">All Categories</option>
+                                                                            @foreach ($categories as $category)
+                                                                                <option value="{{ $category->id }}">
+                                                                                    {{ $category->name }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
+
+                                                                    <div class="form-fields">
+                                                                        <label class="title">Select Tours</label>
+                                                                        <select :name="`addOns[${index}][tour_ids][]`"
+                                                                            class="choices-select" multiple
+                                                                            x-ref="select${index}">
+                                                                            <template
+                                                                                x-for="tour in filteredTours(addOn.category_id)"
+                                                                                :key="tour.id">
+                                                                                <option :value="tour.id"
+                                                                                    x-text="tour.title"
+                                                                                    :selected="addOn.tour_ids.includes(String(tour
+                                                                                        .id))">
+                                                                                </option>
+                                                                            </template>
+                                                                        </select>
+                                                                    </div>
                                                                 </td>
+
                                                                 <td>
                                                                     <button type="button" @click="removeAddOn(index)"
                                                                         class="delete-btn delete-btn--static ms-auto">
@@ -3005,6 +3028,7 @@
                                                                 </td>
                                                             </tr>
                                                         </template>
+
                                                     </tbody>
                                                 </table>
                                                 <div class="mt-4">
@@ -3602,10 +3626,12 @@
         function featuresManager() {
             return {
                 features: @if ($tour->features)
-                    @js(array_map(function($feature) {
-                        $feature['id'] = uniqid('', true);
-                        return $feature;
-                    }, json_decode($tour->features, true)))
+                    @js(
+    array_map(function ($feature) {
+        $feature['id'] = uniqid('', true);
+        return $feature;
+    }, json_decode($tour->features, true)),
+)
                 @else
                     [{
                         id: Date.now(),
@@ -3659,42 +3685,89 @@
 
         function repeaterFormForAddOns(addOns = []) {
             return {
+                allTours: @json($tours),
                 formData: {
                     addOns: addOns.length ? addOns : [{
                         heading: '',
+                        category_id: '',
                         tour_ids: []
                     }]
                 },
+
                 initChoices() {
                     this.$nextTick(() => {
+                        // --- Initialize Tours multiselect ---
                         document.querySelectorAll('.choices-select').forEach(el => {
-                            if (el._choicesInstance) el._choicesInstance.destroy()
-                            el._choicesInstance = new Choices(el, {
-                                removeItemButton: true
-                            })
+                            if (el._choicesInstance) el._choicesInstance.destroy();
 
+                            el._choicesInstance = new Choices(el, {
+                                removeItemButton: true,
+                                placeholder: true,
+                                searchPlaceholderValue: 'Search tours...'
+                            });
 
                             const selectedValues = Array.from(el.querySelectorAll('option:checked')).map(
-                                o => o.value)
-                            selectedValues.forEach(val => {
-                                el._choicesInstance.setChoiceByValue(val)
-                            })
-                        })
-                    })
+                                o => o.value);
+                            selectedValues.forEach(val => el._choicesInstance.setChoiceByValue(val));
+                        });
+
+                        // --- Initialize Category single select ---
+                        document.querySelectorAll('.choices-category').forEach(el => {
+                            if (el._choicesInstance) el._choicesInstance.destroy();
+
+                            el._choicesInstance = new Choices(el, {
+                                removeItemButton: false,
+                                placeholder: true,
+                                searchPlaceholderValue: 'Search categories...'
+                            });
+
+                            // ✅ Sync Choices → Alpine
+                            el.removeEventListener('change', this._categoryChangeHandler);
+                            this._categoryChangeHandler = (event) => {
+                                const index = [...document.querySelectorAll('.choices-category')]
+                                    .indexOf(el);
+                                if (index !== -1) {
+                                    this.formData.addOns[index].category_id = event.target.value;
+                                    this.filterTours(index);
+                                }
+                            };
+                            el.addEventListener('change', this._categoryChangeHandler);
+
+                            const selectedVal = el.querySelector('option:checked')?.value;
+                            if (selectedVal) el._choicesInstance.setChoiceByValue(selectedVal);
+                        });
+                    });
                 },
+
                 addAddOn() {
                     this.formData.addOns.push({
                         heading: '',
+                        category_id: '',
                         tour_ids: []
-                    })
-                    this.initChoices()
+                    });
+                    this.initChoices();
                 },
+
                 removeAddOn(index) {
-                    this.formData.addOns.splice(index, 1)
-                    this.initChoices()
+                    this.formData.addOns.splice(index, 1);
+                    this.initChoices();
+                },
+
+                filteredTours(category_id) {
+                    if (!category_id) return this.allTours;
+                    return this.allTours.filter(t =>
+                        Array.isArray(t.categories) &&
+                        t.categories.some(c => c.id == category_id)
+                    );
+                },
+
+                filterTours(index) {
+                    this.formData.addOns[index].tour_ids = [];
+                    this.initChoices();
                 }
-            }
+            };
         }
+
 
         function promoAddons() {
             return {

@@ -1154,8 +1154,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="form-fields mt-4 repeater-table"
-                                                x-show="planItineraryExperience == 1">
+                                            <div class="form-fields mt-4 repeater-table">
                                                 <div class="form-fields">
                                                     <div class="d-flex">
                                                         <label class="title title--sm mb-0">Itinerary:</label>
@@ -2471,21 +2470,39 @@
                                                                     <div class="form-fields">
                                                                         <label class="title">Heading</label>
                                                                         <input :name="`addOns[${index}][heading]`"
-                                                                            type="text" class="field">
+                                                                            type="text" class="field"
+                                                                            x-model="addOn.heading">
                                                                     </div>
+
+                                                                    {{-- ✅ Category Filter --}}
                                                                     <div class="form-fields">
-                                                                        <label class="title">Select
-                                                                            tours</label>
-                                                                        <select :name="`addOns[${index}][tour_ids][]`"
-                                                                            multiple class="choices-select">
-                                                                            @foreach ($tours as $tour)
-                                                                                <option value="{{ $tour->id }}">
-                                                                                    {{ $tour->title }}
-                                                                                </option>
+                                                                        <label class="title">Filter Tours by Category</label>
+                                                                        <select :name="`addOns[${index}][category_id]`"
+                                                                            class="choices-category field"
+                                                                            x-model="addOn.category_id">
+                                                                            <option value="">All Categories</option>
+                                                                            @foreach ($categories as $category)
+                                                                                <option value="{{ $category->id }}">
+                                                                                    {{ $category->name }}</option>
                                                                             @endforeach
                                                                         </select>
                                                                     </div>
+
+                                                                    {{-- ✅ Filtered Tours --}}
+                                                                    <div class="form-fields">
+                                                                        <label class="title">Select Tours</label>
+                                                                        <select :name="`addOns[${index}][tour_ids][]`"
+                                                                            multiple class="choices-select">
+                                                                            <template
+                                                                                x-for="tour in filteredTours(addOn.category_id)"
+                                                                                :key="tour.id">
+                                                                                <option :value="tour.id"
+                                                                                    x-text="tour.title"></option>
+                                                                            </template>
+                                                                        </select>
+                                                                    </div>
                                                                 </td>
+
                                                                 <td>
                                                                     <button type="button" @click="removeAddOn(index)"
                                                                         class="delete-btn delete-btn--static ms-auto">
@@ -2494,6 +2511,7 @@
                                                                 </td>
                                                             </tr>
                                                         </template>
+
                                                     </tbody>
                                                 </table>
                                                 <div class="mt-4">
@@ -3012,34 +3030,80 @@
 
         function repeaterFormForAddOns() {
             return {
+                allTours: @json($tours),
                 formData: {
                     addOns: [{
                         heading: '',
+                        category_id: '',
                         tour_ids: []
                     }]
                 },
+
                 initChoices() {
                     this.$nextTick(() => {
+                        // --- Initialize Tours multiselect ---
                         document.querySelectorAll('.choices-select').forEach(el => {
-                            if (el._choicesInstance) el._choicesInstance.destroy()
+                            if (el._choicesInstance) el._choicesInstance.destroy();
+
                             el._choicesInstance = new Choices(el, {
-                                removeItemButton: true
-                            })
-                        })
-                    })
+                                removeItemButton: true,
+                                placeholder: true,
+                                searchPlaceholderValue: 'Search tours...'
+                            });
+                        });
+
+                        // --- Initialize Category single select ---
+                        document.querySelectorAll('.choices-category').forEach(el => {
+                            if (el._choicesInstance) el._choicesInstance.destroy();
+
+                            el._choicesInstance = new Choices(el, {
+                                removeItemButton: false,
+                                placeholder: true,
+                                searchPlaceholderValue: 'Search categories...'
+                            });
+
+                            // ✅ Sync Choices → Alpine
+                            el.removeEventListener('change', this._categoryChangeHandler);
+                            this._categoryChangeHandler = (event) => {
+                                const index = [...document.querySelectorAll('.choices-category')]
+                                    .indexOf(el);
+                                if (index !== -1) {
+                                    this.formData.addOns[index].category_id = event.target.value;
+                                    this.filterTours(index);
+                                }
+                            };
+                            el.addEventListener('change', this._categoryChangeHandler);
+                        });
+                    });
                 },
+
                 addAddOn() {
                     this.formData.addOns.push({
                         heading: '',
+                        category_id: '',
                         tour_ids: []
-                    })
-                    this.initChoices()
+                    });
+                    this.initChoices();
                 },
+
                 removeAddOn(index) {
-                    this.formData.addOns.splice(index, 1)
-                    this.initChoices()
+                    this.formData.addOns.splice(index, 1);
+                    this.initChoices();
+                },
+
+                filteredTours(category_id) {
+                    if (!category_id) return this.allTours;
+                    return this.allTours.filter(t =>
+                        Array.isArray(t.categories) &&
+                        t.categories.some(c => c.id == category_id)
+                    );
+                },
+
+                filterTours(index) {
+                    this.formData.addOns[index].tour_ids = [];
+                    this.initChoices();
                 }
-            }
+            };
         }
 
 
