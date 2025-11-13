@@ -8253,3 +8253,7 @@ ul.show-in-desktop {
 .Price-Includes__content:has(.no-icon) .tour-content__pra-icon {
     display: none;
 }
+
+body .timeslot-group-wrapper :is(select.select-field) {
+    padding: 0.5rem !important;
+}

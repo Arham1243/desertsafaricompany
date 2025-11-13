@@ -719,8 +719,34 @@ class TourController extends Controller
                 'time' => $pricing['time'],
                 'water_price' => $pricing['water_price'],
                 'promo_title' => $pricing['promo_title'],
+                'promo_slug' => $pricing['promo_slug'],
+                'promo_is_free' => $pricing['promo_is_free'],
                 'original_price' => $pricing['original_price'],
             ]);
+        }
+
+        // Duplicate promo add-ons if price type is promo
+        if ($priceType === 'promo') {
+            $promoAddOn = TourPricing::where('tour_id', $tour->id)
+                ->where('price_type', 'promoAddOn')
+                ->first();
+
+            if ($promoAddOn && $promoAddOn->promo_addons) {
+                $promoAddOns = json_decode($promoAddOn->promo_addons);
+
+                // regenerate unique slugs for each add-on
+                $newPromoAddOns = collect($promoAddOns)->map(function ($addon) {
+                    $addon->promo_slug = Str::slug(strip_tags($addon->title)) . '-' . uniqid();
+                    return $addon;
+                })->all();
+
+                // create new promoAddOn row for the duplicated tour
+                TourPricing::create([
+                    'tour_id' => $newTour->id,
+                    'price_type' => 'promoAddOn',
+                    'promo_addons' => json_encode($newPromoAddOns),
+                ]);
+            }
         }
     }
 
