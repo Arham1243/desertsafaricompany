@@ -19,6 +19,7 @@
                                     <div class="form-fields d-flex gap-3">
                                         <select class="field" id="bulkActions" name="bulk_actions" required>
                                             <option value="" disabled selected>Bulk Actions</option>
+                                            <option value="duplicate">Duplicate</option>
                                             <option value="publish">Publish</option>
                                             <option value="draft">Move to Draft</option>
                                             <option value="delete">Delete</option>

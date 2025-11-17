@@ -22,6 +22,7 @@ use App\Models\TourAuthor;
 use App\Models\TourCategory;
 use App\Models\TourDetailPopup;
 use App\Models\TourReview;
+use App\Services\Admin\TourDuplicateService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -171,6 +172,14 @@ class BulkActionController extends Controller
                 break;
             case 'inactive':
                 $modelClass::whereIn($idColumn, $selectedIds)->update(['status' => 'inactive']);
+                break;
+            case 'duplicate':
+                if ($modelClass === Tour::class) {
+                    $service = app(TourDuplicateService::class);
+                    $modelClass::whereIn($idColumn, $selectedIds)->get()->each(function ($tour) use ($service) {
+                        $service->duplicate($tour);
+                    });
+                }
                 break;
             case 'permanent_delete':
                 $modelClass::onlyTrashed()->whereIn($idColumn, $selectedIds)->each(function ($model) use ($modelClass, $isParent) {
