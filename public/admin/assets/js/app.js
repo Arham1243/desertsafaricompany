@@ -718,6 +718,15 @@ function confirmBulkAction(event) {
         }
     }
 
+    if (selectedAction === "duplicate") {
+        const confirmation = confirm(
+            "Are you sure you want to duplicate the selected items?",
+        );
+        if (!confirmation) {
+            event.preventDefault();
+        }
+    }
+
     if (selectedAction === "permanent_delete") {
         const message =
             "This action will permanently delete the selected items and all related fields. Do you want to proceed?";
