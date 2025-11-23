@@ -540,10 +540,12 @@
                 if (!tourPackages || !tourPackages[promoIndex]) return;
 
                 const packageItem = tourPackages[promoIndex];
+                const minPerson = parseInt(packageItem.min_person) || 0;
+                const maxPerson = parseInt(packageItem.max_person) || 999;
 
-                if (action === 'plus') {
+                if (action === 'plus' && packageItem.quantity < maxPerson) {
                     packageItem.quantity = (packageItem.quantity || 0) + 1;
-                } else if (action === 'minus' && packageItem.quantity > 0) {
+                } else if (action === 'minus' && packageItem.quantity > minPerson) {
                     packageItem.quantity--;
                 }
 

@@ -22,14 +22,15 @@
                 <!-- Simple Package or Main Promo -->
                 <template v-if="pkg.type === 'simple' || !pkg.type">
                     <div class="tour-pricing__quantity">
+                        
                         <div class="quantity-controls">
                             <button type="button" @click="updatePromoQuantity('minus', null, tour, pkgIndex)"
-                                class="quantity-btn minus" :disabled="pkg.quantity <= 0">
+                                class="quantity-btn minus" :disabled="pkg.quantity <= (parseInt(pkg.min_person) || 0)">
                                 <i class="bx bx-minus"></i>
                             </button>
                             <span class="quantity-display">@{{ pkg.quantity }}</span>
                             <button type="button" @click="updatePromoQuantity('plus', null, tour, pkgIndex)"
-                                class="quantity-btn plus">
+                                class="quantity-btn plus" :disabled="pkg.quantity >= (parseInt(pkg.max_person) || 999)">
                                 <i class="bx bx-plus"></i>
                             </button>
                         </div>
@@ -49,14 +50,15 @@
                 <template v-else-if="pkg.type === 'timeslot'">
                     <div class="timeslot-addon">
                         <div class="tour-pricing__quantity mb-4">
+                            
                             <div class="quantity-controls">
                                 <button type="button" @click="updatePromoQuantity('minus', null, tour, pkgIndex)"
-                                    class="quantity-btn minus" :disabled="pkg.quantity <= 0">
+                                    class="quantity-btn minus" :disabled="pkg.quantity <= (parseInt(pkg.min_person) || 0)">
                                     <i class="bx bx-minus"></i>
                                 </button>
                                 <span class="quantity-display">@{{ pkg.quantity }}</span>
                                 <button type="button" @click="updatePromoQuantity('plus', null, tour, pkgIndex)"
-                                    class="quantity-btn plus">
+                                    class="quantity-btn plus" :disabled="pkg.quantity >= (parseInt(pkg.max_person) || 999)">
                                     <i class="bx bx-plus"></i>
                                 </button>
                             </div>
@@ -214,6 +216,11 @@
             text-align: center;
             font-weight: 600;
             font-size: 16px;
+        }
+
+        .quantity-info small {
+            font-size: 0.75rem;
+            color: #6c757d;
         }
 
         .tour-pricing__subtotal {
