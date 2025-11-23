@@ -241,6 +241,8 @@ class TourController extends Controller
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'promo_is_free' => (int) $pricing['promo']['promo_is_free'][$index] ?? 0,
+                        'min_person' => (int) $pricing['promo']['min_person'][$index] ?? null,
+                        'max_person' => (int) $pricing['promo']['max_person'][$index] ?? null,
                         'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);
@@ -526,6 +528,8 @@ class TourController extends Controller
                         'price_type' => $pricing['price_type'],
                         'promo_title' => $promoTitle,
                         'promo_is_free' => (int) $pricing['promo']['promo_is_free'][$index] ?? 0,
+                        'min_person' => $pricing['promo']['min_person'][$index] ?? null,
+                        'max_person' => $pricing['promo']['max_person'][$index] ?? null,
                         'promo_slug' => $promoSlug,
                         'original_price' => $pricing['promo']['original_price'][$index] ?? null,
                     ]);

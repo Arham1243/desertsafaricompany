@@ -141,7 +141,7 @@
                                                         class="text-danger">*</span> <span class="text-dark ps-2">(Tour
                                                         will appear on these selected category pages)</span></label>
                                                 <select name="tour[general][category_ids][]" class="select2-select"
-                                                    data-error="Category" data-required should-sort="false" multiple>
+                                                    data-error="General > Categories" data-required should-sort="false" multiple>
                                                     {!! renderCategoriesMulti($categories, $tourCategoryIds) !!}
                                                 </select>
                                             </div>
@@ -1784,10 +1784,10 @@
                                                                     </div>
                                                                     <div x-data="{
                                                                         promos: [
-                                                                            { title: '', price: '', is_free: false }
+                                                                            { title: '', price: '', is_free: false, min_person: 0, max_person: 200 }
                                                                         ],
                                                                         addRow() {
-                                                                            this.promos.push({ title: '', price: '', is_free: false })
+                                                                            this.promos.push({ title: '', price: '', is_free: false, min_person: 0, max_person: 200 })
                                                                         },
                                                                         removeRow(index) {
                                                                             this.promos.splice(index, 1)
@@ -1823,6 +1823,29 @@
                                                                                                     min="0"
                                                                                                     :name="`tour[pricing][promo][original_price][]`"
                                                                                                     x-model="promo.price">
+                                                                                            </div>
+                                                                                               <div class="row mt-3">
+                                                                                                <div class="col-md-6">
+                                                                                                <label
+                                                                                                    class="title">Min:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field"
+                                                                                                    step="1"
+                                                                                                    min="0"
+                                                                                                    :name="`tour[pricing][promo][min_person][]`"
+                                                                                                    x-model="promo.min_person">
+                                                                                            </div>
+                                                                                                <div class="col-md-6">
+                                                                                                <label
+                                                                                                    class="title">Max:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field"
+                                                                                                    step="1"
+                                                                                                    min="0"
+                                                                                                    :name="`tour[pricing][promo][max_person][]`"
+                                                                                                    x-model="promo.max_person">
+                                                                                                    </div>
+                                                                                            </div>
                                                                                             </div>
                                                                                         </td>
                                                                                         <td style="width: 19%">
@@ -1916,7 +1939,6 @@
                                                                                             </button>
                                                                                         </div>
                                                                                     </div>
-
                                                                                     <div x-show="addon.type === 'simple'"
                                                                                         class="row mt-3">
                                                                                         <div class="col-md-6">
