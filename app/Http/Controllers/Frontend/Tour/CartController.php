@@ -12,6 +12,7 @@ class CartController extends Controller
     public function index()
     {
         $cart = Session::get('cart', []);
+        dd($cart);
         $tours = Tour::where('status', 'publish')->get();
 
         // Initialize required data arrays for cart view

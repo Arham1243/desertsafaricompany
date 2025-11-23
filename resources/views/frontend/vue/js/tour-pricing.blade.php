@@ -640,6 +640,9 @@
                 updateTotalPrice()
             })
 
+            // Calculate initial total price on mount
+            updateTotalPrice()
+
             return {
                 totalPrice,
                 updateQuantity,
