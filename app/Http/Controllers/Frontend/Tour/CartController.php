@@ -12,7 +12,6 @@ class CartController extends Controller
     public function index()
     {
         $cart = Session::get('cart', []);
-        dd($cart);
         $tours = Tour::where('status', 'publish')->get();
 
         // Initialize required data arrays for cart view
@@ -36,6 +35,9 @@ class CartController extends Controller
             : [];
 
         $tour = Tour::findOrFail($tourId);
+        if($tour->status != 'publish') {
+            return redirect()->back()->with('notify_error', 'Tour is not published.');
+        }
         $totalNoOfPeople = array_sum(array_column($tourItems, 'quantity'));
 
         $subtotal = round((float) ($request->input('subtotal', 0)), 2);
