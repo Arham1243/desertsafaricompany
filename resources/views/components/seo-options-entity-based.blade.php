@@ -281,14 +281,16 @@
                                 <!-- Schema Tab -->
                                 <div class="tab-pane fade" id="schema" role="tabpanel"
                                     aria-labelledby="schema-tab">
-                                    <div class="row">
-                                        <div class="form-fields col-md-12">
-                                            <label class="title">Schema:</label>
-                                            <textarea name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
-                                            @error($fieldName('schema'))
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
+                                    @if ($schemaEntity && $id)
+                                        <a href="{{ route('admin.schema.index', ['entity' => $schemaEntity, 'id' => $id]) }}"
+                                            target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                    @endif
+                                    <div class="form-fields mt-3">
+                                        <label class="title">Schema:</label>
+                                        <textarea name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
+                                        @error($fieldName('schema'))
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

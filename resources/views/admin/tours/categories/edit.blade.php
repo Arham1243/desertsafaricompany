@@ -1532,7 +1532,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="buildCategoryDetailUrl($category, false, false)" :slug="$category->slug" />
+                            <x-seo-options entity="tour-categories" :id="$category->id" :seo="$seo ?? null" :resource="buildCategoryDetailUrl($category, false, false)" :slug="$category->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">

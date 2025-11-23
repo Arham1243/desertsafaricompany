@@ -839,7 +839,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :slug="$item->iso_alpha2 ?? ''" />
+                            <x-seo-options :entity="'countries'" :id="$item->id" :seo="$seo ?? null" :slug="$item->iso_alpha2 ?? ''" />
                         </div>
                     </div>
                     <div class="col-md-3">

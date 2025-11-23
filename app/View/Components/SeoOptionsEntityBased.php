@@ -14,12 +14,17 @@ class SeoOptionsEntityBased extends Component
 
     public $slug;
 
-    public function __construct($seo = null, $resource = null, $entity = null, $slug = null)
+    public $id;
+    public $schemaEntity;
+
+    public function __construct($seo = null, $resource = null, $entity = null, $slug = null, $id = null, $schemaEntity = null)
     {
         $this->seo = $seo;
         $this->resource = $resource;
         $this->entity = $entity;
         $this->slug = $slug;
+        $this->id = $id;
+        $this->schemaEntity = $schemaEntity;
     }
 
     public function render()

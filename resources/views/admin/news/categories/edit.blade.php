@@ -11,7 +11,7 @@
                     <div class="custom-sec__header">
                         <div class="section-content">
                             <h3 class="heading">Edit Category: {{ isset($title) ? $title : '' }}</h3>
-                            <div class="permalink">
+                            {{-- <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
                                     <div class="full-url">{{ buildUrl(url('/'), 'news/category/') }}</div>
@@ -20,10 +20,10 @@
                                     <input type="hidden" id="slug" value="{{ $category->slug ?? '#' }}"
                                         name="slug">
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
-                        <a href="{{ buildUrl(url('/'), 'news/category', $category->slug) }}" target="_blank"
-                            class="themeBtn">View</a>
+                        {{-- <a href="{{ buildUrl(url('/'), 'news/category', $category->slug) }}" target="_blank"
+                            class="themeBtn">View</a> --}}
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'news/category'" :slug="$category->slug" />
+                            {{-- <x-seo-options :seo="$seo ?? null" :resource="'news/category'" :slug="$category->slug" /> --}}
                         </div>
                     </div>
                     <div class="col-md-3">

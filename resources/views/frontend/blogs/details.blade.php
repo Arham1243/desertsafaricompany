@@ -5,6 +5,7 @@
         $is_enabled_blogs_you_may_also_like = $settings->get('is_enabled_blogs_you_may_also_like')
             ? (int) $settings->get('is_enabled_blogs_you_may_also_like') === 1
             : false;
+        $seo = $blog->seo ?? null;
     @endphp
 
     <div class="mt-3">

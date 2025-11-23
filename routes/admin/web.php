@@ -23,6 +23,7 @@ use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
 use App\Http\Controllers\Admin\SettingController;
+use App\Http\Controllers\Admin\SchemaController;
 use App\Http\Controllers\Admin\TerminalController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
@@ -76,6 +77,8 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
     Route::resource('tours', TourController::class);
     Route::get('tours/duplicate/{id}', [TourController::class, 'duplicate'])->name('tours.duplicate');
+    Route::get('{entity}/schema/{id}', [SchemaController::class, 'index'])->name('schema.index');
+    Route::post('{entity}/schema/{id}', [SchemaController::class, 'save'])->name('schema.save');
 
     Route::get('tour-media/{media}', [TourController::class, 'deleteMedia'])->name('tour-media.delete');
 

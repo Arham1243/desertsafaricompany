@@ -901,7 +901,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="buildCityUrl($item, true, false)" />
+                            <x-seo-options :entity="'cities'" :id="$item->id" :seo="$seo ?? null" :resource="buildCityUrl($item, true, false)" />
                         </div>
                     </div>
                     <div class="col-md-3">

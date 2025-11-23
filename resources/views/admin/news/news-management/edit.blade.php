@@ -66,7 +66,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="buildNewsDetailUrl($news, true, false)" :slug="''" />
+                            <x-seo-options entity="news" :id="$news->id" :seo="$seo ?? null" :resource="buildNewsDetailUrl($news, true, false)" :slug="''" />
                         </div>
                     </div>
                     <div class="col-md-3">

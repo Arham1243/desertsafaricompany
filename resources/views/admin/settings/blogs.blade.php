@@ -162,7 +162,8 @@
                                         ->toArray();
                                 @endphp
 
-                                <x-seo-options-entity-based :seo="$blogSeoSettings" resource="blogs" entity="blog_seo" />
+                                <x-seo-options-entity-based schemaEntity="blogs" id="listing" :seo="$blogSeoSettings"
+                                    resource="blogs" entity="blog_seo" />
                             </div>
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i

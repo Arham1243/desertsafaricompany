@@ -301,17 +301,42 @@
                                 </div>
                                 <div class="tab-pane fade" id="schema" role="tabpanel"
                                     aria-labelledby="schema-tab">
-                                    <div class="row">
-                                        <!-- Schema -->
-                                        <div class="form-fields col-md-12">
-                                            <label class="title">
-                                                Schema:
-                                            </label>
-                                            <textarea name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
-                                            @error('seo[schema]')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
+                                    @if ($entity && $id)
+                                        @if ($entity === 'tours')
+                                            @php
+                                                $tour = \App\Models\Tour::find($id);
+                                                $schema_type = $tour->schema_type;
+                                            @endphp
+                                            <div x-data="{ schema_type: '{{ $schema_type ?? 'inner-page' }}' }">
+                                                <div class="form-fields mb-3">
+                                                    <label class="title mb-2">Schema Type:</label>
+                                                    <select x-model="schema_type" name="tour[general][schema_type]"
+                                                        class="field">
+                                                        <option value="inner-page">TouristTrip (Inner Page)</option>
+                                                        <option value="water-activity">SportsActivityLocation (Water
+                                                            Activities)</option>
+                                                        <option value="boat-trip">BoatTrip (Water Activities)</option>
+                                                        <option value="bus-trip">BusTrip (Bus Tour)</option>
+                                                    </select>
+                                                </div>
+
+                                                <a :href="`{{ route('admin.schema.index', ['entity' => $entity, 'id' => $id]) }}?type=${schema_type}`"
+                                                    target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                            </div>
+                                        @else
+                                            <a href="{{ route('admin.schema.index', ['entity' => $entity, 'id' => $id]) }}"
+                                                target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                        @endif
+                                    @endif
+                                    <!-- Schema -->
+                                    <div class="form-fields mt-3">
+                                        <label class="title">
+                                            Schema:
+                                        </label>
+                                        <textarea disabled name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
+                                        @error('seo[schema]')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="canonical" role="tabpanel"

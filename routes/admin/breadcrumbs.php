@@ -292,3 +292,32 @@ Breadcrumbs::for('admin.inquiries.edit', function (BreadcrumbTrail $trail, $item
     $trail->parent('admin.inquiries.index');
     $trail->push('Inquiry Details', route('admin.inquiries.edit', $item->id));
 });
+
+// ---------------Schema---------------
+Breadcrumbs::for('admin.schema.index', function (BreadcrumbTrail $trail, $entity, $id, $record) {
+    // Handle listing pages (saved in settings)
+    if ($id === 'listing') {
+        $trail->parent('admin.settings.index');
+        $trail->push(ucfirst($entity) . ' Settings', route('admin.settings.edit', ['resource' => $entity]));
+        $trail->push('Edit Schema', route('admin.schema.index', ['entity' => $entity, 'id' => $id]));
+        return;
+    }
+    
+    // Handle regular entity records
+    $entityMap = [
+        'tours' => 'admin.tours.edit',
+        'pages' => 'admin.pages.edit',
+        'cities' => 'admin.cities.edit',
+        'countries' => 'admin.countries.edit',
+        'tour-categories' => 'admin.tour-categories.edit',
+        'blogs' => 'admin.blogs.edit',
+        'news' => 'admin.news.edit',
+    ];
+    
+    if (isset($entityMap[$entity]) && $record) {
+        $trail->parent($entityMap[$entity], $record);
+    }
+    
+    $trail->push('Edit Schema', route('admin.schema.index', ['entity' => $entity, 'id' => $id]));
+});
+// ---------------Schema---------------

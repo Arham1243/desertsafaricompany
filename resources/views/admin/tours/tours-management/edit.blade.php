@@ -3613,7 +3613,10 @@
                             </div>
                         </div>
                         <div x-show="optionTab === 'seo'" class="seo-options">
-                            <x-seo-options :seo="$tour->seo ?? null" :resource="buildTourDetailUrl($tour, true, false)" />
+                            <x-seo-options 
+                            :id="$tour->id"
+                            entity="tours"
+                                :seo="$tour->seo ?? null" :resource="buildTourDetailUrl($tour, true, false)" />
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " type="submit"
                             class="themeBtn mt-4 ms-auto">Save Changes<i class='bx bx-check'></i></button>

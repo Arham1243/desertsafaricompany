@@ -402,6 +402,7 @@ class TourController extends Controller
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
             'badge_tag' => $badgeTag ?? null,
+            'schema_type' => $general['schema_type'] ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
             'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
             'category_id' => $general['category_id'] ?? null,

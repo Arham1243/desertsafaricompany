@@ -67,7 +67,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <x-seo-options :seo="$seo ?? null" :resource="'page'" :slug="$page->slug" />
+                            <x-seo-options :entity="'pages'" :id="$page->id" :seo="$seo ?? null" :resource="'page'" :slug="$page->slug" />
                         </div>
                     </div>
                     <div class="col-md-3">

@@ -27,6 +27,8 @@
         <meta name="twitter:image" content="{{ asset(optional($seo)->tw_featured_image) }}">
     @endif
     @if (optional($seo)->schema)
+        <script type="application/ld+json">
         {!! optional($seo)->schema !!}
+    </script>
     @endif
 @endif

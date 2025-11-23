@@ -4,6 +4,7 @@
         $is_enabled_news_you_may_also_like = $settings->get('is_enabled_news_you_may_also_like')
             ? (int) $settings->get('is_enabled_news_you_may_also_like') === 1
             : false;
+        $seo = $news->seo ?? null;
     @endphp
     <div class="blog-details section-padding">
         <div class="container">

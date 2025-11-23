@@ -223,7 +223,8 @@
                                 </div>
                             </div>
 
-                            <x-seo-options :seo="$seo ?? null" :resource="buildBlogDetailUrl($blog, true, false)" :slug="''" />
+                            <x-seo-options entity="blogs" :id="$blog->id" :seo="$seo ?? null" :resource="buildBlogDetailUrl($blog, true, false)"
+                                :slug="''" />
                         </div>
                     </div>
                     <div class="col-md-3">
