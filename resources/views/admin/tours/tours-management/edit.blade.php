@@ -2411,6 +2411,28 @@
 
                                                                                     <div x-show="addon.type === 'timeslot'"
                                                                                         class="mt-3">
+                                                                                        <div class="row mb-3">
+                                                                                            <div class="col-md-6">
+                                                                                                <label
+                                                                                                    class="title">Min:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field w-100"
+                                                                                                    step="1"
+                                                                                                    min="0"
+                                                                                                    x-model="addon.min_person"
+                                                                                                    :name="`tour[pricing][promo][addOns][${index}][min_person]`">
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <label
+                                                                                                    class="title">Max:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field w-100"
+                                                                                                    step="1"
+                                                                                                    min="0"
+                                                                                                    x-model="addon.max_person"
+                                                                                                    :name="`tour[pricing][promo][addOns][${index}][max_person]`">
+                                                                                            </div>
+                                                                                        </div>
                                                                                         <template
                                                                                             x-for="(slot, sIndex) in addon.slots"
                                                                                             :key="sIndex">
@@ -2463,28 +2485,6 @@
                                                                                                         step="0.01"
                                                                                                         x-model="slot.discountedPercent"
                                                                                                         :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][discounted_percent]`">
-                                                                                                </div>
-
-                                                                                                <div class="col-md">
-                                                                                                    <label
-                                                                                                        class="title">Min:</label>
-                                                                                                    <input type="number"
-                                                                                                        class="field w-100"
-                                                                                                        step="1"
-                                                                                                        min="0"
-                                                                                                        x-model="slot.min_person"
-                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][min_person]`">
-                                                                                                </div>
-
-                                                                                                <div class="col-md">
-                                                                                                    <label
-                                                                                                        class="title">Max:</label>
-                                                                                                    <input type="number"
-                                                                                                        class="field w-100"
-                                                                                                        step="1"
-                                                                                                        min="0"
-                                                                                                        x-model="slot.max_person"
-                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][max_person]`">
                                                                                                 </div>
 
                                                                                                 <div
@@ -3850,9 +3850,7 @@
                     slots: addon.slots?.map(slot => ({
                         time: slot.time ?? '',
                         price: parseFloat(slot.price) || null,
-                        discountedPercent: parseFloat(slot.discounted_percent) || null,
-                        min_person: slot.min_person || 0,
-                        max_person: slot.max_person || 200
+                        discountedPercent: parseFloat(slot.discounted_percent) || null
                     })) || []
                 })),
 
@@ -3876,9 +3874,7 @@
                 addSlot(addonIndex) {
                     this.addons[addonIndex].slots.push({
                         time: '',
-                        price: null,
-                        min_person: 0,
-                        max_person: 200
+                        price: null
                     })
                 },
                 removeSlot(addonIndex, slotIndex) {
