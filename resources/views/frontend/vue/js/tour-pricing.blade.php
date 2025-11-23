@@ -29,6 +29,8 @@
                 'discount_percent' => $discountPercent,
                 'original_discounted_price' => number_format($discounted, 2),
                 'discounted_price' => number_format($discounted, 2),
+                'min_person' => (int) $promoPrice->min_person,
+                'max_person' => (int) $promoPrice->max_person,
                 'promo_discounted_price' => $firstOrderCoupon
                     ? applyPromoDiscount(
                         number_format($discounted, 2),
@@ -36,7 +38,7 @@
                         $firstOrderCoupon->amount,
                     )
                     : null,
-                'quantity' => 0,
+                'quantity' => (int) $promoPrice->min_person,
                 'hours_left' => $hoursLeft,
                 'is_first_order_coupon_applied' => false,
             ];
@@ -62,6 +64,8 @@
                             'discount_percent' => $discountPercent,
                             'original_discounted_price' => number_format($discounted, 2),
                             'discounted_price' => number_format($discounted, 2),
+                            'min_person' => (int) $addon['min_person'],
+                            'max_person' => (int) $addon['max_person'],
                             'promo_discounted_price' => $firstOrderCoupon
                                 ? applyPromoDiscount(
                                     number_format($discounted, 2),
@@ -69,7 +73,7 @@
                                     $firstOrderCoupon->amount,
                                 )
                                 : null,
-                            'quantity' => 0,
+                            'quantity' => (int) $addon['min_person'],
                             'hours_left' => $hoursLeft,
                             'is_first_order_coupon_applied' => false,
                         ];
@@ -94,7 +98,9 @@
                                 )
                                 : null,
                             'hours_left' => $hoursLeft,
-                            'quantity' => 0,
+                            'min_person' => (int) $addon['min_person'],
+                            'max_person' => (int) $addon['max_person'],
+                            'quantity' => (int) $addon['min_person'],
                             'selected_slots' => [],
                             'is_first_order_coupon_applied' => false,
                             'slots' => $slots
@@ -576,9 +582,14 @@
                     .slug) === personType);
                 if (!promoData) return;
 
-                promoData.quantity += (action === "plus" ? 1 : (action === "minus" && promoData
-                    .quantity > 0 ? -
-                    1 : 0));
+                const minPerson = parseInt(promoData.min_person) || 0;
+                const maxPerson = parseInt(promoData.max_person) || 999;
+
+                if (action === "plus" && promoData.quantity < maxPerson) {
+                    promoData.quantity++;
+                } else if (action === "minus" && promoData.quantity > minPerson) {
+                    promoData.quantity--;
+                }
                 updateTotalPrice();
             };
 

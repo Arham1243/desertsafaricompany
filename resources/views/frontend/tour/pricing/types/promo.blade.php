@@ -29,17 +29,22 @@
                         <i style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                 </template>
                 <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
-                    <div class="already-bought"></div>
+                    <div class="already-bought">
+
+                    </div>
                     <div class="quantity-counter">
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('minus', formatNameForInput(promo.slug))">
+                            @click="updateQuantity('minus', formatNameForInput(promo.slug))"
+                            :disabled="promo.quantity <= (parseInt(promo.min_person) || 0)">
                             <i class="bx bx-chevron-down"></i>
                         </button>
                         <input readonly type="number" class="quantity-counter__btn quantity-counter__btn--quantity"
-                            min="0" v-model="promo.quantity">
+                            :min="parseInt(promo.min_person) || 0" :max="parseInt(promo.max_person) || 999"
+                            v-model="promo.quantity">
 
                         <button class="quantity-counter__btn" type="button"
-                            @click="updateQuantity('plus', formatNameForInput(promo.slug))">
+                            @click="updateQuantity('plus', formatNameForInput(promo.slug))"
+                            :disabled="promo.quantity >= (parseInt(promo.max_person) || 999)">
                             <i class="bx bx-chevron-up"></i>
                         </button>
                     </div>
@@ -84,17 +89,22 @@
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
-                                <div class="already-bought"></div>
+                                <div class="already-bought">
+
+                                </div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))">
+                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))"
+                                        :disabled="addOn.quantity <= (parseInt(addOn.min_person) || 0)">
                                         <i class="bx bx-chevron-down"></i>
                                     </button>
                                     <input readonly type="number"
-                                        class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
-                                        v-model="addOn.quantity">
+                                        class="quantity-counter__btn quantity-counter__btn--quantity"
+                                        :min="parseInt(addOn.min_person) || 0"
+                                        :max="parseInt(addOn.max_person) || 999" v-model="addOn.quantity">
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('plus', formatNameForInput(addOn.slug))">
+                                        @click="updateQuantity('plus', formatNameForInput(addOn.slug))"
+                                        :disabled="addOn.quantity >= (parseInt(addOn.max_person) || 999)">
                                         <i class="bx bx-chevron-up"></i>
                                     </button>
                                 </div>
@@ -135,18 +145,22 @@
                                 class="promo-applied purple  d-flex align-items-center mt-1"> <i
                                     style="font-size:1.1rem;" class="bx bxs-check-circle"></i> Promo Applied</span>
                             <div class="form-guest-search__items justify-content-between" style="margin-top: 0.25rem">
-                                <div class="already-bought"></div>
+                                <div class="already-bought">
+                                </div>
                                 <div class="quantity-counter">
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))">
+                                        @click="updateQuantity('minus', formatNameForInput(addOn.slug))"
+                                        :disabled="addOn.quantity <= (parseInt(addOn.min_person) || 0)">
                                         <i class="bx bx-chevron-down"></i>
                                     </button>
                                     <input readonly type="number"
-                                        class="quantity-counter__btn quantity-counter__btn--quantity" min="0"
-                                        v-model="addOn.quantity">
+                                        class="quantity-counter__btn quantity-counter__btn--quantity"
+                                        :min="parseInt(addOn.min_person) || 0"
+                                        :max="parseInt(addOn.max_person) || 999" v-model="addOn.quantity">
 
                                     <button class="quantity-counter__btn" type="button"
-                                        @click="updateQuantity('plus', (addOn.slug))">
+                                        @click="updateQuantity('plus', formatNameForInput(addOn.slug))"
+                                        :disabled="addOn.quantity >= (parseInt(addOn.max_person) || 999)">
                                         <i class="bx bx-chevron-up"></i>
                                     </button>
                                 </div>
@@ -186,6 +200,11 @@
     <style>
         .form-book__title {
             padding-bottom: 0 !important;
+        }
+
+        .quantity-counter__btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
     </style>
 @endpush
