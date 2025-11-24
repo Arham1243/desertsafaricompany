@@ -9,12 +9,6 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <div class="form-fields">
-                                <label class="title">@context</label>
-                                <input type="text" x-model="schema['@context']" name="schema[@context]" class="field">
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
                                 <label class="title">@type</label>
                                 <input type="text" x-model="schema['@type']" name="schema[@type]" class="field">
                             </div>

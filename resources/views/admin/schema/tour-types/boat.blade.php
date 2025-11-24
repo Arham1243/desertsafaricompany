@@ -11,14 +11,6 @@
                 </div>
                 <div class="form-box__body form-fields">
                     <div class="row">
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">@context</label>
-                                <input type="text" x-model="schema['@context']" class="field">
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
                         <div class="col-12 mb-3 title title--sm">@type Boat Trip</div>
 
                         <div class="col-12 mb-3">
