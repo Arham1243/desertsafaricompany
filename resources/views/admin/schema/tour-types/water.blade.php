@@ -19,7 +19,7 @@
             </div>
         </div>
         <div class="col-md-5">
-            <div class="form-box">
+            <div class="form-box preview-box-wrapper">
                 <div class="form-box__header">
                     <div class="title">JSON Preview</div>
                 </div>
@@ -34,20 +34,23 @@
     </div>
 </div>
 
-<script>
-    function schemaManager() {
-        return {
-            schema: {
-                '@context': 'https://schema.org',
-            },
-            init(initialSchema) {
-                if (initialSchema && Object.keys(initialSchema).length > 0) {
-                    this.schema = initialSchema;
-                }
-            },
-            jsonPreview() {
-                return JSON.stringify(this.schema, null, 2);
-            }
+
+@push('js')
+    <script></script>
+@endpush
+@push('css')
+    <style>
+        .preview-box-wrapper {
+            position: sticky;
+            top: 1rem;
         }
-    }
-</script>
+
+        .preview-box {
+            font-size: 0.85rem;
+        }
+
+        body .form-fields .title {
+            text-transform: initial
+        }
+    </style>
+@endpush
