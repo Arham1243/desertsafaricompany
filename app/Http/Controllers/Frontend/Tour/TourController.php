@@ -149,12 +149,12 @@ class TourController extends Controller
                     'title' => $promoPrice->promo_title,
                     'slug' => $promoPrice->promo_slug,
                     'promo_is_free' => (int) $promoPrice->promo_is_free,
-                    'original_price' => number_format($original, 2),
+                    'original_price' => $original,
                     'discount_percent' => $discountPercent,
-                    'original_discounted_price' => number_format($discounted, 2),
-                    'discounted_price' => number_format($discounted, 2),
+                    'original_discounted_price' => $discounted,
+                    'discounted_price' => $discounted,
                     'promo_discounted_price' => $firstOrderCoupon
-                        ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                        ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                         : null,
                     'min_person' => (int) ($promoPrice->min_person ?? 0),
                     'max_person' => (int) ($promoPrice->max_person ?? 200),
@@ -181,12 +181,12 @@ class TourController extends Controller
                                 'type' => 'simple',
                                 'title' => $addon['title'],
                                 'slug' => $addon['promo_slug'],
-                                'original_price' => number_format($original, 2),
+                                'original_price' => $original,
                                 'discount_percent' => $discountPercent,
-                                'original_discounted_price' => number_format($discounted, 2),
-                                'discounted_price' => number_format($discounted, 2),
+                                'original_discounted_price' => $discounted,
+                                'discounted_price' => $discounted,
                                 'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
                                 'min_person' => (int) ($addon['min_person'] ?? 0),
                                 'max_person' => (int) ($addon['max_person'] ?? 200),
@@ -207,7 +207,7 @@ class TourController extends Controller
                                 'original_discounted_price' => $firstSlotDiscount,
                                 'discounted_price' => $firstSlotDiscount,
                                 'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount(number_format($firstSlotDiscount, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
                                 'hours_left' => $hoursLeft,
                                 'quantity' => (int) ($addon['min_person'] ?? 0),
@@ -222,12 +222,12 @@ class TourController extends Controller
 
                                         return [
                                             'time' => $slot['time'],
-                                            'original_price' => number_format($price, 2),
+                                            'original_price' => $price,
                                             'discount_percent' => $discountPercent,
-                                            'original_discounted_price' => number_format($discounted, 2),
-                                            'discounted_price' => number_format($discounted, 2),
+                                            'original_discounted_price' => $discounted,
+                                            'discounted_price' => $discounted,
                                             'promo_discounted_price' => $firstOrderCoupon
-                                            ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                            ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                             : null,
                                         ];
                                     })

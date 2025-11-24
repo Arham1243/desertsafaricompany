@@ -910,9 +910,6 @@
 
                         @if ($insideStopsWrapper)
                     </div> {{-- close destinations-wrapper if still open --}}
-
-
-
                     @endif
 
                     @if (isset($itineraryExperience['dropoff_locations']))
@@ -1468,6 +1465,10 @@
             const weekdayPrice = window.lowestPromoWeekdayDiscountPrice;
             const weekendPrice = window.lowestPromoWeekendDiscountPrice;
 
+            function formatPrice(price) {
+    return Number(price).toLocaleString('en-US', { maximumFractionDigits: 0 });
+}
+
             flatpickr("#start_date", {
                 dateFormat: "Y-m-d",
                 disable: [
@@ -1489,9 +1490,9 @@
                         price = parseInt(lowestPrice);
                     }
 
-                    const formattedPrice = `{{ currencySymbol() }}${price}`;
+                    const formattedPrice = `{{ currencySymbol() }}${formatPrice(price)}`;
                     const formattedFloatPrice =
-                        `{{ currencySymbol() }}${parseFloat(price).toFixed(2)}`;
+                        `{{ currencySymbol() }}${price}`;
 
                     const priceTag = document.createElement("div");
                     const availabilityBarLowesPrice = document.querySelector(

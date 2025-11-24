@@ -3054,7 +3054,7 @@ ul.tour-content__pra li {
     padding-top: 8px;
 }
 .flatpickr-day .price {
-    font-size: 12px;
+    font-size: 11px;
     margin-top: 2px;
     color: green;
     font-weight: bold;
@@ -4464,8 +4464,11 @@ a h5.blogDet-card__title:hover {
 .cart__product {
     display: flex;
     align-items: stretch;
-    border-bottom: 1px solid #00000020;
     padding: 1.5rem 0px;
+}
+.cart__product:not(:last-child){
+    border-bottom: 1px solid #00000020;
+    margin-bottom: 1rem;
 }
 
 .cart__product:hover .cart__productImg {
