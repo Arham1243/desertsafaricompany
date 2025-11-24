@@ -2779,3 +2779,6 @@ table th {
 .form-fields .field::placeholder {
     color: #00000082 !important;
 }
+.preview-box{
+    min-height: 80vh;
+}
