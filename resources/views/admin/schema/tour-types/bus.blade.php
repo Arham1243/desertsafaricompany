@@ -396,7 +396,20 @@
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
-                                <div class="repeater-table">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <label class="title mb-0">Reviews</label>
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                            id="enable_reviews_switch" x-model="reviewsEnabled"
+                                            @change="toggleReviews()"
+                                            name="enable_reviews">
+                                        <label class="form-check-label"
+                                            for="enable_reviews_switch">Disabled</label>
+                                    </div>
+                                </div>
+
+                                <div class="repeater-table" x-show="reviewsEnabled">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -795,20 +808,7 @@
                         ratingCount: '',
                         reviewCount: ''
                     },
-                    review: [{
-                        '@type': 'Review',
-                        author: {
-                            '@type': 'Person',
-                            name: ''
-                        },
-                        datePublished: '',
-                        reviewBody: '',
-                        reviewRating: {
-                            '@type': 'Rating',
-                            ratingValue: '',
-                            bestRating: '5'
-                        }
-                    }]
+                    review: []
                 },
                 localBusiness: {
                     '@type': 'LocalBusiness',
@@ -847,6 +847,7 @@
                 schema: {
                     ...defaults
                 },
+                reviewsEnabled: false,
 
                 init(initialSchema = {}) {
                     // Check if initialSchema has @graph format
@@ -913,7 +914,7 @@
                                         ...defaults.service.aggregateRating,
                                         ...(item.aggregateRating || {})
                                     },
-                                    review: item.review || defaults.service.review
+                                    review: item.review || []
                                 };
                             } else if (item['@type'] === 'LocalBusiness') {
                                 this.schema.localBusiness = {
@@ -1016,8 +1017,7 @@
                                     ...defaults.service.aggregateRating,
                                     ...((initialSchema.service && initialSchema.service.aggregateRating) || {})
                                 },
-                                review: (initialSchema.service && initialSchema.service.review) || defaults.service
-                                    .review
+                                review: (initialSchema.service && initialSchema.service.review) || []
                             },
                             localBusiness: {
                                 ...defaults.localBusiness,
@@ -1042,6 +1042,16 @@
                         };
                     }
 
+                    // Check if reviews exist and enable the switch FIRST (before array validation)
+                    if (this.schema.service.review && this.schema.service.review.length > 0) {
+                        const hasContent = this.schema.service.review.some(review => 
+                            review.author?.name || review.reviewBody || review.reviewRating?.ratingValue
+                        );
+                        if (hasContent) {
+                            this.reviewsEnabled = true;
+                        }
+                    }
+
                     // Ensure arrays
                     if (!Array.isArray(this.schema.busTrip.image)) {
                         this.schema.busTrip.image = this.schema.busTrip.image ? [this.schema.busTrip.image] : [''];
@@ -1055,9 +1065,25 @@
                     }
 
                     if (!Array.isArray(this.schema.service.review)) {
-                        this.schema.service.review = [defaults.service.review[0]];
+                        this.schema.service.review = [];
                     }
-                    if (this.schema.service.review.length === 0) this.schema.service.review = [defaults.service.review[0]];
+                    // Only add default review if reviews are enabled and array is empty
+                    if (this.reviewsEnabled && this.schema.service.review.length === 0) {
+                        this.schema.service.review = [{
+                            '@type': 'Review',
+                            author: {
+                                '@type': 'Person',
+                                name: ''
+                            },
+                            datePublished: '',
+                            reviewBody: '',
+                            reviewRating: {
+                                '@type': 'Rating',
+                                ratingValue: '',
+                                bestRating: '5'
+                            }
+                        }];
+                    }
 
                     if (!Array.isArray(this.schema.localBusiness.paymentAccepted)) {
                         this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? [this.schema
@@ -1152,6 +1178,31 @@
                     }
                 },
 
+                // Toggle reviews on/off
+                toggleReviews() {
+                    if (this.reviewsEnabled) {
+                        // Enabled - ensure at least one review exists
+                        if (!this.schema.service.review || this.schema.service.review.length === 0) {
+                            this.schema.service.review = [{
+                                '@type': 'Review',
+                                author: {
+                                    '@type': 'Person',
+                                    name: ''
+                                },
+                                datePublished: '',
+                                reviewBody: '',
+                                reviewRating: {
+                                    '@type': 'Rating',
+                                    ratingValue: '',
+                                    bestRating: '5'
+                                }
+                            }];
+                        }
+                    }
+                    // When disabled, we keep the reviews but hide them
+                    // They will be excluded from JSON output if reviewsEnabled is false
+                },
+
                 // Helper methods for countries and cities
                 getCountries() {
                     return Object.keys(countriesCities).map(code => ({
@@ -1224,16 +1275,22 @@
 
                     // Add Service
                     if (this.schema.service) {
-                        graph.push({
+                        const serviceObj = {
                             '@type': this.schema.service['@type'],
                             '@id': this.schema.service['@id'],
                             name: this.schema.service.name,
                             description: this.schema.service.description,
                             audience: this.schema.service.audience,
                             provider: this.schema.service.provider,
-                            aggregateRating: this.schema.service.aggregateRating,
-                            review: this.schema.service.review
-                        });
+                            aggregateRating: this.schema.service.aggregateRating
+                        };
+                        
+                        // Only include review if enabled
+                        if (this.reviewsEnabled) {
+                            serviceObj.review = this.schema.service.review;
+                        }
+                        
+                        graph.push(serviceObj);
                     }
 
                     // Add LocalBusiness
