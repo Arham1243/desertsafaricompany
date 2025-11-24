@@ -45,8 +45,14 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">foundingDate (Year Only)</label>
-                                <input type="text" x-model="schema.foundingDate" name="schema[foundingDate]"
-                                    class="field">
+                                <select x-model="schema.foundingDate" name="schema[foundingDate]" class="field">
+                                    <option value="">Select Year</option>
+                                    <template
+                                        x-for="year in Array.from({length: 125}, (_, i) => new Date().getFullYear() - i)"
+                                        :key="year">
+                                        <option :value="year" x-text="year"></option>
+                                    </template>
+                                </select>
                             </div>
                         </div>
 
@@ -124,8 +130,10 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">telephone</label>
-                                <input type="text" x-model="schema.telephone" name="schema[telephone]"
-                                    class="field">
+                                <div class="phone-input-wrapper" data-phone-wrapper>
+                                    <input type="tel" x-model="schema.telephone" name="schema[telephone]"
+                                        class="field phone-input" data-phone-input placeholder="Phone number">
+                                </div>
                             </div>
                         </div>
 
@@ -715,9 +723,55 @@
         }
     </script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <script>
+        // Initialize all phone inputs (reusable)
+        document.addEventListener('alpine:initialized', () => {
+            setTimeout(() => {
+                document.querySelectorAll('[data-phone-wrapper]').forEach(wrapper => {
+                    const input = wrapper.querySelector('[data-phone-input]');
+                    if (input) {
+                        // Get existing value from Alpine
+                        const alpineComponent = Alpine.$data(document.querySelector('[x-data]'));
+                        const existingValue = alpineComponent?.schema?.telephone || '';
+                        
+                        // Initialize intl-tel-input
+                        const iti = window.intlTelInput(input, {
+                            initialCountry: "ae",
+                            separateDialCode: true,
+                            preferredCountries: ["ae", "sa", "qa", "om", "kw", "bh"],
+                            utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.js"
+                        });
+
+                        // Set existing number if available
+                        if (existingValue) {
+                            iti.setNumber(existingValue);
+                        }
+
+                        // Function to update full number
+                        const updateFullNumber = () => {
+                            const fullNumber = iti.getNumber();
+                            if (fullNumber) {
+                                if (alpineComponent && alpineComponent.schema) {
+                                    alpineComponent.schema.telephone = fullNumber;
+                                }
+                            }
+                        };
+
+                        // Update on input
+                        input.addEventListener('input', updateFullNumber);
+                        input.addEventListener('blur', updateFullNumber);
+                        input.addEventListener('countrychange', updateFullNumber);
+                    }
+                });
+            }, 100);
+        });
+    </script>
 @endpush
 @push('css')
-    <link rel="stylesheet" href="https://choices-js.github.io/Choices/assets/styles/choices.min.css" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css">
+    <link rel="stylesheet" href="https://choices-js.github.io/Choices/assets/styles/choices.min.css"
+        crossorigin="anonymous" />
     <style>
         .preview-box-wrapper {
             position: sticky;
@@ -743,6 +797,26 @@
         .choices__list--multiple .choices__item {
             background-color: #00376b;
             border: 1px solid #00376b;
+        }
+
+        /* Phone input styles */
+        .phone-input-wrapper {
+            position: relative;
+        }
+
+        .phone-input-wrapper .iti {
+            width: 100%;
+        }
+
+        .phone-input-wrapper .iti__flag-container {
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+        }
+
+        .phone-input-wrapper input.phone-input {
+            padding-left: 52px;
         }
     </style>
 @endpush
