@@ -44,7 +44,10 @@ class SchemaController extends Controller
             $schemaJson = Setting::get($settingKey);
             $schema = $schemaJson ? json_decode($schemaJson, true) ?? [] : [];
 
-            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema'));
+            // Load countries and cities for bus tour schema
+            $countriesCities = config('countries-cities');
+
+            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'countriesCities'));
         }
 
         // Regular entity record
@@ -58,16 +61,24 @@ class SchemaController extends Controller
             $schema = json_decode($seo->schema, true) ?? [];
         }
 
-        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType'));
+        // Load countries and cities for bus tour schema
+        $countriesCities = config('countries-cities');
+
+        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType', 'countriesCities'));
     }
 
     public function save(Request $request, $entity, $id)
     {
-        // Get schema data from request
-        $schemaData = $request->input('schema', []);
-
-        // Convert to JSON only
-        $schemaJson = json_encode($schemaData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        // Check if schema_graph exists (from bus tour @graph format)
+        if ($request->has('schema_graph') && !empty($request->input('schema_graph'))) {
+            // schema_graph is already JSON string, just use it directly
+            $schemaJson = $request->input('schema_graph');
+        } else {
+            // Get schema data from request (old format)
+            $schemaData = $request->input('schema', []);
+            // Convert to JSON
+            $schemaJson = json_encode($schemaData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+        }
 
         // Check if this is a listing page (save in settings table)
         if ($id === 'listing') {
