@@ -36,13 +36,18 @@ class SchemaController extends Controller
 
             $map = [
                 'blogs' => 'blog',
-                'news' => 'news',
+            ];
+
+            $listingMap = [
+                'blogs' => 'blogs-listing',
             ];
 
             $entityName = $map[$entity] ?? $entity;
             $settingKey = $entityName . '_seo_schema';
             $schemaJson = Setting::get($settingKey);
             $schema = $schemaJson ? json_decode($schemaJson, true) ?? [] : [];
+            $entity = $listingMap[$entity] ?? $entity;
+
 
             // Load countries and cities for bus tour schema
             $countriesCities = config('countries-cities');
