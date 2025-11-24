@@ -2768,3 +2768,11 @@ table th {
     border-radius: 5px;
     border: none;
 }
+/* yearpicker */
+.yearpicker-items.selected {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+}
+.yearpicker-items:hover {
+    color: #000 !important;
+}

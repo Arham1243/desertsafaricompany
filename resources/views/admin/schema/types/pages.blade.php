@@ -45,14 +45,10 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">foundingDate (Year Only)</label>
-                                <select x-model="schema.foundingDate" name="schema[foundingDate]" class="field">
-                                    <option value="">Select Year</option>
-                                    <template
-                                        x-for="year in Array.from({length: 125}, (_, i) => new Date().getFullYear() - i)"
-                                        :key="year">
-                                        <option :value="year" x-text="year"></option>
-                                    </template>
-                                </select>
+                                <input type="text"
+                                style="background-color: #fff !important; "
+                                 class="yearpicker field" x-ref="year" readonly>
+                                <input type="hidden" x-model="schema.foundingDate" name="schema[foundingDate]">
                             </div>
                         </div>
 
@@ -651,6 +647,23 @@
                                 });
                             }
                         });
+
+                        this.$nextTick(() => {
+                            const yearInput = this.$el.querySelector('[x-ref="year"]');
+                            if (yearInput) {
+                                $(yearInput).yearpicker({
+                                    startYear: 1900,
+                                    endYear: new Date().getFullYear(),
+                                    onChange: (value) => {
+                                        this.schema.foundingDate = value;
+                                    }
+                                });
+                                if (this.schema.foundingDate) {
+                                    $(yearInput).yearpicker('setYear', this.schema.foundingDate);
+                                }
+                            }
+                        });
+
                     });
                 },
 
@@ -724,6 +737,9 @@
     </script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/yearpicker.js@1.0.1/dist/yearpicker.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/yearpicker.js@1.0.1/dist/yearpicker.min.js"></script>
+
     <script>
         // Initialize all phone inputs (reusable)
         document.addEventListener('alpine:initialized', () => {
@@ -734,7 +750,7 @@
                         // Get existing value from Alpine
                         const alpineComponent = Alpine.$data(document.querySelector('[x-data]'));
                         const existingValue = alpineComponent?.schema?.telephone || '';
-                        
+
                         // Initialize intl-tel-input
                         const iti = window.intlTelInput(input, {
                             initialCountry: "ae",
