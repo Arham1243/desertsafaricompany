@@ -349,11 +349,28 @@
                                     name="schema[service][audience][audienceType][]" class="select2-select"
                                     data-field="service.audience.audienceType">
                                     <option value="Families">Families</option>
-                                    <option value="Couples">Couples</option>
-                                    <option value="Friends">Friends</option>
-                                    <option value="Solo Travelers">Solo Travelers</option>
-                                    <option value="Corporate Groups">Corporate Groups</option>
-                                    <option value="Adventure Seekers">Adventure Seekers</option>
+<option value="Solo Travelers">Solo Travelers</option>
+<option value="Local Residents">Local Residents</option>
+<option value="Adventure Seekers">Adventure Seekers</option>
+<option value="Couples">Couples</option>
+<option value="Corporate Groups">Corporate Groups</option>
+<option value="Tourists">Tourists</option>
+<option value="budget travel">budget travel</option>
+<option value="Groups of Friends">Groups of Friends</option>
+<option value="Honeymooners">Honeymooners</option>
+<option value="less budget">less budget</option>
+<option value="Cultural tours">Cultural tours</option>
+<option value="Cultural Enthusiasts">Cultural Enthusiasts</option>
+<option value="Seek exclusive">Seek exclusive</option>
+<option value="private tours">private tours</option>
+<option value="high-end experiences">high-end experiences</option>
+<option value="local traditions">local traditions</option>
+<option value="Interested in museums">Interested in museums</option>
+<option value="Business Travelers">Business Travelers</option>
+<option value="Nature Lovers">Nature Lovers</option>
+<option value="Food Lovers">Food Lovers</option>
+<option value="Photography Enthusiasts">Photography Enthusiasts</option>
+<option value="Travel Agents">Travel Agents</option>
                                 </select>
                             </div>
                         </div>
