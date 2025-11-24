@@ -52,8 +52,9 @@ class SchemaController extends Controller
             // Load countries and cities for bus tour schema
             $countriesCities = config('countries-cities');
             $currencies = config('currencies');
+            $languages = config('languages');
 
-            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'countriesCities', 'currencies'));
+            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'countriesCities', 'currencies', 'languages'));
         }
 
         // Regular entity record
@@ -70,8 +71,9 @@ class SchemaController extends Controller
         // Load countries and cities for bus tour schema
         $countriesCities = config('countries-cities');
         $currencies = config('currencies');
+        $languages = config('languages');
 
-        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType', 'countriesCities', 'currencies'));
+        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType', 'countriesCities', 'currencies', 'languages'));
     }
 
     public function save(Request $request, $entity, $id)
