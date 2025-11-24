@@ -156,9 +156,9 @@ class TourController extends Controller
                     'promo_discounted_price' => $firstOrderCoupon
                         ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                         : null,
-                    'min_person' => (int) $promoPrice->min_person,
-                    'max_person' => (int) $promoPrice->max_person,
-                    'quantity' => (int) $promoPrice->min_person,
+                    'min_person' => (int) $promoPrice->min_person ?? 0,
+                    'max_person' => (int) $promoPrice->max_person ?? 200,
+                    'quantity' => (int) $promoPrice->min_person ?? 0,
                     'hours_left' => $hoursLeft,
                 ];
             }),
@@ -188,9 +188,9 @@ class TourController extends Controller
                                 'promo_discounted_price' => $firstOrderCoupon
                                 ? applyPromoDiscount(number_format($discounted, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
-                                'min_person' => (int) $addon['min_person'],
-                                'max_person' => (int) $addon['max_person'],
-                                'quantity' => (int) $addon['min_person'],
+                                'min_person' => (int) $addon['min_person'] ?? 0,
+                                'max_person' => (int) $addon['max_person'] ?? 200,
+                                'quantity' => (int) $addon['min_person'] ?? 0,
                                 'hours_left' => $hoursLeft,
                             ];
                         }
@@ -210,9 +210,9 @@ class TourController extends Controller
                                 ? applyPromoDiscount(number_format($firstSlotDiscount, 2), $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
                                 'hours_left' => $hoursLeft,
-                                'quantity' => (int) $addon['min_person'],
-                                'min_person' => (int) $addon['min_person'],
-                                'max_person' => (int) $addon['max_person'],
+                                'quantity' => (int) $addon['min_person'] ?? 0,
+                                'min_person' => (int) $addon['min_person'] ?? 0,
+                                'max_person' => (int) $addon['max_person'] ?? 200,
                                 'selected_slots' => [],
                                 'slots' => $slots
                                     ->map(function ($slot) use ($firstOrderCoupon) {
