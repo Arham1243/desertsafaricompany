@@ -287,7 +287,7 @@
                                     @endif
                                     <div class="form-fields mt-3">
                                         <label class="title">Schema:</label>
-                                        <textarea name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
+                                        <textarea readonly name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
                                         @error($fieldName('schema'))
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror

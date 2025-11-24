@@ -333,7 +333,7 @@
                                         <label class="title">
                                             Schema:
                                         </label>
-                                        <textarea disabled name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
+                                        <textarea readonly name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
                                         @error('seo[schema]')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
