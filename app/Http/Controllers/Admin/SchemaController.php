@@ -91,14 +91,17 @@ class SchemaController extends Controller
 
         // Check if this is a listing page (save in settings table)
         if ($id === 'listing') {
+            $record = null;
+
             $map = [
-                'blogs' => 'blog',
-                'news' => 'news',
+                'blogs-listing' => 'blog',
+            ];
+            $mapForGroup = [
+                'blogs-listing' => 'blog',
             ];
 
-            $entityName = $map[$entity] ?? $entity;
-            $settingKey = $entityName . '_seo_schema';
-            Setting::set($settingKey, $schemaJson, $entityName . '_seo');
+            $entityNameForGroup = $mapForGroup[$entity] ?? $entity;
+            Setting::set($entityNameForGroup . '_seo_schema', $schemaJson, $entityNameForGroup . '_seo');
 
             return redirect()->back()->with('notify_success', 'Schema saved successfully');
         }

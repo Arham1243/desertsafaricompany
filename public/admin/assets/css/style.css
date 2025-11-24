@@ -2776,3 +2776,6 @@ table th {
 .yearpicker-items:hover {
     color: #000 !important;
 }
+.form-fields .field::placeholder {
+    color: #00000082 !important;
+}
