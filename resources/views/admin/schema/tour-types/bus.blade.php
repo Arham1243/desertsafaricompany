@@ -583,15 +583,31 @@
                         <div class="col-12 mb-3 title title--sm">@type FAQ Page</div>
 
                         <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">@id</label>
-                                <input type="text" x-model="schema.faq['@id']" name="schema[faq][@id]"
-                                    class="field">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="title mb-0">FAQ Section </label>
+                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                    data-disabled-text="Disabled">
+                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                        id="enable_faq_switch" x-model="faqEnabled"
+                                        @change="toggleFaq()"
+                                        name="enable_faq">
+                                    <label class="form-check-label"
+                                        for="enable_faq_switch">Disabled</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">mainEntity (FAQ Items)</label>
+
+                        <div x-show="faqEnabled">
+                            <div class="col-12 mb-3">
+                                <div class="form-fields">
+                                    <label class="title">@id</label>
+                                    <input type="text" x-model="schema.faq['@id']" name="schema[faq][@id]"
+                                        class="field">
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-fields">
+                                    <label class="title">mainEntity (FAQ Items)</label>
                                 <div class="repeater-table">
                                     <table class="table table-bordered">
                                         <thead>
@@ -637,20 +653,37 @@
                                 </div>
                             </div>
                         </div>
+                        </div>
 
                         <hr class="my-4">
                         <div class="col-12 mb-3 title title--sm">@type Breadcrumb List</div>
 
                         <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">@id</label>
-                                <input type="text" x-model="schema.breadcrumb['@id']"
-                                    name="schema[breadcrumb][@id]" class="field">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label class="title mb-0">Breadcrumb Navigation </label>
+                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                    data-disabled-text="Disabled">
+                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                        id="enable_breadcrumb_switch" x-model="breadcrumbEnabled"
+                                        @change="toggleBreadcrumb()"
+                                        name="enable_breadcrumb">
+                                    <label class="form-check-label"
+                                        for="enable_breadcrumb_switch">Disabled</label>
+                                </div>
                             </div>
                         </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">itemListElement (Breadcrumb Items)</label>
+
+                        <div x-show="breadcrumbEnabled">
+                            <div class="col-12 mb-3">
+                                <div class="form-fields">
+                                    <label class="title">@id</label>
+                                    <input type="text" x-model="schema.breadcrumb['@id']"
+                                        name="schema[breadcrumb][@id]" class="field">
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-fields">
+                                    <label class="title">itemListElement (Breadcrumb Items)</label>
                                 <div class="repeater-table">
                                     <table class="table table-bordered">
                                         <thead>
@@ -700,6 +733,7 @@
                                         Breadcrumb</button>
                                 </div>
                             </div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -822,24 +856,12 @@
                 faq: {
                     '@type': 'FAQPage',
                     '@id': '',
-                    mainEntity: [{
-                        '@type': 'Question',
-                        name: '',
-                        acceptedAnswer: {
-                            '@type': 'Answer',
-                            text: ''
-                        }
-                    }]
+                    mainEntity: []
                 },
                 breadcrumb: {
                     '@type': 'BreadcrumbList',
                     '@id': '',
-                    itemListElement: [{
-                        '@type': 'ListItem',
-                        position: 1,
-                        name: '',
-                        item: ''
-                    }]
+                    itemListElement: []
                 }
             };
 
@@ -848,6 +870,8 @@
                     ...defaults
                 },
                 reviewsEnabled: false,
+                faqEnabled: false,
+                breadcrumbEnabled: false,
 
                 init(initialSchema = {}) {
                     // Check if initialSchema has @graph format
@@ -928,13 +952,13 @@
                                 this.schema.faq = {
                                     ...defaults.faq,
                                     ...item,
-                                    mainEntity: item.mainEntity || defaults.faq.mainEntity
+                                    mainEntity: item.mainEntity || []
                                 };
                             } else if (item['@type'] === 'BreadcrumbList') {
                                 this.schema.breadcrumb = {
                                     ...defaults.breadcrumb,
                                     ...item,
-                                    itemListElement: item.itemListElement || defaults.breadcrumb.itemListElement
+                                    itemListElement: item.itemListElement || []
                                 };
                             }
                         });
@@ -1030,14 +1054,13 @@
                             faq: {
                                 ...defaults.faq,
                                 ...(initialSchema.faq || {}),
-                                mainEntity: (initialSchema.faq && initialSchema.faq.mainEntity) || defaults.faq
-                                    .mainEntity
+                                mainEntity: (initialSchema.faq && initialSchema.faq.mainEntity) || []
                             },
                             breadcrumb: {
                                 ...defaults.breadcrumb,
                                 ...(initialSchema.breadcrumb || {}),
                                 itemListElement: (initialSchema.breadcrumb && initialSchema.breadcrumb
-                                    .itemListElement) || defaults.breadcrumb.itemListElement
+                                    .itemListElement) || []
                             }
                         };
                     }
@@ -1049,6 +1072,26 @@
                         );
                         if (hasContent) {
                             this.reviewsEnabled = true;
+                        }
+                    }
+
+                    // Check if FAQ exists and enable the switch
+                    if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
+                        const hasContent = this.schema.faq.mainEntity.some(item => 
+                            item.name || item.acceptedAnswer?.text
+                        );
+                        if (hasContent) {
+                            this.faqEnabled = true;
+                        }
+                    }
+
+                    // Check if Breadcrumb exists and enable the switch
+                    if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
+                        const hasContent = this.schema.breadcrumb.itemListElement.some(item => 
+                            item.name || item.item
+                        );
+                        if (hasContent) {
+                            this.breadcrumbEnabled = true;
                         }
                     }
 
@@ -1099,16 +1142,20 @@
                     if (this.schema.localBusiness.sameAs.length === 0) this.schema.localBusiness.sameAs = [''];
 
                     if (!Array.isArray(this.schema.faq.mainEntity)) {
+                        this.schema.faq.mainEntity = [];
+                    }
+                    // Only add default FAQ if enabled and array is empty
+                    if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
                         this.schema.faq.mainEntity = [defaults.faq.mainEntity[0]];
                     }
-                    if (this.schema.faq.mainEntity.length === 0) this.schema.faq.mainEntity = [defaults.faq.mainEntity[0]];
 
                     if (!Array.isArray(this.schema.breadcrumb.itemListElement)) {
+                        this.schema.breadcrumb.itemListElement = [];
+                    }
+                    // Only add default breadcrumb if enabled and array is empty
+                    if (this.breadcrumbEnabled && this.schema.breadcrumb.itemListElement.length === 0) {
                         this.schema.breadcrumb.itemListElement = [defaults.breadcrumb.itemListElement[0]];
                     }
-                    if (this.schema.breadcrumb.itemListElement.length === 0) this.schema.breadcrumb.itemListElement = [
-                        defaults.breadcrumb.itemListElement[0]
-                    ];
 
                     // Initialize Select2 selects
                     this.$el.querySelectorAll('.select2-select, .select2-payment-methods').forEach((el) => {
@@ -1201,6 +1248,38 @@
                     }
                     // When disabled, we keep the reviews but hide them
                     // They will be excluded from JSON output if reviewsEnabled is false
+                },
+
+                // Toggle FAQ on/off
+                toggleFaq() {
+                    if (this.faqEnabled) {
+                        // Enabled - ensure at least one FAQ exists
+                        if (!this.schema.faq.mainEntity || this.schema.faq.mainEntity.length === 0) {
+                            this.schema.faq.mainEntity = [{
+                                '@type': 'Question',
+                                name: '',
+                                acceptedAnswer: {
+                                    '@type': 'Answer',
+                                    text: ''
+                                }
+                            }];
+                        }
+                    }
+                },
+
+                // Toggle breadcrumb on/off
+                toggleBreadcrumb() {
+                    if (this.breadcrumbEnabled) {
+                        // Enabled - ensure at least one breadcrumb exists
+                        if (!this.schema.breadcrumb.itemListElement || this.schema.breadcrumb.itemListElement.length === 0) {
+                            this.schema.breadcrumb.itemListElement = [{
+                                '@type': 'ListItem',
+                                position: 1,
+                                name: '',
+                                item: ''
+                            }];
+                        }
+                    }
                 },
 
                 // Helper methods for countries and cities
@@ -1306,8 +1385,8 @@
                         });
                     }
 
-                    // Add FAQPage
-                    if (this.schema.faq) {
+                    // Add FAQPage (only if enabled)
+                    if (this.faqEnabled && this.schema.faq) {
                         graph.push({
                             '@type': this.schema.faq['@type'],
                             '@id': this.schema.faq['@id'],
@@ -1315,8 +1394,8 @@
                         });
                     }
 
-                    // Add BreadcrumbList
-                    if (this.schema.breadcrumb) {
+                    // Add BreadcrumbList (only if enabled)
+                    if (this.breadcrumbEnabled && this.schema.breadcrumb) {
                         graph.push({
                             '@type': this.schema.breadcrumb['@type'],
                             '@id': this.schema.breadcrumb['@id'],
