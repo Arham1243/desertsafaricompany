@@ -6238,7 +6238,10 @@ span.select2-dropdown.select2-dropdown--below {
 }
 
 .banner-search .select2-container {
-    top: 102% !important;
+    top: 100% !important;
+    display: block !important;
+    width: 100%;
+    left: 0 !important;
 }
 
 .highlighted {
