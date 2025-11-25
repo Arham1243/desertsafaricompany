@@ -32,8 +32,7 @@
                                         <a href="{{ Request::url() . '?tour_id=' . $tour->id }}"
                                             data-tour-id="{{ $tour->id }}"
                                             class="settings-item__link 
-                                               @if ($selectedTourId == $tour->id) 
-                                                   active @endif">
+                                               @if ($selectedTourId == $tour->id) active @endif">
                                             {{ $tour->title }}
                                         </a>
                                     </li>
@@ -78,7 +77,9 @@
                     date: event.booking_confirm_date,
                     extendedProps: {
                         customer: event.customer_name,
-                        price: event.total_price
+                        price: event.total_price,
+                        status: event.payment_status,
+                        method: event.payment_type
                     },
                     backgroundColor: '#00376b',
                     borderColor: '#00376b'
@@ -89,11 +90,16 @@
                 initialView: 'dayGridMonth',
                 events: events,
                 eventContent: function(arg) {
+                    const statusText = arg.event.extendedProps.method ?
+                        `${arg.event.extendedProps.status} (${arg.event.extendedProps.method})` :
+                        arg.event.extendedProps.status;
+
                     return {
                         html: `<div style="padding: 2px 4px;">
-                                   <div style="font-weight: bold; font-size: 12px;">${arg.event.title}</div>
-                                   <div style="font-size: 11px;">${arg.event.extendedProps.customer}</div>
-                               </div>`
+                   <div style="font-weight: bold; font-size: 12px;">${arg.event.title}</div>
+                   <div style="font-size: 11px;">${arg.event.extendedProps.customer}</div>
+                   <div style="font-size: 11px; text-transform:capitalize;">${statusText}</div>
+               </div>`
                     };
                 },
                 eventClick: function(info) {
