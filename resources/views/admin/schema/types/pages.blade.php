@@ -545,7 +545,10 @@
                             ...defaults.hasOfferCatalog,
                             ...(initialSchema.hasOfferCatalog || {}),
                             itemListElement: (initialSchema.hasOfferCatalog && initialSchema.hasOfferCatalog
-                                .itemListElement) || defaults.hasOfferCatalog.itemListElement
+                                .itemListElement && initialSchema.hasOfferCatalog.itemListElement.map(item => ({
+                                    '@type': 'Offer',
+                                    ...item
+                                }))) || defaults.hasOfferCatalog.itemListElement
                         },
                         sameAs: initialSchema.sameAs || defaults.sameAs
                     };
