@@ -2782,3 +2782,7 @@ table th {
 .preview-box{
     min-height: 80vh;
 }
+.form-box__body.form-box__body-scroll {
+    height: 95vh;
+    overflow-y: auto;
+}
