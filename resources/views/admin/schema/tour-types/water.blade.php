@@ -169,9 +169,7 @@
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Days of Week</th>
-                                                <th>Opens</th>
-                                                <th>Closes</th>
+                                                <th>Opening Hours Details</th>
                                                 <th style="width: 100px;">Action</th>
                                             </tr>
                                         </thead>
@@ -181,33 +179,79 @@
                                                 :key="index">
                                                 <tr>
                                                     <td>
-                                                        <select multiple
-                                                            x-model="schema.location.openingHoursSpecification[index].dayOfWeek"
-                                                            :name="`schema[location][openingHoursSpecification][${index}][dayOfWeek][]`"
-                                                            class="field select2-select">
-                                                            <option value="Monday">Monday</option>
-                                                            <option value="Tuesday">Tuesday</option>
-                                                            <option value="Wednesday">Wednesday</option>
-                                                            <option value="Thursday">Thursday</option>
-                                                            <option value="Friday">Friday</option>
-                                                            <option value="Saturday">Saturday</option>
-                                                            <option value="Sunday">Sunday</option>
-                                                        </select>
+                                                        <div class="d-flex flex-column gap-3">
+                                                            <div>
+                                                                <label class="title mb-2">Days of Week</label>
+                                                                <div class="day-checkboxes">
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Monday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Monday')"
+                                                                            @change="toggleDay(index, 'Monday', $event.target.checked)">
+                                                                        Monday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Tuesday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Tuesday')"
+                                                                            @change="toggleDay(index, 'Tuesday', $event.target.checked)">
+                                                                        Tuesday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Wednesday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Wednesday')"
+                                                                            @change="toggleDay(index, 'Wednesday', $event.target.checked)">
+                                                                        Wednesday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Thursday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Thursday')"
+                                                                            @change="toggleDay(index, 'Thursday', $event.target.checked)">
+                                                                        Thursday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Friday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Friday')"
+                                                                            @change="toggleDay(index, 'Friday', $event.target.checked)">
+                                                                        Friday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Saturday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Saturday')"
+                                                                            @change="toggleDay(index, 'Saturday', $event.target.checked)">
+                                                                        Saturday
+                                                                    </label>
+                                                                    <label class="checkbox-label">
+                                                                        <input type="checkbox" value="Sunday"
+                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Sunday')"
+                                                                            @change="toggleDay(index, 'Sunday', $event.target.checked)">
+                                                                        Sunday
+                                                                    </label>
+                                                                </div>
+                                                                <!-- Hidden inputs for form submission -->
+                                                                <template x-for="(day, dayIndex) in schema.location.openingHoursSpecification[index].dayOfWeek" :key="dayIndex">
+                                                                    <input type="hidden" :name="`schema[location][openingHoursSpecification][${index}][dayOfWeek][]`" :value="day">
+                                                                </template>
+                                                            </div>
+                                                            
+                                                            <div class="row">
+                                                                <div class="col-6">
+                                                                    <label class="title mb-2">Opens</label>
+                                                                    <input type="time"
+                                                                        x-model="schema.location.openingHoursSpecification[index].opens"
+                                                                        :name="`schema[location][openingHoursSpecification][${index}][opens]`"
+                                                                        class="field">
+                                                                </div>
+                                                                <div class="col-6">
+                                                                    <label class="title mb-2">Closes</label>
+                                                                    <input type="time"
+                                                                        x-model="schema.location.openingHoursSpecification[index].closes"
+                                                                        :name="`schema[location][openingHoursSpecification][${index}][closes]`"
+                                                                        class="field">
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td>
-                                                        <input type="time"
-                                                            x-model="schema.location.openingHoursSpecification[index].opens"
-                                                            :name="`schema[location][openingHoursSpecification][${index}][opens]`"
-                                                            class="field">
-                                                    </td>
-                                                    <td>
-                                                        <input type="time"
-                                                            x-model="schema.location.openingHoursSpecification[index].closes"
-                                                            :name="`schema[location][openingHoursSpecification][${index}][closes]`"
-                                                            class="field">
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex gap-2">
+                                                        <div class="d-flex flex-column gap-2">
                                                             <button type="button"
                                                                 class="delete-btn delete-btn--static"
                                                                 @click="removeFromNestedArray('location.openingHoursSpecification', index)"
@@ -898,7 +942,7 @@
                     this.$el.querySelectorAll('.select2-select:not(.select2-hidden-accessible), .select2-payment-methods:not(.select2-hidden-accessible)').forEach((el) => {
                         const select = $(el);
                         select.select2({
-                            placeholder: el.classList.contains('select2-payment-methods') ? 'Select payment methods' : el.name?.includes('dayOfWeek') ? 'Select days' : 'Select audience',
+                            placeholder: el.classList.contains('select2-payment-methods') ? 'Select payment methods' : 'Select audience',
                             allowClear: true
                         });
 
@@ -926,6 +970,21 @@
                             });
                         }
                     });
+                },
+
+                // Toggle day in openingHoursSpecification
+                toggleDay(index, day, checked) {
+                    const dayArray = this.schema.location.openingHoursSpecification[index].dayOfWeek;
+                    if (checked) {
+                        if (!dayArray.includes(day)) {
+                            dayArray.push(day);
+                        }
+                    } else {
+                        const dayIndex = dayArray.indexOf(day);
+                        if (dayIndex > -1) {
+                            dayArray.splice(dayIndex, 1);
+                        }
+                    }
                 },
 
                 // Nested array helpers
@@ -1082,6 +1141,29 @@
 
         body .form-fields .title {
             text-transform: initial
+        }
+
+        .day-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin: 0;
+            cursor: pointer;
+            font-weight: normal;
+            white-space: nowrap;
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
         }
     </style>
 @endpush
