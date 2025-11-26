@@ -2768,3 +2768,21 @@ table th {
     border-radius: 5px;
     border: none;
 }
+/* yearpicker */
+.yearpicker-items.selected {
+    background-color: var(--color-primary) !important;
+    color: #fff !important;
+}
+.yearpicker-items:hover {
+    color: #000 !important;
+}
+.form-fields .field::placeholder {
+    color: #00000082 !important;
+}
+.preview-box{
+    min-height: 80vh;
+}
+.form-box__body.form-box__body-scroll {
+    height: 95vh;
+    overflow-y: auto;
+}

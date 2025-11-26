@@ -25,20 +25,16 @@
                 'title' => $promoPrice->promo_title,
                 'slug' => $promoPrice->promo_slug,
                 'promo_is_free' => (int) $promoPrice->promo_is_free,
-                'original_price' => number_format($original, 2),
+                'original_price' => $original,
                 'discount_percent' => $discountPercent,
-                'original_discounted_price' => number_format($discounted, 2),
-                'discounted_price' => number_format($discounted, 2),
-                'min_person' => (int) $promoPrice->min_person,
-                'max_person' => (int) $promoPrice->max_person,
+                'original_discounted_price' => $discounted,
+                'discounted_price' => $discounted,
+                'min_person' => (int) ($promoPrice->min_person ?? 0),
+                'max_person' => (int) ($promoPrice->max_person ?? 200),
                 'promo_discounted_price' => $firstOrderCoupon
-                    ? applyPromoDiscount(
-                        number_format($discounted, 2),
-                        $firstOrderCoupon->discount_type,
-                        $firstOrderCoupon->amount,
-                    )
+                    ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                     : null,
-                'quantity' => (int) $promoPrice->min_person,
+                'quantity' => (int) ($promoPrice->min_person ?? 0),
                 'hours_left' => $hoursLeft,
                 'is_first_order_coupon_applied' => false,
             ];
@@ -60,20 +56,16 @@
                             'type' => 'simple',
                             'title' => $addon['title'],
                             'slug' => $addon['promo_slug'],
-                            'original_price' => number_format($original, 2),
+                            'original_price' => $original,
                             'discount_percent' => $discountPercent,
-                            'original_discounted_price' => number_format($discounted, 2),
-                            'discounted_price' => number_format($discounted, 2),
-                            'min_person' => (int) $addon['min_person'],
-                            'max_person' => (int) $addon['max_person'],
+                            'original_discounted_price' => $discounted,
+                            'discounted_price' => $discounted,
+                            'min_person' => (int) ($addon['min_person'] ?? 0),
+                            'max_person' => (int) ($addon['max_person'] ?? 200),
                             'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount(
-                                    number_format($discounted, 2),
-                                    $firstOrderCoupon->discount_type,
-                                    $firstOrderCoupon->amount,
-                                )
+                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
-                            'quantity' => (int) $addon['min_person'],
+                            'quantity' => (int) ($addon['min_person'] ?? 0),
                             'hours_left' => $hoursLeft,
                             'is_first_order_coupon_applied' => false,
                         ];
@@ -91,16 +83,12 @@
                             'original_discounted_price' => $firstSlotDiscount,
                             'discounted_price' => $firstSlotDiscount,
                             'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount(
-                                    number_format($firstSlotDiscount, 2),
-                                    $firstOrderCoupon->discount_type,
-                                    $firstOrderCoupon->amount,
-                                )
+                                ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                 : null,
                             'hours_left' => $hoursLeft,
-                            'min_person' => (int) $addon['min_person'],
-                            'max_person' => (int) $addon['max_person'],
-                            'quantity' => (int) $addon['min_person'],
+                            'min_person' => (int) ($addon['min_person'] ?? 0),
+                            'max_person' => (int) ($addon['max_person'] ?? 200),
+                            'quantity' => (int) ($addon['min_person'] ?? 0),
                             'selected_slots' => [],
                             'is_first_order_coupon_applied' => false,
                             'slots' => $slots
@@ -111,16 +99,12 @@
 
                                     return [
                                         'time' => $slot['time'],
-                                        'original_price' => number_format($price, 2),
+                                        'original_price' => $price,
                                         'discount_percent' => $discountPercent,
-                                        'original_discounted_price' => number_format($discounted, 2),
-                                        'discounted_price' => number_format($discounted, 2),
+                                        'original_discounted_price' => $discounted,
+                                        'discounted_price' => $discounted,
                                         'promo_discounted_price' => $firstOrderCoupon
-                                            ? applyPromoDiscount(
-                                                number_format($discounted, 2),
-                                                $firstOrderCoupon->discount_type,
-                                                $firstOrderCoupon->amount,
-                                            )
+                                            ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
                                             : null,
                                         'is_first_order_coupon_applied' => false,
                                     ];
@@ -150,9 +134,9 @@
                 'person_description' => $price->person_description,
                 'original_price' => $originalPrice,
                 'promo_discounted_price' => $promoDiscountedPrice,
-                'min' => (int) $price->min_person,
-                'max' => (int) $price->max_person,
-                'quantity' => 0,
+                'min' => (int) ($price->min_person ?? 0),
+                'max' => (int) ($price->max_person ?? 200),
+                'quantity' => (int) ($price->min_person ?? 0),
             ],
         ];
     });
@@ -185,8 +169,8 @@
 
     $privateTourData = $tour->privatePrices
         ? [
-            'min_person' => (int) $tour->privatePrices->min_person,
-            'max_person' => (int) $tour->privatePrices->max_person,
+            'min_person' => (int) ($tour->privatePrices->min_person ?? 0),
+            'max_person' => (int) ($tour->privatePrices->max_person ?? 200),
             'car_price' => (int) $tour->privatePrices->car_price,
             'original_price' => (int) $tour->privatePrices->car_price,
             'promo_discounted_price' => applyPromoDiscount(
@@ -194,7 +178,7 @@
                 $firstOrderCoupon->discount_type,
                 $firstOrderCoupon->amount,
             ),
-            'quantity' => 0,
+            'quantity' => (int) ($tour->privatePrices->min_person ?? 0),
         ]
         : null;
 
@@ -583,7 +567,7 @@
                 if (!promoData) return;
 
                 const minPerson = parseInt(promoData.min_person) || 0;
-                const maxPerson = parseInt(promoData.max_person) || 999;
+                const maxPerson = parseInt(promoData.max_person) || 200;
 
                 if (action === "plus" && promoData.quantity < maxPerson) {
                     promoData.quantity++;

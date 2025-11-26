@@ -250,8 +250,7 @@
                                                 <label class="title title--sm">
                                                     Start Date:
                                                 </label>
-                                                <div class="title text-dark">
-                                                    {{ formatDateTime($tourDataDetails['start_date']) }}</div>
+                                                <div class="title text-dark">{{ formatDate($tourDataDetails['start_date']) }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 mb-4">

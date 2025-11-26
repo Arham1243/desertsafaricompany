@@ -22,7 +22,7 @@
                 <!-- Simple Package or Main Promo -->
                 <template v-if="pkg.type === 'simple' || !pkg.type">
                     <div class="tour-pricing__quantity">
-                        
+
                         <div class="quantity-controls">
                             <button type="button" @click="updatePromoQuantity('minus', null, tour, pkgIndex)"
                                 class="quantity-btn minus" :disabled="pkg.quantity <= (parseInt(pkg.min_person) || 0)">
@@ -50,15 +50,17 @@
                 <template v-else-if="pkg.type === 'timeslot'">
                     <div class="timeslot-addon">
                         <div class="tour-pricing__quantity mb-4">
-                            
+
                             <div class="quantity-controls">
                                 <button type="button" @click="updatePromoQuantity('minus', null, tour, pkgIndex)"
-                                    class="quantity-btn minus" :disabled="pkg.quantity <= (parseInt(pkg.min_person) || 0)">
+                                    class="quantity-btn minus"
+                                    :disabled="pkg.quantity <= (parseInt(pkg.min_person) || 0)">
                                     <i class="bx bx-minus"></i>
                                 </button>
                                 <span class="quantity-display">@{{ pkg.quantity }}</span>
                                 <button type="button" @click="updatePromoQuantity('plus', null, tour, pkgIndex)"
-                                    class="quantity-btn plus" :disabled="pkg.quantity >= (parseInt(pkg.max_person) || 999)">
+                                    class="quantity-btn plus"
+                                    :disabled="pkg.quantity >= (parseInt(pkg.max_person) || 999)">
                                     <i class="bx bx-plus"></i>
                                 </button>
                             </div>
@@ -98,7 +100,8 @@
     </template>
 
     <!-- Tour Service Fee and Extra Prices -->
-    <div class="tour-additional-costs" v-if="cart.tours[tour.id]">
+    <div class="tour-additional-costs"
+        v-if="(cart.tours[tour.id].service_fee && cart.tours[tour.id].service_fee > 0) || (cart.tours[tour.id].extra_prices && cart.tours[tour.id].extra_prices.length > 0)">
         <template v-if="cart.tours[tour.id].service_fee && cart.tours[tour.id].service_fee > 0">
             <div class="additional-cost-item">
                 <span class="cost-label">Service Fee:</span>
@@ -144,6 +147,7 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid #e0e0e0;
+            gap: 1rem;
         }
 
         .tour-pricing__title h5 {

@@ -36,18 +36,25 @@ class SchemaController extends Controller
 
             $map = [
                 'blogs' => 'blog',
-                'news' => 'news',
+            ];
+
+            $listingMap = [
+                'blogs' => 'blogs-listing',
             ];
 
             $entityName = $map[$entity] ?? $entity;
             $settingKey = $entityName . '_seo_schema';
             $schemaJson = Setting::get($settingKey);
             $schema = $schemaJson ? json_decode($schemaJson, true) ?? [] : [];
+            $entity = $listingMap[$entity] ?? $entity;
+
 
             // Load countries and cities for bus tour schema
             $countriesCities = config('countries-cities');
+            $currencies = config('currencies');
+            $languages = config('languages');
 
-            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'countriesCities'));
+            return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'countriesCities', 'currencies', 'languages'));
         }
 
         // Regular entity record
@@ -63,8 +70,10 @@ class SchemaController extends Controller
 
         // Load countries and cities for bus tour schema
         $countriesCities = config('countries-cities');
+        $currencies = config('currencies');
+        $languages = config('languages');
 
-        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType', 'countriesCities'));
+        return view('admin.schema.index', compact('entity', 'id', 'record', 'title', 'schema', 'schemaType', 'countriesCities', 'currencies', 'languages'));
     }
 
     public function save(Request $request, $entity, $id)
@@ -82,14 +91,17 @@ class SchemaController extends Controller
 
         // Check if this is a listing page (save in settings table)
         if ($id === 'listing') {
+            $record = null;
+
             $map = [
-                'blogs' => 'blog',
-                'news' => 'news',
+                'blogs-listing' => 'blog',
+            ];
+            $mapForGroup = [
+                'blogs-listing' => 'blog',
             ];
 
-            $entityName = $map[$entity] ?? $entity;
-            $settingKey = $entityName . '_seo_schema';
-            Setting::set($settingKey, $schemaJson, $entityName . '_seo');
+            $entityNameForGroup = $mapForGroup[$entity] ?? $entity;
+            Setting::set($entityNameForGroup . '_seo_schema', $schemaJson, $entityNameForGroup . '_seo');
 
             return redirect()->back()->with('notify_success', 'Schema saved successfully');
         }

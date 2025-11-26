@@ -17,7 +17,7 @@
                         <div class="form-box__header">
                             <div class="title">Tours</div>
                         </div>
-                        <div class="form-box__body p-0">
+                        <div class="form-box__body form-box__body-scroll p-0">
                             <ul class="settings">
                                 @php
                                     $selectedTourId = null;

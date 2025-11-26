@@ -324,9 +324,13 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">priceCurrency</label>
-                                <input type="text" x-model="schema.location.makesOffer.priceCurrency"
-                                    name="schema[location][makesOffer][priceCurrency]" class="field"
-                                    placeholder="AED">
+                                <select multiple x-model="schema.location.makesOffer.priceCurrency"
+                                    name="schema[location][makesOffer][priceCurrency][]" class="select2-select"
+                                    data-field="location.makesOffer.priceCurrency">
+                                    @foreach ($currencies as $code => $name)
+                                        <option value="{{ $code }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
@@ -693,7 +697,7 @@
                     },
                     makesOffer: {
                         '@type': 'Offer',
-                        priceCurrency: 'AED',
+                        priceCurrency: [],
                         price: '',
                         availability: 'https://schema.org/InStock',
                         url: '',

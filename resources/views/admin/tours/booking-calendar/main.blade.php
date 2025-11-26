@@ -17,7 +17,7 @@
                         <div class="form-box__header">
                             <div class="title">Tours</div>
                         </div>
-                        <div class="form-box__body p-0">
+                        <div class="form-box__body form-box__body-scroll  p-0">
                             <ul class="settings">
                                 @php
                                     $selectedTourId = null;
@@ -32,8 +32,7 @@
                                         <a href="{{ Request::url() . '?tour_id=' . $tour->id }}"
                                             data-tour-id="{{ $tour->id }}"
                                             class="settings-item__link 
-                                               @if ($selectedTourId == $tour->id) ) 
-                                                   active @endif">
+                                               @if ($selectedTourId == $tour->id) active @endif">
                                             {{ $tour->title }}
                                         </a>
                                     </li>
@@ -52,33 +51,7 @@
     </div>
 
     @php
-        $selectedTour = \App\Models\Tour::where('id', $selectedTourId)->first();
-        $bookingsJson = json_encode([
-            [
-                'order_id' => '12345',
-                'booking_confirm_date' => '2024-10-01',
-            ],
-            [
-                'order_id' => '12345',
-                'booking_confirm_date' => '2024-10-05',
-            ],
-            [
-                'order_id' => '12345',
-                'booking_confirm_date' => '2024-10-10',
-            ],
-            [
-                'order_id' => '12345',
-                'booking_confirm_date' => '2024-10-10',
-            ],
-            [
-                'order_id' => '12346',
-                'booking_confirm_date' => '2024-10-02',
-            ],
-            [
-                'order_id' => '12347',
-                'booking_confirm_date' => '2024-10-03',
-            ],
-        ]);
+        $bookingsJson = json_encode($bookings ?? []);
     @endphp
 @endsection
 
@@ -100,9 +73,16 @@
 
             const events = eventsJson.map(event => {
                 return {
-                    title: `Booking: ${event.order_id}`,
-                    date: new Date(event.booking_confirm_date).toISOString().split('T')[
-                        0],
+                    title: `Order #${event.order_id}`,
+                    date: event.booking_confirm_date,
+                    extendedProps: {
+                        customer: event.customer_name,
+                        price: event.total_price,
+                        status: event.payment_status,
+                        method: event.payment_type
+                    },
+                    backgroundColor: '#00376b',
+                    borderColor: '#00376b'
                 };
             });
 
@@ -110,9 +90,21 @@
                 initialView: 'dayGridMonth',
                 events: events,
                 eventContent: function(arg) {
+                    const statusText = arg.event.extendedProps.method ?
+                        `${arg.event.extendedProps.status} (${arg.event.extendedProps.method})` :
+                        arg.event.extendedProps.status;
+
                     return {
-                        html: `<span>${arg.event.title}</span>`
+                        html: `<div style="padding: 2px 4px;">
+                   <div style="font-weight: bold; font-size: 12px;">${arg.event.title}</div>
+                   <div style="font-size: 11px;">${arg.event.extendedProps.customer}</div>
+                   <div style="font-size: 11px; text-transform:capitalize;">${statusText}</div>
+               </div>`
                     };
+                },
+                eventClick: function(info) {
+                    const orderId = info.event.title.replace('Order #', '');
+                    window.open(`{{ route('admin.bookings.index') }}/${orderId}/edit`, '_blank');
                 }
             });
 

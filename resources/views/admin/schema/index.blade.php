@@ -39,6 +39,10 @@
                                     @include('admin.schema.types.tours')
                                 @break
 
+                                @case('blogs-listing')
+                                    @include('admin.schema.types.pages')
+                                @break
+
                                 @case('blogs')
                                     @include('admin.schema.types.blogs')
                                 @break

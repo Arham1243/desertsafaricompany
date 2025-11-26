@@ -11,14 +11,6 @@
                 </div>
                 <div class="form-box__body form-fields">
                     <div class="row">
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">@context</label>
-                                <input type="text" x-model="schema['@context']" class="field">
-                            </div>
-                        </div>
-
-                        <hr class="my-4">
                         <div class="col-12 mb-3 title title--sm">@type Boat Trip</div>
 
                         <div class="col-12 mb-3">
@@ -272,8 +264,13 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">priceCurrency</label>
-                                <input type="text" x-model="schema.offer.priceCurrency"
-                                    name="schema[offer][priceCurrency]" class="field">
+                                <select multiple x-model="schema.offer.priceCurrency"
+                                    name="schema[offer][priceCurrency][]" class="select2-select"
+                                    data-field="offer.priceCurrency">
+                                    @foreach ($currencies as $code => $name)
+                                        <option value="{{ $code }}">{{ $name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
@@ -828,7 +825,7 @@
                 offer: {
                     '@type': 'Offer',
                     '@id': '',
-                    priceCurrency: 'AED',
+                    priceCurrency: [],
                     price: '',
                     availability: 'https://schema.org/InStock',
                     validFrom: '',

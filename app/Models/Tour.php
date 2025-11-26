@@ -157,8 +157,8 @@ class Tour extends Model
 
         return $lowest
             ? [
-                'original' => number_format($lowest['original'], 2),
-                'discounted' => number_format($lowest['discounted'], 2),
+                'original' => $lowest['original'],
+                'discounted' => $lowest['discounted'],
             ]
             : null;
     }

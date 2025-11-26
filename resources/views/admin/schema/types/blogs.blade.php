@@ -9,13 +9,6 @@
                     <div class="row">
                         <div class="col-12 mb-3">
                             <div class="form-fields">
-                                <label class="title">@context</label>
-                                <input type="text" x-model="schema['@context']" name="schema[@context]"
-                                    class="field" placeholder="https://schema.org">
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
                                 <label class="title">@type</label>
                                 <select x-model="schema['@type']" name="schema[@type][]" multiple x-ref="selectType"
                                     class="select2-select">
