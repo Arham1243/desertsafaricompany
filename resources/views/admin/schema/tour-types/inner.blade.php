@@ -304,9 +304,20 @@
                         <hr class="my-4">
                         <div class="col-12 mb-3">
                             <div class="form-fields">
-                                <label class="title title--sm mb-3">Reviews</label>
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <label class="title title--sm mb-0">Reviews</label>
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                            id="enable_reviews_switch" x-model="reviewsEnabled"
+                                            @change="toggleReviews()"
+                                            name="enable_reviews">
+                                        <label class="form-check-label"
+                                            for="enable_reviews_switch">Disabled</label>
+                                    </div>
+                                </div>
 
-                                <div class="repeater-table">
+                                <div class="repeater-table" x-show="reviewsEnabled">
                                     <table class="table table-bordered">
                                         <thead>
                                             <tr>
@@ -729,6 +740,7 @@
                 },
                 faqEnabled: false,
                 breadcrumbEnabled: false,
+                reviewsEnabled: false,
 
                 init(initialSchema = {}) {
                     // Check if initialSchema has @graph format
@@ -867,6 +879,16 @@
                         );
                         if (hasContent) {
                             this.breadcrumbEnabled = true;
+                        }
+                    }
+
+                    // Check if Reviews exist and enable the switch
+                    if (this.schema.touristTrip.review && this.schema.touristTrip.review.length > 0) {
+                        const hasContent = this.schema.touristTrip.review.some(item =>
+                            item.author?.name || item.reviewBody || item.reviewRating?.ratingValue
+                        );
+                        if (hasContent) {
+                            this.reviewsEnabled = true;
                         }
                     }
 
@@ -1029,13 +1051,39 @@
                     }
                 },
 
+                // Toggle reviews on/off
+                toggleReviews() {
+                    if (this.reviewsEnabled) {
+                        // Enabled - ensure at least one review exists
+                        if (!this.schema.touristTrip.review || this.schema.touristTrip.review.length === 0) {
+                            this.schema.touristTrip.review = [{
+                                '@type': 'Review',
+                                author: {
+                                    '@type': 'Person',
+                                    name: ''
+                                },
+                                datePublished: '',
+                                reviewBody: '',
+                                reviewRating: {
+                                    '@type': 'Rating',
+                                    ratingValue: '',
+                                    bestRating: '5',
+                                    worstRating: '1'
+                                }
+                            }];
+                        }
+                    }
+                    // When disabled, we keep the reviews but hide them
+                    // They will be excluded from JSON output if reviewsEnabled is false
+                },
+
                 jsonPreview() {
                     // Build @graph array from all schema objects
                     const graph = [];
 
                     // Add TouristTrip (with all nested properties)
                     if (this.schema.touristTrip) {
-                        graph.push({
+                        const touristTripObj = {
                             '@type': this.schema.touristTrip['@type'],
                             name: this.schema.touristTrip.name,
                             description: this.schema.touristTrip.description,
@@ -1046,9 +1094,15 @@
                             offers: this.schema.touristTrip.offers,
                             itinerary: this.schema.touristTrip.itinerary,
                             partOfTrip: this.schema.touristTrip.partOfTrip,
-                            aggregateRating: this.schema.touristTrip.aggregateRating,
-                            review: this.schema.touristTrip.review
-                        });
+                            aggregateRating: this.schema.touristTrip.aggregateRating
+                        };
+                        
+                        // Only include review if enabled
+                        if (this.reviewsEnabled) {
+                            touristTripObj.review = this.schema.touristTrip.review;
+                        }
+                        
+                        graph.push(touristTripObj);
                     }
 
                     // Add LocalBusiness
