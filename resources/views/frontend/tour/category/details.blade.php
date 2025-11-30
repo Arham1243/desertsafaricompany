@@ -145,6 +145,33 @@
         $newsContent = $sectionContent->news_section ?? null;
     @endphp
 
+    @if (isset($first_tour_block['is_enabled']) &&
+            $first_tour_block['is_enabled'] === '1' &&
+            $first_tour_block_tours->isNotEmpty())
+        <div class="my-5">
+            <div class="container">
+                @if (isset($first_tour_block['heading_enabled']) && (int) $first_tour_block['heading_enabled'] === 1)
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $first_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div class="row">
+                    @foreach ($first_tour_block_tours->take(8) as $first_tour_block_tour)
+                        <div class="col-md-3">
+                            <x-tour-card :tour="$first_tour_block_tour" style="style3" />
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    @endif
+
     @if (isset($callToActionContent->is_enabled) && (int) $callToActionContent->is_enabled === 1)
         @php
             $isCtaBackgroundColor = isset($callToActionContent->call_to_action_background_type)
@@ -185,25 +212,13 @@
         </div>
     @endif
 
-
     @if (isset($first_tour_block['is_enabled']) &&
             $first_tour_block['is_enabled'] === '1' &&
-            $first_tour_block_tours->isNotEmpty())
+            $first_tour_block_tours->count() > 8)
         <div class="my-5">
             <div class="container">
-                @if (isset($first_tour_block['heading_enabled']) && (int) $first_tour_block['heading_enabled'] === 1)
-                    <div class="row mb-3">
-                        <div class="col-md-12">
-                            <div class="section-content">
-                                <h2 class="subHeading block-heading">
-                                    {{ $first_tour_block['heading'] ?? '' }}
-                                </h2>
-                            </div>
-                        </div>
-                    </div>
-                @endif
                 <div class="row">
-                    @foreach ($first_tour_block_tours as $first_tour_block_tour)
+                    @foreach ($first_tour_block_tours->skip(8) as $first_tour_block_tour)
                         <div class="col-md-3">
                             <x-tour-card :tour="$first_tour_block_tour" style="style3" />
                         </div>
