@@ -163,8 +163,19 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">availability</label>
-                                <input type="text" x-model="schema.touristTrip.offers.availability"
+                                <select x-model="schema.touristTrip.offers.availability"
                                     name="schema[touristTrip][offers][availability]" class="field">
+                                    <option value="">Select Availability</option>
+                                    <option value="https://schema.org/InStock">In stock</option>
+                                    <option value="https://schema.org/OutOfStock">Out of stock</option>
+                                    <option value="https://schema.org/PreOrder">Preorder</option>
+                                    <option value="https://schema.org/LimitedAvailability">Limited availability</option>
+                                    <option value="https://schema.org/SoldOut">Sold out</option>
+                                    <option value="https://schema.org/OnlineOnly">Online only</option>
+                                    <option value="https://schema.org/PreSale">Pre sale</option>
+                                    <option value="https://schema.org/Discontinued">Discontinued</option>
+                                    <option value="https://schema.org/BackOrder">Backorder</option>
+                                </select>
                             </div>
                         </div>
 

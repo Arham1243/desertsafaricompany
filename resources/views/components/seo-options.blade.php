@@ -321,19 +321,19 @@
                                                 </div>
 
                                                 <a :href="`{{ route('admin.schema.index', ['entity' => $entity, 'id' => $id]) }}?type=${schema_type}`"
-                                                    target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                                    target="_blank" class="themeBtn ml-2 mb-2">Generate Schema</a>
                                             </div>
                                         @else
                                             <a href="{{ route('admin.schema.index', ['entity' => $entity, 'id' => $id]) }}"
-                                                target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                                target="_blank" class="themeBtn ml-2 mb-2">Generate Schema</a>
                                         @endif
                                     @endif
                                     <!-- Schema -->
                                     <div class="form-fields mt-3">
                                         <label class="title">
-                                            Schema:
+                                            Paste Generated Schema:
                                         </label>
-                                        <textarea readonly name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
+                                        <textarea name="seo[schema]" class="field" rows="15">{{ old('seo[schema]', $seo->schema ?? '') }}</textarea>
                                         @error('seo[schema]')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
