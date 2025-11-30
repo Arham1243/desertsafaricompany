@@ -264,7 +264,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div x-data="{ enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['first_tour_block']['heading_enabled']) && $jsonContent['first_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">First Tour Block</div>
@@ -286,9 +289,20 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title">Heading:</label>
-                                        <input name="json_content[first_tour_block][heading]" type="text"
-                                            class="field"
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading:</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[first_tour_block][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="first_tour_block_heading" value="1"
+                                                    name="json_content[first_tour_block][heading_enabled]" x-model="headingEnabled">
+                                                <label class="form-check-label" for="first_tour_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition name="json_content[first_tour_block][heading]" type="text"
+                                            class="field mt-3"
                                             value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
@@ -305,7 +319,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div x-data="{ enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }} }" class="form-box">
+                            <div x-data="{
+                                enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
+                                headingEnabled: {{ isset($jsonContent['second_tour_block']['heading_enabled']) && $jsonContent['second_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
+                            }" class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
                                     <div class="d-flex align-items-center gap-3">
                                         <div class="title">Second Tour Block</div>
@@ -327,9 +344,20 @@
 
                                 <div class="form-box__body" x-show="enabled" x-transition>
                                     <div class="form-fields mb-4">
-                                        <label class="title">Heading:</label>
-                                        <input name="json_content[second_tour_block][heading]" type="text"
-                                            class="field"
+                                        <div class="d-flex align-items-center gap-3">
+                                            <label class="title mb-0">Heading:</label>
+                                            <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                data-disabled-text="Disabled">
+                                                <input type="hidden" value="0"
+                                                    name="json_content[second_tour_block][heading_enabled]">
+                                                <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                    id="second_tour_block_heading" value="1"
+                                                    name="json_content[second_tour_block][heading_enabled]" x-model="headingEnabled">
+                                                <label class="form-check-label" for="second_tour_block_heading">Enabled</label>
+                                            </div>
+                                        </div>
+                                        <input x-show="headingEnabled" x-transition name="json_content[second_tour_block][heading]" type="text"
+                                            class="field mt-3"
                                             value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
                                     </div>
                                     <div class="form-fields">
