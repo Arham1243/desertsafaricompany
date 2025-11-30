@@ -38,7 +38,7 @@ class SettingController extends Controller
             }
             if ($request->hasFile($key)) {
                 Setting::setFile($key, $request->file($key), $resource);
-            } elseif (in_array($key, ['perks', 'detail_popup_ids', 'header_menu']) && is_array($value)) {
+            } elseif (in_array($key, ['perks', 'detail_popup_ids', 'header_menu', 'global_local_business_schema']) && is_array($value)) {
                 Setting::set($key, json_encode($value), $resource);
             } elseif (! is_array($value)) {
                 Setting::set($key, $value, $resource);

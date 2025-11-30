@@ -432,9 +432,9 @@
                             </div>
                         </div>
 
-                        <div class="form-box">
+                        <div class="form-box" x-data="localBusinessSchemaManager()" x-init="init(JSON.parse('{{ addslashes(json_encode($settings->get('global_local_business_schema') ? json_decode($settings->get('global_local_business_schema'), true) : [])) }}'))">
                             <div class="form-box__header">
-                                <div class="title">@type Local Business Schema</div>
+                                <div class="title">@type Local Business Schema (Global)</div>
                             </div>
                             <div class="form-box__body">
                                 <div class="row">
@@ -444,25 +444,25 @@
                                                 <div class="form-fields">
                                                     <label class="title">@id</label>
                                                     <input type="text" x-model="schema.localBusiness['@id']"
-                                                        name="schema[localBusiness][@id]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][@id]" class="field mb-3">
 
                                                     <label class="title">name</label>
                                                     <input type="text" x-model="schema.localBusiness.name"
-                                                        name="schema[localBusiness][name]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][name]" class="field mb-3">
 
                                                     <label class="title">url</label>
                                                     <input type="text" x-model="schema.localBusiness.url"
-                                                        name="schema[localBusiness][url]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][url]" class="field mb-3">
 
                                                     <label class="title">logo</label>
                                                     <input type="text" x-model="schema.localBusiness.logo"
-                                                        name="schema[localBusiness][logo]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][logo]" class="field mb-3">
 
                                                     <div class="form-fields">
                                                         <label class="title">paymentAccepted </label>
                                                         <select multiple x-model="schema.localBusiness.paymentAccepted"
-                                                            name="schema[localBusiness][paymentAccepted][]"
-                                                            class="field select2-select"
+                                                            name="global_local_business_schema[localBusiness][paymentAccepted][]"
+                                                            class="field select2-payment-global"
                                                             data-field="localBusiness.paymentAccepted"
                                                             style="width: 100%;">
                                                             <option value="Cash">Cash</option>
@@ -508,7 +508,7 @@
                                                                         <td>
                                                                             <input type="text"
                                                                                 x-model="schema.localBusiness.sameAs[index]"
-                                                                                :name="`schema[localBusiness][sameAs][${index}]`"
+                                                                                :name="`global_local_business_schema[localBusiness][sameAs][${index}]`"
                                                                                 class="field">
                                                                         </td>
                                                                         <td>
@@ -596,5 +596,101 @@
                 matchBrackets: true
             });
         });
+
+        function localBusinessSchemaManager() {
+            const defaults = {
+                localBusiness: {
+                    '@type': 'LocalBusiness',
+                    '@id': '',
+                    name: '',
+                    url: '',
+                    logo: '',
+                    paymentAccepted: [],
+                    sameAs: ['']
+                }
+            };
+
+            return {
+                schema: {
+                    ...defaults
+                },
+
+                init(initialSchema = {}) {
+                    this.schema = {
+                        ...defaults,
+                        localBusiness: {
+                            ...defaults.localBusiness,
+                            ...(initialSchema.localBusiness || {})
+                        }
+                    };
+
+                    // Ensure array fields are always arrays
+                    if (!Array.isArray(this.schema.localBusiness.paymentAccepted)) {
+                        this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? 
+                            [this.schema.localBusiness.paymentAccepted] : [];
+                    }
+
+                    if (!Array.isArray(this.schema.localBusiness.sameAs)) {
+                        this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? 
+                            [this.schema.localBusiness.sameAs] : [''];
+                    }
+                    if (this.schema.localBusiness.sameAs.length === 0) this.schema.localBusiness.sameAs = [''];
+
+                    // Initialize Select2 for payment methods
+                    this.$nextTick(() => {
+                        const select = $(this.$el).find('.select2-payment-global');
+                        select.select2();
+                        select.val(this.schema.localBusiness.paymentAccepted || []).trigger('change');
+                        select.on('change', (e) => {
+                            this.schema.localBusiness.paymentAccepted = $(e.target).val() || [];
+                        });
+                    });
+                },
+
+                addToNestedArray(path, defaultValue = '') {
+                    const keys = path.split('.');
+                    let target = this.schema;
+                    for (let i = 0; i < keys.length; i++) {
+                        if (i === keys.length - 1) {
+                            if (!Array.isArray(target[keys[i]])) target[keys[i]] = [];
+                            target[keys[i]].push(defaultValue);
+                        } else {
+                            target = target[keys[i]];
+                        }
+                    }
+                },
+
+                insertInNestedArray(path, index, defaultValue = '') {
+                    const keys = path.split('.');
+                    let target = this.schema;
+                    for (let i = 0; i < keys.length; i++) {
+                        if (i === keys.length - 1) {
+                            if (!Array.isArray(target[keys[i]])) target[keys[i]] = [];
+                            target[keys[i]].splice(index + 1, 0, defaultValue);
+                        } else {
+                            target = target[keys[i]];
+                        }
+                    }
+                },
+
+                removeFromNestedArray(path, index) {
+                    const keys = path.split('.');
+                    let target = this.schema;
+                    for (let i = 0; i < keys.length; i++) {
+                        if (i === keys.length - 1) {
+                            if (Array.isArray(target[keys[i]]) && target[keys[i]].length > 1) {
+                                target[keys[i]].splice(index, 1);
+                            }
+                        } else {
+                            target = target[keys[i]];
+                        }
+                    }
+                },
+
+                jsonPreview() {
+                    return JSON.stringify(this.schema.localBusiness, null, 2);
+                }
+            }
+        }
     </script>
 @endpush

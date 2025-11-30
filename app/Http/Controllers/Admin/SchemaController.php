@@ -68,6 +68,15 @@ class SchemaController extends Controller
             $schema = json_decode($seo->schema, true) ?? [];
         }
 
+        // Always load global Local Business schema from settings (not editable per page)
+        $globalLocalBusinessJson = Setting::get('global_local_business_schema');
+        $globalLocalBusiness = $globalLocalBusinessJson ? json_decode($globalLocalBusinessJson, true) : [];
+        
+        // Always use global Local Business schema
+        if (isset($globalLocalBusiness['localBusiness'])) {
+            $schema['localBusiness'] = $globalLocalBusiness['localBusiness'];
+        }
+
         // Load countries and cities for bus tour schema
         $countriesCities = config('countries-cities');
         $currencies = config('currencies');
