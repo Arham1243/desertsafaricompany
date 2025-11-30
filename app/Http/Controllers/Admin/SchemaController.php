@@ -58,7 +58,6 @@ class SchemaController extends Controller
 
         // Get existing schema from schemas table
         $schema = Schema::getSchema($entity, $id, $schemaType);
-        dd($schema);
 
         // Always load global Local Business schema from settings (not editable per page)
         $globalLocalBusinessJson = Setting::get('global_local_business_schema');
