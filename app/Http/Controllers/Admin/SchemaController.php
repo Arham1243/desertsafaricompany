@@ -12,6 +12,7 @@ use App\Models\City;
 use App\Models\Country;
 use App\Models\TourCategory;
 use App\Models\Setting;
+use App\Models\Schema;
 
 class SchemaController extends Controller
 {
@@ -29,25 +30,19 @@ class SchemaController extends Controller
             $tour->update(['schema_type' => $schemaType]);
         }
 
-        // Check if this is a listing page (saved in settings table)
+        // Check if this is a listing page
         if ($id === 'listing') {
             $title = ucfirst($entity) . ' Listing Page';
             $record = null;
-
-            $map = [
-                'blogs' => 'blog',
-            ];
 
             $listingMap = [
                 'blogs' => 'blogs-listing',
             ];
 
-            $entityName = $map[$entity] ?? $entity;
-            $settingKey = $entityName . '_seo_schema';
-            $schemaJson = Setting::get($settingKey);
-            $schema = $schemaJson ? json_decode($schemaJson, true) ?? [] : [];
-            $entity = $listingMap[$entity] ?? $entity;
+            $mappedEntity = $listingMap[$entity] ?? $entity;
 
+            // Get schema from schemas table
+            $schema = Schema::getSchema('listing', $mappedEntity);
 
             // Load countries and cities for bus tour schema
             $countriesCities = config('countries-cities');
@@ -61,17 +56,14 @@ class SchemaController extends Controller
         $record = $this->getEntityModel($entity, $id);
         $title = $this->getEntityTitle($entity, $id);
 
-        // Get existing schema from SEO table
-        $seo = $record->seo;
-        $schema = [];
-        if ($seo && $seo->schema) {
-            $schema = json_decode($seo->schema, true) ?? [];
-        }
+        // Get existing schema from schemas table
+        $schema = Schema::getSchema($entity, $id, $schemaType);
+        dd($schema);
 
         // Always load global Local Business schema from settings (not editable per page)
         $globalLocalBusinessJson = Setting::get('global_local_business_schema');
         $globalLocalBusiness = $globalLocalBusinessJson ? json_decode($globalLocalBusinessJson, true) : [];
-        
+
         // Always use global Local Business schema
         if (isset($globalLocalBusiness['localBusiness'])) {
             $schema['localBusiness'] = $globalLocalBusiness['localBusiness'];
@@ -80,7 +72,7 @@ class SchemaController extends Controller
         // Auto-populate tour-specific fields for tour entities
         if ($entity === 'tours' && $record) {
             // Auto-populate name and url for tour types (boat, bus, inner, water)
-            $tourTypeFields = ['boatTrip', 'busTrip', 'touristTrip', 'waterTrip'];
+            $tourTypeFields = ['bus-trip', 'boat-trip', 'inner-page', 'water-activity'];
             foreach ($tourTypeFields as $field) {
                 if (!isset($schema[$field]['name']) || empty($schema[$field]['name'])) {
                     $schema[$field]['name'] = $record->title ?? '';
@@ -92,7 +84,7 @@ class SchemaController extends Controller
 
             // Auto-populate FAQ from tour FAQs if schema FAQ is empty
             if ((!isset($schema['faq']['mainEntity']) || empty($schema['faq']['mainEntity'])) && $record->faqs && $record->faqs->isNotEmpty()) {
-                $schema['faq']['mainEntity'] = $record->faqs->map(function($faq) {
+                $schema['faq']['mainEntity'] = $record->faqs->map(function ($faq) {
                     return [
                         '@type' => 'Question',
                         'name' => $faq->question ?? '',
@@ -126,29 +118,25 @@ class SchemaController extends Controller
             $schemaJson = json_encode($schemaData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
         }
 
-        // Check if this is a listing page (save in settings table)
+        // Get schema type for tours
+        $schemaType = $request->get('type');
+
+        // Check if this is a listing page
         if ($id === 'listing') {
-            $record = null;
-
-            $map = [
-                'blogs-listing' => 'blog',
-            ];
-            $mapForGroup = [
-                'blogs-listing' => 'blog',
+            $listingMap = [
+                'blogs' => 'blogs-listing',
             ];
 
-            $entityNameForGroup = $mapForGroup[$entity] ?? $entity;
-            Setting::set($entityNameForGroup . '_seo_schema', $schemaJson, $entityNameForGroup . '_seo');
+            $mappedEntity = $listingMap[$entity] ?? $entity;
+
+            // Save to schemas table
+            Schema::saveSchema('listing', $mappedEntity, $schemaJson);
 
             return redirect()->back()->with('notify_success', 'Schema saved successfully');
         }
 
-        // Regular entity record - save in seos table
-        $record = $this->getEntityModel($entity, $id);
-        $record->seo()->updateOrCreate(
-            ['seoable_id' => $id, 'seoable_type' => get_class($record)],
-            ['schema' => $schemaJson]
-        );
+        // Regular entity record - save to schemas table
+        Schema::saveSchema($entity, $id, $schemaJson, $schemaType);
 
         return redirect()->back()->with('notify_success', 'Schema saved successfully');
     }

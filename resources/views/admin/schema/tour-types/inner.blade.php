@@ -1,6 +1,7 @@
 <div x-data="schemaManager()" x-init="init(JSON.parse('{{ addslashes(json_encode($schema)) }}'))">
     <!-- Hidden field to store final @graph JSON -->
     <input type="hidden" name="schema_graph" :value="jsonPreview()">
+    <input type="hidden" name="type" value="inner-page">
 
     <div class="row">
         <div class="col-md-7">

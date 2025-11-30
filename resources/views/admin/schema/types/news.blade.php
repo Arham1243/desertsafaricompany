@@ -473,7 +473,7 @@
                 },
 
                 jsonPreview() {
-                    return JSON.stringify(schema, null, 2);
+                    return JSON.stringify(this.schema, null, 2);
                 },
 
                 copyJsonToClipboard() {

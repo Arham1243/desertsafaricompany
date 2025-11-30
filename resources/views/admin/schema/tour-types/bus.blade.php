@@ -2,6 +2,7 @@
     <!-- Hidden field to store final @graph JSON - this is what gets saved to database -->
     <!-- The SchemaController should use this field for saving -->
     <input type="hidden" name="schema_graph" :value="jsonPreview()">
+    <input type="hidden" name="type" value="bus-trip">
 
     <div class="row">
         <div class="col-md-7">
