@@ -455,6 +455,13 @@
                         <div x-show="faqEnabled">
                             <div class="col-12 mb-3">
                                 <div class="form-fields">
+                                    <label class="title">@id</label>
+                                    <input type="text" x-model="schema.faq['@id']" name="schema[faq][@id]"
+                                        class="field">
+                                </div>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <div class="form-fields">
                                     <label class="title">FAQ Items</label>
                                     <div class="repeater-table">
                                         <table class="table table-bordered">
@@ -681,6 +688,7 @@
                 },
                 faq: {
                     '@type': 'FAQPage',
+                    '@id': '',
                     mainEntity: []
                 },
                 breadcrumb: {
@@ -1078,6 +1086,7 @@
                     if (this.faqEnabled && this.schema.faq) {
                         graph.push({
                             '@type': this.schema.faq['@type'],
+                            '@id': this.schema.faq['@id'],
                             mainEntity: this.schema.faq.mainEntity
                         });
                     }
