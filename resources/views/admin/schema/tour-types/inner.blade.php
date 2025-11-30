@@ -846,17 +846,7 @@
                         this.schema.localBusiness = initialSchema.localBusiness;
                     }
 
-                    // Check if Reviews exist and enable the switch
-                    if (this.schema.touristTrip.review && this.schema.touristTrip.review.length > 0) {
-                        const hasContent = this.schema.touristTrip.review.some(item =>
-                            item.author?.name || item.reviewBody || item.reviewRating?.ratingValue
-                        );
-                        if (hasContent) {
-                            this.reviewsEnabled = true;
-                        }
-                    }
-
-                    // Ensure arrays
+                    // Ensure arrays FIRST before checking switches
                     if (!Array.isArray(this.schema.touristTrip.image)) {
                         this.schema.touristTrip.image = this.schema.touristTrip.image ? [this.schema.touristTrip.image] : [
                             ''
@@ -881,9 +871,6 @@
                     if (!Array.isArray(this.schema.touristTrip.review)) {
                         this.schema.touristTrip.review = [];
                     }
-                    if (this.schema.touristTrip.review.length === 0) {
-                        this.schema.touristTrip.review = [defaults.touristTrip.review[0]];
-                    }
 
                     if (!Array.isArray(this.schema.localBusiness.sameAs)) {
                         this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? [this.schema.localBusiness
@@ -895,27 +882,51 @@
                     if (!Array.isArray(this.schema.faq.mainEntity)) {
                         this.schema.faq.mainEntity = [];
                     }
-                    if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
-                        this.schema.faq.mainEntity = [{
-                            '@type': 'Question',
-                            name: '',
-                            acceptedAnswer: {
-                                '@type': 'Answer',
-                                text: ''
-                            }
-                        }];
-                    }
 
                     if (!Array.isArray(this.schema.breadcrumb.itemListElement)) {
                         this.schema.breadcrumb.itemListElement = [];
                     }
+
+                    // NOW check if content exists and enable switches
+                    // Check if Reviews exist and enable the switch
+                    if (this.schema.touristTrip.review && this.schema.touristTrip.review.length > 0) {
+                        const hasContent = this.schema.touristTrip.review.some(item =>
+                            item.author?.name || item.reviewBody || item.reviewRating?.ratingValue
+                        );
+                        if (hasContent) {
+                            this.reviewsEnabled = true;
+                        }
+                    }
+
+                    // Check if FAQ exists and enable the switch
+                    if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
+                        const hasContent = this.schema.faq.mainEntity.some(item =>
+                            item.name || item.acceptedAnswer?.text
+                        );
+                        if (hasContent) {
+                            this.faqEnabled = true;
+                        }
+                    }
+
+                    // Check if Breadcrumb exists and enable the switch
+                    if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
+                        const hasContent = this.schema.breadcrumb.itemListElement.some(item =>
+                            item.name || item.item
+                        );
+                        if (hasContent) {
+                            this.breadcrumbEnabled = true;
+                        }
+                    }
+
+                    // Only add default items if switches are enabled but arrays are empty
+                    if (this.reviewsEnabled && this.schema.touristTrip.review.length === 0) {
+                        this.schema.touristTrip.review = [defaults.touristTrip.review[0]];
+                    }
+                    if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
+                        this.schema.faq.mainEntity = [defaults.faq.mainEntity[0]];
+                    }
                     if (this.breadcrumbEnabled && this.schema.breadcrumb.itemListElement.length === 0) {
-                        this.schema.breadcrumb.itemListElement = [{
-                            '@type': 'ListItem',
-                            position: 1,
-                            name: '',
-                            item: ''
-                        }];
+                        this.schema.breadcrumb.itemListElement = [defaults.breadcrumb.itemListElement[0]];
                     }
 
                     // Initialize Select2 selects

@@ -903,27 +903,7 @@
                         };
                     }
 
-                    // Check if FAQ exists and enable the switch
-                    if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
-                        const hasContent = this.schema.faq.mainEntity.some(item =>
-                            item.name || item.acceptedAnswer?.text
-                        );
-                        if (hasContent) {
-                            this.faqEnabled = true;
-                        }
-                    }
-
-                    // Check if Breadcrumb exists and enable the switch
-                    if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
-                        const hasContent = this.schema.breadcrumb.itemListElement.some(item =>
-                            item.name || item.item
-                        );
-                        if (hasContent) {
-                            this.breadcrumbEnabled = true;
-                        }
-                    }
-
-                    // Ensure arrays
+                    // Ensure arrays FIRST before checking switches
                     if (!Array.isArray(this.schema.location.image)) {
                         this.schema.location.image = this.schema.location.image ? [this.schema.location.image] : [''];
                     }
@@ -962,27 +942,38 @@
                     if (!Array.isArray(this.schema.faq.mainEntity)) {
                         this.schema.faq.mainEntity = [];
                     }
-                    if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
-                        this.schema.faq.mainEntity = [{
-                            '@type': 'Question',
-                            name: '',
-                            acceptedAnswer: {
-                                '@type': 'Answer',
-                                text: ''
-                            }
-                        }];
-                    }
 
                     if (!Array.isArray(this.schema.breadcrumb.itemListElement)) {
                         this.schema.breadcrumb.itemListElement = [];
                     }
+
+                    // NOW check if content exists and enable switches
+                    // Check if FAQ exists and enable the switch
+                    if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
+                        const hasContent = this.schema.faq.mainEntity.some(item =>
+                            item.name || item.acceptedAnswer?.text
+                        );
+                        if (hasContent) {
+                            this.faqEnabled = true;
+                        }
+                    }
+
+                    // Check if Breadcrumb exists and enable the switch
+                    if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
+                        const hasContent = this.schema.breadcrumb.itemListElement.some(item =>
+                            item.name || item.item
+                        );
+                        if (hasContent) {
+                            this.breadcrumbEnabled = true;
+                        }
+                    }
+
+                    // Only add default items if switches are enabled but arrays are empty
+                    if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
+                        this.schema.faq.mainEntity = [defaults.faq.mainEntity[0]];
+                    }
                     if (this.breadcrumbEnabled && this.schema.breadcrumb.itemListElement.length === 0) {
-                        this.schema.breadcrumb.itemListElement = [{
-                            '@type': 'ListItem',
-                            position: 1,
-                            name: '',
-                            item: ''
-                        }];
+                        this.schema.breadcrumb.itemListElement = [defaults.breadcrumb.itemListElement[0]];
                     }
 
                     // Initialize Select2 selects

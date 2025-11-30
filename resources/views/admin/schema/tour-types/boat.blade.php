@@ -1070,7 +1070,45 @@
                         this.schema.localBusiness = initialSchema.localBusiness;
                     }
 
-                    // Check if reviews exist and enable the switch FIRST (before array validation)
+                    // Ensure arrays FIRST before checking switches
+                    if (!Array.isArray(this.schema.boatTrip.image)) {
+                        this.schema.boatTrip.image = this.schema.boatTrip.image ? [this.schema.boatTrip.image] : [''];
+                    }
+                    if (this.schema.boatTrip.image.length === 0) this.schema.boatTrip.image = [''];
+
+                    if (!Array.isArray(this.schema.service.audience.audienceType)) {
+                        this.schema.service.audience.audienceType = this.schema.service.audience.audienceType ? [this.schema
+                            .service.audience.audienceType
+                        ] : [];
+                    }
+
+                    if (!Array.isArray(this.schema.service.review)) {
+                        this.schema.service.review = [];
+                    }
+
+                    if (!Array.isArray(this.schema.localBusiness.paymentAccepted)) {
+                        this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? [this.schema
+                            .localBusiness.paymentAccepted
+                        ] : [];
+                    }
+
+                    if (!Array.isArray(this.schema.localBusiness.sameAs)) {
+                        this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? [this.schema.localBusiness
+                            .sameAs
+                        ] : [''];
+                    }
+                    if (this.schema.localBusiness.sameAs.length === 0) this.schema.localBusiness.sameAs = [''];
+
+                    if (!Array.isArray(this.schema.faq.mainEntity)) {
+                        this.schema.faq.mainEntity = [];
+                    }
+
+                    if (!Array.isArray(this.schema.breadcrumb.itemListElement)) {
+                        this.schema.breadcrumb.itemListElement = [];
+                    }
+
+                    // NOW check if content exists and enable switches
+                    // Check if reviews exist and enable the switch
                     if (this.schema.service.review && this.schema.service.review.length > 0) {
                         const hasContent = this.schema.service.review.some(review =>
                             review.author?.name || review.reviewBody || review.reviewRating?.ratingValue
@@ -1100,64 +1138,13 @@
                         }
                     }
 
-                    // Ensure arrays
-                    if (!Array.isArray(this.schema.boatTrip.image)) {
-                        this.schema.boatTrip.image = this.schema.boatTrip.image ? [this.schema.boatTrip.image] : [''];
-                    }
-                    if (this.schema.boatTrip.image.length === 0) this.schema.boatTrip.image = [''];
-
-                    if (!Array.isArray(this.schema.service.audience.audienceType)) {
-                        this.schema.service.audience.audienceType = this.schema.service.audience.audienceType ? [this.schema
-                            .service.audience.audienceType
-                        ] : [];
-                    }
-
-                    if (!Array.isArray(this.schema.service.review)) {
-                        this.schema.service.review = [];
-                    }
-                    // Only add default review if reviews are enabled and array is empty
+                    // Only add default items if switches are enabled but arrays are empty
                     if (this.reviewsEnabled && this.schema.service.review.length === 0) {
-                        this.schema.service.review = [{
-                            '@type': 'Review',
-                            author: {
-                                '@type': 'Person',
-                                name: ''
-                            },
-                            datePublished: '',
-                            reviewBody: '',
-                            reviewRating: {
-                                '@type': 'Rating',
-                                ratingValue: '',
-                                bestRating: '5'
-                            }
-                        }];
+                        this.schema.service.review = [defaults.service.review[0]];
                     }
-
-                    if (!Array.isArray(this.schema.localBusiness.paymentAccepted)) {
-                        this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? [this.schema
-                            .localBusiness.paymentAccepted
-                        ] : [];
-                    }
-
-                    if (!Array.isArray(this.schema.localBusiness.sameAs)) {
-                        this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? [this.schema.localBusiness
-                            .sameAs
-                        ] : [''];
-                    }
-                    if (this.schema.localBusiness.sameAs.length === 0) this.schema.localBusiness.sameAs = [''];
-
-                    if (!Array.isArray(this.schema.faq.mainEntity)) {
-                        this.schema.faq.mainEntity = [];
-                    }
-                    // Only add default FAQ if enabled and array is empty
                     if (this.faqEnabled && this.schema.faq.mainEntity.length === 0) {
                         this.schema.faq.mainEntity = [defaults.faq.mainEntity[0]];
                     }
-
-                    if (!Array.isArray(this.schema.breadcrumb.itemListElement)) {
-                        this.schema.breadcrumb.itemListElement = [];
-                    }
-                    // Only add default breadcrumb if enabled and array is empty
                     if (this.breadcrumbEnabled && this.schema.breadcrumb.itemListElement.length === 0) {
                         this.schema.breadcrumb.itemListElement = [defaults.breadcrumb.itemListElement[0]];
                     }
