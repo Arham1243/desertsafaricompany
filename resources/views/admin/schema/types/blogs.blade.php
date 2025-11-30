@@ -265,8 +265,9 @@
                                     name="schema[audience][@type]" class="field mb-3">
 
                                 <label class="title">audienceType</label>
-                                <select mulitple x-model="schema.audience.audienceType" name="schema[audience][audienceType][]"
-                                    multiple class="select2-select" data-field="audience.audienceType">
+                                <select mulitple x-model="schema.audience.audienceType"
+                                    name="schema[audience][audienceType][]" multiple class="select2-select"
+                                    data-field="audience.audienceType">
                                     <option value="Families">Families</option>
                                     <option value="Solo Travelers">Solo Travelers</option>
                                     <option value="Local Residents">Local Residents</option>
@@ -313,13 +314,14 @@
                                     class="field mb-3">
 
                                 <label class="title">availability</label>
-                                <select x-model="schema.offers.availability"
-                                    name="schema[offers][availability]" class="field mb-3">
+                                <select x-model="schema.offers.availability" name="schema[offers][availability]"
+                                    class="field mb-3">
                                     <option value="">Select Availability</option>
                                     <option value="https://schema.org/InStock">In stock</option>
                                     <option value="https://schema.org/OutOfStock">Out of stock</option>
                                     <option value="https://schema.org/PreOrder">Preorder</option>
-                                    <option value="https://schema.org/LimitedAvailability">Limited availability</option>
+                                    <option value="https://schema.org/LimitedAvailability">Limited availability
+                                    </option>
                                     <option value="https://schema.org/SoldOut">Sold out</option>
                                     <option value="https://schema.org/OnlineOnly">Online only</option>
                                     <option value="https://schema.org/PreSale">Pre sale</option>
@@ -376,8 +378,12 @@
         </div>
         <div class="col-md-5">
             <div class="form-box preview-box-wrapper">
-                <div class="form-box__header">
+                <div class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                     <div class="title">JSON Preview</div>
+                    <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                        style="padding:0.5rem; font-size: 0.75rem;">
+                        <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                    </button>
                 </div>
                 <div class="form-box__body">
                     <div class="preview-box"
@@ -526,7 +532,7 @@
                     this.$el.querySelectorAll('.select2-select').forEach((el) => {
                         const select = $(el);
                         select.select2();
-                        
+
                         // Handle nested fields (e.g., audience.audienceType)
                         const dataField = el.getAttribute('data-field');
                         if (dataField) {
@@ -610,6 +616,27 @@
 
                 jsonPreview() {
                     return JSON.stringify(this.schema, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }

@@ -45,9 +45,8 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">foundingDate (Year Only)</label>
-                                <input type="text"
-                                style="background-color: #fff !important; "
-                                 class="yearpicker field" x-ref="year" readonly>
+                                <input type="text" style="background-color: #fff !important; "
+                                    class="yearpicker field" x-ref="year" readonly>
                                 <input type="hidden" x-model="schema.foundingDate" name="schema[foundingDate]">
                             </div>
                         </div>
@@ -440,8 +439,12 @@
         </div>
         <div class="col-md-5">
             <div class="form-box preview-box-wrapper">
-                <div class="form-box__header">
+                <div class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                     <div class="title">JSON Preview</div>
+                    <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                        style="padding:0.5rem; font-size: 0.75rem;">
+                        <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                    </button>
                 </div>
                 <div class="form-box__body">
                     <div class="preview-box"
@@ -734,6 +737,27 @@
 
                 jsonPreview() {
                     return JSON.stringify(this.schema, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }

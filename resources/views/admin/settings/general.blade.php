@@ -444,19 +444,23 @@
                                                 <div class="form-fields">
                                                     <label class="title">@id</label>
                                                     <input type="text" x-model="schema.localBusiness['@id']"
-                                                        name="global_local_business_schema[localBusiness][@id]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][@id]"
+                                                        class="field mb-3">
 
                                                     <label class="title">name</label>
                                                     <input type="text" x-model="schema.localBusiness.name"
-                                                        name="global_local_business_schema[localBusiness][name]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][name]"
+                                                        class="field mb-3">
 
                                                     <label class="title">url</label>
                                                     <input type="text" x-model="schema.localBusiness.url"
-                                                        name="global_local_business_schema[localBusiness][url]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][url]"
+                                                        class="field mb-3">
 
                                                     <label class="title">logo</label>
                                                     <input type="text" x-model="schema.localBusiness.logo"
-                                                        name="global_local_business_schema[localBusiness][logo]" class="field mb-3">
+                                                        name="global_local_business_schema[localBusiness][logo]"
+                                                        class="field mb-3">
 
                                                     <div class="form-fields">
                                                         <label class="title">paymentAccepted </label>
@@ -541,8 +545,13 @@
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-box">
-                                            <div class="form-box__header">
+                                            <div
+                                                class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                                                 <div class="title">JSON Preview</div>
+                                                <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                                                    style="padding:0.5rem; font-size: 0.75rem;">
+                                                    <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                                                </button>
                                             </div>
                                             <div class="form-box__body">
                                                 <div class="preview-box"
@@ -626,13 +635,15 @@
 
                     // Ensure array fields are always arrays
                     if (!Array.isArray(this.schema.localBusiness.paymentAccepted)) {
-                        this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? 
-                            [this.schema.localBusiness.paymentAccepted] : [];
+                        this.schema.localBusiness.paymentAccepted = this.schema.localBusiness.paymentAccepted ? [this.schema
+                            .localBusiness.paymentAccepted
+                        ] : [];
                     }
 
                     if (!Array.isArray(this.schema.localBusiness.sameAs)) {
-                        this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? 
-                            [this.schema.localBusiness.sameAs] : [''];
+                        this.schema.localBusiness.sameAs = this.schema.localBusiness.sameAs ? [this.schema.localBusiness
+                            .sameAs
+                        ] : [''];
                     }
                     if (this.schema.localBusiness.sameAs.length === 0) this.schema.localBusiness.sameAs = [''];
 
@@ -689,6 +700,27 @@
 
                 jsonPreview() {
                     return JSON.stringify(this.schema.localBusiness, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }

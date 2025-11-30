@@ -177,7 +177,8 @@
                                     </template>
                                 </select>
                                 <small class="text-muted"
-                                    x-show="!schema.departureBoatTerminal.address.addressCountry">Please select a country
+                                    x-show="!schema.departureBoatTerminal.address.addressCountry">Please select a
+                                    country
                                     first</small>
                             </div>
                         </div>
@@ -283,13 +284,14 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">availability</label>
-                                <select x-model="schema.offer.availability"
-                                    name="schema[offer][availability]" class="field">
+                                <select x-model="schema.offer.availability" name="schema[offer][availability]"
+                                    class="field">
                                     <option value="">Select Availability</option>
                                     <option value="https://schema.org/InStock">In stock</option>
                                     <option value="https://schema.org/OutOfStock">Out of stock</option>
                                     <option value="https://schema.org/PreOrder">Preorder</option>
-                                    <option value="https://schema.org/LimitedAvailability">Limited availability</option>
+                                    <option value="https://schema.org/LimitedAvailability">Limited availability
+                                    </option>
                                     <option value="https://schema.org/SoldOut">Sold out</option>
                                     <option value="https://schema.org/OnlineOnly">Online only</option>
                                     <option value="https://schema.org/PreSale">Pre sale</option>
@@ -357,28 +359,28 @@
                                     name="schema[service][audience][audienceType][]" class="select2-select"
                                     data-field="service.audience.audienceType">
                                     <option value="Families">Families</option>
-<option value="Solo Travelers">Solo Travelers</option>
-<option value="Local Residents">Local Residents</option>
-<option value="Adventure Seekers">Adventure Seekers</option>
-<option value="Couples">Couples</option>
-<option value="Corporate Groups">Corporate Groups</option>
-<option value="Tourists">Tourists</option>
-<option value="budget travel">budget travel</option>
-<option value="Groups of Friends">Groups of Friends</option>
-<option value="Honeymooners">Honeymooners</option>
-<option value="less budget">less budget</option>
-<option value="Cultural tours">Cultural tours</option>
-<option value="Cultural Enthusiasts">Cultural Enthusiasts</option>
-<option value="Seek exclusive">Seek exclusive</option>
-<option value="private tours">private tours</option>
-<option value="high-end experiences">high-end experiences</option>
-<option value="local traditions">local traditions</option>
-<option value="Interested in museums">Interested in museums</option>
-<option value="Business Travelers">Business Travelers</option>
-<option value="Nature Lovers">Nature Lovers</option>
-<option value="Food Lovers">Food Lovers</option>
-<option value="Photography Enthusiasts">Photography Enthusiasts</option>
-<option value="Travel Agents">Travel Agents</option>
+                                    <option value="Solo Travelers">Solo Travelers</option>
+                                    <option value="Local Residents">Local Residents</option>
+                                    <option value="Adventure Seekers">Adventure Seekers</option>
+                                    <option value="Couples">Couples</option>
+                                    <option value="Corporate Groups">Corporate Groups</option>
+                                    <option value="Tourists">Tourists</option>
+                                    <option value="budget travel">budget travel</option>
+                                    <option value="Groups of Friends">Groups of Friends</option>
+                                    <option value="Honeymooners">Honeymooners</option>
+                                    <option value="less budget">less budget</option>
+                                    <option value="Cultural tours">Cultural tours</option>
+                                    <option value="Cultural Enthusiasts">Cultural Enthusiasts</option>
+                                    <option value="Seek exclusive">Seek exclusive</option>
+                                    <option value="private tours">private tours</option>
+                                    <option value="high-end experiences">high-end experiences</option>
+                                    <option value="local traditions">local traditions</option>
+                                    <option value="Interested in museums">Interested in museums</option>
+                                    <option value="Business Travelers">Business Travelers</option>
+                                    <option value="Nature Lovers">Nature Lovers</option>
+                                    <option value="Food Lovers">Food Lovers</option>
+                                    <option value="Photography Enthusiasts">Photography Enthusiasts</option>
+                                    <option value="Travel Agents">Travel Agents</option>
                                 </select>
                             </div>
                         </div>
@@ -427,10 +429,8 @@
                                         data-disabled-text="Disabled">
                                         <input data-toggle-switch class="form-check-input" type="checkbox"
                                             id="enable_reviews_switch" x-model="reviewsEnabled"
-                                            @change="toggleReviews()"
-                                            name="enable_reviews">
-                                        <label class="form-check-label"
-                                            for="enable_reviews_switch">Disabled</label>
+                                            @change="toggleReviews()" name="enable_reviews">
+                                        <label class="form-check-label" for="enable_reviews_switch">Disabled</label>
                                     </div>
                                 </div>
 
@@ -501,44 +501,50 @@
 
                         <hr class="my-4">
                         <div class="col-12 mb-3 title title--sm">@type Local Business </div>
-                        
-                       
+
+
 
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">@id</label>
-                                <input type="text" x-model="schema.localBusiness['@id']" class="field" disabled readonly>
+                                <input type="text" x-model="schema.localBusiness['@id']" class="field" disabled
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">name</label>
-                                <input type="text" x-model="schema.localBusiness.name" class="field" disabled readonly>
+                                <input type="text" x-model="schema.localBusiness.name" class="field" disabled
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">url</label>
-                                <input type="text" x-model="schema.localBusiness.url" class="field" disabled readonly>
+                                <input type="text" x-model="schema.localBusiness.url" class="field" disabled
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">logo</label>
-                                <input type="text" x-model="schema.localBusiness.logo" class="field" disabled readonly>
+                                <input type="text" x-model="schema.localBusiness.logo" class="field" disabled
+                                    readonly>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">paymentAccepted</label>
-                                <input type="text" x-model="schema.localBusiness.paymentAccepted.join(', ')" class="field" disabled readonly>
+                                <input type="text" x-model="schema.localBusiness.paymentAccepted.join(', ')"
+                                    class="field" disabled readonly>
                             </div>
                         </div>
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">sameAs (Social Links)</label>
                                 <template x-for="(link, index) in schema.localBusiness.sameAs" :key="index">
-                                    <input type="text" x-model="schema.localBusiness.sameAs[index]" class="field mb-2" disabled readonly>
+                                    <input type="text" x-model="schema.localBusiness.sameAs[index]"
+                                        class="field mb-2" disabled readonly>
                                 </template>
                             </div>
                         </div>
@@ -552,11 +558,9 @@
                                 <div class="form-check form-switch" data-enabled-text="Enabled"
                                     data-disabled-text="Disabled">
                                     <input data-toggle-switch class="form-check-input" type="checkbox"
-                                        id="enable_faq_switch" x-model="faqEnabled"
-                                        @change="toggleFaq()"
+                                        id="enable_faq_switch" x-model="faqEnabled" @change="toggleFaq()"
                                         name="enable_faq">
-                                    <label class="form-check-label"
-                                        for="enable_faq_switch">Disabled</label>
+                                    <label class="form-check-label" for="enable_faq_switch">Disabled</label>
                                 </div>
                             </div>
                         </div>
@@ -572,51 +576,51 @@
                             <div class="col-12 mb-3">
                                 <div class="form-fields">
                                     <label class="title">mainEntity (FAQ Items)</label>
-                                <div class="repeater-table">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th>Question</th>
-                                                <th>Answer</th>
-                                                <th style="width: 100px;">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <template x-for="(item, index) in schema.faq.mainEntity"
-                                                :key="index">
+                                    <div class="repeater-table">
+                                        <table class="table table-bordered">
+                                            <thead>
                                                 <tr>
-                                                    <td><input type="text"
-                                                            x-model="schema.faq.mainEntity[index].name"
-                                                            :name="`schema[faq][mainEntity][${index}][name]`"
-                                                            class="field"></td>
-                                                    <td>
-                                                        <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
-                                                            :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" class="field" rows="2"></textarea>
-                                                    </td>
-                                                    <td>
-                                                        <div class="d-flex gap-2">
-                                                            <button type="button"
-                                                                class="delete-btn delete-btn--static"
-                                                                @click="removeFromNestedArray('faq.mainEntity', index)"
-                                                                :disabled="schema.faq.mainEntity.length === 1">
-                                                                <i class='bx bxs-trash-alt'></i>
-                                                            </button>
-                                                            <button type="button" class="add-btn add-btn--static"
-                                                                @click="insertInNestedArray('faq.mainEntity', index, {'@type': 'Question', name: '', acceptedAnswer: {'@type': 'Answer', text: ''}})">
-                                                                <i class='bx bx-plus'></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
+                                                    <th>Question</th>
+                                                    <th>Answer</th>
+                                                    <th style="width: 100px;">Action</th>
                                                 </tr>
-                                            </template>
-                                        </tbody>
-                                    </table>
-                                    <button type="button" class="themeBtn"
-                                        @click="addToNestedArray('faq.mainEntity', {'@type': 'Question', name: '', acceptedAnswer: {'@type': 'Answer', text: ''}})">Add
-                                        FAQ</button>
+                                            </thead>
+                                            <tbody>
+                                                <template x-for="(item, index) in schema.faq.mainEntity"
+                                                    :key="index">
+                                                    <tr>
+                                                        <td><input type="text"
+                                                                x-model="schema.faq.mainEntity[index].name"
+                                                                :name="`schema[faq][mainEntity][${index}][name]`"
+                                                                class="field"></td>
+                                                        <td>
+                                                            <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
+                                                                :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" class="field" rows="2"></textarea>
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <button type="button"
+                                                                    class="delete-btn delete-btn--static"
+                                                                    @click="removeFromNestedArray('faq.mainEntity', index)"
+                                                                    :disabled="schema.faq.mainEntity.length === 1">
+                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                </button>
+                                                                <button type="button" class="add-btn add-btn--static"
+                                                                    @click="insertInNestedArray('faq.mainEntity', index, {'@type': 'Question', name: '', acceptedAnswer: {'@type': 'Answer', text: ''}})">
+                                                                    <i class='bx bx-plus'></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" class="themeBtn"
+                                            @click="addToNestedArray('faq.mainEntity', {'@type': 'Question', name: '', acceptedAnswer: {'@type': 'Answer', text: ''}})">Add
+                                            FAQ</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
 
                         <hr class="my-4">
@@ -629,10 +633,8 @@
                                     data-disabled-text="Disabled">
                                     <input data-toggle-switch class="form-check-input" type="checkbox"
                                         id="enable_breadcrumb_switch" x-model="breadcrumbEnabled"
-                                        @change="toggleBreadcrumb()"
-                                        name="enable_breadcrumb">
-                                    <label class="form-check-label"
-                                        for="enable_breadcrumb_switch">Disabled</label>
+                                        @change="toggleBreadcrumb()" name="enable_breadcrumb">
+                                    <label class="form-check-label" for="enable_breadcrumb_switch">Disabled</label>
                                 </div>
                             </div>
                         </div>
@@ -648,56 +650,56 @@
                             <div class="col-12 mb-3">
                                 <div class="form-fields">
                                     <label class="title">itemListElement (Breadcrumb Items)</label>
-                                <div class="repeater-table">
-                                    <table class="table table-bordered">
-                                        <thead>
-                                            <tr>
-                                                <th style="width: 80px;">Position</th>
-                                                <th>Name</th>
-                                                <th>URL</th>
-                                                <th style="width: 100px;">Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <template x-for="(item, index) in schema.breadcrumb.itemListElement"
-                                                :key="index">
+                                    <div class="repeater-table">
+                                        <table class="table table-bordered">
+                                            <thead>
                                                 <tr>
-                                                    <td><input type="number"
-                                                            x-model="schema.breadcrumb.itemListElement[index].position"
-                                                            :name="`schema[breadcrumb][itemListElement][${index}][position]`"
-                                                            class="field"></td>
-                                                    <td><input type="text"
-                                                            x-model="schema.breadcrumb.itemListElement[index].name"
-                                                            :name="`schema[breadcrumb][itemListElement][${index}][name]`"
-                                                            class="field"></td>
-                                                    <td><input type="text"
-                                                            x-model="schema.breadcrumb.itemListElement[index].item"
-                                                            :name="`schema[breadcrumb][itemListElement][${index}][item]`"
-                                                            class="field"></td>
-                                                    <td>
-                                                        <div class="d-flex gap-2">
-                                                            <button type="button"
-                                                                class="delete-btn delete-btn--static"
-                                                                @click="removeFromNestedArray('breadcrumb.itemListElement', index)"
-                                                                :disabled="schema.breadcrumb.itemListElement.length === 1">
-                                                                <i class='bx bxs-trash-alt'></i>
-                                                            </button>
-                                                            <button type="button" class="add-btn add-btn--static"
-                                                                @click="insertInNestedArray('breadcrumb.itemListElement', index, {'@type': 'ListItem', position: schema.breadcrumb.itemListElement.length + 1, name: '', item: ''})">
-                                                                <i class='bx bx-plus'></i>
-                                                            </button>
-                                                        </div>
-                                                    </td>
+                                                    <th style="width: 80px;">Position</th>
+                                                    <th>Name</th>
+                                                    <th>URL</th>
+                                                    <th style="width: 100px;">Action</th>
                                                 </tr>
-                                            </template>
-                                        </tbody>
-                                    </table>
-                                    <button type="button" class="themeBtn"
-                                        @click="addToNestedArray('breadcrumb.itemListElement', {'@type': 'ListItem', position: schema.breadcrumb.itemListElement.length + 1, name: '', item: ''})">Add
-                                        Breadcrumb</button>
+                                            </thead>
+                                            <tbody>
+                                                <template x-for="(item, index) in schema.breadcrumb.itemListElement"
+                                                    :key="index">
+                                                    <tr>
+                                                        <td><input type="number"
+                                                                x-model="schema.breadcrumb.itemListElement[index].position"
+                                                                :name="`schema[breadcrumb][itemListElement][${index}][position]`"
+                                                                class="field"></td>
+                                                        <td><input type="text"
+                                                                x-model="schema.breadcrumb.itemListElement[index].name"
+                                                                :name="`schema[breadcrumb][itemListElement][${index}][name]`"
+                                                                class="field"></td>
+                                                        <td><input type="text"
+                                                                x-model="schema.breadcrumb.itemListElement[index].item"
+                                                                :name="`schema[breadcrumb][itemListElement][${index}][item]`"
+                                                                class="field"></td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <button type="button"
+                                                                    class="delete-btn delete-btn--static"
+                                                                    @click="removeFromNestedArray('breadcrumb.itemListElement', index)"
+                                                                    :disabled="schema.breadcrumb.itemListElement.length === 1">
+                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                </button>
+                                                                <button type="button" class="add-btn add-btn--static"
+                                                                    @click="insertInNestedArray('breadcrumb.itemListElement', index, {'@type': 'ListItem', position: schema.breadcrumb.itemListElement.length + 1, name: '', item: ''})">
+                                                                    <i class='bx bx-plus'></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </template>
+                                            </tbody>
+                                        </table>
+                                        <button type="button" class="themeBtn"
+                                            @click="addToNestedArray('breadcrumb.itemListElement', {'@type': 'ListItem', position: schema.breadcrumb.itemListElement.length + 1, name: '', item: ''})">Add
+                                            Breadcrumb</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         </div>
                     </div>
                 </div>
@@ -705,8 +707,12 @@
         </div>
         <div class="col-md-5">
             <div class="form-box preview-box-wrapper">
-                <div class="form-box__header">
+                <div class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                     <div class="title">JSON Preview</div>
+                    <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                        style="padding:0.5rem; font-size: 0.75rem;">
+                        <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                    </button>
                 </div>
                 <div class="form-box__body">
                     <div class="preview-box"
@@ -869,12 +875,14 @@
                                     ...item,
                                     departureBoatTerminal: item.departureBoatTerminal || defaults.boatTrip
                                         .departureBoatTerminal,
-                                    arrivalBoatTerminal: item.arrivalBoatTerminal || defaults.boatTrip.arrivalBoatTerminal,
+                                    arrivalBoatTerminal: item.arrivalBoatTerminal || defaults.boatTrip
+                                        .arrivalBoatTerminal,
                                     offers: item.offers || defaults.boatTrip.offers
                                 };
                             } else if (item['@type'] === 'BoatTerminal') {
                                 // Determine if departure or arrival by @id
-                                if (this.schema.boatTrip && this.schema.boatTrip.departureBoatTerminal && item['@id'] ===
+                                if (this.schema.boatTrip && this.schema.boatTrip.departureBoatTerminal && item[
+                                        '@id'] ===
                                     this.schema.boatTrip.departureBoatTerminal['@id']) {
                                     this.schema.departureBoatTerminal = {
                                         ...defaults.departureBoatTerminal,
@@ -948,8 +956,10 @@
 
                         // Fill in missing objects with defaults
                         if (!this.schema.boatTrip) this.schema.boatTrip = defaults.boatTrip;
-                        if (!this.schema.departureBoatTerminal) this.schema.departureBoatTerminal = defaults.departureBoatTerminal;
-                        if (!this.schema.arrivalBoatTerminal) this.schema.arrivalBoatTerminal = defaults.arrivalBoatTerminal;
+                        if (!this.schema.departureBoatTerminal) this.schema.departureBoatTerminal = defaults
+                            .departureBoatTerminal;
+                        if (!this.schema.arrivalBoatTerminal) this.schema.arrivalBoatTerminal = defaults
+                            .arrivalBoatTerminal;
                         if (!this.schema.offer) this.schema.offer = defaults.offer;
                         if (!this.schema.service) this.schema.service = defaults.service;
                         if (!this.schema.localBusiness) this.schema.localBusiness = defaults.localBusiness;
@@ -976,15 +986,16 @@
                                     ...defaults.boatTrip.offers,
                                     ...((initialSchema.boatTrip && initialSchema.boatTrip.offers) || {})
                                 },
-                                image: (initialSchema.boatTrip && initialSchema.boatTrip.image) || defaults.boatTrip.image
+                                image: (initialSchema.boatTrip && initialSchema.boatTrip.image) || defaults.boatTrip
+                                    .image
                             },
                             departureBoatTerminal: {
                                 ...defaults.departureBoatTerminal,
                                 ...(initialSchema.departureBoatTerminal || {}),
                                 address: {
                                     ...defaults.departureBoatTerminal.address,
-                                    ...((initialSchema.departureBoatTerminal && initialSchema.departureBoatTerminal.address) ||
-                                        {})
+                                    ...((initialSchema.departureBoatTerminal && initialSchema.departureBoatTerminal
+                                        .address) || {})
                                 }
                             },
                             arrivalBoatTerminal: {
@@ -992,7 +1003,8 @@
                                 ...(initialSchema.arrivalBoatTerminal || {}),
                                 address: {
                                     ...defaults.arrivalBoatTerminal.address,
-                                    ...((initialSchema.arrivalBoatTerminal && initialSchema.arrivalBoatTerminal.address) || {})
+                                    ...((initialSchema.arrivalBoatTerminal && initialSchema.arrivalBoatTerminal
+                                        .address) || {})
                                 }
                             },
                             offer: {
@@ -1036,7 +1048,8 @@
                                     ...defaults.webPage.isPartOf,
                                     ...((initialSchema.webPage && initialSchema.webPage.isPartOf) || {})
                                 },
-                                mainEntity: (initialSchema.webPage && initialSchema.webPage.mainEntity) || defaults.webPage.mainEntity
+                                mainEntity: (initialSchema.webPage && initialSchema.webPage.mainEntity) || defaults
+                                    .webPage.mainEntity
                             },
                             faq: {
                                 ...defaults.faq,
@@ -1059,7 +1072,7 @@
 
                     // Check if reviews exist and enable the switch FIRST (before array validation)
                     if (this.schema.service.review && this.schema.service.review.length > 0) {
-                        const hasContent = this.schema.service.review.some(review => 
+                        const hasContent = this.schema.service.review.some(review =>
                             review.author?.name || review.reviewBody || review.reviewRating?.ratingValue
                         );
                         if (hasContent) {
@@ -1069,7 +1082,7 @@
 
                     // Check if FAQ exists and enable the switch
                     if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
-                        const hasContent = this.schema.faq.mainEntity.some(item => 
+                        const hasContent = this.schema.faq.mainEntity.some(item =>
                             item.name || item.acceptedAnswer?.text
                         );
                         if (hasContent) {
@@ -1079,7 +1092,7 @@
 
                     // Check if Breadcrumb exists and enable the switch
                     if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
-                        const hasContent = this.schema.breadcrumb.itemListElement.some(item => 
+                        const hasContent = this.schema.breadcrumb.itemListElement.some(item =>
                             item.name || item.item
                         );
                         if (hasContent) {
@@ -1263,7 +1276,8 @@
                 toggleBreadcrumb() {
                     if (this.breadcrumbEnabled) {
                         // Enabled - ensure at least one breadcrumb exists
-                        if (!this.schema.breadcrumb.itemListElement || this.schema.breadcrumb.itemListElement.length === 0) {
+                        if (!this.schema.breadcrumb.itemListElement || this.schema.breadcrumb.itemListElement.length ===
+                            0) {
                             this.schema.breadcrumb.itemListElement = [{
                                 '@type': 'ListItem',
                                 position: 1,
@@ -1355,12 +1369,12 @@
                             provider: this.schema.service.provider,
                             aggregateRating: this.schema.service.aggregateRating
                         };
-                        
+
                         // Only include review if enabled
                         if (this.reviewsEnabled) {
                             serviceObj.review = this.schema.service.review;
                         }
-                        
+
                         graph.push(serviceObj);
                     }
 
@@ -1412,6 +1426,27 @@
                         '@context': this.schema['@context'],
                         '@graph': graph
                     }, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }
@@ -1433,4 +1468,3 @@
         }
     </style>
 @endpush
-

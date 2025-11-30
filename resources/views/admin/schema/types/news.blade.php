@@ -35,8 +35,7 @@
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">description</label>
-                                <textarea x-model="schema.description" name="schema[description]" class="field"
-                                    rows="3"></textarea>
+                                <textarea x-model="schema.description" name="schema[description]" class="field" rows="3"></textarea>
                             </div>
                         </div>
 
@@ -223,13 +222,14 @@
                                     class="field mb-3">
 
                                 <label class="title">availability</label>
-                                <select x-model="schema.offers.availability"
-                                    name="schema[offers][availability]" class="field mb-3">
+                                <select x-model="schema.offers.availability" name="schema[offers][availability]"
+                                    class="field mb-3">
                                     <option value="">Select Availability</option>
                                     <option value="https://schema.org/InStock">In stock</option>
                                     <option value="https://schema.org/OutOfStock">Out of stock</option>
                                     <option value="https://schema.org/PreOrder">Preorder</option>
-                                    <option value="https://schema.org/LimitedAvailability">Limited availability</option>
+                                    <option value="https://schema.org/LimitedAvailability">Limited availability
+                                    </option>
                                     <option value="https://schema.org/SoldOut">Sold out</option>
                                     <option value="https://schema.org/OnlineOnly">Online only</option>
                                     <option value="https://schema.org/PreSale">Pre sale</option>
@@ -266,7 +266,8 @@
                                                     </td>
                                                     <td>
                                                         <div class="d-flex justify-content-end gap-2">
-                                                            <button type="button" class="delete-btn delete-btn--static"
+                                                            <button type="button"
+                                                                class="delete-btn delete-btn--static"
                                                                 @click="removeFromArray('sameAs', index)"
                                                                 :disabled="schema.sameAs.length === 1">
                                                                 <i class='bx bxs-trash-alt'></i>
@@ -310,8 +311,12 @@
         </div>
         <div class="col-md-5">
             <div class="form-box preview-box-wrapper">
-                <div class="form-box__header">
+                <div class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                     <div class="title">JSON Preview</div>
+                    <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                        style="padding:0.5rem; font-size: 0.75rem;">
+                        <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                    </button>
                 </div>
                 <div class="form-box__body">
                     <div class="preview-box"
@@ -468,7 +473,28 @@
                 },
 
                 jsonPreview() {
-                    return JSON.stringify(this.schema, null, 2);
+                    return JSON.stringify(schema, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }

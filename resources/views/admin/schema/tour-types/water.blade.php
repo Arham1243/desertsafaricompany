@@ -185,53 +185,67 @@
                                                                 <div class="day-checkboxes">
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Monday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Monday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes('Monday')"
                                                                             @change="toggleDay(index, 'Monday', $event.target.checked)">
                                                                         Monday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Tuesday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Tuesday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes('Tuesday')"
                                                                             @change="toggleDay(index, 'Tuesday', $event.target.checked)">
                                                                         Tuesday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Wednesday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Wednesday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes(
+                                                                                'Wednesday')"
                                                                             @change="toggleDay(index, 'Wednesday', $event.target.checked)">
                                                                         Wednesday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Thursday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Thursday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes(
+                                                                                'Thursday')"
                                                                             @change="toggleDay(index, 'Thursday', $event.target.checked)">
                                                                         Thursday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Friday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Friday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes('Friday')"
                                                                             @change="toggleDay(index, 'Friday', $event.target.checked)">
                                                                         Friday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Saturday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Saturday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes(
+                                                                                'Saturday')"
                                                                             @change="toggleDay(index, 'Saturday', $event.target.checked)">
                                                                         Saturday
                                                                     </label>
                                                                     <label class="checkbox-label">
                                                                         <input type="checkbox" value="Sunday"
-                                                                            :checked="schema.location.openingHoursSpecification[index].dayOfWeek.includes('Sunday')"
+                                                                            :checked="schema.location.openingHoursSpecification[
+                                                                                index].dayOfWeek.includes('Sunday')"
                                                                             @change="toggleDay(index, 'Sunday', $event.target.checked)">
                                                                         Sunday
                                                                     </label>
                                                                 </div>
                                                                 <!-- Hidden inputs for form submission -->
-                                                                <template x-for="(day, dayIndex) in schema.location.openingHoursSpecification[index].dayOfWeek" :key="dayIndex">
-                                                                    <input type="hidden" :name="`schema[location][openingHoursSpecification][${index}][dayOfWeek][]`" :value="day">
+                                                                <template
+                                                                    x-for="(day, dayIndex) in schema.location.openingHoursSpecification[index].dayOfWeek"
+                                                                    :key="dayIndex">
+                                                                    <input type="hidden"
+                                                                        :name="`schema[location][openingHoursSpecification][${index}][dayOfWeek][]`"
+                                                                        :value="day">
                                                                 </template>
                                                             </div>
-                                                            
+
                                                             <div class="row">
                                                                 <div class="col-6">
                                                                     <label class="title mb-2">Opens</label>
@@ -349,7 +363,8 @@
                                     <option value="https://schema.org/InStock">In stock</option>
                                     <option value="https://schema.org/OutOfStock">Out of stock</option>
                                     <option value="https://schema.org/PreOrder">Preorder</option>
-                                    <option value="https://schema.org/LimitedAvailability">Limited availability</option>
+                                    <option value="https://schema.org/LimitedAvailability">Limited availability
+                                    </option>
                                     <option value="https://schema.org/SoldOut">Sold out</option>
                                     <option value="https://schema.org/OnlineOnly">Online only</option>
                                     <option value="https://schema.org/PreSale">Pre sale</option>
@@ -391,28 +406,28 @@
                                     data-field="location.makesOffer.itemOffered.audience.audienceType"
                                     style="width: 100%;">
                                     <option value="Families">Families</option>
-<option value="Solo Travelers">Solo Travelers</option>
-<option value="Local Residents">Local Residents</option>
-<option value="Adventure Seekers">Adventure Seekers</option>
-<option value="Couples">Couples</option>
-<option value="Corporate Groups">Corporate Groups</option>
-<option value="Tourists">Tourists</option>
-<option value="budget travel">budget travel</option>
-<option value="Groups of Friends">Groups of Friends</option>
-<option value="Honeymooners">Honeymooners</option>
-<option value="less budget">less budget</option>
-<option value="Cultural tours">Cultural tours</option>
-<option value="Cultural Enthusiasts">Cultural Enthusiasts</option>
-<option value="Seek exclusive">Seek exclusive</option>
-<option value="private tours">private tours</option>
-<option value="high-end experiences">high-end experiences</option>
-<option value="local traditions">local traditions</option>
-<option value="Interested in museums">Interested in museums</option>
-<option value="Business Travelers">Business Travelers</option>
-<option value="Nature Lovers">Nature Lovers</option>
-<option value="Food Lovers">Food Lovers</option>
-<option value="Photography Enthusiasts">Photography Enthusiasts</option>
-<option value="Travel Agents">Travel Agents</option>
+                                    <option value="Solo Travelers">Solo Travelers</option>
+                                    <option value="Local Residents">Local Residents</option>
+                                    <option value="Adventure Seekers">Adventure Seekers</option>
+                                    <option value="Couples">Couples</option>
+                                    <option value="Corporate Groups">Corporate Groups</option>
+                                    <option value="Tourists">Tourists</option>
+                                    <option value="budget travel">budget travel</option>
+                                    <option value="Groups of Friends">Groups of Friends</option>
+                                    <option value="Honeymooners">Honeymooners</option>
+                                    <option value="less budget">less budget</option>
+                                    <option value="Cultural tours">Cultural tours</option>
+                                    <option value="Cultural Enthusiasts">Cultural Enthusiasts</option>
+                                    <option value="Seek exclusive">Seek exclusive</option>
+                                    <option value="private tours">private tours</option>
+                                    <option value="high-end experiences">high-end experiences</option>
+                                    <option value="local traditions">local traditions</option>
+                                    <option value="Interested in museums">Interested in museums</option>
+                                    <option value="Business Travelers">Business Travelers</option>
+                                    <option value="Nature Lovers">Nature Lovers</option>
+                                    <option value="Food Lovers">Food Lovers</option>
+                                    <option value="Photography Enthusiasts">Photography Enthusiasts</option>
+                                    <option value="Travel Agents">Travel Agents</option>
                                 </select>
                             </div>
                         </div>
@@ -648,8 +663,12 @@
         </div>
         <div class="col-md-5">
             <div class="form-box preview-box-wrapper">
-                <div class="form-box__header">
+                <div class="form-box__header d-flex justify-content-between align-items-center"style="line-height: 1;">
                     <div class="title">JSON Preview</div>
+                    <button type="button" class="themeBtn" @click="copyJsonToClipboard()"
+                        style="padding:0.5rem; font-size: 0.75rem;">
+                        <i style="font-size: 0.75rem;" class='bx bx-copy'></i> Copy
+                    </button>
                 </div>
                 <div class="form-box__body">
                     <div class="preview-box"
@@ -784,17 +803,23 @@
                                             ...((item.makesOffer && item.makesOffer.itemOffered) || {}),
                                             audience: {
                                                 ...defaults.location.makesOffer.itemOffered.audience,
-                                                ...((item.makesOffer && item.makesOffer.itemOffered && item.makesOffer.itemOffered.audience) || {})
+                                                ...((item.makesOffer && item.makesOffer.itemOffered && item
+                                                    .makesOffer.itemOffered.audience) || {})
                                             },
                                             provider: {
                                                 ...defaults.location.makesOffer.itemOffered.provider,
-                                                ...((item.makesOffer && item.makesOffer.itemOffered && item.makesOffer.itemOffered.provider) || {}),
-                                                sameAs: ((item.makesOffer && item.makesOffer.itemOffered && item.makesOffer.itemOffered.provider && item.makesOffer.itemOffered.provider.sameAs) || defaults.location.makesOffer.itemOffered.provider.sameAs)
+                                                ...((item.makesOffer && item.makesOffer.itemOffered && item
+                                                    .makesOffer.itemOffered.provider) || {}),
+                                                sameAs: ((item.makesOffer && item.makesOffer.itemOffered && item
+                                                        .makesOffer.itemOffered.provider && item.makesOffer
+                                                        .itemOffered.provider.sameAs) || defaults.location
+                                                    .makesOffer.itemOffered.provider.sameAs)
                                             }
                                         }
                                     },
                                     image: item.image || defaults.location.image,
-                                    openingHoursSpecification: item.openingHoursSpecification || defaults.location.openingHoursSpecification,
+                                    openingHoursSpecification: item.openingHoursSpecification || defaults
+                                        .location.openingHoursSpecification,
                                     paymentAccepted: item.paymentAccepted || defaults.location.paymentAccepted
                                 };
                             } else if (item['@type'] === 'FAQPage') {
@@ -841,20 +866,28 @@
                                     ...((initialSchema.location && initialSchema.location.makesOffer) || {}),
                                     itemOffered: {
                                         ...defaults.location.makesOffer.itemOffered,
-                                        ...((initialSchema.location && initialSchema.location.makesOffer && initialSchema.location.makesOffer.itemOffered) || {}),
+                                        ...((initialSchema.location && initialSchema.location.makesOffer &&
+                                            initialSchema.location.makesOffer.itemOffered) || {}),
                                         audience: {
                                             ...defaults.location.makesOffer.itemOffered.audience,
-                                            ...((initialSchema.location && initialSchema.location.makesOffer && initialSchema.location.makesOffer.itemOffered && initialSchema.location.makesOffer.itemOffered.audience) || {})
+                                            ...((initialSchema.location && initialSchema.location.makesOffer &&
+                                                initialSchema.location.makesOffer.itemOffered && initialSchema
+                                                .location.makesOffer.itemOffered.audience) || {})
                                         },
                                         provider: {
                                             ...defaults.location.makesOffer.itemOffered.provider,
-                                            ...((initialSchema.location && initialSchema.location.makesOffer && initialSchema.location.makesOffer.itemOffered && initialSchema.location.makesOffer.itemOffered.provider) || {})
+                                            ...((initialSchema.location && initialSchema.location.makesOffer &&
+                                                initialSchema.location.makesOffer.itemOffered && initialSchema
+                                                .location.makesOffer.itemOffered.provider) || {})
                                         }
                                     }
                                 },
-                                image: (initialSchema.location && initialSchema.location.image) || defaults.location.image,
-                                openingHoursSpecification: (initialSchema.location && initialSchema.location.openingHoursSpecification) || defaults.location.openingHoursSpecification,
-                                paymentAccepted: (initialSchema.location && initialSchema.location.paymentAccepted) || defaults.location.paymentAccepted
+                                image: (initialSchema.location && initialSchema.location.image) || defaults.location
+                                    .image,
+                                openingHoursSpecification: (initialSchema.location && initialSchema.location
+                                    .openingHoursSpecification) || defaults.location.openingHoursSpecification,
+                                paymentAccepted: (initialSchema.location && initialSchema.location.paymentAccepted) ||
+                                    defaults.location.paymentAccepted
                             },
                             faq: {
                                 ...defaults.faq,
@@ -864,14 +897,15 @@
                             breadcrumb: {
                                 ...defaults.breadcrumb,
                                 ...(initialSchema.breadcrumb || {}),
-                                itemListElement: (initialSchema.breadcrumb && initialSchema.breadcrumb.itemListElement) || []
+                                itemListElement: (initialSchema.breadcrumb && initialSchema.breadcrumb
+                                    .itemListElement) || []
                             }
                         };
                     }
 
                     // Check if FAQ exists and enable the switch
                     if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
-                        const hasContent = this.schema.faq.mainEntity.some(item => 
+                        const hasContent = this.schema.faq.mainEntity.some(item =>
                             item.name || item.acceptedAnswer?.text
                         );
                         if (hasContent) {
@@ -881,7 +915,7 @@
 
                     // Check if Breadcrumb exists and enable the switch
                     if (this.schema.breadcrumb.itemListElement && this.schema.breadcrumb.itemListElement.length > 0) {
-                        const hasContent = this.schema.breadcrumb.itemListElement.some(item => 
+                        const hasContent = this.schema.breadcrumb.itemListElement.some(item =>
                             item.name || item.item
                         );
                         if (hasContent) {
@@ -903,15 +937,23 @@
                     }
 
                     if (!Array.isArray(this.schema.location.paymentAccepted)) {
-                        this.schema.location.paymentAccepted = this.schema.location.paymentAccepted ? [this.schema.location.paymentAccepted] : [];
+                        this.schema.location.paymentAccepted = this.schema.location.paymentAccepted ? [this.schema.location
+                            .paymentAccepted
+                        ] : [];
                     }
 
                     if (!Array.isArray(this.schema.location.makesOffer.itemOffered.audience.audienceType)) {
-                        this.schema.location.makesOffer.itemOffered.audience.audienceType = this.schema.location.makesOffer.itemOffered.audience.audienceType ? [this.schema.location.makesOffer.itemOffered.audience.audienceType] : [];
+                        this.schema.location.makesOffer.itemOffered.audience.audienceType = this.schema.location.makesOffer
+                            .itemOffered.audience.audienceType ? [this.schema.location.makesOffer.itemOffered.audience
+                                .audienceType
+                            ] : [];
                     }
 
                     if (!Array.isArray(this.schema.location.makesOffer.itemOffered.provider.sameAs)) {
-                        this.schema.location.makesOffer.itemOffered.provider.sameAs = this.schema.location.makesOffer.itemOffered.provider.sameAs ? [this.schema.location.makesOffer.itemOffered.provider.sameAs] : [''];
+                        this.schema.location.makesOffer.itemOffered.provider.sameAs = this.schema.location.makesOffer
+                            .itemOffered.provider.sameAs ? [this.schema.location.makesOffer.itemOffered.provider.sameAs] : [
+                                ''
+                            ];
                     }
                     if (this.schema.location.makesOffer.itemOffered.provider.sameAs.length === 0) {
                         this.schema.location.makesOffer.itemOffered.provider.sameAs = [''];
@@ -945,7 +987,7 @@
 
                     // Initialize Select2 selects
                     this.initializeSelect2();
-                    
+
                     // Use $nextTick to ensure Alpine has rendered repeaters
                     this.$nextTick(() => {
                         this.initializeSelect2();
@@ -953,10 +995,13 @@
                 },
 
                 initializeSelect2() {
-                    this.$el.querySelectorAll('.select2-select:not(.select2-hidden-accessible), .select2-payment-methods:not(.select2-hidden-accessible)').forEach((el) => {
+                    this.$el.querySelectorAll(
+                        '.select2-select:not(.select2-hidden-accessible), .select2-payment-methods:not(.select2-hidden-accessible)'
+                        ).forEach((el) => {
                         const select = $(el);
                         select.select2({
-                            placeholder: el.classList.contains('select2-payment-methods') ? 'Select payment methods' : 'Select audience',
+                            placeholder: el.classList.contains('select2-payment-methods') ?
+                                'Select payment methods' : 'Select audience',
                             allowClear: true
                         });
 
@@ -979,7 +1024,9 @@
                         } else {
                             // For repeater items with x-model, sync Select2 changes back to Alpine
                             select.on('change', (e) => {
-                                const event = new Event('change', { bubbles: true });
+                                const event = new Event('change', {
+                                    bubbles: true
+                                });
                                 el.dispatchEvent(event);
                             });
                         }
@@ -1067,7 +1114,8 @@
                 // Toggle breadcrumb on/off
                 toggleBreadcrumb() {
                     if (this.breadcrumbEnabled) {
-                        if (!this.schema.breadcrumb.itemListElement || this.schema.breadcrumb.itemListElement.length === 0) {
+                        if (!this.schema.breadcrumb.itemListElement || this.schema.breadcrumb.itemListElement.length ===
+                            0) {
                             this.schema.breadcrumb.itemListElement = [{
                                 '@type': 'ListItem',
                                 position: 1,
@@ -1137,6 +1185,27 @@
                         '@context': this.schema['@context'],
                         '@graph': graph
                     }, null, 2);
+                },
+
+                copyJsonToClipboard() {
+                    const jsonText = this.jsonPreview();
+                    navigator.clipboard.writeText(jsonText).then(() => {
+                        $.toast({
+                            heading: 'Success',
+                            text: 'JSON copied to clipboard!',
+                            icon: 'success',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    }).catch(err => {
+                        $.toast({
+                            heading: 'Error',
+                            text: 'Failed to copy JSON',
+                            icon: 'error',
+                            position: 'top-right',
+                            hideAfter: 3000
+                        });
+                    });
                 }
             }
         }
