@@ -283,11 +283,11 @@
                                     aria-labelledby="schema-tab">
                                     @if ($schemaEntity && $id)
                                         <a href="{{ route('admin.schema.index', ['entity' => $schemaEntity, 'id' => $id]) }}"
-                                            target="_blank" class="themeBtn ml-2 mb-2">Edit Schema</a>
+                                            target="_blank" class="themeBtn ml-2 mb-2">Generate Schema</a>
                                     @endif
                                     <div class="form-fields mt-3">
-                                        <label class="title">Schema:</label>
-                                        <textarea readonly name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
+                                        <label class="title">Paste Generated Schema:</label>
+                                        <textarea name="{{ $fieldName('schema') }}" class="field" rows="15">{{ $fieldValue('schema') }}</textarea>
                                         @error($fieldName('schema'))
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
