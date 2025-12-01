@@ -547,7 +547,7 @@
                                                                     <label :for="`answer-${index}`">Answer</label>
                                                                     <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
                                                                         :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" :id="`answer-${index}`" class="field"
-                                                                        rows="2" placeholder="Enter answer"></textarea>
+                                                                        rows="6" placeholder="Enter answer"></textarea>
                                                                 </div>
                                                             </div>
                                                         </td>
