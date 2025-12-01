@@ -502,50 +502,94 @@
                         <hr class="my-4">
                         <div class="col-12 mb-3 title title--sm">@type Local Business </div>
 
-
-
                         <div class="col-12 mb-3">
                             <div class="form-fields">
                                 <label class="title">@id</label>
-                                <input type="text" x-model="schema.localBusiness['@id']" class="field" disabled
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
+                                <input type="text" x-model="schema.localBusiness['@id']"
+                                    name="schema[localBusiness][@id]" class="field mb-3">
+
                                 <label class="title">name</label>
-                                <input type="text" x-model="schema.localBusiness.name" class="field" disabled
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
+                                <input type="text" x-model="schema.localBusiness.name"
+                                    name="schema[localBusiness][name]" class="field mb-3">
+
                                 <label class="title">url</label>
-                                <input type="text" x-model="schema.localBusiness.url" class="field" disabled
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
+                                <input type="text" x-model="schema.localBusiness.url"
+                                    name="schema[localBusiness][url]" class="field mb-3">
+
                                 <label class="title">logo</label>
-                                <input type="text" x-model="schema.localBusiness.logo" class="field" disabled
-                                    readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
-                                <label class="title">paymentAccepted</label>
-                                <input type="text" x-model="schema.localBusiness.paymentAccepted.join(', ')"
-                                    class="field" disabled readonly>
-                            </div>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="form-fields">
+                                <input type="text" x-model="schema.localBusiness.logo"
+                                    name="schema[localBusiness][logo]" class="field mb-3">
+
+                                <label class="title">paymentAccepted </label>
+                                <select multiple x-model="schema.localBusiness.paymentAccepted"
+                                    name="schema[localBusiness][paymentAccepted][]"
+                                    class="field select2-select"
+                                    data-field="localBusiness.paymentAccepted"
+                                    style="width: 100%;">
+                                    <option value="Cash">Cash</option>
+                                    <option value="Credit Card">Credit Card</option>
+                                    <option value="Debit Card">Debit Card</option>
+                                    <option value="Visa">Visa</option>
+                                    <option value="MasterCard">MasterCard</option>
+                                    <option value="American Express">American Express</option>
+                                    <option value="Discover">Discover</option>
+                                    <option value="UnionPay">UnionPay</option>
+                                    <option value="Diners Club">Diners Club</option>
+                                    <option value="Mobile Payment">Mobile Payment</option>
+                                    <option value="Bank Transfer">Bank Transfer</option>
+                                    <option value="PayPal">PayPal</option>
+                                    <option value="Apple Pay">Apple Pay</option>
+                                    <option value="Google Pay">Google Pay</option>
+                                    <option value="Tabby">Tabby</option>
+                                    <option value="Tamara">Tamara</option>
+                                    <option value="Samsung Pay">Samsung Pay</option>
+                                    <option value="Voucher">Voucher</option>
+                                    <option value="Gift Card">Gift Card</option>
+                                    <option value="Online Payment">Online Payment</option>
+                                    <option value="On Arrival">On Arrival</option>
+                                    <option value="Installment Payment">Installment Payment</option>
+                                </select>
+
                                 <label class="title">sameAs (Social Links)</label>
-                                <template x-for="(link, index) in schema.localBusiness.sameAs" :key="index">
-                                    <input type="text" x-model="schema.localBusiness.sameAs[index]"
-                                        class="field mb-2" disabled readonly>
-                                </template>
+                                <div class="repeater-table">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>URL</th>
+                                                <th style="width: 100px;">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <template x-for="(item, index) in schema.localBusiness.sameAs" :key="index">
+                                                <tr>
+                                                    <td>
+                                                        <input type="text"
+                                                            x-model="schema.localBusiness.sameAs[index]"
+                                                            :name="`schema[localBusiness][sameAs][${index}]`"
+                                                            class="field">
+                                                    </td>
+                                                    <td>
+                                                        <div class="d-flex gap-2">
+                                                            <button type="button"
+                                                                class="delete-btn delete-btn--static"
+                                                                @click="removeFromNestedArray('localBusiness.sameAs', index)"
+                                                                :disabled="schema.localBusiness.sameAs.length === 1">
+                                                                <i class='bx bxs-trash-alt'></i>
+                                                            </button>
+                                                            <button type="button"
+                                                                class="add-btn add-btn--static"
+                                                                @click="insertInNestedArray('localBusiness.sameAs', index)">
+                                                                <i class='bx bx-plus'></i>
+                                                            </button>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                    <button type="button" class="themeBtn"
+                                        @click="addToNestedArray('localBusiness.sameAs')">Add Link</button>
+                                </div>
                             </div>
                         </div>
 
