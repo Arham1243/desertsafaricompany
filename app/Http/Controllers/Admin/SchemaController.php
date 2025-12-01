@@ -89,33 +89,6 @@ class SchemaController extends Controller
             $schema['@graph'][] = $localBusinessNode;
         }
 
-        // Auto-populate tour-specific fields for tour entities
-        if ($entity === 'tours' && $record) {
-            // Auto-populate name and url for tour types (boat, bus, inner, water)
-            $tourTypeFields = ['bus-trip', 'boat-trip', 'inner-page', 'water-activity'];
-            foreach ($tourTypeFields as $field) {
-                if (!isset($schema[$field]['name']) || empty($schema[$field]['name'])) {
-                    $schema[$field]['name'] = $record->title ?? '';
-                }
-                if (!isset($schema[$field]['url']) || empty($schema[$field]['url'])) {
-                    $schema[$field]['url'] = $record->detail_url ?? '';
-                }
-            }
-
-            // Auto-populate FAQ from tour FAQs if schema FAQ is empty
-            if ((!isset($schema['faq']['mainEntity']) || empty($schema['faq']['mainEntity'])) && $record->faqs && $record->faqs->isNotEmpty()) {
-                $schema['faq']['mainEntity'] = $record->faqs->map(function ($faq) {
-                    return [
-                        '@type' => 'Question',
-                        'name' => $faq->question ?? '',
-                        'acceptedAnswer' => [
-                            '@type' => 'Answer',
-                            'text' => $faq->answer ?? ''
-                        ]
-                    ];
-                })->toArray();
-            }
-        }
 
         // Load countries and cities for bus tour schema
         $countriesCities = config('countries-cities');

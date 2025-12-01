@@ -1,4 +1,4 @@
-<div x-data="schemaManager()" x-init="init(JSON.parse('{{ addslashes(json_encode($schema)) }}'))">
+<div x-data="schemaManager()" x-init="init(JSON.parse('{{ addslashes(json_encode($schema)) }}'), '{{ $record->title ?? '' }}', '{{ $record->detail_url ?? '' }}', {{ json_encode($record->faqs ?? []) }})">
     <!-- Hidden field to store final @graph JSON - this is what gets saved to database -->
     <!-- The SchemaController should use this field for saving -->
     <input type="hidden" name="schema_graph" :value="jsonPreview()">
@@ -777,7 +777,7 @@
                 faqEnabled: false,
                 breadcrumbEnabled: false,
 
-                init(initialSchema = {}) {
+                init(initialSchema = {}, tourTitle = '', tourUrl = '', tourFaqs = []) {
                     // Check if initialSchema has @graph format
                     if (initialSchema['@graph']) {
                         // Load from @graph format
@@ -957,6 +957,14 @@
                         this.schema.breadcrumb.itemListElement = [];
                     }
 
+                    // Populate name and url from tour if schema is empty
+                    if (!this.schema.location.name && tourTitle) {
+                        this.schema.location.name = tourTitle;
+                    }
+                    if (!this.schema.location.url && tourUrl) {
+                        this.schema.location.url = tourUrl;
+                    }
+
                     // NOW check if content exists and enable switches
                     // Check if FAQ exists and enable the switch
                     if (this.schema.faq.mainEntity && this.schema.faq.mainEntity.length > 0) {
@@ -966,6 +974,17 @@
                         if (hasContent) {
                             this.faqEnabled = true;
                         }
+                    } else if (tourFaqs && tourFaqs.length > 0) {
+                        // Populate FAQs from tour if schema FAQs are empty
+                        this.schema.faq.mainEntity = tourFaqs.map(faq => ({
+                            '@type': 'Question',
+                            name: faq.question || '',
+                            acceptedAnswer: {
+                                '@type': 'Answer',
+                                text: faq.answer || ''
+                            }
+                        }));
+                        this.faqEnabled = true;
                     }
 
                     // Check if Breadcrumb exists and enable the switch
