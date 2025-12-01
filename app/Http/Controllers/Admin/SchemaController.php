@@ -63,9 +63,30 @@ class SchemaController extends Controller
         $globalLocalBusinessJson = Setting::get('global_local_business_schema');
         $globalLocalBusiness = $globalLocalBusinessJson ? json_decode($globalLocalBusinessJson, true) : [];
 
-        // Always use global Local Business schema
-        if (isset($globalLocalBusiness['localBusiness'])) {
-            $schema['localBusiness'] = $globalLocalBusiness['localBusiness'];
+        // Make sure @graph exists
+        if (!isset($schema['@graph']) || !is_array($schema['@graph'])) {
+            $schema['@graph'] = [];
+        }
+
+        // Check if any LocalBusiness node exists
+        $hasLocalBusiness = false;
+        foreach ($schema['@graph'] as $node) {
+            if (isset($node['@type']) && $node['@type'] === 'LocalBusiness') {
+                $hasLocalBusiness = true;
+                break;
+            }
+        }
+
+        // If no LocalBusiness exists, insert global one
+        if (!empty($globalLocalBusiness['localBusiness']) && !$hasLocalBusiness) {
+            $localBusinessNode = $globalLocalBusiness['localBusiness'];
+
+            // Make sure @type is set
+            if (!isset($localBusinessNode['@type'])) {
+                $localBusinessNode['@type'] = 'LocalBusiness';
+            }
+
+            $schema['@graph'][] = $localBusinessNode;
         }
 
         // Auto-populate tour-specific fields for tour entities

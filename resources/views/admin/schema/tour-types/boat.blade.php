@@ -865,7 +865,7 @@
                     name: '',
                     url: '',
                     logo: '',
-                    paymentAccepted: [],
+                    paymentAccepted: [''],
                     sameAs: ['']
                 },
                 webPage: {
@@ -972,8 +972,12 @@
                                     review: item.review || []
                                 };
                             } else if (item['@type'] === 'LocalBusiness') {
-                                // LocalBusiness is always loaded from global settings, ignore saved data
-                                // Keep the global data that was passed from controller
+                                this.schema.localBusiness = {
+                                    ...defaults.localBusiness,
+                                    ...item,
+                                    paymentAccepted: (item.paymentAccepted && item.paymentAccepted.length > 0) ? item.paymentAccepted : defaults.localBusiness.paymentAccepted,
+                                    sameAs: (item.sameAs && item.sameAs.length > 0) ? item.sameAs : defaults.localBusiness.sameAs
+                                };
                             } else if (item['@type'] === 'WebPage') {
                                 this.schema.webPage = {
                                     ...defaults.webPage,
@@ -1108,11 +1112,6 @@
                                     .itemListElement) || []
                             }
                         };
-                    }
-
-                    // Always override localBusiness with global settings data
-                    if (initialSchema.localBusiness) {
-                        this.schema.localBusiness = initialSchema.localBusiness;
                     }
 
                     // Ensure arrays FIRST before checking switches

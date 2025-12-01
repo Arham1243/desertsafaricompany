@@ -864,7 +864,7 @@
                     name: '',
                     url: '',
                     logo: '',
-                    paymentAccepted: [],
+                    paymentAccepted: [''],
                     sameAs: ['']
                 },
                 faq: {
@@ -958,9 +958,8 @@
                                 this.schema.localBusiness = {
                                     ...defaults.localBusiness,
                                     ...item,
-                                    paymentAccepted: item.paymentAccepted || defaults.localBusiness
-                                        .paymentAccepted,
-                                    sameAs: item.sameAs || defaults.localBusiness.sameAs
+                                    paymentAccepted: (item.paymentAccepted && item.paymentAccepted.length > 0) ? item.paymentAccepted : defaults.localBusiness.paymentAccepted,
+                                    sameAs: (item.sameAs && item.sameAs.length > 0) ? item.sameAs : defaults.localBusiness.sameAs
                                 };
                             } else if (item['@type'] === 'FAQPage') {
                                 this.schema.faq = {
