@@ -536,8 +536,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Question</th>
-                                                    <th>Answer</th>
+                                                    <th>FAQ</th>
                                                     <th style="width: 100px;">Action</th>
                                                 </tr>
                                             </thead>
@@ -545,13 +544,23 @@
                                                 <template x-for="(item, index) in schema.faq.mainEntity"
                                                     :key="index">
                                                     <tr>
-                                                        <td><input type="text"
-                                                                x-model="schema.faq.mainEntity[index].name"
-                                                                :name="`schema[faq][mainEntity][${index}][name]`"
-                                                                class="field"></td>
                                                         <td>
-                                                            <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
-                                                                :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" class="field" rows="2"></textarea>
+                                                            <div class="d-flex flex-column gap-2">
+                                                                <div class="form-group">
+                                                                    <label :for="`question-${index}`">Question</label>
+                                                                    <input type="text"
+                                                                        x-model="schema.faq.mainEntity[index].name"
+                                                                        :name="`schema[faq][mainEntity][${index}][name]`"
+                                                                        :id="`question-${index}`" class="field"
+                                                                        placeholder="Enter question">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label :for="`answer-${index}`">Answer</label>
+                                                                    <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
+                                                                        :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" :id="`answer-${index}`" class="field"
+                                                                        rows="2" placeholder="Enter answer"></textarea>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
@@ -989,7 +998,7 @@
                 initializeSelect2() {
                     this.$el.querySelectorAll(
                         '.select2-select:not(.select2-hidden-accessible), .select2-payment-methods:not(.select2-hidden-accessible)'
-                        ).forEach((el) => {
+                    ).forEach((el) => {
                         const select = $(el);
                         select.select2({
                             placeholder: el.classList.contains('select2-payment-methods') ?

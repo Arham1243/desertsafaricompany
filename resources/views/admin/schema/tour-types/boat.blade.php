@@ -523,10 +523,8 @@
 
                                 <label class="title">paymentAccepted </label>
                                 <select multiple x-model="schema.localBusiness.paymentAccepted"
-                                    name="schema[localBusiness][paymentAccepted][]"
-                                    class="field select2-select"
-                                    data-field="localBusiness.paymentAccepted"
-                                    style="width: 100%;">
+                                    name="schema[localBusiness][paymentAccepted][]" class="field select2-select"
+                                    data-field="localBusiness.paymentAccepted" style="width: 100%;">
                                     <option value="Cash">Cash</option>
                                     <option value="Credit Card">Credit Card</option>
                                     <option value="Debit Card">Debit Card</option>
@@ -561,7 +559,8 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <template x-for="(item, index) in schema.localBusiness.sameAs" :key="index">
+                                            <template x-for="(item, index) in schema.localBusiness.sameAs"
+                                                :key="index">
                                                 <tr>
                                                     <td>
                                                         <input type="text"
@@ -577,8 +576,7 @@
                                                                 :disabled="schema.localBusiness.sameAs.length === 1">
                                                                 <i class='bx bxs-trash-alt'></i>
                                                             </button>
-                                                            <button type="button"
-                                                                class="add-btn add-btn--static"
+                                                            <button type="button" class="add-btn add-btn--static"
                                                                 @click="insertInNestedArray('localBusiness.sameAs', index)">
                                                                 <i class='bx bx-plus'></i>
                                                             </button>
@@ -625,8 +623,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Question</th>
-                                                    <th>Answer</th>
+                                                    <th>FAQ</th>
                                                     <th style="width: 100px;">Action</th>
                                                 </tr>
                                             </thead>
@@ -634,13 +631,23 @@
                                                 <template x-for="(item, index) in schema.faq.mainEntity"
                                                     :key="index">
                                                     <tr>
-                                                        <td><input type="text"
-                                                                x-model="schema.faq.mainEntity[index].name"
-                                                                :name="`schema[faq][mainEntity][${index}][name]`"
-                                                                class="field"></td>
                                                         <td>
-                                                            <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
-                                                                :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" class="field" rows="2"></textarea>
+                                                            <div class="d-flex flex-column gap-2">
+                                                                <div class="form-group">
+                                                                    <label :for="`question-${index}`">Question</label>
+                                                                    <input type="text"
+                                                                        x-model="schema.faq.mainEntity[index].name"
+                                                                        :name="`schema[faq][mainEntity][${index}][name]`"
+                                                                        :id="`question-${index}`" class="field"
+                                                                        placeholder="Enter question">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label :for="`answer-${index}`">Answer</label>
+                                                                    <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
+                                                                        :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" :id="`answer-${index}`" class="field"
+                                                                        rows="2" placeholder="Enter answer"></textarea>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
@@ -975,8 +982,10 @@
                                 this.schema.localBusiness = {
                                     ...defaults.localBusiness,
                                     ...item,
-                                    paymentAccepted: (item.paymentAccepted && item.paymentAccepted.length > 0) ? item.paymentAccepted : defaults.localBusiness.paymentAccepted,
-                                    sameAs: (item.sameAs && item.sameAs.length > 0) ? item.sameAs : defaults.localBusiness.sameAs
+                                    paymentAccepted: (item.paymentAccepted && item.paymentAccepted.length > 0) ?
+                                        item.paymentAccepted : defaults.localBusiness.paymentAccepted,
+                                    sameAs: (item.sameAs && item.sameAs.length > 0) ? item.sameAs : defaults
+                                        .localBusiness.sameAs
                                 };
                             } else if (item['@type'] === 'WebPage') {
                                 this.schema.webPage = {

@@ -426,8 +426,7 @@
                                 <label class="title">paymentAccepted </label>
                                 <select multiple x-model="schema.localBusiness.paymentAccepted"
                                     name="schema[localBusiness][paymentAccepted][]" class="field select2-select"
-                                    data-field="localBusiness.paymentAccepted"
-                                    style="width: 100%;">
+                                    data-field="localBusiness.paymentAccepted" style="width: 100%;">
                                     <option value="Cash">Cash</option>
                                     <option value="Credit Card">Credit Card</option>
                                     <option value="Debit Card">Debit Card</option>
@@ -526,8 +525,7 @@
                                         <table class="table table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Question</th>
-                                                    <th>Answer</th>
+                                                    <th>FAQ</th>
                                                     <th style="width: 100px;">Action</th>
                                                 </tr>
                                             </thead>
@@ -536,14 +534,22 @@
                                                     :key="index">
                                                     <tr>
                                                         <td>
-                                                            <input type="text"
-                                                                x-model="schema.faq.mainEntity[index].name"
-                                                                :name="`schema[faq][mainEntity][${index}][name]`"
-                                                                class="field">
-                                                        </td>
-                                                        <td>
-                                                            <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
-                                                                :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" class="field" rows="2"></textarea>
+                                                            <div class="d-flex flex-column gap-2">
+                                                                <div class="form-group">
+                                                                    <label :for="`question-${index}`">Question</label>
+                                                                    <input type="text"
+                                                                        x-model="schema.faq.mainEntity[index].name"
+                                                                        :name="`schema[faq][mainEntity][${index}][name]`"
+                                                                        :id="`question-${index}`" class="field"
+                                                                        placeholder="Enter question">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label :for="`answer-${index}`">Answer</label>
+                                                                    <textarea x-model="schema.faq.mainEntity[index].acceptedAnswer.text"
+                                                                        :name="`schema[faq][mainEntity][${index}][acceptedAnswer][text]`" :id="`answer-${index}`" class="field"
+                                                                        rows="2" placeholder="Enter answer"></textarea>
+                                                                </div>
+                                                            </div>
                                                         </td>
                                                         <td>
                                                             <div class="d-flex gap-2">
