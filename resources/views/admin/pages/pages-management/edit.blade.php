@@ -14,7 +14,7 @@
                             <div class="permalink">
                                 <div class="title">Permalink:</div>
                                 <div class="title">
-                                    <div class="full-url">{{ buildUrl(url('/'), 'page/') }}</div>
+                                    <div class="full-url">{{ buildUrl(url('/')) }}</div>
                                     <input value="{{ $page->slug ?? '#' }}" type="button" class="link permalink-input"
                                         data-field-id="slug">
                                     <input type="hidden" id="slug" value="{{ $page->slug ?? '#' }}" name="slug">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="d-flex align-items-center gap-3">
                             <a href="{{ route('admin.pages.page-builder', $page->id) }}" class="themeBtn">Page Builder</a>
-                            <a href="{{ buildUrl(url('/'), 'page', $page->slug) }}?viewer=admin" target="_blank"
+                            <a href="{{ buildUrl(url('/'),  $page->slug) }}?viewer=admin" target="_blank"
                                 class="themeBtn">View
                                 Page</a>
                         </div>
