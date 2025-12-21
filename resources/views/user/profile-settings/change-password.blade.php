@@ -26,11 +26,12 @@
                                             <div class="form-fields">
                                                 <label class="title">Current Password<span
                                                         class="text-danger">*</span></label>
-                                                <div class="position-relative">
+                                                <div class="passwood-icon-wrapper position-relative">
                                                     <input type="password" id="current_password" name="current_password"
                                                         class="field" required="">
-                                                    <span data-target="current_password" class="toggle-password"
-                                                        onclick="togglePassword(event)"><i class='bx bxs-show'></i></span>
+                                                    <span class="icon" data-target="current_password"
+                                                        class="toggle-password" onclick="togglePassword(event)"><i
+                                                            class='bx bxs-show'></i></span>
                                                 </div>
                                                 @error('current_password')
                                                     <span class="text-danger">{{ $message }}</span>
@@ -41,10 +42,10 @@
                                             <div class="form-fields">
                                                 <label class="title">New Password<span class="text-danger">*</span>
                                                 </label>
-                                                <div class="position-relative">
+                                                <div class="passwood-icon-wrapper position-relative">
                                                     <input type="password" id="new_password" name="new_password"
                                                         class="field" required="">
-                                                    <span data-target="new_password" class="toggle-password"
+                                                    <span class="icon" data-target="new_password" class="toggle-password"
                                                         onclick="togglePassword(event)"><i class='bx bxs-show'></i></span>
                                                 </div>
                                                 @error('new_password')
@@ -63,6 +64,19 @@
         </div>
     </div>
 @endsection
+@push('css')
+    <style>
+        .passwood-icon-wrapper .icon {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 1rem;
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            cursor: pointer;
+        }
+    </style>
+@endpush
 @push('js')
     <script>
         function togglePassword(event) {
