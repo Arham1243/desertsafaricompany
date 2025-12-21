@@ -9,7 +9,7 @@
 
 
 <div class="sidebar">
-    <a href="{{ route('admin.dashboard') }}" class="sidebar-header">
+    <a href="{{ route('user.dashboard') }}" class="sidebar-header">
         <div class="sidebar-header__icon">
             <img src='{{ asset($headerLogo ?? 'user/assets/images/placeholder-logo.png') }}'
                 alt='{{ $headerLogoAltText ?? 'logo' }}' class="imgFluid">
