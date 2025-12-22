@@ -53,7 +53,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.bookings.edit', $item->id) }}"
+                                                <a href="{{ route('admin.tour-reviews.edit', $item->id) }}"
                                                     class="link">{{ $item->title }}</a>
                                             </td>
                                             <td>{{ $item->tour->title ?? 'N/A' }}</td>
@@ -66,7 +66,7 @@
                                                 </span>
                                             </td>
                                             <td>
-                                                <a href="{{ route('admin.bookings.edit', $item->id) }}" class="themeBtn"><i
+                                                <a href="{{ route('admin.tour-reviews.edit', $item->id) }}" class="themeBtn"><i
                                                         class='bx bxs-edit'></i>View Details</a>
                                             </td>
                                         </tr>
