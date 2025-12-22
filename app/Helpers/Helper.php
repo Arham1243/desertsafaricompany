@@ -11,10 +11,10 @@ if (! function_exists('buildUrl')) {
     {
         $url = $base;
         if ($resource) {
-            $url .= '/'.$resource;
+            $url .= '/' . $resource;
         }
         if ($slug) {
-            $url .= '/'.$slug;
+            $url .= '/' . $slug;
         }
 
         return $url;
@@ -23,7 +23,7 @@ if (! function_exists('buildUrl')) {
 if (! function_exists('sanitizedLink')) {
     function sanitizedLink($url)
     {
-        return '//'.preg_replace('/^(https?:\/\/)?(www\.)?/', '', $url);
+        return '//' . preg_replace('/^(https?:\/\/)?(www\.)?/', '', $url);
     }
 }
 
@@ -43,7 +43,7 @@ if (! function_exists('formatPrice')) {
             ? number_format($price, 2, '.', ',')
             : number_format($price, 0, '.', ',');
 
-        return new HtmlString(currencySymbol()->toHtml().$val);
+        return new HtmlString(currencySymbol()->toHtml() . $val);
     }
 }
 if (! function_exists('handleSeoData')) {
@@ -75,8 +75,8 @@ if (! function_exists('renderCategories')) {
         foreach ($categories->where('parent_category_id', $parent_id) as $category) {
             $selected = (old('category_id', $selectedCategory) == $category->id) ? 'selected' : '';
 
-            echo '<option value="'.$category->id.'" '.$selected.'>';
-            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+            echo '<option value="' . $category->id . '" ' . $selected . '>';
+            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level) . str_repeat('-', $level) . ' ' : '';
             echo $category->name;
             echo '</option>';
 
@@ -90,8 +90,8 @@ if (! function_exists('renderCategoriesMulti')) {
         foreach ($categories->where('parent_category_id', $parent_id) as $category) {
             $selected = in_array($category->id, (array) $selectedCategories) ? 'selected' : '';
 
-            echo '<option value="'.$category->id.'" '.$selected.'>';
-            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level).str_repeat('-', $level).' ' : '';
+            echo '<option value="' . $category->id . '" ' . $selected . '>';
+            echo $level > 0 ? str_repeat('&nbsp;&nbsp;', $level) . str_repeat('-', $level) . ' ' : '';
             echo $category->name;
             echo '</option>';
 
@@ -111,15 +111,15 @@ if (! function_exists('getTimeLeft')) {
         }
 
         if ($interval->d > 0) {
-            return $interval->d.' day'.($interval->d > 1 ? 's' : '');
+            return $interval->d . ' day' . ($interval->d > 1 ? 's' : '');
         }
 
         if ($interval->h > 0) {
-            return $interval->h.' hour'.($interval->h > 1 ? 's' : '');
+            return $interval->h . ' hour' . ($interval->h > 1 ? 's' : '');
         }
 
         if ($interval->i > 0) {
-            return $interval->i.' minute'.($interval->i > 1 ? 's' : '');
+            return $interval->i . ' minute' . ($interval->i > 1 ? 's' : '');
         }
 
         return 'less than a minute';
@@ -141,13 +141,13 @@ if (! function_exists('formatBigNumber')) {
     function formatBigNumber($num)
     {
         if ($num >= 1_000_000_000) {
-            return rtrim(number_format($num / 1_000_000_000, 1, '.', '0'), '.0').'B';
+            return rtrim(number_format($num / 1_000_000_000, 1, '.', '0'), '.0') . 'B';
         }
         if ($num >= 1_000_000) {
-            return rtrim(number_format($num / 1_000_000, 1, '.', '0'), '.0').'M';
+            return rtrim(number_format($num / 1_000_000, 1, '.', '0'), '.0') . 'M';
         }
         if ($num >= 1_000) {
-            return rtrim(number_format($num / 1_000, 1, '.', '0'), '.0').'K';
+            return rtrim(number_format($num / 1_000, 1, '.', '0'), '.0') . 'K';
         }
 
         return (string) $num;
@@ -226,7 +226,7 @@ if (! function_exists('getTotalNoOfPeopleFromCart')) {
     {
         $cartData = is_string($cartData) ? json_decode($cartData, true) : $cartData;
 
-        return isset($cartData['total_no_of_people']) ? $cartData['total_no_of_people'].' people' : 'N/A';
+        return isset($cartData['total_no_of_people']) ? $cartData['total_no_of_people'] . ' people' : 'N/A';
     }
 }
 if (! function_exists('buildTourDetailUrl')) {
@@ -304,7 +304,7 @@ if (! function_exists('replaceTemplateVariables')) {
     function replaceTemplateVariables(string $template, array $data = []): string
     {
         foreach ($data as $key => $value) {
-            $template = str_replace('{'.$key.'}', $value, $template);
+            $template = str_replace('{' . $key . '}', $value, $template);
         }
 
         return $template;
@@ -323,7 +323,7 @@ if (! function_exists('getSortedHeaderMenu')) {
             return [];
         }
 
-        usort($menuArray, fn ($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
+        usort($menuArray, fn($a, $b) => ($a['order'] ?? 0) <=> ($b['order'] ?? 0));
 
         return $menuArray;
     }
@@ -350,9 +350,44 @@ if (! function_exists('makePhoneNumber')) {
     function makePhoneNumber($dial, $number)
     {
         if ($dial && $number) {
-            return '+'.$dial.' '.$number;
+            return '+' . $dial . ' ' . $number;
         }
 
         return 'N/A';
     }
+}
+function getToursByBlock(array $block, $offset = 0, $limit = null)
+{
+    $tours = Tour::with(['city.country', 'categories'])->get();
+
+    $resourceType = $block['resource_type'] ?? 'tour';
+    $sortBy = $block['sort_by'] ?? null;
+
+    if ($resourceType === 'city') {
+        $tours = $tours->whereIn('city_id', $block['city_ids'] ?? []);
+    } elseif ($resourceType === 'country') {
+        $tours = $tours->filter(
+            fn($t) => $t->city && in_array($t->city->country_id, $block['country_ids'] ?? [])
+        );
+    } elseif ($resourceType === 'category') {
+        $tours = $tours->filter(
+            fn($t) => $t->categories->pluck('id')
+                ->intersect($block['category_ids'] ?? [])
+                ->isNotEmpty()
+        );
+    } else {
+        $tours = $tours->whereIn('id', $block['tour_ids'] ?? []);
+    }
+
+    if ($resourceType === 'tour') {
+        match ($sortBy) {
+            'asc' => $tours = $tours->sortBy('title'),
+            'desc' => $tours = $tours->sortByDesc('title'),
+            'random' => $tours = $tours->shuffle(),
+            default => null
+        };
+    }
+
+    // Only slice if limit is provided
+    return $limit ? $tours->slice($offset, $limit)->values() : $tours->values();
 }

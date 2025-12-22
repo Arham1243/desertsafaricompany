@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/#', [IndexController::class, 'index'])->name('login');
 Route::name('frontend.')->group(function () {
+    Route::post('/load/block/tours', [TourController::class, 'loadBlockTours'])->name('load.block.tours');
     Route::get('/', [IndexController::class, 'index'])->name('index');
     Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
     Route::get('{country}/{city}/blog/{slug}', [BlogController::class, 'show'])->name('blogs.details');

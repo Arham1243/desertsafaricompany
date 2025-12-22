@@ -47,7 +47,7 @@ class TourController extends Controller
 
         $tour = Tour::with(['tourAttributes.items', 'categories.city', 'categories.country'])
             ->where('slug', $slug)
-            ->whereHas('categories', fn ($q) => $q->where('slug', $category))
+            ->whereHas('categories', fn($q) => $q->where('slug', $category))
             ->firstOrFail();
 
         $currentCategory = $tour->categories->firstWhere('slug', $category);
@@ -186,8 +186,8 @@ class TourController extends Controller
                                 'original_discounted_price' => $discounted,
                                 'discounted_price' => $discounted,
                                 'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
-                                : null,
+                                    ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                    : null,
                                 'min_person' => (int) ($addon['min_person'] ?? 0),
                                 'max_person' => (int) ($addon['max_person'] ?? 200),
                                 'quantity' => (int) ($addon['min_person'] ?? 0),
@@ -207,8 +207,8 @@ class TourController extends Controller
                                 'original_discounted_price' => $firstSlotDiscount,
                                 'discounted_price' => $firstSlotDiscount,
                                 'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
-                                : null,
+                                    ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                    : null,
                                 'hours_left' => $hoursLeft,
                                 'quantity' => (int) ($addon['min_person'] ?? 0),
                                 'min_person' => (int) ($addon['min_person'] ?? 0),
@@ -227,8 +227,8 @@ class TourController extends Controller
                                             'original_discounted_price' => $discounted,
                                             'discounted_price' => $discounted,
                                             'promo_discounted_price' => $firstOrderCoupon
-                                            ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
-                                            : null,
+                                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                                : null,
                                         ];
                                     })
                                     ->values(),
@@ -242,5 +242,29 @@ class TourController extends Controller
         );
 
         return response()->json($promoData->values());
+    }
+
+    public function loadBlockTours(Request $request)
+    {
+        $block = is_array($request->block)
+            ? $request->block
+            : json_decode($request->block, true);
+
+        if (!$block) {
+            return response()->json(['error' => 'Invalid block data'], 400);
+        }
+
+        $limit = (int) $request->limit;
+        $offset = (int) $request->offset;
+
+        $colClass = $request['col_class'] ?? 'col-md-3';
+        $cardStyle = $request['card_style'] ?? 'style3';
+
+        $tours = getToursByBlock($block, $offset, $limit);
+
+        return response()->json([
+            'html' => view('frontend.partials.tour-cards', compact('tours', 'colClass', 'cardStyle'))->render(),
+            'count' => $tours->count(),
+        ]);
     }
 }

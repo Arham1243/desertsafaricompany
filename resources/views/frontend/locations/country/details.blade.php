@@ -143,50 +143,13 @@ $btnStyles = [];
             : [null];
         $category_block_2_categories = $categories->whereIn('id', $category_block_category_ids_2);
 
-        // Helper function to get tours based on resource type
-        $getToursByResourceType = function ($block, $tours, $categories) {
-            if (!$block) {
-                return collect([]);
-            }
-            $resourceType = $block['resource_type'] ?? 'tour';
-            $sortBy = $block['sort_by'] ?? null;
-            $blockTours = collect([]);
-
-            if ($resourceType === 'city') {
-                $cityIds = $block['city_ids'] ?? [];
-                $blockTours = $tours->filter(fn($t) => $t->city_id && in_array($t->city_id, $cityIds));
-            } elseif ($resourceType === 'country') {
-                $countryIds = $block['country_ids'] ?? [];
-
-                $blockTours = $tours->filter(
-                    fn($t) => $t->city && $t->city->country_id && in_array($t->city->country_id, $countryIds),
-                );
-            } elseif ($resourceType === 'category') {
-                $categoryIds = $block['category_ids'] ?? [];
-                $blockTours = $tours->filter(
-                    fn($t) => $t->categories->pluck('id')->intersect($categoryIds)->isNotEmpty(),
-                );
-            } else {
-                $tourIds = $block['tour_ids'] ?? [];
-                $blockTours = $tours->whereIn('id', $tourIds);
-            }
-
-            if ($resourceType === 'tour' && $sortBy === 'asc') {
-                $blockTours = $blockTours->sortBy('title');
-            } elseif ($resourceType === 'tour' && $sortBy === 'desc') {
-                $blockTours = $blockTours->sortByDesc('title');
-            } elseif ($resourceType === 'tour' && $sortBy === 'random') {
-                $blockTours = $blockTours->shuffle();
-            }
-
-            return $blockTours;
-        };
-
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
-        $first_tour_block_tours = $getToursByResourceType($first_tour_block, $tours, $categories);
+        $total_first_tour_block_tours = getToursByBlock($first_tour_block)->count();
+        $first_tour_block_tours = getToursByBlock($first_tour_block, 0, 8);
 
         $second_tour_block = $jsonContent ? $jsonContent['second_tour_block'] : null;
-        $second_tour_block_tours = $getToursByResourceType($second_tour_block, $tours, $categories);
+        $total_second_tour_block_tours = getToursByBlock($second_tour_block)->count();
+        $second_tour_block_tours = getToursByBlock($second_tour_block, 0, 6);
     @endphp
 
 
@@ -233,13 +196,18 @@ $btnStyles = [];
                         </div>
                     </div>
                 @endif
-                <div class="row">
+                <div class="row" id="firstTourBlockContainer">
                     @foreach ($first_tour_block_tours as $first_tour_block_tour)
                         <div class="col-md-3">
                             <x-tour-card :tour="$first_tour_block_tour" style="style3" />
                         </div>
                     @endforeach
                 </div>
+                @if ($total_first_tour_block_tours > 8)
+                    <button class="primary-btn mx-auto mt-4" id="loadMoreFirstBlock">
+                        Show More
+                    </button>
+                @endif
             </div>
         </div>
     @endif
@@ -260,13 +228,18 @@ $btnStyles = [];
                         </div>
                     </div>
                 @endif
-                <div class="row">
+                <div class="row" id="secondTourBlockContainer">
                     @foreach ($second_tour_block_tours as $second_tour_block_tour)
                         <div class="col-md-4">
                             <x-tour-card :tour="$second_tour_block_tour" style="style2" />
                         </div>
                     @endforeach
                 </div>
+                @if ($total_second_tour_block_tours > 8)
+                    <button class="primary-btn mx-auto mt-4" id="loadMoreSecondBlock">
+                        Show More
+                    </button>
+                @endif
             </div>
         </div>
     @endif
@@ -457,3 +430,86 @@ $btnStyles = [];
         </div>
     @endif
 @endsection
+@push('js')
+    <script>
+        function initLoadMore({
+            button,
+            container,
+            blockConfig,
+            limit = 8,
+            colClass = 'col-md-3',
+            cardStyle = 'style3'
+        }) {
+            const btn = typeof button === 'string' ? document.querySelector(button) : button;
+            const containerEl = typeof container === 'string' ? document.querySelector(container) : container;
+
+            // Track current offset
+            let offset = limit;
+
+            btn.addEventListener('click', function() {
+                const originalContent = btn.innerHTML;
+
+                // Disable button and show spinner
+                btn.disabled = true;
+                btn.innerHTML = `<i class='bx bx-loader-alt bx-spin'></i> Loading...`;
+
+                fetch('{{ route('frontend.load.block.tours') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        },
+                        body: JSON.stringify({
+                            limit: limit,
+                            offset: offset,
+                            block: blockConfig,
+                            col_class: colClass,
+                            card_style: cardStyle,
+                        })
+                    })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.count === 0) {
+                            btn.remove(); // No more tours
+                            return;
+                        }
+
+                        // Append new tours
+                        containerEl.insertAdjacentHTML('beforeend', data.html);
+
+                        // Update offset
+                        offset += limit;
+
+                        // Restore button
+                        btn.disabled = false;
+                        btn.innerHTML = originalContent;
+                    })
+                    .catch(err => {
+                        console.error(err);
+                        btn.disabled = false;
+                        btn.innerHTML = originalContent;
+                        showMessage('Something went wrong. Try again.');
+                    });
+            });
+        }
+
+        // Block 1
+        initLoadMore({
+            button: '#loadMoreFirstBlock',
+            container: '#firstTourBlockContainer',
+            blockConfig: @json($first_tour_block),
+            colClass: 'col-md-3',
+            cardStyle: 'style3'
+        });
+
+        // Block 2
+        initLoadMore({
+            button: '#loadMoreSecondBlock',
+            container: '#secondTourBlockContainer',
+            blockConfig: @json($second_tour_block),
+            colClass: 'col-md-4',
+            limit: 6,
+            cardStyle: 'style2'
+        });
+    </script>
+@endpush
