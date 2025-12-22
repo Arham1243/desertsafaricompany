@@ -70,11 +70,11 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                                                         
-                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                  
-                                                                                                                                      
-                                                                     @endif>
+                                                                                                                                                                                                                                                                                                                             
+                                                                                                                                                                                                                                                                  
+                                                                                                                                                                                                      
+                                                                                                                                          
+                                                                          @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -101,13 +101,55 @@
             : [null];
         $category_block_2_categories = $tourCategories->whereIn('id', $category_block_category_ids_2);
 
+        $getToursByResourceType = function ($block, $tours, $categories) {
+            if (!$block) {
+                return collect([]);
+            }
+            $resourceType = $block['resource_type'] ?? 'tour';
+            $sortBy = $block['sort_by'] ?? null;
+            $blockTours = collect([]);
+
+            if ($resourceType === 'city') {
+                $cityIds = $block['city_ids'] ?? [];
+                $blockTours = $tours->filter(fn($t) => $t->city_id && in_array($t->city_id, $cityIds));
+            } elseif ($resourceType === 'country') {
+                $countryIds = $block['country_ids'] ?? [];
+
+                $blockTours = $tours->filter(
+                    fn($t) => $t->city && $t->city->country_id && in_array($t->city->country_id, $countryIds),
+                );
+            } elseif ($resourceType === 'category') {
+                $categoryIds = $block['category_ids'] ?? [];
+                $blockTours = $tours->filter(
+                    fn($t) => $t->categories->pluck('id')->intersect($categoryIds)->isNotEmpty(),
+                );
+            } else {
+                $tourIds = $block['tour_ids'] ?? [];
+                $blockTours = $tours->whereIn('id', $tourIds);
+            }
+
+            if ($resourceType === 'tour' && $sortBy === 'asc') {
+                $blockTours = $blockTours->sortBy('title');
+            } elseif ($resourceType === 'tour' && $sortBy === 'desc') {
+                $blockTours = $blockTours->sortByDesc('title');
+            } elseif ($resourceType === 'tour' && $sortBy === 'random') {
+                $blockTours = $blockTours->shuffle();
+            }
+
+            return $blockTours;
+        };
+
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
-        $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
-        $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
+        $first_tour_block_tours = $getToursByResourceType($first_tour_block, $tours, $tourCategories);
 
         $second_tour_block = $jsonContent ? $jsonContent['second_tour_block'] : null;
-        $second_tour_block_tour_ids = $second_tour_block['tour_ids'] ?? [];
-        $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
+        $second_tour_block_tours = $getToursByResourceType($second_tour_block, $tours, $tourCategories);
+
+        $sectionContent = json_decode($item->section_content);
+        $tourCountContent = $sectionContent->tour_count ?? null;
+        $callToActionContent = $sectionContent->call_to_action ?? null;
+        $newsletterContent = $sectionContent->newsletter ?? null;
+        $newsContent = $sectionContent->news_section ?? null;
     @endphp
 
     @if (isset($category_block['is_enabled']) &&

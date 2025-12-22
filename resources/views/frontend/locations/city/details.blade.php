@@ -169,13 +169,50 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
             }
         }
 
+        // Helper function to get tours based on resource type
+        $getToursByResourceType = function ($block, $tours, $categories) {
+            if (!$block) {
+                return collect([]);
+            }
+            $resourceType = $block['resource_type'] ?? 'tour';
+            $sortBy = $block['sort_by'] ?? null;
+            $blockTours = collect([]);
+
+            if ($resourceType === 'city') {
+                $cityIds = $block['city_ids'] ?? [];
+                $blockTours = $tours->filter(fn($t) => $t->city_id && in_array($t->city_id, $cityIds));
+            } elseif ($resourceType === 'country') {
+                $countryIds = $block['country_ids'] ?? [];
+
+                $blockTours = $tours->filter(
+                    fn($t) => $t->city && $t->city->country_id && in_array($t->city->country_id, $countryIds),
+                );
+            } elseif ($resourceType === 'category') {
+                $categoryIds = $block['category_ids'] ?? [];
+                $blockTours = $tours->filter(
+                    fn($t) => $t->categories->pluck('id')->intersect($categoryIds)->isNotEmpty(),
+                );
+            } else {
+                $tourIds = $block['tour_ids'] ?? [];
+                $blockTours = $tours->whereIn('id', $tourIds);
+            }
+
+            if ($resourceType === 'tour' && $sortBy === 'asc') {
+                $blockTours = $blockTours->sortBy('title');
+            } elseif ($resourceType === 'tour' && $sortBy === 'desc') {
+                $blockTours = $blockTours->sortByDesc('title');
+            } elseif ($resourceType === 'tour' && $sortBy === 'random') {
+                $blockTours = $blockTours->shuffle();
+            }
+
+            return $blockTours;
+        };
+
         $first_tour_block = isset($jsonContent['first_tour_block']) ? $jsonContent['first_tour_block'] : null;
-        $first_tour_block_tour_ids = $first_tour_block['tour_ids'] ?? [];
-        $first_tour_block_tours = $tours->whereIn('id', $first_tour_block_tour_ids);
+        $first_tour_block_tours = $getToursByResourceType($first_tour_block, $tours, $categories);
 
         $second_tour_block = isset($jsonContent['second_tour_block']) ? $jsonContent['second_tour_block'] : null;
-        $second_tour_block_tour_ids = $second_tour_block['tour_ids'] ?? [];
-        $second_tour_block_tours = $tours->whereIn('id', $second_tour_block_tour_ids);
+        $second_tour_block_tours = $getToursByResourceType($second_tour_block, $tours, $categories);
     @endphp
 
     @if (isset($category_block['is_enabled']) &&
