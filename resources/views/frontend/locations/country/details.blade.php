@@ -185,15 +185,17 @@ $btnStyles = [];
             $first_tour_block_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <div class="section-content">
-                            <h2 class="subHeading block-heading">
-                                {{ $first_tour_block['heading'] ?? '' }}
-                            </h2>
+                @if (isset($first_tour_block['heading_enabled']) && (int) $first_tour_block['heading_enabled'] === 1)
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $first_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="row">
                     @foreach ($first_tour_block_tours as $first_tour_block_tour)
                         <div class="col-md-3">
@@ -210,15 +212,17 @@ $btnStyles = [];
             $second_tour_block_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
-                <div class="row mb-3">
-                    <div class="col-md-12">
-                        <div class="section-content">
-                            <h2 class="subHeading block-heading">
-                                {{ $second_tour_block['heading'] ?? '' }}
-                            </h2>
+                @if (isset($second_tour_block['heading_enabled']) && (int) $second_tour_block['heading_enabled'] === 1)
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $second_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
                 <div class="row">
                     @foreach ($second_tour_block_tours as $second_tour_block_tour)
                         <div class="col-md-4">

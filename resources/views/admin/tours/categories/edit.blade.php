@@ -264,116 +264,18 @@
                                     </div>
                                 </div>
                             </div>
-                            <div x-data="{
-                                enabled: {{ isset($jsonContent['first_tour_block']['is_enabled']) && $jsonContent['first_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
-                                headingEnabled: {{ isset($jsonContent['first_tour_block']['heading_enabled']) && $jsonContent['first_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
-                            }" class="form-box">
-                                <div class="form-box__header d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="title">First Tour Block</div>
-                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                            data-disabled-text="Disabled">
-                                            <input type="hidden" value="0"
-                                                name="json_content[first_tour_block][is_enabled]">
-                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="first_tour_block" value="1"
-                                                name="json_content[first_tour_block][is_enabled]" x-model="enabled">
-                                            <label class="form-check-label" for="first_tour_block">Enabled</label>
-                                        </div>
-                                    </div>
-                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-2">
-                                        <i class='bx bxs-show'></i>
-                                    </a>
-                                </div>
-
-                                <div class="form-box__body" x-show="enabled" x-transition>
-                                    <div class="form-fields mb-4">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <label class="title mb-0">Heading:</label>
-                                            <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                data-disabled-text="Disabled">
-                                                <input type="hidden" value="0"
-                                                    name="json_content[first_tour_block][heading_enabled]">
-                                                <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                    id="first_tour_block_heading" value="1"
-                                                    name="json_content[first_tour_block][heading_enabled]" x-model="headingEnabled">
-                                                <label class="form-check-label" for="first_tour_block_heading">Enabled</label>
-                                            </div>
-                                        </div>
-                                        <input x-show="headingEnabled" x-transition name="json_content[first_tour_block][heading]" type="text"
-                                            class="field mt-3"
-                                            value="{{ $jsonContent ? $jsonContent['first_tour_block']['heading'] : '' }}">
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Select Tours:</label>
-                                        <select name="json_content[first_tour_block][tour_ids][]" multiple
-                                            class="select2-select">
-                                            @foreach ($tours as $firstTourBlockT)
-                                                <option value="{{ $firstTourBlockT->id }}"
-                                                    {{ in_array($firstTourBlockT->id, $jsonContent['first_tour_block']['tour_ids'] ?? []) ? 'selected' : '' }}>
-                                                    {{ $firstTourBlockT->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div x-data="{
-                                enabled: {{ isset($jsonContent['second_tour_block']['is_enabled']) && $jsonContent['second_tour_block']['is_enabled'] == '1' ? 'true' : 'false' }},
-                                headingEnabled: {{ isset($jsonContent['second_tour_block']['heading_enabled']) && $jsonContent['second_tour_block']['heading_enabled'] == '1' ? 'true' : 'false' }}
-                            }" class="form-box">
-                                <div class="form-box__header d-flex align-items-center justify-content-between">
-                                    <div class="d-flex align-items-center gap-3">
-                                        <div class="title">Second Tour Block</div>
-                                        <div class="form-check form-switch" data-enabled-text="Enabled"
-                                            data-disabled-text="Disabled">
-                                            <input type="hidden" value="0"
-                                                name="json_content[second_tour_block][is_enabled]">
-                                            <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                id="second_tour_block" value="1"
-                                                name="json_content[second_tour_block][is_enabled]" x-model="enabled">
-                                            <label class="form-check-label" for="second_tour_block">Enabled</label>
-                                        </div>
-                                    </div>
-                                    <a href="{{ asset('admin/assets/images/tours-blocks/new-card.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-2">
-                                        <i class='bx bxs-show'></i>
-                                    </a>
-                                </div>
-
-                                <div class="form-box__body" x-show="enabled" x-transition>
-                                    <div class="form-fields mb-4">
-                                        <div class="d-flex align-items-center gap-3">
-                                            <label class="title mb-0">Heading:</label>
-                                            <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                data-disabled-text="Disabled">
-                                                <input type="hidden" value="0"
-                                                    name="json_content[second_tour_block][heading_enabled]">
-                                                <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                    id="second_tour_block_heading" value="1"
-                                                    name="json_content[second_tour_block][heading_enabled]" x-model="headingEnabled">
-                                                <label class="form-check-label" for="second_tour_block_heading">Enabled</label>
-                                            </div>
-                                        </div>
-                                        <input x-show="headingEnabled" x-transition name="json_content[second_tour_block][heading]" type="text"
-                                            class="field mt-3"
-                                            value="{{ $jsonContent ? $jsonContent['second_tour_block']['heading'] : '' }}">
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Select Tours:</label>
-                                        <select name="json_content[second_tour_block][tour_ids][]" multiple
-                                            class="select2-select">
-                                            @foreach ($tours as $secondTourBlockT)
-                                                <option value="{{ $secondTourBlockT->id }}"
-                                                    {{ in_array($secondTourBlockT->id, $jsonContent['second_tour_block']['tour_ids'] ?? []) ? 'selected' : '' }}>
-                                                    {{ $secondTourBlockT->title }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-admin.tour-block 
+                                blockKey="first_tour_block" 
+                                blockTitle="First Tour Block" 
+                                :tours="$tours" 
+                                :jsonContent="$jsonContent" 
+                            />
+                            <x-admin.tour-block 
+                                blockKey="second_tour_block" 
+                                blockTitle="Second Tour Block" 
+                                :tours="$tours" 
+                                :jsonContent="$jsonContent" 
+                            />
                             <div x-data="{
                                 enabled: {{ isset($jsonContent['category_block_2']['is_enabled']) && $jsonContent['category_block_2']['is_enabled'] == '1' ? 'true' : 'false' }},
                                 headingEnabled: {{ isset($jsonContent['category_block_2']['heading_enabled']) && $jsonContent['category_block_2']['heading_enabled'] == '1' ? 'true' : 'false' }}
