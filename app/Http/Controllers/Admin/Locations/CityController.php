@@ -28,11 +28,12 @@ class CityController extends Controller
     {
         $countries = Country::where('status', 'publish')->get();
         $categories = TourCategory::where('status', 'publish')->get();
+        $cities = City::where('status', 'publish')->get();
         $news = News::where('status', 'publish')
             ->get();
         $tours = Tour::where('status', 'publish')->get();
 
-        return view('admin.locations.cities-management.add', compact('countries', 'categories', 'tours', 'news'))->with('title', 'Add New City');
+        return view('admin.locations.cities-management.add', compact('countries', 'categories', 'cities', 'tours', 'news'))->with('title', 'Add New City');
     }
 
     public function store(Request $request)
@@ -86,13 +87,14 @@ class CityController extends Controller
     {
         $item = City::find($id);
         $countries = Country::where('status', 'publish')->get();
+        $cities = City::where('status', 'publish')->get();
         $news = News::where('status', 'publish')
             ->get();
         $tours = Tour::where('status', 'publish')->get();
         $categories = TourCategory::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries', 'tours', 'categories', 'news'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.cities-management.edit', compact('item', 'seo', 'countries', 'cities', 'tours', 'categories', 'news'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)

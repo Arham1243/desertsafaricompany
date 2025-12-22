@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Locations;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Country;
 use App\Models\News;
 use App\Models\Tour;
@@ -26,11 +27,13 @@ class CountryController extends Controller
     public function create()
     {
         $tours = Tour::where('status', 'publish')->get();
+        $cities = City::where('status', 'publish')->get();
+        $dbCountries = Country::where('status', 'publish')->get();
         $news = News::where('status', 'publish')
             ->get();
         $categories = TourCategory::where('status', 'publish')->get();
 
-        return view('admin.locations.countries-management.add', compact('tours', 'categories', 'news'))->with('title', 'Add New Country');
+        return view('admin.locations.countries-management.add', compact('tours', 'cities', 'dbCountries', 'categories', 'news'))->with('title', 'Add New Country');
     }
 
     public function store(Request $request)
@@ -88,12 +91,14 @@ class CountryController extends Controller
     {
         $item = Country::find($id);
         $categories = TourCategory::where('status', 'publish')->get();
+        $cities = City::where('status', 'publish')->get();
+        $dbCountries = Country::where('status', 'publish')->get();
         $news = News::where('status', 'publish')
             ->get();
         $tours = Tour::where('status', 'publish')->get();
         $seo = $item->seo()->first();
 
-        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours', 'categories', 'news'))->with('title', ucfirst(strtolower($item->name)));
+        return view('admin.locations.countries-management.edit', compact('item', 'seo', 'tours', 'cities', 'dbCountries', 'categories', 'news'))->with('title', ucfirst(strtolower($item->name)));
     }
 
     public function update(Request $request, $id)

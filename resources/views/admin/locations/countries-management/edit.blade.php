@@ -209,12 +209,18 @@
                                 blockKey="first_tour_block" 
                                 blockTitle="First Tour Block" 
                                 :tours="$tours" 
+                                :cities="$cities" 
+                                :countries="$dbCountries" 
+                                :categories="$categories" 
                                 :jsonContent="$jsonContent" 
                             />
                             <x-admin.tour-block 
                                 blockKey="second_tour_block" 
                                 blockTitle="Second Tour Block" 
                                 :tours="$tours" 
+                                :cities="$cities" 
+                                :countries="$dbCountries" 
+                                :categories="$categories" 
                                 :jsonContent="$jsonContent" 
                             />
                             <div x-data="{
