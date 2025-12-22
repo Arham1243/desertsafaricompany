@@ -21,6 +21,11 @@
             ],
         ],
         [
+            'route' => 'seo',
+            'icon' => 'bx-search-alt',
+            'label' => 'Seo',
+        ],
+        [
             'route' => 'social-media',
             'icon' => 'bx-share-alt',
             'label' => 'Social Media',

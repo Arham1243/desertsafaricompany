@@ -86,6 +86,7 @@
                                     aria-selected="false">Canonical</button>
                             </li>
                         </ul>
+
                         <div class="tab-content-wrapper">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="home" role="tabpanel"
@@ -95,9 +96,11 @@
                                             <label class="title">
                                                 Seo Title:
                                             </label>
-                                            <input type="text" name="seo[seo_title]" class="field"
+                                            <input maxlength="{{ $settings->get('seo_title_limit') ?? '60' }}" type="text"
+                                                name="seo[seo_title]" class="field"
                                                 value="{{ old('seo[seo_title]', $seo->seo_title ?? '') }}"
                                                 placeholder="Title" oninput="updateText(this,'google_title')">
+                                                <small class="text-muted">Max {{ $settings->get('seo_title_limit') ?? '60' }} characters</small>
                                             @error('seo[seo_title]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -107,8 +110,9 @@
                                             <label class="title">
                                                 Seo Description:
                                             </label>
-                                            <textarea name="seo[seo_description]" class="field" rows="3" placeholder="Enter Description..."
-                                                oninput="updateText(this,'google_desc')">{{ old('seo[seo_description]', $seo->seo_description ?? '') }}</textarea>
+                                            <textarea maxlength="{{ $settings->get('seo_description_limit') ?? '160' }}" name="seo[seo_description]" class="field"
+                                                rows="3" placeholder="Enter Description..." oninput="updateText(this,'google_desc')">{{ old('seo[seo_description]', $seo->seo_description ?? '') }}</textarea>
+                                                <small class="text-muted">Max {{ $settings->get('seo_description_limit') ?? '160' }} characters</small>
                                             @error('seo[seo_description]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror

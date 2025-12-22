@@ -99,18 +99,23 @@
                                     <div class="row">
                                         <div class="form-fields col-md-12">
                                             <label class="title">Seo Title:</label>
-                                            <input type="text" name="{{ $fieldName('seo_title') }}" class="field"
+                                            <input
+                                                maxlength="{{ $settings->get('seo_title_limit') ?? '60' }}"type="text"
+                                                name="{{ $fieldName('seo_title') }}" class="field"
                                                 value="{{ $fieldValue('seo_title') }}" placeholder="Title"
                                                 oninput="updateText(this,'google_title')">
+                                                <small class="text-muted">Max {{ $settings->get('seo_title_limit') ?? '60' }} characters</small>
                                             @error($fieldName('seo_title'))
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="form-fields col-md-12">
-                                            <label class="title">Seo Description:</label>
+                                            <label maxlength="{{ $settings->get('seo_description_limit') ?? '160' }}"
+                                                class="title">Seo Description:</label>
                                             <textarea name="{{ $fieldName('seo_description') }}" class="field" rows="3"
                                                 placeholder="Enter Description..." oninput="updateText(this,'google_desc')">{{ $fieldValue('seo_description') }}</textarea>
+                                                <small class="text-muted">Max {{ $settings->get('seo_description_limit') ?? '160' }} characters</small>
                                             @error($fieldName('seo_description'))
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror

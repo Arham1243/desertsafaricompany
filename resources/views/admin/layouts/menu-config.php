@@ -316,6 +316,11 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'tour-inner']),
             ],
             [
+                'title' => 'Seo',
+                'icon' => 'bx bx-search-alt',
+                'route' => route('admin.settings.edit', ['resource' => 'seo']),
+            ],
+            [
                 'title' => 'Social Media',
                 'icon' => 'bx bx-share-alt',
                 'route' => route('admin.settings.edit', ['resource' => 'social-media']),
