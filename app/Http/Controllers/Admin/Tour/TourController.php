@@ -98,6 +98,7 @@ class TourController extends Controller
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
@@ -171,6 +172,8 @@ class TourController extends Controller
             'discount_by_number_of_people' => $discounts ?? null,
             'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
+            'is_advance_booking' => $availabilityData['is_advance_booking'] ?? 0,
+            'availability_advance_booking' => $availabilityAdvanceBooking ?? null,
         ]);
 
         $tour->categories()->sync($categoryIds);
@@ -381,6 +384,7 @@ class TourController extends Controller
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $exclusions_inclusions_heading = ! empty($request->input('exclusions_inclusions_heading')) ? json_encode($request->input('exclusions_inclusions_heading')) : null;
         $authorConfig = ! empty($statusTab['author_config']) ? json_encode($statusTab['author_config']) : null;
@@ -453,6 +457,8 @@ class TourController extends Controller
             'discount_by_number_of_people' => $discounts ?? null,
             'promo_discount_config' => $promoDiscountConfig,
             'availability_open_hours' => $availabilityOpenHours ?? null,
+            'is_advance_booking' => $availabilityData['is_advance_booking'] ?? 0,
+            'availability_advance_booking' => $availabilityAdvanceBooking ?? null,
         ]);
 
         $tour->categories()->sync($categoryIds);

@@ -2847,18 +2847,22 @@
                                 <div class="form-box__header">
                                     <div class="title">Availability</div>
                                 </div>
-                                <div class="form-box__body">
-                                    <div class="col-12" x-data="{ fixedDate: '{{ $tour->is_fixed_date ? '1' : '0' }}' }">
+                                @php
+                                                
+                                                $availability_advance_booking  = json_decode($tour->availability_advance_booking,true);
+                                                @endphp
+                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, fixedDate: {{ $tour->is_fixed_date ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? immediately }}' }">
+                                    <div class="col-12">
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="form-fields">
                                                     <div class="title">Fixed dates:</div>
                                                     <div class="form-check">
+                                                        <input type="hidden" name="tour[availability][is_fixed_date]" x-model="fixedDate">
                                                         <input class="form-check-input" type="checkbox"
-                                                            {{ $tour->is_fixed_date ? 'checked' : '' }}
-                                                            name="tour[availability][is_fixed_date]" id="fixed_date"
-                                                            value="{{ $tour->is_fixed_date ? '1' : '0' }}"
-                                                            x-model="fixedDate" @change="fixedDate = fixedDate ? 1 : 0">
+                                                            id="fixed_date"
+                                                            :checked="fixedDate == 1"
+                                                            @change="fixedDate = $event.target.checked ? 1 : 0; if(fixedDate) { openHours = 0; advanceBooking = 0; }">
                                                         <label class="form-check-label" for="fixed_date">
                                                             Enable Fixed Date
                                                         </label>
@@ -2896,17 +2900,17 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12 mt-3" x-data="{ openHours: '{{ $tour->is_open_hours ? '1' : '0' }}' }">
+                                    <div class="col-12 mt-3">
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="form-fields">
                                                     <div class="title">Open Hours:</div>
                                                     <div class="form-check">
+                                                        <input type="hidden" name="tour[availability][is_open_hours]" x-model="openHours">
                                                         <input class="form-check-input" type="checkbox"
-                                                            name="tour[availability][is_open_hours]"
-                                                            {{ $tour->is_open_hours ? 'checked' : '' }} id="openHours"
-                                                            value="{{ $tour->is_open_hours ? '1' : '0' }}"
-                                                            x-model="openHours" @change="openHours = openHours ? 1 : 0">
+                                                            id="openHours"
+                                                            :checked="openHours == 1"
+                                                            @change="openHours = $event.target.checked ? 1 : 0; if(openHours) { fixedDate = 0; advanceBooking = 0; }">
                                                         <label class="form-check-label" for="openHours">
                                                             Enable Open Hours
                                                         </label>
@@ -3023,6 +3027,66 @@
                                                                 @endfor
                                                             </tbody>
                                                         </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 mt-3">
+                                        <div class="row">
+                                            <div class="col-12 mb-2">
+                                                <div class="form-fields">
+                                                    <div class="title">Advance Booking Time:</div>
+                                                    <div class="form-check">
+                                                        <input type="hidden" name="tour[availability][is_advance_booking]" x-model="advanceBooking">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="advanceBooking" :checked="advanceBooking == 1"
+                                                            @change="advanceBooking = $event.target.checked ? 1 : 0; if(advanceBooking) { fixedDate = 0; openHours = 0; }">
+                                                        <label class="form-check-label" for="advanceBooking">
+                                                            Enable Advance Booking Time
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" x-show="advanceBooking == 1">
+                                                <div class="row my-2">
+                                                    <div class="px-4 mx-2">
+                                                        <div class="form-check p-0 mb-4">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="tour[availability][advance_booking][advance_booking_type]"
+                                                                id="immediately_booking" x-model="advanceBookingType"
+                                                                value="immediately" {{ $availability_advance_booking['advance_booking_type'] === 'immediately' ? 'checked' : '' }}>
+                                                            <label class="form-check-label" for="immediately_booking">
+                                                                Travelers do not need to book in advance, and once completed,
+                                                                bookings can be used immediately.
+                                                            </label>
+                                                        </div>
+                                                        <div class="form-check d-flex align-items-center gap-2 p-0">
+                                                            <input class="form-check-input" type="radio"
+                                                                name="tour[availability][advance_booking][advance_booking_type]"
+                                                                id="custom_booking" x-model="advanceBookingType"
+                                                                value="custom_booking" {{ $availability_advance_booking['advance_booking_type'] === 'custom_booking' ? 'checked' : '' }}>
+                                                            <label class="form-check-label d-flex align-items-center  gap-3"
+                                                                for="custom_booking">Activities
+                                                                Must be booked before
+
+                                                                <div class="form-fields my-0">
+                                                                    <label class="title">Days</label>
+                                                                    <input style="width: 150px !important;" type="text" class="field"
+                                                                        name="tour[availability][advance_booking][days]"
+                                                                        value="{{ $availability_advance_booking['days'] ?? '' }}">
+                                                                </div>
+                                                                <div class="form-fields my-0">
+                                                                    <label class="title">Time</label>
+                                                                    <input style="width: 150px !important;" type="time" class="field"
+                                                                        name="tour[availability][advance_booking][time]"
+                                                                        value="{{ optional($availability_advance_booking)['time'] ?? '' }}">
+                                                                    
+                                                                </div>
+                                                                days before the day of travel.
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
