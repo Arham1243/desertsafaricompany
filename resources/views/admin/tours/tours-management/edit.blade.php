@@ -59,7 +59,7 @@
                                         <button type="button" class="settings-item__link"
                                             :class="{ 'active': optionTab === 'availability' }"
                                             @click="optionTab = 'availability'">
-                                            <i class="bx bx-time-five"></i> Availability
+                                            <i class="bx bx-time-five"></i> Booking Restrictions
                                         </button>
                                     </li>
                                     <li class="settings-item">
