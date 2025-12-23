@@ -34,8 +34,15 @@ class CartController extends Controller
             ? json_decode($request->input('tourData'), true)
             : [];
 
+        $filteredItems = array_filter($tourItems, function ($item) {
+            return isset($item['quantity']) && $item['quantity'] > 0;
+        });
+
+        // Re-index array if needed
+        $filteredItems = array_values($filteredItems);
+
         $tour = Tour::findOrFail($tourId);
-        if($tour->status != 'publish') {
+        if ($tour->status != 'publish') {
             return redirect()->back()->with('notify_error', 'Tour is not published.');
         }
         $totalNoOfPeople = array_sum(array_column($tourItems, 'quantity'));
@@ -59,7 +66,7 @@ class CartController extends Controller
         $totalPrice = round($subtotal + $serviceFee + $totalExtra, 2);
 
         $cardData = [
-            'tourData' => $tourItems,
+            'tourData' => $filteredItems,
             'subtotal' => $subtotal,
             'service_fee' => $serviceFee,
             'start_date' => $startDate,
