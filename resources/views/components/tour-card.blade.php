@@ -244,8 +244,12 @@
                 </div>
                 <div class="booked-details-wrapper">
                     @if ($bookedTextContent && $bookedTextContent->enabled === '1')
-                        <div class="booked-details line-clamp-1">
-                            Booked {{ rand(10, 50) }} times yesterday
+                        <div class="booked-details line-clamp-1"
+                            @if ($bookedTextContent->background_color || $bookedTextContent->text_color) style="
+            {{ $bookedTextContent->background_color ? 'background: ' . $bookedTextContent->background_color . ';' : '' }}
+            {{ $bookedTextContent->text_color ? 'color: ' . $bookedTextContent->text_color . ';' : '' }}
+        " @endif>
+                            {{ $bookedTextContent->label }}
                         </div>
                     @endif
                 </div>

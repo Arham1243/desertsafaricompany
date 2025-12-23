@@ -76,6 +76,12 @@
                                     </li>
                                     <li class="settings-item">
                                         <button type="button" class="settings-item__link"
+                                            :class="{ 'active': optionTab === 'badges' }" @click="optionTab = 'badges'">
+                                            <i class="bx bx-check-circle"></i> Badges
+                                        </button>
+                                    </li>
+                                    <li class="settings-item">
+                                        <button type="button" class="settings-item__link"
                                             :class="{ 'active': optionTab === 'seo' }" @click="optionTab = 'seo'">
                                             <i class="bx bx-search-alt"></i> SEO
                                         </button>
@@ -3396,6 +3402,66 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                </div>
+                            </div>
+
+                            @foreach ($attributes as $attribute)
+                                @if (!$attribute->attributeItems->isEmpty())
+                                    <div class="form-box">
+                                        <div class="form-box__header">
+                                            <div class="title">Attribute: {{ $attribute->name }}</div>
+                                        </div>
+                                        <div class="form-box__body">
+                                            @foreach ($attribute->attributeItems as $index => $item)
+                                                <div class="form-check mb-1">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="tour[status][attributes][{{ $attribute->id }}][]"
+                                                        id="attribute-{{ $item->id }}-{{ $index }}"
+                                                        value="{{ $item->id }}"
+                                                        @if (
+                                                            $tour->attributes->contains($attribute->id) &&
+                                                                $item->tourAttributes &&
+                                                                $item->tourAttributes->contains($attribute->id)) checked @endif>
+                                                    <label class="form-check-label"
+                                                        for="attribute-{{ $item->id }}-{{ $index }}">
+                                                        {{ $item->item }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                @endif
+                            @endforeach
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Ical</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-fields">
+                                        <label class="title">Import url :</label>
+                                        <input type="text" name="tour[status][ical_import_url]" class="field"
+                                            placeholder="" value="{{ $tour->ical_import_url }}">
+                                        @error('tour[status][ical_import_url]')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="title">Export url :</label>
+                                        <input type="text" name="tour[status][ical_export_url]" class="field"
+                                            placeholder="" value="{{ $tour->ical_export_url }}">
+                                        @error('tour[status][ical_export_url]')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div x-show="optionTab === 'badges'" class="status-options">
+<div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Badges</div>
+                                </div>
+                                <div class="form-box__body">
                                     @php
                                         $certifiedTag = is_string($tour->certified_tag)
                                             ? json_decode($tour->certified_tag, true)
@@ -3405,7 +3471,7 @@
                                     @endphp
                                     <div x-data="{ certifiedTagEnabled: false }" x-init="certifiedTagEnabled = {{ old('tour.status.certified_tag.enabled', $certifiedTag['enabled'] ?? false) ? 'true' : 'false' }}">
 
-                                        <div class="row mt-4">
+                                        <div class="row">
                                             <div class="col-md-6">
                                                 <div class="form-fields mb-3">
                                                     <input type="hidden" name="tour[status][certified_tag][enabled]"
@@ -3416,7 +3482,7 @@
                                                             id="certified_tag_enabled" value="1"
                                                             x-model="certifiedTagEnabled">
                                                         <label class="form-check-label" for="certified_tag_enabled">
-                                                            Enable Certified Tag
+                                                            Certified Tag
                                                         </label>
                                                     </div>
                                                 </div>
@@ -3463,7 +3529,7 @@
                                     @endphp
                                     <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
 
-                                        <div class="row mt-2">
+                                        <div class="row mt-3">
                                             <div class="col-md-6">
                                                 <div class="form-fields mb-3">
                                                     <input type="hidden" name="tour[status][booked_text][enabled]"
@@ -3474,10 +3540,58 @@
                                                             id="booked_text_enabled" value="1"
                                                             x-model="showBookedText">
                                                         <label class="form-check-label" for="booked_text_enabled">
-                                                            Show “Booked X times yesterday” text
+                                                            Listing Tag
                                                         </label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div x-show="showBookedText">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-fields mb-3">
+                                                        <label class="title">Label:</label>
+                                                        <input name="tour[status][booked_text][label]" type="text"
+                                                            class="field"
+                                                            value="{{ old('tour.status.booked_text.label', $bookedTextConfig['label'] ?? '') }}">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Background:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="booked_text_bg_color" data-color-picker></label>
+                                                        <input id="booked_text_bg_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][booked_text][background_color]"
+                                                            value="{{ old('tour.status.booked_text.background_color', $bookedTextConfig['background_color'] ?? '#ebeef1') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Text Color:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="booked_text_text_color" data-color-picker></label>
+                                                        <input id="booked_text_text_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][booked_text][text_color]"
+                                                            value="{{ old('tour.status.booked_text.text_color', $bookedTextConfig['text_color'] ?? '#000000') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -3492,7 +3606,7 @@
                                     @endphp
                                     <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', $badgeTag['enabled'] ?? false) ? 'true' : 'false' }}">
 
-                                        <div class="row mt-2">
+                                        <div class="row mt-3">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
                                                     <input type="hidden" name="tour[status][badge_tag][enabled]"
@@ -3503,7 +3617,7 @@
                                                             id="badge_tag_enabled" value="1"
                                                             x-model="badgeTagEnabled">
                                                         <label class="form-check-label" for="badge_tag_enabled">
-                                                            Enable Badge Tag
+                                                            Badge Tag
                                                         </label>
                                                     </div>
                                                 </div>
@@ -3557,57 +3671,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @foreach ($attributes as $attribute)
-                                @if (!$attribute->attributeItems->isEmpty())
-                                    <div class="form-box">
-                                        <div class="form-box__header">
-                                            <div class="title">Attribute: {{ $attribute->name }}</div>
-                                        </div>
-                                        <div class="form-box__body">
-                                            @foreach ($attribute->attributeItems as $index => $item)
-                                                <div class="form-check mb-1">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        name="tour[status][attributes][{{ $attribute->id }}][]"
-                                                        id="attribute-{{ $item->id }}-{{ $index }}"
-                                                        value="{{ $item->id }}"
-                                                        @if (
-                                                            $tour->attributes->contains($attribute->id) &&
-                                                                $item->tourAttributes &&
-                                                                $item->tourAttributes->contains($attribute->id)) checked @endif>
-                                                    <label class="form-check-label"
-                                                        for="attribute-{{ $item->id }}-{{ $index }}">
-                                                        {{ $item->item }}
-                                                    </label>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-                            @endforeach
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Ical</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Import url :</label>
-                                        <input type="text" name="tour[status][ical_import_url]" class="field"
-                                            placeholder="" value="{{ $tour->ical_import_url }}">
-                                        @error('tour[status][ical_import_url]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                    <div class="form-fields">
-                                        <label class="title">Export url :</label>
-                                        <input type="text" name="tour[status][ical_export_url]" class="field"
-                                            placeholder="" value="{{ $tour->ical_export_url }}">
-                                        @error('tour[status][ical_export_url]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
                             </div>
