@@ -3752,7 +3752,7 @@
 
                                          <div x-data="{ bookingRestrictionsEnabled: false }" x-init="bookingRestrictionsEnabled = {{ old('tour.status.booking_restrictions_badge.enabled', $bookingRestrictionsBadge['enabled'] ?? false) ? 'true' : 'false' }}">
 
-                                        <div class="row mt-3">
+                                        <div class="row mt-2">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
                                                     <input type="hidden" name="tour[status][booking_restrictions_badge][enabled]"
