@@ -19,7 +19,7 @@ class Tour extends Model
         'availability_open_hours' => 'array',
     ];
 
-    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price'];
+    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price', 'advance_booking_badge'];
 
     public function category()
     {
@@ -302,51 +302,55 @@ class Tour extends Model
 
 
         if ((int) $this->is_advance_booking === 1) {
-            $availability_advance_booking  = json_decode($this->availability_advance_booking, true);
+            $config = json_decode($this->availability_advance_booking, true);
 
-            $advanceBookingType = $availability_advance_booking['advance_booking_type'] ?? 'immediately';
-            $advanceBookingDays = (int) ($availability_advance_booking['days'] ?? 0);
-            $advanceBookingTime = $availability_advance_booking['time'] ?? '00:00'; // HH:mm
+            $type = $config['advance_booking_type'] ?? 'immediately';
+            $days = (int) ($config['days'] ?? 0);
+            $time = $config['time'] ?? '00:00';
 
             $now = Carbon::now();
 
-            if ($advanceBookingType === 'immediately') {
-                // No restrictions
+            if ($type === 'immediately') {
                 return [
                     'available' => true,
                     'user_message' => 'Good news! This tour is available right now.',
                 ];
             }
 
-            // Parse the time input into a Carbon instance for today
-            try {
-                [$hours, $minutes] = explode(':', $advanceBookingTime);
-                $advanceTime = Carbon::today()->setHour((int)$hours)->setMinute((int)$minutes)->setSecond(0);
-            } catch (\Exception $e) {
-                $advanceTime = Carbon::today();
-            }
-
-            // Add advance booking days to current date
-            $allowedBookingTime = $now->copy()->addDays($advanceBookingDays);
-
-            // Combine days + time for custom booking restriction
-            $allowedBookingDateTime = Carbon::create(
-                $allowedBookingTime->year,
-                $allowedBookingTime->month,
-                $allowedBookingTime->day,
-                $advanceTime->hour,
-                $advanceTime->minute,
-                0
-            );
-
-            if ($now->lt($allowedBookingDateTime)) {
+            // Case 1: days > 0 → today is never allowed
+            if ($days > 0) {
                 return [
                     'available' => false,
                     'user_message' => 'This tour must be booked at least '
-                        . ($advanceBookingDays ? $advanceBookingDays . ' day(s) ' : '')
-                        . $advanceTime->format('H:i') . ' in advance.',
+                        . $days . ' day(s) in advance.',
                 ];
             }
+
+            // Case 2: days = 0 → same-day booking with cutoff
+            try {
+                [$h, $m] = explode(':', $time);
+                $cutoff = Carbon::today()
+                    ->setHour((int) $h)
+                    ->setMinute((int) $m)
+                    ->setSecond(0);
+            } catch (\Exception $e) {
+                return [
+                    'available' => false,
+                    'user_message' => 'This tour is not available for booking today.',
+                ];
+            }
+
+            if ($now->lte($cutoff)) {
+                return [
+                    'available' => true,
+                    'user_message' => 'Good news! This tour is available today.',
+                ];
+            }
+
+            return [
+                'available' => false,
+                'user_message' => 'Booking for today is closed. You can book for tomorrow.',
+            ];
         }
 
         return [
@@ -354,6 +358,44 @@ class Tour extends Model
             'user_message' => 'Good news! This tour is available right now.',
         ];
     }
+
+    public function getAdvanceBookingBadgeAttribute(): ?string
+    {
+        if ((int) $this->is_advance_booking !== 1) {
+            return null;
+        }
+
+        $config = json_decode($this->availability_advance_booking, true);
+
+        $type = $config['advance_booking_type'] ?? 'immediately';
+        $days = (int) ($config['days'] ?? 0);
+        $time = $config['time'] ?? '00:00';
+
+        if ($type === 'immediately') {
+            return null;
+        }
+
+        // Any future-day restriction means tomorrow
+        if ($days > 0) {
+            return 'tomorrow';
+        }
+
+        $now = Carbon::now();
+
+        try {
+            [$h, $m] = explode(':', $time);
+            $cutoff = Carbon::today()
+                ->setHour((int) $h)
+                ->setMinute((int) $m)
+                ->setSecond(0);
+        } catch (\Exception $e) {
+            return 'tomorrow';
+        }
+
+        // days = 0 logic
+        return $now->lte($cutoff) ? 'today' : 'tomorrow';
+    }
+
 
     protected function getNextAvailableDay(): ?string
     {

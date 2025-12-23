@@ -1,0 +1,30 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+          Schema::table('tours', function (Blueprint $table) {
+        $table->string('booking_restrictions_badge')
+            ->nullable()
+            ->after('availability_advance_booking');
+    });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::table('tours', function (Blueprint $table) {
+            $table->dropColumn('booking_restrictions_badge');
+        });
+    }
+};

@@ -242,8 +242,8 @@
                             {{ $certifiedTagContent->label }}</div>
                     @endif
                 </div>
-                <div class="booked-details-wrapper">
-                    @if ($bookedTextContent && $bookedTextContent->enabled === '1')
+                @if ($bookedTextContent && $bookedTextContent->enabled === '1')
+                    <div class="booked-details-wrapper">
                         <div class="booked-details line-clamp-1"
                             @if ($bookedTextContent->background_color || $bookedTextContent->text_color) style="
             {{ $bookedTextContent->background_color ? 'background: ' . $bookedTextContent->background_color . ';' : '' }}
@@ -251,8 +251,25 @@
         " @endif>
                             {{ $bookedTextContent->label }}
                         </div>
-                    @endif
-                </div>
+                    </div>
+                @endif
+                @php
+                    $bookingRestrictionsBadge = $tour->booking_restrictions_badge
+                        ? json_decode($tour->booking_restrictions_badge, true)
+                        : [];
+                @endphp
+                @if ($tour->advance_booking_badge && $bookingRestrictionsBadge && (int) $bookingRestrictionsBadge['enabled'] === 1)
+                    <div class="booked-details-wrapper">
+
+                        <div class="booked-details"
+                            @if ($bookingRestrictionsBadge['background_color'] || $bookingRestrictionsBadge['text_color']) style="
+            {{ $bookingRestrictionsBadge['background_color'] ? 'background: ' . $bookingRestrictionsBadge['background_color'] . ';' : '' }}
+            {{ $bookingRestrictionsBadge['text_color'] ? 'color: ' . $bookingRestrictionsBadge['text_color'] . ';' : '' }}
+        " @endif>
+                            {{ $bookingRestrictionsBadge['label'] }} {{ $tour->advance_booking_badge }}
+                        </div>
+                    </div>
+                @endif
                 <div class="card-rating">
                     <x-star-rating :rating="$tour->average_rating" />
                     @if ($tour->reviews->count() > 0)

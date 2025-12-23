@@ -2849,9 +2849,13 @@
                                 </div>
                                 @php
                                                 
-                                                $availability_advance_booking  = json_decode($tour->availability_advance_booking,true);
+                                                $availability_advance_booking  = $tour->availability_advance_booking ? json_decode($tour->availability_advance_booking,true) : [
+                                                    'advance_booking_type' => 'immediately',
+                                                    'advance_booking_days' => null,
+                                                    'advance_booking_hours' => null,
+                                                ];
                                                 @endphp
-                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, fixedDate: {{ $tour->is_fixed_date ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? immediately }}' }">
+                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, fixedDate: {{ $tour->is_fixed_date ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
                                     <div class="col-12">
                                         <div class="row">
                                             <div class="col-12 mb-2">
@@ -3604,7 +3608,7 @@
                                                             id="booked_text_enabled" value="1"
                                                             x-model="showBookedText">
                                                         <label class="form-check-label" for="booked_text_enabled">
-                                                            Listing Tag
+                                                            Listing Tags
                                                         </label>
                                                     </div>
                                                 </div>
@@ -3730,6 +3734,84 @@
                                                             data-color-picker-input
                                                             name="tour[status][badge_tag][text_color]"
                                                             value="{{ old('tour.status.badge_tag.text_color', $badgeTag['text_color'] ?? '#ffffff') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                              @php
+                                        $bookingRestrictionsBadge = is_string($tour->booking_restrictions_badge)
+                                            ? json_decode($tour->booking_restrictions_badge, true)
+                                            : (is_array($tour->booking_restrictions_badge)
+                                                ? $tour->booking_restrictions_badge
+                                                : []);
+
+                                    @endphp
+                                    </div>
+
+                                         <div x-data="{ bookingRestrictionsEnabled: false }" x-init="bookingRestrictionsEnabled = {{ old('tour.status.booking_restrictions_badge.enabled', $bookingRestrictionsBadge['enabled'] ?? false) ? 'true' : 'false' }}">
+
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <div class="form-fields mb-3">
+                                                    <input type="hidden" name="tour[status][booking_restrictions_badge][enabled]"
+                                                        value="0">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="tour[status][booking_restrictions_badge][enabled]"
+                                                            id="booking_restrictions_badge_enabled" value="1"
+                                                            x-model="bookingRestrictionsEnabled">
+                                                        <label class="form-check-label" for="booking_restrictions_badge_enabled">
+                                                            Booking Restrictions Badge
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row" x-show="bookingRestrictionsEnabled">
+                                            <div class="col-md-12">
+                                                <div class="form-fields mb-3">
+                                                    <label class="title" for="booking_restrictions_badge_tag_label">Badge
+                                                        Label:</label>
+                                                    <input type="text" name="tour[status][booking_restrictions_badge][label]"
+                                                        id="booking_restrictions_badge_tag_label" class="field"
+                                                        value="{{ old('tour.status.booking_restrictions_badge.label', $bookingRestrictionsBadge['label'] ?? 'You can book for') }}">
+                                                        <small class="muted">“Today” or “tomorrow” will be added at the end of the label automatically.</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Background:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="booking_restrictions_badge_bg_color" data-color-picker></label>
+                                                        <input id="booking_restrictions_badge_bg_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][booking_restrictions_badge][background_color]"
+                                                            value="{{ old('tour.status.booking_restrictions_badge.background_color', $bookingRestrictionsBadge['background_color'] ?? '#ebeef1') }}"
+                                                            inputmode="text">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Badge Text Color:</div>
+                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                            target="_blank">Get Color Codes</a>
+                                                    </div>
+                                                    <div class="field color-picker" data-color-picker-container>
+                                                        <label for="booking_restrictions_badge_text_color" data-color-picker></label>
+                                                        <input id="booking_restrictions_badge_text_color" type="text"
+                                                            data-color-picker-input
+                                                            name="tour[status][booking_restrictions_badge][text_color]"
+                                                            value="{{ old('tour.status.booking_restrictions_badge.text_color', $bookingRestrictionsBadge['booking_restrictions_badge'] ?? '#000000') }}"
                                                             inputmode="text">
                                                     </div>
                                                 </div>
