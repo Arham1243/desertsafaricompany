@@ -151,7 +151,7 @@ class Tour extends Model
         });
 
         $lowest = $prices
-            ->filter(fn ($p) => $p['discounted'] > 0)
+            ->filter(fn($p) => $p['discounted'] > 0)
             ->sortBy('discounted')
             ->first();
 
@@ -245,14 +245,14 @@ class Tour extends Model
             if ($now->lt($this->start_date)) {
                 return [
                     'available' => false,
-                    'user_message' => 'This tour starts on '.$this->start_date->format('M d, Y').'. Stay tuned!',
+                    'user_message' => 'This tour starts on ' . $this->start_date->format('M d, Y') . '. Stay tuned!',
                 ];
             }
 
             if ($now->gt($this->end_date)) {
                 return [
                     'available' => false,
-                    'user_message' => 'This tour ended on '.$this->end_date->format('M d, Y').'. Check other tours!',
+                    'user_message' => 'This tour ended on ' . $this->end_date->format('M d, Y') . '. Check other tours!',
                 ];
             }
         }
@@ -269,12 +269,12 @@ class Tour extends Model
 
             $today = strtolower($now->format('l'));
             $todayHours = collect($hours)
-                ->first(fn ($h) => strtolower($h['day']) === $today);
+                ->first(fn($h) => strtolower($h['day']) === $today);
 
             if (! $todayHours) {
                 return [
                     'available' => false,
-                    'user_message' => 'This tour is not available today. Check back on '.ucfirst($this->getNextAvailableDay()).'.',
+                    'user_message' => 'This tour is not available today. Check back on ' . ucfirst($this->getNextAvailableDay()) . '.',
                 ];
             }
 
@@ -295,7 +295,56 @@ class Tour extends Model
             if (! ($now->between($open, $close))) {
                 return [
                     'available' => false,
-                    'user_message' => 'Tour is currently closed. It will be open from '.$open->format('h:i A').' to '.$close->format('h:i A').' today.',
+                    'user_message' => 'Tour is currently closed. It will be open from ' . $open->format('h:i A') . ' to ' . $close->format('h:i A') . ' today.',
+                ];
+            }
+        }
+
+
+        if ((int) $this->is_advance_booking === 1) {
+            $availability_advance_booking  = json_decode($this->availability_advance_booking, true);
+
+            $advanceBookingType = $availability_advance_booking['advance_booking_type'] ?? 'immediately';
+            $advanceBookingDays = (int) ($availability_advance_booking['days'] ?? 0);
+            $advanceBookingTime = $availability_advance_booking['time'] ?? '00:00'; // HH:mm
+
+            $now = Carbon::now();
+
+            if ($advanceBookingType === 'immediately') {
+                // No restrictions
+                return [
+                    'available' => true,
+                    'user_message' => 'Good news! This tour is available right now.',
+                ];
+            }
+
+            // Parse the time input into a Carbon instance for today
+            try {
+                [$hours, $minutes] = explode(':', $advanceBookingTime);
+                $advanceTime = Carbon::today()->setHour((int)$hours)->setMinute((int)$minutes)->setSecond(0);
+            } catch (\Exception $e) {
+                $advanceTime = Carbon::today();
+            }
+
+            // Add advance booking days to current date
+            $allowedBookingTime = $now->copy()->addDays($advanceBookingDays);
+
+            // Combine days + time for custom booking restriction
+            $allowedBookingDateTime = Carbon::create(
+                $allowedBookingTime->year,
+                $allowedBookingTime->month,
+                $allowedBookingTime->day,
+                $advanceTime->hour,
+                $advanceTime->minute,
+                0
+            );
+
+            if ($now->lt($allowedBookingDateTime)) {
+                return [
+                    'available' => false,
+                    'user_message' => 'This tour must be booked at least '
+                        . ($advanceBookingDays ? $advanceBookingDays . ' day(s) ' : '')
+                        . $advanceTime->format('H:i') . ' in advance.',
                 ];
             }
         }
@@ -316,7 +365,7 @@ class Tour extends Model
         $now = Carbon::now();
         for ($i = 1; $i <= 7; $i++) {
             $nextDay = $now->copy()->addDays($i)->format('l');
-            $match = collect($hours)->first(fn ($h) => strtolower($h['day']) === strtolower($nextDay));
+            $match = collect($hours)->first(fn($h) => strtolower($h['day']) === strtolower($nextDay));
             if ($match) {
                 return strtolower($nextDay);
             }
