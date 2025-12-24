@@ -3529,6 +3529,17 @@
                 initialView: 'dayGridMonth',
 
                 dayCellDidMount: function(info) {
+                      const today = new Date();
+            today.setHours(0,0,0,0); // normalize today to midnight
+            const cellDate = new Date(info.date);
+            cellDate.setHours(0,0,0,0);
+
+            // Skip past dates
+            if (cellDate < today) {
+                info.el.classList.add('fc-past'); // optional: style past dates
+                return; // do NOT append switch
+            }
+
                     const switchDiv = document.createElement('div');
                     switchDiv.className = 'form-check form-switch';
                     switchDiv.style.marginTop = '5px';
