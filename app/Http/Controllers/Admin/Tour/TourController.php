@@ -111,8 +111,8 @@ class TourController extends Controller
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $categoryIds = $general['category_ids'] ?? [];
-        $availabilityData = $request->input('availabilityData');
-        $availabilityDataDates = json_decode($availabilityData, true);
+        $availabilityDatesData = $request->input('availabilityData');
+        $availabilityDates = json_decode($availabilityDatesData, true);
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -178,8 +178,8 @@ class TourController extends Controller
 
         $tour->categories()->sync($categoryIds);
 
-        if ($availabilityDataDates && is_array($availabilityDataDates)) {
-            foreach ($availabilityDataDates as $date => $isAvailable) {
+        if ($$availabilityDates && is_array($$availabilityDates)) {
+            foreach ($$availabilityDates as $date => $isAvailable) {
                 TourAvailability::create([
                     'tour_id' => $tour->id,
                     'date' => $date,
@@ -405,8 +405,8 @@ class TourController extends Controller
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $categoryIds = $general['category_ids'] ?? [];
-        $availabilityData = $request->input('availabilityData');
-        $availabilityDataDates = json_decode($availabilityData, true);
+        $availabilityDatesData = $request->input('availabilityData');
+        $availabilityDates = json_decode($availabilityDatesData, true);
 
 
         $tour->update([
@@ -474,8 +474,8 @@ class TourController extends Controller
 
         $tour->categories()->sync($categoryIds);
 
-        if ($availabilityDataDates && is_array($availabilityDataDates)) {
-            foreach ($availabilityDataDates as $date => $isAvailable) {
+        if ($availabilityDates && is_array($availabilityDates)) {
+            foreach ($availabilityDates as $date => $isAvailable) {
                 TourAvailability::updateOrCreate(
                     [
                         'tour_id' => $tour->id,

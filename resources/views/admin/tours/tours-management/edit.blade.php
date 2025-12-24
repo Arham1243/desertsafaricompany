@@ -158,7 +158,8 @@
                                                         class="text-danger">*</span> <span class="text-dark ps-2">(Tour
                                                         will appear on these selected category pages)</span></label>
                                                 <select name="tour[general][category_ids][]" class="select2-select"
-                                                    data-error="General > Categories" data-required should-sort="false" multiple>
+                                                    data-error="General > Categories" data-required should-sort="false"
+                                                    multiple>
                                                     {!! renderCategoriesMulti($categories, $tourCategoryIds) !!}
                                                 </select>
                                             </div>
@@ -184,7 +185,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        
+
 
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
@@ -793,8 +794,7 @@
                                                 id="enable_location_switch" x-model="enableItinerary"
                                                 @change="enableItinerary = enableItinerary ? 1 : 0"
                                                 value="{{ $tour->enable_location ?? 1 }}"
-                                                {{ $tour->enable_location == 1 ? 'checked' : '' }}
-                                                name="enable_location">
+                                                {{ $tour->enable_location == 1 ? 'checked' : '' }} name="enable_location">
                                             <label class="form-check-label" for="enable_location_switch">Enabled</label>
                                         </div>
                                     </div>
@@ -1604,9 +1604,8 @@
                                                     <div class="title title--sm mb-0">Pricing Tagline:</div>
                                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                                         data-disabled-text="Disabled">
-                                                        <input data-toggle-switch class="form-check-input"
-                                                            type="checkbox" id="pricing_tagline_enabled"
-                                                            value="1"
+                                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                            id="pricing_tagline_enabled" value="1"
                                                             name="tour[pricing][pricing_tagline][enabled]"
                                                             x-model="taglineEnabled">
                                                         <label class="form-check-label"
@@ -2211,148 +2210,167 @@
                                                                                                     :name="`tour[pricing][promo][original_price][]`"
                                                                                                     x-model="promo.price">
                                                                                             </div>
-                                                                                               <div class="row mt-3">
+                                                                                            <div class="row mt-3">
                                                                                                 <div class="col-md-6">
-                                                                                                <label
-                                                                                                    class="title">Min:</label>
-                                                                                                <input type="number"
-                                                                                                    class="field"
-                                                                                                    step="1"
-                                                                                                    min="0"
-                                                                                                    :name="`tour[pricing][promo][min_person][]`"
-                                                                                                    x-model="promo.min_person">
-                                                                                            </div>
+                                                                                                    <label
+                                                                                                        class="title">Min:</label>
+                                                                                                    <input type="number"
+                                                                                                        class="field"
+                                                                                                        step="1"
+                                                                                                        min="0"
+                                                                                                        :name="`tour[pricing][promo][min_person][]`"
+                                                                                                        x-model="promo.min_person">
+                                                                                                </div>
                                                                                                 <div class="col-md-6">
-                                                                                                <label
-                                                                                                    class="title">Max:</label>
-                                                                                                <input type="number"
-                                                                                                    class="field"
-                                                                                                    step="1"
-                                                                                                    min="0"
-                                                                                                    :name="`tour[pricing][promo][max_person][]`"
-                                                                                                    x-model="promo.max_person">
-                                                                                                    </div>
+                                                                                                    <label
+                                                                                                        class="title">Max:</label>
+                                                                                                    <input type="number"
+                                                                                                        class="field"
+                                                                                                        step="1"
+                                                                                                        min="0"
+                                                                                                        :name="`tour[pricing][promo][max_person][]`"
+                                                                                                        x-model="promo.max_person">
+                                                                                                </div>
                                                                                             </div>
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td style="width: 19%">
-                                                                                            <div
-                                                                                                class="form-check d-flex justify-content-center">
-                                                                                                <input type="hidden"
-                                                                                                    :name="`tour[pricing][promo][promo_is_free][]`"
-                                                                                                    :value="promo.is_free ? 1 :
-                                                                                                        0">
-                                                                                                <input type="checkbox"
-                                                                                                    class="form-check-input"
-                                                                                                    style="scale: 1.5"
-                                                                                                    x-model="promo.is_free">
-                                                                                            </div>
-                                                                                        </td>
-                                                                                        <td>
-                                                                                            <button type="button"
-                                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                                @click="removeRow(index)"
-                                                                                                x-bind:disabled="promos.length === 1">
-                                                                                                <i
-                                                                                                    class='bx bxs-trash-alt'></i>
-                                                                                            </button>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </template>
-                                                                            </tbody>
-                                                                        </table>
-
-                                                                        <button type="button" class="themeBtn ms-auto"
-                                                                            @click="addRow()">
-                                                                            Add <i class="bx bx-plus"></i>
-                                                                        </button>
                                                                     </div>
+                                                                    </td>
+                                                                    <td style="width: 19%">
+                                                                        <div
+                                                                            class="form-check d-flex justify-content-center">
+                                                                            <input type="hidden"
+                                                                                :name="`tour[pricing][promo][promo_is_free][]`"
+                                                                                :value="promo.is_free ? 1 :
+                                                                                    0">
+                                                                            <input type="checkbox"
+                                                                                class="form-check-input"
+                                                                                style="scale: 1.5"
+                                                                                x-model="promo.is_free">
+                                                                        </div>
+                                                                    </td>
+                                                                    <td>
+                                                                        <button type="button"
+                                                                            class="delete-btn ms-auto delete-btn--static"
+                                                                            @click="removeRow(index)"
+                                                                            x-bind:disabled="promos.length === 1">
+                                                                            <i class='bx bxs-trash-alt'></i>
+                                                                        </button>
+                                                                    </td>
+                                                                    </tr>
+                                                                    </template>
+                                                                    </tbody>
+                                                                    </table>
+
+                                                                    <button type="button" class="themeBtn ms-auto"
+                                                                        @click="addRow()">
+                                                                        Add <i class="bx bx-plus"></i>
+                                                                    </button>
                                                                 </div>
-                                                                <div x-data="{ enablePromoAddOns: {{ $tour->enable_promo_addOns == '1' ? '1' : '0' }} }">
-                                                                    <div x-data="promoAddons()"
-                                                                        class="repeater-table my-4">
-                                                                        <div class="form-fields">
-                                                                            <label class="title title--sm">Promo
-                                                                                Addons:</label>
+                                                            </div>
+                                                            <div x-data="{ enablePromoAddOns: {{ $tour->enable_promo_addOns == '1' ? '1' : '0' }} }">
+                                                                <div x-data="promoAddons()"
+                                                                    class="repeater-table my-4">
+                                                                    <div class="form-fields">
+                                                                        <label class="title title--sm">Promo
+                                                                            Addons:</label>
+                                                                    </div>
+                                                                    <div class="form-fields">
+                                                                        <div class="form-check">
+                                                                            <input class="form-check-input"
+                                                                                type="checkbox" id="enable_promo_addOns"
+                                                                                {{ $tour->enable_promo_addOns == '1' ? 'checked' : '' }}
+                                                                                value="1"
+                                                                                name="tour[pricing][enable_promo_addOns]"
+                                                                                x-model="enablePromoAddOns"
+                                                                                @change="enablePromoAddOns = enablePromoAddOns ? 1 : 0">
+                                                                            <label class="form-check-label"
+                                                                                for="enable_promo_addOns">
+                                                                                Enable Addons
+                                                                            </label>
                                                                         </div>
-                                                                        <div class="form-fields">
-                                                                            <div class="form-check">
-                                                                                <input class="form-check-input"
-                                                                                    type="checkbox"
-                                                                                    id="enable_promo_addOns"
-                                                                                    {{ $tour->enable_promo_addOns == '1' ? 'checked' : '' }}
-                                                                                    value="1"
-                                                                                    name="tour[pricing][enable_promo_addOns]"
-                                                                                    x-model="enablePromoAddOns"
-                                                                                    @change="enablePromoAddOns = enablePromoAddOns ? 1 : 0">
-                                                                                <label class="form-check-label"
-                                                                                    for="enable_promo_addOns">
-                                                                                    Enable Addons
-                                                                                </label>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div x-show="enablePromoAddOns == 1">
-                                                                            <template x-for="(addon, index) in addons"
-                                                                                :key="index">
-                                                                                <div class="border p-3 rounded mb-3">
-                                                                                    <div
-                                                                                        class="row g-3 align-items-center">
-                                                                                        <div class="col-md-12">
-                                                                                            <label
-                                                                                                class="title">Type:</label>
-                                                                                            <select class="field w-100"
-                                                                                                x-model="addon.type"
-                                                                                                :name="`tour[pricing][promo][addOns][${index}][type]`">
-                                                                                                <option value="simple">
-                                                                                                    Simple
-                                                                                                </option>
-                                                                                                <option value="timeslot">
-                                                                                                    Timeslot
-                                                                                                </option>
-                                                                                            </select>
-                                                                                        </div>
+                                                                    </div>
+                                                                    <div x-show="enablePromoAddOns == 1">
+                                                                        <template x-for="(addon, index) in addons"
+                                                                            :key="index">
+                                                                            <div class="border p-3 rounded mb-3">
+                                                                                <div class="row g-3 align-items-center">
+                                                                                    <div class="col-md-12">
+                                                                                        <label
+                                                                                            class="title">Type:</label>
+                                                                                        <select class="field w-100"
+                                                                                            x-model="addon.type"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][type]`">
+                                                                                            <option value="simple">
+                                                                                                Simple
+                                                                                            </option>
+                                                                                            <option value="timeslot">
+                                                                                                Timeslot
+                                                                                            </option>
+                                                                                        </select>
+                                                                                    </div>
 
-                                                                                        <div class="col-md-11">
-                                                                                            <label class="title">Addon
-                                                                                                Title:</label>
-                                                                                            <textarea rows="3" class="field w-100" x-model="addon.title"
-                                                                                                :name="`tour[pricing][promo][addOns][${index}][title]`"></textarea>
-                                                                                        </div>
+                                                                                    <div class="col-md-11">
+                                                                                        <label class="title">Addon
+                                                                                            Title:</label>
+                                                                                        <textarea rows="3" class="field w-100" x-model="addon.title"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][title]`"></textarea>
+                                                                                    </div>
 
-                                                                                        <div
-                                                                                            class="col-md-1 text-end mb-2">
-                                                                                            <button type="button"
-                                                                                                class="delete-btn delete-btn--static px-3 mx-auto"
-                                                                                                @click="remove(index)">
-                                                                                                <i
-                                                                                                    class='bx bxs-trash-alt'></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>  
-                                                                                    <div x-show="addon.type === 'simple'"
-                                                                                        class="row mt-3">
+                                                                                    <div class="col-md-1 text-end mb-2">
+                                                                                        <button type="button"
+                                                                                            class="delete-btn delete-btn--static px-3 mx-auto"
+                                                                                            @click="remove(index)">
+                                                                                            <i
+                                                                                                class='bx bxs-trash-alt'></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div x-show="addon.type === 'simple'"
+                                                                                    class="row mt-3">
+                                                                                    <div class="col-md-6">
+                                                                                        <label
+                                                                                            class="title">Price:</label>
+                                                                                        <input type="number"
+                                                                                            class="field w-100"
+                                                                                            min="0"
+                                                                                            step="0.01"
+                                                                                            x-model="addon.price"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][price]`">
+                                                                                    </div>
+                                                                                    <div class="col-md-6">
+                                                                                        <label class="title">Discount
+                                                                                            %:</label>
+                                                                                        <input type="number"
+                                                                                            class="field w-100"
+                                                                                            min="0"
+                                                                                            max="99"
+                                                                                            step="0.01"
+                                                                                            x-model="addon.discounted_percent"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][discounted_percent]`">
+                                                                                    </div>
+                                                                                    <div class="col-md-6 mt-3">
+                                                                                        <label class="title">Min:</label>
+                                                                                        <input type="number"
+                                                                                            class="field w-100"
+                                                                                            step="1"
+                                                                                            min="0"
+                                                                                            x-model="addon.min_person"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][min_person]`">
+                                                                                    </div>
+                                                                                    <div class="col-md-6 mt-3">
+                                                                                        <label class="title">Max:</label>
+                                                                                        <input type="number"
+                                                                                            class="field w-100"
+                                                                                            step="1"
+                                                                                            min="0"
+                                                                                            x-model="addon.max_person"
+                                                                                            :name="`tour[pricing][promo][addOns][${index}][max_person]`">
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div x-show="addon.type === 'timeslot'"
+                                                                                    class="mt-3">
+                                                                                    <div class="row mb-3">
                                                                                         <div class="col-md-6">
-                                                                                            <label
-                                                                                                class="title">Price:</label>
-                                                                                            <input type="number"
-                                                                                                class="field w-100"
-                                                                                                min="0"
-                                                                                                step="0.01"
-                                                                                                x-model="addon.price"
-                                                                                                :name="`tour[pricing][promo][addOns][${index}][price]`">
-                                                                                        </div>
-                                                                                        <div class="col-md-6">
-                                                                                            <label class="title">Discount
-                                                                                                %:</label>
-                                                                                            <input type="number"
-                                                                                                class="field w-100"
-                                                                                                min="0"
-                                                                                                max="99"
-                                                                                                step="0.01"
-                                                                                                x-model="addon.discounted_percent"
-                                                                                                :name="`tour[pricing][promo][addOns][${index}][discounted_percent]`">
-                                                                                        </div>
-                                                                                        <div class="col-md-6 mt-3">
                                                                                             <label
                                                                                                 class="title">Min:</label>
                                                                                             <input type="number"
@@ -2362,7 +2380,7 @@
                                                                                                 x-model="addon.min_person"
                                                                                                 :name="`tour[pricing][promo][addOns][${index}][min_person]`">
                                                                                         </div>
-                                                                                        <div class="col-md-6 mt-3">
+                                                                                        <div class="col-md-6">
                                                                                             <label
                                                                                                 class="title">Max:</label>
                                                                                             <input type="number"
@@ -2373,350 +2391,87 @@
                                                                                                 :name="`tour[pricing][promo][addOns][${index}][max_person]`">
                                                                                         </div>
                                                                                     </div>
-
-                                                                                    <div x-show="addon.type === 'timeslot'"
-                                                                                        class="mt-3">
-                                                                                        <div class="row mb-3">
-                                                                                            <div class="col-md-6">
-                                                                                                <label
-                                                                                                    class="title">Min:</label>
-                                                                                                <input type="number"
+                                                                                    <template
+                                                                                        x-for="(slot, sIndex) in addon.slots"
+                                                                                        :key="sIndex">
+                                                                                        <div
+                                                                                            class="row g-3 align-items-end mb-3">
+                                                                                            <div class="col-md">
+                                                                                                <label class="title">Time
+                                                                                                    Slot:</label>
+                                                                                                <select
                                                                                                     class="field w-100"
-                                                                                                    step="1"
-                                                                                                    min="0"
-                                                                                                    x-model="addon.min_person"
-                                                                                                    :name="`tour[pricing][promo][addOns][${index}][min_person]`">
-                                                                                            </div>
-                                                                                            <div class="col-md-6">
-                                                                                                <label
-                                                                                                    class="title">Max:</label>
-                                                                                                <input type="number"
-                                                                                                    class="field w-100"
-                                                                                                    step="1"
-                                                                                                    min="0"
-                                                                                                    x-model="addon.max_person"
-                                                                                                    :name="`tour[pricing][promo][addOns][${index}][max_person]`">
-                                                                                            </div>
-                                                                                        </div>
-                                                                                        <template
-                                                                                            x-for="(slot, sIndex) in addon.slots"
-                                                                                            :key="sIndex">
-                                                                                            <div
-                                                                                                class="row g-3 align-items-end mb-3">
-                                                                                                <div class="col-md">
-                                                                                                    <label
-                                                                                                        class="title">Time
-                                                                                                        Slot:</label>
-                                                                                                    <select
-                                                                                                        class="field w-100"
-                                                                                                        x-model="slot.time"
-                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][time]`">
-                                                                                                        <option
-                                                                                                            value="">
-                                                                                                            Select Time
-                                                                                                        </option>
-                                                                                                        <template
-                                                                                                            x-for="slotOpt in timeSlots"
-                                                                                                            :key="slotOpt">
-                                                                                                            <option
-                                                                                                                :selected="slot.time ===
-                                                                                                                    slotOpt"
-                                                                                                                :value="slotOpt"
-                                                                                                                x-text="formatTime(slotOpt)">
-                                                                                                            </option>
-                                                                                                        </template>
-                                                                                                    </select>
-                                                                                                </div>
-
-                                                                                                <div class="col-md">
-                                                                                                    <label
-                                                                                                        class="title">Price:</label>
-                                                                                                    <input type="number"
-                                                                                                        class="field w-100"
-                                                                                                        min="0"
-                                                                                                        step="0.01"
-                                                                                                        x-model="slot.price"
-                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][price]`">
-                                                                                                </div>
-
-                                                                                                <div class="col-md">
-                                                                                                    <label
-                                                                                                        class="title">Discount
-                                                                                                        %:</label>
-                                                                                                    <input type="number"
-                                                                                                        class="field w-100"
-                                                                                                        min="0"
-                                                                                                        max="99"
-                                                                                                        step="0.01"
-                                                                                                        x-model="slot.discountedPercent"
-                                                                                                        :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][discounted_percent]`">
-                                                                                                </div>
-
-                                                                                                <div
-                                                                                                    class="col-md-1 text-end mb-2">
-                                                                                                    <button type="button"
-                                                                                                        class="delete-btn delete-btn--static px-2"
-                                                                                                        @click="removeSlot(index, sIndex)">
-                                                                                                        <i
-                                                                                                            class='bx bxs-trash-alt'></i>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </template>
-
-                                                                                        <div class="text-end">
-                                                                                            <button type="button"
-                                                                                                class="themeBtn mt-2"
-                                                                                                @click="addSlot(index)">
-                                                                                                Add Timeslot <i
-                                                                                                    class="bx bx-plus"></i>
-                                                                                            </button>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </template>
-                                                                            <div class="text-end">
-                                                                                <button type="button"
-                                                                                    class="themeBtn mt-2"
-                                                                                    @click="add()">
-                                                                                    Add Addon <i class="bx bx-plus"></i>
-                                                                                </button>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 my-2">
-                                            <hr>
-                                        </div>
-                                        <div class="col-12" x-data="{ extraPrice: {{ $tour->is_extra_price_enabled == '1' ? '1' : '0' }} }">
-                                            <div class="row">
-                                                <div class="col-12 mb-2">
-                                                    <div class="form-fields">
-                                                        <div class="title title--sm mb-0">Extra Price:</div>
-                                                    </div>
-                                                    <div class="form-fields">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                name="tour[pricing][is_extra_price_enabled]"
-                                                                {{ $tour->is_extra_price_enabled == '1' ? 'checked' : '' }}
-                                                                id="enebled_extra_price"
-                                                                @change="extraPrice = extraPrice ? 1 : 0" value="1"
-                                                                x-model="extraPrice">
-                                                            <label class="form-check-label" for="enebled_extra_price">
-                                                                Enable extra price
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-12" x-show="extraPrice == 1">
-                                                    <div class="row">
-                                                        <div class="col-12 mt-3">
-                                                            <div class="form-fields">
-                                                                <div class="title text-dark">Extra Price:</div>
-                                                                <div class="repeater-table" data-repeater>
-                                                                    <table class="table table-bordered">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th scope="col">Name</th>
-                                                                                <th scope="col">Price</th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        @php
-                                                                            $tourExtraPrices = $tour->extra_prices
-                                                                                ? json_decode($tour->extra_prices)
-                                                                                : [
-                                                                                    [
-                                                                                        'name' => '',
-                                                                                        'price' => '',
-                                                                                    ],
-                                                                                ];
-
-                                                                        @endphp
-                                                                        <tbody data-repeater-list>
-                                                                            @foreach ($tourExtraPrices as $i => $extraPrice)
-                                                                                <tr data-repeater-item>
-                                                                                    <td>
-                                                                                        <input type="text"
-                                                                                            name="tour[pricing][extra_price][{{ $i }}][name]"
-                                                                                            class="field"
-                                                                                            value="{{ $extraPrice->name }}"
-                                                                                            placeholder="Extra Price Name">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <input type="number"
-                                                                                            step="0.01"
-                                                                                            min="0"
-                                                                                            value="{{ $extraPrice->price }}"
-                                                                                            name="tour[pricing][extra_price][{{ $i }}][price]"
-                                                                                            class="field">
-                                                                                    </td>
-                                                                                    <td>
-                                                                                        <button type="button"
-                                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                                            data-repeater-remove disabled>
-                                                                                            <i
-                                                                                                class='bx bxs-trash-alt'></i>
-                                                                                        </button>
-                                                                                    </td>
-                                                                                </tr>
-                                                                            @endforeach
-                                                                        </tbody>
-                                                                    </table>
-                                                                    <button type="button" class="themeBtn ms-auto"
-                                                                        data-repeater-create>Add <i
-                                                                            class="bx bx-plus"></i></button>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 my-2">
-                                            <hr>
-                                        </div>
-                                        <div class="col-12 mb-3">
-                                            <div class="col-12 mb-3" x-data="{ enableDiscountByPersons: {{ $tour->enable_discount_by_persons == '1' ? '1' : '0' }} }">
-                                                <div class="col-12 my-2">
-                                                    <div class="row">
-                                                        <div class="col-12 mb-2">
-                                                            <div class="form-fields">
-                                                                <div class="title title--sm mb-0">Discount by number of
-                                                                    people:</div>
-                                                            </div>
-                                                            <div class="form-fields">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="checkbox"
-                                                                        id="enable_discount_by_persons"
-                                                                        {{ $tour->enable_discount_by_persons == '1' ? 'checked' : '' }}
-                                                                        value="{{ $tour->enable_discount_by_persons }}"
-                                                                        name="tour[pricing][enable_discount_by_persons]"
-                                                                        x-model="enableDiscountByPersons"
-                                                                        @change="enableDiscountByPersons = enableDiscountByPersons ? 1 : 0">
-                                                                    <label class="form-check-label"
-                                                                        for="enable_discount_by_persons">
-                                                                        Enable discount
-                                                                    </label>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12" x-show="enableDiscountByPersons == 1">
-                                                            <div class="row">
-                                                                <div class="col-12 mt-3">
-                                                                    <div class="form-fields">
-                                                                        <div class="repeater-table" data-repeater>
-                                                                            <table class="table table-bordered">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th scope="col">
-                                                                                            No of people
-                                                                                        </th>
-                                                                                        <th scope="col">Discount
-                                                                                        </th>
-                                                                                        <th scope="col">Type</th>
-                                                                                        <th></th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                @php
-                                                                                    $tourDiscounts = $tour->discount_by_number_of_people
-                                                                                        ? json_decode(
-                                                                                            $tour->discount_by_number_of_people,
-                                                                                        )
-                                                                                        : null;
-                                                                                    $tourDiscounts = !empty(
-                                                                                        $tourDiscounts
-                                                                                    )
-                                                                                        ? $tourDiscounts
-                                                                                        : [
-                                                                                            'people_from' => [],
-                                                                                            'people_to' => [],
-                                                                                            'discount' => [],
-                                                                                            'type' => [],
-                                                                                        ];
-                                                                                    $people_froms =
-                                                                                        $tourDiscounts->people_from;
-                                                                                    $people_tos =
-                                                                                        $tourDiscounts->people_to;
-                                                                                    $discount_prices =
-                                                                                        $tourDiscounts->discount;
-                                                                                    $discount_types =
-                                                                                        $tourDiscounts->type;
-                                                                                @endphp
-
-                                                                                <tbody data-repeater-list>
-                                                                                    @foreach ($people_froms as $i => $people_from)
-                                                                                        <tr data-repeater-item>
-                                                                                            <td>
-                                                                                                <div class="row">
-                                                                                                    <div class="col-md-6">
-                                                                                                        <input
-                                                                                                            type="number"
-                                                                                                            min="0"
-                                                                                                            name="tour[pricing][discount][people_from][]"
-                                                                                                            class="field"
-                                                                                                            value="{{ $people_froms[$i] }}"
-                                                                                                            placeholder="from">
-                                                                                                    </div>
-                                                                                                    <div class="col-md-6">
-                                                                                                        <input
-                                                                                                            type="number"
-                                                                                                            min="0"
-                                                                                                            name="tour[pricing][discount][people_to][]"
-                                                                                                            class="field"
-                                                                                                            value="{{ $people_tos[$i] }}"
-                                                                                                            placeholder="to">
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <input type="number"
-                                                                                                    min="0"
-                                                                                                    name="tour[pricing][discount][discount][]"
-                                                                                                    value="{{ $discount_prices[$i] }}"
-                                                                                                    class="field"
-                                                                                                    placeholder="">
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <select class="field"
-                                                                                                    name="tour[pricing][discount][type][]">
-                                                                                                    <option value=""
-                                                                                                        selected>Select
-                                                                                                    </option>
-                                                                                                    <option value="fixed"
-                                                                                                        {{ $discount_types[$i] == 'fixed' ? 'selected' : '' }}>
-                                                                                                        Fixed</option>
+                                                                                                    x-model="slot.time"
+                                                                                                    :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][time]`">
                                                                                                     <option
-                                                                                                        value="percent"
-                                                                                                        {{ $discount_types[$i] == 'percent' ? 'selected' : '' }}>
-                                                                                                        Percent</option>
+                                                                                                        value="">
+                                                                                                        Select Time
+                                                                                                    </option>
+                                                                                                    <template
+                                                                                                        x-for="slotOpt in timeSlots"
+                                                                                                        :key="slotOpt">
+                                                                                                        <option
+                                                                                                            :selected="slot.time ===
+                                                                                                                slotOpt"
+                                                                                                            :value="slotOpt"
+                                                                                                            x-text="formatTime(slotOpt)">
+                                                                                                        </option>
+                                                                                                    </template>
                                                                                                 </select>
-                                                                                            </td>
-                                                                                            <td>
+                                                                                            </div>
+
+                                                                                            <div class="col-md">
+                                                                                                <label
+                                                                                                    class="title">Price:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field w-100"
+                                                                                                    min="0"
+                                                                                                    step="0.01"
+                                                                                                    x-model="slot.price"
+                                                                                                    :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][price]`">
+                                                                                            </div>
+
+                                                                                            <div class="col-md">
+                                                                                                <label
+                                                                                                    class="title">Discount
+                                                                                                    %:</label>
+                                                                                                <input type="number"
+                                                                                                    class="field w-100"
+                                                                                                    min="0"
+                                                                                                    max="99"
+                                                                                                    step="0.01"
+                                                                                                    x-model="slot.discountedPercent"
+                                                                                                    :name="`tour[pricing][promo][addOns][${index}][slots][${sIndex}][discounted_percent]`">
+                                                                                            </div>
+
+                                                                                            <div
+                                                                                                class="col-md-1 text-end mb-2">
                                                                                                 <button type="button"
-                                                                                                    class="delete-btn ms-auto delete-btn--static"
-                                                                                                    data-repeater-remove
-                                                                                                    disabled>
+                                                                                                    class="delete-btn delete-btn--static px-2"
+                                                                                                    @click="removeSlot(index, sIndex)">
                                                                                                     <i
                                                                                                         class='bx bxs-trash-alt'></i>
                                                                                                 </button>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    @endforeach
-                                                                                </tbody>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </template>
 
-                                                                            </table>
-                                                                            <button type="button"
-                                                                                class="themeBtn ms-auto"
-                                                                                data-repeater-create>Add
-                                                                                <i class="bx bx-plus"></i></button>
+                                                                                    <div class="text-end">
+                                                                                        <button type="button"
+                                                                                            class="themeBtn mt-2"
+                                                                                            @click="addSlot(index)">
+                                                                                            Add Timeslot <i
+                                                                                                class="bx bx-plus"></i>
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </template>
+                                                                        <div class="text-end">
+                                                                            <button type="button" class="themeBtn mt-2"
+                                                                                @click="add()">
+                                                                                Add Addon <i class="bx bx-plus"></i>
+                                                                            </button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -2726,1069 +2481,1289 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 my-2">
-                                            <hr>
-                                        </div>
-                                        <div class="col-12 my-2" x-data="{ serviceFee: {{ $tour->enabled_custom_service_fee == '1' ? '1' : '0' }} }">
-                                            <div class="row">
-                                                <div class="col-12 mb-2">
-                                                    <div class="form-fields">
-                                                        <div class="title title--sm mb-0">Service fee:</div>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <hr>
+                                    </div>
+                                    <div class="col-12" x-data="{ extraPrice: {{ $tour->is_extra_price_enabled == '1' ? '1' : '0' }} }">
+                                        <div class="row">
+                                            <div class="col-12 mb-2">
+                                                <div class="form-fields">
+                                                    <div class="title title--sm mb-0">Extra Price:</div>
+                                                </div>
+                                                <div class="form-fields">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            name="tour[pricing][is_extra_price_enabled]"
+                                                            {{ $tour->is_extra_price_enabled == '1' ? 'checked' : '' }}
+                                                            id="enebled_extra_price"
+                                                            @change="extraPrice = extraPrice ? 1 : 0" value="1"
+                                                            x-model="extraPrice">
+                                                        <label class="form-check-label" for="enebled_extra_price">
+                                                            Enable extra price
+                                                        </label>
                                                     </div>
-                                                    <div class="form-fields">
-                                                        <div class="form-check">
-                                                            <input class="form-check-input" type="checkbox"
-                                                                id="enebled_service_fee"
-                                                                {{ $tour->enabled_custom_service_fee == '1' ? 'checked' : '' }}
-                                                                name="tour[pricing][enabled_custom_service_fee]"
-                                                                value="{{ $tour->enabled_custom_service_fee }}"
-                                                                x-model="serviceFee"
-                                                                @change="serviceFee = serviceFee ? 1 : 0">
-                                                            <label class="form-check-label" for="enebled_service_fee">
-                                                                Enable service fee
-                                                            </label>
+                                                </div>
+                                            </div>
+                                            <div class="col-12" x-show="extraPrice == 1">
+                                                <div class="row">
+                                                    <div class="col-12 mt-3">
+                                                        <div class="form-fields">
+                                                            <div class="title text-dark">Extra Price:</div>
+                                                            <div class="repeater-table" data-repeater>
+                                                                <table class="table table-bordered">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">Name</th>
+                                                                            <th scope="col">Price</th>
+                                                                            <th></th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    @php
+                                                                        $tourExtraPrices = $tour->extra_prices
+                                                                            ? json_decode($tour->extra_prices)
+                                                                            : [
+                                                                                [
+                                                                                    'name' => '',
+                                                                                    'price' => '',
+                                                                                ],
+                                                                            ];
+
+                                                                    @endphp
+                                                                    <tbody data-repeater-list>
+                                                                        @foreach ($tourExtraPrices as $i => $extraPrice)
+                                                                            <tr data-repeater-item>
+                                                                                <td>
+                                                                                    <input type="text"
+                                                                                        name="tour[pricing][extra_price][{{ $i }}][name]"
+                                                                                        class="field"
+                                                                                        value="{{ $extraPrice->name }}"
+                                                                                        placeholder="Extra Price Name">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <input type="number" step="0.01"
+                                                                                        min="0"
+                                                                                        value="{{ $extraPrice->price }}"
+                                                                                        name="tour[pricing][extra_price][{{ $i }}][price]"
+                                                                                        class="field">
+                                                                                </td>
+                                                                                <td>
+                                                                                    <button type="button"
+                                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                                        data-repeater-remove disabled>
+                                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                                    </button>
+                                                                                </td>
+                                                                            </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                                <button type="button" class="themeBtn ms-auto"
+                                                                    data-repeater-create>Add <i
+                                                                        class="bx bx-plus"></i></button>
+                                                            </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="col-12" x-show="serviceFee == 1">
-                                                    <div class="form-fields mt-2">
-                                                        <input step="0.01" min="0" type="number"
-                                                            name="tour[pricing][service_fee_price]" class="field"
-                                                            value="{{ old('tour[pricing][service_fee_price]', $tour->service_fee_price) }}"
-                                                            data-error="Price">
-                                                        @error('tour[pricing][service_fee_price]')
-                                                            <div class="text-danger">{{ $message }}</div>
-                                                        @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <hr>
+                                    </div>
+                                    <div class="col-12 mb-3">
+                                        <div class="col-12 mb-3" x-data="{ enableDiscountByPersons: {{ $tour->enable_discount_by_persons == '1' ? '1' : '0' }} }">
+                                            <div class="col-12 my-2">
+                                                <div class="row">
+                                                    <div class="col-12 mb-2">
+                                                        <div class="form-fields">
+                                                            <div class="title title--sm mb-0">Discount by number of
+                                                                people:</div>
+                                                        </div>
+                                                        <div class="form-fields">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                    id="enable_discount_by_persons"
+                                                                    {{ $tour->enable_discount_by_persons == '1' ? 'checked' : '' }}
+                                                                    value="{{ $tour->enable_discount_by_persons }}"
+                                                                    name="tour[pricing][enable_discount_by_persons]"
+                                                                    x-model="enableDiscountByPersons"
+                                                                    @change="enableDiscountByPersons = enableDiscountByPersons ? 1 : 0">
+                                                                <label class="form-check-label"
+                                                                    for="enable_discount_by_persons">
+                                                                    Enable discount
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12" x-show="enableDiscountByPersons == 1">
+                                                        <div class="row">
+                                                            <div class="col-12 mt-3">
+                                                                <div class="form-fields">
+                                                                    <div class="repeater-table" data-repeater>
+                                                                        <table class="table table-bordered">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th scope="col">
+                                                                                        No of people
+                                                                                    </th>
+                                                                                    <th scope="col">Discount
+                                                                                    </th>
+                                                                                    <th scope="col">Type</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            @php
+                                                                                $tourDiscounts = $tour->discount_by_number_of_people
+                                                                                    ? json_decode(
+                                                                                        $tour->discount_by_number_of_people,
+                                                                                    )
+                                                                                    : null;
+                                                                                $tourDiscounts = !empty($tourDiscounts)
+                                                                                    ? $tourDiscounts
+                                                                                    : [
+                                                                                        'people_from' => [],
+                                                                                        'people_to' => [],
+                                                                                        'discount' => [],
+                                                                                        'type' => [],
+                                                                                    ];
+                                                                                $people_froms =
+                                                                                    $tourDiscounts->people_from;
+                                                                                $people_tos = $tourDiscounts->people_to;
+                                                                                $discount_prices =
+                                                                                    $tourDiscounts->discount;
+                                                                                $discount_types = $tourDiscounts->type;
+                                                                            @endphp
+
+                                                                            <tbody data-repeater-list>
+                                                                                @foreach ($people_froms as $i => $people_from)
+                                                                                    <tr data-repeater-item>
+                                                                                        <td>
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-6">
+                                                                                                    <input type="number"
+                                                                                                        min="0"
+                                                                                                        name="tour[pricing][discount][people_from][]"
+                                                                                                        class="field"
+                                                                                                        value="{{ $people_froms[$i] }}"
+                                                                                                        placeholder="from">
+                                                                                                </div>
+                                                                                                <div class="col-md-6">
+                                                                                                    <input type="number"
+                                                                                                        min="0"
+                                                                                                        name="tour[pricing][discount][people_to][]"
+                                                                                                        class="field"
+                                                                                                        value="{{ $people_tos[$i] }}"
+                                                                                                        placeholder="to">
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <input type="number"
+                                                                                                min="0"
+                                                                                                name="tour[pricing][discount][discount][]"
+                                                                                                value="{{ $discount_prices[$i] }}"
+                                                                                                class="field"
+                                                                                                placeholder="">
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <select class="field"
+                                                                                                name="tour[pricing][discount][type][]">
+                                                                                                <option value=""
+                                                                                                    selected>Select
+                                                                                                </option>
+                                                                                                <option value="fixed"
+                                                                                                    {{ $discount_types[$i] == 'fixed' ? 'selected' : '' }}>
+                                                                                                    Fixed</option>
+                                                                                                <option value="percent"
+                                                                                                    {{ $discount_types[$i] == 'percent' ? 'selected' : '' }}>
+                                                                                                    Percent</option>
+                                                                                            </select>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <button type="button"
+                                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                                data-repeater-remove
+                                                                                                disabled>
+                                                                                                <i
+                                                                                                    class='bx bxs-trash-alt'></i>
+                                                                                            </button>
+                                                                                        </td>
+                                                                                    </tr>
+                                                                                @endforeach
+                                                                            </tbody>
+
+                                                                        </table>
+                                                                        <button type="button" class="themeBtn ms-auto"
+                                                                            data-repeater-create>Add
+                                                                            <i class="bx bx-plus"></i></button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 mt-2">
-                                            <div class="form-fields mb-4">
-                                                <div class="d-flex align-items-center gap-3 mb-2">
-                                                    <span class="title mb-0">Whatsapp Number:</span>
-                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                        data-disabled-text="Disabled">
-                                                        <input class="form-check-input" data-toggle-switch
-                                                            type="checkbox" id="enable-section"
-                                                            {{ $tour->show_phone == '1' ? 'checked' : '' }}
-                                                            value="1" name="tour[pricing][show_phone]">
-                                                        <label class="form-check-label"
-                                                            for="enable-section">Enabled</label>
+                                    </div>
+                                    <div class="col-12 my-2">
+                                        <hr>
+                                    </div>
+                                    <div class="col-12 my-2" x-data="{ serviceFee: {{ $tour->enabled_custom_service_fee == '1' ? '1' : '0' }} }">
+                                        <div class="row">
+                                            <div class="col-12 mb-2">
+                                                <div class="form-fields">
+                                                    <div class="title title--sm mb-0">Service fee:</div>
+                                                </div>
+                                                <div class="form-fields">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="enebled_service_fee"
+                                                            {{ $tour->enabled_custom_service_fee == '1' ? 'checked' : '' }}
+                                                            name="tour[pricing][enabled_custom_service_fee]"
+                                                            value="{{ $tour->enabled_custom_service_fee }}"
+                                                            x-model="serviceFee"
+                                                            @change="serviceFee = serviceFee ? 1 : 0">
+                                                        <label class="form-check-label" for="enebled_service_fee">
+                                                            Enable service fee
+                                                        </label>
                                                     </div>
                                                 </div>
-                                                <div data-flag-input-wrapper>
-                                                    <input type="hidden" name="tour[pricing][phone_dial_code]"
-                                                        data-flag-input-dial-code value="{{ $tour->phone_dial_code }}">
-                                                    <input type="hidden" name="tour[pricing][phone_country_code]"
-                                                        data-flag-input-country-code
-                                                        value="{{ $tour->phone_country_code }}">
-                                                    <input type="text" name="tour[pricing][phone_number]"
-                                                        class="field flag-input" data-flag-input
-                                                        value="{{ old('tour[pricing][phone_number]', $tour->phone_number) }}"
-                                                        placeholder="Phone" data-error="phone" inputmode="numeric"
-                                                        pattern="[0-9]*"
-                                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');"
-                                                        maxlength="15">
-                                                </div>
-
-                                                @error('tour[pricing][phone_number]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
                                             </div>
+                                            <div class="col-12" x-show="serviceFee == 1">
+                                                <div class="form-fields mt-2">
+                                                    <input step="0.01" min="0" type="number"
+                                                        name="tour[pricing][service_fee_price]" class="field"
+                                                        value="{{ old('tour[pricing][service_fee_price]', $tour->service_fee_price) }}"
+                                                        data-error="Price">
+                                                    @error('tour[pricing][service_fee_price]')
+                                                        <div class="text-danger">{{ $message }}</div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-2">
+                                        <div class="form-fields mb-4">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <span class="title mb-0">Whatsapp Number:</span>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input class="form-check-input" data-toggle-switch type="checkbox"
+                                                        id="enable-section"
+                                                        {{ $tour->show_phone == '1' ? 'checked' : '' }} value="1"
+                                                        name="tour[pricing][show_phone]">
+                                                    <label class="form-check-label" for="enable-section">Enabled</label>
+                                                </div>
+                                            </div>
+                                            <div data-flag-input-wrapper>
+                                                <input type="hidden" name="tour[pricing][phone_dial_code]"
+                                                    data-flag-input-dial-code value="{{ $tour->phone_dial_code }}">
+                                                <input type="hidden" name="tour[pricing][phone_country_code]"
+                                                    data-flag-input-country-code
+                                                    value="{{ $tour->phone_country_code }}">
+                                                <input type="text" name="tour[pricing][phone_number]"
+                                                    class="field flag-input" data-flag-input
+                                                    value="{{ old('tour[pricing][phone_number]', $tour->phone_number) }}"
+                                                    placeholder="Phone" data-error="phone" inputmode="numeric"
+                                                    pattern="[0-9]*"
+                                                    oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                    maxlength="15">
+                                            </div>
+
+                                            @error('tour[pricing][phone_number]')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div x-show="optionTab === 'availability'" class="availability-options">
-                            <div class="form-box form-box--calendar">
+                    </div>
+                    <div x-show="optionTab === 'availability'" class="availability-options">
+                        <div class="form-box form-box--calendar">
                             <input type="hidden" name="availabilityData" id="availabilityInput">
                             <div id='calendar'></div>
                         </div>
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Availability</div>
-                                </div>
-                                @php
-                                                
-                                                $availability_advance_booking  = $tour->availability_advance_booking ? json_decode($tour->availability_advance_booking,true) : [
-                                                    'advance_booking_type' => 'immediately',
-                                                    'advance_booking_days' => null,
-                                                    'advance_booking_hours' => null,
-                                                ];
-                                                @endphp
-                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
-
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <div class="form-fields">
-                                                    <div class="title">Open Hours:</div>
-                                                    <div class="form-check">
-                                                        <input type="hidden" name="tour[availability][is_open_hours]" x-model="openHours">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="openHours"
-                                                            :checked="openHours == 1"
-                                                            @change="openHours = $event.target.checked ? 1 : 0;">
-                                                        <label class="form-check-label" for="openHours">
-                                                            Enable Open Hours
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12" x-show="openHours == 1">
-                                                <div class="row my-2">
-                                                    <div class="repeater-table form-fields">
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Day of Week </th>
-                                                                    <th scope="col">Open</th>
-                                                                    <th scope="col">Close</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                @php
-                                                                    $days = [
-                                                                        'monday',
-                                                                        'tuesday',
-                                                                        'wednesday',
-                                                                        'thursday',
-                                                                        'friday',
-                                                                    ];
-                                                                    $timeSlots = [
-                                                                        '00:00:00',
-                                                                        '02:00:00',
-                                                                        '03:00:00',
-                                                                        '04:00:00',
-                                                                        '05:00:00',
-                                                                        '06:00:00',
-                                                                        '07:00:00',
-                                                                        '08:00:00',
-                                                                        '09:00:00',
-                                                                        '10:00:00',
-                                                                        '11:00:00',
-                                                                        '12:00:00',
-                                                                        '13:00:00',
-                                                                        '14:00:00',
-                                                                        '15:00:00',
-                                                                        '16:00:00',
-                                                                        '17:00:00',
-                                                                        '18:00:00',
-                                                                        '19:00:00',
-                                                                        '20:00:00',
-                                                                        '21:00:00',
-                                                                        '22:00:00',
-                                                                        '23:00:00',
-                                                                    ];
-
-                                                                    $openHour = $tour->availability_open_hours;
-
-                                                                    if (is_string($openHour)) {
-                                                                        $openHour = json_decode($openHour, true) ?? [];
-                                                                    } elseif (!is_array($openHour)) {
-                                                                        $openHour = [];
-                                                                    }
-
-                                                                    $openHour = array_replace(
-                                                                        array_fill(0, count($days), [
-                                                                            'enabled' => '',
-                                                                            'open_time' => '',
-                                                                            'close_time' => '',
-                                                                        ]),
-                                                                        $openHour,
-                                                                    );
-                                                                @endphp
-                                                                @for ($i = 0; $i < count($days); $i++)
-                                                                    @php
-                                                                        $day = $days[$i];
-                                                                        $dayData = $openHour[$i] ?? [
-                                                                            'enabled' => '',
-                                                                            'open_time' => '',
-                                                                            'close_time' => '',
-                                                                        ];
-                                                                    @endphp
-                                                                    <tr>
-                                                                        <td>
-                                                                            <input
-                                                                                name="tour[availability][open_hours][{{ $i }}][day]"
-                                                                                type="text"
-                                                                                value="{{ $day }}"
-                                                                                class="field" readonly>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select class="field"
-                                                                                name="tour[availability][open_hours][{{ $i }}][open_time]">
-                                                                                <option value="">Select Time
-                                                                                </option>
-                                                                                @foreach ($timeSlots as $slot)
-                                                                                    <option value="{{ $slot }}"
-                                                                                        {{ $dayData['open_time'] === $slot ? 'selected' : '' }}>
-                                                                                        {{ date('H:i', strtotime($slot)) }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </td>
-                                                                        <td>
-                                                                            <select class="field"
-                                                                                name="tour[availability][open_hours][{{ $i }}][close_time]">
-                                                                                <option value="">Select Time
-                                                                                </option>
-                                                                                @foreach ($timeSlots as $slot)
-                                                                                    <option value="{{ $slot }}"
-                                                                                        {{ $dayData['close_time'] === $slot ? 'selected' : '' }}>
-                                                                                        {{ date('H:i', strtotime($slot)) }}
-                                                                                    </option>
-                                                                                @endforeach
-                                                                            </select>
-                                                                        </td>
-                                                                    </tr>
-                                                                @endfor
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mt-3">
-                                        <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <div class="form-fields">
-                                                    <div class="title">Advance Booking Time:</div>
-                                                    <div class="form-check">
-                                                        <input type="hidden" name="tour[availability][is_advance_booking]" x-model="advanceBooking">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="advanceBooking" :checked="advanceBooking == 1"
-                                                            @change="advanceBooking = $event.target.checked ? 1 : 0;">
-                                                        <label class="form-check-label" for="advanceBooking">
-                                                            Enable Advance Booking Time
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12" x-show="advanceBooking == 1">
-                                                <div class="row my-2">
-                                                    <div class="px-4 mx-2">
-                                                        <div class="form-check p-0 mb-4">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="tour[availability][advance_booking][advance_booking_type]"
-                                                                id="immediately_booking" x-model="advanceBookingType"
-                                                                value="immediately" {{ $availability_advance_booking['advance_booking_type'] === 'immediately' ? 'checked' : '' }}>
-                                                            <label class="form-check-label" for="immediately_booking">
-                                                                Travelers do not need to book in advance, and once completed,
-                                                                bookings can be used immediately.
-                                                            </label>
-                                                        </div>
-                                                        <div class="form-check d-flex align-items-center gap-2 p-0">
-                                                            <input class="form-check-input" type="radio"
-                                                                name="tour[availability][advance_booking][advance_booking_type]"
-                                                                id="custom_booking" x-model="advanceBookingType"
-                                                                value="custom_booking" {{ $availability_advance_booking['advance_booking_type'] === 'custom_booking' ? 'checked' : '' }}>
-                                                            <label class="form-check-label d-flex align-items-center  gap-3"
-                                                                for="custom_booking">Activities
-                                                                Must be booked before
-
-                                                                <div class="form-fields my-0">
-                                                                    <label class="title">Days</label>
-                                                                    <input style="width: 150px !important;" type="text" class="field"
-                                                                        name="tour[availability][advance_booking][days]"
-                                                                        value="{{ $availability_advance_booking['days'] ?? '' }}">
-                                                                </div>
-                                                                <div class="form-fields my-0">
-                                                                    <label class="title">Time</label>
-                                                                    <input style="width: 150px !important;" type="time" class="field"
-                                                                        name="tour[availability][advance_booking][time]"
-                                                                        value="{{ optional($availability_advance_booking)['time'] ?? '' }}">
-                                                                    
-                                                                </div>
-                                                                days before the day of travel.
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Availability</div>
                             </div>
-                        </div>
-                        <div x-show="optionTab === 'addOn'" class="addOn-options">
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Add On</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <div x-data="repeaterFormForAddOns({{ $tour->addOns->toJson() }})" x-init="initChoices()">
-                                            <div class="repeater-table">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Section</th>
-                                                            <th class="text-end">Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <template x-for="(addOn, index) in formData.addOns"
-                                                            :key="index">
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="form-fields">
-                                                                        <label class="title">Heading</label>
-                                                                        <input :name="`addOns[${index}][heading]`"
-                                                                            type="text" class="field"
-                                                                            x-model="addOn.heading">
-                                                                    </div>
+                            @php
 
-                                                                    <div class="form-fields">
-                                                                        <label class="title">Filter Tours by Category</label>
-                                                                        <select :name="`addOns[${index}][category_id]`"
-                                                                            class="choices-category field"
-                                                                            x-model="addOn.category_id"
-                                                                            @change="filterTours(index)">
-                                                                            <option value="">All Categories</option>
-                                                                            @foreach ($categories as $category)
-                                                                                <option value="{{ $category->id }}">
-                                                                                    {{ $category->name }}</option>
-                                                                            @endforeach
-                                                                        </select>
-                                                                    </div>
+                                $availability_advance_booking = $tour->availability_advance_booking
+                                    ? json_decode($tour->availability_advance_booking, true)
+                                    : [
+                                        'advance_booking_type' => 'immediately',
+                                        'advance_booking_days' => null,
+                                        'advance_booking_hours' => null,
+                                    ];
+                            @endphp
+                            <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
 
-                                                                    <div class="form-fields">
-                                                                        <label class="title">Select Tours</label>
-                                                                        <select :name="`addOns[${index}][tour_ids][]`"
-                                                                            class="choices-select" multiple
-                                                                            x-ref="select${index}">
-                                                                            <template
-                                                                                x-for="tour in filteredTours(addOn.category_id)"
-                                                                                :key="tour.id">
-                                                                                <option :value="tour.id"
-                                                                                    x-text="tour.title"
-                                                                                    :selected="addOn.tour_ids.includes(String(tour
-                                                                                        .id))">
-                                                                                </option>
-                                                                            </template>
-                                                                        </select>
-                                                                    </div>
-                                                                </td>
-
-                                                                <td>
-                                                                    <button type="button" @click="removeAddOn(index)"
-                                                                        class="delete-btn delete-btn--static ms-auto">
-                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        </template>
-
-                                                    </tbody>
-                                                </table>
-                                                <div class="mt-4">
-                                                    <button type="button" @click="addAddOn()"
-                                                        class="themeBtn ms-auto">
-                                                        Add <i class="bx bx-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div x-show="optionTab === 'status'" class="status-options">
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Publish</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="tour[status][status]"
-                                            id="publish" value="publish"
-                                            {{ $tour->status === 'publish' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="publish">
-                                            Publish
-                                        </label>
-                                    </div>
-                                    <div class="form-check mt-2">
-                                        <input class="form-check-input" type="radio" name="tour[status][status]"
-                                            id="draft" value="draft"
-                                            {{ $tour->status === 'draft' ? 'checked' : '' }}>
-                                        <label class="form-check-label" for="draft">
-                                            Draft
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Images</div>
-                                </div>
-                                <div class="form-box__body">
+                                <div class="col-12">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-12 mb-2">
                                             <div class="form-fields">
-                                                <label class="title">Feature Image
-                                                    :</label>
-                                                <div class="upload" data-upload>
-                                                    <div class="upload-box-wrapper">
-                                                        <div class="upload-box {{ empty($tour->featured_image) ? 'show' : '' }}"
-                                                            data-upload-box>
-                                                            <input type="file" name="featured_image"
-                                                                {{ empty($tour->featured_image) ? '' : '' }}
-                                                                data-error="Feature Image" id="featured_image"
-                                                                class="upload-box__file d-none" accept="image/*"
-                                                                data-file-input>
-                                                            <div class="upload-box__placeholder"><i
-                                                                    class='bx bxs-image'></i>
-                                                            </div>
-                                                            <label for="featured_image"
-                                                                class="upload-box__btn themeBtn">Upload
-                                                                Image</label>
-                                                        </div>
-                                                        <div class="upload-box__img {{ !empty($tour->featured_image) ? 'show' : '' }}"
-                                                            data-upload-img>
-                                                            <button type="button" class="delete-btn" data-delete-btn><i
-                                                                    class='bx bxs-trash-alt'></i></button>
-                                                            <a href="{{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                class="mask" data-fancybox="gallery">
-                                                                <img src="{{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                    alt="{{ $tour->featured_image_alt_text }}"
-                                                                    class="imgFluid" data-upload-preview>
-                                                            </a>
-                                                            <input type="text" name="featured_image_alt_text"
-                                                                class="field" placeholder="Enter alt text"
-                                                                value="{{ $tour->featured_image_alt_text }}">
-                                                        </div>
-                                                    </div>
-                                                    <div data-error-message class="text-danger mt-2 d-none text-center">
-                                                        Please
-                                                        upload a
-                                                        valid image file
-                                                    </div>
-                                                    @error('featured_image')
-                                                        <div class="text-danger mt-2 text-center">{{ $message }}
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                                                <div class="dimensions text-center mt-3">
-                                                    <strong>Dimensions:</strong> 260 &times; 180
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-fields">
-                                                <label class="title">Promotional Image:</label>
-                                                <div class="upload" data-upload>
-                                                    <div class="upload-box-wrapper">
-                                                        <div class="upload-box {{ empty($tour->promotional_image) ? 'show' : '' }}"
-                                                            data-upload-box>
-                                                            <input type="file" name="promotional_image"
-                                                                {{ empty($tour->promotional_image) ? '' : '' }}
-                                                                data-error="Feature Image" id="promotional_image"
-                                                                class="upload-box__file d-none" accept="image/*"
-                                                                data-file-input>
-                                                            <div class="upload-box__placeholder"><i
-                                                                    class='bx bxs-image'></i>
-                                                            </div>
-                                                            <label for="promotional_image"
-                                                                class="upload-box__btn themeBtn">Upload
-                                                                Image</label>
-                                                        </div>
-                                                        <div class="upload-box__img {{ !empty($tour->promotional_image) ? 'show' : '' }}"
-                                                            data-upload-img>
-                                                            <button type="button" class="delete-btn" data-delete-btn><i
-                                                                    class='bx bxs-trash-alt'></i></button>
-                                                            <a href="{{ asset($tour->promotional_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                class="mask" data-fancybox="gallery">
-                                                                <img src="{{ asset($tour->promotional_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                    alt="{{ $tour->promotional_image_alt_text }}"
-                                                                    class="imgFluid" data-upload-preview>
-                                                            </a>
-                                                            <input type="text" name="promotional_image_alt_text"
-                                                                class="field" placeholder="Enter alt text"
-                                                                value="{{ $tour->promotional_image_alt_text }}">
-                                                        </div>
-                                                    </div>
-                                                    <div data-error-message class="text-danger mt-2 d-none text-center">
-                                                        Please
-                                                        upload a
-                                                        valid image file
-                                                    </div>
-                                                    @error('promotional_image')
-                                                        <div class="text-danger mt-2 text-center">{{ $message }}
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                                                <div class="dimensions text-center mt-3">
-                                                    <strong>Dimensions:</strong> 360 &times; 155
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-fields">
-                                                <label class="title">Gift Image:</label>
-                                                <div class="upload" data-upload>
-                                                    <div class="upload-box-wrapper">
-                                                        <div class="upload-box {{ empty($tour->gift_image) ? 'show' : '' }}"
-                                                            data-upload-box>
-                                                            <input type="file" name="gift_image"
-                                                                data-error="Gift Image" id="gift_image"
-                                                                class="upload-box__file d-none" accept="image/*"
-                                                                data-file-input>
-                                                            <div class="upload-box__placeholder"><i
-                                                                    class='bx bxs-image'></i></div>
-                                                            <label for="gift_image"
-                                                                class="upload-box__btn themeBtn">Upload Image</label>
-                                                        </div>
-                                                        <div class="upload-box__img {{ !empty($tour->gift_image) ? 'show' : '' }}"
-                                                            data-upload-img>
-                                                            <button type="button" class="delete-btn" data-delete-btn><i
-                                                                    class='bx bxs-trash-alt'></i></button>
-                                                            <a href="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                class="mask" data-fancybox="gallery">
-                                                                <img src="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
-                                                                    alt="{{ $tour->gift_image_alt_text }}"
-                                                                    class="imgFluid" data-upload-preview>
-                                                            </a>
-                                                            <input type="text" name="gift_image_alt_text"
-                                                                class="field" placeholder="Enter alt text"
-                                                                value="{{ $tour->gift_image_alt_text }}">
-                                                        </div>
-                                                    </div>
-                                                    <div data-error-message class="text-danger mt-2 d-none text-center">
-                                                        Please upload a valid image file
-                                                    </div>
-                                                    @error('gift_image')
-                                                        <div class="text-danger mt-2 text-center">{{ $message }}</div>
-                                                    @enderror
-                                                </div>
-                                                <div class="dimensions text-center mt-3">
-                                                    <strong>Dimensions:</strong> 765 &times; 210
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Tour Featured</div>
-                                </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox"
-                                                name="tour[status][is_featured]" id="is_featured" value="1"
-                                                {{ $tour->is_featured ? 'checked' : '' }}>
-                                            <label class="form-check-label" for="is_featured">
-                                                Enable featured
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="form-fields mt-3">
-                                        <label class="title">Default State :</label>
-                                        <select name="tour[status][featured_state]" class="field">
-                                            <option value="" disabled
-                                                {{ $tour->featured_state === null ? 'selected' : '' }}>Select</option>
-                                            <option value="always"
-                                                {{ $tour->featured_state === 'always' ? 'selected' : '' }}>Always
-                                                Available</option>
-                                            <option value="specific_dates"
-                                                {{ $tour->featured_state === 'specific_dates' ? 'selected' : '' }}>Only
-                                                available on specific Dates</option>
-                                        </select>
-                                        @error('tour[status][featured_state]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-                            </div>
-
-                            @foreach ($attributes as $attribute)
-                                @if (!$attribute->attributeItems->isEmpty())
-                                    <div class="form-box">
-                                        <div class="form-box__header">
-                                            <div class="title">Attribute: {{ $attribute->name }}</div>
-                                        </div>
-                                        <div class="form-box__body">
-                                            @foreach ($attribute->attributeItems as $index => $item)
-                                                <div class="form-check mb-1">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        name="tour[status][attributes][{{ $attribute->id }}][]"
-                                                        id="attribute-{{ $item->id }}-{{ $index }}"
-                                                        value="{{ $item->id }}"
-                                                        @if (
-                                                            $tour->attributes->contains($attribute->id) &&
-                                                                $item->tourAttributes &&
-                                                                $item->tourAttributes->contains($attribute->id)) checked @endif>
-                                                    <label class="form-check-label"
-                                                        for="attribute-{{ $item->id }}-{{ $index }}">
-                                                        {{ $item->item }}
+                                                <div class="title">Open Hours:</div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input"  name="tour[availability][is_open_hours]" type="checkbox" id="openHours"
+                                                    x-model="openHours"
+                                                        value="{{ $tour->is_open_hours ? '1' : '0' }}"
+                                                        {{ $tour->is_open_hours ? 'checked' : '' }}
+                                                        @change="openHours = openHours ? 1 : 0">
+                                                    <label class="form-check-label" for="openHours">
+                                                        Enable Open Hours
                                                     </label>
                                                 </div>
-                                            @endforeach
+                                            </div>
+                                        </div>
+                                        <div class="col-12" x-show="openHours == 1">
+                                            <div class="row my-2">
+                                                <div class="repeater-table form-fields">
+                                                    <table class="table table-bordered">
+                                                        <thead>
+                                                            <tr>
+                                                                <th scope="col">Day of Week </th>
+                                                                <th scope="col">Open</th>
+                                                                <th scope="col">Close</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php
+                                                                $days = [
+                                                                    'monday',
+                                                                    'tuesday',
+                                                                    'wednesday',
+                                                                    'thursday',
+                                                                    'friday',
+                                                                ];
+                                                                $timeSlots = [
+                                                                    '00:00:00',
+                                                                    '02:00:00',
+                                                                    '03:00:00',
+                                                                    '04:00:00',
+                                                                    '05:00:00',
+                                                                    '06:00:00',
+                                                                    '07:00:00',
+                                                                    '08:00:00',
+                                                                    '09:00:00',
+                                                                    '10:00:00',
+                                                                    '11:00:00',
+                                                                    '12:00:00',
+                                                                    '13:00:00',
+                                                                    '14:00:00',
+                                                                    '15:00:00',
+                                                                    '16:00:00',
+                                                                    '17:00:00',
+                                                                    '18:00:00',
+                                                                    '19:00:00',
+                                                                    '20:00:00',
+                                                                    '21:00:00',
+                                                                    '22:00:00',
+                                                                    '23:00:00',
+                                                                ];
+
+                                                                $openHour = $tour->availability_open_hours;
+
+                                                                if (is_string($openHour)) {
+                                                                    $openHour = json_decode($openHour, true) ?? [];
+                                                                } elseif (!is_array($openHour)) {
+                                                                    $openHour = [];
+                                                                }
+
+                                                                $openHour = array_replace(
+                                                                    array_fill(0, count($days), [
+                                                                        'enabled' => '',
+                                                                        'open_time' => '',
+                                                                        'close_time' => '',
+                                                                    ]),
+                                                                    $openHour,
+                                                                );
+                                                            @endphp
+                                                            @for ($i = 0; $i < count($days); $i++)
+                                                                @php
+                                                                    $day = $days[$i];
+                                                                    $dayData = $openHour[$i] ?? [
+                                                                        'enabled' => '',
+                                                                        'open_time' => '',
+                                                                        'close_time' => '',
+                                                                    ];
+                                                                @endphp
+                                                                <tr>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[availability][open_hours][{{ $i }}][day]"
+                                                                            type="text" value="{{ $day }}"
+                                                                            class="field" readonly>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="field"
+                                                                            name="tour[availability][open_hours][{{ $i }}][open_time]">
+                                                                            <option value="">Select Time
+                                                                            </option>
+                                                                            @foreach ($timeSlots as $slot)
+                                                                                <option value="{{ $slot }}"
+                                                                                    {{ $dayData['open_time'] === $slot ? 'selected' : '' }}>
+                                                                                    {{ date('H:i', strtotime($slot)) }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                    <td>
+                                                                        <select class="field"
+                                                                            name="tour[availability][open_hours][{{ $i }}][close_time]">
+                                                                            <option value="">Select Time
+                                                                            </option>
+                                                                            @foreach ($timeSlots as $slot)
+                                                                                <option value="{{ $slot }}"
+                                                                                    {{ $dayData['close_time'] === $slot ? 'selected' : '' }}>
+                                                                                    {{ date('H:i', strtotime($slot)) }}
+                                                                                </option>
+                                                                            @endforeach
+                                                                        </select>
+                                                                    </td>
+                                                                </tr>
+                                                            @endfor
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                @endif
-                            @endforeach
-                            <div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Ical</div>
                                 </div>
-                                <div class="form-box__body">
-                                    <div class="form-fields">
-                                        <label class="title">Import url :</label>
-                                        <input type="text" name="tour[status][ical_import_url]" class="field"
-                                            placeholder="" value="{{ $tour->ical_import_url }}">
-                                        @error('tour[status][ical_import_url]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+
+                                <div class="col-12 mt-3">
+                                    <div class="row">
+                                        <div class="col-12 mb-2">
+                                            <div class="form-fields">
+                                                <div class="title">Advance Booking Time:</div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="advanceBooking"
+                                                        name="tour[availability][is_advance_booking]"
+                                                        {{ $tour->is_advance_booking ? 'checked' : '' }}
+                                                        x-model="advanceBooking"
+                                                        value="{{ $tour->is_advance_booking ? '1' : '0' }}"
+                                                        @change="advanceBooking = advanceBooking ? 1 : 0">
+                                                    <label class="form-check-label" for="advanceBooking">
+                                                        Enable Advance Booking Time
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12" x-show="advanceBooking == 1">
+                                            <div class="row my-2">
+                                                <div class="px-4 mx-2">
+                                                    <div class="form-check p-0 mb-4">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="tour[availability][advance_booking][advance_booking_type]"
+                                                            id="immediately_booking" x-model="advanceBookingType"
+                                                            value="immediately"
+                                                            {{ $availability_advance_booking['advance_booking_type'] === 'immediately' ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="immediately_booking">
+                                                            Travelers do not need to book in advance, and once completed,
+                                                            bookings can be used immediately.
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check d-flex align-items-center gap-2 p-0">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="tour[availability][advance_booking][advance_booking_type]"
+                                                            id="custom_booking" x-model="advanceBookingType"
+                                                            value="custom_booking"
+                                                            {{ $availability_advance_booking['advance_booking_type'] === 'custom_booking' ? 'checked' : '' }}>
+                                                        <label class="form-check-label d-flex align-items-center  gap-3"
+                                                            for="custom_booking">Activities
+                                                            Must be booked before
+
+                                                            <div class="form-fields my-0">
+                                                                <label class="title">Days</label>
+                                                                <input style="width: 150px !important;" type="text"
+                                                                    class="field"
+                                                                    name="tour[availability][advance_booking][days]"
+                                                                    value="{{ $availability_advance_booking['days'] ?? '' }}">
+                                                            </div>
+                                                            <div class="form-fields my-0">
+                                                                <label class="title">Time</label>
+                                                                <input style="width: 150px !important;" type="time"
+                                                                    class="field"
+                                                                    name="tour[availability][advance_booking][time]"
+                                                                    value="{{ optional($availability_advance_booking)['time'] ?? '' }}">
+
+                                                            </div>
+                                                            days before the day of travel.
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-fields">
-                                        <label class="title">Export url :</label>
-                                        <input type="text" name="tour[status][ical_export_url]" class="field"
-                                            placeholder="" value="{{ $tour->ical_export_url }}">
-                                        @error('tour[status][ical_export_url]')
-                                            <div class="text-danger">{{ $message }}</div>
-                                        @enderror
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div x-show="optionTab === 'addOn'" class="addOn-options">
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Add On</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-fields">
+                                    <div x-data="repeaterFormForAddOns({{ $tour->addOns->toJson() }})" x-init="initChoices()">
+                                        <div class="repeater-table">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Section</th>
+                                                        <th class="text-end">Actions</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template x-for="(addOn, index) in formData.addOns"
+                                                        :key="index">
+                                                        <tr>
+                                                            <td>
+                                                                <div class="form-fields">
+                                                                    <label class="title">Heading</label>
+                                                                    <input :name="`addOns[${index}][heading]`"
+                                                                        type="text" class="field"
+                                                                        x-model="addOn.heading">
+                                                                </div>
+
+                                                                <div class="form-fields">
+                                                                    <label class="title">Filter Tours by Category</label>
+                                                                    <select :name="`addOns[${index}][category_id]`"
+                                                                        class="choices-category field"
+                                                                        x-model="addOn.category_id"
+                                                                        @change="filterTours(index)">
+                                                                        <option value="">All Categories</option>
+                                                                        @foreach ($categories as $category)
+                                                                            <option value="{{ $category->id }}">
+                                                                                {{ $category->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="form-fields">
+                                                                    <label class="title">Select Tours</label>
+                                                                    <select :name="`addOns[${index}][tour_ids][]`"
+                                                                        class="choices-select" multiple
+                                                                        x-ref="select${index}">
+                                                                        <template
+                                                                            x-for="tour in filteredTours(addOn.category_id)"
+                                                                            :key="tour.id">
+                                                                            <option :value="tour.id"
+                                                                                x-text="tour.title"
+                                                                                :selected="addOn.tour_ids.includes(String(tour
+                                                                                    .id))">
+                                                                            </option>
+                                                                        </template>
+                                                                    </select>
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <button type="button" @click="removeAddOn(index)"
+                                                                    class="delete-btn delete-btn--static ms-auto">
+                                                                    <i class="bx bxs-trash-alt"></i>
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+
+                                                </tbody>
+                                            </table>
+                                            <div class="mt-4">
+                                                <button type="button" @click="addAddOn()" class="themeBtn ms-auto">
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div x-show="optionTab === 'badges'" class="status-options">
-<div class="form-box">
-                                <div class="form-box__header">
-                                    <div class="title">Badges</div>
+                    </div>
+                    <div x-show="optionTab === 'status'" class="status-options">
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Publish</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="tour[status][status]"
+                                        id="publish" value="publish"
+                                        {{ $tour->status === 'publish' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="publish">
+                                        Publish
+                                    </label>
                                 </div>
-                                <div class="form-box__body">
-                                    @php
-                                        $certifiedTag = is_string($tour->certified_tag)
-                                            ? json_decode($tour->certified_tag, true)
-                                            : (is_array($tour->certified_tag)
-                                                ? $tour->certified_tag
-                                                : []);
-                                    @endphp
-                                    <div x-data="{ certifiedTagEnabled: false }" x-init="certifiedTagEnabled = {{ old('tour.status.certified_tag.enabled', $certifiedTag['enabled'] ?? false) ? 'true' : 'false' }}">
-
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-fields mb-3">
-                                                    <input type="hidden" name="tour[status][certified_tag][enabled]"
-                                                        value="0">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="tour[status][certified_tag][enabled]"
-                                                            id="certified_tag_enabled" value="1"
-                                                            x-model="certifiedTagEnabled">
-                                                        <label class="form-check-label" for="certified_tag_enabled">
-                                                            Certified Tag
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <template x-if="certifiedTagEnabled">
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="form-fields">
-                                                        <div class="title d-flex align-items-center gap-2">
-                                                            <div>Icon:</div>
-                                                            <a class="p-0 nav-link" href="//v2.boxicons.com"
-                                                                target="_blank">boxicons</a>
-                                                        </div>
-                                                        <div x-data="{ icon: '{{ old('tour.status.certified_tag.icon', $certifiedTag['icon'] ?? 'bx bx-badge-check') }}' }"
-                                                            class="d-flex align-items-center gap-3">
-                                                            <input type="text"
-                                                                name="tour[status][certified_tag][icon]" class="field"
-                                                                x-model="icon">
-                                                            <i :class="`${icon} bx-sm`" style="font-size: 1.5rem"></i>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6">
-                                                    <div class="form-fields mb-3">
-                                                        <label class="title">Label:</label>
-                                                        <input name="tour[status][certified_tag][label]" type="text"
-                                                            class="field"
-                                                            value="{{ old('tour.status.certified_tag.label', $certifiedTag['label'] ?? '') }}">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </template>
-                                    </div>
-
-                                    @php
-                                        
-                                      $bookedTextConfig = is_string($tour->booked_text)
-                                            ? json_decode($tour->booked_text, true)
-                                            : (is_array($tour->booked_text) ? $tour->booked_text : []);
-
-                                        $labels = $bookedTextConfig['label'] ?? [];
-                                        $bgColors = $bookedTextConfig['background_color'] ?? [];
-                                        $textColors = $bookedTextConfig['text_color'] ?? [];
-
-                                        if (empty($labels)) {
-                                            $labels = [''];
-                                        }
-
-                                    @endphp
-                                    <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
-
-                                        <div class="row mt-3">
-                                            <div class="col-md-6">
-                                                <div class="form-fields mb-3">
-                                                    <input type="hidden" name="tour[status][booked_text][enabled]"
-                                                        value="0">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="tour[status][booked_text][enabled]"
-                                                            id="booked_text_enabled" value="1"
-                                                            x-model="showBookedText">
-                                                        <label class="form-check-label" for="booked_text_enabled">
-                                                            Listing Tags
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div x-show="showBookedText">
-                                            <div class="repeater-table form-fields" 
-                                                x-data="statusRepeater({
-                                                    items: @js(collect($labels)->map(function($label, $index) use ($bgColors, $textColors) {
-                                                        return [
-                                                            'label' => old('tour.status.booked_text.label.' . $index, $label),
-                                                            'background_color' => old('tour.status.booked_text.background_color.' . $index, $bgColors[$index] ?? '#ffffff'),
-                                                            'text_color' => old('tour.status.booked_text.text_color.' . $index, $textColors[$index] ?? '#000000')
-                                                        ];
-                                                    })->values())
-                                                })"
-                                                x-init="init()">
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">
-                                                                <div class="text-dark title">
-                                                                    Label
-                                                                </div>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <div class="text-dark title">
-                                                                    Background Color
-                                                                </div>
-                                                            </th>
-                                                            <th scope="col">
-                                                                <div class="text-dark title">
-                                                                    Text Color
-                                                                </div>
-                                                            </th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <template x-for="(item, index) in items" :key="index">
-                                                            <tr>
-                                                                <td>
-                                                                    <input
-                                                                        name="tour[status][booked_text][label][]"
-                                                                        type="text"
-                                                                        class="field"
-                                                                        x-model="item.label"
-                                                                    >
-                                                                </td>
-
-                                                                <td>
-                                                                    <div class="field color-picker" data-color-picker-container x-ref="bgColorPicker">
-                                                                        <label data-color-picker></label>
-                                                                        <input
-                                                                            type="text"
-                                                                            data-color-picker-input
-                                                                            name="tour[status][booked_text][background_color][]"
-                                                                            x-model="item.background_color"
-                                                                        >
-                                                                    </div>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div class="field color-picker" data-color-picker-container x-ref="textColorPicker">
-                                                                        <label data-color-picker></label>
-                                                                        <input
-                                                                            type="text"
-                                                                            data-color-picker-input
-                                                                            name="tour[status][booked_text][text_color][]"
-                                                                            x-model="item.text_color"
-                                                                        >
-                                                                    </div>
-                                                                </td>
-
-                                                                <td>
-                                                                    <div class="d-flex gap-2">
-                                                                        <button
-                                                                            type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            @click="removeItem(index)"
-                                                                            :disabled="items.length === 1"
-                                                                        >
-                                                                            <i class="bx bxs-trash-alt"></i>
-                                                                        </button>
-
-                                                                        <button
-                                                                            type="button"
-                                                                            class="add-btn ms-auto add-btn--static"
-                                                                            @click="addItemAfter(index)"
-                                                                        >
-                                                                            <i class="bx bx-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </template>
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" @click="addItem()">Add
-                                                    <i class="bx bx-plus"></i></button>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    @php
-                                        $badgeTag = is_string($tour->badge_tag)
-                                            ? json_decode($tour->badge_tag, true)
-                                            : (is_array($tour->badge_tag)
-                                                ? $tour->badge_tag
-                                                : []);
-
-                                    @endphp
-                                    <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', $badgeTag['enabled'] ?? false) ? 'true' : 'false' }}">
-                                        <div class="row mt-3">
-                                            <div class="col-md-12">
-                                                <div class="form-fields mb-3">
-                                                    <input type="hidden" name="tour[status][badge_tag][enabled]"
-                                                        value="0">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="tour[status][badge_tag][enabled]"
-                                                            id="badge_tag_enabled" value="1"
-                                                            x-model="badgeTagEnabled">
-                                                        <label class="form-check-label" for="badge_tag_enabled">
-                                                            Badge Tag
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row" x-show="badgeTagEnabled">
-                                            <div class="col-md-12">
-                                                <div class="form-fields mb-3">
-                                                    <label class="title" for="badge_tag_label">Badge
-                                                        Label:</label>
-                                                    <input type="text" name="tour[status][badge_tag][label]"
-                                                        id="badge_tag_label" class="field"
-                                                        value="{{ old('tour.status.badge_tag.label', $badgeTag['label'] ?? '') }}">
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Background:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="badge_tag_bg_color" data-color-picker></label>
-                                                        <input id="badge_tag_bg_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][badge_tag][background_color]"
-                                                            value="{{ old('tour.status.badge_tag.background_color', $badgeTag['background_color'] ?? '#1c4d99') }}"
-                                                            inputmode="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6 mb-3">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Text Color:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="badge_tag_text_color" data-color-picker></label>
-                                                        <input id="badge_tag_text_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][badge_tag][text_color]"
-                                                            value="{{ old('tour.status.badge_tag.text_color', $badgeTag['text_color'] ?? '#ffffff') }}"
-                                                            inputmode="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="radio" name="tour[status][status]"
+                                        id="draft" value="draft"
+                                        {{ $tour->status === 'draft' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="draft">
+                                        Draft
+                                    </label>
                                 </div>
                             </div>
-                            <div class="form-box">
-                                <div class="form-box__header d-flex align-items-center justify-content-between">
-                                    <div class="title">Tour Details Badge</div>
-                                    <span class="title d-flex align-items-center gap-1">
-                                        Preview:
-                                        <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
-                                            data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                                class='bx  bxs-show'></i></a>
-                                    </span>
-                                </div>
-                                <div class="form-box__body">
-                                        <div class="row">
-                                    <div class="col-md-6 col-12">
-                                            <div class="form-fields">
-                                                <div class="d-flex align-items-center gap-3 mb-2">
-                                                    <span class="title mb-0">Badge Icon:
-                                                        <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
-                                                            target="_blank">boxicons</a>
-                                                    </span>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Images</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-fields">
+                                            <label class="title">Feature Image
+                                                :</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($tour->featured_image) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="featured_image"
+                                                            {{ empty($tour->featured_image) ? '' : '' }}
+                                                            data-error="Feature Image" id="featured_image"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i
+                                                                class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="featured_image"
+                                                            class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($tour->featured_image) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                            class="mask" data-fancybox="gallery">
+                                                            <img src="{{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                                alt="{{ $tour->featured_image_alt_text }}"
+                                                                class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="featured_image_alt_text"
+                                                            class="field" placeholder="Enter alt text"
+                                                            value="{{ $tour->featured_image_alt_text }}">
+                                                    </div>
                                                 </div>
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <input type="text" name="tour[badge][icon_class]" class="field"
-                                                        value="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }}"
-                                                        placeholder="" oninput="showIcon(this)">
-                                                    <i class="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }} bx-md"
-                                                        data-preview-icon></i>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                    Please
+                                                    upload a
+                                                    valid image file
                                                 </div>
-                                                @error('tour.badge.icon_class')
-                                                    <div class="text-danger">{{ $message }}</div>
+                                                @error('featured_image')
+                                                    <div class="text-danger mt-2 text-center">{{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 260 &times; 180
+                                            </div>
                                         </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-fields">
-                                                <label class="title">Badge Name:</label>
-                                                <input type="text" name="tour[badge][name]" class="field"
-                                                    value="{{ old('tour.badge.name', optional(json_decode($tour->badge))->name) }}"
-                                                    placeholder="">
-                                                    <small class="muted">This badge will be shown on the tour details page when the tour has five 5-star reviews.</small>
-                                                @error('tour.badge.name')
-                                                    <div class="text-danger">{{ $message }}</div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-fields">
+                                            <label class="title">Promotional Image:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($tour->promotional_image) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="promotional_image"
+                                                            {{ empty($tour->promotional_image) ? '' : '' }}
+                                                            data-error="Feature Image" id="promotional_image"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i
+                                                                class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="promotional_image"
+                                                            class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($tour->promotional_image) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($tour->promotional_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                            class="mask" data-fancybox="gallery">
+                                                            <img src="{{ asset($tour->promotional_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                                alt="{{ $tour->promotional_image_alt_text }}"
+                                                                class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="promotional_image_alt_text"
+                                                            class="field" placeholder="Enter alt text"
+                                                            value="{{ $tour->promotional_image_alt_text }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                    Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                                @error('promotional_image')
+                                                    <div class="text-danger mt-2 text-center">{{ $message }}
+                                                    </div>
                                                 @enderror
                                             </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 360 &times; 155
                                             </div>
                                         </div>
-                            </div>
-                            </div>
-                            <div class="form-box">
-                                <div class="form-box__header d-flex align-items-center justify-content-between">
-                                    <div class="title">Author Settings</div>
-                                    <span class="title d-flex align-items-center gap-1">
-                                        Preview:
-                                        <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
-                                            data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                                class='bx  bxs-show'></i></a>
-                                    </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-fields">
+                                            <label class="title">Gift Image:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($tour->gift_image) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="gift_image"
+                                                            data-error="Gift Image" id="gift_image"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i
+                                                                class='bx bxs-image'></i></div>
+                                                        <label for="gift_image" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($tour->gift_image) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                            class="mask" data-fancybox="gallery">
+                                                            <img src="{{ asset($tour->gift_image ?? 'admin/assets/images/placeholder.png') }}"
+                                                                alt="{{ $tour->gift_image_alt_text }}"
+                                                                class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="gift_image_alt_text"
+                                                            class="field" placeholder="Enter alt text"
+                                                            value="{{ $tour->gift_image_alt_text }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                    Please upload a valid image file
+                                                </div>
+                                                @error('gift_image')
+                                                    <div class="text-danger mt-2 text-center">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 765 &times; 210
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                                <div class="form-box__body">
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Tour Featured</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-fields">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                            name="tour[status][is_featured]" id="is_featured" value="1"
+                                            {{ $tour->is_featured ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="is_featured">
+                                            Enable featured
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-fields mt-3">
+                                    <label class="title">Default State :</label>
+                                    <select name="tour[status][featured_state]" class="field">
+                                        <option value="" disabled
+                                            {{ $tour->featured_state === null ? 'selected' : '' }}>Select</option>
+                                        <option value="always"
+                                            {{ $tour->featured_state === 'always' ? 'selected' : '' }}>Always
+                                            Available</option>
+                                        <option value="specific_dates"
+                                            {{ $tour->featured_state === 'specific_dates' ? 'selected' : '' }}>Only
+                                            available on specific Dates</option>
+                                    </select>
+                                    @error('tour[status][featured_state]')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+
+                        @foreach ($attributes as $attribute)
+                            @if (!$attribute->attributeItems->isEmpty())
+                                <div class="form-box">
+                                    <div class="form-box__header">
+                                        <div class="title">Attribute: {{ $attribute->name }}</div>
+                                    </div>
+                                    <div class="form-box__body">
+                                        @foreach ($attribute->attributeItems as $index => $item)
+                                            <div class="form-check mb-1">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="tour[status][attributes][{{ $attribute->id }}][]"
+                                                    id="attribute-{{ $item->id }}-{{ $index }}"
+                                                    value="{{ $item->id }}"
+                                                    @if (
+                                                        $tour->attributes->contains($attribute->id) &&
+                                                            $item->tourAttributes &&
+                                                            $item->tourAttributes->contains($attribute->id)) checked @endif>
+                                                <label class="form-check-label"
+                                                    for="attribute-{{ $item->id }}-{{ $index }}">
+                                                    {{ $item->item }}
+                                                </label>
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Ical</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="form-fields">
+                                    <label class="title">Import url :</label>
+                                    <input type="text" name="tour[status][ical_import_url]" class="field"
+                                        placeholder="" value="{{ $tour->ical_import_url }}">
+                                    @error('tour[status][ical_import_url]')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                <div class="form-fields">
+                                    <label class="title">Export url :</label>
+                                    <input type="text" name="tour[status][ical_export_url]" class="field"
+                                        placeholder="" value="{{ $tour->ical_export_url }}">
+                                    @error('tour[status][ical_export_url]')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div x-show="optionTab === 'badges'" class="status-options">
+                        <div class="form-box">
+                            <div class="form-box__header">
+                                <div class="title">Badges</div>
+                            </div>
+                            <div class="form-box__body">
+                                @php
+                                    $certifiedTag = is_string($tour->certified_tag)
+                                        ? json_decode($tour->certified_tag, true)
+                                        : (is_array($tour->certified_tag)
+                                            ? $tour->certified_tag
+                                            : []);
+                                @endphp
+                                <div x-data="{ certifiedTagEnabled: false }" x-init="certifiedTagEnabled = {{ old('tour.status.certified_tag.enabled', $certifiedTag['enabled'] ?? false) ? 'true' : 'false' }}">
+
                                     <div class="row">
-                                        @php
-                                            $authorConfig = is_string($tour->author_config)
-                                                ? json_decode($tour->author_config, true)
-                                                : (is_array($tour->author_config)
-                                                    ? $tour->author_config
-                                                    : []);
-                                        @endphp
+                                        <div class="col-md-6">
+                                            <div class="form-fields mb-3">
+                                                <input type="hidden" name="tour[status][certified_tag][enabled]"
+                                                    value="0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="tour[status][certified_tag][enabled]"
+                                                        id="certified_tag_enabled" value="1"
+                                                        x-model="certifiedTagEnabled">
+                                                    <label class="form-check-label" for="certified_tag_enabled">
+                                                        Certified Tag
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
-                                        <div class="col-md-6 col-12">
+                                    <template x-if="certifiedTagEnabled">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-fields">
+                                                    <div class="title d-flex align-items-center gap-2">
+                                                        <div>Icon:</div>
+                                                        <a class="p-0 nav-link" href="//v2.boxicons.com"
+                                                            target="_blank">boxicons</a>
+                                                    </div>
+                                                    <div x-data="{ icon: '{{ old('tour.status.certified_tag.icon', $certifiedTag['icon'] ?? 'bx bx-badge-check') }}' }"
+                                                        class="d-flex align-items-center gap-3">
+                                                        <input type="text" name="tour[status][certified_tag][icon]"
+                                                            class="field" x-model="icon">
+                                                        <i :class="`${icon} bx-sm`" style="font-size: 1.5rem"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-fields mb-3">
+                                                    <label class="title">Label:</label>
+                                                    <input name="tour[status][certified_tag][label]" type="text"
+                                                        class="field"
+                                                        value="{{ old('tour.status.certified_tag.label', $certifiedTag['label'] ?? '') }}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                @php
+
+                                    $bookedTextConfig = is_string($tour->booked_text)
+                                        ? json_decode($tour->booked_text, true)
+                                        : (is_array($tour->booked_text)
+                                            ? $tour->booked_text
+                                            : []);
+
+                                    $labels = $bookedTextConfig['label'] ?? [];
+                                    $bgColors = $bookedTextConfig['background_color'] ?? [];
+                                    $textColors = $bookedTextConfig['text_color'] ?? [];
+
+                                    if (empty($labels)) {
+                                        $labels = [''];
+                                    }
+
+                                @endphp
+                                <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-6">
+                                            <div class="form-fields mb-3">
+                                                <input type="hidden" name="tour[status][booked_text][enabled]"
+                                                    value="0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="tour[status][booked_text][enabled]"
+                                                        id="booked_text_enabled" value="1"
+                                                        x-model="showBookedText">
+                                                    <label class="form-check-label" for="booked_text_enabled">
+                                                        Listing Tags
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div x-show="showBookedText">
+                                        <div class="repeater-table form-fields" x-data="statusRepeater({
+                                            items: @js(
+    collect($labels)
+        ->map(function ($label, $index) use ($bgColors, $textColors) {
+            return [
+                'label' => old('tour.status.booked_text.label.' . $index, $label),
+                'background_color' => old('tour.status.booked_text.background_color.' . $index, $bgColors[$index] ?? '#ffffff'),
+                'text_color' => old('tour.status.booked_text.text_color.' . $index, $textColors[$index] ?? '#000000'),
+            ];
+        })
+        ->values(),
+)
+                                        })"
+                                            x-init="init()">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <div class="text-dark title">
+                                                                Label
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div class="text-dark title">
+                                                                Background Color
+                                                            </div>
+                                                        </th>
+                                                        <th scope="col">
+                                                            <div class="text-dark title">
+                                                                Text Color
+                                                            </div>
+                                                        </th>
+                                                        <th class="text-end" scope="col">Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <template x-for="(item, index) in items" :key="index">
+                                                        <tr>
+                                                            <td>
+                                                                <input name="tour[status][booked_text][label][]"
+                                                                    type="text" class="field"
+                                                                    x-model="item.label">
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container x-ref="bgColorPicker">
+                                                                    <label data-color-picker></label>
+                                                                    <input type="text" data-color-picker-input
+                                                                        name="tour[status][booked_text][background_color][]"
+                                                                        x-model="item.background_color">
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container x-ref="textColorPicker">
+                                                                    <label data-color-picker></label>
+                                                                    <input type="text" data-color-picker-input
+                                                                        name="tour[status][booked_text][text_color][]"
+                                                                        x-model="item.text_color">
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        @click="removeItem(index)"
+                                                                        :disabled="items.length === 1">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        @click="addItemAfter(index)">
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="themeBtn ms-auto" @click="addItem()">Add
+                                                <i class="bx bx-plus"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @php
+                                    $badgeTag = is_string($tour->badge_tag)
+                                        ? json_decode($tour->badge_tag, true)
+                                        : (is_array($tour->badge_tag)
+                                            ? $tour->badge_tag
+                                            : []);
+
+                                @endphp
+                                <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', $badgeTag['enabled'] ?? false) ? 'true' : 'false' }}">
+                                    <div class="row mt-3">
+                                        <div class="col-md-12">
+                                            <div class="form-fields mb-3">
+                                                <input type="hidden" name="tour[status][badge_tag][enabled]"
+                                                    value="0">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        name="tour[status][badge_tag][enabled]" id="badge_tag_enabled"
+                                                        value="1" x-model="badgeTagEnabled">
+                                                    <label class="form-check-label" for="badge_tag_enabled">
+                                                        Badge Tag
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row" x-show="badgeTagEnabled">
+                                        <div class="col-md-12">
+                                            <div class="form-fields mb-3">
+                                                <label class="title" for="badge_tag_label">Badge
+                                                    Label:</label>
+                                                <input type="text" name="tour[status][badge_tag][label]"
+                                                    id="badge_tag_label" class="field"
+                                                    value="{{ old('tour.status.badge_tag.label', $badgeTag['label'] ?? '') }}">
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
                                             <div class="form-fields">
-                                                <label class="title">Author & Background Color :</label>
+                                                <div class="title d-flex align-items-center gap-2">
+                                                    <div>Badge Background:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
                                                 <div class="field color-picker" data-color-picker-container>
-                                                    <label for="background-color-picker-author" data-color-picker></label>
-                                                    <input id="background-color-picker-author" type="hidden"
+                                                    <label for="badge_tag_bg_color" data-color-picker></label>
+                                                    <input id="badge_tag_bg_color" type="text"
                                                         data-color-picker-input
-                                                        name="tour[status][author_config][background_color]"
-                                                        value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '#edab56') }}"
+                                                        name="tour[status][badge_tag][background_color]"
+                                                        value="{{ old('tour.status.badge_tag.background_color', $badgeTag['background_color'] ?? '#1c4d99') }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <div class="form-fields">
+                                                <div class="title d-flex align-items-center gap-2">
+                                                    <div>Badge Text Color:</div>
+                                                    <a class="p-0 nav-link" href="//html-color-codes.info"
+                                                        target="_blank">Get Color Codes</a>
+                                                </div>
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="badge_tag_text_color" data-color-picker></label>
+                                                    <input id="badge_tag_text_color" type="text"
+                                                        data-color-picker-input name="tour[status][badge_tag][text_color]"
+                                                        value="{{ old('tour.status.badge_tag.text_color', $badgeTag['text_color'] ?? '#ffffff') }}"
+                                                        inputmode="text">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header d-flex align-items-center justify-content-between">
+                                <div class="title">Tour Details Badge</div>
+                                <span class="title d-flex align-items-center gap-1">
+                                    Preview:
+                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
+                                            class='bx  bxs-show'></i></a>
+                                </span>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <span class="title mb-0">Badge Icon:
+                                                    <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
+                                                        target="_blank">boxicons</a>
+                                                </span>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <input type="text" name="tour[badge][icon_class]" class="field"
+                                                    value="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }}"
+                                                    placeholder="" oninput="showIcon(this)">
+                                                <i class="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }} bx-md"
+                                                    data-preview-icon></i>
+                                            </div>
+                                            @error('tour.badge.icon_class')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Badge Name:</label>
+                                            <input type="text" name="tour[badge][name]" class="field"
+                                                value="{{ old('tour.badge.name', optional(json_decode($tour->badge))->name) }}"
+                                                placeholder="">
+                                            <small class="muted">This badge will be shown on the tour details page when
+                                                the tour has five 5-star reviews.</small>
+                                            @error('tour.badge.name')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header d-flex align-items-center justify-content-between">
+                                <div class="title">Author Settings</div>
+                                <span class="title d-flex align-items-center gap-1">
+                                    Preview:
+                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
+                                            class='bx  bxs-show'></i></a>
+                                </span>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    @php
+                                        $authorConfig = is_string($tour->author_config)
+                                            ? json_decode($tour->author_config, true)
+                                            : (is_array($tour->author_config)
+                                                ? $tour->author_config
+                                                : []);
+                                    @endphp
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Author & Background Color :</label>
+                                            <div class="field color-picker" data-color-picker-container>
+                                                <label for="background-color-picker-author" data-color-picker></label>
+                                                <input id="background-color-picker-author" type="hidden"
+                                                    data-color-picker-input
+                                                    name="tour[status][author_config][background_color]"
+                                                    value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '#edab56') }}"
+                                                    inputmode="text">
+
+                                                <select class="select2-select" name="tour[status][author_id]"
+                                                    data-error="Author">
+                                                    <option value="" selected>Select</option>
+                                                    @foreach ($authors as $author)
+                                                        <option value="{{ $author->id }}"
+                                                            {{ old('tour[status][author_id]', $tour->author_id) == $author->id || $author->system === 1 ? 'selected' : '' }}>
+                                                            {{ $author->name }}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            @error('tour[status][author_id]')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <span class="title mb-0">
+                                                    Author icon :
+                                                    <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
+                                                        target="_blank">boxicons</a>
+                                                </span>
+                                            </div>
+
+                                            <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? 'bx bx-badge-check') }}' }">
+                                                <div class="field color-picker" data-color-picker-container>
+                                                    <label for="icon-color-picker-author" data-color-picker></label>
+                                                    <input id="icon-color-picker-author" type="hidden"
+                                                        data-color-picker-input
+                                                        name="tour[status][author_config][icon_color]"
+                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '#000000') }}"
                                                         inputmode="text">
 
-                                                    <select class="select2-select" name="tour[status][author_id]"
-                                                        data-error="Author">
-                                                        <option value="" selected>Select</option>
-                                                        @foreach ($authors as $author)
-                                                            <option value="{{ $author->id }}"
-                                                                {{ old('tour[status][author_id]', $tour->author_id) == $author->id || $author->system === 1 ? 'selected' : '' }}>
-                                                                {{ $author->name }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                @error('tour[status][author_id]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-6 col-12">
-                                            <div class="form-fields">
-                                                <div class="d-flex align-items-center gap-3 mb-2">
-                                                    <span class="title mb-0">
-                                                        Author icon :
-                                                        <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
-                                                            target="_blank">boxicons</a>
-                                                    </span>
+                                                    <input type="text" name="tour[status][author_config][icon_class]"
+                                                        x-model="iconClass" placeholder="">
                                                 </div>
 
-                                                <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? 'bx bx-badge-check') }}' }">
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="icon-color-picker-author" data-color-picker></label>
-                                                        <input id="icon-color-picker-author" type="hidden"
-                                                            data-color-picker-input
-                                                            name="tour[status][author_config][icon_color]"
-                                                            value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '#000000') }}"
-                                                            inputmode="text">
-
-                                                        <input type="text"
-                                                            name="tour[status][author_config][icon_class]"
-                                                            x-model="iconClass" placeholder="">
-                                                    </div>
-
-                                                    <i :class="iconClass + ' bx-md'"></i>
-                                                </div>
+                                                <i :class="iconClass + ' bx-md'"></i>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+
                             </div>
                         </div>
-                        <div x-show="optionTab === 'seo'" class="seo-options">
-                            <x-seo-options 
-                            :id="$tour->id"
-                            entity="tours"
-                                :seo="$tour->seo ?? null" :resource="buildTourDetailUrl($tour, true, false)" />
-                        </div>
-                        <button style=" position: sticky; bottom: 1rem; " type="submit"
-                            class="themeBtn mt-4 ms-auto">Save Changes<i class='bx bx-check'></i></button>
                     </div>
+                    <div x-show="optionTab === 'seo'" class="seo-options">
+                        <x-seo-options :id="$tour->id" entity="tours" :seo="$tour->seo ?? null" :resource="buildTourDetailUrl($tour, true, false)" />
+                    </div>
+                    <button style=" position: sticky; bottom: 1rem; " type="submit"
+                        class="themeBtn mt-4 ms-auto">Save Changes<i class='bx bx-check'></i></button>
                 </div>
-
-            </form>
         </div>
+
+        </form>
+    </div>
     </div>
 @endsection
 
 @push('css')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.15/fullcalendar.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.15/fullcalendar.min.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://choices-js.github.io/Choices/assets/styles/choices.min.css"
         crossorigin="anonymous" />
 
-        <style>
+    <style>
         .fc-view-harness {
             height: 638.519px !important;
         }
@@ -4144,7 +4119,7 @@
                         background_color: '#ffffff',
                         text_color: '#000000'
                     })
-                    
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
@@ -4158,7 +4133,7 @@
                         background_color: '#ffffff',
                         text_color: '#000000'
                     })
-                    
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
@@ -4185,50 +4160,50 @@
     <script src="{{ asset('admin/assets/js/tour-settings.js') }}"></script>
 
     <script>
-           const existingAvailability = @json(
-        $tour->availabilities->pluck('is_available', 'date')
-    );
-document.addEventListener('DOMContentLoaded', function() {
-    const checkedDates = {};
+        const existingAvailability = @json($tour->availabilities->pluck('is_available', 'date'));
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkedDates = {};
 
-    // Initialize checkedDates from existing availability
-    for (const [date, value] of Object.entries(existingAvailability)) {
-        checkedDates[date] = value == 1 ? true : false;
-    }
+            // Initialize checkedDates from existing availability
+            for (const [date, value] of Object.entries(existingAvailability)) {
+                checkedDates[date] = value == 1 ? true : false;
+            }
 
-    const availabilityInput = document.getElementById('availabilityInput');
-    availabilityInput.value = JSON.stringify(checkedDates); // initial value
+            const availabilityInput = document.getElementById('availabilityInput');
+            availabilityInput.value = JSON.stringify(checkedDates); // initial value
 
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
 
-        dayCellDidMount: function(info) {
-            const switchDiv = document.createElement('div');
-            switchDiv.className = 'form-check form-switch';
-            switchDiv.style.marginTop = '5px';
+                dayCellDidMount: function(info) {
+                    const switchDiv = document.createElement('div');
+                    switchDiv.className = 'form-check form-switch';
+                    switchDiv.style.marginTop = '5px';
 
-            const input = document.createElement('input');
-            input.type = 'checkbox';
-            input.className = 'form-check-input';
-            input.value = '1';
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.className = 'form-check-input';
+                    input.value = '1';
 
-            const dateStr = info.date.toISOString().split('T')[0];
+                    const dateStr = info.date.getFullYear() + '-' +
+                        String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(info.date.getDate()).padStart(2, '0');
 
-            // Pre-check if stored
-            if (checkedDates[dateStr]) input.checked = true;
+                    // Pre-check if stored
+                    if (checkedDates[dateStr]) input.checked = true;
 
-            input.addEventListener('change', function() {
-                checkedDates[dateStr] = this.checked;
-                availabilityInput.value = JSON.stringify(checkedDates);
+                    input.addEventListener('change', function() {
+                        checkedDates[dateStr] = this.checked;
+                        availabilityInput.value = JSON.stringify(checkedDates);
+                    });
+
+                    switchDiv.appendChild(input);
+                    info.el.appendChild(switchDiv);
+                }
             });
 
-            switchDiv.appendChild(input);
-            info.el.appendChild(switchDiv);
-        }
-    });
-
-    calendar.render();
-});
-</script>
+            calendar.render();
+        });
+    </script>
 @endpush

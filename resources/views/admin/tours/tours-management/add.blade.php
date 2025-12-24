@@ -2317,11 +2317,10 @@
                                             <div class="form-fields">
                                                 <div class="title">Open Hours:</div>
                                                 <div class="form-check">
-                                                    <input type="hidden" name="tour[availability][is_open_hours]"
-                                                        x-model="openHours">
-                                                    <input class="form-check-input" type="checkbox" id="openHours"
-                                                        :checked="openHours == 1"
-                                                        @change="openHours = $event.target.checked ? 1 : 0;">
+                                                         <input class="form-check-input"  name="tour[availability][is_open_hours]" type="checkbox" id="openHours"
+                                                    x-model="openHours"
+                                                        value="1"
+                                                        @change="openHours = openHours ? 1 : 0">
                                                     <label class="form-check-label" for="openHours">
                                                         Enable Open Hours
                                                     </label>
@@ -2428,11 +2427,12 @@
                                             <div class="form-fields">
                                                 <div class="title">Advance Booking Time:</div>
                                                 <div class="form-check">
-                                                    <input type="hidden" name="tour[availability][is_advance_booking]"
-                                                        x-model="advanceBooking">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="advanceBooking" :checked="advanceBooking == 1"
-                                                        @change="advanceBooking = $event.target.checked ? 1 : 0">
+                                                  <input class="form-check-input" type="checkbox"
+                                                        id="advanceBooking"
+                                                        name="tour[availability][is_advance_booking]"
+                                                        x-model="advanceBooking"
+                                                        value="1"
+                                                        @change="advanceBooking = advanceBooking ? 1 : 0">
                                                     <label class="form-check-label" for="advanceBooking">
                                                         Enable Advance Booking Time
                                                     </label>
@@ -3539,9 +3539,11 @@
                     input.value = '1';
 
                     if (checkedDates[info.dateStr]) input.checked = true;
+                        const dateStr = info.date.getFullYear() + '-' +
+                String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
+                String(info.date.getDate()).padStart(2, '0');
 
                     input.addEventListener('change', function() {
-                        const dateStr = info.date.toISOString().split('T')[0]; // YYYY-MM-DD
                         checkedDates[dateStr] = this.checked;
                             availabilityInput.value = JSON.stringify(checkedDates);
                     });

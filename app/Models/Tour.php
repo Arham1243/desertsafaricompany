@@ -241,106 +241,97 @@ class Tour extends Model
     public function getAvailabilityStatusAttribute(): array
     {
         $now = Carbon::now();
+        $today = $now->format('Y-m-d');
 
+        // --------------------------
+        // 1. Check explicit tour availabilities
+        // --------------------------
+        $availabilityDates = $this->availabilities->pluck('is_available', 'date')->toArray();
+
+        if (!isset($availabilityDates[$today]) || $availabilityDates[$today] == 0) {
+            return [
+                'available' => false,
+                'user_message' => 'This tour is not available today.',
+            ];
+        }
+
+        $isAvailable = true;
+        $messages = [];
+
+        // --------------------------
+        // 2. Check open hours if enabled
+        // --------------------------
         if ((int) $this->is_open_hours === 1) {
             $hours = json_decode($this->availability_open_hours, true);
 
-            if (! is_array($hours)) {
-                return [
-                    'available' => false,
-                    'user_message' => 'Tour hours data is invalid. Please contact support.',
-                ];
-            }
+            if (!is_array($hours)) {
+                $isAvailable = false;
+                $messages[] = 'Tour hours data is invalid. Please contact support.';
+            } else {
+                $todayDay = strtolower($now->format('l'));
+                $todayHours = collect($hours)
+                    ->first(fn($h) => strtolower($h['day']) === $todayDay);
 
-            $today = strtolower($now->format('l'));
-            $todayHours = collect($hours)
-                ->first(fn($h) => strtolower($h['day']) === $today);
+                if (!$todayHours) {
+                    $isAvailable = false;
+                    $messages[] = 'This tour is not available today. Check back on ' . ucfirst($this->getNextAvailableDay()) . '.';
+                } else {
+                    try {
+                        $open = Carbon::createFromTimeString($todayHours['open_time']);
+                        $close = Carbon::createFromTimeString($todayHours['close_time']);
 
-            if (! $todayHours) {
-                return [
-                    'available' => false,
-                    'user_message' => 'This tour is not available today. Check back on ' . ucfirst($this->getNextAvailableDay()) . '.',
-                ];
-            }
+                        if ($close->lt($open)) $close->addDay();
 
-            try {
-                $open = Carbon::createFromTimeString($todayHours['open_time']);
-                $close = Carbon::createFromTimeString($todayHours['close_time']);
-            } catch (\Exception $e) {
-                return [
-                    'available' => false,
-                    'user_message' => 'Tour hours are invalid today. Please contact support.',
-                ];
-            }
-
-            if ($close->lt($open)) {
-                $close->addDay();
-            }
-
-            if (! ($now->between($open, $close))) {
-                return [
-                    'available' => false,
-                    'user_message' => 'Tour is currently closed. It will be open from ' . $open->format('h:i A') . ' to ' . $close->format('h:i A') . ' today.',
-                ];
+                        if (! $now->between($open, $close)) {
+                            $isAvailable = false;
+                            $messages[] = 'Tour is currently closed. It will be open from ' . $open->format('h:i A') . ' to ' . $close->format('h:i A') . ' today.';
+                        }
+                    } catch (\Exception $e) {
+                        $isAvailable = false;
+                        $messages[] = 'Tour hours are invalid today. Please contact support.';
+                    }
+                }
             }
         }
 
-
+        // --------------------------
+        // 3. Check advance booking rules if enabled
+        // --------------------------
         if ((int) $this->is_advance_booking === 1) {
             $config = json_decode($this->availability_advance_booking, true);
-
             $type = $config['advance_booking_type'] ?? 'immediately';
             $days = (int) ($config['days'] ?? 0);
             $time = $config['time'] ?? '00:00';
 
-            $now = Carbon::now();
-
             if ($type === 'immediately') {
-                return [
-                    'available' => true,
-                    'user_message' => 'Good news! This tour is available right now.',
-                ];
-            }
+                // no additional check
+            } elseif ($days > 0) {
+                $isAvailable = false;
+                $messages[] = 'This tour must be booked at least ' . $days . ' day(s) in advance.';
+            } else {
+                try {
+                    [$h, $m] = explode(':', $time);
+                    $cutoff = Carbon::today()->setHour((int)$h)->setMinute((int)$m)->setSecond(0);
 
-            // Case 1: days > 0 → today is never allowed
-            if ($days > 0) {
-                return [
-                    'available' => false,
-                    'user_message' => 'This tour must be booked at least '
-                        . $days . ' day(s) in advance.',
-                ];
+                    if ($now->gt($cutoff)) {
+                        $isAvailable = false;
+                        $messages[] = 'Booking for today is closed. You can book for tomorrow.';
+                    }
+                } catch (\Exception $e) {
+                    $isAvailable = false;
+                    $messages[] = 'This tour is not available for booking today.';
+                }
             }
-
-            // Case 2: days = 0 → same-day booking with cutoff
-            try {
-                [$h, $m] = explode(':', $time);
-                $cutoff = Carbon::today()
-                    ->setHour((int) $h)
-                    ->setMinute((int) $m)
-                    ->setSecond(0);
-            } catch (\Exception $e) {
-                return [
-                    'available' => false,
-                    'user_message' => 'This tour is not available for booking today.',
-                ];
-            }
-
-            if ($now->lte($cutoff)) {
-                return [
-                    'available' => true,
-                    'user_message' => 'Good news! This tour is available today.',
-                ];
-            }
-
-            return [
-                'available' => false,
-                'user_message' => 'Booking for today is closed. You can book for tomorrow.',
-            ];
         }
 
+        // --------------------------
+        // 4. Return final result
+        // --------------------------
         return [
-            'available' => true,
-            'user_message' => 'Good news! This tour is available right now.',
+            'available' => $isAvailable,
+            'user_message' => $isAvailable
+                ? 'Good news! This tour is available right now.'
+                : implode(' ', $messages),
         ];
     }
 
