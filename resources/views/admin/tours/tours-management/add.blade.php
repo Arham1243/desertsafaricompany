@@ -3028,7 +3028,15 @@
                                     </div>
 
                                     <div x-show="showBookedText">
-                                        <div class="repeater-table form-fields" data-repeater>
+                                        <div class="repeater-table form-fields" 
+                                            x-data="statusRepeater({
+                                                items: [{
+                                                    label: '',
+                                                    background_color: '#ffffff',
+                                                    text_color: '#000000'
+                                                }]
+                                            })"
+                                            x-init="init()">
                                             <table class="table table-bordered">
                                                 <thead>
                                                     <tr>
@@ -3050,38 +3058,67 @@
                                                         <th class="text-end" scope="col">Remove</th>
                                                     </tr>
                                                 </thead>
-                                                <tbody data-repeater-list>
-                                                    <tr data-repeater-item>
-                                                        <td>
-                                                            <input name="tour[status][booked_text][label][]"
-                                                                type="text" class="field">
-                                                        </td>
+                                                <tbody>
+                                                    <template x-for="(item, index) in items" :key="index">
+                                                        <tr>
                                                             <td>
-                                                            <input name="tour[status][booked_text][background_color][]"
-                                                                type="text" class="field">
-                                                        </td>
-                                                        <td>
-                                                            <input name="tour[status][booked_text][text_color][]"
-                                                                type="text" class="field">
-                                                        </td>
-                                                        <td>
-                                                            <div class="d-flex gap-2">
-                                                                <button type="button"
-                                                                    class="delete-btn ms-auto delete-btn--static"
-                                                                    data-repeater-remove disabled>
-                                                                    <i class='bx bxs-trash-alt'></i>
-                                                                </button>
-                                                                <button type="button"
-                                                                    class="add-btn  ms-auto add-btn--static"
-                                                                    data-repeater-insert>
-                                                                    <i class='bx bx-plus'></i>
-                                                                </button>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                                <input
+                                                                    name="tour[status][booked_text][label][]"
+                                                                    type="text"
+                                                                    class="field"
+                                                                    x-model="item.label"
+                                                                >
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="field color-picker" data-color-picker-container>
+                                                                    <label data-color-picker></label>
+                                                                    <input
+                                                                        type="text"
+                                                                        data-color-picker-input
+                                                                        name="tour[status][booked_text][background_color][]"
+                                                                        x-model="item.background_color"
+                                                                    >
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="field color-picker" data-color-picker-container>
+                                                                    <label data-color-picker></label>
+                                                                    <input
+                                                                        type="text"
+                                                                        data-color-picker-input
+                                                                        name="tour[status][booked_text][text_color][]"
+                                                                        x-model="item.text_color"
+                                                                    >
+                                                                </div>
+                                                            </td>
+
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button
+                                                                        type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        @click="removeItem(index)"
+                                                                        :disabled="items.length === 1"
+                                                                    >
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+
+                                                                    <button
+                                                                        type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        @click="addItemAfter(index)"
+                                                                    >
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </template>
                                                 </tbody>
                                             </table>
-                                            <button type="button" class="themeBtn ms-auto" data-repeater-create>Add
+                                            <button type="button" class="themeBtn ms-auto" @click="addItem()">Add
                                                 <i class="bx bx-plus"></i></button>
                                         </div>
                                     </div>
@@ -3512,6 +3549,54 @@
 
                 copy() {
                     navigator.clipboard.writeText(this.snippet)
+                }
+            }
+        }
+
+        function statusRepeater(config) {
+            return {
+                items: config.items || [],
+
+                init() {
+                    this.$nextTick(() => {
+                        document.querySelectorAll("[data-color-picker-container]").forEach(el => {
+                            InitializeColorPickers(el);
+                        });
+                    })
+                },
+
+                addItem() {
+                    this.items.push({
+                        label: '',
+                        background_color: '#ffffff',
+                        text_color: '#000000'
+                    })
+                    
+                    this.$nextTick(() => {
+                        document.querySelectorAll("[data-color-picker-container]").forEach(el => {
+                            InitializeColorPickers(el);
+                        });
+                    })
+                },
+
+                addItemAfter(index) {
+                    this.items.splice(index + 1, 0, {
+                        label: '',
+                        background_color: '#ffffff',
+                        text_color: '#000000'
+                    })
+                    
+                    this.$nextTick(() => {
+                        document.querySelectorAll("[data-color-picker-container]").forEach(el => {
+                            InitializeColorPickers(el);
+                        });
+                    })
+                },
+
+                removeItem(index) {
+                    if (this.items.length > 1) {
+                        this.items.splice(index, 1)
+                    }
                 }
             }
         }
