@@ -3470,16 +3470,16 @@
                                     @php
                                         
                                       $bookedTextConfig = is_string($tour->booked_text)
-    ? json_decode($tour->booked_text, true)
-    : (is_array($tour->booked_text) ? $tour->booked_text : []);
+                                            ? json_decode($tour->booked_text, true)
+                                            : (is_array($tour->booked_text) ? $tour->booked_text : []);
 
-$labels = $bookedTextConfig['label'] ?? [];
-$bgColors = $bookedTextConfig['background_color'] ?? [];
-$textColors = $bookedTextConfig['text_color'] ?? [];
+                                        $labels = $bookedTextConfig['label'] ?? [];
+                                        $bgColors = $bookedTextConfig['background_color'] ?? [];
+                                        $textColors = $bookedTextConfig['text_color'] ?? [];
 
-if (empty($labels)) {
-    $labels = [''];
-}
+                                        if (empty($labels)) {
+                                            $labels = [''];
+                                        }
 
                                     @endphp
                                     <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
@@ -3610,7 +3610,6 @@ if (empty($labels)) {
 
                                     @endphp
                                     <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', $badgeTag['enabled'] ?? false) ? 'true' : 'false' }}">
-
                                         <div class="row mt-3">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
@@ -3676,36 +3675,6 @@ if (empty($labels)) {
                                                 </div>
                                             </div>
                                         </div>
-
-                                              @php
-                                        $bookingRestrictionsBadge = is_string($tour->booking_restrictions_badge)
-                                            ? json_decode($tour->booking_restrictions_badge, true)
-                                            : (is_array($tour->booking_restrictions_badge)
-                                                ? $tour->booking_restrictions_badge
-                                                : []);
-
-                                    @endphp
-                                    </div>
-
-                                         <div x-data="{ bookingRestrictionsEnabled: false }" x-init="bookingRestrictionsEnabled = {{ old('tour.status.booking_restrictions_badge.enabled', $bookingRestrictionsBadge['enabled'] ?? false) ? 'true' : 'false' }}">
-
-                                        <div class="row mt-2">
-                                            <div class="col-md-12">
-                                                <div class="form-fields mb-3">
-                                                    <input type="hidden" name="tour[status][booking_restrictions_badge][enabled]"
-                                                        value="0">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            name="tour[status][booking_restrictions_badge][enabled]"
-                                                            id="booking_restrictions_badge_enabled" value="1"
-                                                            x-model="bookingRestrictionsEnabled">
-                                                        <label class="form-check-label" for="booking_restrictions_badge_enabled">
-                                                            Booking Restrictions Badge
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -3720,7 +3689,7 @@ if (empty($labels)) {
                                     </span>
                                 </div>
                                 <div class="form-box__body">
-                                <div class="row">
+                                        <div class="row">
                                     <div class="col-md-6 col-12">
                                             <div class="form-fields">
                                                 <div class="d-flex align-items-center gap-3 mb-2">
@@ -3755,6 +3724,7 @@ if (empty($labels)) {
                                             </div>
                                             </div>
                                         </div>
+                            </div>
                             </div>
                             <div class="form-box">
                                 <div class="form-box__header d-flex align-items-center justify-content-between">
