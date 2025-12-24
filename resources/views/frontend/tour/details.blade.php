@@ -108,7 +108,7 @@
                             @if ($currentCategory && $tour->city)
                                 <li class="breadcrumb-item">
                                     <a
-                                        href="{{ route('tours.category.details', [$tour->city->country->iso_alpha2, $tour->city->slug, $currentCategory->slug]) }}">
+                                        href="{{ buildCategoryDetailUrl($currentCategory, true, true) }}">
                                         {{ $currentCategory->name ?? '' }}
                                     </a>
                                 </li>
