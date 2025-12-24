@@ -28,7 +28,6 @@ use App\Http\Controllers\Admin\TerminalController;
 use App\Http\Controllers\Admin\TestimonialController;
 use App\Http\Controllers\Admin\Tour\AttributesController;
 use App\Http\Controllers\Admin\Tour\AuthorController as TourAuthorController;
-use App\Http\Controllers\Admin\Tour\AvailabilityController;
 use App\Http\Controllers\Admin\Tour\BookingController;
 use App\Http\Controllers\Admin\Tour\CategoryController as TourCategoryController;
 use App\Http\Controllers\Admin\Tour\DetailPopupController as TourDetailPopupController;
@@ -102,8 +101,6 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('/', ReviewController::class)->parameters(['' => 'review'])->except(['show']);
     });
-
-    Route::resource('tour-availability', AvailabilityController::class);
 
     Route::resource('tour-bookings', BookingController::class);
 

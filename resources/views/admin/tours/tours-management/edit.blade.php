@@ -2802,6 +2802,10 @@
                             </div>
                         </div>
                         <div x-show="optionTab === 'availability'" class="availability-options">
+                            <div class="form-box form-box--calendar">
+                            <input type="hidden" name="availabilityData" id="availabilityInput">
+                            <div id='calendar'></div>
+                        </div>
                             <div class="form-box">
                                 <div class="form-box__header">
                                     <div class="title">Availability</div>
@@ -2816,7 +2820,7 @@
                                                 @endphp
                                 <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
 
-                                    <div class="col-12 mt-3">
+                                    <div class="col-12">
                                         <div class="row">
                                             <div class="col-12 mb-2">
                                                 <div class="form-fields">
@@ -3777,10 +3781,39 @@
 @endsection
 
 @push('css')
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.15/fullcalendar.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://choices-js.github.io/Choices/assets/styles/choices.min.css"
         crossorigin="anonymous" />
+
+        <style>
+        .fc-view-harness {
+            height: 638.519px !important;
+        }
+
+        table.fc-col-header {
+            width: 860px !important;
+        }
+
+        table.fc-scrollgrid-sync-table {
+            width: 860px !important;
+            height: 608px !important;
+        }
+
+        td.fc-day {
+            position: relative;
+        }
+
+        td.fc-day .form-check.form-switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.4);
+            z-index: 100;
+        }
+    </style>
 @endpush
 @push('js')
     @php
@@ -4141,6 +4174,7 @@
             }
         }
     </script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
@@ -4149,4 +4183,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="{{ asset('admin/assets/js/tour-settings.js') }}"></script>
+
+    <script>
+           const existingAvailability = @json(
+        $tour->availabilities->pluck('is_available', 'date')
+    );
+document.addEventListener('DOMContentLoaded', function() {
+    const checkedDates = {};
+
+    // Initialize checkedDates from existing availability
+    for (const [date, value] of Object.entries(existingAvailability)) {
+        checkedDates[date] = value == 1 ? true : false;
+    }
+
+    const availabilityInput = document.getElementById('availabilityInput');
+    availabilityInput.value = JSON.stringify(checkedDates); // initial value
+
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+
+        dayCellDidMount: function(info) {
+            const switchDiv = document.createElement('div');
+            switchDiv.className = 'form-check form-switch';
+            switchDiv.style.marginTop = '5px';
+
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.className = 'form-check-input';
+            input.value = '1';
+
+            const dateStr = info.date.toISOString().split('T')[0];
+
+            // Pre-check if stored
+            if (checkedDates[dateStr]) input.checked = true;
+
+            input.addEventListener('change', function() {
+                checkedDates[dateStr] = this.checked;
+                availabilityInput.value = JSON.stringify(checkedDates);
+            });
+
+            switchDiv.appendChild(input);
+            info.el.appendChild(switchDiv);
+        }
+    });
+
+    calendar.render();
+});
+</script>
 @endpush

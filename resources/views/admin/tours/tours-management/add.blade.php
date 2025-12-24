@@ -2302,6 +2302,10 @@
                         </div>
                     </div>
                     <div x-show="optionTab === 'availability'" class="availability-options">
+                        <div class="form-box form-box--calendar">
+                            <input type="hidden" name="availabilityData" id="availabilityInput">
+                            <div id='calendar'></div>
+                        </div>
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="title">Availability</div>
@@ -3030,7 +3034,7 @@
                             <div class="form-box__header d-flex align-items-center justify-content-between">
                                 <div class="title">Tour Details Badge</div>
                                 <span class="title d-flex align-items-center gap-1">
-                                     Preview:
+                                    Preview:
                                     <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
                                             class='bx  bxs-show'></i></a>
@@ -3075,7 +3079,7 @@
                             <div class="form-box__header d-flex align-items-center justify-content-between">
                                 <div class="title">Author Settings</div>
                                 <span class="title d-flex align-items-center gap-1">
-                                     Preview:
+                                    Preview:
                                     <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
                                             class='bx  bxs-show'></i></a>
@@ -3155,10 +3159,38 @@
 @endsection
 
 @push('css')
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.15/fullcalendar.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="https://choices-js.github.io/Choices/assets/styles/choices.min.css"
         crossorigin="anonymous" />
+    <style>
+        .fc-view-harness {
+            height: 638.519px !important;
+        }
+
+        table.fc-col-header {
+            width: 860px !important;
+        }
+
+        table.fc-scrollgrid-sync-table {
+            width: 860px !important;
+            height: 608px !important;
+        }
+
+        td.fc-day {
+            position: relative;
+        }
+
+        td.fc-day .form-check.form-switch {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1.4);
+            z-index: 100;
+        }
+    </style>
 @endpush
 @push('js')
     <script>
@@ -3476,6 +3508,7 @@
             }
         }
     </script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>
     <script src="https://choices-js.github.io/Choices/assets/scripts/choices.min.js" crossorigin="anonymous"></script>
@@ -3484,4 +3517,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/js/intlTelInput-jquery.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="{{ asset('admin/assets/js/tour-settings.js') }}"></script>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkedDates = {}; // Track which dates are checked
+            const availabilityInput = document.getElementById('availabilityInput');
+
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+
+                dayCellDidMount: function(info) {
+                    const switchDiv = document.createElement('div');
+                    switchDiv.className = 'form-check form-switch';
+                    switchDiv.style.marginTop = '5px';
+
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.className = 'form-check-input';
+                    input.value = '1';
+
+                    if (checkedDates[info.dateStr]) input.checked = true;
+
+                    input.addEventListener('change', function() {
+                        const dateStr = info.date.toISOString().split('T')[0]; // YYYY-MM-DD
+                        checkedDates[dateStr] = this.checked;
+                            availabilityInput.value = JSON.stringify(checkedDates);
+                    });
+
+
+                    switchDiv.appendChild(input);
+                    info.el.appendChild(switchDiv);
+                }
+            });
+
+            calendar.render();
+        });
+    </script>
 @endpush

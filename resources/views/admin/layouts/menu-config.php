@@ -222,11 +222,6 @@ return [
                 'route' => route('admin.tour-popups.index'),
             ],
             [
-                'title' => 'Availability',
-                'icon' => 'bx bx-calendar',
-                'route' => route('admin.tour-availability.index'),
-            ],
-            [
                 'title' => 'Booking Calendar',
                 'icon' => 'bx bx-calendar-check',
                 'route' => route('admin.tour-bookings.index'),

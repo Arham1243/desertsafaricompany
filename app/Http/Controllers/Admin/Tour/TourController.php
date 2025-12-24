@@ -11,6 +11,7 @@ use App\Models\TourAuthor;
 use App\Models\TourCategory;
 use App\Models\TourFaq;
 use App\Models\TourItinerary;
+use App\Models\TourAvailability;
 use App\Models\TourPricing;
 use App\Traits\Sluggable;
 use App\Services\Admin\TourDuplicateService;
@@ -69,6 +70,7 @@ class TourController extends Controller
 
     public function store(Request $request)
     {
+
         $general = $request->input('tour.general', []);
         $statusTab = $request->input('tour.status', []);
         $availabilityData = $request->input('tour.availability', []);
@@ -109,6 +111,8 @@ class TourController extends Controller
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $categoryIds = $general['category_ids'] ?? [];
+        $availabilityData = $request->input('availabilityData');
+        $availabilityDataDates = json_decode($availabilityData, true);
 
         $tour = Tour::create([
             'title' => $general['title'] ?? null,
@@ -173,6 +177,17 @@ class TourController extends Controller
         ]);
 
         $tour->categories()->sync($categoryIds);
+
+        if ($availabilityDataDates && is_array($availabilityDataDates)) {
+            foreach ($availabilityDataDates as $date => $isAvailable) {
+                TourAvailability::create([
+                    'tour_id' => $tour->id,
+                    'date' => $date,
+                    'is_available' => $isAvailable ? 1 : 0,
+                ]);
+            }
+        }
+
 
         if (isset($general['faq']['question']) && is_array($general['faq']['question'])) {
             foreach ($general['faq']['question'] as $index => $question) {
@@ -390,6 +405,9 @@ class TourController extends Controller
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $categoryIds = $general['category_ids'] ?? [];
+        $availabilityData = $request->input('availabilityData');
+        $availabilityDataDates = json_decode($availabilityData, true);
+
 
         $tour->update([
             'title' => $general['title'] ?? null,
@@ -455,6 +473,21 @@ class TourController extends Controller
         ]);
 
         $tour->categories()->sync($categoryIds);
+
+        if ($availabilityDataDates && is_array($availabilityDataDates)) {
+            foreach ($availabilityDataDates as $date => $isAvailable) {
+                TourAvailability::updateOrCreate(
+                    [
+                        'tour_id' => $tour->id,
+                        'date' => $date,
+                    ],
+                    [
+                        'is_available' => $isAvailable ? 1 : 0,
+                    ]
+                );
+            }
+        }
+
 
         if (isset($general['faq']['question']) && is_array($general['faq']['question'])) {
             $tour->faqs()->delete();
