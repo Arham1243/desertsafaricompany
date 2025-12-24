@@ -2814,54 +2814,7 @@
                                                     'advance_booking_hours' => null,
                                                 ];
                                                 @endphp
-                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, fixedDate: {{ $tour->is_fixed_date ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
-                                    <div class="col-12">
-                                        <div class="row">
-                                            <div class="col-12 mb-2">
-                                                <div class="form-fields">
-                                                    <div class="title">Fixed dates:</div>
-                                                    <div class="form-check">
-                                                        <input type="hidden" name="tour[availability][is_fixed_date]" x-model="fixedDate">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            id="fixed_date"
-                                                            :checked="fixedDate == 1"
-                                                            @change="fixedDate = $event.target.checked ? 1 : 0; if(fixedDate) { openHours = 0; advanceBooking = 0; }">
-                                                        <label class="form-check-label" for="fixed_date">
-                                                            Enable Fixed Date
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-12" x-show="fixedDate == 1">
-                                                <div class="row my-2">
-                                                    <div class="col-md-6">
-                                                        <div class="form-fields">
-                                                            <label class="title">Start Date :</label>
-                                                            <input readonly type="text" class="field date-picker"
-                                                                placeholder="Select"
-                                                                name="tour[availability][start_date]" autocomplete="off"
-                                                                value="{{ optional($tour->start_date)->format('Y-m-d') }}">
-                                                            @error('tour[availability][start_date]')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <div class="form-fields">
-                                                            <label class="title">End Date :</label>
-                                                            <input readonly type="text" class="field date-picker"
-                                                                placeholder="Select" name="tour[availability][end_date]"
-                                                                autocomplete="off"
-                                                                value="{{ optional($tour->end_date)->format('Y-m-d') }}">
-                                                            @error('tour[availability][end_date]')
-                                                                <div class="text-danger">{{ $message }}</div>
-                                                            @enderror
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="form-box__body" x-data="{ advanceBooking: {{ $tour->is_advance_booking ? '1' : '0' }}, openHours: {{ $tour->is_open_hours ? '1' : '0' }}, advanceBookingType: '{{ $availability_advance_booking['advance_booking_type'] ?? 'immediately' }}' }">
 
                                     <div class="col-12 mt-3">
                                         <div class="row">
@@ -2873,7 +2826,7 @@
                                                         <input class="form-check-input" type="checkbox"
                                                             id="openHours"
                                                             :checked="openHours == 1"
-                                                            @change="openHours = $event.target.checked ? 1 : 0; if(openHours) { fixedDate = 0; advanceBooking = 0; }">
+                                                            @change="openHours = $event.target.checked ? 1 : 0;">
                                                         <label class="form-check-label" for="openHours">
                                                             Enable Open Hours
                                                         </label>
@@ -3005,7 +2958,7 @@
                                                         <input type="hidden" name="tour[availability][is_advance_booking]" x-model="advanceBooking">
                                                         <input class="form-check-input" type="checkbox"
                                                             id="advanceBooking" :checked="advanceBooking == 1"
-                                                            @change="advanceBooking = $event.target.checked ? 1 : 0; if(advanceBooking) { fixedDate = 0; openHours = 0; }">
+                                                            @change="advanceBooking = $event.target.checked ? 1 : 0;">
                                                         <label class="form-check-label" for="advanceBooking">
                                                             Enable Advance Booking Time
                                                         </label>

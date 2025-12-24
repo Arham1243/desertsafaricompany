@@ -242,29 +242,6 @@ class Tour extends Model
     {
         $now = Carbon::now();
 
-        if ((int) $this->is_fixed_date === 1) {
-            if (! $this->start_date || ! $this->end_date) {
-                return [
-                    'available' => false,
-                    'user_message' => 'Tour dates are not set yet. Please check back later.',
-                ];
-            }
-
-            if ($now->lt($this->start_date)) {
-                return [
-                    'available' => false,
-                    'user_message' => 'This tour starts on ' . $this->start_date->format('M d, Y') . '. Stay tuned!',
-                ];
-            }
-
-            if ($now->gt($this->end_date)) {
-                return [
-                    'available' => false,
-                    'user_message' => 'This tour ended on ' . $this->end_date->format('M d, Y') . '. Check other tours!',
-                ];
-            }
-        }
-
         if ((int) $this->is_open_hours === 1) {
             $hours = json_decode($this->availability_open_hours, true);
 
