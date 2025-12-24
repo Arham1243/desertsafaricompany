@@ -8270,7 +8270,7 @@ body .timeslot-group-wrapper :is(select.select-field) {
     color: #000 !important;
     opacity: 0.4 !important;
 }
-.flatpickr-day.selected,.flatpickr-day.selected:hover {
+.flatpickr-day.selected,.flatpickr-day.selected:not(.flatpickr-disabled):hover {
     color: #fff !important;
     background: var(--color-primary) !important;
 }
