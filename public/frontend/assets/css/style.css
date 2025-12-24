@@ -7595,11 +7595,12 @@ ul.show-in-desktop {
     font-size: 17px;
 }
 .tour-card__content .booked-details {
-    font-size: 11px;
+    font-size: 10.5px;
     font-weight: 800;
     background: #ebeef1;
     width: fit-content;
-    padding: 3px 9px;
+    padding: 2px 7px;
+    margin: 1px 0;
     border-radius: 0.25rem;
 }
 .tour-card .pricing-details {
@@ -7629,10 +7630,11 @@ ul.show-in-desktop {
 }
 
 .tour-card .booked-details-wrapper {
-    height: 35px;
     display: flex;
     align-items: center;
-    padding-bottom: 3px;
+    margin: 10px 0;
+    flex-wrap: wrap;
+    gap: 4px;
 }
 .tour-card .pricing-details-wrapper {
     line-height: 1.15;

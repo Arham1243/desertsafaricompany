@@ -189,8 +189,24 @@
         <div class="tour-card tour-card--style3 img-zoom-wrapper">
             @php
                 $certifiedTagContent = json_decode($tour->certified_tag) ?? null;
-                $bookedTextContent = json_decode($tour->booked_text) ?? null;
                 $badgeTagContent = json_decode($tour->badge_tag) ?? null;
+                $bookedTextContent = json_decode($tour->booked_text);
+
+                $labels = $bookedTextContent->label ?? [];
+                $bgColors = $bookedTextContent->background_color ?? [];
+                $textColors = $bookedTextContent->text_color ?? [];
+
+                if (!is_array($labels)) {
+                    $labels = [$labels];
+                }
+                if (!is_array($bgColors)) {
+                    $bgColors = [$bgColors];
+                }
+                if (!is_array($textColors)) {
+                    $textColors = [$textColors];
+                }
+
+                $labels = array_filter($labels, fn($label) => !empty(trim($label)));
             @endphp
             <div class="tour-card__img">
                 <div class="tour-actions">
@@ -242,27 +258,18 @@
                             {{ $certifiedTagContent->label }}</div>
                     @endif
                 </div>
-                @if ($bookedTextContent && $bookedTextContent->enabled === '1')
-                    @php
-                        $bookedTextLabels = $bookedTextContent->label ?? [];
-                        if (!is_array($bookedTextLabels)) {
-                            $bookedTextLabels = [$bookedTextLabels];
-                        }
-                        $bookedTextLabels = array_filter($bookedTextLabels, fn($label) => !empty(trim($label)));
-                    @endphp
-                    @if (!empty($bookedTextLabels))
-                        @foreach ($bookedTextLabels as $label)
-                            <div class="booked-details-wrapper">
-                                <div class="booked-details line-clamp-1"
-                                    @if ($bookedTextContent->background_color || $bookedTextContent->text_color) style="
-                {{ $bookedTextContent->background_color ? 'background: ' . $bookedTextContent->background_color . ';' : '' }}
-                {{ $bookedTextContent->text_color ? 'color: ' . $bookedTextContent->text_color . ';' : '' }}
-            " @endif>
-                                    {{ $label }}
-                                </div>
+                @if ($bookedTextContent && $bookedTextContent->enabled === '1' && !empty($labels))
+                    <div class="booked-details-wrapper">
+                        @foreach ($labels as $index => $label)
+                            <div class="booked-details line-clamp-1"
+                                style="
+                    {{ !empty($bgColors[$index] ?? null) ? 'background:' . $bgColors[$index] . ';' : '' }}
+                    {{ !empty($textColors[$index] ?? null) ? 'color:' . $textColors[$index] . ';' : '' }}
+                ">
+                                {{ $label }}
                             </div>
                         @endforeach
-                    @endif
+                    </div>
                 @endif
                 @php
                     $bookingRestrictionsBadge = $tour->booking_restrictions_badge
