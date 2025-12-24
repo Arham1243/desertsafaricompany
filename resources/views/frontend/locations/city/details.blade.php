@@ -567,6 +567,9 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
                         // Append new tours
                         containerEl.insertAdjacentHTML('beforeend', data.html);
 
+                        // Observe newly added lazy images
+                        initLazyLoading(containerEl);
+
                         // Update offset
                         offset += limit;
 

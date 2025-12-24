@@ -70,12 +70,12 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                                                                                                             
-                                                                                                                                                                                                                                                                                                                  
-                                                                                                                                                                                                                                                      
-                                                                                                                                                                                          
-                                                                                                                              
-                                                           @endif>
+                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                  
+                                                                                                                                      
+                                                                     @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -625,6 +625,9 @@
                         // Append new tours
                         containerEl.insertAdjacentHTML('beforeend', data.html);
 
+                        // Observe newly added lazy images
+                        initLazyLoading(containerEl);
+                        
                         // Update offset
                         offset += limit;
 

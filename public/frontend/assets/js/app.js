@@ -108,13 +108,13 @@ function closeSideBar() {
     document.getElementById("sideBar").classList.remove("show");
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    let images = document.querySelectorAll("img.lazy");
-    let observer = new IntersectionObserver(
+function initLazyLoading(container = document) {
+    const images = container.querySelectorAll("img.lazy");
+    const observer = new IntersectionObserver(
         (entries, observer) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
-                    let img = entry.target;
+                    const img = entry.target;
                     img.src = img.dataset.src;
                     observer.unobserve(img);
                 }
@@ -123,12 +123,14 @@ document.addEventListener("DOMContentLoaded", function () {
         {
             rootMargin: "200px 0px",
             threshold: 0.1,
-        },
+        }
     );
-    images.forEach((image) => {
-        observer.observe(image);
-    });
-});
+
+    images.forEach((img) => observer.observe(img));
+}
+
+// Run once on page load
+document.addEventListener("DOMContentLoaded", () => initLazyLoading());
 
 // Custom quantity Counters
 const quantityWrappers = document.querySelectorAll(".quantity-counter");

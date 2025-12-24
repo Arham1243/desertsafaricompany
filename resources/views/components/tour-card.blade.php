@@ -228,7 +228,7 @@
                     @endif
                 </div>
                 <a href={{ $detailUrl }} class="img-wrapper img-zoom">
-                    <img data-src="={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
+                    <img data-src="{{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}"
                         alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 </a>
             </div>

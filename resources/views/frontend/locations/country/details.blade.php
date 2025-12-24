@@ -476,6 +476,8 @@ $btnStyles = [];
 
                         // Append new tours
                         containerEl.insertAdjacentHTML('beforeend', data.html);
+                        // Observe newly added lazy images
+                        initLazyLoading(containerEl);
 
                         // Update offset
                         offset += limit;
