@@ -379,7 +379,7 @@ function getToursByBlock(array $block, $offset = 0, $limit = null)
         $tours = $tours->whereIn('id', $block['tour_ids'] ?? []);
     }
 
-    if ($resourceType === 'tour') {
+    if ($sortBy) {
         match ($sortBy) {
             'asc' => $tours = $tours->sortBy('title'),
             'desc' => $tours = $tours->sortByDesc('title'),

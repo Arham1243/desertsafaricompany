@@ -46,6 +46,39 @@
                 type="text" class="field mt-3"
                 value="{{ $jsonContent ? $jsonContent[$blockKey]['heading'] ?? '' : '' }}">
         </div>
+        
+        <div class="form-fields mb-4">
+            <label class="title">Sort By:</label>
+            <div class="d-flex align-items-center gap-5 px-4 mb-3">
+                <div class="form-check p-0">
+                    <input class="form-check-input" type="radio" name="json_content[{{ $blockKey }}][sort_by]"
+                        id="sort_by_asc_{{ $blockKey }}" value="asc"
+                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'asc' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="sort_by_asc_{{ $blockKey }}">
+                        Asc by Title (A to Z)
+                    </label>
+                </div>
+
+                <div class="form-check p-0">
+                    <input class="form-check-input" type="radio" name="json_content[{{ $blockKey }}][sort_by]"
+                        id="sort_by_desc_{{ $blockKey }}" value="desc"
+                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'desc' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="sort_by_desc_{{ $blockKey }}">
+                        Desc by Title (Z to A)
+                    </label>
+                </div>
+
+                <div class="form-check p-0">
+                    <input class="form-check-input" type="radio" name="json_content[{{ $blockKey }}][sort_by]"
+                        id="sort_by_random_{{ $blockKey }}" value="random"
+                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'random' ? 'checked' : '' }} />
+                    <label class="form-check-label" for="sort_by_random_{{ $blockKey }}">
+                        Auto Random
+                    </label>
+                </div>
+            </div>
+        </div>
+
         <div class="d-flex align-items-center gap-5 px-4 mb-3">
             <div class="form-check p-0">
                 <input class="form-check-input" type="radio" name="json_content[{{ $blockKey }}][resource_type]"
@@ -70,21 +103,6 @@
         </div>
 
         <div x-show="resource_type == 'tour'" x-transition>
-            <div class="form-fields mb-4">
-                <label class="title">Sort By:</label>
-                <select name="json_content[{{ $blockKey }}][sort_by]" class="field">
-                    <option value="" selected disabled>Select</option>
-                    <option value="asc"
-                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'asc' ? 'selected' : '' }}>
-                        Asc by title (A to Z)</option>
-                    <option value="desc"
-                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'desc' ? 'selected' : '' }}>
-                        Desc by title (Z to A)</option>
-                    <option value="random"
-                        {{ isset($jsonContent[$blockKey]['sort_by']) && $jsonContent[$blockKey]['sort_by'] === 'random' ? 'selected' : '' }}>
-                        Random</option>
-                </select>
-            </div>
             <div class="form-fields">
                 <label class="title">Select Tours:</label>
                 <select name="json_content[{{ $blockKey }}][tour_ids][]" multiple class="select2-select">
