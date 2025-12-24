@@ -19,7 +19,7 @@ class Tour extends Model
         'availability_open_hours' => 'array',
     ];
 
-    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price', 'advance_booking_badge'];
+    protected $appends = ['average_rating', 'formated_price_type', 'availability_status', 'detail_url', 'tour_lowest_price', 'advance_booking_badge', 'has_five_star_five_review'];
 
     public function category()
     {
@@ -39,6 +39,14 @@ class Tour extends Model
     public function availabilities()
     {
         return $this->hasMany(TourAvailability::class);
+    }
+
+    public function getHasFiveStarFiveReviewAttribute()
+    {
+        return $this->reviews()
+            ->where('rating', 5)
+            ->where('status', 'active')
+            ->count() >= 5;
     }
 
     public function reviews()

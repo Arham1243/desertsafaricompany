@@ -211,7 +211,7 @@
                                                 $badgeStyle .= "color: $badgeIconColor;";
                                             }
                                         @endphp
-                                        @if (json_decode($tour->badge) && optional(json_decode($tour->badge))->is_enabled)
+                                        @if (json_decode($tour->badge) && $tour->has_five_star_five_review)
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
                                                 @if ($badgeStyle && $badgeIconClass)

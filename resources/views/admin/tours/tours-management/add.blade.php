@@ -173,42 +173,6 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 col-12 mt-4">
-                                            <div class="form-fields">
-                                                <div class="d-flex align-items-center gap-3 mb-2">
-                                                    <span class="title mb-0">Badge icon: <a class="p-0 ps-2 nav-link"
-                                                            href="//v2.boxicons.com" target="_blank">boxicons</a></span>
-
-                                                    <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                        data-disabled-text="Disabled">
-                                                        <input class="form-check-input" data-toggle-switch type="checkbox"
-                                                            id="enable-badge-section" value="1"
-                                                            name="tour[badge][is_enabled]" checked>
-                                                        <label class="form-check-label"
-                                                            for="enable-badge-section">Enabled</label>
-                                                    </div>
-                                                </div>
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <input type="text" name="tour[badge][icon_class]" class="field"
-                                                        value="{{ old('tour[badge][icon_class]', 'bx bx-badge-check') }}"
-                                                        placeholder="" oninput="showIcon(this)">
-                                                    <i class="bx bx-badge-check bx-md" data-preview-icon></i>
-                                                </div>
-                                                @error('tour[badge][icon_class]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-12  mt-4">
-                                            <div class="form-fields">
-                                                <label class="title">Badge Name:</label>
-                                                <input type="text" name="tour[badge][name]" class="field"
-                                                    value="{{ old('tour[badge][name]') }}" placeholder="">
-                                                @error('tour[badge][name]')
-                                                    <div class="text-danger">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
                                         <div class="col-md-12 mt-5">
                                             <div class="form-fields">
                                                 <div class="d-flex mb-2">
@@ -1439,8 +1403,7 @@
                                                                 <input class="form-check-input" type="radio"
                                                                     name="tour[pricing][price_type]" x-model="tourType"
                                                                     value="private" id="privatePrice">
-                                                                <label class="form-check-label"
-                                                                    for="privatePrice">Private
+                                                                <label class="form-check-label" for="privatePrice">Private
                                                                     Tour Price</label>
                                                             </div>
                                                             <div class="form-check p-0">
@@ -2892,7 +2855,7 @@
                             </div>
                             <div class="form-box__body">
                                 <div x-data="{ certifiedTagEnabled: {{ !empty($jsonContent['status']['certified_tag']['enabled']) ? 'true' : 'false' }} }">
-                                    <div class="row mt-4">
+                                    <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-fields mb-3">
                                                 <input type="hidden" name="tour[status][certified_tag][enabled]"
@@ -2959,14 +2922,13 @@
                                     </div>
 
                                     <div x-show="showBookedText">
-                                        <div class="repeater-table form-fields" 
-                                            x-data="statusRepeater({
-                                                items: [{
-                                                    label: '',
-                                                    background_color: '#ffffff',
-                                                    text_color: '#000000'
-                                                }]
-                                            })"
+                                        <div class="repeater-table form-fields" x-data="statusRepeater({
+                                            items: [{
+                                                label: '',
+                                                background_color: '#ffffff',
+                                                text_color: '#000000'
+                                            }]
+                                        })"
                                             x-init="init()">
                                             <table class="table table-bordered">
                                                 <thead>
@@ -2993,54 +2955,43 @@
                                                     <template x-for="(item, index) in items" :key="index">
                                                         <tr>
                                                             <td>
-                                                                <input
-                                                                    name="tour[status][booked_text][label][]"
-                                                                    type="text"
-                                                                    class="field"
-                                                                    x-model="item.label"
-                                                                >
+                                                                <input name="tour[status][booked_text][label][]"
+                                                                    type="text" class="field"
+                                                                    x-model="item.label">
                                                             </td>
 
                                                             <td>
-                                                                <div class="field color-picker" data-color-picker-container>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container>
                                                                     <label data-color-picker></label>
-                                                                    <input
-                                                                        type="text"
-                                                                        data-color-picker-input
+                                                                    <input type="text" data-color-picker-input
                                                                         name="tour[status][booked_text][background_color][]"
-                                                                        x-model="item.background_color"
-                                                                    >
+                                                                        x-model="item.background_color">
                                                                 </div>
                                                             </td>
 
                                                             <td>
-                                                                <div class="field color-picker" data-color-picker-container>
+                                                                <div class="field color-picker"
+                                                                    data-color-picker-container>
                                                                     <label data-color-picker></label>
-                                                                    <input
-                                                                        type="text"
-                                                                        data-color-picker-input
+                                                                    <input type="text" data-color-picker-input
                                                                         name="tour[status][booked_text][text_color][]"
-                                                                        x-model="item.text_color"
-                                                                    >
+                                                                        x-model="item.text_color">
                                                                 </div>
                                                             </td>
 
                                                             <td>
                                                                 <div class="d-flex gap-2">
-                                                                    <button
-                                                                        type="button"
+                                                                    <button type="button"
                                                                         class="delete-btn ms-auto delete-btn--static"
                                                                         @click="removeItem(index)"
-                                                                        :disabled="items.length === 1"
-                                                                    >
+                                                                        :disabled="items.length === 1">
                                                                         <i class="bx bxs-trash-alt"></i>
                                                                     </button>
 
-                                                                    <button
-                                                                        type="button"
+                                                                    <button type="button"
                                                                         class="add-btn ms-auto add-btn--static"
-                                                                        @click="addItemAfter(index)"
-                                                                    >
+                                                                        @click="addItemAfter(index)">
                                                                         <i class="bx bx-plus"></i>
                                                                     </button>
                                                                 </div>
@@ -3194,13 +3145,60 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header d-flex align-items-center justify-content-between">
+                                <div class="title">Tour Details Badge</div>
+                                <span class="title d-flex align-items-center gap-1">
+                                     Preview:
+                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
+                                            class='bx  bxs-show'></i></a>
+                                </span>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <span class="title mb-0">Badge icon: <a class="p-0 ps-2 nav-link"
+                                                        href="//v2.boxicons.com" target="_blank">boxicons</a></span>
+                                            </div>
+                                            <div class="d-flex align-items-center gap-3">
+                                                <input type="text" name="tour[badge][icon_class]" class="field"
+                                                    value="{{ old('tour[badge][icon_class]', 'bx bx-badge-check') }}"
+                                                    placeholder="" oninput="showIcon(this)">
+                                                <i class="bx bx-badge-check bx-md" data-preview-icon></i>
+                                            </div>
+                                            @error('tour[badge][icon_class]')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Badge Name:</label>
+                                            <input type="text" name="tour[badge][name]" class="field"
+                                                value="{{ old('tour[badge][name]') }}" placeholder="">
+
+                                            <small class="muted">This badge will be shown on the tour details page
+                                                when the tour has five 5-star reviews.</small>
+                                            @error('tour[badge][name]')
+                                                <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="form-box">
                             <div class="form-box__header d-flex align-items-center justify-content-between">
                                 <div class="title">Author Settings</div>
                                 <span class="title d-flex align-items-center gap-1">
-                                    Section Preview:
+                                     Preview:
                                     <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
                                         data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
                                             class='bx  bxs-show'></i></a>
@@ -3571,7 +3569,7 @@
                         background_color: '#ffffff',
                         text_color: '#000000'
                     })
-                    
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
@@ -3585,7 +3583,7 @@
                         background_color: '#ffffff',
                         text_color: '#000000'
                     })
-                    
+
                     this.$nextTick(() => {
                         document.querySelectorAll("[data-color-picker-container]").forEach(el => {
                             InitializeColorPickers(el);
