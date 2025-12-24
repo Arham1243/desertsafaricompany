@@ -276,15 +276,10 @@
                         ? json_decode($tour->booking_restrictions_badge, true)
                         : [];
                 @endphp
-                @if ($tour->advance_booking_badge && $bookingRestrictionsBadge && (int) $bookingRestrictionsBadge['enabled'] === 1)
+                @if ($tour->is_advance_booking && $tour->advance_booking_badge)
                     <div class="booked-details-wrapper">
-
-                        <div class="booked-details"
-                            @if ($bookingRestrictionsBadge['background_color'] || $bookingRestrictionsBadge['text_color']) style="
-            {{ $bookingRestrictionsBadge['background_color'] ? 'background: ' . $bookingRestrictionsBadge['background_color'] . ';' : '' }}
-            {{ $bookingRestrictionsBadge['text_color'] ? 'color: ' . $bookingRestrictionsBadge['text_color'] . ';' : '' }}
-        " @endif>
-                            {{ $bookingRestrictionsBadge['label'] }} {{ $tour->advance_booking_badge }}
+                        <div class="booked-details">
+                            You can book for {{ $tour->advance_booking_badge }}
                         </div>
                     </div>
                 @endif

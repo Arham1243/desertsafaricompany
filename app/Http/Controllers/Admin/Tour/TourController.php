@@ -106,7 +106,6 @@ class TourController extends Controller
         $certifiedTag = ! empty($statusTab['certified_tag']) ? json_encode($statusTab['certified_tag']) : null;
         $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
         $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
-        $bookingRestrictionsBadge = ! empty($statusTab['booking_restrictions_badge']) ? json_encode($statusTab['booking_restrictions_badge']) : null;
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $categoryIds = $general['category_ids'] ?? [];
@@ -121,7 +120,6 @@ class TourController extends Controller
             'booked_text' => $bookedText ?? null,
             'badge_tag' => $badgeTag ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
-            'booking_restrictions_badge' => $bookingRestrictionsBadge ?? null,
             'content' => $general['content'] ?? null,
             'tour_time_id' => $general['tour_time_id'] ?? null,
             'category_id' => $general['category_id'] ?? null,
@@ -393,7 +391,6 @@ class TourController extends Controller
         $certifiedTag = ! empty($statusTab['certified_tag']) ? json_encode($statusTab['certified_tag']) : null;
         $bookedText = ! empty($statusTab['booked_text']) ? json_encode($statusTab['booked_text']) : null;
         $badgeTag = ! empty($statusTab['badge_tag']) ? json_encode($statusTab['badge_tag']) : null;
-        $bookingRestrictionsBadge = ! empty($statusTab['booking_restrictions_badge']) ? json_encode($statusTab['booking_restrictions_badge']) : null;
         $systemAuthor = TourAuthor::where('system', 1)->first();
         $pricingTagline = ! empty($pricing['pricing_tagline']) ? json_encode($pricing['pricing_tagline']) : null;
         $categoryIds = $general['category_ids'] ?? [];
@@ -409,7 +406,6 @@ class TourController extends Controller
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
             'badge_tag' => $badgeTag ?? null,
-            'booking_restrictions_badge' => $bookingRestrictionsBadge ?? null,
             'schema_type' => $general['schema_type'] ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
             'exclusions_inclusions_heading' => $exclusions_inclusions_heading,
