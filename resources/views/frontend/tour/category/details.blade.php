@@ -70,12 +70,13 @@
                     <div class="editor-content line-clamp" data-show-more-content
                         @if ($item->long_description_line_limit > 0) style="
             -webkit-line-clamp: {{ $item->long_description_line_limit }}; @if ($tour_category_content_color)color:{{ $tour_category_content_color }}; @endif "
-                                                                                                                                                                                                                                                                                                                                                                                     
-                                                                                                                                                                                                                                                                                                                          
-                                                                                                                                                                                                                                                              
-                                                                                                                                                                                                  
-                                                                                                                                      
-                                                                     @endif>
+                                                                                                                                                                                                                                                                                                                                                                                                                     
+                                                                                                                                                                                                                                                                                                                                                          
+                                                                                                                                                                                                                                                                                              
+                                                                                                                                                                                                                                  
+                                                                                                                                                                      
+                                                                                                          
+                                  @endif>
                         {!! $item->long_description !!}
                     </div>
                     @if ($item->long_description_line_limit > 0)
@@ -103,8 +104,10 @@
         $category_block_2_categories = $tourCategories->whereIn('id', $category_block_category_ids_2);
 
         $first_tour_block = $jsonContent ? $jsonContent['first_tour_block'] : null;
+        $first_8_tours = getToursByBlock($first_tour_block, 0, 8);
         $total_first_tour_block_tours = getToursByBlock($first_tour_block)->count();
-        $first_tour_block_tours = getToursByBlock($first_tour_block, 0, 8);
+        $remaining_tours_count = max($total_first_tour_block_tours - 8, 0);
+        $remaining_tours = getToursByBlock($first_tour_block, 8, 8);
 
         $second_tour_block = $jsonContent ? $jsonContent['second_tour_block'] : null;
         $total_second_tour_block_tours = getToursByBlock($second_tour_block)->count();
@@ -144,9 +147,7 @@
         </div>
     @endif
 
-    @if (isset($first_tour_block['is_enabled']) &&
-            $first_tour_block['is_enabled'] === '1' &&
-            $first_tour_block_tours->isNotEmpty())
+    @if (isset($first_tour_block['is_enabled']) && $first_tour_block['is_enabled'] === '1' && $first_8_tours->isNotEmpty())
         <div class="my-5">
             <div class="container">
                 @if (isset($first_tour_block['heading_enabled']) && (int) $first_tour_block['heading_enabled'] === 1)
@@ -160,18 +161,13 @@
                         </div>
                     </div>
                 @endif
-                <div class="row" id="firstTourBlockContainer">
-                    @foreach ($first_tour_block_tours as $first_tour_block_tour)
+                <div class="row">
+                    @foreach ($first_8_tours as $first_tour_block_tour)
                         <div class="col-md-3">
                             <x-tour-card :tour="$first_tour_block_tour" style="style3" />
                         </div>
                     @endforeach
                 </div>
-                @if ($total_first_tour_block_tours > 8)
-                    <button class="primary-btn mx-auto mt-4" id="loadMoreFirstBlock">
-                        Show More
-                    </button>
-                @endif
             </div>
         </div>
     @endif
@@ -212,6 +208,37 @@
                         @endif
                     </div>
                 </div>
+            </div>
+        </div>
+    @endif
+
+
+    @if (isset($first_tour_block['is_enabled']) && $first_tour_block['is_enabled'] === '1' && $first_8_tours->isNotEmpty())
+        <div class="my-5">
+            <div class="container">
+                @if (isset($first_tour_block['heading_enabled']) && (int) $first_tour_block['heading_enabled'] === 1)
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <div class="section-content">
+                                <h2 class="subHeading block-heading">
+                                    {{ $first_tour_block['heading'] ?? '' }}
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+                <div class="row" id="firstTourBlockContainer">
+                    @foreach ($remaining_tours as $remaining_tour)
+                        <div class="col-md-3">
+                            <x-tour-card :tour="$remaining_tour" style="style3" />
+                        </div>
+                    @endforeach
+                </div>
+                @if ($remaining_tours_count > 8)
+                    <button class="primary-btn mx-auto mt-4" id="loadMoreFirstBlock">
+                        Show More
+                    </button>
+                @endif
             </div>
         </div>
     @endif
@@ -585,6 +612,7 @@
             container,
             blockConfig,
             limit = 8,
+            offset = 0,
             colClass = 'col-md-3',
             cardStyle = 'style3'
         }) {
@@ -592,7 +620,6 @@
             const containerEl = typeof container === 'string' ? document.querySelector(container) : container;
 
             // Track current offset
-            let offset = limit;
 
             btn?.addEventListener('click', function() {
                 const originalContent = btn.innerHTML;
@@ -617,9 +644,8 @@
                     })
                     .then(res => res.json())
                     .then(data => {
-                        if (data.count === 0) {
+                        if (data.remainingCount === 0) {
                             btn.remove(); // No more tours
-                            return;
                         }
 
                         // Append new tours
@@ -627,7 +653,7 @@
 
                         // Observe newly added lazy images
                         initLazyLoading(containerEl);
-                        
+
                         // Update offset
                         offset += limit;
 
@@ -650,7 +676,8 @@
             container: '#firstTourBlockContainer',
             blockConfig: @json($first_tour_block),
             colClass: 'col-md-3',
-            cardStyle: 'style3'
+            cardStyle: 'style3',
+            offset: 16,
         });
 
         // Block 2

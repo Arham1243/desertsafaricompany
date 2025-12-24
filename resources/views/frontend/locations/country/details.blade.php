@@ -469,9 +469,8 @@ $btnStyles = [];
                     })
                     .then(res => res.json())
                     .then(data => {
-                        if (data.count === 0) {
+                        if (data.remainingCount === 0) {
                             btn.remove(); // No more tours
-                            return;
                         }
 
                         // Append new tours

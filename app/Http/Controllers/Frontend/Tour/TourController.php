@@ -261,10 +261,14 @@ class TourController extends Controller
         $cardStyle = $request['card_style'] ?? 'style3';
 
         $tours = getToursByBlock($block, $offset, $limit);
+        $totalTours = getToursByBlock($block)->count();
+
+        $remainingCount = max($totalTours - ($offset + $tours->count()), 0);
 
         return response()->json([
             'html' => view('frontend.partials.tour-cards', compact('tours', 'colClass', 'cardStyle'))->render(),
             'count' => $tours->count(),
+            'remainingCount' => $remainingCount,
         ]);
     }
 }
