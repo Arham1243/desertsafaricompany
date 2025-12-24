@@ -8265,3 +8265,12 @@ ul.show-in-desktop {
 body .timeslot-group-wrapper :is(select.select-field) {
     padding: 0.5rem !important;
 }
+
+.flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover, .flatpickr-day.flatpickr-disabled .price {
+    color: #000 !important;
+    opacity: 0.4 !important;
+}
+.flatpickr-day.selected,.flatpickr-day.selected:hover {
+    color: #fff !important;
+    background: var(--color-primary) !important;
+}

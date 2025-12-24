@@ -107,8 +107,7 @@
                             <li style="color: #6c757d;" class="breadcrumb-item">/</li>
                             @if ($currentCategory && $tour->city)
                                 <li class="breadcrumb-item">
-                                    <a
-                                        href="{{ buildCategoryDetailUrl($currentCategory, true, true) }}">
+                                    <a href="{{ buildCategoryDetailUrl($currentCategory, true, true) }}">
                                         {{ $currentCategory->name ?? '' }}
                                     </a>
                                 </li>
@@ -1466,14 +1465,25 @@
             const weekendPrice = window.lowestPromoWeekendDiscountPrice;
 
             function formatPrice(price) {
-    return Number(price).toLocaleString('en-US', { maximumFractionDigits: 0 });
-}
+                return Number(price).toLocaleString('en-US', {
+                    maximumFractionDigits: 0
+                });
+            }
+            const enabledDates = @json($tour->availabilities->filter(fn($a) => $a->is_available == 1)->pluck('date')->toArray());
 
             flatpickr("#start_date", {
                 dateFormat: "Y-m-d",
                 disable: [
                     function(date) {
-                        return date < today.setHours(0, 0, 0, 0);
+                        const formatted = date.getFullYear() + '-' +
+                            String(date.getMonth() + 1).padStart(2, '0') + '-' +
+                            String(date.getDate()).padStart(2, '0'); // YYYY-MM-DD
+
+                        // Disable past dates
+                        if (date < today.setHours(0, 0, 0, 0)) return true;
+
+                        // Disable dates not in enabledDates
+                        return !enabledDates.includes(formatted);
                     }
                 ],
                 onDayCreate: function(dObj, dStr, fp, dayElem) {
