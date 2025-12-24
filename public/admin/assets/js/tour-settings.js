@@ -296,7 +296,7 @@ document.addEventListener("DOMContentLoaded", function () {
         // ✅ If afterElement is provided → insert after it
         if (afterElement) {
             afterElement.insertAdjacentElement("afterend", newItem);
-        } else {
+        } else {    
             // Otherwise → append at the end
             list.appendChild(newItem);
         }
@@ -304,7 +304,6 @@ document.addEventListener("DOMContentLoaded", function () {
         updateDeleteButtonState(container);
         updateIndices(container);
         initializeSubRepeater(newItem);
-        calculatePromoPrice();
     }
 
 
