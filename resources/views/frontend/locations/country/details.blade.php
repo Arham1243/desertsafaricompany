@@ -446,7 +446,7 @@ $btnStyles = [];
             // Track current offset
             let offset = limit;
 
-            btn.addEventListener('click', function() {
+            btn?.addEventListener('click', function() {
                 const originalContent = btn.innerHTML;
 
                 // Disable button and show spinner

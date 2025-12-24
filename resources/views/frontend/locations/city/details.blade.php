@@ -536,7 +536,7 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
             // Track current offset
             let offset = limit;
 
-            btn.addEventListener('click', function() {
+            btn?.addEventListener('click', function() {
                 const originalContent = btn.innerHTML;
 
                 // Disable button and show spinner

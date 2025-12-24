@@ -407,7 +407,7 @@
             const closeIcon = popupWrapper.querySelector('.close-btn');
 
             sendPopupBtn.forEach(btn => {
-                btn.addEventListener('click', function() {
+                btn?.addEventListener('click', function() {
                     popupWrapper.classList.add('open');
                 });
             });
