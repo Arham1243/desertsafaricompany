@@ -3594,6 +3594,16 @@
                                             : (is_array($tour->booked_text)
                                                 ? $tour->booked_text
                                                 : []);
+                                        
+                                        // Extract labels array, ensuring it's always an array
+                                        $bookedTextLabels = $bookedTextConfig['label'] ?? [];
+                                        if (!is_array($bookedTextLabels)) {
+                                            $bookedTextLabels = [$bookedTextLabels];
+                                        }
+                                        // Ensure at least one empty row for the repeater
+                                        if (empty($bookedTextLabels)) {
+                                            $bookedTextLabels = [''];
+                                        }
                                     @endphp
                                     <div x-data="{ showBookedText: false }" x-init="showBookedText = {{ old('tour.status.booked_text.enabled', $bookedTextConfig['enabled'] ?? false) ? 'true' : 'false' }}">
 
@@ -3616,50 +3626,78 @@
                                         </div>
 
                                         <div x-show="showBookedText">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="form-fields mb-3">
-                                                        <label class="title">Label:</label>
-                                                        <input name="tour[status][booked_text][label]" type="text"
-                                                            class="field"
-                                                            value="{{ old('tour.status.booked_text.label', $bookedTextConfig['label'] ?? '') }}">
-                                                    </div>
-                                                </div>
+                                            <div class="repeater-table form-fields" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">
+                                                                <div class="text-dark title">
+                                                                    Label
+                                                                </div>
+                                                            </th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @foreach($bookedTextLabels as $label)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input name="tour[status][booked_text][label][]"
+                                                                    type="text" class="field" value="{{ old('tour.status.booked_text.label.' . $loop->index, $label) }}">
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first && $loop->count == 1 ? 'disabled' : '' }}>
+                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn  ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class='bx bx-plus'></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>Add
+                                                    <i class="bx bx-plus"></i></button>
+                                            </div>
+                                            <div class="row mt-3 mb-4">
                                                 <div class="col-md-6">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Background:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booked_text_bg_color" data-color-picker></label>
-                                                        <input id="booked_text_bg_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][booked_text][background_color]"
-                                                            value="{{ old('tour.status.booked_text.background_color', $bookedTextConfig['background_color'] ?? '#ebeef1') }}"
-                                                            inputmode="text">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Badge Background:</div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get Color Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="booked_text_bg_color" data-color-picker></label>
+                                                            <input id="booked_text_bg_color" type="text" data-color-picker-input
+                                                                name="tour[status][booked_text][background_color]"
+                                                                value="{{ old('tour.status.booked_text.background_color', $bookedTextConfig['background_color'] ?? '#ebeef1') }}"
+                                                                inputmode="text">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="col-md-6">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Text Color:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booked_text_text_color" data-color-picker></label>
-                                                        <input id="booked_text_text_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][booked_text][text_color]"
-                                                            value="{{ old('tour.status.booked_text.text_color', $bookedTextConfig['text_color'] ?? '#000000') }}"
-                                                            inputmode="text">
+                                                <div class="col-md-6">
+                                                    <div class="form-fields">
+                                                        <div class="title d-flex align-items-center gap-2">
+                                                            <div>Badge Text Color:</div>
+                                                            <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get Color Codes</a>
+                                                        </div>
+                                                        <div class="field color-picker" data-color-picker-container>
+                                                            <label for="booked_text_text_color" data-color-picker></label>
+                                                            <input id="booked_text_text_color" type="text" data-color-picker-input
+                                                                name="tour[status][booked_text][text_color]"
+                                                                value="{{ old('tour.status.booked_text.text_color', $bookedTextConfig['text_color'] ?? '#000000') }}"
+                                                                inputmode="text">
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
                                             </div>
                                         </div>
                                     </div>
@@ -3703,7 +3741,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <div class="form-fields">
                                                     <div class="title d-flex align-items-center gap-2">
                                                         <div>Badge Background:</div>
@@ -3721,7 +3759,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <div class="form-fields">
                                                     <div class="title d-flex align-items-center gap-2">
                                                         <div>Badge Text Color:</div>
@@ -3781,7 +3819,7 @@
                                                         <small class="muted">“Today” or “tomorrow” will be added at the end of the label automatically.</small>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <div class="form-fields">
                                                     <div class="title d-flex align-items-center gap-2">
                                                         <div>Badge Background:</div>
@@ -3799,7 +3837,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 mb-3">
                                                 <div class="form-fields">
                                                     <div class="title d-flex align-items-center gap-2">
                                                         <div>Badge Text Color:</div>

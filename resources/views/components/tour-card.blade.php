@@ -243,15 +243,26 @@
                     @endif
                 </div>
                 @if ($bookedTextContent && $bookedTextContent->enabled === '1')
-                    <div class="booked-details-wrapper">
-                        <div class="booked-details line-clamp-1"
-                            @if ($bookedTextContent->background_color || $bookedTextContent->text_color) style="
-            {{ $bookedTextContent->background_color ? 'background: ' . $bookedTextContent->background_color . ';' : '' }}
-            {{ $bookedTextContent->text_color ? 'color: ' . $bookedTextContent->text_color . ';' : '' }}
-        " @endif>
-                            {{ $bookedTextContent->label }}
-                        </div>
-                    </div>
+                    @php
+                        $bookedTextLabels = $bookedTextContent->label ?? [];
+                        if (!is_array($bookedTextLabels)) {
+                            $bookedTextLabels = [$bookedTextLabels];
+                        }
+                        $bookedTextLabels = array_filter($bookedTextLabels, fn($label) => !empty(trim($label)));
+                    @endphp
+                    @if (!empty($bookedTextLabels))
+                        @foreach ($bookedTextLabels as $label)
+                            <div class="booked-details-wrapper">
+                                <div class="booked-details line-clamp-1"
+                                    @if ($bookedTextContent->background_color || $bookedTextContent->text_color) style="
+                {{ $bookedTextContent->background_color ? 'background: ' . $bookedTextContent->background_color . ';' : '' }}
+                {{ $bookedTextContent->text_color ? 'color: ' . $bookedTextContent->text_color . ';' : '' }}
+            " @endif>
+                                    {{ $label }}
+                                </div>
+                            </div>
+                        @endforeach
+                    @endif
                 @endif
                 @php
                     $bookingRestrictionsBadge = $tour->booking_restrictions_badge

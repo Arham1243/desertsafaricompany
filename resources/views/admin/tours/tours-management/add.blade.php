@@ -2350,9 +2350,9 @@
                                             <div class="form-fields">
                                                 <div class="title">Fixed dates:</div>
                                                 <div class="form-check">
-                                                    <input type="hidden" name="tour[availability][is_fixed_date]" x-model="fixedDate">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="fixed_date"
+                                                    <input type="hidden" name="tour[availability][is_fixed_date]"
+                                                        x-model="fixedDate">
+                                                    <input class="form-check-input" type="checkbox" id="fixed_date"
                                                         :checked="fixedDate == 1"
                                                         @change="fixedDate = $event.target.checked ? 1 : 0; if(fixedDate) { openHours = 0; advanceBooking = 0; }">
                                                     <label class="form-check-label" for="fixed_date">
@@ -2397,9 +2397,9 @@
                                             <div class="form-fields">
                                                 <div class="title">Open Hours:</div>
                                                 <div class="form-check">
-                                                    <input type="hidden" name="tour[availability][is_open_hours]" x-model="openHours">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="openHours"
+                                                    <input type="hidden" name="tour[availability][is_open_hours]"
+                                                        x-model="openHours">
+                                                    <input class="form-check-input" type="checkbox" id="openHours"
                                                         :checked="openHours == 1"
                                                         @change="openHours = $event.target.checked ? 1 : 0; if(openHours) { fixedDate = 0; advanceBooking = 0; }">
                                                     <label class="form-check-label" for="openHours">
@@ -2508,7 +2508,8 @@
                                             <div class="form-fields">
                                                 <div class="title">Advance Booking Time:</div>
                                                 <div class="form-check">
-                                                    <input type="hidden" name="tour[availability][is_advance_booking]" x-model="advanceBooking">
+                                                    <input type="hidden" name="tour[availability][is_advance_booking]"
+                                                        x-model="advanceBooking">
                                                     <input class="form-check-input" type="checkbox"
                                                         id="advanceBooking" :checked="advanceBooking == 1"
                                                         @change="advanceBooking = $event.target.checked ? 1 : 0; if(advanceBooking) { fixedDate = 0; openHours = 0; }">
@@ -2542,14 +2543,16 @@
 
                                                             <div class="form-fields my-0">
                                                                 <label class="title">Days</label>
-                                                                <input style="width: 150px !important;" type="text" class="field"
+                                                                <input style="width: 150px !important;" type="text"
+                                                                    class="field"
                                                                     name="tour[availability][advance_booking][days]">
                                                             </div>
                                                             <div class="form-fields my-0">
                                                                 <label class="title">Time</label>
-                                                                <input style="width: 150px !important;" type="time" class="field"
+                                                                <input style="width: 150px !important;" type="time"
+                                                                    class="field"
                                                                     name="tour[availability][advance_booking][time]">
-                                                                
+
                                                             </div>
                                                             days before the day of travel.
                                                         </label>
@@ -2978,7 +2981,7 @@
 
                                     <template x-if="certifiedTagEnabled">
                                         <div class="row">
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 ">
                                                 <div class="form-fields">
                                                     <div class="title d-flex align-items-center gap-2">
                                                         <div>Icon:</div>
@@ -2993,7 +2996,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-6 ">
                                                 <div class="form-fields mb-3">
                                                     <label class="title">Label:</label>
                                                     <input name="tour[status][certified_tag][label]" type="text"
@@ -3025,51 +3028,77 @@
                                     </div>
 
                                     <div x-show="showBookedText">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="form-fields mb-3">
-                                                    <label class="title">Label:</label>
-                                                    <input name="tour[status][booked_text][label]" type="text"
-                                                        class="field"
-                                                        value="{{ old('tour.status.booked_text.label') }}">
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Background:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booked_text_bg_color" data-color-picker></label>
-                                                        <input id="booked_text_bg_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][booked_text][background_color]"
-                                                            value="{{ old('tour.status.booked_text.background_color', '#ebeef1') }}"
-                                                            inputmode="text">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-6">
-                                                <div class="form-fields">
-                                                    <div class="title d-flex align-items-center gap-2">
-                                                        <div>Badge Text Color:</div>
-                                                        <a class="p-0 nav-link" href="//html-color-codes.info"
-                                                            target="_blank">Get Color Codes</a>
-                                                    </div>
-                                                    <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booked_text_text_color" data-color-picker></label>
-                                                        <input id="booked_text_text_color" type="text"
-                                                            data-color-picker-input
-                                                            name="tour[status][booked_text][text_color]"
-                                                            value="{{ old('tour.status.booked_text.text_color', '#000000') }}"
-                                                            inputmode="text">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="repeater-table form-fields" data-repeater>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">
+                                                            <div class="text-dark title">
+                                                                Label
+                                                            </div>
+                                                        </th>
+                                                        <th class="text-end" scope="col">Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody data-repeater-list>
+                                                    <tr data-repeater-item>
+                                                        <td>
+                                                            <input name="tour[status][booked_text][label][]"
+                                                                type="text" class="field">
+                                                        </td>
+                                                        <td>
+                                                            <div class="d-flex gap-2">
+                                                                <button type="button"
+                                                                    class="delete-btn ms-auto delete-btn--static"
+                                                                    data-repeater-remove disabled>
+                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                </button>
+                                                                <button type="button"
+                                                                    class="add-btn  ms-auto add-btn--static"
+                                                                    data-repeater-insert>
+                                                                    <i class='bx bx-plus'></i>
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="themeBtn ms-auto" data-repeater-create>Add
+                                                <i class="bx bx-plus"></i></button>
                                         </div>
+                                        <div class="row mt-3 mb-4">
+    <div class="col-md-6 mb-4">
+        <div class="form-fields">
+            <div class="title d-flex align-items-center gap-2">
+                <div>Badge Background:</div>
+                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get Color Codes</a>
+            </div>
+            <div class="field color-picker" data-color-picker-container>
+                <label for="booked_text_bg_color" data-color-picker></label>
+                <input id="booked_text_bg_color" type="text" data-color-picker-input
+                    name="tour[status][booked_text][background_color]"
+                    value="{{ old('tour.status.booked_text.background_color', '#ebeef1') }}"
+                    inputmode="text">
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="form-fields">
+            <div class="title d-flex align-items-center gap-2">
+                <div>Badge Text Color:</div>
+                <a class="p-0 nav-link" href="//html-color-codes.info" target="_blank">Get Color Codes</a>
+            </div>
+            <div class="field color-picker" data-color-picker-container>
+                <label for="booked_text_text_color" data-color-picker></label>
+                <input id="booked_text_text_color" type="text" data-color-picker-input
+                    name="tour[status][booked_text][text_color]"
+                    value="{{ old('tour.status.booked_text.text_color', '#000000') }}"
+                    inputmode="text">
+            </div>
+        </div>
+    </div>
+</div>
                                     </div>
                                 </div>
                                 <div x-data="{ badgeTagEnabled: false }" x-init="badgeTagEnabled = {{ old('tour.status.badge_tag.enabled', false) ? 'true' : 'false' }}">
@@ -3089,7 +3118,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row" x-show="badgeTagEnabled">
+                                    <div class="row " x-show="badgeTagEnabled">
                                         <div class="col-md-12">
                                             <div class="form-fields mb-3">
                                                 <label class="title" for="badge_tag_label">Badge
@@ -3099,7 +3128,7 @@
                                                     value="{{ old('tour.status.badge_tag.label', '') }}">
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
                                                 <div class="title d-flex align-items-center gap-2">
                                                     <div>Badge Background:</div>
@@ -3117,7 +3146,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
                                                 <div class="title d-flex align-items-center gap-2">
                                                     <div>Badge Text Color:</div>
@@ -3141,14 +3170,16 @@
                                         <div class="row mt-2">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
-                                                    <input type="hidden" name="tour[status][booking_restrictions_badge][enabled]"
+                                                    <input type="hidden"
+                                                        name="tour[status][booking_restrictions_badge][enabled]"
                                                         value="0">
                                                     <div class="form-check">
                                                         <input class="form-check-input" type="checkbox"
                                                             name="tour[status][booking_restrictions_badge][enabled]"
                                                             id="booking_restrictions_badge_enabled" value="1"
                                                             x-model="bookingRestrictionsEnabled">
-                                                        <label class="form-check-label" for="booking_restrictions_badge_enabled">
+                                                        <label class="form-check-label"
+                                                            for="booking_restrictions_badge_enabled">
                                                             Booking Restrictions Badge
                                                         </label>
                                                     </div>
@@ -3156,15 +3187,18 @@
                                             </div>
                                         </div>
 
-                                        <div class="row" x-show="bookingRestrictionsEnabled">
+                                        <div class="row  " x-show="bookingRestrictionsEnabled">
                                             <div class="col-md-12">
                                                 <div class="form-fields mb-3">
-                                                    <label class="title" for="booking_restrictions_badge_tag_label">Badge
+                                                    <label class="title"
+                                                        for="booking_restrictions_badge_tag_label">Badge
                                                         Label:</label>
-                                                    <input type="text" name="tour[status][booking_restrictions_badge][label]"
+                                                    <input type="text"
+                                                        name="tour[status][booking_restrictions_badge][label]"
                                                         id="booking_restrictions_badge_tag_label" class="field"
                                                         value="{{ old('tour.status.booking_restrictions_badge.label', 'You can book for') }}">
-                                                        <small class="muted">"Today" or "tomorrow" will be added at the end of the label automatically.</small>
+                                                    <small class="muted">"Today" or "tomorrow" will be added at the end
+                                                        of the label automatically.</small>
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -3175,7 +3209,8 @@
                                                             target="_blank">Get Color Codes</a>
                                                     </div>
                                                     <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booking_restrictions_badge_bg_color" data-color-picker></label>
+                                                        <label for="booking_restrictions_badge_bg_color"
+                                                            data-color-picker></label>
                                                         <input id="booking_restrictions_badge_bg_color" type="text"
                                                             data-color-picker-input
                                                             name="tour[status][booking_restrictions_badge][background_color]"
@@ -3193,7 +3228,8 @@
                                                             target="_blank">Get Color Codes</a>
                                                     </div>
                                                     <div class="field color-picker" data-color-picker-container>
-                                                        <label for="booking_restrictions_badge_text_color" data-color-picker></label>
+                                                        <label for="booking_restrictions_badge_text_color"
+                                                            data-color-picker></label>
                                                         <input id="booking_restrictions_badge_text_color" type="text"
                                                             data-color-picker-input
                                                             name="tour[status][booking_restrictions_badge][text_color]"
