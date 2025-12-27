@@ -2,8 +2,8 @@
 @section('content')
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('admin.bookings.index') }}
-            <form id="bulkActionForm" method="POST" action="{{ route('admin.bulk-actions', ['resource' => 'bookings']) }}">
+            {{ Breadcrumbs::render('admin.tour-reviews.index') }}
+            <form id="bulkActionForm" method="POST" action="{{ route('admin.bulk-actions', ['resource' => 'tour-reviews']) }}">
                 @csrf
                 <div class="table-container universal-table">
                     <div class="custom-sec">
