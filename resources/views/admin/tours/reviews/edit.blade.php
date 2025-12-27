@@ -23,7 +23,7 @@
                                 </div>
                                 <div class="form-box__body">
                                     <div class="form-fields">
-                                        <label class="title">Title</label>
+                                        <label class="title">Title <span class="text-danger">*</span> :</label>
                                         <input type="text" name="title" class="field"
                                             value="{{ old('title', $review->title) }}" placeholder="Title"
                                             data-error="Title">
@@ -31,19 +31,62 @@
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
-
                                     <div class="form-fields">
-                                        <label class="title">for select field</label>
-                                        <select name="iso_alpha2" class="field select2-select" data-error="ISO Alpha-2 Code"
-                                            data-required>
-                                            <option value="" selected disabled>Select Country</option>
+                                        <label class="title">Review <span class="text-danger">*</span> :</label>
+                                        <textarea name="review" class="field" rows="5" placeholder="Review" data-error="Review">{{ old('review', $review->review) }}</textarea>
 
-                                        </select>
-                                        @error('iso_alpha2')
+                                        @error('review')
                                             <div class="text-danger">{{ $message }}</div>
                                         @enderror
                                     </div>
+                                    <div class="form-fields">
+                                        <label class="title">Rating <span class="text-danger">*</span> :</label>
+                                        <div class="rating">
+                                            @for ($i = 5; $i >= 1; $i--)
+                                                <input type="radio" id="star-{{ $i }}" name="rating"
+                                                    value="{{ $i }}"
+                                                    {{ $review->rating == $i ? 'checked' : '' }} />
+                                                <label for="star-{{ $i }}"
+                                                    title="Rating {{ $i }}"></label>
+                                            @endfor
+                                        </div>
 
+                                        @error('review')
+                                            <div class="text-danger">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">User Details</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <div class="form-fields">
+                                                <label class="title">Name:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $review->user->full_name ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-12 mb-3">
+                                            <div class="form-fields">
+                                                <label class="title">Email:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $review->user->email ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mt-4">
+                                            <div class="placeholder-user">
+                                                <a href="{{ asset($review->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
+                                                    data-fancybox="gallery" class="placeholder-user__img">
+                                                    <img src="{{ asset($review->user->avatar ?? 'admin/assets/images/placeholder.png') }}"
+                                                        alt="{{ $review->user->full_name ?? '' }}" class="imgFluid">
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -65,7 +108,8 @@
                                             value="active"
                                             {{ old('status', $review->status ?? '') == 'active' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="active">
-                                            Active
+                                            Approve
+
                                         </label>
                                     </div>
                                     <div class="form-check mt-2">
@@ -73,7 +117,7 @@
                                             value="inactive"
                                             {{ old('status', $review->status ?? '') == 'inactive' ? 'checked' : '' }}>
                                         <label class="form-check-label" for="inactive">
-                                            Inactive
+                                            Reject
                                         </label>
                                     </div>
                                     <button class="themeBtn ms-auto mt-4">Save Changes</button>
