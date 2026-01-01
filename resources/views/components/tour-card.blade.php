@@ -258,8 +258,8 @@
                             {{ $certifiedTagContent->label }}</div>
                     @endif
                 </div>
-                @if ($bookedTextContent && $bookedTextContent->enabled === '1' && !empty($labels))
-                    <div class="booked-details-wrapper" data-tour-card-badge-container>
+                <div class="booked-details-wrapper" data-tour-card-badge-container>
+                    @if ($bookedTextContent && $bookedTextContent->enabled === '1' && !empty($labels))
                         @foreach ($labels as $index => $label)
                             <div class="booked-details line-clamp-1"
                                 style="
@@ -269,8 +269,8 @@
                                 {{ $label }}
                             </div>
                         @endforeach
-                    </div>
-                @endif
+                    @endif
+                </div>
                 @php
                     $bookingRestrictionsBadge = $tour->booking_restrictions_badge
                         ? json_decode($tour->booking_restrictions_badge, true)
