@@ -276,13 +276,13 @@
                         ? json_decode($tour->booking_restrictions_badge, true)
                         : [];
                 @endphp
-                @if ($tour->is_advance_booking && $tour->advance_booking_badge)
-                    <div class="booked-details-wrapper">
+                <div class="booked-details-wrapper advance-booking-tag" style="height: 21px">
+                    @if ($tour->is_advance_booking && $tour->advance_booking_badge)
                         <div class="booked-details">
                             You can book for {{ $tour->advance_booking_badge }}
                         </div>
-                    </div>
-                @endif
+                    @endif
+                </div>
                 <div class="card-rating">
                     <x-star-rating :rating="$tour->average_rating" />
                     @if ($tour->reviews->count() > 0)
