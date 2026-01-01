@@ -123,7 +123,7 @@ function initLazyLoading(container = document) {
         {
             rootMargin: "200px 0px",
             threshold: 0.1,
-        }
+        },
     );
 
     images.forEach((img) => observer.observe(img));
@@ -257,3 +257,24 @@ function handleCookieConsent(accepted) {
     localStorage.setItem("cookieConsent", accepted ? "accepted" : "rejected");
     cookieBar.classList.toggle("hidden");
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Get all badge containers inside tour cards
+    const badgeContainers = document.querySelectorAll(
+        "[data-tour-card-badge-container]",
+    );
+    if (badgeContainers.length === 0) return;
+
+    let maxHeight = 0;
+
+    // Find max height
+    badgeContainers.forEach((container) => {
+        const height = container.clientHeight;
+        if (height > maxHeight) maxHeight = height;
+    });
+
+    // Apply max height to all
+    badgeContainers.forEach((container) => {
+        container.style.height = maxHeight + "px";
+    });
+});

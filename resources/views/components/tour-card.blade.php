@@ -259,7 +259,7 @@
                     @endif
                 </div>
                 @if ($bookedTextContent && $bookedTextContent->enabled === '1' && !empty($labels))
-                    <div class="booked-details-wrapper">
+                    <div class="booked-details-wrapper" data-tour-card-badge-container>
                         @foreach ($labels as $index => $label)
                             <div class="booked-details line-clamp-1"
                                 style="
