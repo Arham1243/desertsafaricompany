@@ -4177,43 +4177,53 @@
                 initialView: 'dayGridMonth',
 
                 dayCellDidMount: function(info) {
+    const today = new Date();
+    today.setHours(0,0,0,0);
 
-                      const today = new Date();
-            today.setHours(0,0,0,0); // normalize today to midnight
-            const cellDate = new Date(info.date);
-            cellDate.setHours(0,0,0,0);
+    const cellDate = new Date(info.date);
+    cellDate.setHours(0,0,0,0);
 
-            // Skip past dates
-            if (cellDate < today) {
-                info.el.classList.add('fc-past'); // optional: style past dates
-                return; // do NOT append switch
-            }
+    // Skip past dates
+    if (cellDate < today) {
+        info.el.classList.add('fc-past');
+        return;
+    }
 
-            
-                    const switchDiv = document.createElement('div');
-                    switchDiv.className = 'form-check form-switch';
-                    switchDiv.style.marginTop = '5px';
+    const dateStr =
+        info.date.getFullYear() + '-' +
+        String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
+        String(info.date.getDate()).padStart(2, '0');
 
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.className = 'form-check-input';
-                    input.value = '1';
+    const switchDiv = document.createElement('div');
+    switchDiv.className = 'form-check form-switch';
+    switchDiv.style.marginTop = '5px';
 
-                    const dateStr = info.date.getFullYear() + '-' +
-                        String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
-                        String(info.date.getDate()).padStart(2, '0');
+    const input = document.createElement('input');
+    input.type = 'checkbox';
+    input.className = 'form-check-input';
+    input.value = '1';
 
-                    // Pre-check if stored
-                    if (checkedDates[dateStr]) input.checked = true;
+    // 🔥 DEFAULT BEHAVIOR
+    // If no DB entry exists for this date, assume AVAILABLE
+    if (!(dateStr in existingAvailability)) {
+        input.checked = true;
+        checkedDates[dateStr] = true;
+    } else {
+        input.checked = existingAvailability[dateStr] == 1;
+        checkedDates[dateStr] = input.checked;
+    }
 
-                    input.addEventListener('change', function() {
-                        checkedDates[dateStr] = this.checked;
-                        availabilityInput.value = JSON.stringify(checkedDates);
-                    });
+    input.addEventListener('change', function () {
+        checkedDates[dateStr] = this.checked;
+        availabilityInput.value = JSON.stringify(checkedDates);
+    });
 
-                    switchDiv.appendChild(input);
-                    info.el.appendChild(switchDiv);
-                }
+    switchDiv.appendChild(input);
+    info.el.appendChild(switchDiv);
+
+    availabilityInput.value = JSON.stringify(checkedDates);
+}
+
             });
 
             calendar.render();

@@ -1470,20 +1470,26 @@
                 });
             }
             const enabledDates = @json($tour->availabilities->filter(fn($a) => $a->is_available == 1)->pluck('date')->toArray());
+            // Blade/JS
+            const unavailableDates = @json($tour->availabilities->filter(fn($a) => $a->is_available == 0)->pluck('date')->toArray());
 
             flatpickr("#start_date", {
                 dateFormat: "Y-m-d",
                 disable: [
                     function(date) {
-                        const formatted = date.getFullYear() + '-' +
+                        const formatted =
+                            date.getFullYear() + '-' +
                             String(date.getMonth() + 1).padStart(2, '0') + '-' +
-                            String(date.getDate()).padStart(2, '0'); // YYYY-MM-DD
+                            String(date.getDate()).padStart(2, '0');
 
-                        // Disable past dates
+                        // Always disable past dates
                         if (date < today.setHours(0, 0, 0, 0)) return true;
 
-                        // Disable dates not in enabledDates
-                        return !enabledDates.includes(formatted);
+                        // Disable explicitly unavailable dates
+                        if (unavailableDates.includes(formatted)) return true;
+
+                        // Everything else is enabled
+                        return false;
                     }
                 ],
                 onDayCreate: function(dObj, dStr, fp, dayElem) {

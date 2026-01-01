@@ -3519,53 +3519,60 @@
     <script src="{{ asset('admin/assets/js/tour-settings.js') }}"></script>
 
 
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkedDates = {}; // Track which dates are checked
-            const availabilityInput = document.getElementById('availabilityInput');
+ <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const checkedDates = {};
+    const availabilityInput = document.getElementById('availabilityInput');
 
-            const calendarEl = document.getElementById('calendar');
-            const calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+    const calendarEl = document.getElementById('calendar');
+    const calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
 
-                dayCellDidMount: function(info) {
-                      const today = new Date();
-            today.setHours(0,0,0,0); // normalize today to midnight
+        dayCellDidMount: function (info) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
             const cellDate = new Date(info.date);
-            cellDate.setHours(0,0,0,0);
+            cellDate.setHours(0, 0, 0, 0);
 
             // Skip past dates
             if (cellDate < today) {
-                info.el.classList.add('fc-past'); // optional: style past dates
-                return; // do NOT append switch
+                info.el.classList.add('fc-past');
+                return;
             }
 
-                    const switchDiv = document.createElement('div');
-                    switchDiv.className = 'form-check form-switch';
-                    switchDiv.style.marginTop = '5px';
-
-                    const input = document.createElement('input');
-                    input.type = 'checkbox';
-                    input.className = 'form-check-input';
-                    input.value = '1';
-
-                    if (checkedDates[info.dateStr]) input.checked = true;
-                        const dateStr = info.date.getFullYear() + '-' +
+            const dateStr =
+                info.date.getFullYear() + '-' +
                 String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
                 String(info.date.getDate()).padStart(2, '0');
 
-                    input.addEventListener('change', function() {
-                        checkedDates[dateStr] = this.checked;
-                            availabilityInput.value = JSON.stringify(checkedDates);
-                    });
+            const switchDiv = document.createElement('div');
+            switchDiv.className = 'form-check form-switch';
+            switchDiv.style.marginTop = '5px';
 
+            const input = document.createElement('input');
+            input.type = 'checkbox';
+            input.className = 'form-check-input';
+            input.value = '1';
 
-                    switchDiv.appendChild(input);
-                    info.el.appendChild(switchDiv);
-                }
+            // ✅ DEFAULT: checked
+            input.checked = true;
+            checkedDates[dateStr] = true;
+
+            input.addEventListener('change', function () {
+                checkedDates[dateStr] = this.checked;
+                availabilityInput.value = JSON.stringify(checkedDates);
             });
 
-            calendar.render();
-        });
-    </script>
+            switchDiv.appendChild(input);
+            info.el.appendChild(switchDiv);
+
+            availabilityInput.value = JSON.stringify(checkedDates);
+        }
+    });
+
+    calendar.render();
+});
+</script>
+
 @endpush
