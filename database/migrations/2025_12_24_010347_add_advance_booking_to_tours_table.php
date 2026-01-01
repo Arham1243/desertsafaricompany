@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('tours', function (Blueprint $table) {
-            $table->boolean('is_advance_booking')->default(false);
+            $table->boolean('is_advance_booking')->default(true);
             $table->json('availability_advance_booking')->nullable();
         });
     }
