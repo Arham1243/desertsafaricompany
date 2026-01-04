@@ -97,7 +97,25 @@
             const toursNormalPrices = ref(@json($toursNormalPrices));
             const privateTourData = ref(@json($privateTourData));
             const waterTourTimeSlots = ref(@json($waterTourTimeSlots));
+            const toursBookingAdditional = ref(@json($toursBookingAdditional));
             const totalPrice = ref(cart.value.total_price);
+            
+            // Initialize booking_additional_selections for each tour if not exists
+            Object.keys(cart.value.tours || {}).forEach(tourId => {
+                const bookingAdditional = toursBookingAdditional.value[tourId];
+                if (!cart.value.tours[tourId].booking_additional_selections) {
+                    cart.value.tours[tourId].booking_additional_selections = {
+                        type: bookingAdditional?.additional_type || null,
+                        selection: null
+                    };
+                } else if (!cart.value.tours[tourId].booking_additional_selections.type) {
+                    // Migrate old structure to new structure
+                    cart.value.tours[tourId].booking_additional_selections = {
+                        type: bookingAdditional?.additional_type || null,
+                        selection: null
+                    };
+                }
+            });
 
             // Check if first order coupon is applied
             const hasUsedFirstOrderCoupon = computed(() => {
@@ -728,6 +746,53 @@
                 return name.toLowerCase().replace(/ /g, '_');
             };
 
+            const getBookingAdditional = (tourId) => {
+                return toursBookingAdditional.value[tourId] || null;
+            };
+
+            const handleBookingAdditionalChange = (tourId) => {
+                // Sync with backend when booking additional selection changes
+                syncCartWithBackend();
+            };
+
+            const isBookingAdditionalValid = (tourId) => {
+                const bookingAdditional = getBookingAdditional(tourId);
+                if (!bookingAdditional || bookingAdditional.enabled != 1) {
+                    return true; // Not required if disabled
+                }
+
+                const bookingSelections = cart.value.tours[tourId]?.booking_additional_selections || {};
+                const additionalType = bookingAdditional.additional_type;
+
+                if (additionalType === 'activities') {
+                    const selectionType = bookingAdditional.activities?.selection_type;
+                    if (selectionType === 'multiple_selection') {
+                        const activity = bookingAdditional.activities?.multiple_selection?.activity || [];
+                        const selections = bookingSelections.selection || {};
+                        // Check if all required dropdowns have selections
+                        for (const activityType of activity) {
+                            if (!selections[activityType] || selections[activityType] === '') {
+                                return false;
+                            }
+                        }
+                    }
+                    return true;
+                } else {
+                    // For non-activities types, check if selection exists and is not empty
+                    return bookingSelections.selection && bookingSelections.selection !== '';
+                }
+            };
+
+            const canProceedToCheckout = computed(() => {
+                // Check if all tours with booking_additional have valid selections
+                for (const tourId of Object.keys(cart.value.tours || {})) {
+                    if (!isBookingAdditionalValid(tourId)) {
+                        return false;
+                    }
+                }
+                return true;
+            });
+
             return {
                 cart,
                 cartTours,
@@ -757,6 +822,11 @@
                 syncCartWithBackend,
                 getCorrectPrice,
                 getCorrectSlotPrice,
+                toursBookingAdditional,
+                getBookingAdditional,
+                handleBookingAdditionalChange,
+                isBookingAdditionalValid,
+                canProceedToCheckout,
             };
         },
     });

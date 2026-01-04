@@ -14,6 +14,12 @@ class CartController extends Controller
         $cart = Session::get('cart', []);
         $tours = Tour::where('status', 'publish')->get();
 
+        // Parse booking_additional for each tour
+        $toursBookingAdditional = $tours->whereIn('id', array_keys($cart['tours'] ?? []))->mapWithKeys(function ($tour) {
+            $bookingAdditional = $tour->booking_additional ? json_decode($tour->booking_additional, true) : null;
+            return [$tour->id => $bookingAdditional];
+        });
+
         // Initialize required data arrays for cart view
         $cartTours = [];
         $promoToursData = [];
@@ -21,7 +27,7 @@ class CartController extends Controller
         $privateTourData = [];
         $waterTourTimeSlots = [];
 
-        $data = compact('tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
+        $data = compact('tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots', 'toursBookingAdditional');
 
         return view('frontend.tour.cart.index')
             ->with('title', 'Cart')

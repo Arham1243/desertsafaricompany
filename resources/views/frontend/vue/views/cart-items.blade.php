@@ -35,6 +35,8 @@
                                 @include('frontend.tour.cart.pricing.private')
                             </template>
 
+                            @include('frontend.tour.cart.booking-additional')
+
                         </div>
                         <button type="button" @click="removeTour(tour.id)"
                             class="primary-btn p-2 align-self-start bg-danger">
@@ -70,9 +72,19 @@
                                 <div class="title">Total Payable</div>
                                 <div class="price"><span v-html="formatPrice(totalPrice)"></span></div>
                             </div>
-                            <a href="{{ route('checkout.index') }}" class="primary-btn w-100 mt-4">Proceed
-                                to Checkout
-                            </a>
+                            <template v-if="canProceedToCheckout">
+                                <a href="{{ route('checkout.index') }}" class="primary-btn w-100 mt-4">Proceed
+                                    to Checkout
+                                </a>
+                            </template>
+                            <template v-else>
+                                <button type="button" class="primary-btn w-100 mt-4" disabled style="opacity: 0.6; cursor: not-allowed;">
+                                    Complete Required Information
+                                </button>
+                                <small class="text-danger d-block mt-2 text-center">
+                                    <i class='bx bx-error-circle'></i> Please fill all required additional information
+                                </small>
+                            </template>
                         </div>
                     </div>
                 </div>
