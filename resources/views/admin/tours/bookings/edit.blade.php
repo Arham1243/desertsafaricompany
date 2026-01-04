@@ -289,8 +289,6 @@
                                                     <input type="text" class="field" value="{{ $tour->detail_url }}"
                                                         readonly>
                                                 </div>
-                                                <a href="{{ $tour->detail_url }}" target="_blank"
-                                                    class="themeBtn mt-4">Open</a>
                                             </div>
                                         </div>
 
@@ -330,6 +328,7 @@
                                             </div>
                                         @endif
 
+                                        @include('partials.booking-additional-display')
 
                                         @if (!$loop->last)
                                             <div class="col-12">
