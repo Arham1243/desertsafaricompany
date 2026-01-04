@@ -64,6 +64,14 @@
                                     </li>
                                     <li class="settings-item">
                                         <button type="button" class="settings-item__link"
+                                            :class="{ 'active': optionTab === 'booking_additional' }"
+                                            @click="optionTab = 'booking_additional'">
+                                            <i class="bx bx-book-content"></i>
+                                            Booking Additional Information
+                                        </button>
+                                    </li>
+                                    <li class="settings-item">
+                                        <button type="button" class="settings-item__link"
                                             :class="{ 'active': optionTab === 'addOn' }" @click="optionTab = 'addOn'">
                                             <i class="bx bx-plus-circle"></i> Add On
                                         </button>
@@ -3001,6 +3009,595 @@
                                     </div>
                                 </div>
 
+                            </div>
+                        </div>
+                    </div>
+                    @php
+                        $bookingAdditional = $tour->booking_additional ? json_decode($tour->booking_additional, true) : [];
+                        $bookingAdditionalEnabled = $bookingAdditional['enabled'] ?? 0;
+                        $additionalType = $bookingAdditional['additional_type'] ?? '';
+                        $activitiesType = $bookingAdditional['activities']['selection_type'] ?? '';
+                        $activitiesMultipleSelection = $bookingAdditional['activities']['multiple_selection']['activity'] ?? [];
+                        $singleSelectionActivity = $bookingAdditional['activities']['single_selection']['activity'] ?? '';
+                        $singleSelectionRemarks = $bookingAdditional['activities']['single_selection']['user_remarks'] ?? '';
+                        
+                        // For non-activities types (meeting_point, timeslot, etc.)
+                        $meetingPoints = $bookingAdditional['meeting_points'] ?? [];
+                        $timeslots = $bookingAdditional['timeslots'] ?? [];
+                        $meetingTimes = $bookingAdditional['meeting_time'] ?? [];
+                        $departureTimes = $bookingAdditional['departure_time'] ?? [];
+                        $departureHotelNames = $bookingAdditional['departure_hotel_name'] ?? [];
+                        $pickupLocations = $bookingAdditional['pickup_location'] ?? [];
+                        
+                        // For multiple selection within activities
+                        $meetingPointOptions = $bookingAdditional['activities']['multiple_selection']['meeting_point']['options'] ?? [];
+                        $timeslotOptions = $bookingAdditional['activities']['multiple_selection']['timeslot']['options'] ?? [];
+                        $pickupLocationOptions = $bookingAdditional['activities']['multiple_selection']['pickup_location']['options'] ?? [];
+                    @endphp
+                    <div x-show="optionTab === 'booking_additional'" class="availability-options">
+                        <div class="form-box" x-data="{ 
+                            enableBookingAdditional: {{ $bookingAdditionalEnabled }}, 
+                            additionalType: '{{ $additionalType }}', 
+                            activitiesType: '{{ $activitiesType }}', 
+                            activitiesMulitpleSelection: @js($activitiesMultipleSelection) 
+                        }">
+                            <div class="form-box__header d-flex align-items-center gap-3">
+                                <div class="title">Booking Additionals</div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                            id="enable_booking_additional_switch" x-model="enableBookingAdditional"
+                                            @change="enableBookingAdditional = enableBookingAdditional ? 1 : 0"
+                                            value="1" {{ $bookingAdditionalEnabled == 1 ? 'checked' : '' }} name="tour[bookingAdditional][enabled]" />
+                                        <label class="form-check-label" for="enable_booking_additional_switch">Enabled</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-box__body" x-show="enableBookingAdditional == 1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Select Additional information </label>
+                                            <select x-model="additionalType"
+                                                name="tour[bookingAdditional][additional_type]" class="field">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="meeting_point">Meeting Point</option>
+                                                <option value="timeslot">Timeslot</option>
+                                                <option value="meeting_time">Meeting Time</option>
+                                                <option value="departure_time">Departure time</option>
+                                                <option value="activities">Activities</option>
+                                                <option value="departure_hotel_name">Departure Hotel Name</option>
+                                                <option value="pickup_location">Pickup Location</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Activities -->
+                                <div class="row mt-4" x-show="additionalType === 'activities'">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Select Additional information</label>
+                                            <select x-model="activitiesType"
+                                                name="tour[bookingAdditional][activities][selection_type]"
+                                                class="field">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="single_selection">Single Selection</option>
+                                                <option value="multiple_selection">Multiple Selection</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Single Selection -->
+                                    <div class="col-12 mt-4" x-show="activitiesType === 'single_selection'">
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">Activity</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][activities][single_selection][activity]"
+                                                class="field" value="{{ $singleSelectionActivity }}" />
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][activities][single_selection][user_remarks]"
+                                                class="field" value="{{ $singleSelectionRemarks }}" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Multiple Selection -->
+                                    <div class="col-12 mt-4" x-show="activitiesType === 'multiple_selection'">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-fields">
+                                                    <label class="title">Select Activities</label>
+                                                    <select x-model="activitiesMulitpleSelection"
+                                                        name="tour[bookingAdditional][activities][multiple_selection][activity][]"
+                                                        multiple class="select2-select">
+                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="meeting_point">Meeting Point</option>
+                                                        <option value="timeslot">Time Slot</option>
+                                                        <option value="pickup_location">Pickup Location</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('meeting_point')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Meeting point</label>
+                                                    <div class="repeater-table" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                @foreach($meetingPointOptions as $option)
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][meeting_point][options][]"
+                                                                            type="text" class="field" value="{{ $option }}" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('timeslot')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Timeslot</label>
+                                                    <div class="repeater-table" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                @foreach($timeslotOptions as $option)
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][]"
+                                                                            type="text" class="field" value="{{ $option }}" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('pickup_location')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Pickup Location</label>
+                                                    <div class="repeater-table form-fields" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                @foreach($pickupLocationOptions as $option)
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+                                                                            type="text" class="field" value="{{ $option }}" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                @endforeach
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-fields mt-2">
+                                                <label class="title text-dark">User remarks</label>
+                                                @php
+                                                    $multipleSelectionRemarks = $bookingAdditional['activities']['multiple_selection']['user_remarks'] ?? '';
+                                                @endphp
+                                                <input type="text"
+                                                    name="tour[bookingAdditional][activities][multiple_selection][user_remarks]"
+                                                    class="field" value="{{ $multipleSelectionRemarks }}" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Meeting Point -->
+                                <div class="row mt-4" x-show="additionalType === 'meeting_point'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $meetingPointsOptions = $meetingPoints['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($meetingPointsOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][meeting_points][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][meeting_points][user_remarks]"
+                                                class="field" value="{{ $meetingPoints['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Timeslot -->
+                                <div class="row mt-4" x-show="additionalType === 'timeslot'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $timeslotsOptions = $timeslots['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($timeslotsOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][timeslots][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][timeslots][user_remarks]"
+                                                class="field" value="{{ $timeslots['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Meeting Time -->
+                                <div class="row mt-4" x-show="additionalType === 'meeting_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $meetingTimeOptions = $meetingTimes['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($meetingTimeOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][meeting_time][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][meeting_time][user_remarks]"
+                                                class="field" value="{{ $meetingTimes['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Departure Time -->
+                                <div class="row mt-4" x-show="additionalType === 'departure_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $departureTimesOptions = $departureTimes['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($departureTimesOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][departure_time][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][departure_time][user_remarks]"
+                                                class="field" value="{{ $departureTimes['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Departure Hotel Name -->
+                                <div class="row mt-4" x-show="additionalType === 'departure_hotel_name'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $departureHotelNamesOptions = $departureHotelNames['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($departureHotelNamesOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][departure_hotel_name][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][departure_hotel_name][user_remarks]"
+                                                class="field" value="{{ $departureHotelNames['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pickup Location -->
+                                <div class="row mt-4" x-show="additionalType === 'pickup_location'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @php
+                                                            $pickupLocationsOptions = $pickupLocations['options'] ?? [null];
+                                                        @endphp
+                                                        @foreach($pickupLocationsOptions as $option)
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][pickup_location][options][]"
+                                                                    type="text" class="field" value="{{ $option }}" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][pickup_location][user_remarks]"
+                                                class="field" value="{{ $pickupLocations['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

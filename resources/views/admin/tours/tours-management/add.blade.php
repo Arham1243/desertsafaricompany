@@ -57,6 +57,14 @@
                                     </li>
                                     <li class="settings-item">
                                         <button type="button" class="settings-item__link"
+                                            :class="{ 'active': optionTab === 'booking_additional' }"
+                                            @click="optionTab = 'booking_additional'">
+                                            <i class="bx bx-book-content"></i>
+                                            Booking Additional Information
+                                        </button>
+                                    </li>
+                                    <li class="settings-item">
+                                        <button type="button" class="settings-item__link"
                                             :class="{ 'active': optionTab === 'addOn' }" @click="optionTab = 'addOn'">
                                             <i class="bx bx-plus-circle"></i> Add On
                                         </button>
@@ -2317,9 +2325,9 @@
                                             <div class="form-fields">
                                                 <div class="title">Open Hours:</div>
                                                 <div class="form-check">
-                                                         <input class="form-check-input"  name="tour[availability][is_open_hours]" type="checkbox" id="openHours"
-                                                    x-model="openHours"
-                                                        value="1"
+                                                    <input class="form-check-input"
+                                                        name="tour[availability][is_open_hours]" type="checkbox"
+                                                        id="openHours" x-model="openHours" value="1"
                                                         @change="openHours = openHours ? 1 : 0">
                                                     <label class="form-check-label" for="openHours">
                                                         Enable Open Hours
@@ -2427,11 +2435,10 @@
                                             <div class="form-fields">
                                                 <div class="title">Advance Booking Time:</div>
                                                 <div class="form-check">
-                                                  <input class="form-check-input" type="checkbox"
+                                                    <input class="form-check-input" type="checkbox"
                                                         id="advanceBooking"
                                                         name="tour[availability][is_advance_booking]"
-                                                        x-model="advanceBooking"
-                                                        value="1"
+                                                        x-model="advanceBooking" value="1"
                                                         @change="advanceBooking = advanceBooking ? 1 : 0">
                                                     <label class="form-check-label" for="advanceBooking">
                                                         Enable Advance Booking Time
@@ -2479,6 +2486,529 @@
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div x-show="optionTab === 'booking_additional'" class="availability-options">
+                        <div class="form-box" x-data="{ enableBookingAdditional: 1, additionalType: '', activitiesType: '', activitiesMulitpleSelection: [] }">
+                            <div class="form-box__header d-flex align-items-center gap-3">
+                                <div class="title">Booking Additionals</div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                            id="enable_booking_add_switch" x-model="enableBookingAdditional"
+                                            @change="enableBookingAdditional = enableBookingAdditional ? 1 : 0"
+                                            value="1" checked name="tour[bookingAdditional][enabled]" />
+                                        <label class="form-check-label" for="enable_booking_add_switch">Enabled</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-box__body" x-show="enableBookingAdditional == 1">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Select Additional information </label>
+                                            <select x-model="additionalType"
+                                                name="tour[bookingAdditional][additional_type]" class="field">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="meeting_point">Meeting Point</option>
+                                                <option value="timeslot">Timeslot</option>
+                                                <option value="meeting_time">Meeting Time</option>
+                                                <option value="departure_time">Departure time</option>
+                                                <option value="activities">Activities</option>
+                                                <option value="departure_hotel_name">Departure Hotel Name</option>
+                                                <option value="pickup_location">Pickup Location</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Activities -->
+                                <div class="row mt-4" x-show="additionalType === 'activities'">
+                                    <div class="col-12">
+                                        <div class="form-fields">
+                                            <label class="title">Select Additional information</label>
+                                            <select x-model="activitiesType"
+                                                name="tour[bookingAdditional][activities][selection_type]"
+                                                class="field">
+                                                <option value="" selected disabled>Select</option>
+                                                <option value="single_selection">Single Selection</option>
+                                                <option value="multiple_selection">Multiple Selection</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <!-- Single Selection -->
+                                    <div class="col-12 mt-4" x-show="activitiesType === 'single_selection'">
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">Activity</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][activities][single_selection][activity]"
+                                                class="field" />
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][activities][single_selection][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+
+                                    <!-- Multiple Selection -->
+                                    <div class="col-12 mt-4" x-show="activitiesType === 'multiple_selection'">
+                                        <div class="row">
+                                            <div class="col-12">
+                                                <div class="form-fields">
+                                                    <label class="title">Select Activities</label>
+                                                    <select x-model="activitiesMulitpleSelection"
+                                                        name="tour[bookingAdditional][activities][multiple_selection][activity][]"
+                                                        multiple class="select2-select">
+                                                        <option value="" selected disabled>Select</option>
+                                                        <option value="meeting_point">Meeting Point</option>
+                                                        <option value="timeslot">Time Slot</option>
+                                                        <option value="pickup_location">Pickup Location</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('meeting_point')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Meeting point</label>
+                                                    <div class="repeater-table" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][meeting_point][options][]"
+                                                                            type="text" class="field" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('timeslot')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Timeslot</label>
+                                                    <div class="repeater-table" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][]"
+                                                                            type="text" class="field" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('pickup_location')">
+                                                <div class="form-fields">
+                                                    <label class="title text-dark">Pickup Location</label>
+                                                    <div class="repeater-table form-fields" data-repeater>
+                                                        <table class="table table-bordered">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th scope="col">Option</th>
+                                                                    <th class="text-end" scope="col">Remove</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody data-repeater-list>
+                                                                <tr data-repeater-item>
+                                                                    <td>
+                                                                        <input
+                                                                            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+                                                                            type="text" class="field" />
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="d-flex gap-2">
+                                                                            <button type="button"
+                                                                                class="delete-btn ms-auto delete-btn--static"
+                                                                                data-repeater-remove disabled>
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                class="add-btn ms-auto add-btn--static"
+                                                                                data-repeater-insert>
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button type="button" class="themeBtn ms-auto"
+                                                            data-repeater-create>
+                                                            Add <i class="bx bx-plus"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-fields mt-2">
+                                                <label class="title text-dark">User remarks</label>
+                                                <input type="text"
+                                                    name="tour[bookingAdditional][activities][multiple_selection][user_remarks]"
+                                                    class="field" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Meeting Point -->
+                                <div class="row mt-4" x-show="additionalType === 'meeting_point'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][meeting_points][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][meeting_points][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Timeslot -->
+                                <div class="row mt-4" x-show="additionalType === 'timeslot'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][timeslots][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][timeslots][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Meeting Time -->
+                                <div class="row mt-4" x-show="additionalType === 'meeting_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][meeting_time][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][meeting_time][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Departure Time -->
+                                <div class="row mt-4" x-show="additionalType === 'departure_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][departure_time][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][departure_time][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Departure Hotel Name -->
+                                <div class="row mt-4" x-show="additionalType === 'departure_hotel_name'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][departure_hotel_name][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][departure_hotel_name][user_remarks]"
+                                                class="field" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pickup Location -->
+                                <div class="row mt-4" x-show="additionalType === 'pickup_location'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Option</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        <tr data-repeater-item>
+                                                            <td>
+                                                                <input
+                                                                    name="tour[bookingAdditional][pickup_location][options][]"
+                                                                    type="text" class="field" />
+                                                            </td>
+                                                            <td>
+                                                                <div class="d-flex gap-2">
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove disabled>
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                    <button type="button"
+                                                                        class="add-btn ms-auto add-btn--static"
+                                                                        data-repeater-insert>
+                                                                        <i class="bx bx-plus"></i>
+                                                                    </button>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
+                                                    Add <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="form-fields mt-2">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][pickup_location][user_remarks]"
+                                                class="field" />
                                         </div>
                                     </div>
                                 </div>
@@ -3519,60 +4049,59 @@
     <script src="{{ asset('admin/assets/js/tour-settings.js') }}"></script>
 
 
- <script>
-document.addEventListener('DOMContentLoaded', function () {
-    const checkedDates = {};
-    const availabilityInput = document.getElementById('availabilityInput');
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkedDates = {};
+            const availabilityInput = document.getElementById('availabilityInput');
 
-    const calendarEl = document.getElementById('calendar');
-    const calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
 
-        dayCellDidMount: function (info) {
-            const today = new Date();
-            today.setHours(0, 0, 0, 0);
+                dayCellDidMount: function(info) {
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
 
-            const cellDate = new Date(info.date);
-            cellDate.setHours(0, 0, 0, 0);
+                    const cellDate = new Date(info.date);
+                    cellDate.setHours(0, 0, 0, 0);
 
-            // Skip past dates
-            if (cellDate < today) {
-                info.el.classList.add('fc-past');
-                return;
-            }
+                    // Skip past dates
+                    if (cellDate < today) {
+                        info.el.classList.add('fc-past');
+                        return;
+                    }
 
-            const dateStr =
-                info.date.getFullYear() + '-' +
-                String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
-                String(info.date.getDate()).padStart(2, '0');
+                    const dateStr =
+                        info.date.getFullYear() + '-' +
+                        String(info.date.getMonth() + 1).padStart(2, '0') + '-' +
+                        String(info.date.getDate()).padStart(2, '0');
 
-            const switchDiv = document.createElement('div');
-            switchDiv.className = 'form-check form-switch';
-            switchDiv.style.marginTop = '5px';
+                    const switchDiv = document.createElement('div');
+                    switchDiv.className = 'form-check form-switch';
+                    switchDiv.style.marginTop = '5px';
 
-            const input = document.createElement('input');
-            input.type = 'checkbox';
-            input.className = 'form-check-input';
-            input.value = '1';
+                    const input = document.createElement('input');
+                    input.type = 'checkbox';
+                    input.className = 'form-check-input';
+                    input.value = '1';
 
-            // ✅ DEFAULT: checked
-            input.checked = true;
-            checkedDates[dateStr] = true;
+                    // ✅ DEFAULT: checked
+                    input.checked = true;
+                    checkedDates[dateStr] = true;
 
-            input.addEventListener('change', function () {
-                checkedDates[dateStr] = this.checked;
-                availabilityInput.value = JSON.stringify(checkedDates);
+                    input.addEventListener('change', function() {
+                        checkedDates[dateStr] = this.checked;
+                        availabilityInput.value = JSON.stringify(checkedDates);
+                    });
+
+                    switchDiv.appendChild(input);
+                    info.el.appendChild(switchDiv);
+
+                    availabilityInput.value = JSON.stringify(checkedDates);
+                }
             });
 
-            switchDiv.appendChild(input);
-            info.el.appendChild(switchDiv);
-
-            availabilityInput.value = JSON.stringify(checkedDates);
-        }
-    });
-
-    calendar.render();
-});
-</script>
-
+            calendar.render();
+        });
+    </script>
 @endpush

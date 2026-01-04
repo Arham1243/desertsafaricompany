@@ -232,6 +232,13 @@ const initializeSelect2 = () => {
         const config = getSelect2Config(select, maxItems, shouldSort);
         // Initialize Select2
         $(select).select2(config);
+
+        // Sync Select2 changes with Alpine.js x-model
+        $(select).on("change", function (e) {
+            // Trigger Alpine.js to update by dispatching an input event
+            const event = new Event("change", { bubbles: true });
+            select.dispatchEvent(event);
+        });
     });
 };
 

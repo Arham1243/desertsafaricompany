@@ -78,6 +78,7 @@ class TourController extends Controller
         $location = $request->input('tour.location', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
         $promoAddOns = $request->input('tour.pricing.promo.addOns', []);
+        $bookingAdditional = $request->input('tour.bookingAdditional', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours');
@@ -100,6 +101,7 @@ class TourController extends Controller
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $bookingAdditionalData = ! empty($bookingAdditional) ? json_encode($bookingAdditional) : null;
         $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
         $details = ! empty($request->input('details')) ? json_encode($request->input('details')) : null;
@@ -122,6 +124,7 @@ class TourController extends Controller
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
+            'booking_additional' => $bookingAdditionalData ?? null,
             'badge_tag' => $badgeTag ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
             'content' => $general['content'] ?? null,
@@ -178,8 +181,8 @@ class TourController extends Controller
 
         $tour->categories()->sync($categoryIds);
 
-        if ($$availabilityDates && is_array($$availabilityDates)) {
-            foreach ($$availabilityDates as $date => $isAvailable) {
+        if ($availabilityDates && is_array($availabilityDates)) {
+            foreach ($availabilityDates as $date => $isAvailable) {
                 TourAvailability::create([
                     'tour_id' => $tour->id,
                     'date' => $date,
@@ -372,6 +375,7 @@ class TourController extends Controller
         $location = $request->input('tour.location', []);
         $promoAddOns = $request->input('tour.pricing.promo.addOns', []);
         $itineraryExperience = $request->input('itinerary_experience', []);
+        $bookingAdditional = $request->input('tour.bookingAdditional', []);
 
         $slugText = ! empty($general['slug']) ? $general['slug'] : $general['title'];
         $slug = $this->createSlug($slugText, 'tours', $tour->slug);
@@ -394,6 +398,7 @@ class TourController extends Controller
         $promoDiscountConfig = isset($request->tour['pricing']['promo']['discount'])
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
+        $bookingAdditionalData = ! empty($bookingAdditional) ? json_encode($bookingAdditional) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
@@ -408,7 +413,6 @@ class TourController extends Controller
         $availabilityDatesData = $request->input('availabilityData');
         $availabilityDates = json_decode($availabilityDatesData, true);
 
-
         $tour->update([
             'title' => $general['title'] ?? null,
             'slug' => $slug ?? null,
@@ -417,6 +421,7 @@ class TourController extends Controller
             'city_id' => $location['normal_location']['city_id'] ?? null,
             'details' => $details,
             'author_config' => $authorConfig ?? null,
+            'booking_additional' => $bookingAdditionalData ?? null,
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
             'badge_tag' => $badgeTag ?? null,
