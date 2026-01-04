@@ -3078,7 +3078,7 @@
                                 <div class="row mt-4" x-show="additionalType === 'activities'">
                                     <div class="col-12">
                                         <div class="form-fields">
-                                            <label class="title">Select Additional information</label>
+                                            <label class="title">Activity Type</label>
                                             <select x-model="activitiesType"
                                                 name="tour[bookingAdditional][activities][selection_type]"
                                                 class="field">
