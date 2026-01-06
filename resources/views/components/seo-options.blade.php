@@ -93,26 +93,30 @@
                                     aria-labelledby="home-tab">
                                     <div class="row">
                                         <div class="form-fields col-md-12">
-                                            <label class="title">
-                                                Seo Title:
-                                            </label>
-                                            <input maxlength="{{ $settings->get('seo_title_limit') ?? '60' }}" type="text"
-                                                name="seo[seo_title]" class="field"
+                                            <label class="title">Seo Title:</label>
+                                            <input maxlength="{{ $settings->get('seo_title_limit') ?? 60 }}"
+                                                type="text" name="seo[seo_title]" class="field"
                                                 value="{{ old('seo[seo_title]', $seo->seo_title ?? '') }}"
-                                                placeholder="Title" oninput="updateText(this,'google_title')">
-                                                <small class="text-muted">Max {{ $settings->get('seo_title_limit') ?? '60' }} characters</small>
+                                                placeholder="Title" oninput="updateCounter(this, 'title_counter')">
+                                            <small class="text-muted">
+                                                <span
+                                                    id="title_counter">{{ ($settings->get('seo_title_limit') ?? 60) - strlen(old('seo[seo_title]', $seo->seo_title ?? '')) }}</span>
+                                                characters left
+                                            </small>
                                             @error('seo[seo_title]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
 
                                         <div class="form-fields col-md-12">
-                                            <label class="title">
-                                                Seo Description:
-                                            </label>
-                                            <textarea maxlength="{{ $settings->get('seo_description_limit') ?? '160' }}" name="seo[seo_description]" class="field"
-                                                rows="3" placeholder="Enter Description..." oninput="updateText(this,'google_desc')">{{ old('seo[seo_description]', $seo->seo_description ?? '') }}</textarea>
-                                                <small class="text-muted">Max {{ $settings->get('seo_description_limit') ?? '160' }} characters</small>
+                                            <label class="title">Seo Description:</label>
+                                            <textarea maxlength="{{ $settings->get('seo_description_limit') ?? 160 }}" name="seo[seo_description]"
+                                                class="field" rows="3" placeholder="Enter Description..." oninput="updateCounter(this, 'desc_counter')">{{ old('seo[seo_description]', $seo->seo_description ?? '') }}</textarea>
+                                            <small class="text-muted">
+                                                <span
+                                                    id="desc_counter">{{ ($settings->get('seo_description_limit') ?? 160) - strlen(old('seo[seo_description]', $seo->seo_description ?? '')) }}</span>
+                                                characters left
+                                            </small>
                                             @error('seo[seo_description]')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -374,6 +378,23 @@
         function updateText(currentInput, ElementId) {
             let textPreview = document.getElementById(ElementId)
             textPreview.textContent = currentInput.value
+        }
+
+        function updateCounter(el, counterId) {
+            const max = parseInt(el.getAttribute('maxlength'));
+            const currentLength = el.value.length;
+            const remaining = max - currentLength;
+            const counter = document.getElementById(counterId);
+
+            counter.textContent = remaining;
+            const smallEl = counter.closest('small');
+            if (remaining <= 0) {
+                smallEl.classList.remove('text-muted');
+                smallEl.classList.add('text-danger');
+            } else {
+                smallEl.classList.add('text-muted');
+                smallEl.classList.remove('text-danger');
+            }
         }
     </script>
 @endsection
