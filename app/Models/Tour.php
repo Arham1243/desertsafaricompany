@@ -263,7 +263,7 @@ class Tour extends Model
         // --------------------------
         if ((int) $this->is_open_hours === 1) {
             $hours = json_decode($this->availability_open_hours, true);
-
+            
             if (!is_array($hours)) {
                 $isAvailable = false;
                 $messages[] = 'Tour hours data is invalid. Please contact support.';
@@ -272,19 +272,26 @@ class Tour extends Model
                 $todayHours = collect($hours)
                     ->first(fn($h) => strtolower($h['day']) === $todayDay);
 
-                if (!$todayHours) {
+                if (empty($todayHours['open_time']) || empty($todayHours['close_time'])) {
                     $isAvailable = false;
-                    $messages[] = 'This tour is not available today. Check back on ' . ucfirst($this->getNextAvailableDay()) . '.';
+                    $messages[] = 'This tour is not available today.';
                 } else {
                     try {
                         $open = Carbon::createFromTimeString($todayHours['open_time']);
                         $close = Carbon::createFromTimeString($todayHours['close_time']);
 
-                        if ($close->lt($open)) $close->addDay();
+                        if ($close->lt($open)) {
+                            $close->addDay();
+                        }
 
                         if (! $now->between($open, $close)) {
                             $isAvailable = false;
-                            $messages[] = 'Tour is currently closed. It will be open from ' . $open->format('h:i A') . ' to ' . $close->format('h:i A') . ' today.';
+                            $messages[] =
+                                'Tour is currently closed. It will be open from ' .
+                                $open->format('h:i A') .
+                                ' to ' .
+                                $close->format('h:i A') .
+                                ' today.';
                         }
                     } catch (\Exception $e) {
                         $isAvailable = false;
