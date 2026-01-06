@@ -24,6 +24,31 @@ class TourController extends Controller
     use Sluggable;
     use UploadImageTrait;
 
+    protected function processBookingAdditional($bookingAdditional)
+    {
+        if (!empty($bookingAdditional['meeting_points']['cities'])) {
+            $cities = $bookingAdditional['meeting_points']['cities'];
+            $processedCities = [];
+
+            foreach ($cities as $cityData) {
+                if (!empty($cityData['city_id'])) {
+                    $city = City::find($cityData['city_id']);
+                    if ($city) {
+                        $processedCities[] = [
+                            'city_id' => $cityData['city_id'],
+                            'city_name' => $city->name,
+                            'points' => array_filter($cityData['points'] ?? [], fn($point) => !empty($point))
+                        ];
+                    }
+                }
+            }
+
+            $bookingAdditional['meeting_points']['cities'] = $processedCities;
+        }
+
+        return $bookingAdditional;
+    }
+
     public function index()
     {
         $tourCategories = TourCategory::get();
@@ -101,6 +126,7 @@ class TourController extends Controller
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
+        $bookingAdditional = $this->processBookingAdditional($bookingAdditional);
         $bookingAdditionalData = ! empty($bookingAdditional) ? json_encode($bookingAdditional) : null;
         $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;
         $badge = ! empty($request->input('tour.badge')) ? json_encode($request->input('tour.badge')) : null;
@@ -124,7 +150,7 @@ class TourController extends Controller
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
-            'booking_additional' => $bookingAdditionalData ?? null,
+            '   ' => $bookingAdditionalData ?? null,
             'badge_tag' => $badgeTag ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
             'content' => $general['content'] ?? null,
@@ -398,6 +424,7 @@ class TourController extends Controller
         $promoDiscountConfig = isset($request->tour['pricing']['promo']['discount'])
             ? json_encode($request->tour['pricing']['promo']['discount'])
             : null;
+        $bookingAdditional = $this->processBookingAdditional($bookingAdditional);
         $bookingAdditionalData = ! empty($bookingAdditional) ? json_encode($bookingAdditional) : null;
         $availabilityOpenHours = ! empty($availabilityData['open_hours']) ? json_encode($availabilityData['open_hours']) : null;
         $availabilityAdvanceBooking = ! empty($availabilityData['advance_booking']) ? json_encode($availabilityData['advance_booking']) : null;

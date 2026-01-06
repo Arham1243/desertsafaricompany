@@ -5,22 +5,60 @@
 
         <!-- Meeting Point -->
         <template v-if="getBookingAdditional(tour.id).additional_type === 'meeting_point'">
+            @{{ (() => {
+                // Initialize selection as object if not exists
+                if (!cart.tours[tour.id].booking_additional_selections.selection || typeof cart.tours[tour.id].booking_additional_selections.selection !== 'object') {
+                    cart.tours[tour.id].booking_additional_selections.selection = {
+                        city_id: '',
+                        city_name: '',
+                        meeting_point: ''
+                    };
+                }
+                return '';
+            })() }}
+
             <div class="form-fields mb-3">
+                <label class="title text-dark">Select City <span class="text-danger">*</span></label>
+                <select 
+                    v-model="cart.tours[tour.id].booking_additional_selections.selection.city_id"
+                    @change="(e) => {
+                        const cityId = e.target.value;
+                        const cityData = (getBookingAdditional(tour.id).meeting_points?.cities || []).find(c => c.city_id == cityId);
+                        cart.tours[tour.id].booking_additional_selections.selection.city_name = cityData?.city_name || '';
+                        cart.tours[tour.id].booking_additional_selections.selection.meeting_point = '';
+                        handleBookingAdditionalChange(tour.id);
+                    }"
+                    class="field"
+                    required>
+                    <option value="">Select City</option>
+                    <option 
+                        v-for="(cityData, index) in getBookingAdditional(tour.id).meeting_points?.cities || []" 
+                        :key="index"
+                        :value="cityData.city_id">
+                        @{{ cityData.city_name }}
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-fields mb-3" v-if="cart.tours[tour.id].booking_additional_selections.selection.city_id">
                 <label class="title text-dark">Meeting Point <span class="text-danger">*</span></label>
                 <select 
-                    v-model="cart.tours[tour.id].booking_additional_selections.selection"
+                    v-model="cart.tours[tour.id].booking_additional_selections.selection.meeting_point"
                     @change="handleBookingAdditionalChange(tour.id)"
                     class="field"
                     required>
                     <option value="">Select Meeting Point</option>
-                    <option 
-                        v-for="(option, index) in getBookingAdditional(tour.id).meeting_points?.options || []" 
-                        :key="index"
-                        :value="option">
-                        @{{ option }}
-                    </option>
+                    <template v-for="(cityData, index) in getBookingAdditional(tour.id).meeting_points?.cities || []">
+                        <option 
+                            v-if="cityData.city_id == cart.tours[tour.id].booking_additional_selections.selection.city_id"
+                            v-for="(point, pIndex) in cityData.points || []" 
+                            :key="`${index}-${pIndex}`"
+                            :value="point">
+                            @{{ point }}
+                        </option>
+                    </template>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).meeting_points?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).meeting_points?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).meeting_points.user_remarks }}
                 </small>
             </div>
@@ -43,7 +81,7 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).timeslots?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).timeslots?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).timeslots.user_remarks }}
                 </small>
             </div>
@@ -66,7 +104,7 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).meeting_time?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).meeting_time?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).meeting_time.user_remarks }}
                 </small>
             </div>
@@ -89,7 +127,7 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).departure_time?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).departure_time?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).departure_time.user_remarks }}
                 </small>
             </div>
@@ -112,7 +150,7 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).departure_hotel_name?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).departure_hotel_name?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).departure_hotel_name.user_remarks }}
                 </small>
             </div>
@@ -135,7 +173,7 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).pickup_location?.user_remarks" class="text-muted d-block mt-1">
+                <small v-if="getBookingAdditional(tour.id).pickup_location?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).pickup_location.user_remarks }}
                 </small>
             </div>

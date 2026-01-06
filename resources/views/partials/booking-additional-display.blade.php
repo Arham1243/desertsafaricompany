@@ -2,7 +2,7 @@
     $bookingAdditionalSelections = $tourDataDetails['booking_additional_selections'] ?? null;
 @endphp
 
-@if($bookingAdditionalSelections && isset($bookingAdditionalSelections['type']))
+@if ($bookingAdditionalSelections && isset($bookingAdditionalSelections['type']))
     <div class="col-md-12 col-12 mb-4">
         <div class="form-fields">
             <label class="title">Additional Information:</label>
@@ -12,13 +12,13 @@
                     $selection = $bookingAdditionalSelections['selection'] ?? null;
                 @endphp
 
-                @if($type === 'activities')
+                @if ($type === 'activities')
                     {{-- Activities Type --}}
-                    @if(is_array($selection))
+                    @if (is_array($selection))
                         {{-- Multiple Selection --}}
                         <ul class="list-group">
-                            @foreach($selection as $key => $value)
-                                @if($value)
+                            @foreach ($selection as $key => $value)
+                                @if ($value)
                                     <li class="list-group-item d-flex justify-content-between align-items-center">
                                         <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
                                         <span>{{ $value }}</span>
@@ -37,7 +37,9 @@
                     <div class="list-group">
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>{{ ucfirst(str_replace('_', ' ', $type)) }}:</strong>
-                            <span>{{ $selection ?? 'N/A' }}</span>
+                            <span>
+                                {{ $selection['city_name'] ?? 'N/A' }} - {{ $selection['meeting_point'] ?? 'N/A' }}
+                            </span>
                         </div>
                     </div>
                 @endif
