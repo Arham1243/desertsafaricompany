@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                                 @endif>
+                                                    @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -60,13 +60,18 @@
 @include('frontend.tour.pricing.components.service_fee')
 @include('frontend.tour.pricing.components.total_price')
 
-<div class="payment-methods-collage">
-    <img src="{{ asset('frontend/assets/images/methods/3.png') }}" alt="tabby" class="img-fluid">
-    <img src="{{ asset('frontend/assets/images/methods/6.png') }}" alt="tamara" class="img-fluid">
-    <img src="{{ asset('frontend/assets/images/methods/1.png') }}" alt="stripe" class="img-fluid">
-    <img src="{{ asset('frontend/assets/images/methods/5.png') }}" alt="paypal" class="img-fluid">
-    <img src="{{ asset('frontend/assets/images/methods/7.svg') }}" alt="pointCheckout" class="img-fluid">
-</div>
+@php
+    $merchantImages = $settings->get('merchant_images');
+    $merchantImages = $merchantImages ? json_decode($merchantImages, true) : [];
+@endphp
+@if (!empty($merchantImages))
+    <div class="payment-methods-collage">
+        @foreach ($merchantImages as $merchantImage)
+            <img src="{{ asset($merchantImage['image']) }}" alt="{{ $merchantImage['alt_text'] ?? 'Merchant Image' }}"
+                class="img-fluid">
+        @endforeach
+    </div>
+@endif
 
 <div class="form-guest__btn mt-4">
     @if (Auth::check())
@@ -243,7 +248,7 @@
                 @if ($buttonBg || $buttonTextColor) style="
                    @if ($buttonBg) background-color: {{ $buttonBg }}; @endif
                 @if ($buttonTextColor) color: {{ $buttonTextColor }}; @endif "
-            @endif
+               @endif
                 >
                 <i class="bx bxl-whatsapp"></i>
                 {{ $buttonText }}

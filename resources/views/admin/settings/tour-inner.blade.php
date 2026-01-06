@@ -533,6 +533,123 @@
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
+                                <div class="title">Merchant</div>
+                            </div>
+                            <div class="form-box__body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-fields">
+                                            <label class="title title--sm d-flex align-items-center gap-2 mb-3">
+                                                Merchant Images
+                                                <a href="{{ asset('admin/assets/images/tour-inner-settings/merchants-preview.png') }}"
+                                                    data-fancybox="gallery" title="section preview"
+                                                    class="themeBtn section-preview-image section-preview-image--sm"><i
+                                                        class="bx bxs-show"></i></a></label>
+                                        </div>
+
+                                    </div>
+                                    @php
+                                        $merchantImages = $settings->get('merchant_images');
+                                        $merchantImages = $merchantImages ? json_decode($merchantImages, true) : [];
+
+                                        // Always ensure at least one ghost row exists
+                                        if (empty($merchantImages)) {
+                                            $merchantImages[] = [
+                                                'image' => null,
+                                                'alt_text' => 'Merchant Image',
+                                            ];
+                                        }
+                                    @endphp
+
+                                    <div class="col-md-12 mt-4">
+                                        <div class="form-fields">
+                                            <div class="repeater-table" data-repeater>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Image</th>
+                                                            <th class="text-end" scope="col">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody data-repeater-list>
+                                                        @foreach ($merchantImages as $i => $merchantImage)
+                                                            <tr data-repeater-item>
+                                                                <td class="w-25">
+                                                                    <div class="upload upload--sm" data-upload>
+                                                                        <div class="upload-box-wrapper">
+                                                                            <div class="upload-box {{ empty($merchantImage['image']) ? 'show' : '' }}"
+                                                                                data-upload-box>
+                                                                                <input type="hidden"
+                                                                                    name="merchant_images[{{ $i }}][existing_image]"
+                                                                                    value="{{ $merchantImage['image'] ?? '' }}">
+                                                                                <input type="file"
+                                                                                    name="merchant_images[{{ $i }}][image]"
+                                                                                    data-error="Merchant Image"
+                                                                                    id="merchant_image_{{ $i }}"
+                                                                                    class="upload-box__file d-none"
+                                                                                    accept="image/*" data-file-input>
+                                                                                <div class="upload-box__placeholder"><i
+                                                                                        class='bx bxs-image'></i></div>
+                                                                                <label
+                                                                                    for="merchant_image_{{ $i }}"
+                                                                                    class="upload-box__btn themeBtn">Upload
+                                                                                    Image</label>
+                                                                            </div>
+
+                                                                            <div class="upload-box__img {{ !empty($merchantImage['image']) ? 'show' : '' }}"
+                                                                                data-upload-img>
+                                                                                <button type="button" class="delete-btn"
+                                                                                    data-delete-btn>
+                                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                                </button>
+                                                                                <a href="{{ asset($merchantImage['image'] ?? 'admin/assets/images/placeholder.png') }}"
+                                                                                    class="mask"
+                                                                                    data-fancybox="gallery">
+                                                                                    <img src="{{ asset($merchantImage['image'] ?? 'admin/assets/images/placeholder.png') }}"
+                                                                                        alt="{{ $merchantImage['alt_text'] ?? 'Merchant Image' }}"
+                                                                                        class="imgFluid"
+                                                                                        data-upload-preview>
+                                                                                </a>
+                                                                                <input type="text"
+                                                                                    name="merchant_images[{{ $i }}][alt_text]"
+                                                                                    class="field"
+                                                                                    placeholder="Enter alt text"
+                                                                                    value="{{ $merchantImage['alt_text'] ?? '' }}">
+                                                                            </div>
+                                                                        </div>
+                                                                        <div data-error-message
+                                                                            class="text-danger mt-2 d-none text-center">
+                                                                            Please upload a valid image file
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="dimensions text-center mt-3">
+                                                                        <strong>Dimensions:</strong> 40 &times; 40
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <button type="button"
+                                                                        class="delete-btn ms-auto delete-btn--static"
+                                                                        data-repeater-remove
+                                                                        {{ $loop->first ? 'disabled' : '' }}>
+                                                                        <i class='bx bxs-trash-alt'></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
+                                                    </tbody>
+                                                </table>
+                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>Add
+                                                    <i class="bx bx-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-box">
+                            <div class="form-box__header">
                                 <div class="title">Author Settings</div>
                             </div>
                             <div class="form-box__body">
@@ -732,9 +849,11 @@
 
                                     <!-- Button Text Color -->
                                     <div class="col-md-6 col-12 mb-4">
-                                         <div class="form-fields">
-                                            <label class="text-dark title" for="help_whatsapp_button_text">Button Text:</label>
-                                            <input type="text" id="help_whatsapp_button_text" name="help_whatsapp_button_text"
+                                        <div class="form-fields">
+                                            <label class="text-dark title" for="help_whatsapp_button_text">Button
+                                                Text:</label>
+                                            <input type="text" id="help_whatsapp_button_text"
+                                                name="help_whatsapp_button_text"
                                                 value="{{ $settings->get('help_whatsapp_button_text') ?? 'Chat on WhatsApp' }}"
                                                 class="field">
                                         </div>
@@ -933,6 +1052,88 @@
                 }
             };
         }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            let itemCount = document.querySelectorAll("[data-repeater-item]").length;
+
+            function initializeUploadForNewItem(newItem, index) {
+                const uploads = newItem.querySelectorAll("[data-upload]");
+                uploads.forEach((upload) => {
+                    const fileInput = upload.querySelector("[data-file-input]");
+                    const label = upload.querySelector("label");
+                    const uploadImgBox = upload.querySelector("[data-upload-img]");
+                    const uploadBox = upload.querySelector("[data-upload-box]");
+                    const imagePreview = upload.querySelector("[data-upload-preview]");
+
+                    const uniqueId = `merchant_image_${index}`;
+                    fileInput.id = uniqueId;
+                    fileInput.name = `merchant_images[${index}][image]`;
+                    fileInput.value = "";
+
+                    if (label) label.setAttribute("for", uniqueId);
+
+                    // Reset preview only for new row
+                    if (imagePreview) imagePreview.src = imagePreview.dataset.placeholder ?? '';
+                    uploadBox.classList.add("show");
+                    uploadImgBox.classList.remove("show");
+
+                    initializeUploadComponent(upload);
+                });
+            }
+
+            function updateIndices(container) {
+                const items = container.querySelectorAll("[data-repeater-item]");
+                items.forEach((item, index) => {
+                    const uploads = item.querySelectorAll("[data-upload]");
+                    uploads.forEach((upload) => {
+                        const fileInput = upload.querySelector("[data-file-input]");
+                        const label = upload.querySelector("label");
+
+                        const uniqueId = `merchant_image_${index}`;
+                        fileInput.id = uniqueId;
+                        fileInput.name = `merchant_images[${index}][image]`;
+
+                        if (label) label.setAttribute("for", uniqueId);
+                    });
+
+                    const altInput = item.querySelector("input[type='text']");
+                    if (altInput) altInput.name = `merchant_images[${index}][alt_text]`;
+
+                    const removeBtn = item.querySelector("[data-repeater-remove]");
+                    if (removeBtn) removeBtn.disabled = index === 0;
+                });
+                itemCount = items.length;
+            }
+
+            function addItem(container) {
+                const list = container.querySelector("[data-repeater-list]");
+                const firstItem = list.querySelector("[data-repeater-item]");
+                const newItem = firstItem.cloneNode(true);
+
+                list.appendChild(newItem);
+                initializeUploadForNewItem(newItem, list.querySelectorAll("[data-repeater-item]").length - 1);
+                updateIndices(container);
+            }
+
+            document.querySelectorAll("[data-repeater]").forEach((container) => {
+                const addBtn = container.querySelector("[data-repeater-create]");
+                addBtn?.addEventListener("click", () => addItem(container));
+
+                container.addEventListener("click", function(e) {
+                    const removeBtn = e.target.closest("[data-repeater-remove]");
+                    if (removeBtn) {
+                        const item = removeBtn.closest("[data-repeater-item]");
+                        item.remove();
+                        updateIndices(container);
+                    }
+                });
+
+                // Initialize existing uploads
+                container.querySelectorAll("[data-upload]").forEach((upload) => {
+                    initializeUploadComponent(upload);
+                });
+            });
+        });
     </script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/classic.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr@1.8.2/dist/pickr.min.js"></script>

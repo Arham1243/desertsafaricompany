@@ -45,6 +45,35 @@ class SettingController extends Controller
             }
         }
 
+        if ($request->has('merchant_images')) {
+            $merchantImages = $request->merchant_images ?? [];
+            $processedImages = [];
+
+            foreach ($merchantImages as $index => $imageData) {
+                $imageItem = [
+                    'alt_text' => $imageData['alt_text'] ?? '',
+                ];
+
+                // New uploaded file
+                if (!empty($imageData['image']) && $request->hasFile("merchant_images.$index.image")) {
+                    $file = $request->file("merchant_images.$index.image");
+                    $imageItem['image'] = $this->simpleUploadImg($file, 'Merchant-Images');
+
+                    // No new upload, keep existing
+                } elseif (!empty($imageData['existing_image'])) {
+                    $imageItem['image'] = $imageData['existing_image'];
+                }
+
+                if (!empty($imageItem['image'])) {
+                    $processedImages[] = $imageItem;
+                }
+            }
+
+            Setting::set('merchant_images', json_encode($processedImages), $resource);
+        }
+
+
+
         if ($request->has('footer_config')) {
             $footer_config = $request->footer_config ?? [];
             if (is_string($footer_config)) {
@@ -104,7 +133,7 @@ class SettingController extends Controller
         $envPath = base_path('.env');
         $envFile = File::get($envPath);
 
-        $value = '"'.$value.'"';
+        $value = '"' . $value . '"';
 
         if (strpos($envFile, "$key=") !== false) {
             $envFile = preg_replace("/^$key=.*/m", "$key=$value", $envFile);
