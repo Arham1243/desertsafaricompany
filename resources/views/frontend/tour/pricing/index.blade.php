@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                                    @endif>
+                                                      @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -75,29 +75,35 @@
 
 <div class="form-guest__btn mt-4">
     @if (Auth::check())
-        @if (isset($isTourInCart) && !$isTourInCart)
+
+        @if (isset($isTourInCart) && $isTourInCart)
+            <a href="{{ route('cart.index') }}" class="primary-btn w-100">
+                View Cart
+            </a>
+        @else
             @if (!$tour->availability_status['available'])
                 <button class="primary-btn w-100" disabled data-tooltip="tooltip"
                     title="{{ $tour->availability_status['user_message'] }}">
-                    Book Now
+                    Unavailable
+                </button>
+            @elseif (!$isDataValid)
+                <button class="primary-btn w-100" disabled>
+                    Select Start Date to continue
                 </button>
             @else
-                <button class="primary-btn w-100" :disabled="!isSubmitEnabled"
-                    @if (!$isDataValid) disabled @endif
-                    @if (!$tour->availability_status['available']) data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}" @endif>
+                <button v-if="!startDateInput?.value" class="primary-btn w-100" disabled="true">
+                    Select Start Date to continue
+                </button>
+                <button v-else class="primary-btn w-100" :disabled="!isSubmitEnabled">
                     Book Now
                 </button>
-                <div v-if="!startDateInput?.value" class="text-danger text-center mt-2">
-                    Please select a start date
-                </div>
             @endif
-        @else
-            <a href="{{ route('cart.index') }}" class="primary-btn w-100">Already in Cart</a>
         @endif
     @else
         <button type="button" class="primary-btn w-100" open-vue-login-popup
             @if (!$tour->availability_status['available']) disabled
-                data-tooltip="tooltip" title="{{ $tour->availability_status['user_message'] }}" @endif>
+                data-tooltip="tooltip"
+                title="{{ $tour->availability_status['user_message'] }}" @endif>
             Login to Continue
         </button>
     @endif
@@ -248,7 +254,7 @@
                 @if ($buttonBg || $buttonTextColor) style="
                    @if ($buttonBg) background-color: {{ $buttonBg }}; @endif
                 @if ($buttonTextColor) color: {{ $buttonTextColor }}; @endif "
-               @endif
+                 @endif
                 >
                 <i class="bx bxl-whatsapp"></i>
                 {{ $buttonText }}

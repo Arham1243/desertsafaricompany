@@ -3014,7 +3014,7 @@
                     </div>
                     @php
                         $bookingAdditional = $tour->booking_additional ? json_decode($tour->booking_additional, true) : [];
-                        $bookingAdditionalEnabled = $bookingAdditional['enabled'] ?? 0;
+                        $bookingAdditionalEnabled = $bookingAdditional['enabled'] ?? 1;
                         $additionalType = $bookingAdditional['additional_type'] ?? '';
                         $activitiesType = $bookingAdditional['activities']['selection_type'] ?? '';
                         $activitiesMultipleSelection = $bookingAdditional['activities']['multiple_selection']['activity'] ?? [];
