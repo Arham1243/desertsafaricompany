@@ -182,16 +182,45 @@
                     <!-- Meeting Point Dropdown -->
                     <template
                         v-if="(getBookingAdditional(tour.id).activities?.multiple_selection?.activity || []).includes('meeting_point')">
+
+                        <!-- City Dropdown -->
                         <div class="form-fields mb-3">
+                            <label class="title text-dark">Select City <span class="text-danger">*</span></label>
+                            <select v-model="cart.tours[tour.id].booking_additional_selections.selection.city_id"
+                                @change="(e) => {
+            const cityId = e.target.value;
+            const cityData = (getBookingAdditional(tour.id).activities.multiple_selection.meeting_point?.cities || [])
+                .find(c => c.city_id == cityId);
+            cart.tours[tour.id].booking_additional_selections.selection.city_name = cityData?.city_name || '';
+            cart.tours[tour.id].booking_additional_selections.selection.meeting_point = '';
+            handleBookingAdditionalChange(tour.id);
+        }"
+                                class="field" required>
+                                <option value="">Select City</option>
+                                <option
+                                    v-for="(cityData, index) in getBookingAdditional(tour.id).activities.multiple_selection.meeting_point?.cities || []"
+                                    :key="index" :value="cityData.city_id">
+                                    @{{ cityData.city_name }}
+                                </option>
+                            </select>
+                        </div>
+
+                        <!-- Meeting Points Dropdown -->
+                        <div class="form-fields mb-3"
+                            v-if="cart.tours[tour.id].booking_additional_selections.selection.city_id">
                             <label class="title text-dark">Meeting Point <span class="text-danger">*</span></label>
                             <select v-model="cart.tours[tour.id].booking_additional_selections.selection.meeting_point"
                                 @change="handleBookingAdditionalChange(tour.id)" class="field" required>
                                 <option value="">Select Meeting Point</option>
-                                <option
-                                    v-for="(option, index) in getBookingAdditional(tour.id).activities.multiple_selection.meeting_point?.options || []"
-                                    :key="index" :value="option">
-                                    @{{ option }}
-                                </option>
+                                <template
+                                    v-for="(cityData, index) in getBookingAdditional(tour.id).activities.multiple_selection.meeting_point?.cities || []">
+                                    <option
+                                        v-if="cityData.city_id == cart.tours[tour.id].booking_additional_selections.selection.city_id"
+                                        v-for="(point, pIndex) in cityData.points || []" :key="`${index}-${pIndex}`"
+                                        :value="point">
+                                        @{{ point }}
+                                    </option>
+                                </template>
                             </select>
                         </div>
                     </template>

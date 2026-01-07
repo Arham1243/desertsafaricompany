@@ -95,7 +95,6 @@ class TourController extends Controller
 
     public function store(Request $request)
     {
-
         $general = $request->input('tour.general', []);
         $statusTab = $request->input('tour.status', []);
         $availabilityData = $request->input('tour.availability', []);

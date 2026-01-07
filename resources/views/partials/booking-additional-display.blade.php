@@ -3,9 +3,11 @@
 
     function formatAMPM($time)
     {
-        if (!$time) return '';
+        if (!$time) {
+            return '';
+        }
         [$hours, $minutes] = explode(':', $time);
-        $hours = (int)$hours;
+        $hours = (int) $hours;
         $ampm = $hours >= 12 ? 'PM' : 'AM';
         $hours = $hours % 12 ?: 12;
         return $hours . ':' . $minutes . ' ' . $ampm;
@@ -56,6 +58,7 @@
                     @if (is_array($selection))
                         <ul class="list-group">
                             @foreach ($selection as $key => $value)
+                                @continue(str_contains($key, '_id'))
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
                                     <span>{{ formatSelection($value) }}</span>
