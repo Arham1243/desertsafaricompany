@@ -787,7 +787,14 @@
                         }
                     }
                     return true;
-                } else {
+                } 
+                else if (additionalType === 'pickup_location') {
+        const selection = bookingSelections.selection || {};
+        // Both location_type and address must be filled
+        return selection.location_type && selection.location_type !== ''
+            && selection.address && selection.address.trim() !== '';
+    }
+                else {
                     // For non-activities types, check if selection exists and is not empty
                     return bookingSelections.selection && bookingSelections.selection !== '';
                 }

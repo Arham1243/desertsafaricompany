@@ -136,9 +136,23 @@
 
         <!-- Pickup Location -->
         <template v-if="getBookingAdditional(tour.id).additional_type === 'pickup_location'">
+
+            <!-- Ensure selection object exists -->
+            @{{ (() => {
+    if (!cart.tours[tour.id].booking_additional_selections.selection ||
+        typeof cart.tours[tour.id].booking_additional_selections.selection !== 'object') {
+        cart.tours[tour.id].booking_additional_selections.selection = {
+            location_type: '',
+            address: ''
+        };
+    }
+    return '';
+})() }}
+
+            <!-- Pickup Location Dropdown -->
             <div class="form-fields mb-3">
                 <label class="title text-dark">Pickup Location <span class="text-danger">*</span></label>
-                <select v-model="cart.tours[tour.id].booking_additional_selections.selection"
+                <select v-model="cart.tours[tour.id].booking_additional_selections.selection.location_type"
                     @change="handleBookingAdditionalChange(tour.id)" class="field" required>
                     <option value="">Select Pickup Location</option>
                     <option v-for="(option, index) in getBookingAdditional(tour.id).pickup_location?.options || []"
@@ -146,11 +160,20 @@
                         @{{ option }}
                     </option>
                 </select>
-                <small v-if="getBookingAdditional(tour.id).pickup_location?.user_remarks"
-                    class="text-muted d-block mt-3">
-                    @{{ getBookingAdditional(tour.id).pickup_location.user_remarks }}
-                </small>
             </div>
+
+            <!-- Conditional Address Input -->
+            <div class="form-fields mb-3"
+                v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type">
+                <label class="title text-dark">Enter Details <span class="text-danger">*</span></label>
+                <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
+                    @input="handleBookingAdditionalChange(tour.id)" class="field" required />
+            </div>
+
+            <!-- Optional User Remarks -->
+            <small v-if="getBookingAdditional(tour.id).pickup_location?.user_remarks" class="text-muted d-block mt-3">
+                @{{ getBookingAdditional(tour.id).pickup_location.user_remarks }}
+            </small>
         </template>
 
         <!-- Activities -->

@@ -36,6 +36,9 @@
         } elseif (is_array($selection) && isset($selection['city_name'], $selection['meeting_point'])) {
             // City / meeting_point
             return $selection['city_name'] . ' - ' . $selection['meeting_point'];
+        } elseif (is_array($selection) && isset($selection['location_type'], $selection['address'])) {
+            // Pickup location
+            return $selection['location_type'] . ' - ' . $selection['address'];
         } elseif (is_string($selection)) {
             // Simple string
             return $selection;
