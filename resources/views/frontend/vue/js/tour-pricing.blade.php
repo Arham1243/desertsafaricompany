@@ -63,7 +63,11 @@
                             'min_person' => (int) ($addon['min_person'] ?? 0),
                             'max_person' => (int) ($addon['max_person'] ?? 200),
                             'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                ? applyPromoDiscount(
+                                    $discounted,
+                                    $firstOrderCoupon->discount_type,
+                                    $firstOrderCoupon->amount,
+                                )
                                 : null,
                             'quantity' => (int) ($addon['min_person'] ?? 0),
                             'hours_left' => $hoursLeft,
@@ -83,7 +87,11 @@
                             'original_discounted_price' => $firstSlotDiscount,
                             'discounted_price' => $firstSlotDiscount,
                             'promo_discounted_price' => $firstOrderCoupon
-                                ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                ? applyPromoDiscount(
+                                    $firstSlotDiscount,
+                                    $firstOrderCoupon->discount_type,
+                                    $firstOrderCoupon->amount,
+                                )
                                 : null,
                             'hours_left' => $hoursLeft,
                             'min_person' => (int) ($addon['min_person'] ?? 0),
@@ -104,7 +112,11 @@
                                         'original_discounted_price' => $discounted,
                                         'discounted_price' => $discounted,
                                         'promo_discounted_price' => $firstOrderCoupon
-                                            ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                            ? applyPromoDiscount(
+                                                $discounted,
+                                                $firstOrderCoupon->discount_type,
+                                                $firstOrderCoupon->amount,
+                                            )
                                             : null,
                                         'is_first_order_coupon_applied' => false,
                                     ];

@@ -1,5 +1,45 @@
 @php
     $bookingAdditionalSelections = $tourDataDetails['booking_additional_selections'] ?? null;
+
+    function formatAMPM($time)
+    {
+        if (!$time) return '';
+        [$hours, $minutes] = explode(':', $time);
+        $hours = (int)$hours;
+        $ampm = $hours >= 12 ? 'PM' : 'AM';
+        $hours = $hours % 12 ?: 12;
+        return $hours . ':' . $minutes . ' ' . $ampm;
+    }
+
+    function formatSelection($value)
+    {
+        // Timeslot / from-to array
+        if (is_array($value) && isset($value[0], $value[1])) {
+            return formatAMPM($value[0]) . ' - ' . formatAMPM($value[1]);
+        }
+
+        // Simple string
+        if (is_string($value)) {
+            return $value;
+        }
+
+        return 'N/A';
+    }
+
+    function formatNonActivities($selection)
+    {
+        if (is_array($selection) && isset($selection[0], $selection[1])) {
+            // Timeslot / from-to array
+            return formatAMPM($selection[0]) . ' - ' . formatAMPM($selection[1]);
+        } elseif (is_array($selection) && isset($selection['city_name'], $selection['meeting_point'])) {
+            // City / meeting_point
+            return $selection['city_name'] . ' - ' . $selection['meeting_point'];
+        } elseif (is_string($selection)) {
+            // Simple string
+            return $selection;
+        }
+        return 'N/A';
+    }
 @endphp
 
 @if ($bookingAdditionalSelections && isset($bookingAdditionalSelections['type']))
@@ -13,33 +53,25 @@
                 @endphp
 
                 @if ($type === 'activities')
-                    {{-- Activities Type --}}
                     @if (is_array($selection))
-                        {{-- Multiple Selection --}}
                         <ul class="list-group">
                             @foreach ($selection as $key => $value)
-                                @if ($value)
-                                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                                        <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
-                                        <span>{{ $value }}</span>
-                                    </li>
-                                @endif
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
+                                    <span>{{ formatSelection($value) }}</span>
+                                </li>
                             @endforeach
                         </ul>
                     @else
-                        {{-- Single Selection - Just informational, no user selection --}}
                         <div class="alert alert-info mb-0">
                             <strong>Type:</strong> Activities (Single Selection - Informational Only)
                         </div>
                     @endif
                 @else
-                    {{-- Non-Activities Types --}}
                     <div class="list-group">
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>{{ ucfirst(str_replace('_', ' ', $type)) }}:</strong>
-                            <span>
-                                {{ $selection['city_name'] ?? 'N/A' }} - {{ $selection['meeting_point'] ?? 'N/A' }}
-                            </span>
+                            <span>{{ formatNonActivities($selection) }}</span>
                         </div>
                     </div>
                 @endif

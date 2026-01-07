@@ -2617,8 +2617,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-12 mt-4"
-                                                x-show="activitiesMulitpleSelection.includes('timeslot')">
+                                            <div class="col-12 mt-4" x-show="activitiesMulitpleSelection.includes('timeslot')">
                                                 <div class="form-fields">
                                                     <label class="title text-dark">Timeslot</label>
                                                     <div class="repeater-table" data-repeater>
@@ -2632,9 +2631,20 @@
                                                             <tbody data-repeater-list>
                                                                 <tr data-repeater-item>
                                                                     <td>
-                                                                        <input
-                                                                            name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][]"
-                                                                            type="text" class="field" />
+                                                                       
+        <div class="d-flex gap-2">
+            <input
+                name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][from][]"
+                type="time"
+                class="field"
+                placeholder="From" />
+
+            <input
+                name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][to][]"
+                type="time"
+                class="field"
+                placeholder="To" />
+        </div>
                                                                     </td>
                                                                     <td>
                                                                         <div class="d-flex gap-2">
@@ -2718,64 +2728,79 @@
                                     <div class="col-12 mb-4">
                                         <div class="form-fields">
                                             <label class="title text-dark">City-based Meeting Points</label>
-                                             <div x-data="meetingPointsRepeater()" class="repeater-table">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th style="width: 30%;">City</th>
-                <th>Meeting Points</th>
-                <th style="width: 10%;" class="text-end">Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            <template x-for="(city, cityIndex) in cities" :key="cityIndex">
-                <tr>
-                    <!-- City Select -->
-                    <td>
-                        <select :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][city_id]`" x-model="city.city_id" class="field">
-                            <option value="">Select City</option>
-                            @foreach ($cities as $cityObj)
-                                <option value="{{ $cityObj->id }}">{{ $cityObj->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
+                                            <div x-data="meetingPointsRepeater()" class="repeater-table">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 30%;">City</th>
+                                                            <th>Meeting Points</th>
+                                                            <th style="width: 10%;" class="text-end">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(city, cityIndex) in cities"
+                                                            :key="cityIndex">
+                                                            <tr>
+                                                                <!-- City Select -->
+                                                                <td>
+                                                                    <select
+                                                                        :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][city_id]`"
+                                                                        x-model="city.city_id" class="field">
+                                                                        <option value="">Select City</option>
+                                                                        @foreach ($cities as $cityObj)
+                                                                            <option value="{{ $cityObj->id }}">
+                                                                                {{ $cityObj->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
 
-                    <!-- Nested meeting points -->
-                    <td>
-                        <template x-for="(point, pointIndex) in city.points" :key="pointIndex">
-                            <div class="d-flex gap-2 mb-2">
-                                <input
-                                    type="text"
-                                    :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][points][]`"
-                                    x-model="city.points[pointIndex]"
-                                    placeholder="Enter meeting point"
-                                    class="field"
-                                />
-                                <button type="button" @click="removePoint(cityIndex, pointIndex)" class="delete-btn align-self-center delete-btn--static" :disabled="pointIndex === 0">
-                                    <i class="bx bxs-trash-alt"></i>
-                                </button>
-                                <button type="button" @click="addPoint(cityIndex, pointIndex)" class="add-btn align-self-center add-btn--static">
-                                    <i class="bx bx-plus"></i>
-                                </button>
-                            </div>
-                        </template>
-                        <button type="button" @click="addPoint(cityIndex)" class="themeBtn ms-auto mt-2">Add Point <i class="bx bx-plus"></i></button>
-                    </td>
+                                                                <!-- Nested meeting points -->
+                                                                <td>
+                                                                    <template x-for="(point, pointIndex) in city.points"
+                                                                        :key="pointIndex">
+                                                                        <div class="d-flex gap-2 mb-2">
+                                                                            <input type="text"
+                                                                                :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][points][]`"
+                                                                                x-model="city.points[pointIndex]"
+                                                                                placeholder="Enter meeting point"
+                                                                                class="field" />
+                                                                            <button type="button"
+                                                                                @click="removePoint(cityIndex, pointIndex)"
+                                                                                class="delete-btn align-self-center delete-btn--static"
+                                                                                :disabled="pointIndex === 0">
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                @click="addPoint(cityIndex, pointIndex)"
+                                                                                class="add-btn align-self-center add-btn--static">
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <button type="button" @click="addPoint(cityIndex)"
+                                                                        class="themeBtn ms-auto mt-2">Add Point <i
+                                                                            class="bx bx-plus"></i></button>
+                                                                </td>
 
-                    <!-- Delete city -->
-                    <td class="text-end">
-                        <button type="button" @click="removeCity(cityIndex)" class="delete-btn  delete-btn--static" :disabled="cityIndex === 0">
-                            <i class="bx bxs-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-            </template>
-        </tbody>
-    </table>
+                                                                <!-- Delete city -->
+                                                                <td class="text-end">
+                                                                    <button type="button"
+                                                                        @click="removeCity(cityIndex)"
+                                                                        class="delete-btn  delete-btn--static"
+                                                                        :disabled="cityIndex === 0">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
 
-    <!-- Add city -->
-    <button type="button" @click="addCity()" class="themeBtn ms-auto mt-2">Add City <i class="bx bx-plus"></i></button>
-</div>
+                                                <!-- Add city -->
+                                                <button type="button" @click="addCity()"
+                                                    class="themeBtn ms-auto mt-2">Add City <i
+                                                        class="bx bx-plus"></i></button>
+                                            </div>
                                         </div>
                                         <div class="form-fields mt-3">
                                             <label class="title text-dark">User remarks</label>
@@ -2801,9 +2826,17 @@
                                                     <tbody data-repeater-list>
                                                         <tr data-repeater-item>
                                                             <td>
-                                                                <input
-                                                                    name="tour[bookingAdditional][timeslots][options][]"
-                                                                    type="text" class="field" />
+                                                                <div class="d-flex gap-2">
+                                                                    <input
+                                                                        name="tour[bookingAdditional][timeslots][options][from][]"
+                                                                        type="time" class="field"
+                                                                        placeholder="From" />
+
+                                                                    <input
+                                                                        name="tour[bookingAdditional][timeslots][options][to][]"
+                                                                        type="time" class="field"
+                                                                        placeholder="To" />
+                                                                </div>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex gap-2">
@@ -2851,9 +2884,19 @@
                                                     <tbody data-repeater-list>
                                                         <tr data-repeater-item>
                                                             <td>
-                                                                <input
-                                                                    name="tour[bookingAdditional][meeting_time][options][]"
-                                                                    type="text" class="field" />
+                                                                      <div class="d-flex gap-2">
+            <input
+                name="tour[bookingAdditional][meeting_time][options][from][]"
+                type="time"
+                class="field"
+                placeholder="From" />
+
+            <input
+                name="tour[bookingAdditional][meeting_time][options][to][]"
+                type="time"
+                class="field"
+                placeholder="To" />
+        </div>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex gap-2">
@@ -2901,9 +2944,19 @@
                                                     <tbody data-repeater-list>
                                                         <tr data-repeater-item>
                                                             <td>
-                                                                <input
-                                                                    name="tour[bookingAdditional][departure_time][options][]"
-                                                                    type="text" class="field" />
+                                                                      <div class="d-flex gap-2">
+            <input
+                name="tour[bookingAdditional][departure_time][options][from][]"
+                type="time"
+                class="field"
+                placeholder="From" />
+
+            <input
+                name="tour[bookingAdditional][departure_time][options][to][]"
+                type="time"
+                class="field"
+                placeholder="To" />
+        </div>
                                                             </td>
                                                             <td>
                                                                 <div class="d-flex gap-2">
@@ -4127,31 +4180,34 @@
             calendar.render();
         });
 
-         function meetingPointsRepeater() {
-    return {
-        cities: @js([['city_id' => '', 'points' => ['']]]),
+        function meetingPointsRepeater() {
+            return {
+                cities: @js([['city_id' => '', 'points' => ['']]]),
 
-        addCity() {
-            this.cities.push({ city_id: '', points: [''] });
-        },
-        removeCity(index) {
-            if (index === 0) return;
-            this.cities.splice(index, 1);
-        },
-        addPoint(cityIndex, afterIndex = null) {
-            const points = this.cities[cityIndex].points;
-            if (afterIndex === null || afterIndex === points.length - 1) {
-                points.push('');
-            } else {
-                points.splice(afterIndex + 1, 0, '');
+                addCity() {
+                    this.cities.push({
+                        city_id: '',
+                        points: ['']
+                    });
+                },
+                removeCity(index) {
+                    if (index === 0) return;
+                    this.cities.splice(index, 1);
+                },
+                addPoint(cityIndex, afterIndex = null) {
+                    const points = this.cities[cityIndex].points;
+                    if (afterIndex === null || afterIndex === points.length - 1) {
+                        points.push('');
+                    } else {
+                        points.splice(afterIndex + 1, 0, '');
+                    }
+                },
+                removePoint(cityIndex, pointIndex) {
+                    const points = this.cities[cityIndex].points;
+                    if (pointIndex === 0) return;
+                    points.splice(pointIndex, 1);
+                }
             }
-        },
-        removePoint(cityIndex, pointIndex) {
-            const points = this.cities[cityIndex].points;
-            if (pointIndex === 0) return;
-            points.splice(pointIndex, 1);
         }
-    }
-}
     </script>
 @endpush

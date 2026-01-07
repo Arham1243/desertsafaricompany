@@ -99,7 +99,7 @@
             const waterTourTimeSlots = ref(@json($waterTourTimeSlots));
             const toursBookingAdditional = ref(@json($toursBookingAdditional));
             const totalPrice = ref(cart.value.total_price);
-            
+
             // Initialize booking_additional_selections for each tour if not exists
             Object.keys(cart.value.tours || {}).forEach(tourId => {
                 const bookingAdditional = toursBookingAdditional.value[tourId];
@@ -750,6 +750,16 @@
                 return toursBookingAdditional.value[tourId] || null;
             };
 
+            const formatAMPM = (time) => {
+                if (!time) return '';
+                let [hours, minutes] = time.split(':');
+                hours = parseInt(hours);
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                hours = hours % 12;
+                hours = hours ? hours : 12; // 0 → 12
+                return `${hours}:${minutes} ${ampm}`;
+            }
+
             const handleBookingAdditionalChange = (tourId) => {
                 // Sync with backend when booking additional selection changes
                 syncCartWithBackend();
@@ -816,6 +826,7 @@
                 hasAnyPromoQuantity,
                 getTourPackages,
                 formatTimeLabel,
+                formatAMPM,
                 handleSelectedSlotChange,
                 ensureCartDataStructure,
                 recalculateCartTotals,

@@ -150,7 +150,7 @@ class TourController extends Controller
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
-            '   ' => $bookingAdditionalData ?? null,
+            'booking_additional' => $bookingAdditionalData ?? null,
             'badge_tag' => $badgeTag ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
             'content' => $general['content'] ?? null,

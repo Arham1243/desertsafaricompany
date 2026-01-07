@@ -3147,7 +3147,9 @@
                                                             <tbody data-repeater-list>
                                                                 @php
                                                                     $meetingPointOptions =
-                                                                        $bookingAdditional['activities']['multiple_selection']['meeting_point']['options'] ?? [];
+                                                                        $bookingAdditional['activities'][
+                                                                            'multiple_selection'
+                                                                        ]['meeting_point']['options'] ?? [];
                                                                     if (empty($meetingPointOptions)) {
                                                                         $meetingPointOptions = [null];
                                                                     }
@@ -3200,19 +3202,35 @@
                                                             </thead>
                                                             <tbody data-repeater-list>
                                                                 @php
-                                                                    $timeslotOptions =
-                                                                        $bookingAdditional['activities']['multiple_selection']['timeslot']['options'] ?? [];
-                                                                    if (empty($timeslotOptions)) {
-                                                                        $timeslotOptions = [null];
+
+                                                                    $actTieFromOptions =
+                                                                        $bookingAdditional['activities'][
+                                                                            'multiple_selection'
+                                                                        ]['timeslot']['options']['from'] ?? [];
+                                                                    $toActTimeOptions =
+                                                                        $bookingAdditional['activities'][
+                                                                            'multiple_selection'
+                                                                        ]['timeslot']['options']['to'] ?? [];
+
+                                                                    if (empty($actTieFromOptions)) {
+                                                                        $actTieFromOptions = [null];
+                                                                        $toActTimeOptions = [null];
                                                                     }
                                                                 @endphp
-                                                                @foreach ($timeslotOptions as $option)
+                                                                @foreach ($actTieFromOptions as $index => $from)
                                                                     <tr data-repeater-item>
                                                                         <td>
-                                                                            <input
-                                                                                name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][]"
-                                                                                type="text" class="field"
-                                                                                value="{{ $option }}" />
+                                                                            <div class="d-flex gap-2">
+                                                                                <input
+                                                                                    name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][from][]"
+                                                                                    type="time" class="field"
+                                                                                    value="{{ $from }}" />
+
+                                                                                <input
+                                                                                    name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][to][]"
+                                                                                    type="time" class="field"
+                                                                                    value="{{ $toActTimeOptions[$index] ?? null }}" />
+                                                                            </div>
                                                                         </td>
                                                                         <td>
                                                                             <div class="d-flex gap-2">
@@ -3255,7 +3273,9 @@
                                                             <tbody data-repeater-list>
                                                                 @php
                                                                     $pickupLocationOptions =
-                                                                        $bookingAdditional['activities']['multiple_selection']['pickup_location']['options'] ?? [];
+                                                                        $bookingAdditional['activities'][
+                                                                            'multiple_selection'
+                                                                        ]['pickup_location']['options'] ?? [];
                                                                     if (empty($pickupLocationOptions)) {
                                                                         $pickupLocationOptions = [null];
                                                                     }
@@ -3316,63 +3336,78 @@
                                         <div class="form-fields">
                                             <label class="title text-dark">City-based Meeting Points</label>
                                             <div x-data="meetingPointsRepeater()" class="repeater-table">
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th style="width: 30%;">City</th>
-                <th>Meeting Points</th>
-                <th style="width: 10%;" class="text-end">Remove</th>
-            </tr>
-        </thead>
-        <tbody>
-            <template x-for="(city, cityIndex) in cities" :key="cityIndex">
-                <tr>
-                    <!-- City Select -->
-                    <td>
-                        <select :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][city_id]`" x-model="city.city_id" class="field">
-                            <option value="">Select City</option>
-                            @foreach ($cities as $cityObj)
-                                <option value="{{ $cityObj->id }}">{{ $cityObj->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 30%;">City</th>
+                                                            <th>Meeting Points</th>
+                                                            <th style="width: 10%;" class="text-end">Remove</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <template x-for="(city, cityIndex) in cities"
+                                                            :key="cityIndex">
+                                                            <tr>
+                                                                <!-- City Select -->
+                                                                <td>
+                                                                    <select
+                                                                        :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][city_id]`"
+                                                                        x-model="city.city_id" class="field">
+                                                                        <option value="">Select City</option>
+                                                                        @foreach ($cities as $cityObj)
+                                                                            <option value="{{ $cityObj->id }}">
+                                                                                {{ $cityObj->name }}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </td>
 
-                    <!-- Nested meeting points -->
-                    <td>
-                        <template x-for="(point, pointIndex) in city.points" :key="pointIndex">
-                            <div class="d-flex gap-2 mb-2">
-                                <input
-                                    type="text"
-                                    :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][points][]`"
-                                    x-model="city.points[pointIndex]"
-                                    placeholder="Enter meeting point"
-                                    class="field"
-                                />
-                                <button type="button" @click="removePoint(cityIndex, pointIndex)" class="delete-btn align-self-center delete-btn--static" :disabled="pointIndex === 0">
-                                    <i class="bx bxs-trash-alt"></i>
-                                </button>
-                                <button type="button" @click="addPoint(cityIndex, pointIndex)" class="add-btn align-self-center add-btn--static">
-                                    <i class="bx bx-plus"></i>
-                                </button>
-                            </div>
-                        </template>
-                        <button type="button" @click="addPoint(cityIndex)" class="themeBtn ms-auto mt-2">Add Point <i class="bx bx-plus"></i></button>
-                    </td>
+                                                                <!-- Nested meeting points -->
+                                                                <td>
+                                                                    <template x-for="(point, pointIndex) in city.points"
+                                                                        :key="pointIndex">
+                                                                        <div class="d-flex gap-2 mb-2">
+                                                                            <input type="text"
+                                                                                :name="`tour[bookingAdditional][meeting_points][cities][${cityIndex}][points][]`"
+                                                                                x-model="city.points[pointIndex]"
+                                                                                placeholder="Enter meeting point"
+                                                                                class="field" />
+                                                                            <button type="button"
+                                                                                @click="removePoint(cityIndex, pointIndex)"
+                                                                                class="delete-btn align-self-center delete-btn--static"
+                                                                                :disabled="pointIndex === 0">
+                                                                                <i class="bx bxs-trash-alt"></i>
+                                                                            </button>
+                                                                            <button type="button"
+                                                                                @click="addPoint(cityIndex, pointIndex)"
+                                                                                class="add-btn align-self-center add-btn--static">
+                                                                                <i class="bx bx-plus"></i>
+                                                                            </button>
+                                                                        </div>
+                                                                    </template>
+                                                                    <button type="button" @click="addPoint(cityIndex)"
+                                                                        class="themeBtn ms-auto mt-2">Add Point <i
+                                                                            class="bx bx-plus"></i></button>
+                                                                </td>
 
-                    <!-- Delete city -->
-                    <td class="text-end">
-                        <button type="button" @click="removeCity(cityIndex)" class="delete-btn  delete-btn--static" :disabled="cityIndex === 0">
-                            <i class="bx bxs-trash-alt"></i>
-                        </button>
-                    </td>
-                </tr>
-            </template>
-        </tbody>
-    </table>
+                                                                <!-- Delete city -->
+                                                                <td class="text-end">
+                                                                    <button type="button"
+                                                                        @click="removeCity(cityIndex)"
+                                                                        class="delete-btn  delete-btn--static"
+                                                                        :disabled="cityIndex === 0">
+                                                                        <i class="bx bxs-trash-alt"></i>
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        </template>
+                                                    </tbody>
+                                                </table>
 
-    <!-- Add city -->
-    <button type="button" @click="addCity()" class="themeBtn ms-auto mt-2">Add City <i class="bx bx-plus"></i></button>
-</div>
+                                                <!-- Add city -->
+                                                <button type="button" @click="addCity()"
+                                                    class="themeBtn ms-auto mt-2">Add City <i
+                                                        class="bx bx-plus"></i></button>
+                                            </div>
                                         </div>
                                         <div class="form-fields mt-3">
                                             <label class="title text-dark">User remarks</label>
@@ -3397,18 +3432,28 @@
                                                     </thead>
                                                     <tbody data-repeater-list>
                                                         @php
-                                                            $timeslotsOptions = $timeslots['options'] ?? [];
-                                                            if (empty($timeslotsOptions)) {
-                                                                $timeslotsOptions = [null];
+                                                            $timeslotFromOptions = $timeslots['options']['from'] ?? [];
+                                                            $timeslotToOptions = $timeslots['options']['to'] ?? [];
+
+                                                            if (empty($timeslotFromOptions)) {
+                                                                $timeslotFromOptions = [null];
+                                                                $timeslotToOptions = [null];
                                                             }
                                                         @endphp
-                                                        @foreach ($timeslotsOptions as $option)
+                                                        @foreach ($timeslotFromOptions as $index => $from)
                                                             <tr data-repeater-item>
                                                                 <td>
-                                                                    <input
-                                                                        name="tour[bookingAdditional][timeslots][options][]"
-                                                                        type="text" class="field"
-                                                                        value="{{ $option }}" />
+                                                                    <div class="d-flex gap-2">
+                                                                        <input
+                                                                            name="tour[bookingAdditional][timeslots][options][from][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $from }}" />
+
+                                                                        <input
+                                                                            name="tour[bookingAdditional][timeslots][options][to][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $timeslotToOptions[$index] ?? null }}" />
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex gap-2">
@@ -3457,18 +3502,29 @@
                                                     </thead>
                                                     <tbody data-repeater-list>
                                                         @php
-                                                            $meetingTimeOptions = $meetingTimes['options'] ?? [];
-                                                            if (empty($meetingTimeOptions)) {
-                                                                $meetingTimeOptions = [null];
+                                                            $meetingFromOptions =
+                                                                $meetingTimes['options']['from'] ?? [];
+                                                            $meetingToOptions = $meetingTimes['options']['to'] ?? [];
+
+                                                            if (empty($meetingFromOptions)) {
+                                                                $meetingFromOptions = [null];
+                                                                $meetingToOptions = [null];
                                                             }
                                                         @endphp
-                                                        @foreach ($meetingTimeOptions as $option)
+                                                        @foreach ($meetingFromOptions as $index => $from)
                                                             <tr data-repeater-item>
                                                                 <td>
-                                                                    <input
-                                                                        name="tour[bookingAdditional][meeting_time][options][]"
-                                                                        type="text" class="field"
-                                                                        value="{{ $option }}" />
+                                                                    <div class="d-flex gap-2">
+                                                                        <input
+                                                                            name="tour[bookingAdditional][meeting_time][options][from][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $from }}" />
+
+                                                                        <input
+                                                                            name="tour[bookingAdditional][meeting_time][options][to][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $meetingToOptions[$index] ?? null }}" />
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex gap-2">
@@ -3517,18 +3573,31 @@
                                                     </thead>
                                                     <tbody data-repeater-list>
                                                         @php
-                                                            $departureTimesOptions = $departureTimes['options'] ?? [];
-                                                            if (empty($departureTimesOptions)) {
-                                                                $departureTimesOptions = [null];
+                                                            $departureFromOptions =
+                                                                $departureTimes['options']['from'] ?? [];
+                                                            $departureToOptions =
+                                                                $departureTimes['options']['to'] ?? [];
+
+                                                            if (empty($departureFromOptions)) {
+                                                                $departureFromOptions = [null];
+                                                                $departureToOptions = [null];
                                                             }
                                                         @endphp
-                                                        @foreach ($departureTimesOptions as $option)
+
+                                                        @foreach ($departureFromOptions as $index => $from)
                                                             <tr data-repeater-item>
                                                                 <td>
-                                                                    <input
-                                                                        name="tour[bookingAdditional][departure_time][options][]"
-                                                                        type="text" class="field"
-                                                                        value="{{ $option }}" />
+                                                                    <div class="d-flex gap-2">
+                                                                        <input
+                                                                            name="tour[bookingAdditional][departure_time][options][from][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $from }}" />
+
+                                                                        <input
+                                                                            name="tour[bookingAdditional][departure_time][options][to][]"
+                                                                            type="time" class="field"
+                                                                            value="{{ $departureToOptions[$index] ?? null }}" />
+                                                                    </div>
                                                                 </td>
                                                                 <td>
                                                                     <div class="d-flex gap-2">
@@ -3577,7 +3646,8 @@
                                                     </thead>
                                                     <tbody data-repeater-list>
                                                         @php
-                                                            $departureHotelNamesOptions = $departureHotelNames['options'] ?? [];
+                                                            $departureHotelNamesOptions =
+                                                                $departureHotelNames['options'] ?? [];
                                                             if (empty($departureHotelNamesOptions)) {
                                                                 $departureHotelNamesOptions = [null];
                                                             }
@@ -4912,30 +4982,33 @@
         });
 
         function meetingPointsRepeater() {
-    return {
-        cities: @js($meetingPoints['cities'] ?? [['city_id' => '', 'points' => ['']]]),
+            return {
+                cities: @js($meetingPoints['cities'] ?? [['city_id' => '', 'points' => ['']]]),
 
-        addCity() {
-            this.cities.push({ city_id: '', points: [''] });
-        },
-        removeCity(index) {
-            if (index === 0) return;
-            this.cities.splice(index, 1);
-        },
-        addPoint(cityIndex, afterIndex = null) {
-            const points = this.cities[cityIndex].points;
-            if (afterIndex === null || afterIndex === points.length - 1) {
-                points.push('');
-            } else {
-                points.splice(afterIndex + 1, 0, '');
+                addCity() {
+                    this.cities.push({
+                        city_id: '',
+                        points: ['']
+                    });
+                },
+                removeCity(index) {
+                    if (index === 0) return;
+                    this.cities.splice(index, 1);
+                },
+                addPoint(cityIndex, afterIndex = null) {
+                    const points = this.cities[cityIndex].points;
+                    if (afterIndex === null || afterIndex === points.length - 1) {
+                        points.push('');
+                    } else {
+                        points.splice(afterIndex + 1, 0, '');
+                    }
+                },
+                removePoint(cityIndex, pointIndex) {
+                    const points = this.cities[cityIndex].points;
+                    if (pointIndex === 0) return;
+                    points.splice(pointIndex, 1);
+                }
             }
-        },
-        removePoint(cityIndex, pointIndex) {
-            const points = this.cities[cityIndex].points;
-            if (pointIndex === 0) return;
-            points.splice(pointIndex, 1);
         }
-    }
-}
     </script>
 @endpush
