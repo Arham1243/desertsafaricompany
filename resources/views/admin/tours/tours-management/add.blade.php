@@ -2662,56 +2662,28 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-12 mt-4"
-                                                x-show="activitiesMulitpleSelection.includes('timeslot')">
-                                                <div class="form-fields">
+                                            <div class="col-12 mt-4" x-show="activitiesMulitpleSelection.includes('timeslot')">
+                                                <div class="form-fields mb-4">
                                                     <label class="title text-dark">Timeslot</label>
-                                                    <div class="repeater-table" data-repeater>
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Option</th>
-                                                                    <th class="text-end" scope="col">Remove</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody data-repeater-list>
-                                                                <tr data-repeater-item>
-                                                                    <td>
-
-                                                                        <div class="d-flex gap-2">
-                                                                            <input
-                                                                                name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][from][]"
-                                                                                type="time" class="field"
-                                                                                placeholder="From" />
-
-                                                                            <input
-                                                                                name="tour[bookingAdditional][activities][multiple_selection][timeslot][options][to][]"
-                                                                                type="time" class="field"
-                                                                                placeholder="To" />
-                                                                        </div>
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="d-flex gap-2">
-                                                                            <button type="button"
-                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                data-repeater-remove disabled>
-                                                                                <i class="bx bxs-trash-alt"></i>
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                class="add-btn ms-auto add-btn--static"
-                                                                                data-repeater-insert>
-                                                                                <i class="bx bx-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <button type="button" class="themeBtn ms-auto"
-                                                            data-repeater-create>
-                                                            Add <i class="bx bx-plus"></i>
-                                                        </button>
-                                                    </div>
+                                                       <div class="row">
+                                                        <div class="col-md-6">
+                                                                <label class="title text-dark">From</label>
+            <input
+                name="tour[bookingAdditional][activities][multiple_selection][timeslot][from]"
+                type="time"
+                class="field"
+                placeholder="From" />
+</div>
+   <div class="col-md-6">
+    <label class="title text-dark">To</label>
+            <input
+                name="tour[bookingAdditional][activities][multiple_selection][timeslot][to]"
+                type="time"
+                class="field"
+                placeholder="To" />
+        </div>
+        </div>
+    
                                                 </div>
                                             </div>
                                             <div class="col-12 mt-4"
@@ -2856,178 +2828,112 @@
                                 </div>
 
                                 <!-- Timeslot -->
-                                <div class="row mt-4" x-show="additionalType === 'timeslot'">
-                                    <div class="col-12 mb-4">
-                                        <div class="form-fields">
-                                            <div class="repeater-table" data-repeater>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Option</th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-repeater-list>
-                                                        <tr data-repeater-item>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <input
-                                                                        name="tour[bookingAdditional][timeslots][options][from][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="From" />
+                            <div class="row mt-4" x-show="additionalType === 'timeslot'">
+    <div class="col-12 mb-4">
+        <div class="form-fields mb-3">
+            <label class="title text-dark">Timeslot</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="title text-dark">From</label>
+                    <input
+                        name="tour[bookingAdditional][timeslots][options][from]"
+                        type="time"
+                        class="field"
+                        placeholder="From" />
+                </div>
+                <div class="col-md-6">
+                    <label class="title text-dark">To</label>
+                    <input
+                        name="tour[bookingAdditional][timeslots][options][to]"
+                        type="time"
+                        class="field"
+                        placeholder="To" />
+                </div>
+            </div>
+        </div>
 
-                                                                    <input
-                                                                        name="tour[bookingAdditional][timeslots][options][to][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="To" />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="add-btn ms-auto add-btn--static"
-                                                                        data-repeater-insert>
-                                                                        <i class="bx bx-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
-                                                    Add <i class="bx bx-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-fields mt-2">
-                                            <label class="title text-dark">User remarks</label>
-                                            <input type="text"
-                                                name="tour[bookingAdditional][timeslots][user_remarks]"
-                                                class="field" />
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="form-fields">
+            <label class="title text-dark">User remarks</label>
+            <input
+                type="text"
+                name="tour[bookingAdditional][timeslots][user_remarks]"
+                class="field" />
+        </div>
+    </div>
+</div>
+
 
                                 <!-- Meeting Time -->
-                                <div class="row mt-4" x-show="additionalType === 'meeting_time'">
-                                    <div class="col-12 mb-4">
-                                        <div class="form-fields">
-                                            <div class="repeater-table" data-repeater>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Option</th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-repeater-list>
-                                                        <tr data-repeater-item>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <input
-                                                                        name="tour[bookingAdditional][meeting_time][options][from][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="From" />
+                               <div class="row mt-4" x-show="additionalType === 'meeting_time'">
+    <div class="col-12 mb-4">
+        <div class="form-fields mb-3">
+            <label class="title text-dark">Meeting Time</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="title text-dark">From</label>
+                    <input
+                        name="tour[bookingAdditional][meeting_time][options][from]"
+                        type="time"
+                        class="field"
+                        placeholder="From" />
+                </div>
+                <div class="col-md-6">
+                    <label class="title text-dark">To</label>
+                    <input
+                        name="tour[bookingAdditional][meeting_time][options][to]"
+                        type="time"
+                        class="field"
+                        placeholder="To" />
+                </div>
+            </div>
+        </div>
 
-                                                                    <input
-                                                                        name="tour[bookingAdditional][meeting_time][options][to][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="To" />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="add-btn ms-auto add-btn--static"
-                                                                        data-repeater-insert>
-                                                                        <i class="bx bx-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
-                                                    Add <i class="bx bx-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-fields mt-2">
-                                            <label class="title text-dark">User remarks</label>
-                                            <input type="text"
-                                                name="tour[bookingAdditional][meeting_time][user_remarks]"
-                                                class="field" />
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="form-fields">
+            <label class="title text-dark">User remarks</label>
+            <input
+                type="text"
+                name="tour[bookingAdditional][meeting_time][user_remarks]"
+                class="field" />
+        </div>
+    </div>
+</div>
+
 
                                 <!-- Departure Time -->
-                                <div class="row mt-4" x-show="additionalType === 'departure_time'">
-                                    <div class="col-12 mb-4">
-                                        <div class="form-fields">
-                                            <div class="repeater-table" data-repeater>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Option</th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-repeater-list>
-                                                        <tr data-repeater-item>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <input
-                                                                        name="tour[bookingAdditional][departure_time][options][from][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="From" />
+                               <div class="row mt-4" x-show="additionalType === 'departure_time'">
+    <div class="col-12 mb-4">
+        <div class="form-fields mb-3">
+            <label class="title text-dark">Departure Time</label>
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="title text-dark">From</label>
+                    <input
+                        name="tour[bookingAdditional][departure_time][options][from]"
+                        type="time"
+                        class="field"
+                        placeholder="From" />
+                </div>
+                <div class="col-md-6">
+                    <label class="title text-dark">To</label>
+                    <input
+                        name="tour[bookingAdditional][departure_time][options][to]"
+                        type="time"
+                        class="field"
+                        placeholder="To" />
+                </div>
+            </div>
+        </div>
 
-                                                                    <input
-                                                                        name="tour[bookingAdditional][departure_time][options][to][]"
-                                                                        type="time" class="field"
-                                                                        placeholder="To" />
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="add-btn ms-auto add-btn--static"
-                                                                        data-repeater-insert>
-                                                                        <i class="bx bx-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
-                                                    Add <i class="bx bx-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="form-fields mt-2">
-                                            <label class="title text-dark">User remarks</label>
-                                            <input type="text"
-                                                name="tour[bookingAdditional][departure_time][user_remarks]"
-                                                class="field" />
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="form-fields">
+            <label class="title text-dark">User remarks</label>
+            <input
+                type="text"
+                name="tour[bookingAdditional][departure_time][user_remarks]"
+                class="field" />
+        </div>
+    </div>
+</div>
+
 
                                 <!-- Departure Hotel Name -->
                                 <div class="row mt-4" x-show="additionalType === 'departure_hotel_name'">

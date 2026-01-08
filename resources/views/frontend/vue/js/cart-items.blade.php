@@ -750,6 +750,52 @@
                 return toursBookingAdditional.value[tourId] || null;
             };
 
+            const formatTime = (time) => {
+                if (!time) return null;
+
+                const [hourStr, minute] = time.split(':');
+                let hour = parseInt(hourStr, 10);
+                const ampm = hour >= 12 ? 'PM' : 'AM';
+
+                hour = hour % 12;
+                if (hour === 0) hour = 12;
+
+                return `${hour}:${minute} ${ampm}`;
+            };
+            const errors = ref({})
+            const onTimeInput = (selection, tourId, from, to) => {
+                if (!selection || !from || !to) {
+                    errors.value[tourId] = null
+                    return
+                }
+
+                // Convert "HH:mm" to minutes since midnight
+                const toMinutes = (t) => {
+                    const [h, m] = t.split(':').map(Number)
+                    return h * 60 + m
+                }
+
+                let selMinutes = toMinutes(selection)
+                let fromMinutes = toMinutes(from)
+                let toMinutesVal = toMinutes(to)
+
+                // If the range spans past midnight, adjust toMinutes
+                if (fromMinutes > toMinutesVal) {
+                    // Treat times after midnight as +1440 minutes
+                    if (selMinutes < fromMinutes) {
+                        selMinutes += 24 * 60
+                    }
+                    toMinutesVal += 24 * 60
+                }
+
+                if (selMinutes < fromMinutes || selMinutes > toMinutesVal) {
+                    errors.value[tourId] =
+                        `Please select a time between ${formatTime(from)} and ${formatTime(to)}.`
+                } else {
+                    errors.value[tourId] = null
+                }
+            }
+
             const formatAMPM = (time) => {
                 if (!time) return '';
                 let [hours, minutes] = time.split(':');
@@ -774,6 +820,10 @@
                 const bookingSelections = cart.value.tours[tourId]?.booking_additional_selections || {};
                 const additionalType = bookingAdditional.additional_type;
 
+                if (errors.value[tourId]) {
+                    return false
+                }
+
                 if (additionalType === 'activities') {
                     const selectionType = bookingAdditional.activities?.selection_type;
                     if (selectionType === 'multiple_selection') {
@@ -787,14 +837,12 @@
                         }
                     }
                     return true;
-                } 
-                else if (additionalType === 'pickup_location') {
-        const selection = bookingSelections.selection || {};
-        // Both location_type and address must be filled
-        return selection.location_type && selection.location_type !== ''
-            && selection.address && selection.address.trim() !== '';
-    }
-                else {
+                } else if (additionalType === 'pickup_location') {
+                    const selection = bookingSelections.selection || {};
+                    // Both location_type and address must be filled
+                    return selection.location_type && selection.location_type !== '' &&
+                        selection.address && selection.address.trim() !== '';
+                } else {
                     // For non-activities types, check if selection exists and is not empty
                     return bookingSelections.selection && bookingSelections.selection !== '';
                 }
@@ -830,6 +878,9 @@
                 handleTimeSlotChange,
                 cartUpdateForm,
                 submitButton,
+                formatTime,
+                errors,
+                onTimeInput,
                 hasAnyPromoQuantity,
                 getTourPackages,
                 formatTimeLabel,

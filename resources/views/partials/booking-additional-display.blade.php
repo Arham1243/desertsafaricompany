@@ -21,7 +21,12 @@
         }
 
         // Simple string
+
         if (is_string($value)) {
+            // Matches HH:mm or H:mm
+            if (preg_match('/^([01]?\d|2[0-3]):([0-5]\d)$/', $value)) {
+                return formatAMPM($value);
+            }
             return $value;
         }
 
@@ -41,6 +46,9 @@
             return $selection['location_type'] . ' - ' . $selection['address'];
         } elseif (is_string($selection)) {
             // Simple string
+            if (preg_match('/^([01]?\d|2[0-3]):([0-5]\d)$/', $selection)) {
+                return formatAMPM($selection);
+            }
             return $selection;
         }
         return 'N/A';
