@@ -25,6 +25,7 @@ class ProfileSettingsController extends Controller
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'age' => 'nullable|integer|min:1|max:120',
             'country' => 'nullable|string',
             'city' => 'nullable|string|max:255',
         ]);

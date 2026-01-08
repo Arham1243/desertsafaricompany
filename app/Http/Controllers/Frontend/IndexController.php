@@ -6,9 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Newsletter;
 use App\Models\Page;
 use App\Models\Setting;
+use App\Models\User;
 use App\Models\TourReview;
 use App\Traits\Sluggable;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class IndexController extends Controller
 {
@@ -48,7 +50,6 @@ class IndexController extends Controller
         }
 
         return view('frontend.page-builder.page', compact('page', 'sections', 'reviewDetails'));
-
     }
 
     public function save_newsletter(Request $request)
@@ -74,5 +75,19 @@ class IndexController extends Controller
         $review = TourReview::create($validated);
 
         return back()->with('notify_success', 'Review Pending For Admin Approval!');
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $validatedData = $request->validate([
+            'phone' => 'nullable|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'age' => 'nullable|integer|min:1|max:120',
+            'country' => 'nullable|string',
+            'city' => 'nullable|string|max:255',
+        ]);
+
+        User::where('id', Auth::user()->id)->update($validatedData);
+
+        return back()->with('notify_success', 'Profile updated successfully');
     }
 }

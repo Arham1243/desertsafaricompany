@@ -248,7 +248,17 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-4">
+                                               <div class="col-md-4 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Age</label>
+                                                <input type="text" name="age" class="field"
+                                                    value="{{ old('age', $user->age) }}">
+                                                @error('age')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">Country</label>
                                                 <select class="field select2-select" name="country" id="country-select">
@@ -265,7 +275,7 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-6 mb-4">
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
                                                 <label class="title">City</label>
                                                 <input type="text" name="city" class="field"

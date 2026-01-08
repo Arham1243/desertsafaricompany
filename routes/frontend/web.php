@@ -27,6 +27,7 @@ Route::name('frontend.')->group(function () {
         Route::get('/', [InquiryController::class, 'index'])->name('index');
         Route::post('/', [InquiryController::class, 'store'])->name('store');
     });
+    Route::post('/update-profile', [IndexController::class, 'updateProfile'])->name('update-profile');
 });
 
 Route::post('/save-newsletter', [IndexController::class, 'save_newsletter'])->name('save-newsletter');

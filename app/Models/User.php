@@ -33,4 +33,9 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Coupon::class)->withTimestamps();
     }
+
+    public function hasCompletedProfile()
+    {
+        return $this->phone && $this->age && $this->country && $this->city;
+    }
 }

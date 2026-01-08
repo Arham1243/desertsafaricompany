@@ -1,10 +1,12 @@
 @if ((int) $settings->get('is_enabled_cookie_bar') === 1)
-    <div class="cookie-consent hidden" id="cookie-consent" @if ($settings->get('cookie_bar_bg_color')) style="background-color: {{ $settings->get('cookie_bar_bg_color') }};" @endif>
+    <div class="cookie-consent hidden" id="cookie-consent"
+        @if ($settings->get('cookie_bar_bg_color')) style="background-color: {{ $settings->get('cookie_bar_bg_color') }};" @endif>
         <div class="container">
             <div class="cookie-consent__container">
                 <p class="cookie-consent__text"
                     @if ($settings->get('cookie_bar_text_color')) style="color: {{ $settings->get('cookie_bar_text_color') }};" @endif>
-                    {!! $settings->get('cookie_bar_text') ?? 'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' !!}
+                    {!! $settings->get('cookie_bar_text') ??
+                        'We use cookies to improve your experience. You can choose to accept all or reject non-essential cookies.' !!}
                 </p>
                 <div class="cookie-consent__buttons">
                     <button type="button" class="cookie-consent__button cookie-consent__button--accept"
@@ -12,7 +14,7 @@
                         @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                                               @endif>
+                                                              @endif>
                         {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                     </button>
                     <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -20,7 +22,7 @@
                         @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                                               @endif>
+                                                              @endif>
                         {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                     </button>
                 </div>
@@ -188,3 +190,279 @@
         @endif
     @endif
 </div>
+
+@if (Auth::check())
+    @if (!Auth::user()->hasCompletedProfile())
+        @php
+            $countries = [
+                'afghanistan',
+                'albania',
+                'algeria',
+                'american samoa',
+                'andorra',
+                'angola',
+                'anguilla',
+                'antigua and barbuda',
+                'argentina',
+                'armenia',
+                'aruba',
+                'australia',
+                'austria',
+                'azerbaijan',
+                'bahamas',
+                'bahrain',
+                'bangladesh',
+                'barbados',
+                'belarus',
+                'belgium',
+                'belize',
+                'benin',
+                'bermuda',
+                'bhutan',
+                'bolivia',
+                'bosnia and herzegovina',
+                'botswana',
+                'brazil',
+                'british indian ocean territory',
+                'brunei',
+                'bulgaria',
+                'burkina faso',
+                'burundi',
+                'cambodia',
+                'cameroon',
+                'canada',
+                'cape verde',
+                'cayman islands',
+                'central african republic',
+                'chad',
+                'chile',
+                'china',
+                'colombia',
+                'comoros',
+                'congo',
+                'costa rica',
+                'croatia',
+                'cuba',
+                'cyprus',
+                'czech republic',
+                'denmark',
+                'djibouti',
+                'dominica',
+                'dominican republic',
+                'ecuador',
+                'egypt',
+                'el salvador',
+                'equatorial guinea',
+                'eritrea',
+                'estonia',
+                'eswatini',
+                'ethiopia',
+                'fiji',
+                'finland',
+                'france',
+                'gabon',
+                'gambia',
+                'georgia',
+                'germany',
+                'ghana',
+                'greece',
+                'grenada',
+                'guatemala',
+                'guinea',
+                'guinea bissau',
+                'guyana',
+                'haiti',
+                'honduras',
+                'hungary',
+                'iceland',
+                'india',
+                'indonesia',
+                'iran',
+                'iraq',
+                'ireland',
+                'israel',
+                'italy',
+                'jamaica',
+                'japan',
+                'jordan',
+                'kazakhstan',
+                'kenya',
+                'kiribati',
+                'kuwait',
+                'kyrgyzstan',
+                'laos',
+                'latvia',
+                'lebanon',
+                'lesotho',
+                'liberia',
+                'libya',
+                'liechtenstein',
+                'lithuania',
+                'luxembourg',
+                'madagascar',
+                'malawi',
+                'malaysia',
+                'maldives',
+                'mali',
+                'malta',
+                'marshall islands',
+                'mauritania',
+                'mauritius',
+                'mexico',
+                'micronesia',
+                'moldova',
+                'monaco',
+                'mongolia',
+                'montenegro',
+                'morocco',
+                'mozambique',
+                'myanmar',
+                'namibia',
+                'nauru',
+                'nepal',
+                'netherlands',
+                'new zealand',
+                'nicaragua',
+                'niger',
+                'nigeria',
+                'north macedonia',
+                'norway',
+                'oman',
+                'pakistan',
+                'palau',
+                'palestine',
+                'panama',
+                'papua new guinea',
+                'paraguay',
+                'peru',
+                'philippines',
+                'poland',
+                'portugal',
+                'qatar',
+                'romania',
+                'russia',
+                'rwanda',
+                'saudi arabia',
+                'senegal',
+                'serbia',
+                'seychelles',
+                'sierra leone',
+                'singapore',
+                'slovakia',
+                'slovenia',
+                'solomon islands',
+                'somalia',
+                'south africa',
+                'spain',
+                'sri lanka',
+                'sudan',
+                'suriname',
+                'sweden',
+                'switzerland',
+                'syria',
+                'taiwan',
+                'tajikistan',
+                'tanzania',
+                'thailand',
+                'timor leste',
+                'togo',
+                'tonga',
+                'trinidad and tobago',
+                'tunisia',
+                'turkey',
+                'turkmenistan',
+                'tuvalu',
+                'uganda',
+                'ukraine',
+                'united arab emirates',
+                'united kingdom',
+                'united states',
+                'uruguay',
+                'uzbekistan',
+                'vanuatu',
+                'venezuela',
+                'vietnam',
+                'yemen',
+                'zambia',
+                'zimbabwe',
+            ];
+            sort($countries);
+        @endphp
+
+        <div class="global-popup-wrapper detail-popup open" id="user-details-popup">
+            <div class="global-popup">
+                <div class="global-popup__header">
+                    <div class="title">Pleae complete your profile</div>
+                    <div class="close-icon popup-close-icon" id="close-popup" detail-popup-close>
+                        <i class="bx bx-x"></i>
+                    </div>
+                </div>
+
+                <div class="global-popup__content">
+                    <form action="{{ route('frontend.update-profile') }}" method="POST">
+                        @csrf
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                                <div class="field">
+                                    <label class="title">Phone number</label>
+                                    <input id="phone_number" type="text" name="phone" class="field"
+                                        inputmode="numeric" pattern="[0-9]*"
+                                        value="{{ old('phone', Auth::user()->phone) }}"
+                                        oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="15">
+                                    @error('phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="field">
+                                    <label class="title">Age</label>
+                                    <input id="age" type="text" name="age" class="field"
+                                        value="{{ old('age', Auth::user()->age) }}">
+                                    @error('age')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="field">
+                                    <label class="title">Country</label>
+                                    <select id="country" name="country" required>
+                                        <option value="" selected disabled>Select</option>
+                                        @foreach ($countries as $country)
+                                            <option value="{{ $country }}"
+                                                {{ strtolower(Auth::user()->country) == strtolower($country) ? 'selected' : '' }}>
+                                                {{ ucwords($country) }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                    @error('country')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="field">
+                                    <label class="title">City</label>
+                                    <input value="{{ old('city', Auth::user()->city) }}" id="city"
+                                        type="text" required name="city">
+                                    @error('city')
+                                        <span class="text-danger">{{ $message }}</span>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="field">
+                                    <button class="ms-auto primary-btn">Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+@endif
