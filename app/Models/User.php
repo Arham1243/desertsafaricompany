@@ -2,14 +2,20 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+    use SoftDeletes;
     protected $fillable = [
         'social_id',
         'full_name',
         'email',
+        'phone',
+        'age',
+        'country',
+        'city',
         'social_token',
         'avatar',
         'signup_method',

@@ -418,7 +418,7 @@
                             <div class="col-md-6">
                                 <div class="field">
                                     <label class="title">Age</label>
-                                    <input id="age" type="text" name="age" class="field"
+                                    <input id="age" type="number" name="age" class="field"
                                         value="{{ old('age', Auth::user()->age) }}">
                                     @error('age')
                                         <span class="text-danger">{{ $message }}</span>

@@ -15,6 +15,7 @@ use App\Models\NewsTag;
 use App\Models\Page;
 use App\Models\Popup;
 use App\Models\Section;
+use App\Models\User;
 use App\Models\Testimonial;
 use App\Models\Tour;
 use App\Models\TourAttribute;
@@ -84,6 +85,11 @@ class BulkActionController extends Controller
                 $modelClass = Tour::class;
                 $column = 'id';
                 $redirectRoute = 'admin.tours.index';
+                break;
+            case 'users':
+                $modelClass = User::class;
+                $column = 'id';
+                $redirectRoute = 'admin.users.index';
                 break;
             case 'tour-categories':
                 $modelClass = TourCategory::class;

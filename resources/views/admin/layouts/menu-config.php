@@ -292,6 +292,22 @@ return [
         'route' => route('admin.inquiries.index'),
     ],
     [
+        'title' => 'Users',
+        'icon' => 'bx bxs-group',
+        'submenu' => [
+            [
+                'title' => 'All Users',
+                'icon' => 'bx bxs-group',
+                'route' => route('admin.users.index'),
+            ],
+            [
+                'title' => 'Recovery',
+                'icon' => 'bx bx-refresh',
+                'route' => route('admin.recovery.index', ['resource' => 'users']),
+            ],
+        ]
+    ],
+    [
         'title' => 'Orders',
         'icon' => 'bx bx-dollar',
         'route' => route('admin.bookings.index'),

@@ -79,7 +79,7 @@ class AuthController extends Controller
             if ($user->signup_method !== 'email') {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Please log in using '.ucfirst($user->signup_method).'.',
+                    'message' => 'Please log in using ' . ucfirst($user->signup_method) . '.',
                 ], 403);
             }
 
@@ -87,6 +87,13 @@ class AuthController extends Controller
                 return response()->json([
                     'status' => 'error',
                     'message' => 'Please verify your email address before logging in.',
+                ], 403);
+            }
+
+            if ($user->status !== 'active') {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Your account is suspended. Please contact the administrator.',
                 ], 403);
             }
 
@@ -120,7 +127,7 @@ class AuthController extends Controller
                 'logo' => asset($headerLogo),
             ];
 
-            $finalSubject = 'Please Verify Your Email Address - '.env('MAIL_FROM_NAME');
+            $finalSubject = 'Please Verify Your Email Address - ' . env('MAIL_FROM_NAME');
             Mail::send('emails.verify-email', ['data' => $data], function ($message) use ($user, $finalSubject) {
                 $message->from(env('MAIL_FROM_ADDRESS'));
                 $message
@@ -130,7 +137,7 @@ class AuthController extends Controller
 
             return true;
         } catch (\Throwable $e) {
-            \Log::error('Verification email failed for user '.$user->id.': '.$e->getMessage());
+            \Log::error('Verification email failed for user ' . $user->id . ': ' . $e->getMessage());
 
             return false;
         }
@@ -166,7 +173,7 @@ class AuthController extends Controller
             if ($user->signup_method != 'email') {
                 return response()->json([
                     'status' => 'error',
-                    'message' => 'Please log in using '.ucfirst($user->signup_method).'.',
+                    'message' => 'Please log in using ' . ucfirst($user->signup_method) . '.',
                 ], 401);
             }
 

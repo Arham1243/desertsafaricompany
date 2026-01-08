@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\BulkActionController;
+use App\Http\Controllers\Admin\BulkActionController;
 use App\Http\Controllers\User\OrderController;
 use App\Http\Controllers\User\ProfileSettingsController;
 use App\Http\Controllers\User\RecoveryController;

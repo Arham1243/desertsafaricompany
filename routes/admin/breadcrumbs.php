@@ -293,6 +293,19 @@ Breadcrumbs::for('admin.inquiries.edit', function (BreadcrumbTrail $trail, $item
     $trail->push('Inquiry Details', route('admin.inquiries.edit', $item->id));
 });
 
+Breadcrumbs::for('admin.users.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Users', route('admin.users.index'));
+});
+Breadcrumbs::for('admin.users.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.users.index');
+    $trail->push('Add User', route('admin.users.create'));
+});
+Breadcrumbs::for('admin.users.edit', function (BreadcrumbTrail $trail, $item) {
+    $trail->parent('admin.users.index');
+    $trail->push('User Details', route('admin.users.edit', $item->id));
+});
+
 // ---------------Schema---------------
 Breadcrumbs::for('admin.schema.index', function (BreadcrumbTrail $trail, $entity, $id, $record) {
     // Handle listing pages (saved in settings)

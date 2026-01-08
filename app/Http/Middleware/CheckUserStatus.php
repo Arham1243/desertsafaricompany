@@ -17,7 +17,7 @@ class CheckUserStatus
             if ($user->status === 'inactive') {
                 Auth::logout();
 
-                return redirect()->route('auth.login')
+                return redirect()->route('frontend.index')
                     ->withErrors(['email' => 'Your account is suspended. Please contact the admin.'])
                     ->with('notify_error', 'Your account is suspended. Please contact the admin.');
             }

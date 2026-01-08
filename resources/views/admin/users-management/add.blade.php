@@ -1,4 +1,4 @@
-@extends('user.layouts.main')
+@extends('admin.layouts.main')
 @section('content')
     @php
         $countries = [
@@ -197,129 +197,132 @@
     @endphp
     <div class="col-md-12">
         <div class="dashboard-content">
-            {{ Breadcrumbs::render('user.profile.index') }}
-            <form action="{{ route('user.profile.update', $user->id) }}" method="POST" enctype="multipart/form-data"
-                id="validation-form">
-                @csrf
-                @method('PATCH')
-                <div class="custom-sec custom-sec--form">
-                    <div class="custom-sec__header">
-                        <div class="section-content">
-                            <h3 class="heading">Edit: Personal Information</h3>
-                        </div>
+            {{ Breadcrumbs::render('admin.users.create') }}
+            <div class="custom-sec custom-sec--form">
+                <div class="custom-sec__header">
+                    <div class="section-content">
+                        <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                     </div>
                 </div>
+            </div>
+            <form action="{{ route('admin.users.store') }}" method="POST" enctype="multipart/form-data" id="validation-form">
+                @csrf
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-9">
                         <div class="form-wrapper">
                             <div class="form-box">
                                 <div class="form-box__header">
-                                    <div class="title">Information</div>
+                                    <div class="title">City Content</div>
                                 </div>
                                 <div class="form-box__body">
                                     <div class="row">
-                                        <div class="col-md-4 mb-4">
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Name</label>
+                                                <label class="title">Full Name <span class="text-danger">*</span> :</label>
                                                 <input type="text" name="full_name" class="field"
-                                                    value="{{ old('full_name', $user->full_name) }}">
+                                                    value="{{ old('full_name') }}" data-error="Name" data-required>
                                                 @error('full_name')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-4">
+
+
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Email</label>
-                                                <input type="email" readonly class="field"
-                                                    value="{{ old('email', $user->email) }}">
+                                                <label class="title">Email:</label>
+                                                <input name="email" type="text" class="field"
+                                                    value="{{ old('email') }}">
                                                 @error('email')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-4">
+
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Phone</label>
-                                                <input type="text" name="phone" class="field"
-                                                    value="{{ old('phone', $user->phone) }}">
+                                                <label class="title">Phone:</label>
+                                                <input name="phone" type="text" class="field"
+                                                    value="{{ old('phone') }}">
                                                 @error('phone')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                               <div class="col-md-4 mb-4">
+
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Age</label>
-                                                <input type="number" name="age" class="field"
-                                                    value="{{ old('age', $user->age) }}">
+                                                <label class="title">Age:</label>
+                                                <input name="age" type="number" class="field"
+                                                    value="{{ old('age') }}">
                                                 @error('age')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-4">
+
+                                        <div class="col-md-6 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Country</label>
-                                                <select class="field select2-select" name="country" id="country-select">
-                                                    <option value="" selected disabled>Select</option>
+                                                <label class="title">Country <span class="text-danger">*</span> :</label>
+                                                <select name="country" class="select2-select" data-error="Country"
+                                                    data-required>
+                                                    <option value="" selected>Select Country</option>
                                                     @foreach ($countries as $country)
                                                         <option value="{{ $country }}"
-                                                            {{ strtolower($user->country) == strtolower($country) ? 'selected' : '' }}>
+                                                            {{ old('country') == strtolower($country) ? 'selected' : '' }}>
                                                             {{ ucwords($country) }}
                                                         </option>
                                                     @endforeach
                                                 </select>
                                                 @error('country')
-                                                    <span class="text-danger">{{ $message }}</span>
+                                                    <div class="text-danger">{{ $message }}</div>
                                                 @enderror
                                             </div>
                                         </div>
-                                        <div class="col-md-4 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">City</label>
-                                                <input type="text" name="city" class="field"
-                                                    value="{{ old('city', $user->city) }}">
-                                                @error('city')
-                                                    <span class="text-danger">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Profile Photo</label>
-                                                <div class="position-relative d-inline-block mt-2">
-                                                    <img id="avatarPreview"
-                                                        src="{{ $user->avatar ? $user->avatar : asset('user/assets/images/placeholder-user.png') }}"
-                                                        class="rounded-circle border border-secondary"
-                                                        style="width: 140px; height: 140px; object-fit: cover; cursor: pointer;"
-                                                        onclick="document.getElementById('avatarInput').click()">
 
-                                                    <input type="file" id="avatarInput" name="avatar" accept="image/*"
-                                                        style="display: none;" onchange="previewAvatar(this)">
-                                                </div>
+                                        <div class="col-md-6 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">City:</label>
+                                                <input name="city" type="text" class="field"
+                                                    value="{{ old('city') }}">
+                                                @error('city')
+                                                    <div class="text-danger">{{ $message }}</div>
+                                                @enderror
                                             </div>
                                         </div>
-                                        <button class="themeBtn ms-auto mt-4">Save Changes</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="seo-wrapper">
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Status</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="status" id="active" checked
+                                            value="active">
+                                        <label class="form-check-label" for="active">
+                                            Active
+                                        </label>
+                                    </div>
+                                    <div class="form-check mt-2">
+                                        <input class="form-check-input" type="radio" name="status" id="inactive"
+                                            value="inactive">
+                                        <label class="form-check-label" for="inactive">
+                                            Inactive
+                                        </label>
+                                    </div>
+                                    <button class="themeBtn ms-auto mt-4">Save Changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </form>
         </div>
     </div>
 @endsection
-@push('js')
-    <script>
-        function previewAvatar(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('avatarPreview').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
-        }
-    </script>
-@endpush

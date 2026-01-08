@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Blog;
 use App\Models\City;
 use App\Models\Country;
+use App\Models\User;
 use App\Models\News;
 use App\Models\Page;
 use App\Models\Popup;
@@ -66,6 +67,11 @@ class RecoveryController extends Controller
             'title' => 'Title',
             'deleted_at' => 'Deleted On',
         ],
+        'users' => [
+            'full_name' => 'Name',
+            'email' => 'mail',
+            'deleted_at' => 'Deleted On',
+        ],
         'testimonials' => [
             'title' => 'Title',
             'deleted_at' => 'Deleted On',
@@ -89,6 +95,9 @@ class RecoveryController extends Controller
                 break;
             case 'popups':
                 $items = Popup::onlyTrashed()->get();
+                break;
+            case 'users':
+                $items = User::onlyTrashed()->get();
                 break;
             case 'tours':
                 $items = Tour::onlyTrashed()->get();
