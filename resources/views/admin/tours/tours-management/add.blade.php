@@ -2477,6 +2477,7 @@
                                                             <div class="form-fields my-0">
                                                                 <label class="title">Time</label>
                                                                 <input style="width: 150px !important;" type="time"
+                                                                onclick="this.showPicker()"
                                                                     class="field"
                                                                     name="tour[availability][advance_booking][time]">
 
@@ -2671,6 +2672,7 @@
             <input
                 name="tour[bookingAdditional][activities][multiple_selection][timeslot][from]"
                 type="time"
+                onclick="this.showPicker()"
                 class="field"
                 placeholder="From" />
 </div>
@@ -2679,6 +2681,7 @@
             <input
                 name="tour[bookingAdditional][activities][multiple_selection][timeslot][to]"
                 type="time"
+                onclick="this.showPicker()"
                 class="field"
                 placeholder="To" />
         </div>
@@ -2838,6 +2841,7 @@
                     <input
                         name="tour[bookingAdditional][timeslots][options][from]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="From" />
                 </div>
@@ -2846,6 +2850,7 @@
                     <input
                         name="tour[bookingAdditional][timeslots][options][to]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="To" />
                 </div>
@@ -2874,6 +2879,7 @@
                     <input
                         name="tour[bookingAdditional][meeting_time][options][from]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="From" />
                 </div>
@@ -2882,6 +2888,7 @@
                     <input
                         name="tour[bookingAdditional][meeting_time][options][to]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="To" />
                 </div>
@@ -2910,6 +2917,7 @@
                     <input
                         name="tour[bookingAdditional][departure_time][options][from]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="From" />
                 </div>
@@ -2918,6 +2926,7 @@
                     <input
                         name="tour[bookingAdditional][departure_time][options][to]"
                         type="time"
+                        onclick="this.showPicker()"
                         class="field"
                         placeholder="To" />
                 </div>

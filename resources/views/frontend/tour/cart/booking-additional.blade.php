@@ -64,7 +64,8 @@
                         class="text-danger">*</span></label>
                 <input @change="handleBookingAdditionalChange(tour.id)"
                     @input="onTimeInput(cart.tours[tour.id].booking_additional_selections.selection,tour.id, getBookingAdditional(tour.id).timeslots?.options?.from, getBookingAdditional(tour.id).timeslots?.options?.to)"
-                    type="time" v-model="cart.tours[tour.id].booking_additional_selections.selection"
+                    type="time"
+                    onclick="this.showPicker()" v-model="cart.tours[tour.id].booking_additional_selections.selection"
                     :min="getBookingAdditional(tour.id).timeslots?.options?.from"
                     :max="getBookingAdditional(tour.id).timeslots?.options?.to" class="field" required />
 
@@ -87,7 +88,8 @@
                     <span class="text-danger">*</span>
                 </label>
 
-                <input type="time" v-model="cart.tours[tour.id].booking_additional_selections.selection"
+                <input type="time"
+                onclick="this.showPicker()" v-model="cart.tours[tour.id].booking_additional_selections.selection"
                     :min="getBookingAdditional(tour.id).meeting_time?.options?.from"
                     :max="getBookingAdditional(tour.id).meeting_time?.options?.to" class="field"
                     @change="handleBookingAdditionalChange(tour.id)"
@@ -119,7 +121,8 @@
                     <span class="text-danger">*</span>
                 </label>
 
-                <input type="time" v-model="cart.tours[tour.id].booking_additional_selections.selection"
+                <input type="time"
+                onclick="this.showPicker()" v-model="cart.tours[tour.id].booking_additional_selections.selection"
                     :min="getBookingAdditional(tour.id).departure_time?.options?.from"
                     :max="getBookingAdditional(tour.id).departure_time?.options?.to" class="field"
                     @change="handleBookingAdditionalChange(tour.id)"
@@ -287,6 +290,7 @@
                             </label>
 
                             <input type="time"
+                            onclick="this.showPicker()"
                                 v-model="cart.tours[tour.id].booking_additional_selections.selection.timeslot"
                                 :min="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.from"
                                 :max="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.to"
