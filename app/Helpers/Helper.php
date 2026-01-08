@@ -391,3 +391,68 @@ function getToursByBlock(array $block, $offset = 0, $limit = null)
     // Only slice if limit is provided
     return $limit ? $tours->slice($offset, $limit)->values() : $tours->values();
 }
+
+function checkAdvanceBookingAvailability(
+    bool $isAdvanceBooking,
+    ?string $advanceBookingConfig,
+    string $selectedDate,
+    ?Carbon $now = null
+): array {
+    $isAvailable = true;
+    $messages = [];
+
+    if (!$isAdvanceBooking) {
+        return compact('isAvailable', 'messages');
+    }
+
+    $now = $now ?? Carbon::now();
+    $bookingDate = Carbon::parse($selectedDate)->startOfDay();
+
+    $config = json_decode($advanceBookingConfig ?? '{}', true);
+    $type = $config['advance_booking_type'] ?? 'immediately';
+    $days = (int) ($config['days'] ?? 0);
+    $time = $config['time'] ?? '00:00';
+
+    // 1️⃣ Book anytime
+    if ($type === 'immediately') {
+        return compact('isAvailable', 'messages');
+    }
+
+    // 2️⃣ Must be booked X days in advance
+    if ($days > 0) {
+        $earliestAllowedDate = $now->copy()->startOfDay()->addDays($days);
+
+        if ($bookingDate->lt($earliestAllowedDate)) {
+            $isAvailable = false;
+            $messages[] =
+                "This tour must be booked at least {$days} day(s) in advance.";
+        }
+
+        return compact('isAvailable', 'messages');
+    }
+
+    // 3️⃣ Same-day cutoff time
+    try {
+        if ($bookingDate->isSameDay($now)) {
+            [$h, $m] = explode(':', $time);
+
+            $cutoff = $now->copy()
+                ->startOfDay()
+                ->setHour((int) $h)
+                ->setMinute((int) $m)
+                ->setSecond(0);
+
+            if ($now->gt($cutoff)) {
+                $isAvailable = false;
+                $messages[] =
+                    'Booking for today is closed. You can book for tomorrow.';
+            }
+        }
+    } catch (\Exception $e) {
+        $isAvailable = false;
+        $messages[] =
+            'This tour is not available for the selected date.';
+    }
+
+    return compact('isAvailable', 'messages');
+}

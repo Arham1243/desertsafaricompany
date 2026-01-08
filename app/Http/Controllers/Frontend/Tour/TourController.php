@@ -240,8 +240,17 @@ class TourController extends Controller
                     ->filter();
             }),
         );
+        
+        $advanceBookingResult = checkAdvanceBookingAvailability(
+            (int) $tour->is_advance_booking === 1,
+            $tour->availability_advance_booking,
+            $request->date,
+        );
 
-        return response()->json($promoData->values());
+        return response()->json([
+            'promo_data' => $promoData,
+            'tour_availability' => $advanceBookingResult,
+        ]);
     }
 
     public function loadBlockTours(Request $request)

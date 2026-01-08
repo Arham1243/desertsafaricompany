@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                                      @endif>
+                                                       @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -75,14 +75,17 @@
 
 <div class="form-guest__btn mt-4">
     @if (Auth::check())
-
         @if (isset($isTourInCart) && $isTourInCart)
             <a href="{{ route('cart.index') }}" class="primary-btn w-100">
                 View Cart
             </a>
         @else
             @if (!$tour->availability_status['available'])
-                <button class="primary-btn w-100" disabled data-tooltip="tooltip"
+                <button v-if="availabilityData" class="primary-btn w-100" :disabled="!availabilityData['isAvailable']"
+                    data-tooltip="tooltip" :title="availabilityData.messages?.[0] ?? ''">
+                    @{{ availabilityData['isAvailable'] ? 'Book Now' : 'Unavailable' }}
+                </button>
+                <button v-else class="primary-btn w-100" disabled data-tooltip="tooltip"
                     title="{{ $tour->availability_status['user_message'] }}">
                     Unavailable
                 </button>
@@ -254,7 +257,7 @@
                 @if ($buttonBg || $buttonTextColor) style="
                    @if ($buttonBg) background-color: {{ $buttonBg }}; @endif
                 @if ($buttonTextColor) color: {{ $buttonTextColor }}; @endif "
-                 @endif
+                  @endif
                 >
                 <i class="bx bxl-whatsapp"></i>
                 {{ $buttonText }}

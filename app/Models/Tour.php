@@ -263,7 +263,7 @@ class Tour extends Model
         // --------------------------
         if ((int) $this->is_open_hours === 1) {
             $hours = json_decode($this->availability_open_hours, true);
-            
+
             if (!is_array($hours)) {
                 $isAvailable = false;
                 $messages[] = 'Tour hours data is invalid. Please contact support.';
@@ -304,31 +304,16 @@ class Tour extends Model
         // --------------------------
         // 3. Check advance booking rules if enabled
         // --------------------------
-        if ((int) $this->is_advance_booking === 1) {
-            $config = json_decode($this->availability_advance_booking, true);
-            $type = $config['advance_booking_type'] ?? 'immediately';
-            $days = (int) ($config['days'] ?? 0);
-            $time = $config['time'] ?? '00:00';
+        $advanceBookingResult = checkAdvanceBookingAvailability(
+            (int) $this->is_advance_booking === 1,
+            $this->availability_advance_booking,
+            $today,
+            $now
+        );
 
-            if ($type === 'immediately') {
-                // no additional check
-            } elseif ($days > 0) {
-                $isAvailable = false;
-                $messages[] = 'This tour must be booked at least ' . $days . ' day(s) in advance.';
-            } else {
-                try {
-                    [$h, $m] = explode(':', $time);
-                    $cutoff = Carbon::today()->setHour((int)$h)->setMinute((int)$m)->setSecond(0);
-
-                    if ($now->gt($cutoff)) {
-                        $isAvailable = false;
-                        $messages[] = 'Booking for today is closed. You can book for tomorrow.';
-                    }
-                } catch (\Exception $e) {
-                    $isAvailable = false;
-                    $messages[] = 'This tour is not available for booking today.';
-                }
-            }
+        if (! $advanceBookingResult['isAvailable']) {
+            $isAvailable = false;
+            $messages = array_merge($messages, $advanceBookingResult['messages']);
         }
 
         // --------------------------

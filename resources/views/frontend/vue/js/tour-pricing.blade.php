@@ -221,6 +221,7 @@
             const normalTourData = ref(@json($normalTourData));
             const privateTourData = ref(@json($privateTourData));
             const promoTourData = ref(@json($promoTourData));
+            const availabilityData = ref();
             const simpleTourData = ref(@json($simpleTourData));
             const userHasUsedFirstOrderCoupon = @json($userHasUsedFirstOrderCoupon) === 1 ||
                 @json($userHasUsedFirstOrderCoupon) === "1";
@@ -364,15 +365,17 @@
                     fetchingPromoPrices.value = true;
                     const route = `{{ route('tours.promo-prices-by-day') }}`
                     const payload = {
+                        date: startDateInput.value?.value,
                         tour_id: tourId.value,
                         isWeekend: isWeekend
                     }
                     const response = await axios.post(route, payload)
-                    promoTourData.value = response.data
+                    promoTourData.value = response.data.promo_data
                     // Reset coupon application flag for all items
                     promoTourData.value.forEach(item => {
                         item.is_first_order_coupon_applied = false
                     })
+                    availabilityData.value = response.data.tour_availability
                     isFirstOrderCouponApplied.value = false
                     updateTotalPrice()
                 } catch (error) {
@@ -414,9 +417,6 @@
             }
 
             const updateTotalPrice = () => {
-                @if (!$tour->availability_status['available'])
-                    showToast('error', '{{ $tour->availability_status['user_message'] }}');
-                @endif
                 @if (!Auth::check())
                     showToast('error', 'Please Login to continue.');
                 @endif
@@ -648,6 +648,7 @@
                 waterTourData,
                 waterPricesTimeSlots,
                 isSubmitEnabled,
+                availabilityData,
                 formatNameForInput,
                 showAllPromos,
                 visiblePromos,
