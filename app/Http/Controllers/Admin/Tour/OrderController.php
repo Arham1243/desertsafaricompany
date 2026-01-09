@@ -8,12 +8,44 @@ use App\Models\Order;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        // Get filtered query
+        $bookingsQuery = $this->getFilteredBookings($request);
 
-        $bookings = Order::with('user')->latest()->get();
+        // Execute query
+        $bookings = $bookingsQuery->with('user')->latest()->get();
 
         return view('admin.tours.bookings.list', compact('bookings'))->with('title', 'Tour Bookings');
+    }
+
+    private function getFilteredBookings(Request $request)
+    {
+        $query = Order::query();
+
+        // Filter by booking start date
+        if ($request->filled('start_date')) {
+            $query->whereRaw("
+        JSON_SEARCH(cart_data, 'one', ?) IS NOT NULL
+    ", [$request->start_date]);
+        }
+
+        // Filter by order created at date
+        if ($request->filled('created_at')) {
+            $query->whereDate('created_at', $request->created_at);
+        }
+
+        // Filter by order status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Filter by payment status
+        if ($request->filled('payment_status')) {
+            $query->where('payment_status', $request->payment_status);
+        }
+
+        return $query;
     }
 
     public function edit($id)

@@ -10,6 +10,70 @@
                             <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                         </div>
                     </div>
+
+                    <form id="filter-form" class="w-full">
+                        <div class="row w-full mb-4">
+                            <div class="col-md-3">
+                                <div class="form-fields">
+                                    <label class="title">Booking Date:</label>
+                                    <input type="date" name="start_date" class="field"
+                                        value="{{ request('start_date') }}" onclick="this.showPicker()"
+                                        onfocus="this.showPicker()" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-fields">
+                                    <label class="title">Order Created Date:</label>
+                                    <input type="date" name="created_at" class="field"
+                                        value="{{ request('created_at') }}" onclick="this.showPicker()"
+                                        onfocus="this.showPicker()" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-fields">
+                                    <label class="title">Order Status:</label>
+                                    <select name="status" class="field">
+                                        <option value=""  {{ request('status') == '' ? 'selected' : '' }}>
+                                            Select</option>
+                                        <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>
+                                            Pending</option>
+                                        <option value="confirmed" {{ request('status') == 'confirmed' ? 'selected' : '' }}>
+                                            Confirmed</option>
+                                        <option value="cancelled" {{ request('status') == 'cancelled' ? 'selected' : '' }}>
+                                            Cancelled</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-3">
+                                <div class="form-fields">
+                                    <label class="title">Payment Status:</label>
+                                    <select name="payment_status" class="field">
+                                        <option value="" 
+                                            {{ request('payment_status') == '' ? 'selected' : '' }}>Select</option>
+                                        <option value="pending"
+                                            {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Pending</option>
+                                        <option value="paid" {{ request('payment_status') == 'paid' ? 'selected' : '' }}>
+                                            Paid</option>
+                                        <option value="cancelled"
+                                            {{ request('payment_status') == 'cancelled' ? 'selected' : '' }}>Cancelled
+                                        </option>
+                                        <option value="failed"
+                                            {{ request('payment_status') == 'failed' ? 'selected' : '' }}>Failed</option>
+                                    </select>
+                                </div>
+                            </div>
+                            @if (request()->hasAny(['start_date', 'created_at', 'status', 'payment_status']))
+                                <div class="col-md-3 mt-4">
+                                    <a href="{{ route('admin.bookings.index') }}" class="themeBtn">
+                                        <i class='bx bx-refresh'></i> Reset Filters
+                                    </a>
+                                </div>
+                            @endif
+                        </div>
+                    </form>
                     <div class="table-responsive">
                         <table class="data-table">
                             <thead>
@@ -38,7 +102,8 @@
                                                 <div>
                                                     <strong>{{ $tour->title }}</strong><br>
                                                     <small style="color: #666;">
-                                                       Date: {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
+                                                        Date:
+                                                        {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
                                                         &bull;
                                                         {{ getTotalNoOfPeopleFromCart($item->cart_data) }} pax
                                                     </small>
@@ -79,3 +144,18 @@
         </div>
     </div>
 @endsection
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterForm = document.getElementById('filter-form');
+
+            if (filterForm) {
+                filterForm.querySelectorAll('input, select').forEach(element => {
+                    element.addEventListener('change', () => {
+                        filterForm.submit();
+                    });
+                });
+            }
+        });
+    </script>
+@endpush
