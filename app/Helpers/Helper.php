@@ -226,7 +226,7 @@ if (! function_exists('getTotalNoOfPeopleFromCart')) {
     {
         $cartData = is_string($cartData) ? json_decode($cartData, true) : $cartData;
 
-        return isset($cartData['total_no_of_people']) ? $cartData['total_no_of_people'] . ' people' : 'N/A';
+        return isset($cartData['total_no_of_people']) ? $cartData['total_no_of_people'] . ' ' : 'N/A';
     }
 }
 if (! function_exists('buildTourDetailUrl')) {
@@ -455,4 +455,27 @@ function checkAdvanceBookingAvailability(
     }
 
     return compact('isAvailable', 'messages');
+}
+
+function getTourStartDate($cartData, $tourId)
+{
+    $cartData = json_decode($cartData, true);
+
+    if (!isset($cartData['tours'][$tourId])) {
+        return null; // tour not found
+    }
+
+    $tourDetails = $cartData['tours'][$tourId];
+
+    // Top-level start_date
+    if (isset($tourDetails['start_date'])) {
+        return $tourDetails['start_date'];
+    }
+
+    // Nested tourData array fallback
+    if (isset($tourDetails['tourData'][0]['start_date'])) {
+        return $tourDetails['tourData'][0]['start_date'];
+    }
+
+    return null; // not found
 }

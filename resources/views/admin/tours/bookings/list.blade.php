@@ -16,14 +16,13 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Tour</th>
-                                    <th>No of People</th>
                                     <th>User</th>
                                     <th>Payment Type</th>
                                     <th>Total</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
                                     <th>Booking Status</th>
-                                    <th>Status</th>
+                                    <th>Order Created at</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -36,10 +35,16 @@
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                {{ $tour->title }} <br>
+                                                <div>
+                                                    <strong>{{ $tour->title }}</strong><br>
+                                                    <small style="color: #666;">
+                                                       Date: {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
+                                                        &bull;
+                                                        {{ getTotalNoOfPeopleFromCart($item->cart_data) }} pax
+                                                    </small>
+                                                </div>
                                             @endforeach
                                         </td>
-                                        <td>{{ getTotalNoOfPeopleFromCart($item->cart_data) }} <br>
                                         <td>{{ $item->user->full_name ?? 'N/A' }} <br>
                                             {{ $item->user->email ?? 'N/A' }}</td>
                                         <td>

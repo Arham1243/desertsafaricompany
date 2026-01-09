@@ -34,7 +34,15 @@
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                {{ $tour->title }} <br>
+                                                <div>
+                                                    <strong>{{ $tour->title }}</strong><br>
+                                                    <small style="color: #666;">
+                                                        Date:
+                                                        {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
+                                                        &bull;
+                                                        {{ getTotalNoOfPeopleFromCart($item->cart_data) }} pax
+                                                    </small>
+                                                </div>
                                             @endforeach
                                         </td>
                                         <td>{{ $item->user->full_name ?? 'N/A' }} <br>
@@ -49,7 +57,7 @@
                                             </span>
                                         </td>
                                         <td>{{ formatDateTime($item->payment_date) }}</td>
-                                          <td>
+                                        <td>
                                             <span
                                                 class="badge rounded-pill bg-{{ $item->status === 'confirmed' ? 'success' : ($item->status === 'pending' ? 'warning' : 'danger') }}">
                                                 {{ $item->status }}

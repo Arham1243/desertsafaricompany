@@ -187,15 +187,35 @@
                                             $tourDataDetails = $cartTourData['tours'][$tour->id] ?? [];
                                             $tourData = $tourDataDetails['tourData'] ?? [];
                                         @endphp
-                                        <div class="col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title title--sm">
-                                                    Start Date:
-                                                </label>
-                                                <div class="title text-dark">
-                                                    {{ formatDateTime($tourDataDetails['start_date']) }}</div>
+                                        @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
+                                            <form action="{{ route('user.bookings.update', $booking->id) }}"
+                                                method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+
+                                                <div class="col-md-12 col-12 mb-2">
+                                                    <div class="form-fields">
+                                                        <label class="title">Start Date:</label>
+                                                        <input onclick="this.showPicker()" onfocus="this.showPicker()"
+                                                            type="date" name="start_date" class="field"
+                                                            value="{{ $tourDataDetails['start_date'] }}">
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 col-12 mb-4">
+                                                    <button type="submit" class="themeBtn">Update</button>
+                                                </div>
+                                            </form>
+                                        @else
+                                            <div class="col-md-12 col-12 mb-4">
+                                                <div class="form-fields">
+                                                    <label class="title">Start Date:</label>
+                                                    <input type="text" class="field"
+                                                        value="{{ formatDate($tourDataDetails['start_date']) }}" readonly>
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                         <div class="col-md-6 col-12 mb-4">
                                             <div class="form-fields">
                                                 <label class="title title--sm">
@@ -335,7 +355,7 @@
                             </div>
                         @endif
 
-                          @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
+                        @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
                             <div class="form-box mt-3">
                                 <div class="form-box__header">
                                     <div class="title">Cancel Booking</div>
