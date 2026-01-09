@@ -43,6 +43,8 @@
     </div>
 @endsection
 @push('css')
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <style type="text/css">
         .loader-mask {
             position: fixed;
@@ -83,6 +85,18 @@
         window.addEventListener("load", function() {
             const loader = document.getElementById("loader");
             loader.style.display = "none";
+        });
+    </script>
+    <script>
+        document.querySelectorAll('.time-picker').forEach(function(input) {
+            flatpickr(input, {
+                enableTime: true,
+                noCalendar: true,
+                dateFormat: "h:i K",
+                time_24hr: false,
+                minTime: input.dataset.min,
+                maxTime: input.dataset.max,
+            });
         });
     </script>
 @endpush

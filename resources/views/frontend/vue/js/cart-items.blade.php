@@ -762,49 +762,6 @@
 
                 return `${hour}:${minute} ${ampm}`;
             };
-            const errors = ref({})
-            const onTimeInput = (selection, tourId, from, to) => {
-                if (!selection || !from || !to) {
-                    errors.value[tourId] = null
-                    return
-                }
-
-                // Convert "HH:mm" to minutes since midnight
-                const toMinutes = (t) => {
-                    const [h, m] = t.split(':').map(Number)
-                    return h * 60 + m
-                }
-
-                let selMinutes = toMinutes(selection)
-                let fromMinutes = toMinutes(from)
-                let toMinutesVal = toMinutes(to)
-
-                // If the range spans past midnight, adjust toMinutes
-                if (fromMinutes > toMinutesVal) {
-                    // Treat times after midnight as +1440 minutes
-                    if (selMinutes < fromMinutes) {
-                        selMinutes += 24 * 60
-                    }
-                    toMinutesVal += 24 * 60
-                }
-
-                if (selMinutes < fromMinutes || selMinutes > toMinutesVal) {
-                    errors.value[tourId] =
-                        `Please select a time between ${formatTime(from)} and ${formatTime(to)}.`
-                } else {
-                    errors.value[tourId] = null
-                }
-            }
-
-            const formatAMPM = (time) => {
-                if (!time) return '';
-                let [hours, minutes] = time.split(':');
-                hours = parseInt(hours);
-                const ampm = hours >= 12 ? 'PM' : 'AM';
-                hours = hours % 12;
-                hours = hours ? hours : 12; // 0 → 12
-                return `${hours}:${minutes} ${ampm}`;
-            }
 
             const handleBookingAdditionalChange = (tourId) => {
                 // Sync with backend when booking additional selection changes
@@ -820,9 +777,6 @@
                 const bookingSelections = cart.value.tours[tourId]?.booking_additional_selections || {};
                 const additionalType = bookingAdditional.additional_type;
 
-                if (errors.value[tourId]) {
-                    return false
-                }
 
                 if (additionalType === 'activities') {
                     const selectionType = bookingAdditional.activities?.selection_type;
@@ -879,12 +833,9 @@
                 cartUpdateForm,
                 submitButton,
                 formatTime,
-                errors,
-                onTimeInput,
                 hasAnyPromoQuantity,
                 getTourPackages,
                 formatTimeLabel,
-                formatAMPM,
                 handleSelectedSlotChange,
                 ensureCartDataStructure,
                 recalculateCartTotals,

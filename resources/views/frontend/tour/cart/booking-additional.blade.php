@@ -62,16 +62,13 @@
             <div class="form-fields mb-3">
                 <label class="title text-dark">Timeslot @{{ formatTime(getBookingAdditional(tour.id).timeslots?.options?.from) }} - @{{ formatTime(getBookingAdditional(tour.id).timeslots?.options?.to) }} <span
                         class="text-danger">*</span></label>
-                <input @change="handleBookingAdditionalChange(tour.id)"
-                    @input="onTimeInput(cart.tours[tour.id].booking_additional_selections.selection,tour.id, getBookingAdditional(tour.id).timeslots?.options?.from, getBookingAdditional(tour.id).timeslots?.options?.to)"
-                    type="time" onclick="this.showPicker()"
+                <input @change="handleBookingAdditionalChange(tour.id)" type="text"
                     v-model="cart.tours[tour.id].booking_additional_selections.selection"
-                    :min="getBookingAdditional(tour.id).timeslots?.options?.from"
-                    :max="getBookingAdditional(tour.id).timeslots?.options?.to" class="field" required />
+                    :data-min="getBookingAdditional(tour.id).timeslots?.options?.from"
+                    :data-max="getBookingAdditional(tour.id).timeslots?.options?.to" class="time-picker field"
+                    required />
 
-                <p v-if="errors[tour.id]" class="text-danger mt-1">
-                    @{{ errors[tour.id] }}
-                </p>
+                
                 <small v-if="getBookingAdditional(tour.id).timeslots?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).timeslots.user_remarks }}
                 </small>
@@ -90,20 +87,12 @@
 
                 <input type="time" onclick="this.showPicker()"
                     v-model="cart.tours[tour.id].booking_additional_selections.selection"
-                    :min="getBookingAdditional(tour.id).meeting_time?.options?.from"
-                    :max="getBookingAdditional(tour.id).meeting_time?.options?.to" class="field"
+                    :data-min="getBookingAdditional(tour.id).meeting_time?.options?.from"
+                    :data-max="getBookingAdditional(tour.id).meeting_time?.options?.to" class="time-picker field"
                     @change="handleBookingAdditionalChange(tour.id)"
-                    @input="onTimeInput(
-        cart.tours[tour.id].booking_additional_selections.selection,
-        tour.id,
-        getBookingAdditional(tour.id).meeting_time?.options?.from,
-        getBookingAdditional(tour.id).meeting_time?.options?.to
-      )"
                     required />
 
-                <p v-if="errors[tour.id]" class="text-danger mt-1">
-                    @{{ errors[tour.id] }}
-                </p>
+                
 
                 <small v-if="getBookingAdditional(tour.id).meeting_time?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).meeting_time.user_remarks }}
@@ -123,20 +112,12 @@
 
                 <input type="time" onclick="this.showPicker()"
                     v-model="cart.tours[tour.id].booking_additional_selections.selection"
-                    :min="getBookingAdditional(tour.id).departure_time?.options?.from"
-                    :max="getBookingAdditional(tour.id).departure_time?.options?.to" class="field"
+                    :data-min="getBookingAdditional(tour.id).departure_time?.options?.from"
+                    :data-max="getBookingAdditional(tour.id).departure_time?.options?.to" class="time-picker field"
                     @change="handleBookingAdditionalChange(tour.id)"
-                    @input="onTimeInput(
-        cart.tours[tour.id].booking_additional_selections.selection,
-        tour.id,
-        getBookingAdditional(tour.id).departure_time?.options?.from,
-        getBookingAdditional(tour.id).departure_time?.options?.to
-      )"
                     required />
 
-                <p v-if="errors[tour.id]" class="text-danger mt-1">
-                    @{{ errors[tour.id] }}
-                </p>
+                
 
                 <small v-if="getBookingAdditional(tour.id).departure_time?.user_remarks"
                     class="text-muted d-block mt-3">
@@ -204,7 +185,7 @@
             <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel'">
                 <div class="form-fields mb-3">
                     <label class="title text-dark">
-                        Room No 
+                        Room No
                     </label>
 
                     <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.room_no"
@@ -213,7 +194,7 @@
 
                 <div class="form-fields mb-3">
                     <label class="title text-dark">
-                        Hotel No 
+                        Hotel No
                     </label>
 
                     <input type="text"
@@ -313,20 +294,13 @@
 
                             <input type="time" onclick="this.showPicker()"
                                 v-model="cart.tours[tour.id].booking_additional_selections.selection.timeslot"
-                                :min="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.from"
-                                :max="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.to"
-                                class="field" @change="handleBookingAdditionalChange(tour.id)"
-                                @input="onTimeInput(
-        cart.tours[tour.id].booking_additional_selections.selection.timeslot,
-        tour.id,
-        getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.from,
-        getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.to
-      )"
+                                :data-min="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.from"
+                                :data-max="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.to"
+                                class="time-picker field" @change="handleBookingAdditionalChange(tour.id)"
+                                
                                 required />
 
-                            <p v-if="errors[tour.id]" class="text-danger mt-1">
-                                @{{ errors[tour.id] }}
-                            </p>
+                            
 
                             <small
                                 v-if="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.user_remarks"
