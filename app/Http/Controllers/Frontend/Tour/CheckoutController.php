@@ -7,6 +7,7 @@ use App\Models\Coupon;
 use App\Models\Order;
 use App\Models\Tour;
 use App\Services\PaymentService;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Session;
@@ -54,6 +55,11 @@ class CheckoutController extends Controller
 
     public function store(Request $request, PaymentService $paymentService)
     {
+        if (!Auth::check()) {
+            return redirect()->back()
+                ->with('notify_error', 'Please login to continue.');
+        }
+
         $cart = Session::get('cart', []);
         $totalAmount = $cart['total_price'] ?? 0;
 
@@ -129,10 +135,10 @@ class CheckoutController extends Controller
                 ->back()
                 ->with(
                     'notify_error',
-                    'Your total cart amount should be at least '.formatPrice($coupon->minimum_order_amount).' to apply this coupon.'
+                    'Your total cart amount should be at least ' . formatPrice($coupon->minimum_order_amount) . ' to apply this coupon.'
                 )
                 ->withErrors([
-                    'code' => 'Your total cart amount should be at least '.formatPrice($coupon->minimum_order_amount).' to apply this coupon.',
+                    'code' => 'Your total cart amount should be at least ' . formatPrice($coupon->minimum_order_amount) . ' to apply this coupon.',
                 ])
                 ->withInput();
         }
@@ -250,7 +256,7 @@ class CheckoutController extends Controller
         curl_setopt($ch, CURLOPT_URL, "https://api.tabby.ai/api/v2/payments/$paymentId");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Bearer '.env('TABBY_SECRET_KEY'),
+            'Authorization: Bearer ' . env('TABBY_SECRET_KEY'),
             'Content-Type: application/json',
         ]);
         $response = curl_exec($ch);
@@ -327,11 +333,11 @@ class CheckoutController extends Controller
         $order = Order::findOrFail($order_id);
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL => 'https://api.postpay.io/orders/'.$postpayOrderId.'/capture',
+            CURLOPT_URL => 'https://api.postpay.io/orders/' . $postpayOrderId . '/capture',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_POST => true,
             CURLOPT_HTTPHEADER => [
-                'Authorization: Basic '.env('POSTPAY_SECRET_KEY'),
+                'Authorization: Basic ' . env('POSTPAY_SECRET_KEY'),
             ],
         ]);
 
@@ -437,7 +443,7 @@ class CheckoutController extends Controller
         } catch (\Exception $e) {
             return redirect()
                 ->route('checkout.error', ['order_id' => $order->id])
-                ->with('notify_error', 'Payment processing exception: '.$e->getMessage());
+                ->with('notify_error', 'Payment processing exception: ' . $e->getMessage());
         }
     }
 
@@ -484,7 +490,7 @@ class CheckoutController extends Controller
             }
         } catch (\Exception $e) {
             // Handle API errors gracefully
-            \Log::error('Currency conversion failed: '.$e->getMessage());
+            \Log::error('Currency conversion failed: ' . $e->getMessage());
             $usdAmount = $amountAED * 0.27;  // Fallback rate
         }
 

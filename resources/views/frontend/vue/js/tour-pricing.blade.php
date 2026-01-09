@@ -417,9 +417,6 @@
             }
 
             const updateTotalPrice = () => {
-                @if (!Auth::check())
-                    showToast('error', 'Please Login to continue.');
-                @endif
                 @if (isset($isTourInCart) && $isTourInCart)
                     showToast('error', 'Tour already added to cart.');
                 @endif
