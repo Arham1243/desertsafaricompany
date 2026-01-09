@@ -128,6 +128,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('popups', PopupController::class);
 
     Route::resource('coupons', CouponController::class);
+    Route::get('bookings/{id}/cancel', [OrderController::class, 'cancel'])->name('bookings.cancel');
     Route::resource('bookings', OrderController::class);
 
     Route::get('media/{id}/destroy', [MediaController::class, 'destroy'])->name('media.destroy');

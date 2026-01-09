@@ -17,11 +17,12 @@
                                     <th>Order ID</th>
                                     <th>Tour</th>
                                     <th>No of People</th>
-                                    <th>User Name</th>
+                                    <th>User</th>
                                     <th>Payment Type</th>
                                     <th>Total</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
+                                    <th>Booking Status</th>
                                     <th>Status</th>
                                     <th></th>
                                 </tr>
@@ -35,8 +36,7 @@
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                <a target="_blank" href="{{ route('admin.tours.edit', $tour->id) }}"
-                                                    class="link">{{ $tour->title }}</a> <br>
+                                                {{ $tour->title }} <br>
                                             @endforeach
                                         </td>
                                         <td>{{ getTotalNoOfPeopleFromCart($item->cart_data) }} <br>
@@ -53,6 +53,12 @@
                                             </span>
                                         </td>
                                         <td>{{ formatDateTime($item->payment_date) }}</td>
+                                        <td>
+                                            <span
+                                                class="badge rounded-pill bg-{{ $item->status === 'confirmed' ? 'success' : ($item->status === 'pending' ? 'warning' : 'danger') }}">
+                                                {{ $item->status }}
+                                            </span>
+                                        </td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
                                             <a href="{{ route('admin.bookings.edit', $item->id) }}" class="themeBtn"><i

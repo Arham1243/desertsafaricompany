@@ -20,6 +20,7 @@
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
+                                    <th>Booking Status</th>
                                     <th>Order Created at</th>
                                     <th></th>
                                 </tr>
@@ -33,8 +34,7 @@
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
-                                                <a target="_blank" href="{{ $tour->detail_url }}"
-                                                    class="link">{{ $tour->title }}</a> <br>
+                                                {{ $tour->title }} <br>
                                             @endforeach
                                         </td>
                                         <td>{{ $item->user->full_name ?? 'N/A' }} <br>
@@ -49,6 +49,12 @@
                                             </span>
                                         </td>
                                         <td>{{ formatDateTime($item->payment_date) }}</td>
+                                          <td>
+                                            <span
+                                                class="badge rounded-pill bg-{{ $item->status === 'confirmed' ? 'success' : ($item->status === 'pending' ? 'warning' : 'danger') }}">
+                                                {{ $item->status }}
+                                            </span>
+                                        </td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
                                             <div class="dropstart bootsrap-dropdown">
@@ -64,7 +70,7 @@
                                                             View
                                                         </a>
                                                     </li>
-                                                    @if ($item->payment_status !== 'paid')
+                                                    @if ($item->payment_status !== 'paid' && $item->status !== 'cancelled')
                                                         <li>
                                                             <a class="dropdown-item"
                                                                 href="{{ route('user.bookings.pay', $item->id) }}">

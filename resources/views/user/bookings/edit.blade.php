@@ -15,8 +15,10 @@
                             {{ ucfirst($booking->payment_status ?? 'N/A') }}
                         </span>
 
-                        @if ($booking->payment_status !== 'paid')
-                            <a href="{{ route('user.bookings.pay', $booking->id) }}" class="themeBtn">Pay Now</a>
+                        @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
+                            <a href="{{ route('user.bookings.pay', $booking->id) }}" class="themeBtn">
+                                Pay Now
+                            </a>
                         @endif
                     </div>
                 </div>
@@ -59,6 +61,18 @@
                                             <input type="text" class="field"
                                                 value="{{ $booking->created_at ? formatDateTime($booking->created_at) : '' }}"
                                                 readonly>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
+                                            <label class="title">Booking Status:</label>
+                                            <div>
+                                                <span
+                                                    class="badge rounded-pill bg-{{ $booking->status === 'confirmed' ? 'success' : ($booking->status === 'pending' ? 'warning' : 'danger') }}">
+                                                    {{ $booking->status ?? 'N/A' }}
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -321,6 +335,21 @@
                             </div>
                         @endif
 
+                          @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
+                            <div class="form-box mt-3">
+                                <div class="form-box__header">
+                                    <div class="title">Cancel Booking</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <p style="margin-bottom: 15px; color: #666;">
+                                        <strong>Note:</strong> Use this option only if the booking should not proceed.
+                                    </p>
+                                    <a href="{{ route('user.bookings.cancel', $booking->id) }}"
+                                        onclick="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');"
+                                        class="themeBtn">Cancel Booking</a>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

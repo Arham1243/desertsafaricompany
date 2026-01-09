@@ -67,8 +67,8 @@ class PaymentService
                         'currency' => env('APP_CURRENCY'),
                         'product_data' => [
                             'name' => $tour['tour_title'],
-                            'description' => 'Start Date: '.Carbon::parse($tour['start_date'])->format('d M Y')
-                                ." | Total: {$tour['total_no_of_people']}",
+                            'description' => 'Start Date: ' . Carbon::parse($tour['start_date'])->format('d M Y')
+                                . " | Total: {$tour['total_no_of_people']}",
                         ],
                         'unit_amount' => round($tour['total_price'], 2) * 100,
                     ],
@@ -118,14 +118,14 @@ class PaymentService
 
     private function createTabbySession(Request $request, Order $order)
     {
-        $customOrderId = 'ORDER'.$order->id;
+        $customOrderId = 'ORDER' . $order->id;
         $totalWithTaxes = number_format($order->total_amount, 2, '.', '');
         $tax = number_format($order->total_amount * 0.05, 2, '.', '');
         $finalTotal = number_format($order->total_amount - $tax, 2, '.', '');
 
         $items = [[
             'title' => 'Tour Booking',
-            'description' => 'Booking ID '.$customOrderId,
+            'description' => 'Booking ID ' . $customOrderId,
             'quantity' => 1,
             'unit_price' => (float) $finalTotal,
             'category' => 'tour',
@@ -137,9 +137,9 @@ class PaymentService
                 'currency' => 'AED',
                 'description' => env('APP_NAME'),
                 'buyer' => [
-                    'phone' => '+'.$order->phone_dial_code.$order->phone_number,
+                    'phone' => '+' . $order->phone_dial_code . $order->phone_number,
                     'email' => $order->email,
-                    'name' => $order->first_name.' '.$order->last_name,
+                    'name' => $order->first_name . ' ' . $order->last_name,
                 ],
                 'shipping_address' => [
                     'city' => $order->city ?? 'Dubai',
@@ -182,7 +182,7 @@ class PaymentService
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Authorization: Bearer '.env('TABBY_SECRET_KEY'),
+                'Authorization: Bearer ' . env('TABBY_SECRET_KEY'),
                 'Content-Type: application/json',
             ]);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
@@ -202,7 +202,7 @@ class PaymentService
                 'url' => $url,
             ];
         } catch (\Exception $e) {
-            throw new \Exception('Tabby checkout failed: '.$e->getMessage());
+            throw new \Exception('Tabby checkout failed: ' . $e->getMessage());
         }
     }
 
@@ -233,9 +233,9 @@ class PaymentService
 
         $firstName = $orderData['first_name'] ?? 'Guest';
         $lastName = $orderData['last_name'] ?? '';
-        $name = trim($firstName.' '.$lastName);
+        $name = trim($firstName . ' ' . $lastName);
         $email = $orderData['email'] ?? '';
-        $phone = '+'.($orderData['phone_dial_code'] ?? '').($orderData['phone_number'] ?? '');
+        $phone = '+' . ($orderData['phone_dial_code'] ?? '') . ($orderData['phone_number'] ?? '');
         $address = $orderData['address'] ?? '';
         $city = $orderData['city'] ?? '';
         $country = $orderData['country'] ?? '';
@@ -298,8 +298,8 @@ class PaymentService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'X-PointCheckout-Api-Key: '.env('POINTCHECKOUT_API_KEY'),
-            'X-PointCheckout-Api-Secret: '.env('POINTCHECKOUT_API_SECRET'),
+            'X-PointCheckout-Api-Key: ' . env('POINTCHECKOUT_API_KEY'),
+            'X-PointCheckout-Api-Secret: ' . env('POINTCHECKOUT_API_SECRET'),
             'Content-Type: application/json',
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
@@ -349,8 +349,8 @@ class PaymentService
             foreach ($cart['tours'] as $tour) {
                 $items[] = [
                     'name' => $tour['tour_title'],
-                    'description' => 'Start Date: '.\Carbon\Carbon::parse($tour['start_date'])->format('d M Y')
-                        ." | Total: {$tour['total_no_of_people']}",
+                    'description' => 'Start Date: ' . \Carbon\Carbon::parse($tour['start_date'])->format('d M Y')
+                        . " | Total: {$tour['total_no_of_people']}",
                     'unit_amount' => [
                         'currency_code' => env('APP_CURRENCY'),
                         'value' => number_format($tour['total_price'], 2, '.', ''),
@@ -473,7 +473,7 @@ class PaymentService
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic '.env('POSTPAY_SECRET_KEY'),
+            'Authorization: Basic ' . env('POSTPAY_SECRET_KEY'),
             'Content-Type: application/json',
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($payload));
@@ -505,7 +505,7 @@ class PaymentService
      */
     private function handleCOD(Order $order)
     {
-        $order->update(['payment_status' => 'pending']);
+        $order->update(['payment_status' => 'pending', 'status' => 'confirmed']);
         $cart = json_decode($order->cart_data, true);
         $this->saveAppliedUserCoupons($cart, $order);
         $this->sendAdminOrderEmail('emails.customer-order-success', $order, 'Your Order is Confirmed', route('user.bookings.edit', $order->id), 'user');
@@ -561,7 +561,7 @@ class PaymentService
                 'order_id' => $order->id,
                 'customer_name' => $user->full_name ?? '',
                 'customer_email' => $user->email ?? '',
-                'customer_phone' => $orderRequestData->phone_dial_code.$orderRequestData->phone_number,
+                'customer_phone' => $orderRequestData->phone_dial_code . $orderRequestData->phone_number,
                 'payment_type' => $order->payment_type,
                 'cart' => $cart ?? [],
                 'total' => $cart['total_price'] ?? 0,
@@ -570,7 +570,7 @@ class PaymentService
                 'order_link' => $orderLink ?? '',
             ];
 
-            $finalSubject = $subject.' - '.env('MAIL_FROM_NAME');
+            $finalSubject = $subject . ' - ' . env('MAIL_FROM_NAME');
             Mail::send($template, ['data' => $data], function ($message) use ($email, $finalSubject) {
                 $message->from(env('MAIL_FROM_ADDRESS'));
                 $message
@@ -578,7 +578,7 @@ class PaymentService
                     ->subject($finalSubject);
             });
         } catch (\Throwable $e) {
-            \Log::error('Failed to send admin order email: '.$e->getMessage());
+            \Log::error('Failed to send admin order email: ' . $e->getMessage());
         }
     }
 }

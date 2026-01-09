@@ -16,6 +16,7 @@ Route::middleware(['auth', 'check_user_status'])->prefix('user')->name('user.')-
 
     Route::resource('profile', ProfileSettingsController::class);
     Route::resource('bookings', OrderController::class);
+    Route::get('bookings/{id}/cancel', [OrderController::class, 'cancel'])->name('bookings.cancel');
     Route::get('bookings/pay/{id}', [OrderController::class, 'pay'])->name('bookings.pay');
     Route::post('bookings/pay/process/{id}', [OrderController::class, 'paymentProcess'])->name('bookings.paymentProcess');
     Route::get('profile/change/password', [ProfileSettingsController::class, 'changePassword'])->name('profile.changePassword');

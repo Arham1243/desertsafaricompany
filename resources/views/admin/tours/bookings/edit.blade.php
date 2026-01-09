@@ -62,6 +62,18 @@
 
                                     <div class="col-md-6 col-12 mb-4">
                                         <div class="form-fields">
+                                            <label class="title">Booking Status:</label>
+                                            <div>
+                                                <span
+                                                    class="badge rounded-pill bg-{{ $booking->status === 'confirmed' ? 'success' : ($booking->status === 'pending' ? 'warning' : 'danger') }}">
+                                                    {{ $booking->status ?? 'N/A' }}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12 mb-4">
+                                        <div class="form-fields">
                                             <label class="title">Payment Status:</label>
                                             <div>
                                                 <span
@@ -151,7 +163,7 @@
                         </div>
                         <div class="form-box">
                             <div class="form-box__header">
-                                <div class="title">Booking Details Entered by User</div>
+                                <div class="title">Billing Details</div>
                             </div>
                             <div class="form-box__body">
                                 @php
@@ -250,7 +262,8 @@
                                                 <label class="title title--sm">
                                                     Start Date:
                                                 </label>
-                                                <div class="title text-dark">{{ formatDate($tourDataDetails['start_date']) }}</div>
+                                                <div class="title text-dark">
+                                                    {{ formatDate($tourDataDetails['start_date']) }}</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-12 mb-4">
@@ -401,6 +414,22 @@
                                 @endif
                             </div>
                         </div>
+
+                        @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
+                            <div class="form-box mt-3">
+                                <div class="form-box__header">
+                                    <div class="title">Cancel Booking</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <p style="margin-bottom: 15px; color: #666;">
+                                        <strong>Note:</strong> Use this option only if the booking should not proceed.
+                                    </p>
+                                    <a href="{{ route('admin.bookings.cancel', $booking->id) }}"
+                                        onclick="return confirm('Are you sure you want to cancel this booking? This action cannot be undone.');"
+                                        class="themeBtn">Cancel Booking</a>
+                                </div>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>

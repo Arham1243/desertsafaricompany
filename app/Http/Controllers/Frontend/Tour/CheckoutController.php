@@ -169,6 +169,7 @@ class CheckoutController extends Controller
 
         $order->update([
             'payment_type' => $request->payment_type,
+            'status' => 'confirmed',
             'payment_status' => 'paid',
             'payment_date' => now(),
         ]);
@@ -197,6 +198,7 @@ class CheckoutController extends Controller
             $order->update([
                 'payment_type' => 'pointCheckout',
                 'payment_status' => 'paid',
+                'status' => 'confirmed',
                 'payment_date' => now(),
             ]);
 
@@ -260,6 +262,7 @@ class CheckoutController extends Controller
             $order->update([
                 'payment_type' => 'tabby',
                 'payment_status' => 'paid',
+                'status' => 'confirmed',
                 'payment_date' => now(),
             ]);
 
@@ -347,6 +350,7 @@ class CheckoutController extends Controller
             Order::findOrFail($order_id)->update([
                 'payment_type' => 'postpay',
                 'payment_status' => 'paid',
+                'status' => 'confirmed',
                 'payment_date' => now(),
             ]);
 
@@ -401,6 +405,7 @@ class CheckoutController extends Controller
             $order->update([
                 'payment_type' => $request->payment_type ?? 'paypal',
                 'payment_status' => 'paid',
+                'status' => 'confirmed',
                 'payment_date' => now(),
             ]);
 

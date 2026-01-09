@@ -21,4 +21,23 @@ class OrderController extends Controller
 
         return view('admin.tours.bookings.edit', compact('booking'))->with('title', 'Booking Details');
     }
+
+    public function cancel($id)
+    {
+        $booking = Order::findOrFail($id);
+
+        if ($booking->payment_status !== 'pending' || $booking->status === 'cancelled') {
+            return redirect()
+                ->back()
+                ->with('notify_error', 'Only pending bookings can be cancelled.');
+        }
+
+        $booking->update([
+            'status' => 'cancelled',
+        ]);
+
+        return redirect()
+            ->route('admin.bookings.edit', $booking->id)
+            ->with('notify_success', 'Booking has been cancelled successfully.');
+    }
 }

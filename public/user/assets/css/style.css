@@ -1902,7 +1902,7 @@ body.responsive.fancybox-active.compensate-for-scrollbar {
     cursor: move;
 }
 
-input[readonly]:not(.date-picker, .date-picker-time) {
+input[readonly]:not(.date-picker, .date-picker-time),textarea[readonly] {
     background: #cccccc4d !important;
     color: #6c6a6a !important;
 }
