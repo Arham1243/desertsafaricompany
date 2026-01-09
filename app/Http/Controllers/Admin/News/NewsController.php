@@ -35,7 +35,7 @@ class NewsController extends Controller
         $tours = Tour::where('status', 'publish')->get();
         $categories = NewsCategory::where('is_active', 1)->get();
         $tags = NewsTag::where('is_active', 1)->get();
-        $users = User::where('is_active', 1)->get();
+        $users = User::where('status', 'active')->get();
         $data = compact('tours', 'categories', 'users', 'tags');
 
         return view('admin.news.news-management.add')->with('title', 'Add News')->with($data);
@@ -82,7 +82,7 @@ class NewsController extends Controller
         $tours = Tour::where('status', 'publish')->get();
         $categories = NewsCategory::where('is_active', 1)->get();
         $tags = NewsTag::where('is_active', 1)->get();
-        $users = User::where('is_active', 1)->get();
+        $users = User::where('status', 'active')->get();
         $seo = $news->seo()->first();
         $data = compact('tours', 'categories', 'users', 'tags', 'news', 'seo');
 

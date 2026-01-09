@@ -46,7 +46,7 @@ class BlogController extends Controller
         $cities = City::where('status', 'publish')->get();
         $categories = BlogCategory::where('is_active', 1)->get();
         $tags = BlogTag::where('is_active', 1)->get();
-        $users = User::where('is_active', 1)->get();
+        $users = User::where('status', 'active')->get();
         $data = compact('tours', 'countries', 'cities', 'categories', 'users', 'tags', 'dropdownBlogs', 'authors');
 
         return view('admin.blogs.blogs-management.add')->with('title', 'Add New Blog')->with($data);
@@ -135,7 +135,7 @@ class BlogController extends Controller
         $countries = Country::where('status', 'publish')->where('available_for_blogs', 1)->get();
         $cities = City::where('status', 'publish')->get();
         $tags = BlogTag::where('is_active', 1)->get();
-        $users = User::where('is_active', 1)->get();
+        $users = User::where('status', 'active')->get();
         $dropdownBlogs = Blog::where('status', 'publish')->where('id', '!=', $blog->id)->get();
         $seo = $blog->seo()->first();
         $data = compact('tours', 'categories', 'users', 'tags', 'blog', 'seo', 'countries', 'cities', 'dropdownBlogs', 'authors');
