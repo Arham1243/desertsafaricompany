@@ -191,7 +191,7 @@
             <div class="form-fields mb-3"
                 v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type">
                 <label class="title text-dark">
-                    Location
+                    Location <span class="text-danger">*</span>
                 </label>
                 <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
                     @input="handleBookingAdditionalChange(tour.id)" class="field" required
@@ -216,7 +216,7 @@
             <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel'">
                 <div class="form-fields mb-3">
                     <label class="title text-dark">
-                        Room No
+                        Room No <span class="text-danger">*</span>
                     </label>
 
                     <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.room_no"
@@ -394,7 +394,7 @@
                         <div class="form-fields mb-3"
                             v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location">
                             <label class="title text-dark">
-                                Location
+                                Location <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                 v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
@@ -425,7 +425,7 @@
                             v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location === 'hotel'">
                             <div class="form-fields mb-3">
                                 <label class="title text-dark">
-                                    Room No
+                                    Room No <span class="text-danger">*</span>
                                 </label>
 
                                 <input type="text"
