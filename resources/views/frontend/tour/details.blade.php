@@ -210,7 +210,7 @@
                                                 $badgeStyle .= "color: $badgeIconColor;";
                                             }
                                         @endphp
-                                        @if (json_decode($tour->badge) && $tour->has_five_star_five_review)
+                                        @if (json_decode($tour->badge) && json_decode($tour->badge)->enabled == 1)
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
                                                 @if ($badgeStyle && $badgeIconClass)
@@ -218,17 +218,16 @@
                                                 @endif
                                                 {{ $badgeName }}
                                             </div>
-                                        @else
+                                             @endif
+                                        @if (json_decode($tour->author_config) && json_decode($tour->author_config)->enabled == 1)
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
-                                            @if ($tour->author)
-                                                <div class="badge-of-excellence">
-                                                    @if ($authorStyle && $authorIconClass)
-                                                        <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
-                                                    @endif
-                                                    <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
-                                                    <div>{{ $tour->author->name }}</div>
-                                                </div>
-                                            @endif
+                                            <div class="badge-of-excellence">
+                                                @if ($authorStyle && $authorIconClass)
+                                                    <i style="{{ $authorStyle }}" class="{{ $authorIconClass }}"></i>
+                                                @endif
+                                                <span>{{ $authorPrefixText . ' : ' ?? 'Designed and Developed by : ' }}</span>
+                                                <div>{{ $tour->author->name }}</div>
+                                            </div>
                                         @endif
                                     </div>
                                 </div>
@@ -1470,7 +1469,7 @@
                 });
             }
             const enabledDates = @json($tour->availabilities->filter(fn($a) => $a->is_available == 1)->pluck('date')->toArray());
-            
+
 
             const todayFormatted =
                 today.getFullYear() + '-' +

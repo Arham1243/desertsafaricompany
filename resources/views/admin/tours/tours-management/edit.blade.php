@@ -4282,17 +4282,28 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header d-flex align-items-center justify-content-between">
-                                <div class="title">Tour Details Badge</div>
-                                <span class="title d-flex align-items-center gap-1">
-                                    Preview:
-                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                            class='bx  bxs-show'></i></a>
-                                </span>
-                            </div>
-                            <div class="form-box__body">
+                          <div class="form-box" x-data="{ enableBadge: '{{ optional(json_decode($tour->badge))->enabled ?? 1 }}' }">
+    <div class="form-box__header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <div class="title">Tour Details Badge</div>
+            <div class="d-flex align-items-center gap-3">
+                <input type="hidden" name="tour[badge][enabled]" value="0">
+                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
+                    <input data-toggle-switch class="form-check-input" type="checkbox" id="enable_badge_switch"
+                        x-model="enableBadge" @change="enableBadge = enableBadge ? 1 : 0" value="{{ optional(json_decode($tour->badge))->enabled ?? 1 }}" {{ optional(json_decode($tour->badge))->enabled == 1 ? 'checked' : '' }}
+                        name="tour[badge][enabled]">
+                    <label class="form-check-label" for="enable_badge_switch">Enabled</label>
+                </div>
+            </div>
+        </div>
+        <span class="title d-flex align-items-center gap-1">
+            Preview:
+            <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
+                data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i class='bx  bxs-show'></i></a>
+        </span>
+    </div>
+
+    <div class="form-box__body" x-show="enableBadge == 1">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
@@ -4321,8 +4332,6 @@
                                             <input type="text" name="tour[badge][name]" class="field"
                                                 value="{{ old('tour.badge.name', optional(json_decode($tour->badge))->name) }}"
                                                 placeholder="">
-                                            <small class="muted">This badge will be shown on the tour details page when
-                                                the tour has five 5-star reviews.</small>
                                             @error('tour.badge.name')
                                                 <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -4331,26 +4340,46 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header d-flex align-items-center justify-content-between">
-                                <div class="title">Author Settings</div>
-                                <span class="title d-flex align-items-center gap-1">
-                                    Preview:
-                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                            class='bx  bxs-show'></i></a>
-                                </span>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    @php
+                         @php
                                         $authorConfig = is_string($tour->author_config)
                                             ? json_decode($tour->author_config, true)
                                             : (is_array($tour->author_config)
                                                 ? $tour->author_config
                                                 : []);
                                     @endphp
+                           <div class="form-box" x-data="{ enableAuthor: {{ optional($authorConfig)['enabled'] ?? 1 }} }">
+    <div class="form-box__header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <div class="title">Author Settings</div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
+                    <input type="hidden" name="tour[status][author_config][enabled]" value="0">
+                    <input 
+                        data-toggle-switch 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="enable_author_switch"
+                        x-model="enableAuthor" 
+                        @change="enableAuthor = enableAuthor ? 1 : 0" 
+                        value="{{ optional($authorConfig)['enabled'] ?? 1 }}"
+                        {{ optional($authorConfig)['enabled'] == 1 ? 'checked' : '' }}
+                        name="tour[status][author_config][enabled]"
+                    >
+                    <label class="form-check-label" for="enable_author_switch">Enabled</label>
+                </div>
+            </div>
+        </div>
+        <span class="title d-flex align-items-center gap-1">
+            Preview:
+            <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
+                data-fancybox="gallery" class="themeBtn p-1" title="Section Preview">
+                <i class='bx bxs-show'></i>
+            </a>
+        </span>
+    </div>
 
+    <div class="form-box__body" x-show="enableAuthor == 1">
+                                <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
                                             <label class="title">Author & Background Color :</label>

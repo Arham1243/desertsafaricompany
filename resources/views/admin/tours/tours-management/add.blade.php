@@ -3591,62 +3591,91 @@
 
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header d-flex align-items-center justify-content-between">
-                                <div class="title">Tour Details Badge</div>
-                                <span class="title d-flex align-items-center gap-1">
-                                    Preview:
-                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                            class='bx  bxs-show'></i></a>
-                                </span>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-fields">
-                                            <div class="d-flex align-items-center gap-3 mb-2">
-                                                <span class="title mb-0">Badge icon: <a class="p-0 ps-2 nav-link"
-                                                        href="//v2.boxicons.com" target="_blank">boxicons</a></span>
-                                            </div>
-                                            <div class="d-flex align-items-center gap-3">
-                                                <input type="text" name="tour[badge][icon_class]" class="field"
-                                                    value="{{ old('tour[badge][icon_class]', 'bx bx-badge-check') }}"
-                                                    placeholder="" oninput="showIcon(this)">
-                                                <i class="bx bx-badge-check bx-md" data-preview-icon></i>
-                                            </div>
-                                            @error('tour[badge][icon_class]')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12">
-                                        <div class="form-fields">
-                                            <label class="title">Badge Name:</label>
-                                            <input type="text" name="tour[badge][name]" class="field"
-                                                value="{{ old('tour[badge][name]') }}" placeholder="">
+                          
 
-                                            <small class="muted">This badge will be shown on the tour details page
-                                                when the tour has five 5-star reviews.</small>
-                                            @error('tour[badge][name]')
-                                                <div class="text-danger">{{ $message }}</div>
-                                            @enderror
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="form-box" x-data="{ enableBadge: 1 }">
+    <div class="form-box__header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <div class="title">Tour Details Badge</div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
+                    <input data-toggle-switch class="form-check-input" type="checkbox" id="enable_badge_switch"
+                        x-model="enableBadge" @change="enableBadge = enableBadge ? 1 : 0" value="1" checked
+                        name="tour[badge][enabled]">
+                    <label class="form-check-label" for="enable_badge_switch">Enabled</label>
+                </div>
+            </div>
+        </div>
+        <span class="title d-flex align-items-center gap-1">
+            Preview:
+            <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
+                data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i class='bx  bxs-show'></i></a>
+        </span>
+    </div>
+
+    <div class="form-box__body" x-show="enableBadge == 1">
+            <div class="row">
+                <div class="col-md-6 col-12">
+                    <div class="form-fields">
+                        <div class="d-flex align-items-center gap-3 mb-2">
+                            <span class="title mb-0">Badge icon: <a class="p-0 ps-2 nav-link" href="//v2.boxicons.com"
+                                    target="_blank">boxicons</a></span>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header d-flex align-items-center justify-content-between">
-                                <div class="title">Author Settings</div>
-                                <span class="title d-flex align-items-center gap-1">
-                                    Preview:
-                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
-                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
-                                            class='bx  bxs-show'></i></a>
-                                </span>
-                            </div>
-                            <div class="form-box__body">
+                        <div class="d-flex align-items-center gap-3">
+                            <input type="text" name="tour[badge][icon_class]" class="field"
+                                value="{{ old('tour[badge][icon_class]', 'bx bx-badge-check') }}" placeholder=""
+                                oninput="showIcon(this)">
+                            <i class="bx bx-badge-check bx-md" data-preview-icon></i>
+                        </div>
+                        @error('tour[badge][icon_class]')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+                <div class="col-md-6 col-12">
+                    <div class="form-fields">
+                        <label class="title">Badge Name:</label>
+                        <input type="text" name="tour[badge][name]" class="field"
+                            value="{{ old('tour[badge][name]') }}" placeholder="">
+                        @error('tour[badge][name]')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+                     <div class="form-box" x-data="{ enableAuthor: 1 }">
+    <div class="form-box__header d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center gap-3">
+            <div class="title">Author Settings</div>
+            <div class="d-flex align-items-center gap-3">
+                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
+                    <input 
+                        data-toggle-switch 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="enable_author_switch"
+                        x-model="enableAuthor" 
+                        @change="enableAuthor = enableAuthor ? 1 : 0" 
+                        value="1" 
+                        checked 
+                        name="tour[status][author_config][enabled]"
+                    >
+                    <label class="form-check-label" for="enable_author_switch">Enabled</label>
+                </div>
+            </div>
+        </div>
+        <span class="title d-flex align-items-center gap-1">
+            Preview:
+            <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
+                data-fancybox="gallery" class="themeBtn p-1" title="Section Preview">
+                <i class='bx bxs-show'></i>
+            </a>
+        </span>
+    </div>
+
+    <div class="form-box__body" x-show="enableAuthor == 1">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
