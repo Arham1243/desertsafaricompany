@@ -210,7 +210,11 @@
                                                 $badgeStyle .= "color: $badgeIconColor;";
                                             }
                                         @endphp
-                                        @if (json_decode($tour->badge) && json_decode($tour->badge)->enabled == 1)
+                                        @php
+                                            $badge = json_decode($tour->badge);
+                                        @endphp
+
+                                        @if ($badge && isset($badge->enabled) && $badge->enabled == 1)
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
                                                 @if ($badgeStyle && $badgeIconClass)
@@ -218,7 +222,7 @@
                                                 @endif
                                                 {{ $badgeName }}
                                             </div>
-                                             @endif
+                                        @endif
                                         @if (json_decode($tour->author_config) && json_decode($tour->author_config)->enabled == 1)
                                             <span class=pipeDivider><i class='bx bxs-circle'></i> </span>
                                             <div class="badge-of-excellence">
