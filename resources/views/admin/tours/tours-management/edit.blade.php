@@ -2995,10 +2995,8 @@
                                                             </div>
                                                             <div class="form-fields my-0">
                                                                 <label class="title">Time</label>
-                                                                <input style="width: 150px !important;" 
-                                                                 type="time"
-                                                                 onclick="this.showPicker()"
-                                                                    class="field"
+                                                                <input style="width: 150px !important;" type="time"
+                                                                    onclick="this.showPicker()" class="field"
                                                                     name="tour[availability][advance_booking][time]"
                                                                     value="{{ optional($availability_advance_booking)['time'] ?? '' }}">
 
@@ -3224,35 +3222,38 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                         <div class="col-12 mt-4" x-show="activitiesMulitpleSelection.includes('timeslot')">
-    <div class="form-fields mb-4">
-        <label class="title text-dark">Timeslot</label>
-        @php
-            $fromValue = $bookingAdditional['activities']['multiple_selection']['timeslot']['from'] ?? null;
-            $toValue = $bookingAdditional['activities']['multiple_selection']['timeslot']['to'] ?? null;
-        @endphp
-        <div class="row">
-            <div class="col-md-6">
-                <label class="title text-dark">From</label>
-                <input
-                    name="tour[bookingAdditional][activities][multiple_selection][timeslot][from]"
-                    type="time"
-                    onclick="this.showPicker()"
-                    class="field"
-                    value="{{ $fromValue }}" />
-            </div>
-            <div class="col-md-6">
-                <label class="title text-dark">To</label>
-                <input
-                    name="tour[bookingAdditional][activities][multiple_selection][timeslot][to]"
-                    type="time"
-                    onclick="this.showPicker()"
-                    class="field"
-                    value="{{ $toValue }}" />
-            </div>
-        </div>
-    </div>
-</div>
+                                            <div class="col-12 mt-4"
+                                                x-show="activitiesMulitpleSelection.includes('timeslot')">
+                                                <div class="form-fields mb-4">
+                                                    <label class="title text-dark">Timeslot</label>
+                                                    @php
+                                                        $fromValue =
+                                                            $bookingAdditional['activities']['multiple_selection'][
+                                                                'timeslot'
+                                                            ]['from'] ?? null;
+                                                        $toValue =
+                                                            $bookingAdditional['activities']['multiple_selection'][
+                                                                'timeslot'
+                                                            ]['to'] ?? null;
+                                                    @endphp
+                                                    <div class="row">
+                                                        <div class="col-md-6">
+                                                            <label class="title text-dark">From</label>
+                                                            <input
+                                                                name="tour[bookingAdditional][activities][multiple_selection][timeslot][from]"
+                                                                type="time" onclick="this.showPicker()"
+                                                                class="field" value="{{ $fromValue }}" />
+                                                        </div>
+                                                        <div class="col-md-6">
+                                                            <label class="title text-dark">To</label>
+                                                            <input
+                                                                name="tour[bookingAdditional][activities][multiple_selection][timeslot][to]"
+                                                                type="time" onclick="this.showPicker()"
+                                                                class="field" value="{{ $toValue }}" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 
                                             <div class="col-12 mt-4"
                                                 x-show="activitiesMulitpleSelection.includes('pickup_location')">
@@ -3416,137 +3417,113 @@
 
                                 <!-- Timeslot -->
                                 <div class="row mt-4" x-show="additionalType === 'timeslot'">
-    <div class="col-12 mb-4">
-        <div class="form-fields mb-3">
-            <label class="title text-dark">Timeslot</label>
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields mb-3">
+                                            <label class="title text-dark">Timeslot</label>
 
-            @php
-                $fromValue = $timeslots['options']['from'] ?? null;
-                $toValue = $timeslots['options']['to'] ?? null;
-            @endphp
+                                            @php
+                                                $fromValue = $timeslots['options']['from'] ?? null;
+                                                $toValue = $timeslots['options']['to'] ?? null;
+                                            @endphp
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="title text-dark">From</label>
-                    <input
-                        name="tour[bookingAdditional][timeslots][options][from]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $fromValue }}" />
-                </div>
-                <div class="col-md-6">
-                    <label class="title text-dark">To</label>
-                    <input
-                        name="tour[bookingAdditional][timeslots][options][to]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $toValue }}" />
-                </div>
-            </div>
-        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">From</label>
+                                                    <input name="tour[bookingAdditional][timeslots][options][from]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $fromValue }}" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">To</label>
+                                                    <input name="tour[bookingAdditional][timeslots][options][to]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $toValue }}" />
+                                                </div>
+                                            </div>
+                                        </div>
 
-        <div class="form-fields">
-            <label class="title text-dark">User remarks</label>
-            <input
-                type="text"
-                name="tour[bookingAdditional][timeslots][user_remarks]"
-                class="field"
-                value="{{ $timeslots['user_remarks'] ?? '' }}" />
-        </div>
-    </div>
-</div>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][timeslots][user_remarks]" class="field"
+                                                value="{{ $timeslots['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <!-- Meeting Time -->
-                             <div class="row mt-4" x-show="additionalType === 'meeting_time'">
-    <div class="col-12 mb-4">
-        <div class="form-fields mb-3">
-            <label class="title text-dark">Meeting Time</label>
+                                <div class="row mt-4" x-show="additionalType === 'meeting_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields mb-3">
+                                            <label class="title text-dark">Meeting Time</label>
 
-            @php
-                $fromValue = $meetingTimes['options']['from'] ?? null;
-                $toValue = $meetingTimes['options']['to'] ?? null;
-            @endphp
+                                            @php
+                                                $fromValue = $meetingTimes['options']['from'] ?? null;
+                                                $toValue = $meetingTimes['options']['to'] ?? null;
+                                            @endphp
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="title text-dark">From</label>
-                    <input
-                        name="tour[bookingAdditional][meeting_time][options][from]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $fromValue }}" />
-                </div>
-                <div class="col-md-6">
-                    <label class="title text-dark">To</label>
-                    <input
-                        name="tour[bookingAdditional][meeting_time][options][to]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $toValue }}" />
-                </div>
-            </div>
-        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">From</label>
+                                                    <input name="tour[bookingAdditional][meeting_time][options][from]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $fromValue }}" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">To</label>
+                                                    <input name="tour[bookingAdditional][meeting_time][options][to]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $toValue }}" />
+                                                </div>
+                                            </div>
+                                        </div>
 
-        <div class="form-fields">
-            <label class="title text-dark">User remarks</label>
-            <input
-                type="text"
-                name="tour[bookingAdditional][meeting_time][user_remarks]"
-                class="field"
-                value="{{ $meetingTimes['user_remarks'] ?? '' }}" />
-        </div>
-    </div>
-</div>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][meeting_time][user_remarks]"
+                                                class="field" value="{{ $meetingTimes['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <!-- Departure Time -->
-                       <div class="row mt-4" x-show="additionalType === 'departure_time'">
-    <div class="col-12 mb-4">
-        <div class="form-fields mb-3">
-            <label class="title text-dark">Departure Time</label>
+                                <div class="row mt-4" x-show="additionalType === 'departure_time'">
+                                    <div class="col-12 mb-4">
+                                        <div class="form-fields mb-3">
+                                            <label class="title text-dark">Departure Time</label>
 
-            @php
-                $fromValue = $departureTimes['options']['from'] ?? null;
-                $toValue = $departureTimes['options']['to'] ?? null;
-            @endphp
+                                            @php
+                                                $fromValue = $departureTimes['options']['from'] ?? null;
+                                                $toValue = $departureTimes['options']['to'] ?? null;
+                                            @endphp
 
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="title text-dark">From</label>
-                    <input
-                        name="tour[bookingAdditional][departure_time][options][from]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $fromValue }}" />
-                </div>
-                <div class="col-md-6">
-                    <label class="title text-dark">To</label>
-                    <input
-                        name="tour[bookingAdditional][departure_time][options][to]"
-                        type="time"
-                        onclick="this.showPicker()"
-                        class="field"
-                        value="{{ $toValue }}" />
-                </div>
-            </div>
-        </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">From</label>
+                                                    <input name="tour[bookingAdditional][departure_time][options][from]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $fromValue }}" />
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="title text-dark">To</label>
+                                                    <input name="tour[bookingAdditional][departure_time][options][to]"
+                                                        type="time" onclick="this.showPicker()" class="field"
+                                                        value="{{ $toValue }}" />
+                                                </div>
+                                            </div>
+                                        </div>
 
-        <div class="form-fields">
-            <label class="title text-dark">User remarks</label>
-            <input
-                type="text"
-                name="tour[bookingAdditional][departure_time][user_remarks]"
-                class="field"
-                value="{{ $departureTimes['user_remarks'] ?? '' }}" />
-        </div>
-    </div>
-</div>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">User remarks</label>
+                                            <input type="text"
+                                                name="tour[bookingAdditional][departure_time][user_remarks]"
+                                                class="field" value="{{ $departureTimes['user_remarks'] ?? '' }}" />
+                                        </div>
+                                    </div>
+                                </div>
 
 
                                 <!-- Departure Hotel Name -->
@@ -3615,53 +3592,29 @@
                                 <div class="row mt-4" x-show="additionalType === 'pickup_location'">
                                     <div class="col-12 mb-4">
                                         <div class="form-fields">
-                                            <div class="repeater-table" data-repeater>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Option</th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-repeater-list>
-                                                        @php
-                                                            $pickupLocationsOptions = $pickupLocations['options'] ?? [];
-                                                            if (empty($pickupLocationsOptions)) {
-                                                                $pickupLocationsOptions = [null];
-                                                            }
-                                                        @endphp
-                                                        @foreach ($pickupLocationsOptions as $option)
-                                                            <tr data-repeater-item>
-                                                                <td>
-                                                                    <input
-                                                                        name="tour[bookingAdditional][pickup_location][options][]"
-                                                                        type="text" class="field"
-                                                                        value="{{ $option }}" />
-                                                                </td>
-                                                                <td>
-                                                                    <div class="d-flex gap-2">
-                                                                        <button type="button"
-                                                                            class="delete-btn ms-auto delete-btn--static"
-                                                                            data-repeater-remove
-                                                                            {{ $loop->first ? 'disabled' : '' }}>
-                                                                            <i class="bx bxs-trash-alt"></i>
-                                                                        </button>
-                                                                        <button type="button"
-                                                                            class="add-btn ms-auto add-btn--static"
-                                                                            data-repeater-insert>
-                                                                            <i class="bx bx-plus"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
-                                                    Add <i class="bx bx-plus"></i>
-                                                </button>
+                                            <label class="title text-dark">Pickup options</label>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="pickup_hotel"
+                                                    name="tour[bookingAdditional][pickup_location][options][]"
+                                                    value="hotel"
+                                                    {{ in_array('hotel', $pickupLocations['options'] ?? []) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="pickup_hotel">
+                                                    Hotel
+                                                </label>
+                                            </div>
+
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="pickup_home"
+                                                    name="tour[bookingAdditional][pickup_location][options][]"
+                                                    value="home"
+                                                    {{ in_array('home', $pickupLocations['options'] ?? []) ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="pickup_home">
+                                                    Home
+                                                </label>
                                             </div>
                                         </div>
+
                                         <div class="form-fields mt-2">
                                             <label class="title text-dark">User remarks</label>
                                             <input type="text"
@@ -4282,28 +4235,33 @@
                                 </div>
                             </div>
                         </div>
-                          <div class="form-box" x-data="{ enableBadge: '{{ optional(json_decode($tour->badge))->enabled ?? 1 }}' }">
-    <div class="form-box__header d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-3">
-            <div class="title">Tour Details Badge</div>
-            <div class="d-flex align-items-center gap-3">
-                <input type="hidden" name="tour[badge][enabled]" value="0">
-                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
-                    <input data-toggle-switch class="form-check-input" type="checkbox" id="enable_badge_switch"
-                        x-model="enableBadge" @change="enableBadge = enableBadge ? 1 : 0" value="{{ optional(json_decode($tour->badge))->enabled ?? 1 }}" {{ optional(json_decode($tour->badge))->enabled == 1 ? 'checked' : '' }}
-                        name="tour[badge][enabled]">
-                    <label class="form-check-label" for="enable_badge_switch">Enabled</label>
-                </div>
-            </div>
-        </div>
-        <span class="title d-flex align-items-center gap-1">
-            Preview:
-            <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
-                data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i class='bx  bxs-show'></i></a>
-        </span>
-    </div>
+                        <div class="form-box" x-data="{ enableBadge: '{{ optional(json_decode($tour->badge))->enabled ?? 1 }}' }">
+                            <div class="form-box__header d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">Tour Details Badge</div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <input type="hidden" name="tour[badge][enabled]" value="0">
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="enable_badge_switch" x-model="enableBadge"
+                                                @change="enableBadge = enableBadge ? 1 : 0"
+                                                value="{{ optional(json_decode($tour->badge))->enabled ?? 1 }}"
+                                                {{ optional(json_decode($tour->badge))->enabled == 1 ? 'checked' : '' }}
+                                                name="tour[badge][enabled]">
+                                            <label class="form-check-label" for="enable_badge_switch">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="title d-flex align-items-center gap-1">
+                                    Preview:
+                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/exclence-preview.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preivew"><i
+                                            class='bx  bxs-show'></i></a>
+                                </span>
+                            </div>
 
-    <div class="form-box__body" x-show="enableBadge == 1">
+                            <div class="form-box__body" x-show="enableBadge == 1">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">
@@ -4340,45 +4298,42 @@
                                 </div>
                             </div>
                         </div>
-                         @php
-                                        $authorConfig = is_string($tour->author_config)
-                                            ? json_decode($tour->author_config, true)
-                                            : (is_array($tour->author_config)
-                                                ? $tour->author_config
-                                                : []);
-                                    @endphp
-                           <div class="form-box" x-data="{ enableAuthor: {{ optional($authorConfig)['enabled'] ?? 1 }} }">
-    <div class="form-box__header d-flex align-items-center justify-content-between">
-        <div class="d-flex align-items-center gap-3">
-            <div class="title">Author Settings</div>
-            <div class="d-flex align-items-center gap-3">
-                <div class="form-check form-switch" data-enabled-text="Enabled" data-disabled-text="Disabled">
-                    <input type="hidden" name="tour[status][author_config][enabled]" value="0">
-                    <input 
-                        data-toggle-switch 
-                        class="form-check-input" 
-                        type="checkbox" 
-                        id="enable_author_switch"
-                        x-model="enableAuthor" 
-                        @change="enableAuthor = enableAuthor ? 1 : 0" 
-                        value="{{ optional($authorConfig)['enabled'] ?? 1 }}"
-                        {{ optional($authorConfig)['enabled'] == 1 ? 'checked' : '' }}
-                        name="tour[status][author_config][enabled]"
-                    >
-                    <label class="form-check-label" for="enable_author_switch">Enabled</label>
-                </div>
-            </div>
-        </div>
-        <span class="title d-flex align-items-center gap-1">
-            Preview:
-            <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
-                data-fancybox="gallery" class="themeBtn p-1" title="Section Preview">
-                <i class='bx bxs-show'></i>
-            </a>
-        </span>
-    </div>
+                        @php
+                            $authorConfig = is_string($tour->author_config)
+                                ? json_decode($tour->author_config, true)
+                                : (is_array($tour->author_config)
+                                    ? $tour->author_config
+                                    : []);
+                        @endphp
+                        <div class="form-box" x-data="{ enableAuthor: {{ optional($authorConfig)['enabled'] ?? 1 }} }">
+                            <div class="form-box__header d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="title">Author Settings</div>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <div class="form-check form-switch" data-enabled-text="Enabled"
+                                            data-disabled-text="Disabled">
+                                            <input type="hidden" name="tour[status][author_config][enabled]"
+                                                value="0">
+                                            <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                id="enable_author_switch" x-model="enableAuthor"
+                                                @change="enableAuthor = enableAuthor ? 1 : 0"
+                                                value="{{ optional($authorConfig)['enabled'] ?? 1 }}"
+                                                {{ optional($authorConfig)['enabled'] == 1 ? 'checked' : '' }}
+                                                name="tour[status][author_config][enabled]">
+                                            <label class="form-check-label" for="enable_author_switch">Enabled</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="title d-flex align-items-center gap-1">
+                                    Preview:
+                                    <a href="{{ asset('admin/assets/images/tour-inner-settings/author-preview.png') }}"
+                                        data-fancybox="gallery" class="themeBtn p-1" title="Section Preview">
+                                        <i class='bx bxs-show'></i>
+                                    </a>
+                                </span>
+                            </div>
 
-    <div class="form-box__body" x-show="enableAuthor == 1">
+                            <div class="form-box__body" x-show="enableAuthor == 1">
                                 <div class="row">
                                     <div class="col-md-6 col-12">
                                         <div class="form-fields">

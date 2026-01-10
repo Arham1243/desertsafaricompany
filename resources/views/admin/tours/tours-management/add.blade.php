@@ -2689,8 +2689,7 @@
     
                                                 </div>
                                             </div>
-                                            <div class="col-12 mt-4"
-                                                x-show="activitiesMulitpleSelection.includes('pickup_location')">
+                                            <div class="col-12 mt-4" x-show="activitiesMulitpleSelection.includes('pickup_location')">
                                                 <div class="form-fields">
                                                     <label class="title text-dark">Pickup Location</label>
                                                     <div class="repeater-table form-fields" data-repeater>
@@ -2998,43 +2997,35 @@
                                 <div class="row mt-4" x-show="additionalType === 'pickup_location'">
                                     <div class="col-12 mb-4">
                                         <div class="form-fields">
-                                            <div class="repeater-table" data-repeater>
-                                                <table class="table table-bordered">
-                                                    <thead>
-                                                        <tr>
-                                                            <th scope="col">Option</th>
-                                                            <th class="text-end" scope="col">Remove</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody data-repeater-list>
-                                                        <tr data-repeater-item>
-                                                            <td>
-                                                                <input
-                                                                    name="tour[bookingAdditional][pickup_location][options][]"
-                                                                    type="text" class="field" />
-                                                            </td>
-                                                            <td>
-                                                                <div class="d-flex gap-2">
-                                                                    <button type="button"
-                                                                        class="delete-btn ms-auto delete-btn--static"
-                                                                        data-repeater-remove disabled>
-                                                                        <i class="bx bxs-trash-alt"></i>
-                                                                    </button>
-                                                                    <button type="button"
-                                                                        class="add-btn ms-auto add-btn--static"
-                                                                        data-repeater-insert>
-                                                                        <i class="bx bx-plus"></i>
-                                                                    </button>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
-                                                </table>
-                                                <button type="button" class="themeBtn ms-auto" data-repeater-create>
-                                                    Add <i class="bx bx-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
+    <label class="title text-dark">Pickup options</label>
+
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="pickup_hotel"
+            name="tour[bookingAdditional][activities][pickup_location][]"
+            value="hotel"
+        >
+        <label class="form-check-label" for="pickup_hotel">
+            Hotel
+        </label>
+    </div>
+
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="pickup_home"
+            name="tour[bookingAdditional][activities][pickup_location][]"
+            value="home"
+        >
+        <label class="form-check-label" for="pickup_home">
+            Home
+        </label>
+    </div>
+</div>
+
                                         <div class="form-fields mt-2">
                                             <label class="title text-dark">User remarks</label>
                                             <input type="text"

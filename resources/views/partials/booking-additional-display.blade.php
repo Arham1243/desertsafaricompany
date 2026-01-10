@@ -42,25 +42,30 @@
             // City / meeting_point
             return $selection['city_name'] . ' - ' . $selection['meeting_point'];
         } elseif (is_array($selection) && isset($selection['location_type'], $selection['address'])) {
-            // Pickup location
-            $parts = [];
+            $lines = [];
 
-            // Location type (nicely formatted)
-            $parts[] = ucfirst(str_replace('_', ' ', $selection['location_type']));
+            // Title line
+            $lines[] =
+                '<strong>&bull; Location type:</strong> ' . ucfirst(str_replace('_', ' ', $selection['location_type']));
 
             // Address
-            $parts[] = $selection['address'];
+            $lines[] = '&bull; <strong>Location:</strong> ' . e($selection['address']);
 
-            // Optional hotel fields
+            // Hotel-specific fields
             if (!empty($selection['room_no'])) {
-                $parts[] = 'Room: ' . $selection['room_no'];
+                $lines[] = '&bull; <strong>Room No:</strong> ' . e($selection['room_no']);
             }
 
             if (!empty($selection['hotel_no'])) {
-                $parts[] = 'Hotel No: ' . $selection['hotel_no'];
+                $lines[] = '&bull; <strong>Hotel Contact:</strong> ' . e($selection['hotel_no']);
             }
 
-            return implode(' | ', $parts);
+            // Home-specific field
+            if (!empty($selection['alternative_no'])) {
+                $lines[] = '&bull; <strong>Alternative Contact:</strong> ' . e($selection['alternative_no']);
+            }
+
+            return implode('<br>', $lines);
         } elseif (is_string($selection)) {
             // Simple string
             if (preg_match('/^([01]?\d|2[0-3]):([0-5]\d)$/', $selection)) {
@@ -102,7 +107,7 @@
                     <div class="list-group">
                         <div class="list-group-item d-flex justify-content-between align-items-center">
                             <strong>{{ ucfirst(str_replace('_', ' ', $type)) }}:</strong>
-                            <span>{{ formatNonActivities($selection) }}</span>
+                            <span>{!! formatNonActivities($selection) !!}</span>
                         </div>
                     </div>
                 @endif

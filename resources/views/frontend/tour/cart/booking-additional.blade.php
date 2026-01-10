@@ -148,23 +148,37 @@
 
             <!-- Ensure selection object exists -->
             @{{ (() => {
-    if (!cart.tours[tour.id].booking_additional_selections.selection ||
-        typeof cart.tours[tour.id].booking_additional_selections.selection !== 'object') {
+    if (!cart.tours[tour.id].booking_additional_selections.selection || typeof cart.tours[tour.id].booking_additional_selections.selection !== 'object') {
         cart.tours[tour.id].booking_additional_selections.selection = {
             location_type: '',
             address: '',
             room_no: '',
-            hotel_no: ''
+            hotel_no: '',
+            alternative_no: ''
         };
     }
     return '';
 })() }}
 
+            @{{ (() => {
+    const options = getBookingAdditional(tour.id).pickup_location?.options || [];
+
+    if (
+        options.length === 1 &&
+        !cart.tours[tour.id].booking_additional_selections.selection.location_type
+    ) {
+        cart.tours[tour.id].booking_additional_selections.selection.location_type = options[0];
+    }
+
+    return '';
+})() }}
+
+
             <!-- Pickup Location Dropdown -->
             <div class="form-fields mb-3">
                 <label class="title text-dark">Pickup Location <span class="text-danger">*</span></label>
                 <select v-model="cart.tours[tour.id].booking_additional_selections.selection.location_type"
-                    @change="handleBookingAdditionalChange(tour.id)" class="field" required>
+                    @change="handleBookingAdditionalChange(tour.id)" class="field text-capitalize" required>
                     <option value="">Select Pickup Location</option>
                     <option v-for="(option, index) in getBookingAdditional(tour.id).pickup_location?.options || []"
                         :key="index" :value="option">
@@ -180,8 +194,24 @@
                     Location
                 </label>
                 <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
-                    @input="handleBookingAdditionalChange(tour.id)" class="field" required placeholder="e.g. (Marina Gate 2, Dubai Marina)" />
+                    @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                    :placeholder="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel' ?
+                        'e.g. (Atlantis The Palm, Palm Jumeirah)' :
+                        'e.g. (Marina Gate 2, Dubai Marina)'" />
             </div>
+
+            <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'home'">
+                <div class="form-fields mb-3">
+                    <label class="title text-dark">
+                        Alternative Contact Number
+                    </label>
+
+                    <input type="text"
+                        v-model="cart.tours[tour.id].booking_additional_selections.selection.alternative_no"
+                        @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                        placeholder="e.g. (+971-55-2301416)" />
+                </div>
+            </template>
 
             <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel'">
                 <div class="form-fields mb-3">
@@ -199,7 +229,8 @@
                         Hotel Contact Number
                     </label>
 
-                    <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.hotel_no"
+                    <input type="text"
+                        v-model="cart.tours[tour.id].booking_additional_selections.selection.hotel_no"
                         @input="handleBookingAdditionalChange(tour.id)" class="field" required
                         placeholder="e.g. (+971-55-2301416)" />
                 </div>
