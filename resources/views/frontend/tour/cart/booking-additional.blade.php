@@ -68,7 +68,7 @@
                     :data-max="getBookingAdditional(tour.id).timeslots?.options?.to" class="time-picker field"
                     required />
 
-                
+
                 <small v-if="getBookingAdditional(tour.id).timeslots?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).timeslots.user_remarks }}
                 </small>
@@ -89,10 +89,9 @@
                     v-model="cart.tours[tour.id].booking_additional_selections.selection"
                     :data-min="getBookingAdditional(tour.id).meeting_time?.options?.from"
                     :data-max="getBookingAdditional(tour.id).meeting_time?.options?.to" class="time-picker field"
-                    @change="handleBookingAdditionalChange(tour.id)"
-                    required />
+                    @change="handleBookingAdditionalChange(tour.id)" required />
 
-                
+
 
                 <small v-if="getBookingAdditional(tour.id).meeting_time?.user_remarks" class="text-muted d-block mt-3">
                     @{{ getBookingAdditional(tour.id).meeting_time.user_remarks }}
@@ -114,10 +113,9 @@
                     v-model="cart.tours[tour.id].booking_additional_selections.selection"
                     :data-min="getBookingAdditional(tour.id).departure_time?.options?.from"
                     :data-max="getBookingAdditional(tour.id).departure_time?.options?.to" class="time-picker field"
-                    @change="handleBookingAdditionalChange(tour.id)"
-                    required />
+                    @change="handleBookingAdditionalChange(tour.id)" required />
 
-                
+
 
                 <small v-if="getBookingAdditional(tour.id).departure_time?.user_remarks"
                     class="text-muted d-block mt-3">
@@ -178,8 +176,11 @@
             <!-- Conditional Address Input -->
             <div class="form-fields mb-3"
                 v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type">
+                <label class="title text-dark">
+                    Location
+                </label>
                 <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
-                    @input="handleBookingAdditionalChange(tour.id)" class="field" required />
+                    @input="handleBookingAdditionalChange(tour.id)" class="field" required placeholder="e.g. (Marina Gate 2, Dubai Marina)" />
             </div>
 
             <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel'">
@@ -189,17 +190,18 @@
                     </label>
 
                     <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.room_no"
-                        @input="handleBookingAdditionalChange(tour.id)" class="field" required />
+                        @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                        placeholder="e.g. (1001)" />
                 </div>
 
                 <div class="form-fields mb-3">
                     <label class="title text-dark">
-                        Hotel No
+                        Hotel Contact Number
                     </label>
 
-                    <input type="text"
-                        v-model="cart.tours[tour.id].booking_additional_selections.selection.hotel_no"
-                        @input="handleBookingAdditionalChange(tour.id)" class="field" required />
+                    <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.hotel_no"
+                        @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                        placeholder="e.g. (+971-55-2301416)" />
                 </div>
             </template>
 
@@ -296,11 +298,9 @@
                                 v-model="cart.tours[tour.id].booking_additional_selections.selection.timeslot"
                                 :data-min="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.from"
                                 :data-max="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.to"
-                                class="time-picker field" @change="handleBookingAdditionalChange(tour.id)"
-                                
-                                required />
+                                class="time-picker field" @change="handleBookingAdditionalChange(tour.id)" required />
 
-                            
+
 
                             <small
                                 v-if="getBookingAdditional(tour.id).activities.multiple_selection.timeslot?.user_remarks"
