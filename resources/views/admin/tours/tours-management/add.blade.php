@@ -2691,45 +2691,35 @@
                                             </div>
                                             <div class="col-12 mt-4" x-show="activitiesMulitpleSelection.includes('pickup_location')">
                                                 <div class="form-fields">
-                                                    <label class="title text-dark">Pickup Location</label>
-                                                    <div class="repeater-table form-fields" data-repeater>
-                                                        <table class="table table-bordered">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th scope="col">Option</th>
-                                                                    <th class="text-end" scope="col">Remove</th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody data-repeater-list>
-                                                                <tr data-repeater-item>
-                                                                    <td>
-                                                                        <input
-                                                                            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
-                                                                            type="text" class="field" />
-                                                                    </td>
-                                                                    <td>
-                                                                        <div class="d-flex gap-2">
-                                                                            <button type="button"
-                                                                                class="delete-btn ms-auto delete-btn--static"
-                                                                                data-repeater-remove disabled>
-                                                                                <i class="bx bxs-trash-alt"></i>
-                                                                            </button>
-                                                                            <button type="button"
-                                                                                class="add-btn ms-auto add-btn--static"
-                                                                                data-repeater-insert>
-                                                                                <i class="bx bx-plus"></i>
-                                                                            </button>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <button type="button" class="themeBtn ms-auto"
-                                                            data-repeater-create>
-                                                            Add <i class="bx bx-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
+    <label class="title text-dark">Pickup Location</label>
+
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="activity_pickup_hotel"
+            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+            value="hotel"
+        >
+        <label class="form-check-label" for="activity_pickup_hotel">
+            Hotel
+        </label>
+    </div>
+
+    <div class="form-check">
+        <input
+            class="form-check-input"
+            type="checkbox"
+            id="activity_pickup_home"
+            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+            value="home"
+        >
+        <label class="form-check-label" for="activity_pickup_home">
+            Home
+        </label>
+    </div>
+</div>
+
                                             </div>
                                             <div class="form-fields mt-2">
                                                 <label class="title text-dark">User remarks</label>

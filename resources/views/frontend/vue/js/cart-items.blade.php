@@ -788,6 +788,13 @@
                             if (!selections[activityType] || selections[activityType] === '') {
                                 return false;
                             }
+
+                            if (activityType === 'pickup_location') {
+                                const address = selections.address;
+                                if (!address || address.trim() === '') {
+                                    return false;
+                                }
+                            }
                         }
                     }
                     return true;

@@ -344,11 +344,43 @@
                     <!-- Pickup Location Dropdown -->
                     <template
                         v-if="(getBookingAdditional(tour.id).activities?.multiple_selection?.activity || []).includes('pickup_location')">
+
+                        <!-- Ensure selection object exists -->
+                        @{{ (() => {
+    if (!cart.tours[tour.id].booking_additional_selections.selection ||
+        typeof cart.tours[tour.id].booking_additional_selections.selection !== 'object') {
+        cart.tours[tour.id].booking_additional_selections.selection = {
+            pickup_location: '',
+            address: '',
+            room_no: '',
+            hotel_no: '',
+            alternative_no: ''
+        };
+    }
+    return '';
+})() }}
+
+                        <!-- Auto select if only one option -->
+                        @{{ (() => {
+    const options = getBookingAdditional(tour.id).activities.multiple_selection.pickup_location?.options || [];
+
+    if (
+        options.length === 1 &&
+        !cart.tours[tour.id].booking_additional_selections.selection.pickup_location
+    ) {
+        cart.tours[tour.id].booking_additional_selections.selection.pickup_location = options[0];
+    }
+
+    return '';
+})() }}
+
+                        <!-- Pickup Location Dropdown -->
                         <div class="form-fields mb-3">
                             <label class="title text-dark">Pickup Location <span class="text-danger">*</span></label>
                             <select
                                 v-model="cart.tours[tour.id].booking_additional_selections.selection.pickup_location"
-                                @change="handleBookingAdditionalChange(tour.id)" class="field" required>
+                                @change="handleBookingAdditionalChange(tour.id)" class="field text-capitalize"
+                                required>
                                 <option value="">Select Pickup Location</option>
                                 <option
                                     v-for="(option, index) in getBookingAdditional(tour.id).activities.multiple_selection.pickup_location?.options || []"
@@ -357,11 +389,67 @@
                                 </option>
                             </select>
                         </div>
+
+                        <!-- Conditional Address Input -->
+                        <div class="form-fields mb-3"
+                            v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location">
+                            <label class="title text-dark">
+                                Location
+                            </label>
+                            <input type="text"
+                                v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
+                                @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                                :placeholder="cart.tours[tour.id].booking_additional_selections.selection
+                                    .pickup_location === 'hotel' ?
+                                    'e.g. (Atlantis The Palm, Palm Jumeirah)' :
+                                    'e.g. (Marina Gate 2, Dubai Marina)'" />
+                        </div>
+
+                        <!-- Home-specific fields -->
+                        <template
+                            v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location === 'home'">
+                            <div class="form-fields mb-3">
+                                <label class="title text-dark">
+                                    Alternative Contact Number
+                                </label>
+
+                                <input type="text"
+                                    v-model="cart.tours[tour.id].booking_additional_selections.selection.alternative_no"
+                                    @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                                    placeholder="e.g. (+971-55-2301416)" />
+                            </div>
+                        </template>
+
+                        <!-- Hotel-specific fields -->
+                        <template
+                            v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location === 'hotel'">
+                            <div class="form-fields mb-3">
+                                <label class="title text-dark">
+                                    Room No
+                                </label>
+
+                                <input type="text"
+                                    v-model="cart.tours[tour.id].booking_additional_selections.selection.room_no"
+                                    @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                                    placeholder="e.g. (1001)" />
+                            </div>
+
+                            <div class="form-fields mb-3">
+                                <label class="title text-dark">
+                                    Hotel Contact Number
+                                </label>
+
+                                <input type="text"
+                                    v-model="cart.tours[tour.id].booking_additional_selections.selection.hotel_no"
+                                    @input="handleBookingAdditionalChange(tour.id)" class="field" required
+                                    placeholder="e.g. (+971-55-2301416)" />
+                            </div>
+                        </template>
                     </template>
 
                     <!-- Multiple Selection User Remarks -->
                     <small v-if="getBookingAdditional(tour.id).activities?.multiple_selection?.user_remarks"
-                        class="d-block mt-2" style="color: #000; font-weight: bold;">
+                        class="text-muted d-block mt-3">
                         @{{ getBookingAdditional(tour.id).activities.multiple_selection.user_remarks }}
                     </small>
                 </div>
