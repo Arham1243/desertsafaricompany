@@ -600,7 +600,7 @@
                                                                                 data-upload-img>
                                                                                 <button type="button" class="delete-btn"
                                                                                     data-delete-btn>
-                                                                                    <i class='bx bxs-trash-alt'></i>
+                                                                                    <i class='bx bxs-pen'></i>
                                                                                 </button>
                                                                                 <a href="{{ asset($merchantImage['image'] ?? 'admin/assets/images/placeholder.png') }}"
                                                                                     class="mask"
