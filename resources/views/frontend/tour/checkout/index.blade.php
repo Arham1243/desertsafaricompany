@@ -311,7 +311,7 @@
                             </div>
                             <div class="details-box__body details-box__body--pay">
                                 <ul class="payment-options">
-                                        @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
+                                    @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
                                         <!-- Card Payments - Stripe -->
                                         <li class="payment-option">
                                             <input checked class="payment-option__input" type="radio" name="payment_type"
@@ -325,7 +325,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Credit/Debit Card (Stripe)</div>
+                                                    <div class="title">Credit/Debit Card (Full Payment)</div>
                                                     <div class="note">
                                                         Visa, Mastercard, American Express, Discover, Diners Club, JCB
                                                     </div>
@@ -357,24 +357,46 @@
                                         </li>
                                     @endif
 
-                                    
-                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
-                                        <!-- Cash on Pickup -->
+                                    @if (isset($settings['paypal_enabled']) && (int) $settings['paypal_enabled'] === 1)
+                                        <!-- Card Payments - PayPal -->
                                         <li class="payment-option">
                                             <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="cod"  id="cod" />
-                                            <label for="cod" class="payment-option__box">
+                                                value="paypal" id="paypal" />
+                                            <label for="paypal" class="payment-option__box">
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
-                                                            alt="cod" class="imgFluid">
+                                                        <img src="{{ asset('frontend/assets/images/methods/5.png') }}"
+                                                            alt="paypal" class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Cash on Pickup</div>
+                                                    <div class="title">PayPal</div>
                                                     <div class="note">
-                                                        Pay the driver when you pick up your order.
+                                                        Secure payments via PayPal wallet or linked cards.
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
+
+                                    @if (isset($settings['pointcheckout_enabled']) && (int) $settings['pointcheckout_enabled'] === 1)
+                                        <!-- Card Payments - pointCheckout -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="pointCheckout" id="pointCheckout" />
+                                            <label for="pointCheckout" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/7.svg') }}"
+                                                            alt="pointCheckout" class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">Loyalty Points or Card</div>
+                                                    <div class="note">
+                                                        Use reward points or pay by card
                                                     </div>
                                                 </div>
                                             </label>
@@ -407,29 +429,6 @@
                                     @endif
 
 
-                                    @if (isset($settings['paypal_enabled']) && (int) $settings['paypal_enabled'] === 1)
-                                        <!-- Card Payments - PayPal -->
-                                        <li class="payment-option">
-                                            <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="paypal" id="paypal" />
-                                            <label for="paypal" class="payment-option__box">
-                                                <div class="title-wrapper">
-                                                    <div class="radio"></div>
-                                                    <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/5.png') }}"
-                                                            alt="paypal" class="imgFluid">
-                                                    </div>
-                                                </div>
-                                                <div class="content">
-                                                    <div class="title">PayPal</div>
-                                                    <div class="note">
-                                                        Secure payments via PayPal wallet or linked cards.
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                    @endif
-
                                     @if (isset($settings['postpay_enabled']) && (int) $settings['postpay_enabled'] === 1)
                                         <!-- Postpay (optional BNPL) -->
                                         <li class="payment-option">
@@ -453,23 +452,24 @@
                                         </li>
                                     @endif
 
-                                    @if (isset($settings['pointcheckout_enabled']) && (int) $settings['pointcheckout_enabled'] === 1)
-                                        <!-- Card Payments - pointCheckout -->
+
+                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
+                                        <!-- Cash on Pickup -->
                                         <li class="payment-option">
                                             <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="pointCheckout" id="pointCheckout" />
-                                            <label for="pointCheckout" class="payment-option__box">
+                                                value="cod" id="cod" />
+                                            <label for="cod" class="payment-option__box">
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/7.svg') }}"
-                                                            alt="pointCheckout" class="imgFluid">
+                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
+                                                            alt="cod" class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Loyalty Points or Card</div>
+                                                    <div class="title">Cash on Pickup</div>
                                                     <div class="note">
-                                                        Use reward points or pay by card
+                                                        Pay the driver when you pick up your order.
                                                     </div>
                                                 </div>
                                             </label>

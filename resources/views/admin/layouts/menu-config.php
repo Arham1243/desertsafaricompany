@@ -337,7 +337,7 @@ return [
                 'route' => route('admin.settings.edit', ['resource' => 'social-media']),
             ],
             [
-                'title' => 'Payment',
+                'title' => 'Payment Methods',
                 'icon' => 'bx bx-credit-card',
                 'route' => route('admin.settings.edit', ['resource' => 'payment']),
             ],

@@ -33,7 +33,7 @@
         [
             'route' => 'payment',
             'icon' => 'bx-credit-card',
-            'label' => 'Payment',
+            'label' => 'Payment Methods',
         ],
         [
             'route' => 'news',

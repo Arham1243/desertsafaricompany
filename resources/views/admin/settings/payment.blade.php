@@ -28,41 +28,6 @@
                                 <div class="title">Payment Secret Keys</div>
                             </div>
                             <div class="form-box__body">
-                                <div class="row" x-data="{ paypalEnabled: {{ $settings->get('paypal_enabled') ? 'true' : 'false' }} }">
-                                    <div class="col-12 mb-2">
-                                        <div class="form-fields d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center gap-3 mb-2">
-                                                <input type="hidden" name="paypal_enabled" :value="paypalEnabled ? 1 : 0">
-                                                <div class="title title--sm mb-0">PayPal:</div>
-                                                <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                    data-disabled-text="Disabled">
-                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="paypal_enabled_switch" value="1" name="paypal_enabled"
-                                                        x-model="paypalEnabled">
-                                                    <label class="form-check-label"
-                                                        for="paypal_enabled_switch">Enabled</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12" x-show="paypalEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">PayPal Client ID</label>
-                                            <input type="text" name="paypal_client_id"
-                                                value="{{ $settings->get('paypal_client_id') }}" class="field">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12" x-show="paypalEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">PayPal Secret Key</label>
-                                            <input type="text" name="paypal_secret_key"
-                                                value="{{ $settings->get('paypal_secret_key') }}" class="field">
-                                        </div>
-                                    </div>
-                                </div>
-                                <hr class="my-5">
                                 <div class="row" x-data="{ stripeEnabled: {{ $settings->get('stripe_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -97,6 +62,7 @@
                                     </div>
                                 </div>
                                 <hr class="my-5">
+
                                 <div class="row" x-data="{ tabbyEnabled: {{ $settings->get('tabby_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -130,7 +96,81 @@
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <hr class="my-5">
+                                <hr class="my-5">
+
+                                <div class="row" x-data="{ paypalEnabled: {{ $settings->get('paypal_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="paypal_enabled" :value="paypalEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">PayPal:</div>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="paypal_enabled_switch" value="1" name="paypal_enabled"
+                                                        x-model="paypalEnabled">
+                                                    <label class="form-check-label"
+                                                        for="paypal_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12" x-show="paypalEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PayPal Client ID</label>
+                                            <input type="text" name="paypal_client_id"
+                                                value="{{ $settings->get('paypal_client_id') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12" x-show="paypalEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PayPal Secret Key</label>
+                                            <input type="text" name="paypal_secret_key"
+                                                value="{{ $settings->get('paypal_secret_key') }}" class="field">
+                                        </div>
+                                    </div>
+                                </div>
+
+                             {{--    <hr class="my-5">
+                                <div class="row" x-data="{ pointCheckoutEnabled: {{ $settings->get('pointcheckout_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="pointcheckout_enabled"
+                                                    :value="pointCheckoutEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">Point Checkout:</div>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="pointcheckout_enabled_switch" value="1"
+                                                        name="pointcheckout_enabled" x-model="pointCheckoutEnabled">
+                                                    <label class="form-check-label"
+                                                        for="pointcheckout_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12" x-show="pointCheckoutEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PointCheckout API Key</label>
+                                            <input type="text" name="pointcheckout_api_key"
+                                                value="{{ $settings->get('pointcheckout_api_key') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12" x-show="pointCheckoutEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PointCheckout API Secret</label>
+                                            <input type="text" name="pointcheckout_api_secret"
+                                                value="{{ $settings->get('pointcheckout_api_secret') }}" class="field">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <hr class="my-5">
                                 <div class="row" x-data="{ tamaraEnabled: {{ $settings->get('tamara_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -199,42 +239,7 @@
                                     </div>
                                 </div>
                             </div> --}}
-                                <hr class="my-5">
-                                <div class="row" x-data="{ pointCheckoutEnabled: {{ $settings->get('pointcheckout_enabled') ? 'true' : 'false' }} }">
-                                    <div class="col-12 mb-2">
-                                        <div class="form-fields d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center gap-3 mb-2">
-                                                <input type="hidden" name="pointcheckout_enabled"
-                                                    :value="pointCheckoutEnabled ? 1 : 0">
-                                                <div class="title title--sm mb-0">Point Checkout:</div>
-                                                <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                    data-disabled-text="Disabled">
-                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="pointcheckout_enabled_switch" value="1"
-                                                        name="pointcheckout_enabled" x-model="pointCheckoutEnabled">
-                                                    <label class="form-check-label"
-                                                        for="pointcheckout_enabled_switch">Enabled</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12" x-show="pointCheckoutEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">PointCheckout API Key</label>
-                                            <input type="text" name="pointcheckout_api_key"
-                                                value="{{ $settings->get('pointcheckout_api_key') }}" class="field">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12" x-show="pointCheckoutEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">PointCheckout API Secret</label>
-                                            <input type="text" name="pointcheckout_api_secret"
-                                                value="{{ $settings->get('pointcheckout_api_secret') }}" class="field">
-                                        </div>
-                                    </div>
-                                </div>
                                 <hr class="my-5">
                                 <div class="row" x-data="{ cashEnabled: {{ $settings->get('cash_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
@@ -252,6 +257,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i
