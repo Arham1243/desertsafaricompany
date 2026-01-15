@@ -18,7 +18,7 @@
                         @if ($settings->get('pricing_tagline_text_color'))
                             color: {{ $settings->get('pricing_tagline_text_color') }}; @endif
                 @if ((int) $settings->get('pricing_tagline_bold') === 1) font-weight: bold; @endif "
-                                                        @endif>
+                                                          @endif>
                 {{ $pricingTagline['text'] ?? '' }}
             </div>
         </div>
@@ -82,11 +82,11 @@
         @if (!$tour->availability_status['available'])
             <button v-if="availabilityData" class="primary-btn w-100" :disabled="!availabilityData['isAvailable']"
                 data-tooltip="tooltip" :title="availabilityData.messages?.[0] ?? ''">
-                @{{ availabilityData['isAvailable'] ? 'Book Now' : 'Unavailable' }}
+                @{{ availabilityData['isAvailable'] ? 'Book Now' : ' Book Now' }}
             </button>
             <button v-else class="primary-btn w-100" disabled data-tooltip="tooltip"
                 title="{{ $tour->availability_status['user_message'] }}">
-                Unavailable
+                Book Now
             </button>
         @elseif (!$isDataValid)
             <button class="primary-btn w-100" disabled>
@@ -248,7 +248,7 @@
                 @if ($buttonBg || $buttonTextColor) style="
                    @if ($buttonBg) background-color: {{ $buttonBg }}; @endif
                 @if ($buttonTextColor) color: {{ $buttonTextColor }}; @endif "
-                   @endif
+                     @endif
                 >
                 <i class="bx bxl-whatsapp"></i>
                 {{ $buttonText }}

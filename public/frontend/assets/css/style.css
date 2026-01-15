@@ -7100,6 +7100,9 @@ button[disabled] {
     gap: 0.75rem;
 }
 
+.promo-code.applied .promo-code__info  {
+    align-items: flex-start; 
+}
 .promo-code__info .icon {
     font-size: 1.3rem;
     color: #685d6c;
@@ -7127,6 +7130,60 @@ button[disabled] {
     color: #8330c7;
     font-weight: 500;
 }
+
+.promo-code.applied .icon {
+    color: #8330c7;
+}
+
+.promo-breakdown {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid #e0d0eb; 
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    min-width: 220px; 
+}
+
+
+.breakdown-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+
+.breakdown-item .price {
+    font-family: monospace; 
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+
+.breakdown-item .price.text-red {
+    color: #d93025; 
+    background: #fde8e8;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+}
+
+
+.breakdown-item.total {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed #ccc;
+    color: #000;
+    font-weight: 700;
+}
+
+.breakdown-item.total .price.green {
+    color: #1a73e8; 
+    font-size: 1rem;
+}
+
 .tour-views {
     display: flex;
     align-items: center;
@@ -7144,9 +7201,6 @@ button[disabled] {
 .tour-views__count {
     font-size: 1rem;
     color: #625c66e0;
-}
-.promo-code.applied .icon {
-    color: #8330c7;
 }
 
 .skeleton {

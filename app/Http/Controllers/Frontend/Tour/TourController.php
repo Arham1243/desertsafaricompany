@@ -181,9 +181,9 @@ class TourController extends Controller
                                 'type' => 'simple',
                                 'title' => $addon['title'],
                                 'slug' => $addon['promo_slug'],
-                                'original_price' => $original,
+                                'original_price' => $original, // base price
                                 'discount_percent' => $discountPercent,
-                                'original_discounted_price' => $discounted,
+                                'original_discounted_price' => $discounted, // after addon promo
                                 'discounted_price' => $discounted,
                                 'promo_discounted_price' => $firstOrderCoupon
                                     ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
@@ -192,55 +192,60 @@ class TourController extends Controller
                                 'max_person' => (int) ($addon['max_person'] ?? 200),
                                 'quantity' => (int) ($addon['min_person'] ?? 0),
                                 'hours_left' => $hoursLeft,
+                                'is_first_order_coupon_applied' => false,
                             ];
                         }
 
                         if ($addon['type'] === 'timeslot') {
                             $slots = collect($addon['slots'] ?? []);
-                            $firstSlotDiscount = floatval($slots[0]['discounted_percent'] ?? 0);
 
                             return [
                                 'source' => 'addon',
                                 'type' => 'timeslot',
                                 'title' => $addon['title'],
                                 'slug' => $addon['promo_slug'],
-                                'original_discounted_price' => $firstSlotDiscount,
-                                'discounted_price' => $firstSlotDiscount,
+                                'original_price' => floatval($slots[0]['price'] ?? 0),
+                                'original_discounted_price' => floatval($slots[0]['price'] ?? 0) - (floatval($slots[0]['price'] ?? 0) * floatval($slots[0]['discounted_percent'] ?? 0) / 100),
+                                'discounted_price' => floatval($slots[0]['price'] ?? 0) - (floatval($slots[0]['price'] ?? 0) * floatval($slots[0]['discounted_percent'] ?? 0) / 100),
                                 'promo_discounted_price' => $firstOrderCoupon
-                                    ? applyPromoDiscount($firstSlotDiscount, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                    ? applyPromoDiscount(
+                                        floatval($slots[0]['price'] ?? 0) - (floatval($slots[0]['price'] ?? 0) * floatval($slots[0]['discounted_percent'] ?? 0) / 100),
+                                        $firstOrderCoupon->discount_type,
+                                        $firstOrderCoupon->amount
+                                    )
                                     : null,
                                 'hours_left' => $hoursLeft,
                                 'quantity' => (int) ($addon['min_person'] ?? 0),
                                 'min_person' => (int) ($addon['min_person'] ?? 0),
                                 'max_person' => (int) ($addon['max_person'] ?? 200),
                                 'selected_slots' => [],
-                                'slots' => $slots
-                                    ->map(function ($slot) use ($firstOrderCoupon) {
-                                        $price = floatval($slot['price']);
-                                        $discountPercent = floatval($slot['discounted_percent'] ?? 0);
-                                        $discounted = $price - ($price * $discountPercent) / 100;
+                                'is_first_order_coupon_applied' => false,
+                                'slots' => $slots->map(function ($slot) use ($firstOrderCoupon) {
+                                    $price = floatval($slot['price']);
+                                    $discountPercent = floatval($slot['discounted_percent'] ?? 0);
+                                    $discounted = $price - ($price * $discountPercent / 100);
 
-                                        return [
-                                            'time' => $slot['time'],
-                                            'original_price' => $price,
-                                            'discount_percent' => $discountPercent,
-                                            'original_discounted_price' => $discounted,
-                                            'discounted_price' => $discounted,
-                                            'promo_discounted_price' => $firstOrderCoupon
-                                                ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
-                                                : null,
-                                        ];
-                                    })
-                                    ->values(),
+                                    return [
+                                        'time' => $slot['time'],
+                                        'original_price' => $price,
+                                        'discount_percent' => $discountPercent,
+                                        'original_discounted_price' => $discounted,
+                                        'discounted_price' => $discounted,
+                                        'promo_discounted_price' => $firstOrderCoupon
+                                            ? applyPromoDiscount($discounted, $firstOrderCoupon->discount_type, $firstOrderCoupon->amount)
+                                            : null,
+                                        'is_first_order_coupon_applied' => false,
+                                    ];
+                                })->values(),
                             ];
                         }
 
                         return null;
                     })
                     ->filter();
-            }),
+            })
         );
-        
+
         $advanceBookingResult = checkAdvanceBookingAvailability(
             (int) $tour->is_advance_booking === 1,
             $tour->availability_advance_booking,
