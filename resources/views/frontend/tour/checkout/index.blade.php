@@ -254,26 +254,20 @@
                             </div>
                             <div class="details-box__body">
                                 <div class="row g-0">
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="field">
                                             <input id="first_name" type="text" placeholder="First Name *" required
-                                                name="order[first_name]">
+                                                name="order[name]">
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="field">
-                                            <input type="text" placeholder="Last Name *" required
-                                                name="order[last_name]">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="field">
                                             <input id="email" type="email" placeholder="Email *" required
                                                 name="order[email]">
                                         </div>
                                     </div>
 
-                                    <div class="col-md-6">
+                                    <div class="col-md-4">
                                         <div class="field" data-flag-input-wrapper>
                                             <input type="hidden" name="order[phone_dial_code]" data-flag-input-dial-code
                                                 value="971">
@@ -307,17 +301,6 @@
                                                 name="order[city]">
                                         </div>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="field">
-                                            <input id="address" type="text" placeholder="Address *" required
-                                                name="order[address]">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="field">
-                                            <textarea name="order[speical_request]" rows="4" required placeholder="Special Request"></textarea>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -328,23 +311,23 @@
                             </div>
                             <div class="details-box__body details-box__body--pay">
                                 <ul class="payment-options">
-                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
-                                        <!-- Cash on Pickup -->
+                                        @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
+                                        <!-- Card Payments - Stripe -->
                                         <li class="payment-option">
-                                            <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="cod" checked id="cod" />
-                                            <label for="cod" class="payment-option__box">
+                                            <input checked class="payment-option__input" type="radio" name="payment_type"
+                                                value="stripe" id="stripe" />
+                                            <label for="stripe" class="payment-option__box">
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
-                                                            alt="cod" class="imgFluid">
+                                                        <img src="{{ asset('frontend/assets/images/methods/1.png') }}"
+                                                            alt="stripe" class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Cash on Pickup</div>
+                                                    <div class="title">Credit/Debit Card (Stripe)</div>
                                                     <div class="note">
-                                                        Pay the driver when you pick up your order.
+                                                        Visa, Mastercard, American Express, Discover, Diners Club, JCB
                                                     </div>
                                                 </div>
                                             </label>
@@ -374,6 +357,31 @@
                                         </li>
                                     @endif
 
+                                    
+                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
+                                        <!-- Cash on Pickup -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="cod"  id="cod" />
+                                            <label for="cod" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
+                                                            alt="cod" class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">Cash on Pickup</div>
+                                                    <div class="note">
+                                                        Pay the driver when you pick up your order.
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
+
+
                                     @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
                                         <!-- Buy Now Pay Later - Tamara -->
                                         <li class="payment-option">
@@ -392,29 +400,6 @@
                                                     <div class="note">
                                                         Split your payment into 2–3 instalments. No interest. Simple &
                                                         secure.
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                    @endif
-
-                                    @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
-                                        <!-- Card Payments - Stripe -->
-                                        <li class="payment-option">
-                                            <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="stripe" id="stripe" />
-                                            <label for="stripe" class="payment-option__box">
-                                                <div class="title-wrapper">
-                                                    <div class="radio"></div>
-                                                    <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/1.png') }}"
-                                                            alt="stripe" class="imgFluid">
-                                                    </div>
-                                                </div>
-                                                <div class="content">
-                                                    <div class="title">Credit/Debit Card (Stripe)</div>
-                                                    <div class="note">
-                                                        Visa, Mastercard, American Express, Discover, Diners Club, JCB
                                                     </div>
                                                 </div>
                                             </label>
