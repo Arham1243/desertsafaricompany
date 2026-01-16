@@ -321,7 +321,7 @@
                         if (item.type === 'timeslot' && Array.isArray(item.selected_slots)) {
                             item.selected_slots.slice(0, item.quantity).forEach((slotTime) => {
                                 const slot = item.slots.find((s) => s.time ===
-                                slotTime);
+                                    slotTime);
                                 if (slot) {
                                     const beforeCoupon = parseFloat(slot
                                         .discounted_price ?? 0);
@@ -387,7 +387,7 @@
                         if (item.type === 'timeslot' && Array.isArray(item.selected_slots)) {
                             item.selected_slots.slice(0, item.quantity).forEach((slotTime) => {
                                 const slot = item.slots.find((s) => s.time ===
-                                slotTime);
+                                    slotTime);
                                 if (slot) {
                                     const slotPrice = parseFloat(slot
                                         .discounted_price || 0);
@@ -419,7 +419,7 @@
 
                 return sum
             })
-            
+
             // Discount (savings)
             const discountAmount = computed(() => {
                 return isFirstOrderCouponApplied.value ? savings.value : 0
@@ -501,6 +501,79 @@
 
                 updateTotalPrice()
             }
+
+            // Add this computed property
+            const totalPriceWithoutCoupon = computed(() => {
+                let sum = initialTotalPrice;
+
+                if (priceType === "simple") {
+                    sum = parseFloat(simpleTourData.value.sale_price ?? 0)
+                }
+
+                if (priceType === "promo") {
+                    const totalPromoQty = promoTourData.value
+                        .filter(item => item.source === 'promo')
+                        .reduce((total, item) => total + item.quantity, 0)
+
+                    if (totalPromoQty === 0) return 0;
+
+                    promoTourData.value.forEach((item) => {
+                        // Always use discounted_price (ignore promo_discounted_price)
+                        const price = parseFloat(item.discounted_price) || 0
+
+                        if (item.source === 'promo') {
+                            sum += price * item.quantity
+                        }
+
+                        if (item.source === 'addon') {
+                            if (item.type === 'simple') {
+                                sum += price * item.quantity
+                            }
+
+                            if (item.type === 'timeslot' && Array.isArray(item
+                                .selected_slots)) {
+                                item.selected_slots.slice(0, item.quantity).forEach((
+                                    slotTime) => {
+                                        const slot = item.slots.find((s) => s.time ===
+                                            slotTime)
+                                        if (slot) {
+                                            sum += parseFloat(slot.discounted_price) || 0
+                                        }
+                                    })
+                            }
+                        }
+                    })
+                }
+
+                if (priceType === "normal") {
+                    sum += Object.values(normalTourData.value).reduce(
+                        (total, {
+                            original_price,
+                            quantity
+                        }) => {
+                            return total + parseFloat(original_price) * quantity
+                        },
+                        0
+                    )
+                }
+
+                if (priceType === "water") {
+                    Object.entries(waterTourData.value).forEach(([slot, data]) => {
+                        if (data.quantity > 0) {
+                            sum += parseFloat(data.original_price) * data.quantity
+                        }
+                    })
+                }
+
+                if (priceType === "private") {
+                    const qty = privateTourData.value.quantity
+                    const maxPerCar = privateTourData.value.max_person
+                    const carsNeeded = Math.ceil(qty / maxPerCar)
+                    sum = carsNeeded * parseFloat(privateTourData.value.original_price ?? 0)
+                }
+
+                return sum
+            })
 
             const getTourPromoPricesByDay = async () => {
                 if (priceType !== "promo") return
@@ -814,6 +887,7 @@
                 firstOrderCoupon,
                 isFirstOrderCouponApplied,
                 applyFirstOrderCoupon,
+                totalPriceWithoutCoupon,
                 hasUsedFirstOrderCoupon,
                 isTourInCart,
             };

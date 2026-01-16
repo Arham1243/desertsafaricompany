@@ -70,6 +70,7 @@
                         {{ $tour->enabled_custom_service_fee === 1 && $tour->service_fee_price ? $tour->service_fee_price : 0 }}"
                     name="subtotal" />
                 <input type="hidden" :value="totalPrice" name="total_price" />
+                <input type="hidden" :value="totalPriceWithoutCoupon" name="price_without_discount" />
                 <span class="green" style="font-weight:500;" v-html="formatPrice(totalPrice)"></span>
             </div>
         </div>

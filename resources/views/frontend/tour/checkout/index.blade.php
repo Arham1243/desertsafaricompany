@@ -207,6 +207,7 @@
             'zimbabwe',
         ];
         sort($countries);
+        $cashDiscountApplicable = $settings->get('cash_discount_applicable');
     @endphp
     <div class="checkout section-padding">
         <div class="container">
@@ -683,47 +684,50 @@
         $(document).ready(function() {
             initializeFlagInputs();
         });
+        const cashDiscountApplicable = @json($cashDiscountApplicable);
 
         document.addEventListener('DOMContentLoaded', () => {
-            const btn = document.getElementById('checkout-btn');
             const form = document.getElementById('checkout-form');
+            const btn = document.getElementById('checkout-btn');
+            const paymentInputs = document.querySelectorAll('input[name="payment_type"]');
+
+            const getSelectedPaymentMethod = () => {
+                const selected = document.querySelector('input[name="payment_type"]:checked');
+                return selected ? selected.value : null;
+            };
 
             if (btn && form) {
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
+
                     const email = document.getElementById('email').value;
                     const firstName = document.getElementById('first_name').value;
                     const phone = document.getElementById('phone_number').value;
                     const country = document.getElementById('country').value;
                     const city = document.getElementById('city').value;
-
                     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    if (!email) {
-                        showToast('error', 'Email is required');
-                        return;
-                    }
-                    if (!emailPattern.test(email)) {
-                        showToast('error', 'Please enter a valid email');
-                        return;
-                    }
-                    if (!firstName) {
-                        showToast('error', 'First name is required');
-                        return;
-                    }
-                    if (!phone) {
-                        showToast('error', 'Phone number is required');
-                        return;
-                    }
-                    if (!country) {
-                        showToast('error', 'Country is required');
-                        return;
-                    }
-                    if (!city) {
-                        showToast('error', 'City is required');
-                        return;
+                    // Validation
+                    if (!email) return showToast('error', 'Email is required');
+                    if (!emailPattern.test(email)) return showToast('error', 'Please enter a valid email');
+                    if (!firstName) return showToast('error', 'First name is required');
+                    if (!phone) return showToast('error', 'Phone number is required');
+                    if (!country) return showToast('error', 'Country is required');
+                    if (!city) return showToast('error', 'City is required');
+
+                    const selectedPayment = getSelectedPaymentMethod();
+
+                    // COD + discount check
+                    if (selectedPayment === 'cod' && cashDiscountApplicable == 0) {
+                        const proceed = confirm(
+                            "Cash on Pickup is not eligible for your current discount. " +
+                            "If you continue with this payment method, all discounts will be removed. " +
+                            "Do you want to proceed?"
+                        );
+                        if (!proceed) return; // stop if user cancels
                     }
 
+                    // All good, submit form
                     form.submit();
                 });
             }

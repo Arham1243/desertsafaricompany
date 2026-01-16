@@ -133,7 +133,7 @@
                                     </div>
                                 </div>
 
-                             {{--    <hr class="my-5">
+                                {{--    <hr class="my-5">
                                 <div class="row" x-data="{ pointCheckoutEnabled: {{ $settings->get('pointcheckout_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
@@ -253,6 +253,20 @@
                                                     <label class="form-check-label"
                                                         for="cash_enabled_switch">Enabled</label>
                                                 </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12" x-show="cashEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <div class="form-check">
+                                                <input type="hidden" name="cash_discount_applicable" value="0">
+                                                <input class="form-check-input" type="checkbox"
+                                                    name="cash_discount_applicable" id="cash_discount_applicable"
+                                                    value="1"
+                                                    {{ $settings->get('cash_discount_applicable') ? 'checked' : '' }}>
+                                                <label class="form-check-label" for="cash_discount_applicable">Discount
+                                                    Applicable</label>
                                             </div>
                                         </div>
                                     </div>

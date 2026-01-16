@@ -54,6 +54,7 @@ class CartController extends Controller
         $totalNoOfPeople = array_sum(array_column($tourItems, 'quantity'));
 
         $subtotal = round((float) ($request->input('subtotal', 0)), 2);
+        $priceWithoutDiscount = round((float) ($request->input('price_without_discount', 0)), 2);
         $serviceFee = round((float) ($request->input('service_fee', 0)), 2);
         $startDate = $request->input('start_date');
 
@@ -81,12 +82,14 @@ class CartController extends Controller
             'tour_title' => $tour->title,
             'total_no_of_people' => $totalNoOfPeople,
             'total_price' => $totalPrice,
+            'price_without_discount' => $priceWithoutDiscount
         ];
 
         $cart = Session::get('cart', [
             'tours' => [],
             'subtotal' => 0,
             'total_price' => 0,
+            'price_without_discount' => 0,
             'total_no_of_people' => 0,
         ]);
 
@@ -99,6 +102,7 @@ class CartController extends Controller
         // Recalculate root-level totals
         $cart['subtotal'] = array_sum(array_column($cart['tours'], 'subtotal'));
         $cart['total_price'] = array_sum(array_column($cart['tours'], 'total_price'));
+        $cart['price_without_discount'] = array_sum(array_column($cart['tours'], 'price_without_discount'));
         $cart['total_no_of_people'] = array_sum(array_column($cart['tours'], 'total_no_of_people'));
 
         Session::put('cart', $cart);
