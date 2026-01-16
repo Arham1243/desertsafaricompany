@@ -3012,6 +3012,21 @@
 
                             </div>
                         </div>
+                        <div class="form-box" x-data="{ enableCashPickup: {{ $tour->enable_cash_pickup === null ? 1 : $tour->enable_cash_pickup }} }">
+                            <div class="form-box__header d-flex align-items-center gap-3">
+                                <div class="title">Cash on pickup</div>
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="form-check form-switch" data-enabled-text="Enabled"
+                                        data-disabled-text="Disabled">
+                                        <input data-toggle-switch class="form-check-input" type="checkbox"
+                                            id="enable_cash_pickup_switch" x-model="enableCashPickup"
+                                            @change="enableCashPickup = enableCashPickup ? 1 : 0"
+                                            value="1" name="enable_cash_pickup" {{ ($tour->enable_cash_pickup === null ? 1 : $tour->enable_cash_pickup) == 1 ? 'checked' : '' }} />
+                                        <label class="form-check-label" for="enable_cash_pickup_switch">Enabled</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     @php
                         $bookingAdditional = $tour->booking_additional

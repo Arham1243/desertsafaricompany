@@ -791,4 +791,22 @@
     .text-document h1 {
         font-size: 2em;
     }
+    .cart__productImg {
+        width: 100%;
+        height: 190px;
+    }
+    .checkout-Mainheading {
+        justify-content: center;
+        margin-bottom: 1rem;
+    }
+    .checkout__order-list__info {
+        flex-wrap: wrap;
+        text-align: center;
+    }
+    .checkout__order-list {
+        gap: 5px;
+    }
+    .checkout__order-list__infoTitle {
+        font-size: 12px;
+    }
 }

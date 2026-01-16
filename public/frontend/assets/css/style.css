@@ -4936,6 +4936,7 @@ body.fancybox-active.compensate-for-scrollbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
 }
 
 .checkout__order-cardQuantity-btns > button {

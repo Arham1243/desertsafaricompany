@@ -17,6 +17,7 @@ class CheckoutController extends Controller
 {
     public function index()
     {
+        // enable_cash_pickup
         $cart = Session::get('cart', []);
         if (isset($cart['total_price']) && $cart['total_price'] === 0) {
             Session::forget('cart');
@@ -33,6 +34,7 @@ class CheckoutController extends Controller
             $toursNormalPrices = [];
             $privateTourData = [];
             $waterTourTimeSlots = [];
+            $hideCashOnPickup = false;
 
             // Build cartTours array from cart data
             if (isset($cart['tours'])) {
@@ -41,10 +43,13 @@ class CheckoutController extends Controller
                     if ($tour) {
                         $cartTours[] = $tour;
                     }
+                    if ($tour->enable_cash_pickup == 0) {
+                        $hideCashOnPickup = true;
+                    }
                 }
             }
 
-            $data = compact('tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
+            $data = compact('hideCashOnPickup', 'tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
 
             return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')

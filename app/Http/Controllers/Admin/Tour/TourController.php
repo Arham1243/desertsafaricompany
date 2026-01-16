@@ -149,6 +149,8 @@ class TourController extends Controller
             'author_config' => $authorConfig ?? null,
             'certified_tag' => $certifiedTag ?? null,
             'booked_text' => $bookedText ?? null,
+            'enable_cash_pickup' => ($request->input('enable_cash_pickup') == 1) ? 1 : 0,
+            'booked_text' => $bookedText ?? null,
             'booking_additional' => $bookingAdditionalData ?? null,
             'badge_tag' => $badgeTag ?? null,
             'pricing_tagline' => $pricingTagline ?? null,
@@ -438,7 +440,6 @@ class TourController extends Controller
         $categoryIds = $general['category_ids'] ?? [];
         $availabilityDatesData = $request->input('availabilityData');
         $availabilityDates = json_decode($availabilityDatesData, true);
-
         $tour->update([
             'title' => $general['title'] ?? null,
             'slug' => $slug ?? null,
@@ -461,6 +462,7 @@ class TourController extends Controller
             'featured_image_alt_text' => $request->input('featured_image_alt_text'),
             'promotional_image_alt_text' => $request->input('promotional_image_alt_text'),
             'gift_image_alt_text' => $request->input('gift_image_alt_text'),
+            'enable_cash_pickup' => ($request->input('enable_cash_pickup') == 1) ? 1 : 0,
             'enable_includes' => ($request->input('enable_includes') == 1) ? 1 : 0,
             'enable_excludes' => ($request->input('enable_excludes') == 1) ? 1 : 0,
             'enable_location' => ($request->input('enable_location') == 1) ? 1 : 0,

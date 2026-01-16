@@ -459,7 +459,7 @@
                                         </li>
                                     @endif
 
-                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
+                                    @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1 && !$hideCashOnPickup)
                                         <!-- Cash on Pickup -->
                                         <li class="payment-option">
                                             <input class="payment-option__input" type="radio" name="payment_type"
@@ -483,7 +483,6 @@
                                             </label>
                                         </li>
                                     @endif
-
                                 </ul>
                             </div>
                         </div>
@@ -518,11 +517,6 @@
                                                 </div>
                                             @endif
 
-                                            <!-- Tour Details -->
-                                            <div class="sub-total">
-                                                <div class="title">Type</div>
-                                                <div class="price">{{ $tour->formated_price_type ?? 'Standard' }}</div>
-                                            </div>
 
                                             @if ($tour->duration)
                                                 <div class="sub-total">
@@ -532,7 +526,7 @@
                                             @endif
 
                                             <div class="sub-total">
-                                                <div class="title">Date</div>
+                                                <div class="title">Start Date</div>
                                                 <div class="price">
                                                     {{ formatDate($cart['tours'][$tour->id]['start_date']) }}
                                                 </div>
