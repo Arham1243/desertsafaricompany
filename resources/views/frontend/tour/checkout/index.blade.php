@@ -321,8 +321,9 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/1.png') }}"
-                                                            alt="stripe" class="imgFluid">
+                                                        <img src="{{ isset($settings['stripe_logo']) ? asset($settings['stripe_logo']) : asset('frontend/assets/images/methods/1.png') }}"
+                                                            alt="{{ isset($settings['stripe_logo_alt_text']) ? $settings['stripe_logo_alt_text'] : 'stripe' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
@@ -346,8 +347,9 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/3.png') }}"
-                                                            alt="tabby" class="imgFluid">
+                                                        <img src="{{ isset($settings['tabby_logo']) ? asset($settings['tabby_logo']) : asset('frontend/assets/images/methods/3.png') }}"
+                                                            alt="{{ isset($settings['tabby_logo_alt_text']) ? $settings['tabby_logo_alt_text'] : 'tabby' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
@@ -371,8 +373,9 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/5.png') }}"
-                                                            alt="paypal" class="imgFluid">
+                                                        <img src="{{ isset($settings['paypal_logo']) ? asset($settings['paypal_logo']) : asset('frontend/assets/images/methods/5.png') }}"
+                                                            alt="{{ isset($settings['paypal_logo_alt_text']) ? $settings['paypal_logo_alt_text'] : 'paypal' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
@@ -396,8 +399,9 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/6.png') }}"
-                                                            alt="tamara" class="imgFluid">
+                                                        <img src="{{ isset($settings['tamara_logo']) ? asset($settings['tamara_logo']) : asset('frontend/assets/images/methods/6.png') }}"
+                                                            alt="{{ isset($settings['tamara_logo_alt_text']) ? $settings['tamara_logo_alt_text'] : 'tamara' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
@@ -422,14 +426,15 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/7.svg') }}"
-                                                            alt="pointCheckout" class="imgFluid">
+                                                        <img src="{{ isset($settings['pointcheckout_logo']) ? asset($settings['pointcheckout_logo']) : asset('frontend/assets/images/methods/7.svg') }}"
+                                                            alt="{{ isset($settings['pointcheckout_logo_alt_text']) ? $settings['pointcheckout_logo_alt_text'] : 'pointCheckout' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Loyalty Points or Card</div>
+                                                    <div class="title"> {{ $settings['pointcheckout_title'] ?? 'Loyalty Points or Card' }}</div>
                                                     <div class="note">
-                                                        Use reward points or pay by card
+                                                        {{ $settings['pointcheckout_description'] ?? 'Use reward points or pay by card' }}
                                                     </div>
                                                 </div>
                                             </label>
@@ -445,14 +450,15 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/2.png') }}"
-                                                            alt="postpay" class="imgFluid">
+                                                        <img src="{{ isset($settings['postpay_logo']) ? asset($settings['postpay_logo']) : asset('frontend/assets/images/methods/2.png') }}"
+                                                            alt="{{ isset($settings['postpay_logo_alt_text']) ? $settings['postpay_logo_alt_text'] : 'postpay' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Postpay</div>
+                                                    <div class="title">{{ $settings['postpay_title'] ?? 'Postpay' }}</div>
                                                     <div class="note">
-                                                        Pay later at checkout. Available for eligible orders.
+                                                        {{ $settings['postpay_description'] ?? 'Pay later at checkout. Available for eligible orders.' }}
                                                     </div>
                                                 </div>
                                             </label>
@@ -468,8 +474,9 @@
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
                                                     <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/4.png') }}"
-                                                            alt="cod" class="imgFluid">
+                                                        <img src="{{ isset($settings['cash_logo']) ? asset($settings['cash_logo']) : asset('frontend/assets/images/methods/4.png') }}"
+                                                            alt="{{ isset($settings['cash_logo_alt_text']) ? $settings['cash_logo_alt_text'] : 'cod' }}"
+                                                            class="imgFluid">
                                                     </div>
                                                 </div>
                                                 <div class="content">

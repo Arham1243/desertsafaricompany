@@ -78,6 +78,49 @@
                                                 value="{{ $settings->get('stripe_description') }}" class="field">
                                         </div>
                                     </div>
+
+                                    <div class="col-md-4 mt-3" x-show="stripeEnabled" x-transition>
+                                        @php
+                                            $stripeLogo = $settings->get('stripe_logo');
+                                            $stripeLogoAltText = $settings->get('stripe_logo_alt_text');
+                                        @endphp
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($stripeLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="stripe_logo" data-error="Feature Image"
+                                                            id="stripe_logo" class="upload-box__file d-none"
+                                                            accept="image/*" data-file-input>
+                                                        <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="stripe_logo" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($stripeLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($stripeLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($stripeLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="stripe_logo_alt_text" class="field"
+                                                            placeholder="Enter alt text" value="{{ $stripeLogoAltText }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 &times; 30
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <hr class="my-5">
@@ -130,6 +173,50 @@
                                             <label class="title text-dark">Tabby Description</label>
                                             <input type="text" name="tabby_description"
                                                 value="{{ $settings->get('tabby_description') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4 mt-3" x-show="tabbyEnabled" x-transition>
+                                        @php
+                                            $tabbyLogo = $settings->get('tabby_logo');
+                                            $tabbyLogoAltText = $settings->get('tabby_logo_alt_text');
+                                        @endphp
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($tabbyLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="tabby_logo"
+                                                            data-error="Feature Image" id="tabby_logo"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="tabby_logo" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($tabbyLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($tabbyLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($tabbyLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="tabby_logo_alt_text" class="field"
+                                                            placeholder="Enter alt text" value="{{ $tabbyLogoAltText }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 &times; 30
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -187,8 +274,52 @@
                                                 value="{{ $settings->get('paypal_description') }}" class="field">
                                         </div>
                                     </div>
-                                </div>
 
+                                    <div class="col-md-4 mt-3" x-show="paypalEnabled" x-transition>
+                                        @php
+                                            $paypalLogo = $settings->get('paypal_logo');
+                                            $paypalLogoAltText = $settings->get('paypal_logo_alt_text');
+                                        @endphp
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($paypalLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="paypal_logo"
+                                                            data-error="Feature Image" id="paypal_logo"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="paypal_logo" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($paypalLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($paypalLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($paypalLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="paypal_logo_alt_text" class="field"
+                                                            placeholder="Enter alt text"
+                                                            value="{{ $paypalLogoAltText }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 &times; 30
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <hr class="my-5">
                                 <div class="row" x-data="{ tamaraEnabled: {{ $settings->get('tamara_enabled') ? 'true' : 'false' }} }">
@@ -240,6 +371,50 @@
                                             <label class="title text-dark">Tamara Description</label>
                                             <input type="text" name="tamara_description"
                                                 value="{{ $settings->get('tamara_description') }}" class="field">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-3" x-show="tamaraEnabled" x-transition>
+                                        @php
+                                            $tamaraLogo = $settings->get('tamara_logo');
+                                            $tamaraLogoAltText = $settings->get('tamara_logo_alt_text');
+                                        @endphp
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($tamaraLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="tamara_logo"
+                                                            data-error="Feature Image" id="tamara_logo"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="tamara_logo" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($tamaraLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($tamaraLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($tamaraLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="tamara_logo_alt_text" class="field"
+                                                            placeholder="Enter alt text"
+                                                            value="{{ $tamaraLogoAltText }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 &times; 30
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -363,6 +538,50 @@
                                             <label class="title text-dark">Cash on Pickup Description</label>
                                             <input type="text" name="cash_description"
                                                 value="{{ $settings->get('cash_description') }}" class="field">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 mt-3" x-show="cashEnabled" x-transition>
+                                        @php
+                                            $cashLogo = $settings->get('cash_logo');
+                                            $cashLogoAltText = $settings->get('cash_logo_alt_text');
+                                        @endphp
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
+                                                    <div class="upload-box {{ empty($cashLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="cash_logo"
+                                                            data-error="Feature Image" id="cash_logo"
+                                                            class="upload-box__file d-none" accept="image/*"
+                                                            data-file-input>
+                                                        <div class="upload-box__placeholder"><i class='bx bxs-image'></i>
+                                                        </div>
+                                                        <label for="cash_logo" class="upload-box__btn themeBtn">Upload
+                                                            Image</label>
+                                                    </div>
+                                                    <div class="upload-box__img {{ !empty($cashLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn><i
+                                                                class='bx bxs-trash-alt'></i></button>
+                                                        <a href="{{ asset($cashLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($cashLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
+                                                        <input type="text" name="cash_logo_alt_text" class="field"
+                                                            placeholder="Enter alt text"
+                                                            value="{{ $cashLogoAltText }}">
+                                                    </div>
+                                                </div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">Please
+                                                    upload a
+                                                    valid image file
+                                                </div>
+                                            </div>
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 &times; 30
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

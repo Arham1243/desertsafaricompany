@@ -72,7 +72,21 @@ class SettingController extends Controller
             Setting::set('merchant_images', json_encode($processedImages), $resource);
         }
 
+        $imageKeys = [
+            'stripe_logo' => 'Stripe-Logo',
+            'tabby_logo' => 'Tabby-Logo',
+            'paypal_logo' => 'Paypal-Logo',
+            'tamara_logo' => 'Tamara-Logo',
+            'cash_logo' => 'Cash-Logo',
+        ];
 
+        foreach ($imageKeys as $key => $folder) {
+            if ($request->hasFile($key)) {
+                $file = $request->file($key);
+                $imagePath = $this->simpleUploadImg($file, $folder);
+                Setting::set($key, $imagePath, $resource);
+            }
+        }
 
         if ($request->has('footer_config')) {
             $footer_config = $request->footer_config ?? [];
