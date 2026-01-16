@@ -60,7 +60,26 @@
                                                 value="{{ $settings->get('stripe_secret_key') }}" class="field">
                                         </div>
                                     </div>
+
+                                    <!-- New Title Field -->
+                                    <div class="col-12 mt-3" x-show="stripeEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Stripe Title</label>
+                                            <input type="text" name="stripe_title"
+                                                value="{{ $settings->get('stripe_title') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Description Field -->
+                                    <div class="col-12 mt-3" x-show="stripeEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Stripe Description</label>
+                                            <input type="text" name="stripe_description"
+                                                value="{{ $settings->get('stripe_description') }}" class="field">
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <hr class="my-5">
 
                                 <div class="row" x-data="{ tabbyEnabled: {{ $settings->get('tabby_enabled') ? 'true' : 'false' }} }">
@@ -95,20 +114,39 @@
                                                 value="{{ $settings->get('tabby_secret_key') }}" class="field">
                                         </div>
                                     </div>
+
+                                    <!-- New Title Field -->
+                                    <div class="col-12 mt-3" x-show="tabbyEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tabby Title</label>
+                                            <input type="text" name="tabby_title"
+                                                value="{{ $settings->get('tabby_title') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Description Field -->
+                                    <div class="col-12 mt-3" x-show="tabbyEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tabby Description</label>
+                                            <input type="text" name="tabby_description"
+                                                value="{{ $settings->get('tabby_description') }}" class="field">
+                                        </div>
+                                    </div>
                                 </div>
+
                                 <hr class="my-5">
 
                                 <div class="row" x-data="{ paypalEnabled: {{ $settings->get('paypal_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
                                         <div class="form-fields d-flex align-items-center justify-content-between">
                                             <div class="d-flex align-items-center gap-3 mb-2">
-                                                <input type="hidden" name="paypal_enabled" :value="paypalEnabled ? 1 : 0">
+                                                <input type="hidden" name="paypal_enabled"
+                                                    :value="paypalEnabled ? 1 : 0">
                                                 <div class="title title--sm mb-0">PayPal:</div>
                                                 <div class="form-check form-switch" data-enabled-text="Enabled"
                                                     data-disabled-text="Disabled">
                                                     <input data-toggle-switch class="form-check-input" type="checkbox"
-                                                        id="paypal_enabled_switch" value="1" name="paypal_enabled"
-                                                        x-model="paypalEnabled">
+                                                        id="paypal_enabled_switch" x-model="paypalEnabled">
                                                     <label class="form-check-label"
                                                         for="paypal_enabled_switch">Enabled</label>
                                                 </div>
@@ -129,6 +167,79 @@
                                             <label class="title text-dark">PayPal Secret Key</label>
                                             <input type="text" name="paypal_secret_key"
                                                 value="{{ $settings->get('paypal_secret_key') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Title Field -->
+                                    <div class="col-12 mt-3" x-show="paypalEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PayPal Title</label>
+                                            <input type="text" name="paypal_title"
+                                                value="{{ $settings->get('paypal_title') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Description Field -->
+                                    <div class="col-12 mt-3" x-show="paypalEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">PayPal Description</label>
+                                            <input type="text" name="paypal_description"
+                                                value="{{ $settings->get('paypal_description') }}" class="field">
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <hr class="my-5">
+                                <div class="row" x-data="{ tamaraEnabled: {{ $settings->get('tamara_enabled') ? 'true' : 'false' }} }">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="tamara_enabled"
+                                                    :value="tamaraEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">Tamara:</div>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="tamara_enabled_switch" x-model="tamaraEnabled">
+                                                    <label class="form-check-label"
+                                                        for="tamara_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12 mb-3" x-show="tamaraEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tamara Public Key</label>
+                                            <input type="text" name="tamara_public_key"
+                                                value="{{ $settings->get('tamara_public_key') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6 col-12 mb-3" x-show="tamaraEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tamara Secret Key</label>
+                                            <input type="text" name="tamara_secret_key"
+                                                value="{{ $settings->get('tamara_secret_key') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Title Field -->
+                                    <div class="col-12 mt-3" x-show="tamaraEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tamara Title</label>
+                                            <input type="text" name="tamara_title"
+                                                value="{{ $settings->get('tamara_title') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Description Field -->
+                                    <div class="col-12 mt-3" x-show="tamaraEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Tamara Description</label>
+                                            <input type="text" name="tamara_description"
+                                                value="{{ $settings->get('tamara_description') }}" class="field">
                                         </div>
                                     </div>
                                 </div>
@@ -170,41 +281,7 @@
                                     </div>
                                 </div>
 
-                                <hr class="my-5">
-                                <div class="row" x-data="{ tamaraEnabled: {{ $settings->get('tamara_enabled') ? 'true' : 'false' }} }">
-                                    <div class="col-12 mb-2">
-                                        <div class="form-fields d-flex align-items-center justify-content-between">
-                                            <div class="d-flex align-items-center gap-3 mb-2">
-                                                <input type="hidden" name="tamara_enabled"
-                                                    :value="tamaraEnabled ? 1 : 0">
-                                                <div class="title title--sm mb-0">Tamara:</div>
-                                                <div class="form-check form-switch" data-enabled-text="Enabled"
-                                                    data-disabled-text="Disabled">
-                                                    <input class="form-check-input" type="checkbox"
-                                                        id="tamara_enabled_switch" x-model="tamaraEnabled">
-                                                    <label class="form-check-label"
-                                                        for="tamara_enabled_switch">Enabled</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-3" x-show="tamaraEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">Tamara Public Key</label>
-                                            <input type="text" name="tamara_public_key"
-                                                value="{{ $settings->get('tamara_public_key') }}" class="field">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-3" x-show="tamaraEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">Tamara Secret Key</label>
-                                            <input type="text" name="tamara_secret_key"
-                                                value="{{ $settings->get('tamara_secret_key') }}" class="field">
-                                        </div>
-                                    </div>
-                                </div> --}}
+                                --}}
                                 {{-- <hr class="my-5">
                                 <div class="row" x-data="{ postpayEnabled: {{ $settings->get('postpay_enabled') ? 'true' : 'false' }} }">
                                     <div class="col-12 mb-2">
@@ -270,8 +347,25 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
+                                    <!-- New Title Field -->
+                                    <div class="col-12 mt-3" x-show="cashEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Cash on Pickup Title</label>
+                                            <input type="text" name="cash_title"
+                                                value="{{ $settings->get('cash_title') }}" class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- New Description Field -->
+                                    <div class="col-12 mt-3" x-show="cashEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Cash on Pickup Description</label>
+                                            <input type="text" name="cash_description"
+                                                value="{{ $settings->get('cash_description') }}" class="field">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <button style=" position: sticky; bottom: 1rem; " class="themeBtn ms-auto ">Save Changes <i

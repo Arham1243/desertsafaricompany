@@ -326,9 +326,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Credit/Debit Card (Full Payment)</div>
+                                                    <div class="title">
+                                                        {{ $settings['stripe_title'] ?? 'Credit/Debit Card (Full Payment)' }}
+                                                    </div>
                                                     <div class="note">
-                                                        Visa, Mastercard, American Express, Discover, Diners Club, JCB
+                                                        {{ $settings['stripe_description'] ?? 'Visa, Mastercard, American Express, Discover, Diners Club, JCB' }}
                                                     </div>
                                                 </div>
                                             </label>
@@ -349,9 +351,11 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Tabby - Buy Now, Pay Later (4 instalments)</div>
+                                                    <div class="title">
+                                                        {{ $settings['tabby_title'] ?? 'Tabby - Buy Now, Pay Later (4 instalments)' }}
+                                                    </div>
                                                     <div class="note">
-                                                        No credit card required. Valid for orders AED 100 or more.
+                                                        {{ $settings['tabby_description'] ?? 'No credit card required. Valid for orders AED 100 or more.' }}
                                                     </div>
                                                 </div>
                                             </label>
@@ -372,14 +376,42 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">PayPal</div>
+                                                    <div class="title">
+                                                        {{ $settings['paypal_title'] ?? 'PayPal' }}
+                                                    </div>
                                                     <div class="note">
-                                                        Secure payments via PayPal wallet or linked cards.
+                                                        {{ $settings['paypal_description'] ?? 'Secure payments via PayPal wallet or linked cards.' }}
                                                     </div>
                                                 </div>
                                             </label>
                                         </li>
                                     @endif
+
+                                    @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
+                                        <!-- Buy Now Pay Later - Tamara -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="tamara" id="tamara" />
+                                            <label for="tamara" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ asset('frontend/assets/images/methods/6.png') }}"
+                                                            alt="tamara" class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        {{ $settings['tamara_title'] ?? 'Tamara - Pay Later' }}
+                                                    </div>
+                                                    <div class="note">
+                                                        {{ $settings['tamara_description'] ?? 'Split your payment into 2–3 instalments. No interest. Simple & secure.' }}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
+
 
                                     @if (isset($settings['pointcheckout_enabled']) && (int) $settings['pointcheckout_enabled'] === 1)
                                         <!-- Card Payments - pointCheckout -->
@@ -404,32 +436,6 @@
                                         </li>
                                     @endif
 
-
-                                    @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
-                                        <!-- Buy Now Pay Later - Tamara -->
-                                        <li class="payment-option">
-                                            <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="tamara" id="tamara" />
-                                            <label for="tamara" class="payment-option__box">
-                                                <div class="title-wrapper">
-                                                    <div class="radio"></div>
-                                                    <div class="icon">
-                                                        <img src="{{ asset('frontend/assets/images/methods/6.png') }}"
-                                                            alt="tamara" class="imgFluid">
-                                                    </div>
-                                                </div>
-                                                <div class="content">
-                                                    <div class="title">Tamara - Pay Later</div>
-                                                    <div class="note">
-                                                        Split your payment into 2–3 instalments. No interest. Simple &
-                                                        secure.
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                    @endif
-
-
                                     @if (isset($settings['postpay_enabled']) && (int) $settings['postpay_enabled'] === 1)
                                         <!-- Postpay (optional BNPL) -->
                                         <li class="payment-option">
@@ -453,7 +459,6 @@
                                         </li>
                                     @endif
 
-
                                     @if (isset($settings['cash_enabled']) && (int) $settings['cash_enabled'] === 1)
                                         <!-- Cash on Pickup -->
                                         <li class="payment-option">
@@ -468,14 +473,17 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">Cash on Pickup</div>
+                                                    <div class="title">
+                                                        {{ $settings['cash_title'] ?? 'Cash on Pickup' }}
+                                                    </div>
                                                     <div class="note">
-                                                        Pay the driver when you pick up your order.
+                                                        {{ $settings['cash_description'] ?? 'Pay the driver when you pick up your order.' }}
                                                     </div>
                                                 </div>
                                             </label>
                                         </li>
                                     @endif
+
                                 </ul>
                             </div>
                         </div>
