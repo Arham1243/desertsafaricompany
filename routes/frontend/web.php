@@ -15,6 +15,7 @@ use App\Http\Controllers\Frontend\Tour\FavoriteController;
 use App\Http\Controllers\Frontend\Tour\TourController;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/test-email/{id}', [IndexController::class, 'testEmail']);
 Route::get('/#', [IndexController::class, 'index'])->name('login');
 Route::name('frontend.')->group(function () {
     Route::post('/load/block/tours', [TourController::class, 'loadBlockTours'])->name('load.block.tours');

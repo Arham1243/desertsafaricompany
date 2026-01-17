@@ -8,6 +8,7 @@ use App\Models\Page;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\TourReview;
+use App\Models\Order;
 use App\Traits\Sluggable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -89,5 +90,38 @@ class IndexController extends Controller
         User::where('id', Auth::user()->id)->update($validatedData);
 
         return back()->with('notify_success', 'Profile updated successfully');
+    }
+
+    public function testEmail($id)
+    {
+        $settings = Setting::pluck('value', 'key');
+        $order = Order::findOrFail($id);
+
+        $user = auth()->user() ?? (object) [
+            'full_name' => 'Test User',
+            'email' => 'test@example.com',
+        ];
+
+        $orderRequestData = json_decode($order->request_data ?? '{}');
+        $cart = json_decode($order->cart_data, true) ?? [];
+
+        $headerLogo = $settings->get('header_logo') ?? 'admin/assets/images/placeholder-logo.png';
+
+        $data = [
+            'settings' => $settings,
+            'order_id' => $order->id,
+            'customer_name' => $user->full_name,
+            'customer_email' => $user->email,
+            'customer_phone' => ($orderRequestData->phone_dial_code ?? '+971') . ($orderRequestData->phone_number ?? ''),
+            'payment_type' => $order->payment_type,
+            'advance_amount' => $order->advance_amount,
+            'cart' => $cart,
+            'total' => $cart['total_price'] ?? 0,
+            'tours' => $cart['tours'] ?? [],
+            'logo' => asset($headerLogo),
+            'order_link' => url('/admin/orders/' . $order->id),
+        ];
+
+        return view('emails.customer-order-success', compact('data'));
     }
 }

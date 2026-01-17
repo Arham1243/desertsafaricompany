@@ -581,6 +581,7 @@ class PaymentService
                 'customer_email' => $user->email ?? '',
                 'customer_phone' => $orderRequestData->phone_dial_code . $orderRequestData->phone_number,
                 'payment_type' => $order->payment_type,
+                'advance_amount' => $order->advance_amount,
                 'cart' => $cart ?? [],
                 'total' => $cart['total_price'] ?? 0,
                 'tours' => $cart['tours'] ?? [],

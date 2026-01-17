@@ -145,7 +145,8 @@
                         <td
                             style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
                             Hi Admin,<br><br>
-                            A order payment was <strong>successfully paid</strong>. Details are below:
+                            An order payment for <strong>Order #{{ $data['order_id'] }}</strong> has been
+                            <strong>processed</strong>. Details are below:
                         </td>
                     </tr>
 
@@ -155,23 +156,39 @@
                             <table class="info-table">
                                 <thead>
                                     <tr>
-                                        <th>Order ID</th>
                                         <th>Customer Name</th>
                                         <th>Customer Email</th>
                                         <th>Customer Phone</th>
                                         <th>Payment Type</th>
+                                        @if ($data['advance_amount'] > 0)
+                                            <th>Advance Paid</th>
+                                        @endif
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>{{ $data['order_id'] }}</td>
                                         <td>{{ $data['customer_name'] }}</td>
                                         <td>{{ $data['customer_email'] }}</td>
-                                        <td>{{ $data['customer_phone'] }}</td>
+                                        <td>+{{ $data['customer_phone'] }}</td>
                                         <td>{{ ucfirst($data['payment_type']) }}</td>
+                                        @if ($data['advance_amount'] > 0)
+                                            <td>{{ formatPrice($data['advance_amount']) }}</td>
+                                        @endif
                                     </tr>
                                 </tbody>
                             </table>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td
+                            style="padding-top:25px; padding-left:6.25%; padding-right:6.25%; font-size:17px; line-height:160%; color:#000;">
+                            @if ($data['advance_amount'] > 0)
+                                <strong>{{ formatPrice($data['advance_amount']) }}</strong> has been paid in advance.
+                                The remaining amount will be collected on-site or at pickup.
+                            @else
+                                The order has been <strong>fully paid</strong>.
+                            @endif
                         </td>
                     </tr>
 
