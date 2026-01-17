@@ -49,28 +49,38 @@ class PaymentService
         return redirect($session->url);
     }
 
+    private function calculateAmountToCharge(array $cart, Order $order): float
+    {
+        // If advance payment, charge only that
+        if (!empty($order->advance_amount) && $order->payment_type === 'stripe') {
+            return (float) $order->advance_amount;
+        }
+
+        return $cart['total_price'] ?? 0;
+    }
+
     private function createStripeSession(Request $request, Order $order)
     {
         try {
             Stripe::setApiKey(env('STRIPE_SECRET_KEY'));
             $cart = json_decode($order->cart_data, true);
 
-            if (empty($cart['total_price'])) {
-                return response()->json(['error' => 'Cart total missing']);
-            }
-
             $lineItems = [];
+            $amountToCharge = $this->calculateAmountToCharge($cart, $order);
 
             foreach ($cart['tours'] as $tour) {
+                $tourProportion = $tour['total_price'] / $cart['total_price'];
+                $tourAdvanceAmount = round($amountToCharge * $tourProportion, 2);
+
                 $lineItems[] = [
                     'price_data' => [
                         'currency' => env('APP_CURRENCY'),
                         'product_data' => [
                             'name' => $tour['tour_title'],
                             'description' => 'Start Date: ' . Carbon::parse($tour['start_date'])->format('d M Y')
-                                . " | Total: {$tour['total_no_of_people']}",
+                                . " | Qty: {$tour['total_no_of_people']}",
                         ],
-                        'unit_amount' => round($tour['total_price'], 2) * 100,
+                        'unit_amount' => round($tourAdvanceAmount, 2) * 100,
                     ],
                     'quantity' => 1,
                 ];
@@ -119,9 +129,10 @@ class PaymentService
     private function createTabbySession(Request $request, Order $order)
     {
         $customOrderId = 'ORDER' . $order->id;
-        $totalWithTaxes = number_format($order->total_amount, 2, '.', '');
-        $tax = number_format($order->total_amount * 0.05, 2, '.', '');
-        $finalTotal = number_format($order->total_amount - $tax, 2, '.', '');
+        $cart = json_decode($order->cart_data, true) ?? [];
+        $amountToCharge = $this->calculateAmountToCharge($cart, $order);
+        $tax = round($amountToCharge * 0.05, 2);
+        $finalTotal = round($amountToCharge - $tax, 2);
 
         $items = [[
             'title' => 'Tour Booking',
@@ -133,7 +144,7 @@ class PaymentService
 
         $payload = [
             'payment' => [
-                'amount' => $totalWithTaxes,
+                'amount' => (float) $amountToCharge,
                 'currency' => 'AED',
                 'description' => env('APP_NAME'),
                 'buyer' => [
@@ -240,18 +251,27 @@ class PaymentService
         $city = $orderData['city'] ?? '';
         $country = $orderData['country'] ?? '';
 
-        $total_with_taxes = number_format($order->total_amount, 2, '.', '');
-        $final_total = number_format($order->total_amount, 2, '.', '');  // adjust if you track discount vs subtotal
-        $tax = '0.00';  // pull from order if available
+        // Decode cart
+        $cart = json_decode($order->cart_data, true) ?? [];
 
-        $cart = json_decode($order->cart_data, true);
+        // Calculate amount to charge based on advance payment
+        $amountToCharge = $this->calculateAmountToCharge($cart, $order);
+
+        // Optional: calculate tax if needed
+        $tax = round($amountToCharge * 0.05, 2); // example 5% tax
+        $finalTotal = round($amountToCharge - $tax, 2);
+
+        // Build line items based on remaining amount
         $lineItems = [];
         foreach ($cart['tours'] as $tour) {
+            $proportion = $tour['total_price'] / ($cart['total_price'] ?? 1);
+            $unitPrice = round($finalTotal * $proportion, 2);
+
             $lineItems[] = [
                 'name' => $tour['tour_title'] ?? 'Tour',
                 'quantity' => $tour['total_no_of_people'] ?? 1,
-                'unitPrice' => number_format($tour['total_price'], 2, '.', ''),
-                'totalAmount' => number_format($tour['total_price'], 2, '.', ''),
+                'unitPrice' => number_format($unitPrice, 2, '.', ''),
+                'totalAmount' => number_format($unitPrice, 2, '.', ''),
             ];
         }
         $itemsJson = json_encode(array_values($lineItems));
@@ -259,10 +279,10 @@ class PaymentService
         $payload = [
             'transactionId' => (string) $custom_order_id,
             'currency' => env('APP_CURRENCY', 'AED'),
-            'amount' => $total_with_taxes,
-            'subtotal' => $final_total,
+            'amount' => number_format($amountToCharge, 2, '.', ''),
+            'subtotal' => number_format($finalTotal, 2, '.', ''),
             'shipping' => '0.0',
-            'tax' => $tax,
+            'tax' => number_format($tax, 2, '.', ''),
             'discount' => '0.0',
             'resultUrl' => route('checkout.pointcheckout.response', ['order_id' => $order->id, 'payment_type' => 'pointCheckout']),
             'defaultPaymentMethod' => 'CARD',
@@ -314,13 +334,11 @@ class PaymentService
 
         $result = json_decode($response, true);
 
-        if ($result['success'] == false) {
-            dd($result['error']);
+        if (!($result['success'] ?? false)) {
+            dd($result['error'] ?? 'Unknown error');
         }
 
-        $result_p = json_decode($result, true);
-
-        return $result_p['reference'] ?? null;
+        return $result['reference'] ?? null;
     }
 
     /**

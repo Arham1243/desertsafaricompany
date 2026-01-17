@@ -61,6 +61,8 @@ Route::prefix('checkout')->name('checkout.')->group(function () {
     Route::post('/', [CheckoutController::class, 'store'])->name('store');
     Route::get('/pointcheckout/response', [CheckoutController::class, 'pointCheckoutResponse'])
         ->name('pointcheckout.response');
+    Route::get('/paypal/checkout', [CheckoutController::class, 'showPayPalPage'])->name('paypal.custom');
+    Route::get('/paypal/success', [CheckoutController::class, 'paypalSuccess'])->name('paypal.success');
     Route::get('/tabby/success', [CheckoutController::class, 'tabbySuccess'])->name('tabby.success');
     Route::get('/tabby/cancel', [CheckoutController::class, 'tabbyCancel'])->name('tabby.cancel');
     Route::get('/tabby/failure', [CheckoutController::class, 'tabbyFailure'])->name('tabby.failure');

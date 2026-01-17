@@ -338,6 +338,32 @@
                                         </li>
                                     @endif
 
+                                    @if (isset($settings['advance_payment_enabled']) && (int) $settings['advance_payment_enabled'] === 1)
+                                        <!-- Card Payments - Stripe -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="advance_payment" id="advance_payment" />
+                                            <label for="advance_payment" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ isset($settings['advance_payment_logo']) ? asset($settings['advance_payment_logo']) : asset('frontend/assets/images/methods/8.png') }}"
+                                                            alt="{{ isset($settings['advance_payment_logo_alt_text']) ? $settings['advance_payment_logo_alt_text'] : 'stripe' }}"
+                                                            class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        {{ $settings['advance_payment_title'] ?? 'Advance Payment' }}
+                                                    </div>
+                                                    <div class="note">
+                                                        {{ $settings['advance_payment_description'] ?? 'A percentage of the order total to be paid upfront before processing.' }}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
+
                                     @if (isset($settings['tabby_enabled']) && (int) $settings['tabby_enabled'] === 1)
                                         <!-- Buy Now Pay Later - Tabby -->
                                         <li class="payment-option">
@@ -358,32 +384,6 @@
                                                     </div>
                                                     <div class="note">
                                                         {{ $settings['tabby_description'] ?? 'No credit card required. Valid for orders AED 100 or more.' }}
-                                                    </div>
-                                                </div>
-                                            </label>
-                                        </li>
-                                    @endif
-
-                                    @if (isset($settings['paypal_enabled']) && (int) $settings['paypal_enabled'] === 1)
-                                        <!-- Card Payments - PayPal -->
-                                        <li class="payment-option">
-                                            <input class="payment-option__input" type="radio" name="payment_type"
-                                                value="paypal" id="paypal" />
-                                            <label for="paypal" class="payment-option__box">
-                                                <div class="title-wrapper">
-                                                    <div class="radio"></div>
-                                                    <div class="icon">
-                                                        <img src="{{ isset($settings['paypal_logo']) ? asset($settings['paypal_logo']) : asset('frontend/assets/images/methods/5.png') }}"
-                                                            alt="{{ isset($settings['paypal_logo_alt_text']) ? $settings['paypal_logo_alt_text'] : 'paypal' }}"
-                                                            class="imgFluid">
-                                                    </div>
-                                                </div>
-                                                <div class="content">
-                                                    <div class="title">
-                                                        {{ $settings['paypal_title'] ?? 'PayPal' }}
-                                                    </div>
-                                                    <div class="note">
-                                                        {{ $settings['paypal_description'] ?? 'Secure payments via PayPal wallet or linked cards.' }}
                                                     </div>
                                                 </div>
                                             </label>
@@ -416,6 +416,31 @@
                                         </li>
                                     @endif
 
+                                    @if (isset($settings['paypal_enabled']) && (int) $settings['paypal_enabled'] === 1)
+                                        <!-- Card Payments - PayPal -->
+                                        <li class="payment-option">
+                                            <input class="payment-option__input" type="radio" name="payment_type"
+                                                value="paypal" id="paypal" />
+                                            <label for="paypal" class="payment-option__box">
+                                                <div class="title-wrapper">
+                                                    <div class="radio"></div>
+                                                    <div class="icon">
+                                                        <img src="{{ isset($settings['paypal_logo']) ? asset($settings['paypal_logo']) : asset('frontend/assets/images/methods/5.png') }}"
+                                                            alt="{{ isset($settings['paypal_logo_alt_text']) ? $settings['paypal_logo_alt_text'] : 'paypal' }}"
+                                                            class="imgFluid">
+                                                    </div>
+                                                </div>
+                                                <div class="content">
+                                                    <div class="title">
+                                                        {{ $settings['paypal_title'] ?? 'PayPal' }}
+                                                    </div>
+                                                    <div class="note">
+                                                        {{ $settings['paypal_description'] ?? 'Secure payments via PayPal wallet or linked cards.' }}
+                                                    </div>
+                                                </div>
+                                            </label>
+                                        </li>
+                                    @endif
 
                                     @if (isset($settings['pointcheckout_enabled']) && (int) $settings['pointcheckout_enabled'] === 1)
                                         <!-- Card Payments - pointCheckout -->
@@ -432,7 +457,9 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title"> {{ $settings['pointcheckout_title'] ?? 'Loyalty Points or Card' }}</div>
+                                                    <div class="title">
+                                                        {{ $settings['pointcheckout_title'] ?? 'Loyalty Points or Card' }}
+                                                    </div>
                                                     <div class="note">
                                                         {{ $settings['pointcheckout_description'] ?? 'Use reward points or pay by card' }}
                                                     </div>
@@ -456,7 +483,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">{{ $settings['postpay_title'] ?? 'Postpay' }}</div>
+                                                    <div class="title">{{ $settings['postpay_title'] ?? 'Postpay' }}
+                                                    </div>
                                                     <div class="note">
                                                         {{ $settings['postpay_description'] ?? 'Pay later at checkout. Available for eligible orders.' }}
                                                     </div>
@@ -694,6 +722,7 @@
             initializeFlagInputs();
         });
         const cashDiscountApplicable = @json($cashDiscountApplicable);
+        const hasCouponApplied = @json($hasCouponApplied);
 
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('checkout-form');
@@ -727,13 +756,15 @@
                     const selectedPayment = getSelectedPaymentMethod();
 
                     // COD + discount check
-                    if (selectedPayment === 'cod' && cashDiscountApplicable == 0) {
-                        const proceed = confirm(
-                            "Cash on Pickup is not eligible for your current discount. " +
-                            "If you continue with this payment method, all discounts will be removed. " +
-                            "Do you want to proceed?"
-                        );
-                        if (!proceed) return; // stop if user cancels
+                    if (hasCouponApplied) {
+                        if (selectedPayment === 'cod' && cashDiscountApplicable == 0) {
+                            const proceed = confirm(
+                                "Cash on Pickup is not eligible for your current discount. " +
+                                "If you continue with this payment method, all discounts will be removed. " +
+                                "Do you want to proceed?"
+                            );
+                            if (!proceed) return; // stop if user cancels
+                        }
                     }
 
                     // All good, submit form

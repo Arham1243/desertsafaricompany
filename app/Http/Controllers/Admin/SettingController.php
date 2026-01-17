@@ -78,6 +78,7 @@ class SettingController extends Controller
             'paypal_logo' => 'Paypal-Logo',
             'tamara_logo' => 'Tamara-Logo',
             'cash_logo' => 'Cash-Logo',
+            'advance_payment_logo' => 'Advance-Payment-Logo',
         ];
 
         foreach ($imageKeys as $key => $folder) {

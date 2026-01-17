@@ -24,6 +24,7 @@ class CheckoutController extends Controller
 
             return redirect()->route('cart.index')->with('notify_error', 'Your cart is empty.');
         }
+        $hasCouponApplied = !empty($cart['applied_coupons']);
 
         if (! empty($cart)) {
             $tours = Tour::where('status', 'publish')->get();
@@ -49,7 +50,7 @@ class CheckoutController extends Controller
                 }
             }
 
-            $data = compact('hideCashOnPickup', 'tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots');
+            $data = compact('hideCashOnPickup', 'tours', 'cart', 'cartTours', 'promoToursData', 'toursNormalPrices', 'privateTourData', 'waterTourTimeSlots', 'hasCouponApplied');
 
             return view('frontend.tour.checkout.index')
                 ->with('title', 'Checkout')
@@ -62,10 +63,12 @@ class CheckoutController extends Controller
     public function store(Request $request, PaymentService $paymentService)
     {
         $settings = Setting::pluck('value', 'key');
-        $cashDiscountApplicable = $settings->get('cash_discount_applicable');
+        $advancePaymentPercentage = (float) ($settings->get('advance_payment_percentage', 10));
+        $cashDiscountApplicable = $settings->get('cash_discount_applicable', 0);
         $canAvailDiscount = true;
+
         if ($request->payment_type === 'cod' && $cashDiscountApplicable == 0) {
-            $canAvailDiscount = false;;
+            $canAvailDiscount = false;
         }
 
         if (!Auth::check()) {
@@ -74,7 +77,6 @@ class CheckoutController extends Controller
         }
 
         $cart = Session::get('cart', []);
-
         if (!$canAvailDiscount) {
             $cart = $this->revertCouponDiscounts($cart);
         }
@@ -86,12 +88,32 @@ class CheckoutController extends Controller
                 ->route('frontend.index')
                 ->with('notify_error', 'Your cart is empty.');
         }
+
+        $advanceAmount = 0;
+        $remainingAmount = 0;
+        if ($request->payment_type === 'advance_payment') {
+            $advanceAmount = round($totalAmount * ($advancePaymentPercentage / 100), 2);
+            $remainingAmount = $totalAmount - $advanceAmount;
+            $request->merge([
+                'payment_type' => 'stripe',
+                'advance_amount' => $advanceAmount,
+                'remaining_amount' => $remainingAmount,
+            ]);
+        }
+
         $order = $this->createOrder($request, $cart, $totalAmount);
 
-        $paymentService->sendAdminOrderEmail('emails.admin-pending-order', $order, 'New Pending Order', route('admin.bookings.edit', $order->id), 'admin');
+        $paymentService->sendAdminOrderEmail(
+            'emails.admin-pending-order',
+            $order,
+            'New Pending Order',
+            route('admin.bookings.edit', $order->id),
+            'admin'
+        );
 
         return $paymentService->processPayment($request, $order);
     }
+
 
 
     /**
@@ -198,6 +220,8 @@ class CheckoutController extends Controller
             'payment_type' => $request->payment_type,
             'payment_status' => 'pending',
             'total_amount' => $totalAmount,
+            'advance_amount' => $request->advance_amount ?? null,
+            'remaining_amount' => $request->remaining_amount ?? null,
         ]);
     }
 
@@ -286,11 +310,13 @@ class CheckoutController extends Controller
     public function stripeSuccess(Request $request, PaymentService $paymentService)
     {
         $order = Order::findOrFail($request->order_id);
+        $paymentStatus = $order->remaining_amount > 0 ? 'partial' : 'paid';
 
         $order->update([
             'payment_type' => $request->payment_type,
             'status' => 'confirmed',
-            'payment_status' => 'paid',
+            'payment_status' => $paymentStatus,
+            'paid_amount' => $order->advance_amount ?? $order->total_amount,
             'payment_date' => now(),
         ]);
 
@@ -583,13 +609,32 @@ class CheckoutController extends Controller
             ->with('title', 'Payment failed due to an error');
     }
 
+    protected function calculateAmountToCharge(array $cart, Order $order): float
+    {
+        $totalPrice = $cart['total_price'] ?? 0;
+
+        // If advance payment exists, charge only the remaining
+        if ($order->advance_amount > 0) {
+            return round($totalPrice - $order->advance_amount, 2);
+        }
+
+        // Otherwise, charge the full total
+        return round($totalPrice, 2);
+    }
+
     public function showPayPalPage(Request $request)
     {
         $order = Order::findOrFail($request->order_id);
+
         if ($order->payment_status === 'paid') {
             abort(404);
         }
-        $amountAED = $order->total_amount;
+
+        // Decode cart
+        $cart = json_decode($order->cart_data, true) ?? [];
+
+        // Calculate remaining amount considering advance payment
+        $amountAED = $this->calculateAmountToCharge($cart, $order);
 
         try {
             $response = Http::get('https://api.exchangerate-api.com/v4/latest/AED');

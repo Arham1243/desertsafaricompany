@@ -3020,8 +3020,9 @@
                                         data-disabled-text="Disabled">
                                         <input data-toggle-switch class="form-check-input" type="checkbox"
                                             id="enable_cash_pickup_switch" x-model="enableCashPickup"
-                                            @change="enableCashPickup = enableCashPickup ? 1 : 0"
-                                            value="1" name="enable_cash_pickup" {{ ($tour->enable_cash_pickup === null ? 1 : $tour->enable_cash_pickup) == 1 ? 'checked' : '' }} />
+                                            @change="enableCashPickup = enableCashPickup ? 1 : 0" value="1"
+                                            name="enable_cash_pickup"
+                                            {{ ($tour->enable_cash_pickup === null ? 1 : $tour->enable_cash_pickup) == 1 ? 'checked' : '' }} />
                                         <label class="form-check-label" for="enable_cash_pickup_switch">Enabled</label>
                                     </div>
                                 </div>
@@ -3032,7 +3033,9 @@
                         $bookingAdditional = $tour->booking_additional
                             ? json_decode($tour->booking_additional, true)
                             : [];
-                        $bookingAdditionalEnabled = $bookingAdditional['enabled'] ?? 1;
+                        $bookingAdditionalEnabled = array_key_exists('enabled', $bookingAdditional)
+                            ? $bookingAdditional['enabled']
+                            : 1;
                         $additionalType = $bookingAdditional['additional_type'] ?? '';
                         $activitiesType = $bookingAdditional['activities']['selection_type'] ?? '';
                         $activitiesMultipleSelection =
@@ -3070,6 +3073,7 @@
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="form-check form-switch" data-enabled-text="Enabled"
                                         data-disabled-text="Disabled">
+                                        <input type="hidden" name="tour[bookingAdditional][enabled]" value="0">
                                         <input data-toggle-switch class="form-check-input" type="checkbox"
                                             id="enable_booking_additional_switch" x-model="enableBookingAdditional"
                                             @change="enableBookingAdditional = enableBookingAdditional ? 1 : 0"
@@ -3273,41 +3277,37 @@
                                             <div class="col-12 mt-4"
                                                 x-show="activitiesMulitpleSelection.includes('pickup_location')">
                                                 <div class="form-fields">
-    <label class="title text-dark">Pickup Location</label>
+                                                    <label class="title text-dark">Pickup Location</label>
 
-    @php
-        $pickupLocationOptions =
-            $bookingAdditional['activities']['multiple_selection']['pickup_location']['options'] ?? [];
-    @endphp
+                                                    @php
+                                                        $pickupLocationOptions =
+                                                            $bookingAdditional['activities']['multiple_selection'][
+                                                                'pickup_location'
+                                                            ]['options'] ?? [];
+                                                    @endphp
 
-    <div class="form-check">
-        <input
-            class="form-check-input"
-            type="checkbox"
-            id="activity_pickup_hotel"
-            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
-            value="hotel"
-            {{ in_array('hotel', $pickupLocationOptions) ? 'checked' : '' }}
-        >
-        <label class="form-check-label" for="activity_pickup_hotel">
-            Hotel
-        </label>
-    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="activity_pickup_hotel"
+                                                            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+                                                            value="hotel"
+                                                            {{ in_array('hotel', $pickupLocationOptions) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="activity_pickup_hotel">
+                                                            Hotel
+                                                        </label>
+                                                    </div>
 
-    <div class="form-check">
-        <input
-            class="form-check-input"
-            type="checkbox"
-            id="activity_pickup_home"
-            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
-            value="home"
-            {{ in_array('home', $pickupLocationOptions) ? 'checked' : '' }}
-        >
-        <label class="form-check-label" for="activity_pickup_home">
-            Home
-        </label>
-    </div>
-</div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox"
+                                                            id="activity_pickup_home"
+                                                            name="tour[bookingAdditional][activities][multiple_selection][pickup_location][options][]"
+                                                            value="home"
+                                                            {{ in_array('home', $pickupLocationOptions) ? 'checked' : '' }}>
+                                                        <label class="form-check-label" for="activity_pickup_home">
+                                                            Home
+                                                        </label>
+                                                    </div>
+                                                </div>
 
                                             </div>
                                             <div class="form-fields mt-2">

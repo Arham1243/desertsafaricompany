@@ -52,7 +52,7 @@
                                         </td>
                                         <td>
                                             <span
-                                                class="badge rounded-pill bg-{{ $item->payment_status === 'paid' ? 'success' : ($item->payment_status === 'pending' ? 'warning' : 'danger') }}">
+                                                class="badge rounded-pill bg-{{ $item->payment_status === 'paid' ? 'success' : ($item->payment_status === 'partial' ? 'warning' : 'danger') }}">
                                                 {{ $item->payment_status }}
                                             </span>
                                         </td>

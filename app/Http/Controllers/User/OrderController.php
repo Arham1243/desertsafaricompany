@@ -91,6 +91,12 @@ class OrderController extends Controller
         $user_id = Auth::id();
         $booking = Order::where('user_id', $user_id)->findOrFail($id);
 
+        if ($request->has('payment_type')) {
+            $booking->update([
+                'payment_type' => $request->payment_type,
+            ]);
+        }
+
         return $paymentService->processPayment($request, $booking);
     }
 }

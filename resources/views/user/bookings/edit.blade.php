@@ -11,11 +11,15 @@
                     <div class="custom-sec__header justify-content-start gap-3">
                         Payment status:
                         <span
-                            class="badge rounded-pill bg-{{ $booking->payment_status === 'paid' ? 'success' : ($booking->payment_status === 'pending' ? 'warning' : 'danger') }}">
+                            class="badge rounded-pill bg-{{ $booking->payment_status === 'paid'
+                                ? 'success'
+                                : ($booking->payment_status === 'partial'
+                                    ? 'warning'
+                                    : 'danger') }}">
                             {{ ucfirst($booking->payment_status ?? 'N/A') }}
                         </span>
 
-                        @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
+                        @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled' && ($booking->advance_amount ?? 0) == 0)
                             <a href="{{ route('user.bookings.pay', $booking->id) }}" class="themeBtn">
                                 Pay Now
                             </a>
@@ -64,6 +68,39 @@
                                         </div>
                                     </div>
 
+
+
+                                    @if ($booking->advance_amount)
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Advance Amount:</label>
+                                                <input type="text" class="field" value="{{ $booking->advance_amount }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if ($booking->paid_amount)
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Paid Amount:</label>
+                                                <input type="text" class="field" value="{{ $booking->paid_amount }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if ($booking->remaining_amount)
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Remaining Amount:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->remaining_amount }}" readonly>
+                                            </div>
+                                        </div>
+                                    @endif
+
+
                                     <div class="col-md-6 col-12 mb-4">
                                         <div class="form-fields">
                                             <label class="title">Booking Status:</label>
@@ -82,95 +119,83 @@
                                             <label class="title">Payment Status:</label>
                                             <div>
                                                 <span
-                                                    class="badge rounded-pill bg-{{ $booking->payment_status === 'paid' ? 'success' : ($booking->payment_status === 'pending' ? 'warning' : 'danger') }}">
+                                                    class="badge rounded-pill bg-{{ $booking->payment_status === 'paid'
+                                                        ? 'success'
+                                                        : ($booking->payment_status === 'partial'
+                                                            ? 'warning'
+                                                            : 'danger') }}">
                                                     {{ $booking->payment_status ?? 'N/A' }}
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
 
-
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Checkout Details</div>
-                            </div>
-                            <div class="form-box__body">
-                                @php
-                                    $bookingRequestData = json_decode($booking->request_data, true);
-                                @endphp
-
-                                <div class="row">
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">First Name:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['first_name'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Last Name:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['last_name'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Email:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['email'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Phone:</label>
-                                            <input type="text" class="field"
-                                                value="+{{ $bookingRequestData['phone_dial_code'] ?? '' }} {{ $bookingRequestData['phone_number'] ?? '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Country:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['country'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">City:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['city'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Address:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $bookingRequestData['address'] ?? '' }}" readonly>
-                                        </div>
-                                    </div>
-
-                                    @if (!empty($bookingRequestData['speical_request']))
-                                        <div class="col-12 mb-4">
+                        @php
+                            $bookingRequestData = json_decode($booking->request_data, true);
+                        @endphp
+                        @if ($bookingRequestData)
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Billing Details</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Special Request:</label>
-                                                <textarea rows="8" class="field" readonly>{{ $bookingRequestData['speical_request'] }}</textarea>
+                                                <label class="title">Name:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $bookingRequestData['name'] ?? '' }}" readonly>
                                             </div>
                                         </div>
-                                    @endif
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Email:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $bookingRequestData['email'] ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Phone:</label>
+                                                <input type="text" class="field"
+                                                    value="+{{ $bookingRequestData['phone_dial_code'] ?? '' }} {{ $bookingRequestData['phone_number'] ?? '' }}"
+                                                    readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Country:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $bookingRequestData['country'] ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">City:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $bookingRequestData['city'] ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+
+                                        @if (!empty($bookingRequestData['speical_request']))
+                                            <div class="col-12 mb-4">
+                                                <div class="form-fields">
+                                                    <label class="title">Special Request:</label>
+                                                    <textarea rows="8" class="field" readonly>{{ $bookingRequestData['speical_request'] }}</textarea>
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         <div class="form-box">
                             <div class="form-box__header">
                                 <div class="title">Booked Tours</div>

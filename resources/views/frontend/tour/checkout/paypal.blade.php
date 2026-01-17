@@ -6,7 +6,12 @@
                 <div class="col-md-8">
                     <div class="text-document mb-4">
                         <h3 class="subHeading mb-0">Secure Checkout with PayPal</h3>
-                        <p>Fast, safe, and encrypted payment. Complete your order below.</p>
+                        <p>
+                            Fast, safe, and encrypted payment. Complete your order below.
+                        </p>
+                        <p class="fw-bold mt-2">
+                            Amount to pay: <span class="text-primary">${{ number_format($usdAmount, 2, '.', '') }}</span>
+                        </p>
                     </div>
                     <div id="paypal-button-container" class="w-100"></div>
                 </div>
