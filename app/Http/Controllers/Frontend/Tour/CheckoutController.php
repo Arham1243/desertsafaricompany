@@ -77,7 +77,6 @@ class CheckoutController extends Controller
         }
 
         $cart = Session::get('cart', []);
-        dd($cart);
         if (!$canAvailDiscount) {
             $cart = $this->revertCouponDiscounts($cart);
         }

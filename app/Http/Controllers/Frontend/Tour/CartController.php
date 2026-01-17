@@ -54,6 +54,7 @@ class CartController extends Controller
         $totalNoOfPeople = array_sum(array_column($tourItems, 'quantity'));
 
         $subtotal = round((float) ($request->input('subtotal', 0)), 2);
+        $totalPrice = round((float) ($request->input('total_price', 0)), 2);
         $priceWithoutDiscount = round((float) ($request->input('price_without_discount', 0)), 2);
         $serviceFee = round((float) ($request->input('service_fee', 0)), 2);
         $startDate = $request->input('start_date');
@@ -69,8 +70,6 @@ class CartController extends Controller
             ];
             $totalExtra += $price;
         }
-
-        $totalPrice = round($subtotal + $serviceFee + $totalExtra, 2);
 
         $cardData = [
             'tourData' => $filteredItems,
