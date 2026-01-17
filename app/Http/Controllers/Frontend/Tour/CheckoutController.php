@@ -72,6 +72,16 @@ class CheckoutController extends Controller
         }
 
         $cart = Session::get('cart', []);
+
+        $validation = $this->validateFirstOrderCoupon($cart, $request);
+        $cart = $validation['cart'];
+
+        if ($validation['is_invalid']) {
+            return redirect()
+                ->back()
+                ->with('notify_error', 'First order coupon cannot be applied as you have already used it before.');
+        }
+
         if (!$canAvailDiscount) {
             $cart = $this->revertCouponDiscounts($cart);
         }
@@ -109,7 +119,64 @@ class CheckoutController extends Controller
         return $paymentService->processPayment($request, $order);
     }
 
+    /**
+     * Validate and handle first order coupon based on user's coupon usage history
+     */
+    private function validateFirstOrderCoupon(array $cart, Request $request): array
+    {
+        // Check if there are any applied coupons
+        if (!isset($cart['applied_coupons']) || !is_array($cart['applied_coupons'])) {
+            return ['cart' => $cart, 'is_invalid' => false];
+        }
 
+        // Find if first order coupon is applied
+        $firstOrderCouponIndex = null;
+        foreach ($cart['applied_coupons'] as $index => $coupon) {
+            if (isset($coupon['is_first_order_coupon']) && $coupon['is_first_order_coupon'] == '1') {
+                $firstOrderCouponIndex = $index;
+                break;
+            }
+        }
+
+        // If no first order coupon found, return cart as is
+        if ($firstOrderCouponIndex === null) {
+            return ['cart' => $cart, 'is_invalid' => false];
+        }
+
+        // Get user email from request
+        $userEmail = $request->input('order.email');
+
+        if (!$userEmail) {
+            return ['cart' => $cart, 'is_invalid' => false];
+        }
+
+        // Check if user has already used first order coupon
+        $user = \App\Models\User::where('email', $userEmail)->first();
+
+        // If user exists and has already used first order coupon, remove it from cart
+        if ($user && $user->has_used_first_order_coupon == 1) {
+            // Remove the first order coupon from applied_coupons
+            unset($cart['applied_coupons'][$firstOrderCouponIndex]);
+
+            // Re-index the array to avoid gaps
+            $cart['applied_coupons'] = array_values($cart['applied_coupons']);
+
+            // If no coupons left, remove the applied_coupons key entirely
+            if (empty($cart['applied_coupons'])) {
+                unset($cart['applied_coupons']);
+            }
+
+            // Revert the coupon discounts to restore original prices
+            $cart = $this->revertCouponDiscounts($cart);
+
+            // Update session with reverted cart
+            Session::put('cart', $cart);
+
+            return ['cart' => $cart, 'is_invalid' => true];
+        }
+
+        return ['cart' => $cart, 'is_invalid' => false];
+    }
 
     /**
      * Revert all coupon discounts from the cart

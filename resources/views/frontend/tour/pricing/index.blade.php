@@ -195,37 +195,6 @@
                 </div>
             </div>
         @endforeach
-        @push('js')
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
-                    const triggers = document.querySelectorAll('[detail-popup-trigger]');
-                    const popups = document.querySelectorAll('.global-popup-wrapper');
-
-                    triggers.forEach(trigger => {
-                        trigger.addEventListener('click', () => {
-                            const id = trigger.getAttribute('detail-popup-id');
-                            popups.forEach(popup => {
-                                popup.classList.remove('open');
-                                if (popup.id === id) popup.classList.add('open');
-                            });
-                        });
-                    });
-                    popups.forEach(popup => {
-                        popup.addEventListener('click', function(e) {
-                            if (e.target === popup) {
-                                popup.classList.remove('open');
-                            }
-                        });
-                    });
-
-                    document.querySelectorAll('[detail-popup-close]').forEach(close => {
-                        close.addEventListener('click', () => {
-                            close.closest('.global-popup-wrapper').classList.remove('open');
-                        });
-                    });
-                });
-            </script>
-        @endpush
     @endif
     @php
         $isEnabled = (int) $settings->get('help_whatsapp_is_enabled') === 1;

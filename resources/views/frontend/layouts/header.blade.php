@@ -14,7 +14,7 @@
                         @if ($settings->get('cookie_bar_accept_bg_color') || $settings->get('cookie_bar_accept_text_color')) style="
                         @if ($settings->get('cookie_bar_accept_bg_color')) background-color: {{ $settings->get('cookie_bar_accept_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_accept_text_color')) color: {{ $settings->get('cookie_bar_accept_text_color') }}; @endif "
-                                                              @endif>
+                                                               @endif>
                         {{ $settings->get('cookie_bar_accept_text') ?? 'Accept All' }}
                     </button>
                     <button type="button" class="cookie-consent__button cookie-consent__button--reject"
@@ -22,7 +22,7 @@
                         @if ($settings->get('cookie_bar_reject_bg_color') || $settings->get('cookie_bar_reject_text_color')) style="
                         @if ($settings->get('cookie_bar_reject_bg_color')) background-color: {{ $settings->get('cookie_bar_reject_bg_color') }}; @endif
                         @if ($settings->get('cookie_bar_reject_text_color')) color: {{ $settings->get('cookie_bar_reject_text_color') }}; @endif "
-                                                              @endif>
+                                                               @endif>
                         {{ $settings->get('cookie_bar_reject_text') ?? 'Reject' }}
                     </button>
                 </div>
@@ -466,3 +466,34 @@
         </div>
     @endif
 @endif
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const triggers = document.querySelectorAll('[detail-popup-trigger]');
+            const popups = document.querySelectorAll('.global-popup-wrapper');
+
+            triggers.forEach(trigger => {
+                trigger.addEventListener('click', () => {
+                    const id = trigger.getAttribute('detail-popup-id');
+                    popups.forEach(popup => {
+                        popup.classList.remove('open');
+                        if (popup.id === id) popup.classList.add('open');
+                    });
+                });
+            });
+            popups.forEach(popup => {
+                popup.addEventListener('click', function(e) {
+                    if (e.target === popup) {
+                        popup.classList.remove('open');
+                    }
+                });
+            });
+
+            document.querySelectorAll('[detail-popup-close]').forEach(close => {
+                close.addEventListener('click', () => {
+                    close.closest('.global-popup-wrapper').classList.remove('open');
+                });
+            });
+        });
+    </script>
+@endpush
