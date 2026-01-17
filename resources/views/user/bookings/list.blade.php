@@ -16,11 +16,11 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Tour</th>
-                                    <th>User</th>
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
                                     <th>Booking Status</th>
+                                    <th>Total Amount</th>
                                     <th>Order Created at</th>
                                     <th></th>
                                 </tr>
@@ -45,8 +45,6 @@
                                                 </div>
                                             @endforeach
                                         </td>
-                                        <td>{{ $item->user->full_name ?? 'N/A' }} <br>
-                                            {{ $item->user->email ?? 'N/A' }}</td>
                                         <td>
                                             {{ formatKey($item->payment_type) }}
                                         </td>
@@ -63,6 +61,7 @@
                                                 {{ $item->status }}
                                             </span>
                                         </td>
+                                          <td>{{ formatPrice($item->total_amount) }}</td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
                                             <div class="dropstart bootsrap-dropdown">

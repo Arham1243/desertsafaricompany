@@ -110,8 +110,15 @@
                                                 </div>
                                             @endforeach
                                         </td>
-                                        <td>{{ $item->user->full_name ?? 'N/A' }} <br>
-                                            {{ $item->user->email ?? 'N/A' }}</td>
+                                        <td>
+                                            @if($item->user)
+                                            {{ $item->user->full_name ?? 'N/A' }} <br>
+                                            {{ $item->user->email ?? 'N/A' }}
+                                            @else
+                                            Guest Checkout
+                                            {{ $item->guest_email ?? 'N/A' }}
+                                            @endif
+                                        </td>
                                         <td>
                                             {{ formatKey($item->payment_type) }}
                                         </td>

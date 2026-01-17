@@ -248,63 +248,205 @@
                 <div class="col-lg-7">
                     <form action="{{ route('checkout.store') }}" method="POST" id="checkout-form">
                         @csrf
-                        <div class="details-box">
-                            <div class="details-box__header">
-                                <i class='bx bxs-group'></i>
-                                <div class="heading">Lead Passenger Details</div>
-                            </div>
-                            <div class="details-box__body">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <div class="field">
-                                            <input id="first_name" type="text" placeholder="First Name *" required
-                                                name="order[name]">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="field">
-                                            <input id="email" type="email" placeholder="Email *" required
-                                                name="order[email]">
-                                        </div>
-                                    </div>
+                        @if (!Auth::check())
+                            <div class="details-box">
+                                <div class="details-box__header">
+                                    <i class='bx bxs-user'></i>
+                                    <div class="heading">How would you like to proceed?</div>
+                                </div>
+                                <div class="details-box__body">
 
-                                    <div class="col-md-4">
-                                        <div class="field" data-flag-input-wrapper>
-                                            <input type="hidden" name="order[phone_dial_code]" data-flag-input-dial-code
-                                                value="971">
-                                            <input type="hidden" name="order[phone_country_code]"
-                                                data-flag-input-country-code value="ae">
-                                            <input id="phone_number" type="text" name="order[phone_number]"
-                                                class="field flag-input" data-flag-input value="" placeholder="Phone"
-                                                inputmode="numeric" pattern="[0-9]*"
-                                                oninput="this.value = this.value.replace(/[^0-9]/g, '');" maxlength="15">
-                                        </div>
+                                    <!-- Modern Segmented Toggle -->
+                                    <div class="segmented-control mb-4">
+                                        <!-- Radio 1 -->
+                                        <input type="radio" name="auth-toggle" id="tab-guest-input" checked
+                                            data-bs-target="#guest-form">
+                                        <label for="tab-guest-input" class="control-item">
+                                            <i class='bx bx-user-circle'></i>
+                                            <span>Continue as Guest</span>
+                                        </label>
+
+                                        <!-- Radio 2 -->
+                                        <input type="radio" name="auth-toggle" id="tab-login-input"
+                                            data-bs-target="#login-prompt">
+                                        <label for="tab-login-input" class="control-item">
+                                            <i class='bx bx-log-in-circle'></i>
+                                            <span>Login / Signup</span>
+                                        </label>
+
+                                        <div class="selection-slider"></div>
                                     </div>
 
-
-                                    <div class="col-md-6">
-                                        <div class="field">
-                                            <select id="country" name="order[country]" required>
-                                                <option value="" selected disabled>Select</option>
-                                                @foreach ($countries as $country)
-                                                    <option value="{{ $country }}"
-                                                        {{ strtolower('united arab emirates') == strtolower($country) ? 'selected' : '' }}>
-                                                        {{ ucwords($country) }}
-                                                    </option>
-                                                @endforeach
-                                            </select>
+                                    <div class="tab-content" id="authTabContent">
+                                        <!-- Guest Form Pane -->
+                                        <div class="tab-pane fade show active" id="guest-form" role="tabpanel">
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <div class="field">
+                                                        <input id="first_name" type="text" placeholder="First Name *"
+                                                            required name="order[name]">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="field">
+                                                        <input id="email" type="email" placeholder="Email *" required
+                                                            name="order[email]">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="field" data-flag-input-wrapper>
+                                                        <input type="hidden" name="order[phone_dial_code]"
+                                                            data-flag-input-dial-code value="971">
+                                                        <input type="hidden" name="order[phone_country_code]"
+                                                            data-flag-input-country-code value="ae">
+                                                        <input id="phone_number" type="text" name="order[phone_number]"
+                                                            class="field flag-input" data-flag-input placeholder="Phone"
+                                                            inputmode="numeric" pattern="[0-9]*"
+                                                            oninput="this.value = this.value.replace(/[^0-9]/g, '');"
+                                                            maxlength="15">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="field">
+                                                        <select id="country" name="order[country]" required>
+                                                            <option value="" selected disabled>Select Country</option>
+                                                            @foreach ($countries as $country)
+                                                                <option value="{{ $country }}"
+                                                                    {{ strtolower('united arab emirates') == strtolower($country) ? 'selected' : '' }}>
+                                                                    {{ ucwords($country) }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="field">
+                                                        <input id="city" type="text" placeholder="City *" required
+                                                            name="order[city]">
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6">
-                                        <div class="field">
-                                            <input id="city" type="text" placeholder="City *" required
-                                                name="order[city]">
+                                        <!-- Login Prompt Pane -->
+                                        <div class="tab-pane fade" id="login-prompt" role="tabpanel">
+                                            <div class="login-card-inner text-center pb-4">
+                                                <div class="icon-circle mb-3">
+                                                    <i class='bx bxs-lock-open-alt'></i>
+                                                </div>
+                                                <h5 class="fw-bold">Login / Signup</h5>
+                                                <p class="text-muted small">Access your saved addresses and enjoy faster
+                                                    checkout by logging in or creating a new account.</p>
+                                                <button type="button" class="primary-btn mt-2 mx-auto"
+                                                    open-vue-login-popup>
+                                                    Continue to My Account
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+                            <script>
+                                document.addEventListener('DOMContentLoaded', function() {
+                                    const radios = document.querySelectorAll('input[name="auth-toggle"]');
+
+                                    radios.forEach(radio => {
+                                        radio.addEventListener('change', function() {
+                                            const targetSelector = this.getAttribute('data-bs-target');
+
+                                            // Hide all tab panes
+                                            document.querySelectorAll('.tab-pane').forEach(pane => {
+                                                pane.classList.remove('show', 'active');
+                                            });
+
+                                            // Show the selected tab pane
+                                            const targetPane = document.querySelector(targetSelector);
+                                            if (targetPane) {
+                                                targetPane.classList.add('show', 'active');
+                                            }
+                                        });
+                                    });
+                                });
+                            </script>
+
+                            <style>
+                                .segmented-control {
+                                    position: relative;
+                                    display: flex;
+                                    background: #f1f3f5;
+                                    border-radius: 12px;
+                                    padding: 4px;
+                                    margin: 0 auto;
+                                    border: 1px solid #e9ecef;
+                                    overflow: hidden;
+                                }
+
+                                .segmented-control input[type="radio"] {
+                                    display: none;
+                                }
+
+                                .control-item {
+                                    flex: 1;
+                                    text-align: center;
+                                    padding: 12px 10px;
+                                    cursor: pointer;
+                                    z-index: 2;
+                                    transition: color 0.3s ease;
+                                    font-weight: 600;
+                                    font-size: 14px;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    gap: 8px;
+                                    color: #6c757d;
+                                    margin-bottom: 0;
+                                }
+
+                                .selection-slider {
+                                    position: absolute;
+                                    top: 4px;
+                                    left: 4px;
+                                    bottom: 4px;
+                                    width: calc(50% - 4px);
+                                    background: #ffffff;
+                                    border-radius: 10px;
+                                    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                                    transition: transform 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+                                    z-index: 1;
+                                }
+
+                                /* Move slider based on checked input */
+                                #tab-login-input:checked~.selection-slider {
+                                    transform: translateX(100%);
+                                }
+
+                                /* Active Text Color */
+                                #tab-guest-input:checked+label,
+                                #tab-login-input:checked+label {
+                                    color: #000;
+                                }
+
+                                .login-card-inner {
+                                    margin: 0 auto;
+                                }
+
+                                .icon-circle {
+                                    width: 60px;
+                                    height: 60px;
+                                    border: 1px dashed #dee2e6;
+                                    background: #fff;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    margin: 0 auto;
+                                    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+                                    color: #2b3e50;
+                                    font-size: 1.5rem;
+                                }
+                            </style>
+                        @endif
                         <div class="details-box">
                             <div class="details-box__header">
                                 <i class='bx bxs-credit-card'></i>
@@ -315,8 +457,8 @@
                                     @if (isset($settings['stripe_enabled']) && (int) $settings['stripe_enabled'] === 1)
                                         <!-- Card Payments - Stripe -->
                                         <li class="payment-option">
-                                            <input checked class="payment-option__input" type="radio" name="payment_type"
-                                                value="stripe" id="stripe" />
+                                            <input checked class="payment-option__input" type="radio"
+                                                name="payment_type" value="stripe" id="stripe" />
                                             <label for="stripe" class="payment-option__box">
                                                 <div class="title-wrapper">
                                                     <div class="radio"></div>
@@ -740,6 +882,7 @@
         });
         const cashDiscountApplicable = @json($cashDiscountApplicable);
         const hasCouponApplied = @json($hasCouponApplied);
+        const makeFieldsRequired = @json(!Auth::check());
 
         document.addEventListener('DOMContentLoaded', () => {
             const form = document.getElementById('checkout-form');
@@ -755,20 +898,23 @@
                 btn.addEventListener('click', (e) => {
                     e.preventDefault();
 
-                    const email = document.getElementById('email').value;
-                    const firstName = document.getElementById('first_name').value;
-                    const phone = document.getElementById('phone_number').value;
-                    const country = document.getElementById('country').value;
-                    const city = document.getElementById('city').value;
-                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-                    // Validation
-                    if (!email) return showToast('error', 'Email is required');
-                    if (!emailPattern.test(email)) return showToast('error', 'Please enter a valid email');
-                    if (!firstName) return showToast('error', 'First name is required');
-                    if (!phone) return showToast('error', 'Phone number is required');
-                    if (!country) return showToast('error', 'Country is required');
-                    if (!city) return showToast('error', 'City is required');
+                    if (makeFieldsRequired) {
+                        const email = document.getElementById('email').value;
+                        const firstName = document.getElementById('first_name').value;
+                        const phone = document.getElementById('phone_number').value;
+                        const country = document.getElementById('country').value;
+                        const city = document.getElementById('city').value;
+                        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                        // Validation
+                        if (!email) return showToast('error', 'Email is required');
+                        if (!emailPattern.test(email)) return showToast('error',
+                            'Please enter a valid email');
+                        if (!firstName) return showToast('error', 'First name is required');
+                        if (!phone) return showToast('error', 'Phone number is required');
+                        if (!country) return showToast('error', 'Country is required');
+                        if (!city) return showToast('error', 'City is required');
+                    }
 
                     const selectedPayment = getSelectedPaymentMethod();
 

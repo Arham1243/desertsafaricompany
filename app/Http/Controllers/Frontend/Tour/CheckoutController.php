@@ -71,11 +71,6 @@ class CheckoutController extends Controller
             $canAvailDiscount = false;
         }
 
-        if (!Auth::check()) {
-            return redirect()->back()
-                ->with('notify_error', 'Please login to continue.');
-        }
-
         $cart = Session::get('cart', []);
         if (!$canAvailDiscount) {
             $cart = $this->revertCouponDiscounts($cart);
@@ -214,7 +209,9 @@ class CheckoutController extends Controller
     protected function createOrder(Request $request, array $cart, float $totalAmount): Order
     {
         return Order::create([
-            'user_id' => auth()->id(),
+            'user_id' => auth()->id() ?? null,
+            'guest_email' => $request->order['email'] ?? null,
+            'request_data' => json_encode($request->order),
             'request_data' => json_encode($request->order),
             'cart_data' => json_encode($cart),
             'payment_type' => $request->payment_type,

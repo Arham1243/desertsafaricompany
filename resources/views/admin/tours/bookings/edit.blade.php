@@ -125,80 +125,83 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-box">
-                            <div class="form-box__header">
-                                <div class="title">Registered User Details</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Name:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->full_name ?? '' }}" readonly>
+                        @if ($booking->user)
+                            <div class="form-box">
+                                <div class="form-box__header">
+                                    <div class="title">Registered User Details</div>
+                                </div>
+                                <div class="form-box__body">
+                                    <div class="row">
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Name:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->full_name ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Email:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->email ?? '' }}"
-                                                readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Email:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->email ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Phone:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->phone ?? '' }}"
-                                                readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Phone:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->phone ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Country:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->country ?? '' }}" readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Country:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->country ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">City:</label>
-                                            <input type="text" class="field" value="{{ $booking->user->city ?? '' }}"
-                                                readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">City:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->city ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Signup Method:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->signup_method ?? '' }}" readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Signup Method:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->signup_method ?? '' }}" readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Registration Date:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->user->created_at->format('d M Y') ?? '' }}" readonly>
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Registration Date:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->created_at->format('d M Y') ?? '' }}"
+                                                    readonly>
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="col-md-12 mt-4">
-                                        <div class="placeholder-user">
-                                            <a href="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
-                                                data-fancybox="gallery" class="placeholder-user__img">
-                                                <img src="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
-                                                    alt="{{ $booking->user->full_name ?? '' }}" class="imgFluid">
-                                            </a>
+                                        <div class="col-md-12 mt-4">
+                                            <div class="placeholder-user">
+                                                <a href="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
+                                                    data-fancybox="gallery" class="placeholder-user__img">
+                                                    <img src="{{ $booking->user->avatar ?? asset('admin/assets/images/placeholder.png') }}"
+                                                        alt="{{ $booking->user->full_name ?? '' }}" class="imgFluid">
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        @endif
                         @php
                             $bookingRequestData = json_decode($booking->request_data, true);
                         @endphp

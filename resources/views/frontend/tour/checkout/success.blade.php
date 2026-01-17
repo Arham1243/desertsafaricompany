@@ -11,7 +11,9 @@
                 </div>
                 <p>Thank you for your order! Your payment has been successfully processed.<br>
                     Your booking is confirmed — get ready for an amazing adventure!</p>
-                <a href="{{ url('user/bookings') }}" class="primary-btn mx-auto">View My Bookings</a>
+                @if (Auth::check())
+                    <a href="{{ url('user/bookings') }}" class="primary-btn mx-auto">View My Bookings</a>
+                @endif
             </div>
         </div>
     </div>

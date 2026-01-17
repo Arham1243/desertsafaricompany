@@ -12,8 +12,9 @@ class OrderController extends Controller
 {
     public function index()
     {
-        $user_id = Auth::user()->id;
-        $bookings = Order::where('user_id', $user_id)
+        $user = Auth::user();
+        $bookings = Order::where('user_id', $user->id)
+            ->orWhere('guest_email', $user->email)
             ->latest()
             ->get();
 
