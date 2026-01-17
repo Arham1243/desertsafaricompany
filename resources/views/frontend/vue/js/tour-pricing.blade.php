@@ -504,7 +504,7 @@
 
             // Add this computed property
             const totalPriceWithoutCoupon = computed(() => {
-                let sum = initialTotalPrice;
+                let sum = 0;
 
                 if (priceType === "simple") {
                     sum = parseFloat(simpleTourData.value.sale_price ?? 0)
@@ -572,7 +572,7 @@
                     sum = carsNeeded * parseFloat(privateTourData.value.original_price ?? 0)
                 }
 
-                return sum
+                return sum + initialTotalPrice
             })
 
             const getTourPromoPricesByDay = async () => {
