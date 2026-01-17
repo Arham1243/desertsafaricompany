@@ -56,25 +56,42 @@
                                                     <li class="payment-option">
                                                         <input class="payment-option__input" type="radio"
                                                             name="payment_type" value="tabby" id="tabby" />
-                                                        <label for="tabby" class="payment-option__box">
-                                                            <div class="title-wrapper">
-                                                                <div class="radio"></div>
-                                                                <div class="icon">
-                                                                    <img src="{{ isset($settings['tabby_logo']) ? asset($settings['tabby_logo']) : asset('frontend/assets/images/methods/3.png') }}"
-                                                                        alt="{{ isset($settings['tabby_logo_alt_text']) ? $settings['tabby_logo_alt_text'] : 'tabby' }}"
-                                                                        class="imgFluid">
+                                                        <label for="tabby" class="payment-option__box d-block">
+                                                            <div class="payment-option__box">
+                                                                <div class="title-wrapper">
+                                                                    <div class="radio"></div>
+                                                                    <div class="icon">
+                                                                        <img src="{{ isset($settings['tabby_logo']) ? asset($settings['tabby_logo']) : asset('frontend/assets/images/methods/3.png') }}"
+                                                                            alt="{{ isset($settings['tabby_logo_alt_text']) ? $settings['tabby_logo_alt_text'] : 'tabby' }}"
+                                                                            class="imgFluid">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="content">
+                                                                    <div class="title">
+                                                                        {{ $settings['tabby_title'] ?? 'Tabby - Buy Now, Pay Later (4 instalments)' }}
+                                                                    </div>
+                                                                    <div class="note">
+                                                                        {{ $settings['tabby_description'] ?? 'No credit card required. Valid for orders AED 100 or more.' }}
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
-                                                            <div class="content">
-                                                                <div class="title">
-                                                                    {{ $settings['tabby_title'] ?? 'Tabby - Buy Now, Pay Later (4 instalments)' }}
-                                                                </div>
-                                                                <div class="note">
-                                                                    {{ $settings['tabby_description'] ?? 'No credit card required. Valid for orders AED 100 or more.' }}
-                                                                </div>
-                                                            </div>
+                                                            <div id="tabbyPromo"></div>
                                                         </label>
                                                     </li>
+                                                    <script src="https://checkout.tabby.ai/tabby-promo.js"></script>
+                                                    <script>
+                                                        new TabbyPromo({
+                                                            selector: '#tabbyPromo',
+                                                            currency: 'AED',
+                                                            price: {{ $cart['total_price'] }},
+                                                            installmentsCount: 4,
+                                                            lang: 'en',
+                                                            source: 'product',
+                                                            publicKey: 'pk_test_68ae0214-7dd1-42dc-90e2-f541006cde58',
+                                                            merchantCode: 'HDS'
+                                                        });
+                                                    </script>
                                                 @endif
 
                                                 @if (isset($settings['tamara_enabled']) && (int) $settings['tamara_enabled'] === 1)
