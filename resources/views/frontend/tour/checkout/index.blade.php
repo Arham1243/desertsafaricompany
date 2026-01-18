@@ -500,16 +500,23 @@
                                                     <div class="title d-flex align-items-start  gap-2">
                                                         {{ $settings['advance_payment_title'] ?? 'Advance Payment' }}
                                                         @php
-                                                            $advanceAmount =
-                                                            $advancePaymentPercentage ? 
-                                                                ($advancePaymentPercentage / 100) *
-                                                                $cart['total_price'] : null;
+                                                            $advanceAmount = $advancePaymentPercentage
+                                                                ? ($advancePaymentPercentage / 100) *
+                                                                    $cart['total_price']
+                                                                : null;
+
+                                                            $remainingAmount = $advanceAmount
+                                                                ? $cart['total_price'] - $advanceAmount
+                                                                : null;
                                                         @endphp
-                                                        @if($advanceAmount)
-                                                        <div class="advance-payment-info" data-tooltip="tooltip"
-                                                            title="You can book this tour by paying {{ $advancePaymentPercentage }}% (AED {{ number_format($advanceAmount, 2) }}) of the total price.">
-                                                            <i class='bx bxs-info-circle'></i>
-                                                        </div>
+
+                                                        @if ($advanceAmount)
+                                                            <div class="advance-payment-info" data-tooltip="tooltip"
+                                                                title="Book now just with a booking deposit of AED {{ number_format($advanceAmount, 2) }}  <br>
+The balance of AED {{ number_format($remainingAmount, 2) }} will be paid on the day of the activity. <br>
+Total AED {{ number_format($cart['total_price'], 2) }} per selected travelers/options">
+                                                                <i class='bx bxs-info-circle'></i>
+                                                            </div>
                                                         @endif
                                                     </div>
                                                     <div class="note">
@@ -838,6 +845,11 @@
     </div>
 @endsection
 @push('css')
+    <style>
+        .tooltip-inner {
+            max-width: 450px !important;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.13/css/intlTelInput.css">
 @endpush
 @push('js')
