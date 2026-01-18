@@ -8328,3 +8328,13 @@ body .timeslot-group-wrapper :is(select.select-field) {
     color: #fff !important;
     background: var(--color-primary) !important;
 }
+.advance-payment-info {
+    display: inline-block;
+    cursor: pointer;
+    color: var(--color-primary);
+    line-height: 1.21;
+}
+
+.advance-payment-info i {
+    font-size: 1.1rem;
+}

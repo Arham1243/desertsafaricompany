@@ -208,6 +208,7 @@
         ];
         sort($countries);
         $cashDiscountApplicable = $settings->get('cash_discount_applicable');
+        $advancePaymentPercentage = $settings->get('advance_payment_percentage');
     @endphp
     <div class="checkout section-padding">
         <div class="container">
@@ -492,11 +493,24 @@
                                                         <img src="{{ isset($settings['advance_payment_logo']) ? asset($settings['advance_payment_logo']) : asset('frontend/assets/images/methods/8.png') }}"
                                                             alt="{{ isset($settings['advance_payment_logo_alt_text']) ? $settings['advance_payment_logo_alt_text'] : 'stripe' }}"
                                                             class="imgFluid">
+
                                                     </div>
                                                 </div>
                                                 <div class="content">
-                                                    <div class="title">
+                                                    <div class="title d-flex align-items-start  gap-2">
                                                         {{ $settings['advance_payment_title'] ?? 'Advance Payment' }}
+                                                        @php
+                                                            $advanceAmount =
+                                                            $advancePaymentPercentage ? 
+                                                                ($advancePaymentPercentage / 100) *
+                                                                $cart['total_price'] : null;
+                                                        @endphp
+                                                        @if($advanceAmount)
+                                                        <div class="advance-payment-info" data-tooltip="tooltip"
+                                                            title="You can book this tour by paying {{ $advancePaymentPercentage }}% (AED {{ number_format($advanceAmount, 2) }}) of the total price.">
+                                                            <i class='bx bxs-info-circle'></i>
+                                                        </div>
+                                                        @endif
                                                     </div>
                                                     <div class="note">
                                                         {{ $settings['advance_payment_description'] ?? 'A percentage of the order total to be paid upfront before processing.' }}
