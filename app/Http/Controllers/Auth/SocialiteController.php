@@ -36,43 +36,45 @@ class SocialiteController extends Controller
         try {
             $socialUser = Socialite::driver($social)->stateless()->user();
 
-            // Check if the user already exists by email
-            $existingUser = User::where('email', $socialUser->email)->first();
+            $email = $socialUser->email ?? ($socialUser->nickname . '@' . $social . '.com');
+
+            // Determine unique column for Apple
+            $socialColumn = $social === 'apple' ? 'apple_id' : 'social_id';
+
+            $existingUser = User::where($socialColumn, $socialUser->id)
+                ->orWhere('email', $email)
+                ->first();
 
             if ($existingUser) {
-                // User already exists, update their social info and login
                 $existingUser->update([
-                    'social_id' => $socialUser->id,
+                    $socialColumn => $socialUser->id,
                     'signup_method' => $social,
                     'social_token' => $socialUser->token,
-                    'avatar' => $socialUser->avatar,
+                    'avatar' => $socialUser->avatar ?? null,
                     'email_verified' => true,
                 ]);
 
                 Auth::login($existingUser);
                 $redirectTo = $request->session()->pull('url.intended', route('frontend.index'));
-
                 return redirect()->to($redirectTo)->with('notify_success', 'Login Successful!');
             } else {
-                // User does not exist, create a new user
-                $user = User::updateOrCreate([
-                    'social_id' => $socialUser->id,
-                ], [
+                $user = User::create([
+                    $socialColumn => $socialUser->id,
                     'signup_method' => $social,
-                    'full_name' => $socialUser->name,
-                    'email' => $socialUser->email ?? $socialUser->nickname.'@'.$social.'.com', // Handle missing email
+                    'full_name' => $socialUser->name ?? $socialUser->nickname ?? 'Apple User',
+                    'email' => $email,
                     'social_token' => $socialUser->token,
-                    'avatar' => $socialUser->avatar,
+                    'avatar' => $socialUser->avatar ?? null,
                     'email_verified' => true,
+                    'password' => bcrypt(uniqid()),
                 ]);
 
                 Auth::login($user);
                 $redirectTo = $request->session()->pull('url.intended', route('frontend.index'));
-
                 return redirect()->to($redirectTo)->with('notify_success', 'Signup Successful!');
             }
         } catch (Exception $e) {
-            return redirect()->route('frontend.index')->with('notify_error', 'Failed to login using '.ucfirst($social).': '.$e->getMessage());
+            return redirect()->route('frontend.index')->with('notify_error', 'Failed to login using ' . ucfirst($social) . ': ' . $e->getMessage());
         }
     }
 }

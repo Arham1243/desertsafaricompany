@@ -4111,11 +4111,10 @@ a h5.blogDet-card__title:hover {
 }
 
 .loginSignup-popup__buttons {
-    display: flex;
-    justify-content: space-around;
     margin: 20px 0;
-    flex-wrap: wrap;
-    gap: 0.75rem 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 1rem;
 }
 
 .loginSignup-popup__img img {
@@ -4140,7 +4139,7 @@ a h5.blogDet-card__title:hover {
     background: #fff;
     border-radius: 21px;
     padding: 5px 45px;
-    width: 47%;
+    width: 100%;
 }
 
 .loginSignup-popup__email {

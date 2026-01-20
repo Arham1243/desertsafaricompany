@@ -98,6 +98,58 @@
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="my-5">
+                                <div class="row" x-data="{ appleEnabled: {{ $settings->get('is_apple_login_enabled') ? 'true' : 'false' }} }">
+
+                                    <!-- Toggle Switch -->
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="is_apple_login_enabled"
+                                                    :value="appleEnabled ? 1 : 0">
+                                                <div class="title title--sm mb-0">Apple:</div>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input data-toggle-switch class="form-check-input" type="checkbox"
+                                                        id="is_apple_login_enabled_switch" value="1"
+                                                        name="is_apple_login_enabled" x-model="appleEnabled">
+                                                    <label class="form-check-label"
+                                                        for="is_apple_login_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Apple Client ID -->
+                                    <div class="col-md-6 col-12" x-show="appleEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Apple Client ID</label>
+                                            <input type="text" name="apple_client_id"
+                                                value="{{ $settings->get('apple_client_id') ?? env('APPLE_CLIENT_ID') }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- Apple Team ID -->
+                                    <div class="col-md-6 col-12 mt-3" x-show="appleEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Apple Team ID</label>
+                                            <input type="text" name="apple_team_id"
+                                                value="{{ $settings->get('apple_team_id') ?? env('APPLE_TEAM_ID') }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+
+                                    <!-- Apple Key ID -->
+                                    <div class="col-md-6 col-12 mt-3" x-show="appleEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Apple Key ID</label>
+                                            <input type="text" name="apple_key_id"
+                                                value="{{ $settings->get('apple_key_id') ?? env('APPLE_KEY_ID') }}"
+                                                class="field">
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 

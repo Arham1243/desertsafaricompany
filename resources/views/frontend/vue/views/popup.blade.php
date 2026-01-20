@@ -43,6 +43,15 @@
                                 </div>
                             </a>
                         @endif
+                        @if ($settings->get('is_apple_login_enabled') && (int) $settings->get('is_apple_login_enabled') === 1)
+                            <a href="{{ route('auth.socialite', ['social' => 'apple']) }}"
+                                class="loginSignup-popup__icons">
+                                <div class="loginSignup-popup__img">
+                                    <img src="{{ asset('frontend/assets/images/apple.png') }}"
+                                        alt='image' class='imgFluid' loading='lazy' width="27" height="27">
+                                </div>
+                            </a>
+                        @endif
                     </div>
                     <form @submit.prevent="checkEmail">
 
