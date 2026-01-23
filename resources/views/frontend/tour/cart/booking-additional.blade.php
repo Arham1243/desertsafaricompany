@@ -216,7 +216,7 @@
             <template v-if="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel'">
                 <div class="form-fields mb-3">
                     <label class="title text-dark">
-                        Room No <span class="text-danger">*</span>
+                        Room No 
                     </label>
 
                     <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.room_no"
@@ -425,7 +425,7 @@
                             v-if="cart.tours[tour.id].booking_additional_selections.selection.pickup_location === 'hotel'">
                             <div class="form-fields mb-3">
                                 <label class="title text-dark">
-                                    Room No <span class="text-danger">*</span>
+                                    Room No
                                 </label>
 
                                 <input type="text"

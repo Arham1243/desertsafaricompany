@@ -794,12 +794,6 @@
                                 if (!address || address.trim() === '') {
                                     return false;
                                 }
-                                if (selections.pickup_location === 'hotel') {
-                                    const roomNo = selections.room_no;
-                                    if (!roomNo || roomNo.trim() === '') {
-                                        return false;
-                                    }
-                                }
                             }
                         }
                     }
@@ -811,12 +805,6 @@
                     if (!selection.location_type || selection.location_type === '' ||
                         !selection.address || selection.address.trim() === '') {
                         return false;
-                    }
-                    // Additional rule: if location_type is hotel, room_no is mandatory
-                    if (selection.location_type === 'hotel') {
-                        if (!selection.room_no || selection.room_no.trim() === '') {
-                            return false;
-                        }
                     }
 
                     // All validations passed
