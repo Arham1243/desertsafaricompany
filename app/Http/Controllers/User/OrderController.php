@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Services\PaymentService;
 use Illuminate\Http\Request;
+use App\Models\Setting;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -24,7 +25,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $user_id = Auth::user()->id;
-        $booking = Order::where('user_id', $user_id)->findOrFail($id);
+        $booking = Order::findOrFail($id);
 
         return view('user.bookings.edit', compact('booking'))->with('title', 'Booking Details');
     }
@@ -78,8 +79,7 @@ class OrderController extends Controller
     {
         $userId = Auth::id();
 
-        $booking = Order::where('user_id', $userId)
-            ->where('payment_status', '!=', 'paid')
+        $booking = Order::where('payment_status', '!=', 'paid')
             ->where('status', '!=', 'cancelled')
             ->findOrFail($id);
 
@@ -90,13 +90,33 @@ class OrderController extends Controller
     public function paymentProcess(Request $request, $id, PaymentService $paymentService)
     {
         $user_id = Auth::id();
-        $booking = Order::where('user_id', $user_id)->findOrFail($id);
+        $booking = Order::findOrFail($id);
 
         if ($request->has('payment_type')) {
             $booking->update([
                 'payment_type' => $request->payment_type,
             ]);
         }
+        $settings = Setting::pluck('value', 'key');
+        $advancePaymentPercentage = (float) ($settings->get('advance_payment_percentage', 10));
+
+        $totalAmount = $booking->total_amount;
+        $advanceAmount = 0;
+        $remainingAmount = 0;
+        if ($request->payment_type === 'advance_payment') {
+            $advanceAmount = round($totalAmount * ($advancePaymentPercentage / 100), 2);
+            $remainingAmount = $totalAmount - $advanceAmount;
+            $request->merge([
+                'payment_type' => 'stripe',
+                'advance_amount' => $advanceAmount,
+                'remaining_amount' => $remainingAmount,
+            ]);
+        }
+        $booking->update([
+            'payment_type' => 'stripe',
+            'advance_amount' => $advanceAmount,
+            'remaining_amount' => $remainingAmount,
+        ]);
 
         return $paymentService->processPayment($request, $booking);
     }

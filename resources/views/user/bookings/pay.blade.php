@@ -1,5 +1,8 @@
 @extends('user.layouts.main')
 @section('content')
+    @php
+        $advancePaymentPercentage = (float) $settings->get('advance_payment_percentage', 10);
+    @endphp
     <div class="col-md-12">
         <div class="dashboard-content">
             {{ Breadcrumbs::render('user.bookings.pay', $booking) }}
@@ -42,7 +45,8 @@
                                                     // Advance Payment
                                                     if (
                                                         !empty($settings['advance_payment_enabled']) &&
-                                                        (int) $settings['advance_payment_enabled'] === 1
+                                                        (int) $settings['advance_payment_enabled'] === 1 &&
+                                                        ($booking->advance_amount ?? 0) == 0
                                                     ) {
                                                         $paymentMethods[] = [
                                                             'key' => 'advance_payment',
@@ -83,21 +87,6 @@
                                                             'order' => (int) ($settings['paypal_order'] ?? 999),
                                                         ];
                                                     }
-
-                                                    // Cash
-                                                    if (
-                                                        !empty($settings['cash_enabled']) &&
-                                                        (int) $settings['cash_enabled'] === 1 &&
-                                                        !$hideCashOnPickup
-                                                    ) {
-                                                        $paymentMethods[] = [
-                                                            'key' => 'cash',
-                                                            'order' => (int) ($settings['cash_order'] ?? 999),
-                                                        ];
-                                                    }
-
-                                                    // Sort by order
-                                                    usort($paymentMethods, fn($a, $b) => $a['order'] <=> $b['order']);
                                                 @endphp
 
 
@@ -147,30 +136,26 @@
                                                                     </div>
                                                                     <div class="content">
                                                                         <div class="title d-flex align-items-start  gap-2">
-                                                                            {{ $settings['advance_payment_title'] ?? 'Advance Payment' }}
                                                                             @php
                                                                                 $advanceAmount = $advancePaymentPercentage
                                                                                     ? ($advancePaymentPercentage /
                                                                                             100) *
-                                                                                        $cart['total_price']
+                                                                                        $booking->total_amount
                                                                                     : null;
 
                                                                                 $remainingAmount = $advanceAmount
-                                                                                    ? $cart['total_price'] -
+                                                                                    ? $booking->total_amount -
                                                                                         $advanceAmount
                                                                                     : null;
                                                                             @endphp
-
-                                                                            @if ($advanceAmount)
-                                                                                <div class="advance-payment-info"
-                                                                                    data-tooltip="tooltip"
-                                                                                    title="Book now just with a booking deposit of AED {{ number_format($advanceAmount, 2) }}  <br> The balance of AED {{ number_format($remainingAmount, 2) }} will be paid on the day of the activity. <br> Total AED {{ number_format($cart['total_price'], 2) }} per selected travelers/options">
-                                                                                    <i class='bx bxs-info-circle'></i>
-                                                                                </div>
-                                                                            @endif
+                                                                            Book now just with <strong>{{$advancePaymentPercentage}}%</strong> Booking Deposit from
+                                                                            <strong>{{ formatPrice($advanceAmount) }}</strong>
                                                                         </div>
                                                                         <div class="note">
-                                                                            {{ $settings['advance_payment_description'] ?? 'A percentage of the order total to be paid upfront before processing.' }}
+                                                                            The balance of
+                                                                            <strong>{{ formatPrice($remainingAmount) }}</strong>
+                                                                            you will pay on the day of the activity. <strong>(Cash
+                                                                                Or Card)</strong>
                                                                         </div>
                                                                     </div>
                                                                 </label>
@@ -266,32 +251,6 @@
                                                                         </div>
                                                                         <div class="note">
                                                                             {{ $settings['paypal_description'] ?? 'Secure payments via PayPal wallet or linked cards.' }}
-                                                                        </div>
-                                                                    </div>
-                                                                </label>
-                                                            </li>
-                                                        @break
-
-                                                        @case('cash')
-                                                            <!-- Cash on Pickup -->
-                                                            <li class="payment-option">
-                                                                <input class="payment-option__input" type="radio"
-                                                                    name="payment_type" value="cod" id="cod" />
-                                                                <label for="cod" class="payment-option__box">
-                                                                    <div class="title-wrapper">
-                                                                        <div class="radio"></div>
-                                                                        <div class="icon">
-                                                                            <img src="{{ isset($settings['cash_logo']) ? asset($settings['cash_logo']) : asset('frontend/assets/images/methods/4.png') }}"
-                                                                                alt="{{ isset($settings['cash_logo_alt_text']) ? $settings['cash_logo_alt_text'] : 'cod' }}"
-                                                                                class="imgFluid">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="content">
-                                                                        <div class="title">
-                                                                            {{ $settings['cash_title'] ?? 'Cash on Pickup' }}
-                                                                        </div>
-                                                                        <div class="note">
-                                                                            {{ $settings['cash_description'] ?? 'Pay the driver when you pick up your order.' }}
                                                                         </div>
                                                                     </div>
                                                                 </label>

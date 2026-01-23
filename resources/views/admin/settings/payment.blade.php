@@ -162,26 +162,6 @@
                                         </div>
                                     </div>
 
-
-                                    <!-- Advance Payment Title -->
-                                    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">Advance Payment Title</label>
-                                            <input type="text" name="advance_payment_title"
-                                                value="{{ $settings->get('advance_payment_title') }}" class="field">
-                                        </div>
-                                    </div>
-
-                                    <!-- Advance Payment Description -->
-                                    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
-                                        <div class="form-fields">
-                                            <label class="title text-dark">Advance Payment Description</label>
-                                            <input type="text" name="advance_payment_description"
-                                                value="{{ $settings->get('advance_payment_description') }}"
-                                                class="field">
-                                        </div>
-                                    </div>
-
                                     <!-- Advance Payment Percentage -->
                                     <div class="col-md-12 col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
                                         <div class="form-fields">

@@ -535,8 +535,8 @@
                                             @case('stripe')
                                                 <!-- Card Payments - Stripe -->
                                                 <li class="payment-option">
-                                                    <input checked class="payment-option__input" type="radio"
-                                                        name="payment_type" value="stripe" id="stripe" />
+                                                    <input class="payment-option__input" type="radio" name="payment_type"
+                                                        value="stripe" id="stripe" />
                                                     <label for="stripe" class="payment-option__box">
                                                         <div class="title-wrapper">
                                                             <div class="radio"></div>
@@ -575,7 +575,6 @@
                                                         </div>
                                                         <div class="content">
                                                             <div class="title d-flex align-items-start  gap-2">
-                                                                {{ $settings['advance_payment_title'] ?? 'Advance Payment' }}
                                                                 @php
                                                                     $advanceAmount = $advancePaymentPercentage
                                                                         ? ($advancePaymentPercentage / 100) *
@@ -586,16 +585,14 @@
                                                                         ? $cart['total_price'] - $advanceAmount
                                                                         : null;
                                                                 @endphp
-
-                                                                @if ($advanceAmount)
-                                                                    <div class="advance-payment-info" data-tooltip="tooltip"
-                                                                        title="Book now just with a booking deposit of AED {{ number_format($advanceAmount, 2) }}  <br> The balance of AED {{ number_format($remainingAmount, 2) }} will be paid on the day of the activity. <br> Total AED {{ number_format($cart['total_price'], 2) }} per selected travelers/options">
-                                                                        <i class='bx bxs-info-circle'></i>
-                                                                    </div>
-                                                                @endif
+                                                                Book now just with <strong>{{$advancePaymentPercentage}}%</strong> Booking Deposit
+                                                                from
+                                                                <strong>{{ formatPrice($advanceAmount) }}</strong>
                                                             </div>
                                                             <div class="note">
-                                                                {{ $settings['advance_payment_description'] ?? 'A percentage of the order total to be paid upfront before processing.' }}
+                                                                The balance of <strong>{{ formatPrice($remainingAmount) }}</strong>
+                                                                you will pay on the day of the activity. <strong>(Cash Or
+                                                                    Card)</strong>
                                                             </div>
                                                         </div>
                                                     </label>
@@ -969,6 +966,8 @@
                     }
 
                     const selectedPayment = getSelectedPaymentMethod();
+
+                    if (!selectedPayment) return showToast('error', 'Please select a payment method');
 
                     // COD + discount check
                     if (hasCouponApplied) {
