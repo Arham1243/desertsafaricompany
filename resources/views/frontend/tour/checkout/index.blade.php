@@ -604,7 +604,7 @@
                                                 <li class="payment-option">
                                                     <input class="payment-option__input" type="radio" name="payment_type"
                                                         value="tabby" id="tabby" />
-                                                    <label for="tabby" class="payment-option__box d-block px-0">
+                                                    <label for="tabby" class="payment-option__box payment-option__box--tabby  d-block px-0">
                                                         <div class="payment-option__box">
                                                             <div class="title-wrapper">
                                                                 <div class="radio"></div>
