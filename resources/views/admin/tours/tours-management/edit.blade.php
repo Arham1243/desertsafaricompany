@@ -4342,7 +4342,7 @@
                                                 <input id="background-color-picker-author" type="hidden"
                                                     data-color-picker-input
                                                     name="tour[status][author_config][background_color]"
-                                                    value="{{ old('tour[status][author_config][background_color]', $authorConfig->background_color ?? '#edab56') }}"
+                                                    value="{{ old('tour[status][author_config][background_color]', $authorConfig['background_color'] ?? '#edab56') }}"
                                                     inputmode="text">
 
                                                 <select class="select2-select" name="tour[status][author_id]"
@@ -4372,13 +4372,13 @@
                                                 </span>
                                             </div>
 
-                                            <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig->icon_class ?? 'bx bx-badge-check') }}' }">
+                                            <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig['icon_class'] ?? 'bx bx-badge-check') }}' }">
                                                 <div class="field color-picker" data-color-picker-container>
                                                     <label for="icon-color-picker-author" data-color-picker></label>
                                                     <input id="icon-color-picker-author" type="hidden"
                                                         data-color-picker-input
                                                         name="tour[status][author_config][icon_color]"
-                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig->icon_color ?? '#000000') }}"
+                                                        value="{{ old('tour[status][author_config][icon_color]', $authorConfig['icon_color'] ?? '#000000') }}"
                                                         inputmode="text">
 
                                                     <input type="text" name="tour[status][author_config][icon_class]"
