@@ -248,12 +248,13 @@
                                                 @enderror
                                             </div>
                                         </div>
-                                               <div class="col-md-4 mb-4">
+                                        <div class="col-md-4 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Age</label>
-                                                <input type="number" name="age" class="field"
-                                                    value="{{ old('age', $user->age) }}">
-                                                @error('age')
+                                                <label class="title">DOB</label>
+                                                <input onclick="this.showPicker()" onfocus="this.showPicker()"
+                                                    id="dob" type="date" name="dob" class="field"
+                                                    value="{{ old('dob', $user->dob) }}">
+                                                @error('dob')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

@@ -82,7 +82,7 @@ class IndexController extends Controller
     {
         $validatedData = $request->validate([
             'phone' => 'nullable',
-            'age' => 'nullable|integer|min:1|max:120',
+            'dob' => 'nullable|date',
             'country' => 'nullable|string',
             'city' => 'nullable|string|max:255',
         ]);

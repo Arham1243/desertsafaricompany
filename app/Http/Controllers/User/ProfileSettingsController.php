@@ -25,11 +25,12 @@ class ProfileSettingsController extends Controller
         $validatedData = $request->validate([
             'full_name' => 'required|string|max:255',
             'phone' => 'nullable',
-            'age' => 'nullable|integer|min:1|max:120',
+            'dob' => 'nullable|date',
             'country' => 'nullable|string',
             'city' => 'nullable|string|max:255',
         ]);
 
+        $avatar = Auth::user()->avatar;
         if ($request->hasFile('avatar')) {
             $avatar = asset($this->simpleUploadImg($request->file('avatar'), 'Users/Avatar'));
         }

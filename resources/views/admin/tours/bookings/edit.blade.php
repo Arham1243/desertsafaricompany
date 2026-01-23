@@ -166,6 +166,22 @@
 
                                         <div class="col-md-6 col-12 mb-4">
                                             <div class="form-fields">
+                                                <label class="title">DOB:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->dob ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
+                                                <label class="title">Age:</label>
+                                                <input type="text" class="field"
+                                                    value="{{ $booking->user->age ?? '' }}" readonly>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 col-12 mb-4">
+                                            <div class="form-fields">
                                                 <label class="title">City:</label>
                                                 <input type="text" class="field"
                                                     value="{{ $booking->user->city ?? '' }}" readonly>

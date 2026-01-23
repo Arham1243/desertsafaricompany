@@ -424,10 +424,10 @@
 
                             <div class="col-md-6">
                                 <div class="field">
-                                    <label class="title">Age</label>
-                                    <input id="age" type="number" name="age" class="field"
-                                        value="{{ old('age', Auth::user()->age) }}">
-                                    @error('age')
+                                    <label class="title">DOB</label>
+                                    <input onclick="this.showPicker()" onfocus="this.showPicker()" id="dob" type="date" name="dob" class="field"
+                                        value="{{ old('dob', Auth::user()->dob) }}">
+                                    @error('dob')
                                         <span class="text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>

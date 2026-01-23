@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -13,11 +14,11 @@ class User extends Authenticatable
         'full_name',
         'email',
         'phone',
-        'age',
         'country',
         'city',
         'social_token',
         'avatar',
+        'dob',
         'signup_method',
         'password',
         'email_verification_token',
@@ -33,6 +34,12 @@ class User extends Authenticatable
             'user_id',
             'tour_id'
         )->withTimestamps();
+    }
+
+
+    public function getAgeAttribute()
+    {
+        return $this->dob ? Carbon::parse($this->dob)->age : null;
     }
 
     public function coupons()
