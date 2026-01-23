@@ -196,7 +196,7 @@
                 <input type="text" v-model="cart.tours[tour.id].booking_additional_selections.selection.address"
                     @input="handleBookingAdditionalChange(tour.id)" class="field" required
                     :placeholder="cart.tours[tour.id].booking_additional_selections.selection.location_type === 'hotel' ?
-                        'e.g. (Atlantis The Palm, Palm Jumeirah)' :
+                        'Enter the Hotel Name' :
                         'e.g. (Marina Gate 2, Dubai Marina)'" />
             </div>
 
@@ -401,7 +401,7 @@
                                 @input="handleBookingAdditionalChange(tour.id)" class="field" required
                                 :placeholder="cart.tours[tour.id].booking_additional_selections.selection
                                     .pickup_location === 'hotel' ?
-                                    'e.g. (Atlantis The Palm, Palm Jumeirah)' :
+                                    'Enter the Hotel Name' :
                                     'e.g. (Marina Gate 2, Dubai Marina)'" />
                         </div>
 
