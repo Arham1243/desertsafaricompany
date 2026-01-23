@@ -258,23 +258,27 @@ function handleCookieConsent(accepted) {
     cookieBar.classList.toggle("hidden");
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    // Get all badge containers inside tour cards
-    const badgeContainers = document.querySelectorAll(
-        "[data-tour-card-badge-container]",
-    );
+function equalizeTourCardBadgeHeights(
+    selector = "[data-tour-card-badge-container]",
+) {
+    const badgeContainers = document.querySelectorAll(selector);
     if (badgeContainers.length === 0) return;
 
     let maxHeight = 0;
 
-    // Find max height
+    // Find the tallest container
     badgeContainers.forEach((container) => {
         const height = container.clientHeight;
         if (height > maxHeight) maxHeight = height;
     });
 
-    // Apply max height to all
+    // Apply max height to all containers
     badgeContainers.forEach((container) => {
         container.style.height = maxHeight + "px";
     });
+}
+
+// Run on DOM ready
+document.addEventListener("DOMContentLoaded", function () {
+    equalizeTourCardBadgeHeights();
 });

@@ -492,6 +492,7 @@ $btnStyles = [];
                         showMessage('Something went wrong. Try again.');
                     });
             });
+            equalizeTourCardBadgeHeights();
         }
 
         // Block 1
