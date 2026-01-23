@@ -568,6 +568,7 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
 
                         // Observe newly added lazy images
                         initLazyLoading(containerEl);
+                        equalizeTourCardBadgeHeights();
 
                         // Update offset
                         offset += limit;
@@ -583,7 +584,6 @@ if (!empty($guideContent->btn_background_color)) $btnStyles[] = "background: {$g
                         showMessage('Something went wrong. Try again.');
                     });
             });
-            equalizeTourCardBadgeHeights();
         }
 
         // Block 1

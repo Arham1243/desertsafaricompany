@@ -477,6 +477,7 @@ $btnStyles = [];
                         containerEl.insertAdjacentHTML('beforeend', data.html);
                         // Observe newly added lazy images
                         initLazyLoading(containerEl);
+                        equalizeTourCardBadgeHeights();
 
                         // Update offset
                         offset += limit;
@@ -492,7 +493,6 @@ $btnStyles = [];
                         showMessage('Something went wrong. Try again.');
                     });
             });
-            equalizeTourCardBadgeHeights();
         }
 
         // Block 1
