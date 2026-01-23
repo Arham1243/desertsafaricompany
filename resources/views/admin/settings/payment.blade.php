@@ -45,6 +45,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-12 mb-3" x-show="stripeEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="stripe_order"
+                                                value="{{ $settings->get('stripe_order') ?? '1' }}" class="field">
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6 col-12" x-show="stripeEnabled" x-transition>
                                         <div class="form-fields">
                                             <label class="title text-dark">Stripe Publishable Key</label>
@@ -108,7 +116,8 @@
                                                                 alt="Uploaded Image" class="imgFluid" data-upload-preview>
                                                         </a>
                                                         <input type="text" name="stripe_logo_alt_text" class="field"
-                                                            placeholder="Enter alt text" value="{{ $stripeLogoAltText }}">
+                                                            placeholder="Enter alt text"
+                                                            value="{{ $stripeLogoAltText }}">
                                                     </div>
                                                 </div>
                                                 <div data-error-message class="text-danger mt-2 d-none text-center">Please
@@ -123,130 +132,127 @@
                                     </div>
                                 </div>
                                 <hr class="my-5">
-                                <div class="row"
-    x-data="{ advancePaymentEnabled: {{ $settings->get('advance_payment_enabled') ? 'true' : 'false' }} }">
+                                <div class="row" x-data="{ advancePaymentEnabled: {{ $settings->get('advance_payment_enabled') ? 'true' : 'false' }} }">
 
-    <div class="col-12 mb-2">
-        <div class="form-fields d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center gap-3 mb-2">
-                <input type="hidden" name="advance_payment_enabled"
-                    :value="advancePaymentEnabled ? 1 : 0">
+                                    <div class="col-12 mb-2">
+                                        <div class="form-fields d-flex align-items-center justify-content-between">
+                                            <div class="d-flex align-items-center gap-3 mb-2">
+                                                <input type="hidden" name="advance_payment_enabled"
+                                                    :value="advancePaymentEnabled ? 1 : 0">
 
-                <div class="title title--sm mb-0">Advance Payment:</div>
+                                                <div class="title title--sm mb-0">Advance Payment:</div>
 
-                <div class="form-check form-switch" data-enabled-text="Enabled"
-                    data-disabled-text="Disabled">
-                    <input class="form-check-input" type="checkbox"
-                        id="advance_payment_enabled_switch"
-                        x-model="advancePaymentEnabled">
-                    <label class="form-check-label"
-                        for="advance_payment_enabled_switch">Enabled</label>
-                </div>
-            </div>
-        </div>
-    </div>
+                                                <div class="form-check form-switch" data-enabled-text="Enabled"
+                                                    data-disabled-text="Disabled">
+                                                    <input class="form-check-input" type="checkbox"
+                                                        id="advance_payment_enabled_switch"
+                                                        x-model="advancePaymentEnabled">
+                                                    <label class="form-check-label"
+                                                        for="advance_payment_enabled_switch">Enabled</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 mb-3" x-show="advancePaymentEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="advance_payment_order"
+                                                value="{{ $settings->get('advance_payment_order') ?? '2' }}"
+                                                class="field">
+                                        </div>
+                                    </div>
 
-    <!-- Advance Payment Title -->
-    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
-        <div class="form-fields">
-            <label class="title text-dark">Advance Payment Title</label>
-            <input type="text" name="advance_payment_title"
-                value="{{ $settings->get('advance_payment_title') }}"
-                class="field">
-        </div>
-    </div>
 
-    <!-- Advance Payment Description -->
-    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
-        <div class="form-fields">
-            <label class="title text-dark">Advance Payment Description</label>
-            <input type="text" name="advance_payment_description"
-                value="{{ $settings->get('advance_payment_description') }}"
-                class="field">
-        </div>
-    </div>
+                                    <!-- Advance Payment Title -->
+                                    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Advance Payment Title</label>
+                                            <input type="text" name="advance_payment_title"
+                                                value="{{ $settings->get('advance_payment_title') }}" class="field">
+                                        </div>
+                                    </div>
 
-    <!-- Advance Payment Percentage -->
-    <div class="col-md-12 col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
-        <div class="form-fields">
-            <label class="title text-dark">Advance Payment Percentage</label>
-            <input type="number"
-                name="advance_payment_percentage"
-                class="field"
-                min="1"
-                max="100"
-                value="{{ $settings->get('advance_payment_percentage', 10) }}">
-        </div>
-    </div>
+                                    <!-- Advance Payment Description -->
+                                    <div class="col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Advance Payment Description</label>
+                                            <input type="text" name="advance_payment_description"
+                                                value="{{ $settings->get('advance_payment_description') }}"
+                                                class="field">
+                                        </div>
+                                    </div>
 
-    <!-- Advance Payment Logo -->
-    <div class="col-md-4 mt-3" x-show="advancePaymentEnabled" x-transition>
-        @php
-            $advancePaymentLogo = $settings->get('advance_payment_logo');
-            $advancePaymentLogoAltText = $settings->get('advance_payment_logo_alt_text');
-        @endphp
+                                    <!-- Advance Payment Percentage -->
+                                    <div class="col-md-12 col-12 mt-3" x-show="advancePaymentEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Advance Payment Percentage</label>
+                                            <input type="number" name="advance_payment_percentage" class="field"
+                                                min="1" max="100"
+                                                value="{{ $settings->get('advance_payment_percentage', 10) }}">
+                                        </div>
+                                    </div>
 
-        <div class="form-fields">
-            <label class="title">Logo:</label>
+                                    <!-- Advance Payment Logo -->
+                                    <div class="col-md-4 mt-3" x-show="advancePaymentEnabled" x-transition>
+                                        @php
+                                            $advancePaymentLogo = $settings->get('advance_payment_logo');
+                                            $advancePaymentLogoAltText = $settings->get(
+                                                'advance_payment_logo_alt_text',
+                                            );
+                                        @endphp
 
-            <div class="upload" data-upload>
-                <div class="upload-box-wrapper">
+                                        <div class="form-fields">
+                                            <label class="title">Logo:</label>
 
-                    <div class="upload-box {{ empty($advancePaymentLogo) ? 'show' : '' }}"
-                        data-upload-box>
-                        <input type="file"
-                            name="advance_payment_logo"
-                            id="advance_payment_logo"
-                            class="upload-box__file d-none"
-                            accept="image/*"
-                            data-file-input>
+                                            <div class="upload" data-upload>
+                                                <div class="upload-box-wrapper">
 
-                        <div class="upload-box__placeholder">
-                            <i class='bx bxs-image'></i>
-                        </div>
+                                                    <div class="upload-box {{ empty($advancePaymentLogo) ? 'show' : '' }}"
+                                                        data-upload-box>
+                                                        <input type="file" name="advance_payment_logo"
+                                                            id="advance_payment_logo" class="upload-box__file d-none"
+                                                            accept="image/*" data-file-input>
 
-                        <label for="advance_payment_logo"
-                            class="upload-box__btn themeBtn">
-                            Upload Image
-                        </label>
-                    </div>
+                                                        <div class="upload-box__placeholder">
+                                                            <i class='bx bxs-image'></i>
+                                                        </div>
 
-                    <div class="upload-box__img {{ !empty($advancePaymentLogo) ? 'show' : '' }}"
-                        data-upload-img>
-                        <button type="button" class="delete-btn" data-delete-btn>
-                            <i class='bx bxs-trash-alt'></i>
-                        </button>
+                                                        <label for="advance_payment_logo"
+                                                            class="upload-box__btn themeBtn">
+                                                            Upload Image
+                                                        </label>
+                                                    </div>
 
-                        <a href="{{ asset($advancePaymentLogo) }}"
-                            class="mask"
-                            data-fancybox="gallery">
-                            <img src="{{ asset($advancePaymentLogo ?? 'admin/assets/images/loading.webp') }}"
-                                alt="Uploaded Image"
-                                class="imgFluid"
-                                data-upload-preview>
-                        </a>
+                                                    <div class="upload-box__img {{ !empty($advancePaymentLogo) ? 'show' : '' }}"
+                                                        data-upload-img>
+                                                        <button type="button" class="delete-btn" data-delete-btn>
+                                                            <i class='bx bxs-trash-alt'></i>
+                                                        </button>
 
-                        <input type="text"
-                            name="advance_payment_logo_alt_text"
-                            class="field"
-                            placeholder="Enter alt text"
-                            value="{{ $advancePaymentLogoAltText }}">
-                    </div>
+                                                        <a href="{{ asset($advancePaymentLogo) }}" class="mask"
+                                                            data-fancybox="gallery">
+                                                            <img src="{{ asset($advancePaymentLogo ?? 'admin/assets/images/loading.webp') }}"
+                                                                alt="Uploaded Image" class="imgFluid" data-upload-preview>
+                                                        </a>
 
-                </div>
+                                                        <input type="text" name="advance_payment_logo_alt_text"
+                                                            class="field" placeholder="Enter alt text"
+                                                            value="{{ $advancePaymentLogoAltText }}">
+                                                    </div>
 
-                <div data-error-message
-                    class="text-danger mt-2 d-none text-center">
-                    Please upload a valid image file
-                </div>
-            </div>
+                                                </div>
 
-            <div class="dimensions text-center mt-3">
-                <strong>Dimensions:</strong> 70 × 30
-            </div>
-        </div>
-    </div>
-</div>
+                                                <div data-error-message class="text-danger mt-2 d-none text-center">
+                                                    Please upload a valid image file
+                                                </div>
+                                            </div>
+
+                                            <div class="dimensions text-center mt-3">
+                                                <strong>Dimensions:</strong> 70 × 30
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <hr class="my-5">
 
@@ -264,6 +270,14 @@
                                                         for="tabby_enabled_switch">Enabled</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3" x-show="tabbyEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="tabby_order"
+                                                value="{{ $settings->get('tabby_order') ?? '3' }}" class="field">
                                         </div>
                                     </div>
 
@@ -362,6 +376,14 @@
                                                         for="tamara_enabled_switch">Enabled</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3" x-show="tamaraEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="tamara_order"
+                                                value="{{ $settings->get('tamara_order') ?? '4' }}" class="field">
                                         </div>
                                     </div>
 
@@ -464,6 +486,14 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-md-12 mb-3" x-show="pointCheckoutEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="pointcheckout_order"
+                                                value="{{ $settings->get('pointcheckout_order')?? '8' }}" class="field">
+                                        </div>
+                                    </div>
+
                                     <div class="col-md-6 col-12" x-show="pointCheckoutEnabled" x-transition>
                                         <div class="form-fields">
                                             <label class="title text-dark">PointCheckout API Key</label>
@@ -534,6 +564,15 @@
                                                         for="paypal_enabled_switch">Enabled</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 mb-3" x-show="paypalEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="paypal_order"
+                                                value="{{ $settings->get('paypal_order') ?? '5' }}" class="field">
                                         </div>
                                     </div>
 
@@ -631,6 +670,15 @@
                                                         for="cash_enabled_switch">Enabled</label>
                                                 </div>
                                             </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 mb-3" x-show="cashEnabled" x-transition>
+                                        <div class="form-fields">
+                                            <label class="title text-dark">Order</label>
+                                            <input type="number" min="0" name="cash_order"
+                                                value="{{ $settings->get('cash_order') ?? '6' }}" class="field">
                                         </div>
                                     </div>
 
