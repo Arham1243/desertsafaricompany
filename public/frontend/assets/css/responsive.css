@@ -849,4 +849,7 @@
     .checkout-details {
         margin-bottom: 1.5rem;
     }
+    body .control-item{
+        font-size: 11px;
+    }
 }

@@ -183,10 +183,17 @@
                 : null;
         @endphp
         @if ($is_enabled_login_button)
+        @if (!Auth::check())
             <a href="javascript:void(0)" open-vue-login-popup class="primary-btn w-75 mx-auto mt-4"
                 @if ($login_button_text_color || $login_button_bg_color) style="{{ $login_button_text_color ? "color: {$login_button_text_color};" : '' }} {{ $login_button_bg_color ? "background-color: {$login_button_bg_color};" : '' }}" @endif>
                 <span><b>{{ $login_button_text }}</b></span>
             </a>
+            @else
+            <a href="{{ route('user.dashboard') }}" class="primary-btn w-75 mx-auto mt-4"
+                @if ($login_button_text_color || $login_button_bg_color) style="{{ $login_button_text_color ? "color: {$login_button_text_color};" : '' }} {{ $login_button_bg_color ? "background-color: {$login_button_bg_color};" : '' }}" @endif>
+                <span><b>Dashboard</b></span>
+            </a>
+               @endif
         @endif
     @endif
 </div>
