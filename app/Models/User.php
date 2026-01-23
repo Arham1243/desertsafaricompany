@@ -42,6 +42,18 @@ class User extends Authenticatable
         return $this->dob ? Carbon::parse($this->dob)->age : null;
     }
 
+    public function getFnAttribute()
+    {
+        return $this->full_name ? explode(' ', $this->full_name, 2)[0] : null;
+    }
+
+    public function getLnAttribute()
+    {
+        return $this->full_name
+            ? (count($parts = explode(' ', $this->full_name, 2)) > 1 ? $parts[1] : null)
+            : null;
+    }
+
     public function coupons()
     {
         return $this->belongsToMany(Coupon::class)->withTimestamps();

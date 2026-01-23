@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\Locations\CityController;
 use App\Http\Controllers\Admin\Locations\CountryController;
 use App\Http\Controllers\Admin\LogController;
 use App\Http\Controllers\Admin\MediaController;
+use App\Http\Controllers\Admin\ExportController;
 use App\Http\Controllers\Admin\News\CategoriesController as NewsCategoriesController;
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\News\TagsController as NewsTagsController;
@@ -137,4 +138,5 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::post('settings/{resource}/update', [SettingController::class, 'update'])->name('settings.update');
 
     Route::get('/check-upload-filename', [AdminDashController::class, 'checkFilename']);
+    Route::post('/export/{resource}', [ExportController::class, 'export'])->name('export');
 });

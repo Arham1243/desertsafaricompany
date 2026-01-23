@@ -13,7 +13,7 @@
                             </div>
                             <a href="{{ route('admin.users.create') }}" class="themeBtn">Add new</a>
                         </div>
-                        <div class="row mb-4">
+                        <div class="row mb-4 justify-content-between">
                             <div class="col-md-5">
                                 <form class="custom-form ">
                                     <div class="form-fields d-flex gap-3">
@@ -26,6 +26,20 @@
                                         <button type="submit" onclick="confirmBulkAction(event)"
                                             class="themeBtn">Apply</button>
                                     </div>
+                                </form>
+                            </div>
+                            <div class="col-md-5">
+                                <form action="{{ route('admin.export', ['resource' => 'users']) }}" method="POST"
+                                    onsubmit="return confirm('Are you sure you want to export?')">
+                                    @csrf
+                                    <input type="hidden" name="columns[]" value="email">
+                                    <input type="hidden" name="columns[]" value="phone">
+                                    <input type="hidden" name="columns[]" value="fn">
+                                    <input type="hidden" name="columns[]" value="ln">
+                                    <input type="hidden" name="columns[]" value="country">
+                                    <input type="hidden" name="columns[]" value="dob">
+                                    <input type="hidden" name="columns[]" value="age">
+                                    <button type="submit" class="themeBtn ms-auto"><i class='bx bxs-file-export' ></i>Export as Excel</button>
                                 </form>
                             </div>
                         </div>
