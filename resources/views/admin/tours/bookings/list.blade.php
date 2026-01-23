@@ -9,8 +9,22 @@
                         <div class="section-content">
                             <h3 class="heading">{{ isset($title) ? $title : '' }}</h3>
                         </div>
+                        <form action="{{ route('admin.export', ['resource' => 'orders']) }}" method="POST"
+                            onsubmit="return confirm('Are you sure you want to export?')">
+                            @csrf
+                            <input type="hidden" name="columns[]" value="booking_id">
+                            <input type="hidden" name="columns[]" value="total_no_of_people">
+                            <input type="hidden" name="columns[]" value="driver">
+                            <input type="hidden" name="columns[]" value="tours">
+                            <input type="hidden" name="columns[]" value="guest_name">
+                            <input type="hidden" name="columns[]" value="guest_contact">
+                            <input type="hidden" name="columns[]" value="total_amount">
+                            <input type="hidden" name="columns[]" value="advance_amount">
+                            <input type="hidden" name="columns[]" value="remaining_amount">
+                            <button type="submit" class="themeBtn ms-auto"><i class='bx bxs-file-export'></i>Export as
+                                Excel</button>
+                        </form>
                     </div>
-
                     <form id="filter-form" class="w-full">
                         <div class="row w-full mb-4">
                             <div class="col-md-3">
@@ -35,7 +49,7 @@
                                 <div class="form-fields">
                                     <label class="title">Order Status:</label>
                                     <select name="status" class="field">
-                                        <option value=""  {{ request('status') == '' ? 'selected' : '' }}>
+                                        <option value="" {{ request('status') == '' ? 'selected' : '' }}>
                                             Select</option>
                                         <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>
                                             Pending</option>
@@ -51,8 +65,8 @@
                                 <div class="form-fields">
                                     <label class="title">Payment Status:</label>
                                     <select name="payment_status" class="field">
-                                        <option value="" 
-                                            {{ request('payment_status') == '' ? 'selected' : '' }}>Select</option>
+                                        <option value="" {{ request('payment_status') == '' ? 'selected' : '' }}>
+                                            Select</option>
                                         <option value="pending"
                                             {{ request('payment_status') == 'pending' ? 'selected' : '' }}>Pending</option>
                                         <option value="paid" {{ request('payment_status') == 'paid' ? 'selected' : '' }}>
@@ -81,12 +95,13 @@
                                     <th>Order ID</th>
                                     <th>Tour</th>
                                     <th>User</th>
+                                    <th>Driver</th>
                                     <th>Payment Type</th>
                                     <th>Total</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
                                     <th>Booking Status</th>
-                                    <th>Order Created at</th>
+                                    <th>Created at</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -105,18 +120,25 @@
                                                         Date:
                                                         {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
                                                         &bull;
-                                                        {{ getTotalNoOfPeopleFromCart($item->cart_data) }} pax
+                                                        {{ $item->total_no_of_people }} pax
                                                     </small>
                                                 </div>
                                             @endforeach
                                         </td>
                                         <td>
-                                            @if($item->user)
-                                            {{ $item->user->full_name ?? 'N/A' }} <br>
-                                            {{ $item->user->email ?? 'N/A' }}
+                                            @if ($item->user)
+                                                {{ $item->user->full_name ?? 'N/A' }} <br>
+                                                {{ $item->user->email ?? 'N/A' }}
                                             @else
-                                            Guest Checkout
-                                            {{ $item->guest_email ?? 'N/A' }}
+                                                Guest Checkout
+                                                {{ $item->guest_email ?? 'N/A' }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            @if ($item->driver)
+                                                {{ $item->driver->name }}
+                                            @else
+                                                Not Assigned
                                             @endif
                                         </td>
                                         <td>
@@ -138,8 +160,29 @@
                                         </td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
-                                            <a href="{{ route('admin.bookings.edit', $item->id) }}" class="themeBtn"><i
-                                                    class='bx bxs-edit'></i>View</a>
+                                            <div class="dropstart bootsrap-dropdown">
+                                                <button type="button" class="recent-act__icon dropdown-toggle"
+                                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                                    <i class='bx bx-dots-horizontal-rounded'></i>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li>
+                                                        <a class="dropdown-item" target="_blank"
+                                                            href="{{ route('admin.bookings.edit', $item->id) }}"
+                                                            title="View Page">
+                                                            <i class='bx bxs-show'></i>
+                                                            View
+                                                        </a>
+                                                    </li>
+                                                    <li>
+                                                        <a class="dropdown-item"
+                                                            href="{{ route('admin.bookings.edit', $item->id) }}">
+                                                            <i class='bx bx-car'></i>
+                                                            Assign Driver
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

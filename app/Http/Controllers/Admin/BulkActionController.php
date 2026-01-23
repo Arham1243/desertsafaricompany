@@ -14,6 +14,7 @@ use App\Models\NewsCategory;
 use App\Models\NewsTag;
 use App\Models\Page;
 use App\Models\Popup;
+use App\Models\BookingDriver;
 use App\Models\Section;
 use App\Models\User;
 use App\Models\Testimonial;
@@ -141,6 +142,11 @@ class BulkActionController extends Controller
                 $modelClass = Coupon::class;
                 $column = 'id';
                 $redirectRoute = 'admin.coupons.index';
+                break;
+            case 'booking-drivers':
+                $modelClass = BookingDriver::class;
+                $column = 'id';
+                $redirectRoute = 'admin.booking-drivers.index';
                 break;
             default:
                 return Redirect::back()->with('notify_error', 'Resource not found.');

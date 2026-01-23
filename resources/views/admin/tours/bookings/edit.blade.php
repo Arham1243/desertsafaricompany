@@ -477,6 +477,32 @@
                             </div>
                         </div>
 
+                        <div class="form-box mt-3">
+                            <div class="form-box__header">
+                                <div class="title">Driver</div>
+                            </div>
+                            <div class="form-box__body">
+                                <form action="{{ route('admin.bookings.update', $booking->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div class="form-fields">
+                                        <label class="title">Select Driver <span class="text-danger">*</span>:</label>
+                                        <select name="booking_driver_id" class="select2-select" placeholder="Select"
+                                            autocomplete="new-password">
+                                            <option value="" selected disabled>Select Driver</option>
+                                            @foreach ($drivers as $driver)
+                                                <option value="{{ $driver->id }}"
+                                                    {{ old('driver_id', $booking->booking_driver_id) == $driver->id ? 'selected' : '' }}>
+                                                    {{ $driver->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="themeBtn">Update</button>
+                                </form>
+                            </div>
+                        </div>
+
                         @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
                             <div class="form-box mt-3">
                                 <div class="form-box__header">

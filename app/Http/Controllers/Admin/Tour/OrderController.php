@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Tour;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
+use App\Models\BookingDriver;
 
 class OrderController extends Controller
 {
@@ -51,8 +52,9 @@ class OrderController extends Controller
     public function edit($id)
     {
         $booking = Order::findOrFail($id);
+        $drivers = BookingDriver::where('status', 'active')->get();
 
-        return view('admin.tours.bookings.edit', compact('booking'))->with('title', 'Booking Details');
+        return view('admin.tours.bookings.edit', compact('booking', 'drivers'))->with('title', 'Booking Details');
     }
 
     public function update(Request $request, $id)
@@ -74,6 +76,12 @@ class OrderController extends Controller
 
             $booking->cart_data = json_encode($cartData);
             $booking->save();
+        }
+
+        if ($request->booking_driver_id) {
+            $booking->update([
+                'booking_driver_id' => $request->booking_driver_id,
+            ]);
         }
 
         return redirect()

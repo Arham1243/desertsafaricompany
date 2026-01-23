@@ -268,6 +268,24 @@ Breadcrumbs::for('admin.coupons.edit', function (BreadcrumbTrail $trail, $item) 
 });
 // ---------------Coupons---------------
 
+// ---------------Booking Drivers---------------
+Breadcrumbs::for('admin.booking-drivers.index', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.dashboard');
+    $trail->push('Booking Drivers', route('admin.booking-drivers.index'));
+});
+
+Breadcrumbs::for('admin.booking-drivers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('admin.booking-drivers.index');
+    $trail->push('Add Driver', route('admin.booking-drivers.create'));
+});
+
+Breadcrumbs::for('admin.booking-drivers.edit', function (BreadcrumbTrail $trail, $driver) {
+    $trail->parent('admin.booking-drivers.index');
+    $trail->push($driver->name ?? 'N/A', route('admin.booking-drivers.edit', $driver->id));
+});
+// ---------------Booking Drivers--------
+
+
 // ---------------settings---------------
 Breadcrumbs::for('admin.settings.index', function (BreadcrumbTrail $trail) {
     $trail->parent('admin.dashboard');
@@ -315,7 +333,7 @@ Breadcrumbs::for('admin.schema.index', function (BreadcrumbTrail $trail, $entity
         $trail->push('Edit Schema', route('admin.schema.index', ['entity' => $entity, 'id' => $id]));
         return;
     }
-    
+
     // Handle regular entity records
     $entityMap = [
         'tours' => 'admin.tours.edit',
@@ -326,11 +344,11 @@ Breadcrumbs::for('admin.schema.index', function (BreadcrumbTrail $trail, $entity
         'blogs' => 'admin.blogs.edit',
         'news' => 'admin.news.edit',
     ];
-    
+
     if (isset($entityMap[$entity]) && $record) {
         $trail->parent($entityMap[$entity], $record);
     }
-    
+
     $trail->push('Edit Schema', route('admin.schema.index', ['entity' => $entity, 'id' => $id]));
 });
 // ---------------Schema---------------

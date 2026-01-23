@@ -380,6 +380,29 @@
                             </div>
                         @endif
 
+                        <div class="form-box mt-3">
+                            <div class="form-box__header">
+                                <div class="title">Driver</div>
+                            </div>
+                            <div class="form-box__body">
+                                @if ($booking->driver)
+                                    <div class="form-fields">
+                                        <label class="title">Driver Name</label>
+                                        <input type="text" class="field" value="{{ $booking->driver->name }}"
+                                            readonly="">
+                                    </div>
+                                    <div class="form-fields">
+                                        <label class="title">Driver Phone</label>
+                                        <input type="text" class="field" value="{{ $booking->driver->phone }}"
+                                            readonly="">
+                                    </div>
+                                @else
+                                    Not Assigned
+                                @endif
+
+                            </div>
+                        </div>
+
                         @if ($booking->status !== 'cancelled' && $booking->payment_status === 'pending')
                             <div class="form-box mt-3">
                                 <div class="form-box__header">

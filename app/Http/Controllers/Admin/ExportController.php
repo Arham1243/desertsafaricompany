@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
@@ -14,6 +15,7 @@ class ExportController
     // Map resource names to models
     protected $modelMap = [
         'users' => User::class,
+        'orders' => Order::class,
     ];
 
     protected $headerMap = [
@@ -101,6 +103,9 @@ class ExportController
         return [
             'dob' => fn($val) => $val ? formatDate($val) : null,
             'age' => fn($val) => $val !== null ? (string) $val : null,
+            'driver' => fn($val, $item) => $item->driver ? $item->driver->name : 'N/A',
+            'advance_amount' => fn($val, $item) => $item->advance_amount ?? '-',
+            'remaining_amount' => fn($val, $item) => $item->remaining_amount ?? $item->total_amount,
         ];
     }
 
@@ -116,9 +121,18 @@ class ExportController
             // Set headers
             $col = 1;
             foreach ($headers as $header) {
-                // Format header: remove '_id', replace '_' with space, handle dots
-                $label = str_replace('.', ' ', $header);
-                $label = $this->headerMap[$header] ?? str_replace(['_id', '_'], ['', ' '], $label);
+                // Format header: remove '_id' except for 'booking_id', replace '_' with space, handle dots
+                if ($header === 'booking_id') {
+                    $label = 'Booking ID'; // keep as proper label
+                } else {
+                    $label = str_replace('.', ' ', $header);
+                    $label = str_replace('_id', '', $label); // remove _id for others
+                    $label = str_replace('_', ' ', $label); // replace remaining underscores with space
+                }
+
+                // Override with headerMap if exists
+                $label = $this->headerMap[$header] ?? $label;
+
                 $sheet->setCellValue(Coordinate::stringFromColumnIndex($col) . '1', $label);
                 $col++;
             }
@@ -132,8 +146,9 @@ class ExportController
                         Coordinate::stringFromColumnIndex($col) . $rowNum,
                         $row[$key] ?? ''
                     );
+                    $ignoreNumericFormat = ['age', 'booking_id'];
 
-                    if (is_numeric($row[$key]) && $key !== 'age') {
+                    if (is_numeric($row[$key]) && !in_array($key, $ignoreNumericFormat)) {
                         $sheet
                             ->getStyle(Coordinate::stringFromColumnIndex($col) . $rowNum)
                             ->getNumberFormat()

@@ -16,6 +16,7 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Tour</th>
+                                    <th>Driver</th>
                                     <th>Payment Type</th>
                                     <th>Payment Status</th>
                                     <th>Payment Date</th>
@@ -40,10 +41,17 @@
                                                         Date:
                                                         {{ formatDate(getTourStartDate($item->cart_data, $tour->id)) }}
                                                         &bull;
-                                                        {{ getTotalNoOfPeopleFromCart($item->cart_data) }} pax
+                                                        {{ $item->total_no_of_people }} pax
                                                     </small>
                                                 </div>
                                             @endforeach
+                                        </td>
+                                        <td>
+                                            @if ($item->driver)
+                                                {{ $item->driver->name }}
+                                            @else
+                                                Not Assigned
+                                            @endif
                                         </td>
                                         <td>
                                             {{ formatKey($item->payment_type) }}
@@ -61,7 +69,7 @@
                                                 {{ $item->status }}
                                             </span>
                                         </td>
-                                          <td>{{ formatPrice($item->total_amount) }}</td>
+                                        <td>{{ formatPrice($item->total_amount) }}</td>
                                         <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
                                             <div class="dropstart bootsrap-dropdown">

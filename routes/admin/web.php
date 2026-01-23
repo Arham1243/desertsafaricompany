@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\News\CategoriesController as NewsCategoriesContro
 use App\Http\Controllers\Admin\News\NewsController;
 use App\Http\Controllers\Admin\News\TagsController as NewsTagsController;
 use App\Http\Controllers\Admin\PageController;
+use App\Http\Controllers\Admin\BookingsDriverController;
 use App\Http\Controllers\Admin\PopupController;
 use App\Http\Controllers\Admin\RecoveryController;
 use App\Http\Controllers\Admin\SectionController;
@@ -127,6 +128,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('testimonials', TestimonialController::class);
 
     Route::resource('popups', PopupController::class);
+    Route::resource('booking-drivers', BookingsDriverController::class);
 
     Route::resource('coupons', CouponController::class);
     Route::get('bookings/{id}/cancel', [OrderController::class, 'cancel'])->name('bookings.cancel');

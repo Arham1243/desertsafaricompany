@@ -310,7 +310,18 @@ return [
     [
         'title' => 'Orders',
         'icon' => 'bx bx-dollar',
-        'route' => route('admin.bookings.index'),
+        'submenu' => [
+            [
+                'title' => 'Orders',
+                'icon' => 'bx bx-dollar',
+                'route' => route('admin.bookings.index'),
+            ],
+            [
+                'title' => 'Drivers',
+                'icon' => 'bx bxs-car',
+                'route' => route('admin.booking-drivers.index'),
+            ],
+        ]
     ],
     [
         'title' => 'Settings',
