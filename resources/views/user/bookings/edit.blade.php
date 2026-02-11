@@ -70,14 +70,13 @@
                                                                 <strong>Number of Persons:</strong>
                                                                 <span>{{ $row['quantity'] }}</span>
                                                             </li>
-                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center mb-4">
                                                                 <strong>Subtotal:</strong>
                                                                 <span>{{ formatPrice($row['original_price'] * $row['quantity']) }}</span>
                                                             </li>
                                                         @endif
                                                     @endforeach
                                                 @endif
-
                                                 @include('partials.booking-additional-display')
 
                                                 @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
