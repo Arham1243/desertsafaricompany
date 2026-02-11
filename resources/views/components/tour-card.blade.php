@@ -5,11 +5,6 @@
                 <img data-src={{ asset($tour->featured_image ?? 'admin/assets/images/placeholder.png') }}
                     alt="{{ $tour->featured_image_alt_text ?? 'image' }}" class="imgFluid lazy" loading="lazy">
                 <div class=price-details>
-                    <div class=price>
-                        <span>
-                            <b>{!! $tour->formated_price_type ?? formatPrice($tour->sale_price) . ' From' !!}</b>
-                        </span>
-                    </div>
                     @if (Auth::check())
                         <div class="heart-icon">
                             @php
@@ -31,12 +26,17 @@
                 </div>
             </a>
             <div class=card-details>
-                <a href={{ $detailUrl }} data-tooltip="tooltip" class=card-title
-                    title="{{ $tour->title }}">{{ $tour->title }}</a>
                 @if ($tour->city)
                     <div class="location-details" data-tooltip="tooltip" title="{{ $tour->city->name }}">
                         <i class="bx bx-location-plus"></i>
                         {{ $tour->city->name }}
+                    </div>
+                @endif
+                <a href={{ $detailUrl }} data-tooltip="tooltip" class="card-title mb-0"
+                    title="{{ $tour->title }}">{{ $tour->title }}</a>
+                @if ($tour->tour_lowest_price)
+                    <div class="location-details green">
+                        <b>{!! formatPrice($tour->tour_lowest_price) !!}</b>
                     </div>
                 @endif
                 <div class=card-rating>
@@ -299,6 +299,12 @@
                                 class="new-price">{{ formatPrice($tour->lowest_promo_price['discounted'], false) }}</span> per
                             person</ins>
                     </div>
+                @elseif ($tour->tour_lowest_price)
+                    <div class="pricing-details-wrapper">
+                        <ins class="pricing-details pricing-details--ins"><span class="new-price">From
+                                {{ formatPrice($tour->tour_lowest_price, false) }}</span> per
+                            person</ins>
+                    </div>
                 @endif
 
             </div>
@@ -365,7 +371,9 @@
                     </div>
                 </div>
                 <div class="top10-trending-products__price">
-                    {!! $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) !!}
+                    @if ($tour->tour_lowest_price)
+                        From {!! formatPrice($tour->tour_lowest_price) !!}
+                    @endif
                 </div>
             </div>
         </div>
@@ -420,7 +428,10 @@
                     <div class="baseline-pricing__value baseline-pricing__value--high">
                         <p class="baseline-pricing__from">
                             <span class="baseline-pricing__from--value">
-                                {{ $tour->formated_price_type ?? 'From ' . formatPrice($tour->sale_price) }}</span>
+                                @if ($tour->tour_lowest_price)
+                                    From {{ formatPrice($tour->tour_lowest_price) }}
+                                @endif
+                            </span>
                         </p>
                     </div>
                 </div>

@@ -9,7 +9,7 @@
             <div class="custom-sec custom-sec--form">
                 <div class="custom-sec__header">
                     <div class="section-content">
-                        <h3 class="heading">Order ID: #{{ $booking->id }}</h3>
+                        <h3 class="heading">Order ID: #{{ $booking->order_number }}</h3>
                     </div>
                 </div>
             </div>
@@ -163,6 +163,9 @@
                                                         @break
 
                                                         @case('tabby')
+                                                        @php
+                                                        $cart = json_decode($booking->cart_data,true);
+                                                        @endphp
                                                             <!-- Buy Now Pay Later - Tabby -->
                                                             <li class="payment-option">
                                                                 <input class="payment-option__input" type="radio"
@@ -202,7 +205,7 @@
                                                                     publicKey: 'pk_test_68ae0214-7dd1-42dc-90e2-f541006cde58',
                                                                     merchantCode: 'HDS'
                                                                 });
-                                                            </script>
+                                                                </script>
                                                         @break
 
                                                         @case('tamara')

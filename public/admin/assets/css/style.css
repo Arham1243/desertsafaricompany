@@ -2786,3 +2786,16 @@ table th {
     height: 95vh;
     overflow-y: auto;
 }
+.colored-box{
+    width: 25px;
+    aspect-ratio: 1/1;
+}
+.colored-box.red{
+    background: #F84B3A;
+}
+.colored-box.yellow{
+    background: #FEC805;
+}
+.colored-box.green{
+    background: #0AB677;
+}

@@ -6,7 +6,7 @@
             <div class="custom-sec custom-sec--form">
                 <div class="custom-sec__header">
                     <div class="section-content">
-                        <h3 class="heading">Order ID: #{{ $booking->id }}</h3>
+                        <h3 class="heading">Order ID: #{{ $booking->order_number }}</h3>
                     </div>
                     <div class="custom-sec__header justify-content-start gap-3">
                         Payment status:
@@ -284,8 +284,6 @@
                         <div class="form-box">
                             <div class="form-box__header d-flex align-items-center gap-4">
                                 <div class="title">Booked Tours</div>
-                                <div class="title">{{ getTotalNoOfPeopleFromCart($booking->cart_data) }}</div>
-                                <div class="title">{{ formatPrice($booking->total_amount) }}</div>
                             </div>
                             <div class="form-box__body">
                                 <div class="row">
@@ -328,80 +326,56 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <div class="col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title title--sm">
-                                                    Total Price:
-                                                </label>
-                                                <div class="title text-dark">{!! formatPrice($tourDataDetails['total_price']) !!}</div>
-                                            </div>
-                                        </div>
-                                        <div class="col-12 mb-3 d-flex justify-content-between align-items-center">
-                                            <strong>Tour {{ $index + 1 }}</strong>
-                                            <div class="d-flex gap-2">
-                                                <a href="{{ route('admin.tours.edit', $tour->id) }}" target="_blank"
-                                                    class="themeBtn">
-                                                    View Tour in Portal
-                                                </a>
-                                                <a href="{{ $tour->detail_url }}" target="_blank" class="themeBtn">
-                                                    View on Website
-                                                </a>
-                                            </div>
-                                        </div>
 
                                         <div class="col-md-12 col-12 mb-4">
                                             <div class="form-fields">
-                                                <label class="title">Title:</label>
-                                                <input type="text" class="field" value="{{ $tour->title }}"
-                                                    readonly>
-                                            </div>
-                                        </div>
-
-                                        <div class="col-md-12 col-12 mb-4">
-                                            <div class="form-fields d-flex align-items-center gap-2">
-                                                <div class="flex-grow-1">
-                                                    <label class="title">Tour Url:</label>
-                                                    <input type="text" class="field" value="{{ $tour->detail_url }}"
-                                                        readonly>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        @if (!empty($tourData))
-                                            <div class="col-md-12 col-12 mb-4">
-                                                <div class="form-fields">
-                                                    <label class="title">Tour Data:</label>
-                                                    <ul class="list-group mt-3">
+                                                <label class="title">Tour Data:</label>
+                                                <ul class="list-group mt-3">
+                                                    <li
+                                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                                        <strong>Title:</strong>
+                                                        <span>
+                                                          {{ $tour->title }}
+                                                        </span>
+                                                    </li>
+                                                    @if (!empty($tourData))
+                                                        @php
+                                                            $keysToShow = [
+                                                                'original_price',
+                                                                'quantity',
+                                                            ];
+                                                        @endphp
                                                         @foreach ($tourData as $rowIndex => $row)
                                                             @foreach ($row as $key => $value)
-                                                                <li
-                                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                                    <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
-                                                                    <span>
-                                                                        @if (is_numeric($value) && str_contains($key, 'price'))
-                                                                            {{ formatPrice($value) }}
-                                                                        @elseif (is_bool($value))
-                                                                            {{ $value ? 'Yes' : 'No' }}
-                                                                        @elseif (is_array($value))
-                                                                            {{ collect($value)->flatten()->join(', ') }}
-                                                                        @else
-                                                                            {!! $value !!}
-                                                                        @endif
-                                                                    </span>
-                                                                </li>
+                                                                @if (in_array($key, $keysToShow))
+                                                                    <li
+                                                                        class="list-group-item d-flex justify-content-between align-items-center">
+                                                                        <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
+                                                                        <span>
+                                                                            @if (is_numeric($value) && str_contains($key, 'price'))
+                                                                                {{ formatPrice($value) }}
+                                                                            @elseif (is_bool($value))
+                                                                                {{ $value ? 'Yes' : 'No' }}
+                                                                            @elseif (is_array($value))
+                                                                                {{ collect($value)->flatten()->join(', ') }}
+                                                                            @else
+                                                                                {!! $value !!}
+                                                                            @endif
+                                                                        </span>
+                                                                    </li>
+                                                                @endif
                                                             @endforeach
-
                                                             @if (!$loop->last)
                                                                 <li class="list-group-item text-center bg-light">
                                                                     <em>────────────</em>
                                                                 </li>
                                                             @endif
                                                         @endforeach
-                                                    </ul>
+                                                    @endif
+                                                </ul>
 
-                                                </div>
                                             </div>
-                                        @endif
+                                        </div>
 
                                         @include('partials.booking-additional-display')
 

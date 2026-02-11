@@ -16,13 +16,10 @@
                                 <tr>
                                     <th>Order ID</th>
                                     <th>Tour</th>
-                                    <th>Driver</th>
-                                    <th>Payment Type</th>
+                                    <th>Cash</th>
+                                    <th>Online </th>
                                     <th>Payment Status</th>
-                                    <th>Payment Date</th>
                                     <th>Booking Status</th>
-                                    <th>Total Amount</th>
-                                    <th>Order Created at</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -31,7 +28,7 @@
                                     <tr>
                                         <td class="text-center">
                                             <a href="{{ route('user.bookings.edit', $item->id) }}"
-                                                class="link">#{{ $item->id }}</a>
+                                                class="link">{{ $item->order_number }}</a>
                                         </td>
                                         <td>
                                             @foreach (getToursFromCart($item->cart_data) as $tour)
@@ -47,30 +44,23 @@
                                             @endforeach
                                         </td>
                                         <td>
-                                            @if ($item->driver)
-                                                {{ $item->driver->name }}
-                                            @else
-                                                Not Assigned
-                                            @endif
+                                            {{ formatPrice($item->advance_amount > 0 ? $item->remaining_amount : $item->total_amount) }}
                                         </td>
                                         <td>
-                                            {{ formatKey($item->payment_type) }}
+                                            {{ formatPrice($item->advance_amount) }}
                                         </td>
                                         <td>
                                             <span
-                                                class="badge rounded-pill bg-{{ $item->payment_status === 'paid' ? 'success' : ($item->payment_status === 'partial' ? 'warning' : 'danger') }}">
+                                                class="badge rounded-pill bg-{{ $item->payment_status === 'paid' ? 'success' : ($item->payment_status === 'pending' ? 'warning' : 'danger') }}">
                                                 {{ $item->payment_status }}
                                             </span>
                                         </td>
-                                        <td>{{ formatDateTime($item->payment_date) }}</td>
                                         <td>
                                             <span
                                                 class="badge rounded-pill bg-{{ $item->status === 'confirmed' ? 'success' : ($item->status === 'pending' ? 'warning' : 'danger') }}">
                                                 {{ $item->status }}
                                             </span>
                                         </td>
-                                        <td>{{ formatPrice($item->total_amount) }}</td>
-                                        <td>{{ formatDateTime($item->created_at) }}</td>
                                         <td>
                                             <div class="dropstart bootsrap-dropdown">
                                                 <button type="button" class="recent-act__icon dropdown-toggle"
@@ -80,12 +70,13 @@
                                                 <ul class="dropdown-menu">
                                                     <li>
                                                         <a class="dropdown-item"
-                                                            href="{{ route('user.bookings.edit', $item->id) }}">
+                                                            href="{{ route('user.bookings.edit', $item->id) }}"
+                                                            title="View Page">
                                                             <i class='bx bxs-show'></i>
                                                             View
                                                         </a>
                                                     </li>
-                                                    @if ($item->payment_status !== 'paid' && $item->status !== 'cancelled')
+                                                    @if ($item->advance_amount > 0&&$item->payment_status !== 'paid' && $item->status !== 'cancelled')
                                                         <li>
                                                             <a class="dropdown-item"
                                                                 href="{{ route('user.bookings.pay', $item->id) }}">

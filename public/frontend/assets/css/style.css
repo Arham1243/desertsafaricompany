@@ -86,6 +86,9 @@ body :is(.dirham.dirham) {
 .mar-y {
     margin: 5rem 0;
 }
+.color-primary {
+    color: var(--color-primary);
+}
 
 /* ThemeBtn */
 .themeBtn {

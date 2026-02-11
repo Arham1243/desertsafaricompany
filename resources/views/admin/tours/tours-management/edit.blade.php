@@ -4272,9 +4272,9 @@
                                             </div>
                                             <div class="d-flex align-items-center gap-3">
                                                 <input type="text" name="tour[badge][icon_class]" class="field"
-                                                    value="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }}"
+                                                    value="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? '') }}"
                                                     placeholder="" oninput="showIcon(this)">
-                                                <i class="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? 'bx bx-badge-check') }} bx-md"
+                                                <i class="{{ old('tour.badge.icon_class', optional(json_decode($tour->badge))->icon_class ?? '') }} bx-md"
                                                     data-preview-icon></i>
                                             </div>
                                             @error('tour.badge.icon_class')
