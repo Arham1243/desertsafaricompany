@@ -809,6 +809,17 @@
 
                     // All validations passed
                     return true;
+                } else if (additionalType === 'meeting_point') {
+                    const selection = bookingSelections.selection || {};
+
+                    // Validate that city_id and meeting_point are selected
+                    if (!selection.city_id || selection.city_id === '' ||
+                        !selection.meeting_point || selection.meeting_point === '') {
+                        return false;
+                    }
+
+                    // All validations passed
+                    return true;
                 } else {
                     // For non-activities types, check if selection exists and is not empty
                     return bookingSelections.selection && bookingSelections.selection !== '';
