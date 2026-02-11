@@ -27,100 +27,118 @@
 
                         <div class="form-box">
                             <div class="form-box__header">
-                                <div class="title">Payment Details</div>
+                                <div class="title">Booking Summary</div>
                             </div>
                             <div class="form-box__body">
                                 <div class="row">
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Total Amount:</label>
-                                            <input type="text" class="field"
-                                                value="{{ number_format($booking->total_amount ?? 0, 2) }}" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Payment Type:</label>
-                                            <input type="text" class="field" value="{{ $booking->payment_type ?? '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
+                                    @php
+                                        $bookedTours = getToursFromCart($booking->cart_data);
+                                    @endphp
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Payment Date:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->payment_date ? formatDateTime($booking->payment_date) : '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Order Date:</label>
-                                            <input type="text" class="field"
-                                                value="{{ $booking->created_at ? formatDateTime($booking->created_at) : '' }}"
-                                                readonly>
-                                        </div>
-                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <ul class="list-group">
+                                            @foreach ($bookedTours as $index => $tour)
+                                                @php
+                                                    $cartTourData = json_decode($booking->cart_data, true);
+                                                    $tourDataDetails = $cartTourData['tours'][$tour->id] ?? [];
+                                                    $tourData = $tourDataDetails['tourData'] ?? [];
+                                                @endphp
 
-                                    @if ($booking->advance_amount)
-                                        <div class="col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Advance Amount:</label>
-                                                <input type="text" class="field" value="{{ $booking->advance_amount }}"
-                                                    readonly>
-                                            </div>
-                                        </div>
-                                    @endif
+                                                <li class="list-group-item">
+                                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                                        <strong style="font-size: 1.1rem;">Tour {{ $index + 1 }}: {{ $tour->title }}</strong>
+                                                    </div>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <strong>Booking Date:</strong>
+                                                    <span>{{ formatDate($tourDataDetails['start_date']) }}</span>
+                                                </li>
+                                                
+                                                @if (!empty($tourData))
+                                                    @foreach ($tourData as $rowIndex => $row)
+                                                        @if (isset($row['original_price']) && isset($row['quantity']))
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <strong>Price per Person:</strong>
+                                                                <span>{{ formatPrice($row['original_price']) }}</span>
+                                                            </li>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <strong>Number of Persons:</strong>
+                                                                <span>{{ $row['quantity'] }}</span>
+                                                            </li>
+                                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                                <strong>Subtotal:</strong>
+                                                                <span>{{ formatPrice($row['original_price'] * $row['quantity']) }}</span>
+                                                            </li>
+                                                        @endif
+                                                    @endforeach
+                                                @endif
 
-                                    @if ($booking->paid_amount)
-                                        <div class="col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Paid Amount:</label>
-                                                <input type="text" class="field" value="{{ $booking->paid_amount }}"
-                                                    readonly>
-                                            </div>
-                                        </div>
-                                    @endif
+                                                @include('partials.booking-additional-display')
 
-                                    @if ($booking->remaining_amount)
-                                        <div class="col-md-6 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Remaining Amount:</label>
-                                                <input type="text" class="field"
-                                                    value="{{ $booking->remaining_amount }}" readonly>
-                                            </div>
-                                        </div>
-                                    @endif
+                                                @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
+                                                    <li class="list-group-item">
+                                                        <form action="{{ route('admin.bookings.update', $booking->id) }}" method="POST">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <input type="hidden" name="tour_id" value="{{ $tour->id }}">
+                                                            <div class="form-fields">
+                                                                <label class="title">Update Start Date:</label>
+                                                                <input onclick="this.showPicker()" onfocus="this.showPicker()"
+                                                                    type="date" name="start_date" class="field"
+                                                                    value="{{ $tourDataDetails['start_date'] }}">
+                                                            </div>
+                                                            <button type="submit" class="themeBtn mt-2">Update Date</button>
+                                                        </form>
+                                                    </li>
+                                                @endif
 
+                                                @if (!$loop->last)
+                                                    <li class="list-group-item bg-light text-center">
+                                                        <em>───────</em>
+                                                    </li>
+                                                @endif
+                                            @endforeach
 
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Booking Status:</label>
-                                            <div>
-                                                <span
-                                                    class="badge rounded-pill bg-{{ $booking->status === 'confirmed' ? 'success' : ($booking->status === 'pending' ? 'warning' : 'danger') }}">
-                                                    {{ $booking->status ?? 'N/A' }}
+                                            <li class="list-group-item bg-light">
+                                                <strong style="font-size: 1.1rem;">Payment Summary</strong>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <strong>Total Amount:</strong>
+                                                <span>{{ formatPrice($booking->total_amount) }}</span>
+                                            </li>
+                                            @if ($booking->advance_amount > 0)
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <strong>Advance Payment:</strong>
+                                                    <span>{{ formatPrice($booking->advance_amount) }}</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <strong>Remaining Amount:</strong>
+                                                    <span>{{ formatPrice($booking->remaining_amount) }}</span>
+                                                </li>
+                                            @endif
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <strong>Payment Status:</strong>
+                                                <span class="badge rounded-pill bg-{{ $booking->payment_status === 'paid' ? 'success' : ($booking->payment_status === 'partial' ? 'warning' : 'danger') }}">
+                                                    {{ ucfirst($booking->payment_status ?? 'N/A') }}
                                                 </span>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <div class="col-md-6 col-12 mb-4">
-                                        <div class="form-fields">
-                                            <label class="title">Payment Status:</label>
-                                            <div>
-                                                <span
-                                                    class="badge rounded-pill bg-{{ $booking->payment_status === 'paid'
-                                                        ? 'success'
-                                                        : ($booking->payment_status === 'partial'
-                                                            ? 'warning'
-                                                            : 'danger') }}">
-                                                    {{ $booking->payment_status ?? 'N/A' }}
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <strong>Booking Status:</strong>
+                                                <span class="badge rounded-pill bg-{{ $booking->status === 'confirmed' ? 'success' : ($booking->status === 'pending' ? 'warning' : 'danger') }}">
+                                                    {{ ucfirst($booking->status ?? 'N/A') }}
                                                 </span>
-                                            </div>
-                                        </div>
+                                            </li>
+                                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                <strong>Order Date:</strong>
+                                                <span>{{ formatDateTime($booking->created_at) }}</span>
+                                            </li>
+                                            @if ($booking->payment_date)
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    <strong>Payment Date:</strong>
+                                                    <span>{{ formatDateTime($booking->payment_date) }}</span>
+                                                </li>
+                                            @endif
+                                        </ul>
                                     </div>
                                 </div>
                             </div>
@@ -281,113 +299,6 @@
                                 </div>
                             </div>
                         @endif
-                        <div class="form-box">
-                            <div class="form-box__header d-flex align-items-center gap-4">
-                                <div class="title">Booked Tours</div>
-                            </div>
-                            <div class="form-box__body">
-                                <div class="row">
-                                    @php
-                                        $bookedTours = getToursFromCart($booking->cart_data);
-                                    @endphp
-
-                                    @foreach ($bookedTours as $index => $tour)
-                                        @php
-                                            $cartTourData = json_decode($booking->cart_data, true);
-                                            $tourDataDetails = $cartTourData['tours'][$tour->id] ?? [];
-                                            $tourData = $tourDataDetails['tourData'] ?? [];
-                                        @endphp
-                                        @if ($booking->payment_status !== 'paid' && $booking->status !== 'cancelled')
-                                            <form action="{{ route('admin.bookings.update', $booking->id) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('PATCH')
-                                                <input type="hidden" name="tour_id" value="{{ $tour->id }}">
-
-                                                <div class="col-md-12 col-12 mb-2">
-                                                    <div class="form-fields">
-                                                        <label class="title">Start Date:</label>
-                                                        <input onclick="this.showPicker()" onfocus="this.showPicker()"
-                                                            type="date" name="start_date" class="field"
-                                                            value="{{ $tourDataDetails['start_date'] }}">
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-12 col-12 mb-4">
-                                                    <button type="submit" class="themeBtn">Update</button>
-                                                </div>
-                                            </form>
-                                        @else
-                                            <div class="col-md-12 col-12 mb-4">
-                                                <div class="form-fields">
-                                                    <label class="title">Start Date:</label>
-                                                    <input type="text" class="field"
-                                                        value="{{ formatDate($tourDataDetails['start_date']) }}" readonly>
-                                                </div>
-                                            </div>
-                                        @endif
-
-                                        <div class="col-md-12 col-12 mb-4">
-                                            <div class="form-fields">
-                                                <label class="title">Tour Data:</label>
-                                                <ul class="list-group mt-3">
-                                                    <li
-                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                        <strong>Title:</strong>
-                                                        <span>
-                                                          {{ $tour->title }}
-                                                        </span>
-                                                    </li>
-                                                    @if (!empty($tourData))
-                                                        @php
-                                                            $keysToShow = [
-                                                                'original_price',
-                                                                'quantity',
-                                                            ];
-                                                        @endphp
-                                                        @foreach ($tourData as $rowIndex => $row)
-                                                            @foreach ($row as $key => $value)
-                                                                @if (in_array($key, $keysToShow))
-                                                                    <li
-                                                                        class="list-group-item d-flex justify-content-between align-items-center">
-                                                                        <strong>{{ ucfirst(str_replace('_', ' ', $key)) }}:</strong>
-                                                                        <span>
-                                                                            @if (is_numeric($value) && str_contains($key, 'price'))
-                                                                                {{ formatPrice($value) }}
-                                                                            @elseif (is_bool($value))
-                                                                                {{ $value ? 'Yes' : 'No' }}
-                                                                            @elseif (is_array($value))
-                                                                                {{ collect($value)->flatten()->join(', ') }}
-                                                                            @else
-                                                                                {!! $value !!}
-                                                                            @endif
-                                                                        </span>
-                                                                    </li>
-                                                                @endif
-                                                            @endforeach
-                                                            @if (!$loop->last)
-                                                                <li class="list-group-item text-center bg-light">
-                                                                    <em>────────────</em>
-                                                                </li>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                                </ul>
-
-                                            </div>
-                                        </div>
-
-                                        @include('partials.booking-additional-display')
-
-                                        @if (!$loop->last)
-                                            <div class="col-12">
-                                                <hr class="my-5">
-                                            </div>
-                                        @endif
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="form-box">
                             <div class="form-box__header d-flex justify-content-between align-items-center">
