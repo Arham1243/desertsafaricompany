@@ -100,7 +100,7 @@ class Order extends Model
                 $lastNumber = 999;
             }
 
-            $invoice->invoice_number = $lastNumber + 1;
+            $order->order_number = $lastNumber + 1;
         });
     }
 }
