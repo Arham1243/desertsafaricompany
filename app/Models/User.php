@@ -61,6 +61,6 @@ class User extends Authenticatable
 
     public function hasCompletedProfile()
     {
-        return $this->phone && $this->age && $this->country && $this->city;
+        return $this->phone && $this->dob && $this->country && $this->city;
     }
 }
