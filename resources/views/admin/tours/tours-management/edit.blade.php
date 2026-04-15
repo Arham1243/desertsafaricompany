@@ -4372,7 +4372,7 @@
                                                 </span>
                                             </div>
 
-                                            <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig['icon_class'] ?? 'bx bx-badge-check') }}' }">
+                                            <div class="d-flex align-items-center gap-3" x-data="{ iconClass: '{{ old('tour[status][author_config][icon_class]', $authorConfig['icon_class'] ?? '') }}' }">
                                                 <div class="field color-picker" data-color-picker-container>
                                                     <label for="icon-color-picker-author" data-color-picker></label>
                                                     <input id="icon-color-picker-author" type="hidden"
